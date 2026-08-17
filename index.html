@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>赛马牧场物语 · 比赛模拟 Demo</title>
+<style>
+:root {
+  --bg: #0d1512; --panel: #14211b; --panel2: #1a2b23; --line: #2c4636;
+  --text: #dce8e0; --dim: #7f9c8b; --gold: #e8c96a; --red: #ff6b6b; --green: #59c98e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "Hiragino Kaku Gothic ProN", "PingFang SC", sans-serif;
+  padding: 16px 20px 60px; line-height: 1.5;
+}
+header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+header h1 { font-size: 20px; color: var(--gold); letter-spacing: 1px; }
+header .sub { color: var(--dim); font-size: 12px; }
+header a { color: #7fb8ff; font-size: 12px; text-decoration: none; }
+.seedbox { margin-left: auto; color: var(--dim); font-size: 12px; }
+.seedbox input { width: 110px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); padding: 3px 6px; border-radius: 4px; }
+.bankroll { color: var(--gold); font-weight: 700; font-size: 14px; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+button {
+  background: var(--panel2); color: var(--text); border: 1px solid var(--line);
+  padding: 7px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;
+}
+button:hover { border-color: var(--gold); color: var(--gold); }
+button.primary { background: #2f4a3a; border-color: #4d7a5e; font-weight: 600; }
+button.on { background: var(--gold); color: #1a241d; border-color: var(--gold); }
+.screen { display: none; }
+.screen.active { display: block; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.card h2 { font-size: 15px; color: var(--gold); margin-bottom: 10px; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+th { color: var(--dim); font-weight: 500; font-size: 12px; }
+tr.is-player td { background: rgba(232, 201, 106, 0.07); }
+.name { font-weight: 600; }
+.name .sub { display: block; font-weight: 400; color: var(--dim); font-size: 11px; }
+.cap { display: inline-block; width: 22px; height: 22px; line-height: 22px; border-radius: 50%; text-align: center; font-size: 12px; font-weight: 700; }
+.cap-mini { display: inline-block; width: 16px; height: 16px; line-height: 16px; border-radius: 50%; text-align: center; font-size: 10px; font-weight: 700; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; }
+.badge-逃 { background: #7a2f2f; } .badge-先 { background: #2f4a7a; }
+.badge-差 { background: #5a3a7a; } .badge-追 { background: #3a6a3a; }
+.odds { color: var(--gold); font-weight: 700; }
+.hint { color: var(--dim); font-size: 12px; margin: 6px 0 0; }
+select, input[type=number] {
+  background: var(--panel2); color: var(--text); border: 1px solid var(--line);
+  padding: 5px 8px; border-radius: 5px; font-size: 13px;
+}
+.rline { display: flex; gap: 10px; align-items: baseline; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.rline .rsrc { flex: 0 0 64px; color: var(--gold); font-size: 12px; }
+.rline .rtxt { flex: 1; }
+.rline .rgrade { color: var(--dim); font-size: 11px; white-space: nowrap; }
+.staffchips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.chip { background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 2px 10px; font-size: 12px; color: var(--dim); }
+/* 比赛画面 */
+#raceWrap { display: flex; gap: 14px; flex-wrap: wrap; }
+#raceLeft { flex: 1 1 640px; min-width: 320px; }
+#raceRight { flex: 0 0 300px; display: flex; flex-direction: column; gap: 12px; }
+#raceCanvas { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); display: block; background: #1e5b34; }
+.phasebar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin-top: 8px; border: 1px solid var(--line); }
+.phasebar .ph { display: flex; align-items: center; justify-content: center; font-size: 11px; color: #9db8a8; background: var(--panel2); border-right: 1px solid var(--line); }
+.phasebar .ph.on { background: var(--gold); color: #1a241d; font-weight: 700; }
+.ctrl { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+.lb-row { display: flex; align-items: center; gap: 8px; padding: 3px 0; font-size: 13px; border-bottom: 1px dashed var(--line); }
+.lb-row .lb-rank { width: 20px; color: var(--dim); }
+.lb-row .lb-name { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.lb-row .lb-gap { color: var(--dim); font-size: 11px; }
+.lb-row.pl { background: rgba(232, 201, 106, 0.08); }
+.feed { height: 170px; overflow-y: auto; font-size: 12px; display: flex; flex-direction: column-reverse; }
+.feed .ev { padding: 3px 0; border-bottom: 1px dashed var(--line); }
+.feed .ev .t { color: var(--dim); margin-right: 6px; font-variant-numeric: tabular-nums; }
+.bar { height: 8px; background: var(--panel2); border-radius: 4px; overflow: hidden; margin: 4px 0; }
+.bar > div { height: 100%; border-radius: 4px; }
+.stage-badge { font-size: 11px; padding: 1px 8px; border-radius: 8px; }
+.stage-耐力 { background: #2e5a3f; } .stage-毅力 { background: #6a5a2e; } .stage-失速 { background: #7a2f2f; }
+table.debug td { font-size: 11px; padding: 2px 5px; }
+/* 结果 */
+.banner { text-align: center; padding: 22px; background: linear-gradient(180deg, #1d3327, #14211b); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px; }
+.banner .win { font-size: 26px; color: var(--gold); font-weight: 800; }
+.banner .info { color: var(--dim); margin-top: 6px; }
+.judge-ok { color: var(--green); font-weight: 700; }
+.judge-bad { color: var(--red); font-weight: 700; }
+#chartCanvas { width: 100%; height: auto; background: var(--panel); border-radius: 8px; }
+#autotest { padding: 10px 14px; border-radius: 8px; background: #1c2b22; border: 1px solid #3f6a4d; margin-bottom: 14px; font-size: 13px; color: var(--green); }
+details { margin-top: 8px; }
+details summary { cursor: pointer; color: var(--dim); font-size: 13px; }
+.editor-grid { overflow-x: auto; }
+.editor-grid input[type=number] { width: 52px; }
+.editor-grid select { width: 62px; font-size: 12px; padding: 3px; }
+.editor-grid th, .editor-grid td { padding: 3px 4px; font-size: 12px; }
+.note { color: var(--dim); font-size: 12px; }
+.race-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.race-row .rr-info { flex: 1 1 340px; }
+.race-row .rr-pop { color: var(--dim); font-size: 12px; }
+.race-row .rr-act { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.race-row select.rr-horse { max-width: 200px; font-size: 12px; }
+.hh-btn { font-size: 12px; padding: 3px 8px; margin: 2px; }
+.rr-horse-list { display: flex; flex-wrap: wrap; gap: 2px; }
+footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🐎 赛马牧场物语 · 比赛模拟 Demo</h1>
+  <span class="sub">引擎公式对应《系统数值设计文档》3.10 · 情报误差对应《游戏策划案》4.5</span>
+  <a href="README.md" target="_blank">README</a>
+  <span class="bankroll" id="bankrollDisplay">💰 50万</span>
+  <button id="btnModeCareer">💰 赌马生涯</button>
+  <button id="btnModeSingle">🎬 单场模拟</button>
+  <button id="btnModeBreed">🔬 繁殖模拟</button>
+  <span class="seedbox">阵容种子 <input id="seedInput" type="number"> <button id="seedApply">应用</button></span>
+</header>
+
+<!-- ============ 繁殖模拟 ============ -->
+<section id="breeding" class="screen">
+  <div class="row" style="align-items:flex-start">
+    <div class="card" style="flex:1 1 380px">
+      <h2>🧬 繁殖工坊 <span class="note">（3.11 公式实装 · 数值可见用于验证）</span></h2>
+      <label>种公马 <select id="sireSel"></select></label>
+      <div class="note" id="sireInfo" style="margin-top:4px"></div>
+      <label style="display:block;margin-top:10px">繁殖牝马 <select id="damSel"></select></label>
+      <div class="note" id="damInfo" style="margin-top:4px"></div>
+      <div class="note" id="feeInfo" style="margin-top:10px;font-weight:700"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" id="btnBreed">🐎 配种（支付种费）</button>
+        <button id="btnBreedMC">📊 蒙特卡洛100次</button>
+      </div>
+      <div class="note" id="breedMsg" style="margin-top:8px"></div>
+    </div>
+    <div class="card" style="flex:1 1 460px">
+      <h2>幼驹档案（真实数值）</h2>
+      <div id="foalCard"><div class="note">尚未配种。选择种公马与繁殖牝马，支付种费后生成幼驹。</div></div>
+      <div class="row" style="margin-top:8px">
+        <button id="btnFoalEnter" disabled>🏇 幼驹入厩（6月新马赛出道，可下注）</button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>📊 子代速度分布（100次配种蒙特卡洛）</h2>
+    <canvas id="breedChart" width="1100" height="220" style="width:100%;height:auto"></canvas>
+  </div>
+</section>
+
+<!-- ============ 生涯模式 ============ -->
+<section id="career" class="screen">
+  <div class="card">
+    <div class="row">
+      <h2 style="margin:0" id="careerDate">📅 —</h2>
+      <div style="margin-left:auto" class="row">
+        <button id="btnNews">📰 周报</button>
+        <button class="primary" id="btnNextWeek">▶ 进入下一周</button>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="align-items:flex-start">
+    <div class="card" style="flex:1 1 300px">
+      <h2>📊 战绩统计</h2>
+      <div id="statsCard"></div>
+      <p class="hint" style="margin-top:8px">你是职业赌徒：用每周情报（有误差）和马匹战绩表，在赔率里寻找价值。目标是让资金滚起来。</p>
+    </div>
+    <div class="card" style="flex:1 1 620px">
+      <h2>🔍 本周情报 <span class="note">（马评有误差！）</span></h2>
+      <div class="staffchips" id="careerStaffChips"></div>
+      <div id="careerReport"></div>
+      <button id="btnCareerDebug" style="margin-top:8px">🐞 揭示真实数值（调试）</button>
+    </div>
+  </div>
+  <div class="card">
+    <h2>📋 本周赛程 <span class="note">（每场可下注/观看 · 未观看的场次下周自动出结果）</span></h2>
+    <div class="row" style="margin-bottom:10px">
+      <label>下注金额 <input id="betAmountSel" type="number" value="5" style="width:60px"> 万</label>
+      <button id="btnBetCancelAll">取消全部下注</button>
+    </div>
+    <div id="programList"></div>
+  </div>
+  <div class="card" id="recapCard">
+    <h2>上周回顾</h2>
+    <div id="recapDetail" class="note">（尚未开始）</div>
+  </div>
+</section>
+
+<!-- ============ 赛前 ============ -->
+<section id="setup" class="screen active">
+  <div class="card">
+    <div class="row">
+      <h2 style="margin:0">① 赛前：出战表与情报</h2>
+      <label style="margin-left:auto">距离
+        <select id="cfgLength"><option value="1600">1600m</option><option value="2000" selected>2000m</option><option value="2400">2400m</option><option value="3200">3200m</option></select>
+      </label>
+      <label>场地
+        <select id="cfgSurface"><option value="草地" selected>草地</option><option value="泥地">泥地</option></select>
+      </label>
+      <label>马场状态
+        <select id="cfgState"><option value="良" selected>良</option><option value="稍重">稍重</option><option value="重">重</option><option value="不良">不良</option></select>
+      </label>
+      <label>跑法系数
+        <select id="cfgCoef"><option value="balanced" selected>平衡修正</option><option value="doc">文档原版</option></select>
+      </label>
+      <label>回り方向
+        <select id="cfgDir"><option value="左回" selected>左回</option><option value="右回">右回</option></select>
+      </label>
+      <label>赛道起伏
+        <select id="cfgProfile"><option value="平坦">平坦</option><option value="缓坂" selected>缓坂</option><option value="中坂">中坂</option><option value="急坂">急坂</option></select>
+      </label>
+      <button class="primary" id="btnStart">▶ 开赛</button>
+      <button id="btnGen">🎲 重新生成阵容</button>
+    </div>
+  </div>
+
+  <div class="row" style="align-items:flex-start">
+    <div class="card" style="flex:1 1 520px">
+      <h2>出战表（点击选择你旗下的马）</h2>
+      <table>
+        <thead><tr><th>枠</th><th>马名</th><th>跑法</th><th>骑手</th><th>人气/赔率</th><th>战绩</th><th>选择</th></tr></thead>
+        <tbody id="fieldTable"></tbody>
+      </table>
+      <p class="hint">所有数值对玩家隐藏——你只能通过下面的情报报告、赔率和战绩猜测马匹实力。跑完比赛才会揭晓真相。</p>
+    </div>
+
+    <div class="card" style="flex:1 1 360px">
+      <h2>② 赛前情报报告 <span class="note">（情报可能不准！）</span></h2>
+      <div class="staffchips" id="staffChips"></div>
+      <div id="reportCard"></div>
+      <div class="row" style="margin-top:8px">
+        <button id="btnRerollStaff">🔁 换一批情报</button>
+      </div>
+    </div>
+
+    <div class="card" style="flex:1 1 360px">
+      <h2>③ 赛前下注 <span class="note">（单胜 · 按赔率结算）</span></h2>
+      <div class="row">
+        <select id="betHorse" style="flex:1"></select>
+        <input id="betAmount" type="number" min="1" step="1" value="5" style="width:64px">
+        <span class="note">万</span>
+      </div>
+      <div class="row" style="margin-top:6px">
+        <button data-bet="1">1万</button>
+        <button data-bet="5">5万</button>
+        <button data-bet="10">10万</button>
+        <button id="betMax">最大</button>
+        <button class="primary" id="btnBet">🎫 确认下注</button>
+        <button id="btnBetCancel">取消下注</button>
+        <button id="btnResetBank">重置资金</button>
+      </div>
+      <div id="betStatus" class="note" style="margin-top:6px">尚未下注</div>
+      <p class="hint">情报报告有误差，但至少是个依据——信，还是不信？看穿误差的马主才能赚到钱。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <details id="editorBox">
+      <summary>⚙ 数值沙盒：直接修改每匹马的隐藏数值（调试/构造剧情用）</summary>
+      <div class="editor-grid" id="editorContent"></div>
+      <div class="row" style="margin-top:8px">
+        <button id="btnApplyEditor">应用修改</button>
+        <span class="note">改完点应用，赔率与情报会重新计算。数值改得越极端，比赛故事越戏剧化。</span>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 赛中 ============ -->
+<section id="race" class="screen">
+  <div id="raceWrap">
+    <div id="raceLeft">
+      <canvas id="raceCanvas" width="1100" height="460"></canvas>
+      <div class="phasebar" id="phaseBar">
+        <span class="ph" data-k="break" style="width:5%">出闸</span>
+        <span class="ph" data-k="open" style="width:15%">序盘</span>
+        <span class="ph" data-k="mid" style="width:40%">中盘</span>
+        <span class="ph" data-k="late" style="width:20%">后盘</span>
+        <span class="ph" data-k="final" style="width:20%">终盘</span>
+      </div>
+      <div class="ctrl">
+        <button id="btnPause">⏸ 暂停</button>
+        <button class="speed on" data-v="1">1x</button>
+        <button class="speed" data-v="2">2x</button>
+        <button class="speed" data-v="4">4x</button>
+        <button id="btnSkip">⏭ 跳到结果</button>
+        <button id="btnDebug">🐞 真实数值</button>
+        <span class="note" id="distRemain">残り 2000m</span>
+      </div>
+    </div>
+    <div id="raceRight">
+      <div class="card" style="margin:0">
+        <h2>実況</h2>
+        <div class="feed" id="feed"></div>
+      </div>
+      <div class="card" style="margin:0">
+        <h2>实时名次</h2>
+        <div id="leaderboard"></div>
+      </div>
+      <div class="card" style="margin:0" id="playerCard">
+        <h2>我的马</h2>
+        <div id="playerInfo"></div>
+      </div>
+      <div class="card" style="margin:0; display:none" id="debugPanel">
+        <h2>🐞 真实数值（比赛中的真相）</h2>
+        <table class="debug" id="debugTable"></table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 赛后 ============ -->
+<section id="result" class="screen">
+  <div id="autotest" style="display:none"></div>
+  <div class="banner" id="resultBanner"></div>
+  <div class="row" style="align-items:flex-start">
+    <div class="card" style="flex:1 1 420px">
+      <h2>③ 比赛结果</h2>
+      <table><thead><tr><th>着順</th><th>马名</th><th>骑手</th><th>タイム</th><th>着差</th><th>赔率</th></tr></thead><tbody id="resultTable"></tbody></table>
+    </div>
+    <div class="card" style="flex:1 1 420px">
+      <h2>④ 情报 vs 真相</h2>
+      <table><thead><tr><th>来源</th><th>报告说了什么</th><th>实际真相</th><th>判定</th></tr></thead><tbody id="reportCompare"></tbody></table>
+      <p class="hint">误差机制：真实值 → 观测值(员工误差) → 评语表；类别型属性按正确率+错误池判定。</p>
+    </div>
+  </div>
+  <div class="card">
+    <h2>⑤ 全程位置变化（领头马每前进 1% 记录一次名次）</h2>
+    <canvas id="chartCanvas" width="1100" height="260"></canvas>
+  </div>
+  <div class="card">
+    <h2>⑥ 全员真实能力表</h2>
+    <table><thead><tr><th>马名</th><th>速度</th><th>爆发力</th><th>出闸</th><th>耐力</th><th>力量</th><th>毅力</th><th>智力</th><th>体格</th><th>斗志</th><th>疲劳</th><th>跑法</th><th>骑手</th><th>适性</th></tr></thead><tbody id="statsTable"></tbody></table>
+  </div>
+  <div class="row">
+    <button class="primary" id="btnAgain">🔁 再赛一场（同阵容）</button>
+    <button id="btnBack">◀ 返回赛前</button>
+    <button id="btnGen2">🎲 重新生成阵容</button>
+  </div>
+</section>
+
+<footer>
+  演示 Demo · 全部马名/马主/调教师为程序虚构，与真实赛马无关 · 公式实现见 sim.js，简化点与调参建议见 README.md
+</footer>
+
+<!-- 马匹档案弹窗 -->
+<div id="horseDetail" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:200;overflow:auto">
+  <div style="max-width:540px;margin:40px auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px">
+    <div class="row" style="justify-content:space-between;margin-bottom:8px">
+      <h2 style="margin:0">🐎 马匹档案</h2>
+      <button id="btnCloseDetail">✕ 关闭</button>
+    </div>
+    <div id="horseDetailBody"></div>
+  </div>
+</div>
+<!-- 赛马业周报弹窗 -->
+<div id="newsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:210;overflow:auto">
+  <div style="max-width:560px;margin:40px auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px">
+    <div class="row" style="justify-content:space-between;margin-bottom:8px">
+      <h2 style="margin:0">📰 赛马业周报</h2>
+      <button id="btnCloseNews">✕ 关闭</button>
+    </div>
+    <div id="newsBody"></div>
+  </div>
+</div>
+<script src="sim.js"></script>
+<script>
+'use strict';
+const S = window.SaimaSim;
+const CAP_COLORS = ['#f2f2f2','#232323','#d8302f','#3358d8','#f0c300','#2e9e4f','#ef8b1c','#e8589e'];
+const NUM_DARK = [1, 4];
+const capColor = (i) => CAP_COLORS[i % 8];
+const numColor = (i) => (NUM_DARK.includes(i % 8) ? '#111' : '#fff');
+
+/* ---------- 全局状态 ---------- */
+let seed = 186, field = [], staff = null, report = null, oddsMap = {};
+let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
+let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
+let bankroll = 50, bet = { horseId: null, amount: 0, target: null };
+let mode = 'career', career = null, careerStaff = null;
+let betResult = null;
+const emptyBet = () => ({ horseId: null, amount: 0, target: null });
+function loadBankroll() {
+  try { const v = localStorage.getItem('saima-bankroll'); if (v !== null && isFinite(+v)) bankroll = Math.max(0, +v); } catch (e) {}
+}
+function saveBankroll() {
+  try { localStorage.setItem('saima-bankroll', String(bankroll)); } catch (e) {}
+}
+const fmtWan = (x) => (x >= 1000 ? (x / 1000).toFixed(2) + '亿' : x.toFixed(0) + '万');
+
+const $ = (id) => document.getElementById(id);
+
+function genField(seedValue) {
+  seed = seedValue >>> 0;
+  if (bet.horseId) { bankroll += bet.amount; bet = { horseId: null, amount: 0 }; }
+  const rng = S.mulberry32(seed);
+  field = S.makeField(rng, { n: 8 });
+  staff = S.makeStaff(rng);
+  oddsMap = S.oddsAndPopularity(field, rng);
+  playerId = field.find((h) => h.player).id;
+  reportRng = S.mulberry32((seed ^ 0x51ab1) >>> 0);
+  refreshReport();
+  buildEditor();
+  renderSetup();
+}
+
+function refreshReport() {
+  const h = field.find((x) => x.id === playerId);
+  if (!h || !staff) return;
+  report = S.generateReport(h, staff, reportRng);
+  const chips = $('staffChips');
+  chips.innerHTML =
+    '<span class="chip">牧场长 · 相马眼 ' + staff['牧场长']['相马眼'] + ' 级</span>' +
+    '<span class="chip">调教师 · 洞察力 ' + staff['调教师']['洞察力'] + ' 级</span>' +
+    '<span class="chip">厩务员 · 护理力 ' + staff['厩务员']['护理力'] + ' 级</span>';
+  const card = $('reportCard');
+  card.innerHTML = '<div style="color:var(--dim);font-size:12px;margin-bottom:4px">关于「' + h.name + '」的评价：</div>' +
+    report.lines.map((l) =>
+      '<div class="rline"><span class="rsrc">' + l.source + '</span>' +
+      '<span class="rtxt">' + l.text + '</span>' +
+      '<span class="rgrade">' + (l.grade || '') + '</span></div>').join('');
+}
+
+function renderSetup() {
+  const tb = $('fieldTable');
+  tb.innerHTML = '';
+  field.forEach((h, i) => {
+    const od = oddsMap[h.id] || { '人气': '-', '赔率': '-' };
+    const tr = document.createElement('tr');
+    if (h.id === playerId) tr.className = 'is-player';
+    tr.innerHTML =
+      '<td><span class="cap" style="background:' + capColor(i) + ';color:' + numColor(i) + '">' + (i + 1) + '</span></td>' +
+      '<td class="name">' + h.name + (h.player ? ' ⭐' : '') +
+        '<span class="sub">' + h.sex + h.age + '岁 · ' + h.coat + ' · ' + h.surface + (h.special === '左右皆可' ? '' : ' · ' + h.special) + '</span></td>' +
+      '<td><span class="badge badge-' + h.style + '">' + h.style + '</span></td>' +
+      '<td>' + h.jockeyGrade + '</td>' +
+      '<td>' + od['人气'] + '番人气 <span class="odds">' + od['赔率'] + '</span></td>' +
+      '<td>' + h.form['出赛'] + '戦' + h.form['胜利'] + '勝</td>' +
+      '<td><input type="radio" name="pick" value="' + h.id + '"' + (h.id === playerId ? ' checked' : '') + '></td>';
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('input[name=pick]').forEach((r) => {
+    r.addEventListener('change', () => { playerId = r.value; refreshReport(); renderSetup(); });
+  });
+  // 下注下拉框
+  const bs = $('betHorse');
+  bs.innerHTML = field.map((h, i) => {
+    const od = oddsMap[h.id] || { '人气': '-', '赔率': '-' };
+    return '<option value="' + h.id + '"' + (bet.horseId === h.id ? ' selected' : '') + '>' +
+      (i + 1) + '番 ' + h.name + '（' + od['人气'] + '人气 ' + od['赔率'] + '倍）</option>';
+  }).join('');
+  updateBetUI();
+}
+
+/* ---------- 下注与资金 ---------- */
+function updateBetUI() {
+  $('bankrollDisplay').textContent = '💰 ' + fmtWan(bankroll);
+  const st = $('betStatus');
+  if (bet.horseId) {
+    const h = field.find((f) => f.id === bet.horseId);
+    const od = oddsMap[bet.horseId];
+    if (h && od) {
+      const pay = bet.amount * od['赔率'];
+      st.textContent = '已下注：' + h.name + ' ' + bet.amount + '万 → 夺冠得 ' + pay.toFixed(1) + '万（净赚 ' + (pay - bet.amount).toFixed(1) + '万）';
+    } else st.textContent = '尚未下注';
+  } else {
+    st.textContent = '尚未下注';
+  }
+  const broke = bankroll <= 0;
+  $('btnBet').disabled = broke;
+  $('betMax').disabled = broke;
+  const cur = parseInt($('betAmount').value, 10);
+  $('betAmount').value = Math.max(1, Math.min(cur || 1, Math.max(1, Math.ceil(bankroll))));
+}
+
+const EDIT_STATS = ['速度','爆发力','出闸能力','耐力','力量','毅力','智力','体格'];
+function buildEditor() {
+  const box = $('editorContent');
+  box.innerHTML = '<table><thead><tr><th>马</th>' +
+    EDIT_STATS.map((k) => '<th>' + k + '</th>').join('') +
+    '<th>跑法</th><th>骑手</th><th>斗志</th><th>疲劳</th></tr></thead><tbody>' +
+    field.map((h, i) => {
+      return '<tr><td><span class="cap-mini" style="background:' + capColor(i) + ';color:' + numColor(i) + '">' + (i + 1) + '</span> ' + h.name + '</td>' +
+        EDIT_STATS.map((k) => '<td><input type="number" min="1" max="115" class="ed" data-id="' + h.id + '" data-k="' + k + '" value="' + h.stats[k] + '"></td>').join('') +
+        '<td><select class="ed" data-id="' + h.id + '" data-k="style">' +
+          ['逃','先','差','追'].map((s2) => '<option' + (h.style === s2 ? ' selected' : '') + '>' + s2 + '</option>').join('') + '</select></td>' +
+        '<td><select class="ed" data-id="' + h.id + '" data-k="jockey">' +
+          ['新人','普通','优秀','殿堂'].map((j) => '<option' + (h.jockeyGrade === j ? ' selected' : '') + '>' + j + '</option>').join('') + '</select></td>' +
+        '<td><input type="number" min="1" max="100" class="ed" data-id="' + h.id + '" data-k="斗志" value="' + h['斗志'] + '"></td>' +
+        '<td><input type="number" min="0" max="200" class="ed" data-id="' + h.id + '" data-k="疲劳" value="' + h['疲劳'] + '"></td></tr>';
+    }).join('') + '</tbody></table>';
+}
+
+function applyEditor() {
+  document.querySelectorAll('.ed').forEach((inp) => {
+    const h = field.find((x) => x.id === inp.dataset.id);
+    if (!h) return;
+    const k = inp.dataset.k;
+    const v = inp.tagName === 'SELECT' ? inp.value : parseInt(inp.value, 10);
+    if (k === 'style') h.style = v;
+    else if (k === 'jockey') h.jockeyGrade = v;
+    else if (k === '斗志') h['斗志'] = S.clamp(v || 1, 1, 100);
+    else if (k === '疲劳') h['疲劳'] = S.clamp(v || 0, 0, 200);
+    else h.stats[k] = S.clamp(v || 1, 1, 115);
+  });
+  oddsMap = S.oddsAndPopularity(field, S.mulberry32((seed ^ 0x33) >>> 0));
+  refreshReport();
+  renderSetup();
+}
+
+/* ---------- 状态切换 ---------- */
+function show(name) {
+  state = name;
+  ['setup','race','result','career','breeding'].forEach((s) => $(s).classList.toggle('active', s === name));
+}
+function showSetup() {
+  if (rafId) cancelAnimationFrame(rafId);
+  show('setup'); renderSetup();
+}
+function startRace() {
+  mode = 'single';
+  const length = parseInt($('cfgLength').value, 10);
+  const surface = $('cfgSurface').value;
+  const fstate = $('cfgState').value;
+  // 每场比赛重摇比赛随机数：同一阵容再赛也能有不同的出闸运气/缠斗
+  raceCount++;
+  race = S.createRace(field, {
+    length, surface, state: fstate,
+    styleCoefs: $('cfgCoef').value,
+    dir: $('cfgDir').value,
+    profile: $('cfgProfile').value,
+    rng: S.mulberry32(((seed ^ 0x9e3779b9) + raceCount * 7919) >>> 0),
+  });
+  paused = false; speedMult = 1; acc = 0; lastTs = 0; cam = null;
+  $('btnPause').textContent = '⏸ 暂停';
+  document.querySelectorAll('.speed').forEach((b) => b.classList.toggle('on', +b.dataset.v === 1));
+  $('debugPanel').style.display = 'none';
+  if (rafId) cancelAnimationFrame(rafId);
+  show('race');
+  rafId = requestAnimationFrame(loop);
+}
+function showResult() {
+  if (rafId) cancelAnimationFrame(rafId);
+  show('result');
+  renderResult();
+}
+
+/* ---------- 比赛循环 ---------- */
+function loop(ts) {
+  if (state !== 'race') return;
+  if (!paused && race && !race.race.finished) {
+    if (!lastTs) lastTs = ts;
+    acc += Math.min(0.25, (ts - lastTs) / 1000) * speedMult;
+    lastTs = ts;
+    const dt = 1 / 30;
+    let steps = 0;
+    while (acc >= dt && steps < 300) { race.step(dt); acc -= dt; steps++; }
+    if (race.race.finished) { showResult(); return; }
+  } else { lastTs = ts; }
+  renderRace(ts);
+  rafId = requestAnimationFrame(loop);
+}
+
+function fmtTime(t) {
+  if (t === null || t === undefined) return '--';
+  return Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0') + '.' + Math.floor((t % 1) * 10);
+}
+
+/* ---------- 赛中渲染 ---------- */
+function sectionNameAt(s, geo) {
+  const { B, S } = geo;
+  if (s < S) return '序盘直线';
+  if (s < S + B) return '右弯道';
+  if (s < 2 * S + B) return '对直';
+  if (s < 2 * S + 2 * B) return '左弯道';
+  return '终直';
+}
+function renderRace(ts) {
+  const snap = race.state();
+  const cv = $('raceCanvas');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const L = snap.length;
+  const leaderH = snap.horses.find((h) => h.id === snap.leader);
+  const geo = S.trackGeometry(L);
+  const { R, B, S: St } = geo;
+  const dir = snap.dir;
+  const slopeG = snap.g;
+  // ---- 转播镜头：跟随领头马，行进方向固定为画面横轴 ----
+  // 镜头窗口随曲率动态变焦：直道宽景(马群铺开)、弯道紧追(跑道在画面中转弯)
+  // 乱晃修复：bendF 平滑过渡 + 镜头位置指数逼近（前进限速、后退缓收），
+  // 消除弯道出入口的"变焦突跳"与"镜头瞬间后跳"
+  const kHere = S.kAt(Math.min(L, Math.max(0, leaderH ? leaderH.s : 0)), geo);
+  const targetBendF = Math.min(1, kHere * R);
+  if (!cam) cam = { s: Math.max(0, (leaderH ? leaderH.s : 0) - 150), bendF: targetBendF };
+  cam.bendF += (targetBendF - cam.bendF) * 0.10;
+  const lookBehind = 150 - cam.bendF * 115;
+  const lookAhead = 50 - cam.bendF * 20;
+  const camTarget = Math.max(0, (leaderH ? leaderH.s : 0) - lookBehind);
+  const camDelta = camTarget - cam.s;
+  if (camDelta > 0) cam.s += Math.min(12, camDelta * 0.25);
+  else cam.s = Math.max(camTarget, cam.s + Math.max(-8, camDelta * 0.15));
+  const p0 = S.trackPoint(cam.s, 10, geo, dir);
+  const e0 = S.trackPoint(Math.max(0, cam.s - 2), 10, geo, dir);
+  const e1 = S.trackPoint(Math.min(L, cam.s + 2), 10, geo, dir);
+  let tx = e1.x - e0.x, ty = e1.y - e0.y;
+  const tl = Math.hypot(tx, ty) || 1; tx /= tl; ty /= tl;
+  const innerX = dir === '右回' ? ty : -ty;
+  const innerY = dir === '右回' ? -tx : tx;
+  const scale = (W - 36) / (lookBehind + lookAhead);
+  const cy = H - 125;
+  const yScale = 9;
+  // 伪透视投影：x 按行进弧长（行进方向恒为右），y 为横向偏移并按 1/(1+|d|/D) 衰减，
+  // 远处跑道自然收窄、弯道曲率被透视压缩——模仿电视长焦镜头
+  const perspD = 90;
+  const proj = (p, s) => {
+    const rx = p.x - p0.x, ry = p.y - p0.y;
+    const l = rx * innerX + ry * innerY;
+    const ps = 1 / (1 + Math.abs(s - cam.s) / perspD);
+    return { x: 18 + (s - cam.s) * scale, y: cy - l * yScale * ps, ps };
+  };
+  const sClamp = (s) => Math.max(0, Math.min(L, s));
+
+  ctx.fillStyle = '#152c1e'; ctx.fillRect(0, 0, W, H);
+  // 跑道带：采样内外栏，直道呈水平、弯道自然弯曲
+  const bandIn = [], bandOut = [];
+  const step = 3;
+  for (let s = cam.s - 8; s <= cam.s + lookBehind + lookAhead + 8; s += step) {
+    const ss = sClamp(s);
+    bandIn.push(proj(S.trackPoint(ss, 0, geo, dir), ss));
+    bandOut.push(proj(S.trackPoint(ss, 20, geo, dir), ss));
+  }
+  const poly = (pts) => { ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y); for (const p of pts) ctx.lineTo(p.x, p.y); };
+  ctx.fillStyle = '#2f7f4a';
+  poly(bandOut); for (let i = bandIn.length - 1; i >= 0; i--) ctx.lineTo(bandIn[i].x, bandIn[i].y);
+  ctx.closePath(); ctx.fill();
+  // 内场（内栏下方）与外场（外栏上方）
+  ctx.fillStyle = '#1d4a2e';
+  poly(bandIn); ctx.lineTo(bandIn[bandIn.length - 1].x, H); ctx.lineTo(bandIn[0].x, H); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#16301f';
+  poly(bandOut); ctx.lineTo(bandOut[bandOut.length - 1].x, 0); ctx.lineTo(bandOut[0].x, 0); ctx.closePath(); ctx.fill();
+  // 内栏白线 + 外栏棕色
+  ctx.strokeStyle = 'rgba(240,240,240,0.85)'; ctx.lineWidth = 2.5;
+  poly(bandIn); ctx.stroke();
+  ctx.strokeStyle = 'rgba(150,110,60,0.9)'; ctx.lineWidth = 3;
+  poly(bandOut); ctx.stroke();
+
+  // 坡度着色（逐段贴色）与标注
+  if (slopeG > 0) {
+    for (let i = 0; i < bandIn.length - 1; i++) {
+      const sMid = sClamp(cam.s - 8 + i * step + step / 2);
+      const gr = S.gradientAt(sMid, geo, slopeG);
+      if (gr > 0.001) {
+        ctx.fillStyle = 'rgba(255,170,60,0.18)';
+        ctx.beginPath();
+        ctx.moveTo(bandOut[i].x, bandOut[i].y); ctx.lineTo(bandOut[i + 1].x, bandOut[i + 1].y);
+        ctx.lineTo(bandIn[i + 1].x, bandIn[i + 1].y); ctx.lineTo(bandIn[i].x, bandIn[i].y);
+        ctx.closePath(); ctx.fill();
+      } else if (gr < -0.001) {
+        ctx.fillStyle = 'rgba(130,190,255,0.18)';
+        ctx.beginPath();
+        ctx.moveTo(bandOut[i].x, bandOut[i].y); ctx.lineTo(bandOut[i + 1].x, bandOut[i + 1].y);
+        ctx.lineTo(bandIn[i + 1].x, bandIn[i + 1].y); ctx.lineTo(bandIn[i].x, bandIn[i].y);
+        ctx.closePath(); ctx.fill();
+      }
+    }
+    const slopeLabels = [
+      { s: St + B, text: '▲对直上坡 +' + (slopeG * 100).toFixed(1) + '%', color: 'rgba(255,205,120,0.95)' },
+      { s: 2 * St + B, text: '▲左弯上坡 +' + (0.6 * slopeG * 100).toFixed(1) + '%', color: 'rgba(255,205,120,0.95)' },
+      { s: 2 * St + 2 * B, text: '▼终直下坡 -' + (0.4 * slopeG * 100).toFixed(1) + '%', color: 'rgba(165,210,255,0.95)' },
+    ];
+    ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
+    slopeLabels.forEach((lb) => {
+      const q = proj(S.trackPoint(sClamp(lb.s), 22, geo, dir), sClamp(lb.s));
+      if (q.x > 30 && q.x < W - 30 && q.y > 12 && q.y < H) { ctx.fillStyle = lb.color; ctx.fillText(lb.text, q.x, Math.max(14, q.y - 8)); }
+    });
+  }
+
+  // 距离标记（每200m）
+  ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  for (let m = 200; m < L; m += 200) {
+    const q0 = proj(S.trackPoint(m, 0, geo, dir), m);
+    const q1 = proj(S.trackPoint(m, 20, geo, dir), m);
+    if (q0.x < -20 || q0.x > W + 20 || q0.y < -20 || q0.y > H + 20) continue;
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(q0.x, q0.y); ctx.lineTo(q1.x, q1.y); ctx.stroke();
+    const qm = proj(S.trackPoint(m, 23, geo, dir), m);
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.fillText('残' + (L - m), qm.x, qm.y);
+  }
+
+  // 起跑线（虚线）与终点线（黑白格）
+  const st0 = proj(S.trackPoint(0, 0, geo, dir), 0), st1 = proj(S.trackPoint(0, 20, geo, dir), 0);
+  if (st0.x > -10 && st0.x < W + 10) {
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.setLineDash([6, 6]); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(st0.x, st0.y); ctx.lineTo(st1.x, st1.y); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  const fnA = proj(S.trackPoint(L, 0, geo, dir)), fnB = proj(S.trackPoint(L, 20, geo, dir));
+  if (fnA.x > -20 && fnA.x < W + 20) {
+    for (let i = 0; i < 8; i++) {
+      const ta = proj(S.trackPoint(L, i * 2.5, geo, dir), L);
+      const tb = proj(S.trackPoint(L, (i + 1) * 2.5, geo, dir), L);
+      ctx.fillStyle = i % 2 ? '#141414' : '#f0f0f0';
+      ctx.beginPath(); ctx.moveTo(ta.x, ta.y); ctx.lineTo(tb.x, tb.y);
+      ctx.lineTo(tb.x + 2, tb.y + 2); ctx.lineTo(ta.x + 2, ta.y + 2);
+      ctx.closePath(); ctx.fill();
+    }
+  }
+
+  // 弯道编号（行进顺序，s 位置与回向无关）
+  ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(232,201,106,0.9)';
+  [[St, '1弯'], [St + B, '2弯'], [2 * St + B, '3弯'], [2 * St + 2 * B, '4弯']].forEach(([sJ, label]) => {
+    const q = proj(S.trackPoint(sJ, 22, geo, dir), sJ);
+    if (q.x > 24 && q.x < W - 24 && q.y > 10 && q.y < H) ctx.fillText(label, q.x, Math.max(16, q.y - 10));
+  });
+
+  // 马匹（画面外的马堆叠在左缘显示）
+  const sorted = snap.horses.slice().sort((a, b) => b.s - a.s);
+  let offCount = 0;
+  sorted.forEach((h) => {
+    if (h.dnf) return;
+    const q = proj(S.trackPoint(h.s, h.t, geo, dir), h.s);
+    const idx = field.findIndex((f) => f.id === h.id);
+    if (q.x < 14 || q.y < -30 || q.y > H + 30) {
+      const iy = 64 + offCount * 17; offCount++;
+      ctx.fillStyle = capColor(idx);
+      ctx.beginPath(); ctx.arc(11, iy, 6.5, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = numColor(idx); ctx.font = 'bold 8px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(String(idx + 1), 11, iy + 3);
+      ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+      ctx.fillText(h.name, 21, iy + 3);
+      return;
+    }
+    if (q.x > W + 40) return;
+    const xx = q.x, yy = q.y;
+    const cc = capColor(idx), nc = numColor(idx);
+    const hs = Math.max(5.5, 8.5 * q.ps);
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.beginPath(); ctx.arc(xx + 2 * q.ps, yy + 3 * q.ps, hs, 0, Math.PI * 2); ctx.fill();
+    if (h.id === playerId) {
+      ctx.strokeStyle = 'rgba(255,215,0,0.95)'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(xx, yy, hs + 4, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.fillStyle = cc;
+    ctx.beginPath(); ctx.arc(xx, yy, hs, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = nc; ctx.font = 'bold ' + Math.max(8, Math.round(10 * q.ps)) + 'px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(String(idx + 1), xx, yy + 3.5 * q.ps);
+    ctx.font = '10px sans-serif';
+    const tw = ctx.measureText(h.name).width;
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(xx - tw / 2 - 3, yy - hs - 16, tw + 6, 13);
+    ctx.fillStyle = '#fff'; ctx.fillText(h.name, xx, yy - hs - 6);
+    if (h.stage === '失速') { ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('失速', xx, yy + hs + 9); }
+    else if (h.stage === '毅力') { ctx.fillStyle = '#ffb84d'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('毅', xx, yy + hs + 9); }
+  });
+
+  // 小地图（右上角全体图）
+  const mmScale = Math.min(150 / (St + 2 * R), 92 / (2 * R));
+  const mmCx = W - 92, mmCy = 84;
+  const mmx = (x) => mmCx + x * mmScale;
+  const mmy = (y) => mmCy - y * mmScale;
+  const ohw2 = St / 2 + 10, ohh2 = R + 10, ihw2 = St / 2 - 10, ihh2 = R - 10;
+  ctx.fillStyle = 'rgba(10,26,18,0.9)';
+  ctx.beginPath(); ctx.roundRect(mmx(-ohw2) - 4, mmy(ohh2) - 16, 2 * ohw2 * mmScale + 8, 2 * ohh2 * mmScale + 28, 8); ctx.fill();
+  ctx.fillStyle = '#2f7f4a';
+  ctx.beginPath(); ctx.roundRect(mmx(-ohw2), mmy(ohh2), 2 * ohw2 * mmScale, 2 * ohh2 * mmScale, (R + 10) * mmScale); ctx.fill();
+  ctx.fillStyle = '#1d4a2e';
+  ctx.beginPath(); ctx.roundRect(mmx(-ihw2), mmy(ihh2), 2 * ihw2 * mmScale, 2 * ihh2 * mmScale, Math.max(1, (R - 10) * mmScale)); ctx.fill();
+  ctx.font = '9px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.textAlign = 'center';
+  ctx.fillText('全体图', mmCx, mmy(ohh2) - 4);
+  snap.horses.forEach((h) => {
+    if (h.dnf) return;
+    const p = S.trackPoint(h.s, h.t, geo, dir);
+    const idx = field.findIndex((f) => f.id === h.id);
+    ctx.fillStyle = capColor(idx);
+    ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), h.id === playerId ? 3.5 : 2.5, 0, Math.PI * 2); ctx.fill();
+    if (h.id === playerId) {
+      ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), 5, 0, Math.PI * 2); ctx.stroke();
+    }
+  });
+
+  // 阶段条
+  const p = snap.leaderProgress;
+  document.querySelectorAll('#phaseBar .ph').forEach((el) => {
+    const k = el.dataset.k;
+    const pd = S.PHASE_DEFS.find((pp) => pp.key === k);
+    el.classList.toggle('on', p >= pd.from && p < pd.to);
+  });
+
+  // 侧栏（节流）
+  if (!lastUiTs || ts - lastUiTs > 120 || race.race.finished) {
+    lastUiTs = ts;
+    const lb = $('leaderboard');
+    lb.innerHTML = sorted.map((h, i) => {
+      const idx = field.findIndex((f) => f.id === h.id);
+      return '<div class="lb-row' + (h.id === playerId ? ' pl' : '') + '">' +
+        '<span class="lb-rank">' + (i + 1) + '</span>' +
+        '<span class="cap-mini" style="background:' + capColor(idx) + ';color:' + numColor(idx) + '">' + (idx + 1) + '</span>' +
+        '<span class="lb-name">' + h.name + '</span>' +
+        '<span class="lb-gap">' + (i === 0 ? '先頭' : '+' + (sorted[0].s - h.s).toFixed(1) + 'm') + '</span></div>';
+    }).join('') +
+    (snap.horses.filter((h) => h.dnf).length ? '<div class="note">已中止：' + snap.horses.filter((h) => h.dnf).map((h) => h.name).join('、') + '</div>' : '');
+
+    const betH = bet.horseId ? field.find((f) => f.id === bet.horseId) : null;
+    $('distRemain').textContent = '残り ' + Math.max(0, Math.ceil(L - (sorted[0] ? sorted[0].s : 0))) + 'm · ' +
+      (leaderH ? (leaderH.v * 3.6).toFixed(0) + 'km/h' : '') +
+      (betH ? ' · 🎫 ' + betH.name + ' ' + bet.amount + '万' : '');
+
+    const feed = $('feed');
+    feed.innerHTML = snap.events.map((e) => '<div class="ev"><span class="t">' + fmtTime(e.t) + '</span>' + e.text + '</div>').join('');
+
+    const ph = snap.horses.find((h) => h.id === playerId);
+    if (ph) {
+      $('playerInfo').innerHTML =
+        '<div style="font-weight:700">' + ph.name + ' <span class="stage-badge stage-' + ph.stage + '">' +
+        (ph.stage === '耐力' ? '耐力阶段' : ph.stage === '毅力' ? '毅力阶段' : '失速') + '</span>' +
+        (ph.action ? ' <span class="chip">' + ph.action + '</span>' : '') + '</div>' +
+        '<div style="font-size:12px;color:var(--dim);margin-top:4px">当前 ' + ph.v.toFixed(1) + ' m/s · ' + (ph.v * 3.6).toFixed(1) + ' km/h' +
+        (ph.blocked ? ' · ⚠ 被马群挡住' : '') + '</div>' +
+        (function () {
+          const g2 = S.gradientAt(ph.s, geo, slopeG);
+          const sec2 = sectionNameAt(ph.s, geo);
+          const slopeTxt = g2 > 0.001 ? '▲上坡+' + (g2 * 100).toFixed(1) + '%' : g2 < -0.001 ? '▼下坡-' + (Math.abs(g2) * 100).toFixed(1) + '%' : '平坦';
+          return '<div style="font-size:12px;color:var(--dim)">路段：' + sec2 + ' · ' + slopeTxt + (dir === '左回' ? ' · 左回' : ' · 右回') + '</div>';
+        })() +
+        '<div style="font-size:12px;color:var(--dim)">耐力</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.stamina / ph.staminaMax * 100)) + '%;background:#59c98e"></div></div>' +
+        '<div style="font-size:12px;color:var(--dim)">毅力</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.guts / ph.gutsMax * 100)) + '%;background:#e8c96a"></div></div>';
+    }
+
+    if ($('debugPanel').style.display !== 'none') {
+      $('debugTable').innerHTML = '<thead><tr><th>马</th><th>速度</th><th>爆发</th><th>出闸</th><th>耐力</th><th>力量</th><th>毅力</th><th>体格</th><th>斗志</th><th>疲劳</th><th>跑法</th><th>骑手</th><th>实时v</th><th>阶段</th></tr></thead><tbody>' +
+        field.map((f) => {
+          const hs = snap.horses.find((hh) => hh.id === f.id);
+          return '<tr><td>' + f.name + '</td>' +
+            ['速度','爆发力','出闸能力','耐力','力量','毅力','体格'].map((k) => '<td>' + f.stats[k] + '</td>').join('') +
+            '<td>' + f['斗志'] + '</td><td>' + f['疲劳'] + '</td>' +
+            '<td>' + f.style + '</td><td>' + f.jockeyGrade + '</td>' +
+            '<td>' + (hs ? hs.v.toFixed(1) : '-') + '</td><td>' + (hs ? hs.stage : '-') + '</td></tr>';
+        }).join('') + '</tbody>';
+    }
+  }
+}
+
+/* ---------- 赛后渲染 ---------- */
+function renderResult() {
+  const R = race.race;
+  const winner = R.order[0];
+  const banner = $('resultBanner');
+  const isCareer = mode === 'career' && career.watchInfo;
+  const fld = isCareer ? career.watchInfo.race.field : field;
+  const oddsSrc = isCareer ? career.watchInfo.race.odds : oddsMap;
+  const myId = playerId;
+  // 生涯模式：观看场次结算（马群战绩累积 + 该场注单 + 情报验证）
+  const betMarkIds = isCareer && career.weekBets[career.watchInfo.race.id]
+    ? career.weekBets[career.watchInfo.race.id].ids
+    : (bet.horseId ? [bet.horseId] : []);
+  let careerIntelLine = '';
+  if (isCareer) {
+    S.applyRaceForm(career.roster, career.watchInfo.race.field, R.order, career.weekNum,
+      S.mulberry32(((career.weekNum * 97 + career.watchInfo.race.rngSeed) >>> 0)), career.breedingStock,
+      career.watchInfo.race.name, career.watchInfo.race.tier, career.watchInfo.race.dist, career.watchInfo.race.prize);
+    settleRaceBets(career.watchInfo.race, R.order.map((H) => H.id));
+    const il = annotateIntel(career.watchInfo.race.id);
+    if (il.length) careerIntelLine = '<div class="info">' + il.join('<br>') + '</div>';
+  }
+  // 单场模式注单结算
+  if (mode !== 'career' && bet.horseId) settleBetWith(oddsMap, field, winner);
+  let betLine = '';
+  if (betResult) {
+    betLine = '<div class="info" style="color:' + (betResult.text.indexOf('命中') !== -1 ? 'var(--gold)' : 'var(--red)') + ';font-weight:700">' + betResult.text + '</div>';
+    betResult = null;
+  }
+  let playerLine;
+  if (isCareer) {
+    playerLine = '本场为观赛';
+  } else {
+    const ph = field.find((h) => h.id === playerId);
+    const pRes = R.horses.find((H) => H.id === playerId);
+    playerLine = ph && pRes && pRes.place
+      ? '你的马「' + ph.name + '」第 ' + pRes.place + ' 着' + (pRes.place === 1 ? ' 🏆' : '（落后 ' + (Math.max(0, pRes.gapAtWin || 0) / 2.4).toFixed(1) + ' 马身）')
+      : '你的马「' + (ph ? ph.name : '—') + '」竞走中止';
+  }
+  banner.innerHTML = winner
+    ? '<div class="win">🏆 ' + winner.name + ' 胜出！</div><div class="info">タイム ' + fmtTime(R.winnerTime) + ' · ' + R.length + 'm · ' + R.surface + ' · ' + R.state + ' · ' + R.dir + ' · ' + R.profile + '</div><div class="info">' + playerLine + '</div>' +
+      careerIntelLine + betLine +
+      '<div class="info">💰 所持金 ' + fmtWan(bankroll) + '</div>'
+    : '<div>比赛结束</div>';
+  updateBetUI();
+  $('btnAgain').style.display = isCareer ? 'none' : '';
+  $('btnBack').textContent = isCareer ? '◀ 回到周界面' : '◀ 返回赛前';
+
+  const tb = $('resultTable');
+  let html = '';
+  R.order.forEach((H) => {
+    const idx = fld.findIndex((f) => f.id === H.id);
+    html += '<tr' + (H.id === myId ? ' class="is-player"' : '') + '>' +
+      '<td>' + H.place + '着</td>' +
+      '<td class="name"><span class="cap-mini" style="background:' + capColor(idx) + ';color:' + numColor(idx) + '">' + (idx + 1) + '</span> ' + H.name + (H.id === myId ? ' ⭐' : '') + (betMarkIds.indexOf(H.id) !== -1 ? ' 🎫' : '') + '</td>' +
+      '<td>' + H.jockey + '</td>' +
+      '<td>' + fmtTime(H.time) + '</td>' +
+      '<td>' + (H.place === 1 ? '—' : (Math.max(0, H.gapAtWin || 0) / 2.4).toFixed(1) + ' 马身') + '</td>' +
+      '<td class="odds">' + (oddsSrc[H.id] ? oddsSrc[H.id]['赔率'] : '-') + '</td></tr>';
+  });
+  R.dnf.forEach((H) => {
+    const idx = fld.findIndex((f) => f.id === H.id);
+    html += '<tr' + (H.id === myId ? ' class="is-player"' : '') + '>' +
+      '<td>中止</td><td class="name">' + H.name + '</td><td>' + H.jockey + '</td><td>—</td><td>—</td><td>—</td></tr>';
+  });
+  tb.innerHTML = html;
+
+  const repLines = isCareer
+    ? career.intel.filter((l) => l.checked && l.raceId === career.watchInfo.race.id).map((l) => ({
+        source: l.num + '番 ' + l.horseName, kind: 'stat',
+        text: l.text, truthText: l.truthText, correct: l.correct, truth: Math.round(l.truth),
+      }))
+    : (report ? report.lines : []);
+  const rc = $('reportCompare');
+  rc.innerHTML = repLines.map((l) => {
+    let judge;
+    if (l.kind === 'stat') {
+      judge = l.correct ? '<span class="judge-ok">✓ 准确</span>' : '<span class="judge-bad">✗ 误差（真实 ' + l.truth + '）</span>';
+    } else if (l.kind === 'cat') {
+      judge = l.correct ? '<span class="judge-ok">✓ 判断正确</span>' : '<span class="judge-bad">✗ 判断错误</span>';
+    } else {
+      judge = l.correct ? '<span class="judge-ok">✓ 准确</span>' : '<span class="judge-bad">✗ 误差（真实疲劳 ' + l.truth + '）</span>';
+    }
+    return '<tr><td>' + l.source + '</td><td>' + l.text + '</td><td>' + l.truthText + '</td><td>' + judge + '</td></tr>';
+  }).join('');
+
+  const st = $('statsTable');
+  st.innerHTML = fld.map((f) => {
+    const idx = fld.findIndex((x) => x.id === f.id);
+    const isW = winner && winner.id === f.id;
+    const cls = f.id === myId ? ' class="is-player"' : (isW ? ' style="background:rgba(89,201,142,0.08)"' : '');
+    return '<tr' + cls + '><td class="name">' + f.name + (f.id === myId ? ' ⭐' : '') + (isW ? ' 🏆' : '') + '</td>' +
+      ['速度','爆发力','出闸能力','耐力','力量','毅力','智力','体格'].map((k) => '<td>' + Math.round(f.stats[k]) + '</td>').join('') +
+      '<td>' + f['斗志'] + '</td><td>' + Math.round(f['疲劳']) + '</td>' +
+      '<td><span class="badge badge-' + f.style + '">' + f.style + '</span></td>' +
+      '<td>' + f.jockeyGrade + '</td>' +
+      '<td>' + f.surface + (f.special === '左右皆可' ? '' : '/' + f.special) + '</td></tr>';
+  }).join('');
+
+  drawChart();
+}
+
+function drawChart() {
+  const cv = $('chartCanvas');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#14211b'; ctx.fillRect(0, 0, W, H);
+  const padL = 34, padR = 90, padT = 16, padB = 24;
+  const pw = W - padL - padR, ph = H - padT - padB;
+  const hist = race.race.posHistory;
+  const fld = (mode === 'career' && career.watchInfo) ? career.watchInfo.race.field : field;
+  const n = fld.length;
+  ctx.strokeStyle = '#2c4636';
+  for (let i = 1; i <= n; i++) {
+    const yy = padT + (i - 0.5) / n * ph;
+    ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(padL + pw, yy); ctx.stroke();
+    ctx.fillStyle = '#7f9c8b'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(i + '位', padL - 6, yy + 3);
+  }
+  fld.forEach((f) => {
+    const idx = fld.findIndex((x) => x.id === f.id);
+    const cc = capColor(idx);
+    ctx.strokeStyle = cc;
+    ctx.lineWidth = f.id === playerId ? 3 : 1.4;
+    ctx.beginPath();
+    let started = false;
+    hist.forEach((e) => {
+      const rank = e.order.indexOf(f.id) + 1;
+      if (rank === 0) return;
+      const px = padL + e.pct / 100 * pw;
+      const py = padT + (rank - 0.5) / n * ph;
+      if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
+    });
+    const pRes = race.race.horses.find((H) => H.id === f.id);
+    const finalRank = pRes && pRes.place ? pRes.place : (hist.length ? hist[hist.length - 1].order.indexOf(f.id) + 1 : 0);
+    if (started && finalRank > 0) ctx.lineTo(padL + pw, padT + (finalRank - 0.5) / n * ph);
+    ctx.stroke();
+    if (finalRank > 0) {
+      ctx.fillStyle = cc; ctx.textAlign = 'left'; ctx.font = '11px sans-serif';
+      ctx.fillText((finalRank) + ' ' + f.name, padL + pw + 6, padT + (finalRank - 0.5) / n * ph + 4);
+    }
+  });
+  ctx.fillStyle = '#7f9c8b'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  for (let p = 0; p <= 100; p += 25) ctx.fillText(p + '%', padL + p / 100 * pw, H - 8);
+}
+
+/* ---------- 自检模式 ---------- */
+function runAutotest() {
+  const banner = $('autotest');
+  banner.style.display = 'block';
+  try {
+    const out = [];
+    for (let s = 1; s <= 3; s++) {
+      const f = S.makeField(S.mulberry32(s * 7919), { n: 8 });
+      const r = S.createRace(f, { length: 2000, rng: S.mulberry32(s * 104729) });
+      let guard = 0;
+      while (!r.race.finished && guard++ < 300000) r.step(1 / 30);
+      out.push({ w: r.race.order[0] && r.race.order[0].name, t: r.race.winnerTime, fin: r.race.order.length, dnf: r.race.dnf.length });
+    }
+    banner.textContent = '✅ 引擎自检通过：3 场全部完赛 · 冠军用时 ' +
+      out.map((o) => (o.t ? o.t.toFixed(1) + 's' : '?' )).join(' / ') +
+      ' · 完赛数 ' + out.map((o) => o.fin).join('/') + ' · 中止 ' + out.map((o) => o.dnf).join('/');
+    seed = 186; genField(seed);
+    race = S.createRace(field, { length: 2000, styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
+    let g = 0;
+    while (!race.race.finished && g++ < 300000) race.step(1 / 30);
+    showResult();
+  } catch (e) {
+    banner.textContent = '❌ 自检失败: ' + (e && e.message);
+    console.error(e);
+  }
+}
+
+/* ---------- 生涯模式（赌马） ---------- */
+function fmtDate() {
+  const d = career.date;
+  const month = Math.floor((d.week - 1) / 4) + 1;
+  const wim = ((d.week - 1) % 4) + 1;
+  return d.year + '年' + month + '月 第' + wim + '周';
+}
+function loadStats() {
+  try {
+    const v = localStorage.getItem('saima-stats');
+    if (v) { const s = JSON.parse(v); if (s && typeof s.bets === 'number') return s; }
+  } catch (e) {}
+  return { bets: 0, hits: 0, profit: 0 };
+}
+function saveStats() {
+  try { localStorage.setItem('saima-stats', JSON.stringify(career.stats)); } catch (e) {}
+}
+function newCareer() {
+  // 开局资金保护：破产残留(0元)时重置为50万
+  if (bankroll < 5) { bankroll = 50; saveBankroll(); }
+  const rng = S.mulberry32(Math.floor(Math.random() * 1e9));
+  const stock = S.makeBaseBreedingStock(rng);
+  career = {
+    roster: S.makeRoster(rng, stock),
+    breedingStock: stock,
+    date: { year: 1968, week: 22 }, weekNum: 1,
+    aiRaces: [], weekBets: {}, watchedIds: {}, betTypes: {},
+    watchInfo: null, recap: null, debug: false,
+    intel: [],
+    stats: loadStats(),
+  };
+  careerStaff = S.makeStaff(rng);
+  genWeek();
+  show('career');
+}
+function genWeek() {
+  const rng = S.mulberry32(((career.date.year * 53 + career.date.week) * 7919 + 7) >>> 0);
+  career.aiRaces = S.weekRaceSpecs(career.date.week).map((spec, i) =>
+    S.makeScheduledRace(rng, career.roster, career.weekNum, career.weekNum * 20 + i, spec));
+  career.intel = S.makeWeekIntel(career.aiRaces, careerStaff, rng);
+  career.weekBets = {};
+  career.watchedIds = {};
+  career.watchInfo = null;
+  renderCareer();
+}
+function buildRaceRow(raceId, race) {
+  const watched = !!career.watchedIds[raceId];
+  const b = career.weekBets[raceId];
+  const top3 = race.field.map((f, i) => ({ f, i, pop: race.odds[f.id] ? race.odds[f.id]['人气'] : 99 })).sort((a, b2) => a.pop - b2.pop).slice(0, 3);
+  const info = '<div class="rr-info"><b>' + race.name + '</b>（' + race.tier + '）' + race.dist + 'm ' + race.surface + race.state + ' ' + race.dir + ' ' + race.profile + ' · 1着' + race.prize + '万</div>' +
+    '<div class="rr-pop">人气：' + top3.map((x) => (x.i + 1) + '番 ' + x.f.name + ' ' + (race.odds[x.f.id] ? race.odds[x.f.id]['赔率'] : '-') + '倍').join(' · ') + '</div>';
+  const horseBtns = race.field.map((f, i) => {
+    const rh = career.roster.find((x) => x.id === f.id);
+    return '<button class="hh-btn" data-horse="' + f.id + '">' + (i + 1) + '番 ' + f.name + '（' + (rh ? rh.starts + '战' + rh.wins + '胜' : '-') + '）</button>';
+  }).join('');
+  const betType = career.betTypes[raceId] || '単勝';
+  const need = S.BET_NEED[betType];
+  const orderHints = betType === '馬単' || betType === '三連単';
+  const optsFor = (prefix) => race.field.map((f, i) => '<option value="' + f.id + '">' + (prefix || '') + (i + 1) + '番 ' + f.name + ' ' + (race.odds[f.id] ? race.odds[f.id]['赔率'] : '-') + '倍</option>').join('');
+  let act = '';
+  if (watched) {
+    act = '<span class="note">✓ 已观看' + (b ? ' · 🎫注单已结算' : '') + '</span>';
+  } else {
+    act = '<select class="rr-bt" data-race="' + raceId + '">' + S.BET_TYPES.map((t) => '<option' + (t === betType ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>' +
+      '<select class="rr-h1" data-race="' + raceId + '">' + optsFor(orderHints ? '1着 ' : '') + '</select>' +
+      (need >= 2 ? '<select class="rr-h2" data-race="' + raceId + '">' + optsFor(orderHints ? '2着 ' : '') + '</select>' : '') +
+      (need >= 3 ? '<select class="rr-h3" data-race="' + raceId + '">' + optsFor(orderHints ? '3着 ' : '') + '</select>' : '') +
+      '<button class="rr-bet" data-race="' + raceId + '">🎫下注</button>' +
+      '<button class="rr-watch" data-race="' + raceId + '">👁观看</button>' +
+      '<button class="rr-horses-toggle" data-race="' + raceId + '">🐎 参赛马</button>' +
+      (b ? '<span class="note">已下注 ' + b.type + ' ' + b.amount + '万 @ ' + b.ids.map((id) => (race.field.find((f) => f.id === id) || {}).name || '?').join(b.type === '馬単' || b.type === '三連単' ? '→' : '・') + '（赔率' + b.odds + '）</span>' : '');
+  }
+  return '<div class="race-row"><div>' + info + '</div><div class="rr-act">' + act + '</div><div class="rr-horse-list" id="rr-horses-' + raceId + '" style="display:none">' + horseBtns + '</div></div>';
+}
+function renderCareer() {
+  if (!career) return;
+  $('careerDate').textContent = '📅 ' + fmtDate() + ' · 生涯第 ' + career.weekNum + ' 周';
+  $('statsCard').innerHTML =
+    '<div style="font-size:20px;font-weight:700;color:var(--gold)">💰 ' + fmtWan(bankroll) + '</div>' +
+    '<div class="note" style="margin-top:6px">累计下注 ' + career.stats.bets + ' 笔 · 命中 ' + career.stats.hits + ' 笔' +
+    (career.stats.bets ? '（命中率 ' + Math.round(career.stats.hits / career.stats.bets * 100) + '%）' : '') + '</div>' +
+    '<div class="note" style="margin-top:4px">累计盈亏 <b style="color:' + (career.stats.profit >= 0 ? 'var(--green)' : 'var(--red)') + '">' + (career.stats.profit >= 0 ? '+' : '') + fmtWan(career.stats.profit) + '</b></div>' +
+    '<div class="note" style="margin-top:4px">🏠 每周生活费 -1万（下一周扣除）</div>' +
+    (bankroll <= 0 ? '<div style="margin-top:6px;color:var(--red);font-weight:700">💸 已破产！</div>' : '') +
+    '<button id="btnResetBank2" style="margin-top:8px">重置资金（50万）</button>';
+  const rb2 = $('btnResetBank2');
+  if (rb2) rb2.addEventListener('click', () => {
+    Object.keys(career.weekBets).forEach((rid) => { bankroll += career.weekBets[rid].amount; });
+    career.weekBets = {};
+    bankroll = 50; saveBankroll(); renderCareer();
+  });
+  $('careerStaffChips').innerHTML =
+    '<span class="chip">牧场长 · 相马眼 ' + careerStaff['牧场长']['相马眼'] + ' 级</span>' +
+    '<span class="chip">调教师 · 洞察力 ' + careerStaff['调教师']['洞察力'] + ' 级</span>';
+  $('careerReport').innerHTML = career.intel.map((l) =>
+    '<div class="rline"><span class="rsrc">' + l.num + '番 ' + l.horseName + '</span>' +
+    '<span class="rtxt">' + l.raceName + ' · ' + l.text + '</span>' +
+    (career.debug ? '<span class="rgrade">🐞 真实' + l.stat + ' ' + Math.round(l.truth) + '</span>' : '') +
+    '</div>').join('') || '<div class="note">本周暂无情报</div>';
+  const rows = career.aiRaces.map((r) => buildRaceRow(r.id, r));
+  $('programList').innerHTML = rows.join('');
+  document.querySelectorAll('.rr-bt').forEach((sel) => sel.addEventListener('change', () => {
+    career.betTypes[sel.dataset.race] = sel.value;
+    renderCareer();
+  }));
+  document.querySelectorAll('.rr-bet').forEach((btn) => btn.addEventListener('click', () => {
+    betOnRace(btn.dataset.race);
+  }));
+  document.querySelectorAll('.rr-watch').forEach((btn) => btn.addEventListener('click', () => {
+    const raceId = btn.dataset.race;
+    const r = career.aiRaces.find((x) => x.id === raceId);
+    if (r) watchAiRace(r);
+  }));
+  document.querySelectorAll('.rr-horses-toggle').forEach((btn) => btn.addEventListener('click', () => {
+    const el = $('rr-horses-' + btn.dataset.race);
+    if (el) el.style.display = el.style.display === 'none' ? '' : 'none';
+  }));
+  document.querySelectorAll('.hh-btn').forEach((btn) => btn.addEventListener('click', () => {
+    openHorseDetail(btn.dataset.horse);
+  }));
+  const rp = $('recapDetail');
+  if (career.recap) {
+    let txt = '';
+    txt += '🏠 上周生活费 -1万';
+    if (career.recap.results && career.recap.results.length) txt += '<br>' + career.recap.results.join('<br>');
+    if (career.recap.intelLines && career.recap.intelLines.length) txt += '<br>' + career.recap.intelLines.join('<br>');
+    if (career.recap.betLines && career.recap.betLines.length) txt += '<br>' + career.recap.betLines.join('<br>');
+    if (career.recap.retireLines && career.recap.retireLines.length) txt += '<br><span style="color:var(--red)">' + career.recap.retireLines.join('<br>') + '</span>';
+    if (career.recap.broke) txt += '<br><span style="color:var(--red);font-weight:700">💸 你破产了！点击"重置资金"重新开始</span>';
+    rp.innerHTML = txt;
+  } else {
+    rp.innerHTML = '（尚未开始）';
+  }
+  updateBetUI();
+}
+function betOnRace(raceId) {
+  const race = career.aiRaces.find((r) => r.id === raceId);
+  if (!race) return;
+  const type = career.betTypes[raceId] || '単勝';
+  const need = S.BET_NEED[type];
+  const ids = [];
+  for (let i = 0; i < need; i++) {
+    const sel = document.querySelector('.rr-h' + (i + 1) + '[data-race="' + raceId + '"]');
+    if (sel && sel.value) ids.push(sel.value);
+  }
+  if (ids.length !== need) return;
+  const amt = parseInt($('betAmountSel').value, 10);
+  if (!(amt > 0)) return;
+  if (career.weekBets[raceId]) bankroll += career.weekBets[raceId].amount;
+  const a = Math.min(amt, bankroll);
+  if (a <= 0) return;
+  bankroll -= a;
+  const odds = S.calcBetOdds(type, ids.map((id) => (race.odds[id] ? race.odds[id]['赔率'] : 5)));
+  career.weekBets[raceId] = { type, ids, amount: a, odds };
+  saveBankroll(); renderCareer();
+}
+function settleRaceBets(race, orderIds) {
+  betResult = null;
+  const b = career.weekBets[race.id];
+  if (!b) return;
+  delete career.weekBets[race.id];
+  career.stats.bets++;
+  const names = b.ids.map((id) => (race.field.find((f) => f.id === id) || {}).name || '?');
+  const sep = b.type === '馬単' || b.type === '三連単' ? '→' : '・';
+  const combo = b.type + ' ' + names.join(sep);
+  if (S.betTypeHit(b.type, b.ids, orderIds)) {
+    const pay = b.amount * b.odds;
+    bankroll += pay;
+    career.stats.hits++;
+    career.stats.profit += pay - b.amount;
+    betResult = { text: '🎫「' + race.name + '」' + combo + ' ' + b.amount + '万 命中！赢得 ' + pay.toFixed(1) + '万（赔率 ' + b.odds + '）' };
+  } else {
+    career.stats.profit -= b.amount;
+    betResult = { text: '🎫「' + race.name + '」' + combo + ' ' + b.amount + '万 落空，损失 ' + b.amount + '万' };
+  }
+  saveBankroll(); saveStats();
+}
+function annotateIntel(raceId) {
+  const lines = [];
+  career.intel.forEach((l) => {
+    if (l.raceId === raceId && !l.checked) {
+      l.checked = true;
+      lines.push('🔍 情报验证：「' + l.num + '番 ' + l.horseName + ' ' + l.text + '」→ ' +
+        (l.correct ? '<span style="color:var(--green)">✓ 准确</span>' : '<span style="color:var(--red)">✗ 误差（真实' + l.stat + ' ' + Math.round(l.truth) + '）</span>'));
+    }
+  });
+  return lines;
+}
+function simulateRace(race) {
+  const seedVal = race.rngSeed !== undefined ? race.rngSeed : (career.weekNum * 7919 + raceCount);
+  const sim = S.createRace(race.field, {
+    length: race.dist, surface: race.surface, state: race.state, dir: race.dir, profile: race.profile,
+    styleCoefs: 'balanced',
+    rng: S.mulberry32(seedVal >>> 0),
+  });
+  let g = 0;
+  while (!sim.race.finished && g++ < 400000) sim.step(1 / 30);
+  return sim;
+}
+function watchAiRace(raceCard) {
+  career.watchInfo = { race: raceCard };
+  career.watchedIds[raceCard.id] = true;
+  mode = 'career';
+  raceCount++;
+  race = S.createRace(raceCard.field, {
+    length: raceCard.dist, surface: raceCard.surface, state: raceCard.state, dir: raceCard.dir, profile: raceCard.profile,
+    styleCoefs: 'balanced',
+    rng: S.mulberry32(((raceCard.rngSeed !== undefined ? raceCard.rngSeed : 0) + raceCount) >>> 0),
+  });
+  paused = false; speedMult = 1; acc = 0; lastTs = 0; cam = null;
+  $('btnPause').textContent = '⏸ 暂停';
+  document.querySelectorAll('.speed').forEach((b) => b.classList.toggle('on', +b.dataset.v === 1));
+  $('debugPanel').style.display = 'none';
+  if (rafId) cancelAnimationFrame(rafId);
+  show('race');
+  rafId = requestAnimationFrame(loop);
+}
+function advanceWeek() {
+  if (!career) return;
+  const results = [];
+  const betLines = [];
+  const intelLines = [];
+  const retireLines = [];
+  const toSettle = career.aiRaces.filter((r) => !career.watchedIds[r.id]);
+  for (const r of toSettle) {
+    const sim = simulateRace(r);
+    const R = sim.race;
+    const w = R.order[0];
+    const revs = S.applyRaceForm(career.roster, r.field, R.order, career.weekNum,
+      S.mulberry32(((career.weekNum * 97 + r.rngSeed) >>> 0)), career.breedingStock, r.name, r.tier, r.dist, r.prize);
+    retireLines.push(...revs.map((e) => e.text));
+    results.push(r.name + '：' + (w ? w.name + ' 勝（' + w.style + '）' : '—'));
+    settleRaceBets(r, R.order.map((H) => H.id));
+    if (betResult) { betLines.push(betResult.text); betResult = null; }
+    intelLines.push(...annotateIntel(r.id));
+  }
+  // 每周生活费
+  bankroll = Math.max(0, bankroll - 1);
+  const broke = bankroll <= 0;
+  career.weekNum++;
+  career.date.week++;
+  S.rosterTick(career.roster);
+  if (career.date.week > 52) {
+    career.date.week = 1;
+    career.date.year++;
+    const aevs = S.ageRoster(career.roster, S.mulberry32(career.date.year * 31), career.breedingStock);
+    retireLines.push(...aevs.map((e) => e.text));
+  }
+  career.recap = { results, betLines, intelLines, retireLines, broke };
+  saveBankroll();
+  genWeek();
+  showWeeklyNews();
+}
+/* ---------- 赛马业周报 ---------- */
+const NEWS_FLAVOR = [
+  '竞马杂志公布最新马匹排行榜，引发马迷热议',
+  '某赛马场宣布下年度上调重赏奖金',
+  '骑手学校举行新生入学仪式',
+  '马匹运输新规出台，跨区域远征更加规范',
+  '赛马振兴协会讨论夜场赛马可行性',
+  '马具工房推出新型轻量化鞍具',
+];
+function showWeeklyNews() {
+  if (!career) return;
+  const lines = [];
+  if (career.recap && career.recap.results) {
+    career.recap.results.forEach((r) => {
+      if (r.indexOf('G') !== -1 || r.indexOf('表列') !== -1) lines.push('🏆 ' + r);
+    });
+  }
+  if (career.recap && career.recap.retireLines && career.recap.retireLines.length) {
+    lines.push(...career.recap.retireLines);
+  }
+  const stars = career.roster.filter((h) => !h.retired && h.starts >= 5 && h.wins / h.starts >= 0.5).slice(0, 2);
+  stars.forEach((h) => lines.push('⭐ 注目马：' + h.name + '（' + h.starts + '战' + h.wins + '胜' + (h.g1 ? ' · G1 ' + h.g1 + '胜' : '') + '）'));
+  if (career.date.week === 1) lines.push('🌟 新一批2岁马已入厩，将于6月的新马赛出道');
+  if (career.date.week === 22) lines.push('🌟 2岁马出道季开始！本周末新马赛开锣');
+  const rng = S.mulberry32((career.weekNum * 131) >>> 0);
+  lines.push('📌 ' + NEWS_FLAVOR[Math.floor(rng() * NEWS_FLAVOR.length)]);
+  $('newsBody').innerHTML = lines.map((l) => '<div class="rline"><span class="rtxt">' + l + '</span></div>').join('') || '<div class="note">本周无要闻</div>';
+  $('newsModal').style.display = '';
+}
+
+/* ---------- 马匹档案 ---------- */
+function pedCell(name, rec) {
+  if (!rec) return '<div>' + (name || '—') + '</div>';
+  return '<div>' + (name || rec.name || '—') + '<div class="note">' + (rec.sex === '牡' ? '牡' : '牝') + ' · ' + (rec.starts || 0) + '战' + (rec.wins || 0) + '胜' + (rec.g1 ? ' · G1 ' + rec.g1 + '胜' : '') + '</div></div>';
+}
+function openHorseDetail(hid) {
+  const rh = career.roster.find((x) => x.id === hid);
+  if (!rh) return;
+  const ped3 = (name, rec) => {
+    if (!rec) return name || '—';
+    return name + '（' + (rec.starts || 0) + '战' + (rec.wins || 0) + '胜' + (rec.g1 ? ' G1' + rec.g1 + '胜' : '') + '）';
+  };
+  const gpRow = [
+    ped3(rh.sireRec && rh.sireRec.sireName, rh.sireRec && rh.sireRec.sireRec),
+    ped3(rh.sireRec && rh.sireRec.damName, rh.sireRec && rh.sireRec.damRec),
+    ped3(rh.damRec && rh.damRec.sireName, rh.damRec && rh.damRec.sireRec),
+    ped3(rh.damRec && rh.damRec.damName, rh.damRec && rh.damRec.damRec),
+  ].join(' · ');
+  const ped = '<table style="margin-top:4px"><thead><tr><th style="width:50%">父</th><th>母</th></tr></thead><tbody><tr><td>' + pedCell(rh.sireName, rh.sireRec) + '</td><td>' + pedCell(rh.damName, rh.damRec) + '</td></tr></tbody></table>' +
+    '<div class="note" style="margin-top:4px">祖父辈：' + gpRow + '</div>';
+  const hist = rh.history && rh.history.length
+    ? '<table style="margin-top:6px"><thead><tr><th>周</th><th>赛事</th><th>等级</th><th>距离</th><th>着顺</th></tr></thead><tbody>' +
+      rh.history.slice(-25).map((x) => '<tr><td>' + x.week + '</td><td>' + x.race + '</td><td>' + x.tier + '</td><td>' + x.dist + 'm</td><td>' + x.place + '着</td></tr>').join('') + '</tbody></table>'
+    : '<div class="note">尚无出赛记录（新马）</div>';
+  $('horseDetailBody').innerHTML =
+    '<h2>🐎 ' + rh.name + '</h2>' +
+    '<div class="note">' + rh.sex + ' · ' + rh.coat + ' · ' + rh.age + '岁（' + (career.date.year - rh.age) + '年生） · ' + rh.style + ' · 骑手' + rh.jockeyGrade + '</div>' +
+    '<div class="note">马主 ' + (rh.owner || '—') + ' · ' + (rh.trainer || '—') + '</div>' +
+    '<div class="note">' + rh.starts + '戦' + rh.wins + '勝' + (rh.g1 ? '（G1 ' + rh.g1 + '勝）' : '') + (rh.bestTier ? ' · 最高 ' + rh.bestTier : '') + ' · 生涯赏金 ' + (rh.earnings || 0) + '万' +
+    (rh.retired ? ' · <span style="color:var(--red)">已退役' + (rh.retireReason ? '（' + rh.retireReason + '）' : '') + '</span>' : '') + '</div>' +
+    '<h3 style="margin-top:10px">血统表</h3>' + ped +
+    '<h3 style="margin-top:10px">历史战绩（近25场）</h3>' + hist;
+  $('horseDetail').style.display = '';
+}
+function switchMode(m) {
+  if (bet.horseId) { bankroll += bet.amount; bet = emptyBet(); saveBankroll(); }
+  mode = m;
+  $('btnModeCareer').classList.toggle('on', m === 'career');
+  $('btnModeSingle').classList.toggle('on', m === 'single');
+  $('btnModeBreed').classList.toggle('on', m === 'breed');
+  if (m === 'career') {
+    if (!career) newCareer();
+    else { renderCareer(); show('career'); }
+  } else if (m === 'breed') {
+    if (!career) { newCareer(); show('breeding'); renderBreeding(); }
+    else { renderBreeding(); show('breeding'); }
+  } else {
+    showSetup();
+  }
+}
+
+/* ---------- 繁殖模拟 ---------- */
+let breedState = { sireId: null, damId: null, foal: null };
+function renderBreeding() {
+  if (!career) return;
+  const males = career.breedingStock.filter((h) => h.sex === '牡').sort((a, b) => (b.g1 || 0) - (a.g1 || 0) || (b.wins || 0) - (a.wins || 0));
+  const females = career.breedingStock.filter((h) => h.sex === '牝').sort((a, b) => (b.g1 || 0) - (a.g1 || 0) || (b.wins || 0) - (a.wins || 0));
+  if (!breedState.sireId) breedState.sireId = males[0] ? males[0].id : null;
+  if (!breedState.damId) breedState.damId = females[0] ? females[0].id : null;
+  $('sireSel').innerHTML = males.map((h) => '<option value="' + h.id + '"' + (h.id === breedState.sireId ? ' selected' : '') + '>' + h.name + '（' + h.bestTier + ' · ' + h.starts + '战' + h.wins + '胜' + (h.g1 ? ' · G1' + h.g1 : '') + '）</option>').join('');
+  $('damSel').innerHTML = females.map((h) => '<option value="' + h.id + '"' + (h.id === breedState.damId ? ' selected' : '') + '>' + h.name + '（' + h.bestTier + ' · ' + h.starts + '战' + h.wins + '胜' + (h.g1 ? ' · G1' + h.g1 : '') + '）</option>').join('');
+  updateBreedInfo();
+}
+function statTable(h) {
+  return ['速度', '爆发力', '出闸能力', '耐力', '力量', '毅力', '智力', '体格'].map((k) => k + ' ' + Math.round(h.stats[k])).join(' · ');
+}
+function updateBreedInfo() {
+  const sire = career.breedingStock.find((h) => h.id === breedState.sireId);
+  const dam = career.breedingStock.find((h) => h.id === breedState.damId);
+  $('sireInfo').innerHTML = sire ? '种费 ' + S.studFeeFor(sire) + '万 · ' + statTable(sire) : '';
+  $('damInfo').innerHTML = dam ? statTable(dam) : '';
+  const ibW = sire && dam ? S.checkInbreeding(sire, dam) : 0;
+  const fee = sire ? S.studFeeFor(sire) : 0;
+  $('feeInfo').textContent = '种费 ' + fee + '万 · 近亲判定：' + S.inbreedingPenalty(ibW).name + (ibW > 0 ? '（权重' + ibW + '，早夭率+' + Math.round(S.inbreedingPenalty(ibW).earlyExtra * 100) + '%）' : '');
+}
+function doBreed() {
+  const sire = career.breedingStock.find((h) => h.id === breedState.sireId);
+  const dam = career.breedingStock.find((h) => h.id === breedState.damId);
+  if (!sire || !dam) return;
+  const fee = S.studFeeFor(sire);
+  if (bankroll < fee) { $('breedMsg').innerHTML = '<span style="color:var(--red)">资金不足！种费 ' + fee + '万，当前 ' + fmtWan(bankroll) + '</span>'; return; }
+  bankroll -= fee;
+  saveBankroll();
+  const rng = S.mulberry32(Math.floor(Math.random() * 1e9));
+  const foal = S.breedFoal(rng, sire, dam);
+  breedState.foal = foal;
+  const foalName = S.makeName(S.mulberry32(Math.floor(Math.random() * 1e9)), new Set());
+  breedState.foalName = foalName;
+  const growth = foal.state > 7500 ? (foal.drain > 14.6 ? '觉醒马' : '晚成马') : (foal.drain > 14.6 ? '早熟马' : '早普马');
+  if (foal.earlyDeath) {
+    $('foalCard').innerHTML = '<div style="color:var(--red);font-weight:700">☠ 幼驹早夭！种费 ' + fee + '万打水漂——这正是繁殖的风险。</div>';
+    $('btnFoalEnter').disabled = true;
+  } else {
+    $('foalCard').innerHTML =
+      '<h2>🐴 ' + foalName + '（幼驹）</h2>' +
+      '<div class="note">父 ' + sire.name + ' × 母 ' + dam.name + ' · ' + foal.surface + ' · ' + foal.special + ' · 近亲：' + foal.inbredName + '</div>' +
+      '<div class="note">血统力 ' + foal.bloodline + ' · 状态值 ' + foal.state + ' · 周消耗 ' + foal.drain + '/周 · 成长类型：' + growth + '</div>' +
+      '<div class="note">' + statTable({ stats: foal.stats }) + '</div>';
+    $('btnFoalEnter').disabled = false;
+  }
+  $('breedMsg').innerHTML = '已支付种费 ' + fee + '万（剩余 ' + fmtWan(bankroll) + '）';
+  drawBreedChart();
+}
+function drawBreedChart() {
+  const sire = career.breedingStock.find((h) => h.id === breedState.sireId);
+  const dam = career.breedingStock.find((h) => h.id === breedState.damId);
+  if (!sire || !dam) return;
+  const bins = new Array(21).fill(0);
+  for (let i = 0; i < 100; i++) {
+    const f = S.breedFoal(S.mulberry32(30000 + i), sire, dam);
+    if (f.earlyDeath) continue;
+    bins[Math.min(20, Math.floor(f.stats['速度'] / 5))]++;
+  }
+  const cv = $('breedChart');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#14211b'; ctx.fillRect(0, 0, W, H);
+  const max = Math.max(1, ...bins);
+  const bw = (W - 40) / 21;
+  bins.forEach((c, i) => {
+    const h2 = c / max * (H - 40);
+    ctx.fillStyle = i >= 17 ? '#e8c96a' : '#59c98e';
+    ctx.fillRect(20 + i * bw, H - 18 - h2, bw - 2, h2);
+    if (i % 4 === 0) { ctx.fillStyle = '#7f9c8b'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(String(i * 5), 20 + i * bw + bw / 2, H - 6); }
+  });
+}
+function enterFoalToRoster() {
+  const f = breedState.foal;
+  if (!f || f.earlyDeath) return;
+  const sire = career.breedingStock.find((h) => h.id === breedState.sireId);
+  const dam = career.breedingStock.find((h) => h.id === breedState.damId);
+  const maxId = career.roster.reduce((m, h) => Math.max(m, parseInt(h.id.slice(2), 10)), 0);
+  const h = S.foalToRosterHorse(S.mulberry32(Math.floor(Math.random() * 1e9)), f, sire, dam, maxId + 1);
+  h.name = breedState.foalName;
+  career.roster.push(h);
+  breedState.foal = null;
+  $('btnFoalEnter').disabled = true;
+  $('foalCard').innerHTML = '<div style="color:var(--green);font-weight:700">✅ ' + h.name + ' 已入厩！它将在6月的新马赛出道——届时去赛程里找它下注吧。</div>';
+}
+/* ---------- 事件绑定 ---------- */
+$('btnStart').addEventListener('click', startRace);
+$('btnGen').addEventListener('click', () => genField(Math.floor(Math.random() * 1e9)));
+$('btnGen2').addEventListener('click', () => { genField(Math.floor(Math.random() * 1e9)); showSetup(); });
+$('btnRerollStaff').addEventListener('click', () => { staff = S.makeStaff(S.mulberry32(Math.floor(Math.random() * 1e9))); reportRng = S.mulberry32(Math.floor(Math.random() * 1e9)); refreshReport(); });
+$('btnApplyEditor').addEventListener('click', applyEditor);
+$('seedApply').addEventListener('click', () => { const v = parseInt($('seedInput').value, 10); if (!isNaN(v)) genField(v); });
+$('btnPause').addEventListener('click', () => {
+  paused = !paused;
+  $('btnPause').textContent = paused ? '▶ 继续' : '⏸ 暂停';
+  if (!paused) lastTs = 0;
+});
+document.querySelectorAll('.speed').forEach((b) => {
+  b.addEventListener('click', () => {
+    speedMult = +b.dataset.v;
+    document.querySelectorAll('.speed').forEach((x) => x.classList.toggle('on', x === b));
+  });
+});
+$('btnSkip').addEventListener('click', () => {
+  let guard = 0;
+  while (!race.race.finished && guard++ < 300000) race.step(1 / 30);
+  showResult();
+});
+$('btnDebug').addEventListener('click', () => {
+  $('debugPanel').style.display = $('debugPanel').style.display === 'none' ? '' : 'none';
+});
+$('btnAgain').addEventListener('click', startRace);
+$('btnBack').addEventListener('click', () => {
+  if (mode === 'career') { renderCareer(); show('career'); } else showSetup();
+});
+/* 下注 */
+document.querySelectorAll('[data-bet]').forEach((b) => {
+  b.addEventListener('click', () => { $('betAmount').value = b.dataset.bet; });
+});
+$('betMax').addEventListener('click', () => {
+  const avail = bankroll + (bet.horseId ? bet.amount : 0);
+  $('betAmount').value = Math.max(1, Math.floor(avail));
+});
+$('btnBet').addEventListener('click', () => {
+  const hid = $('betHorse').value;
+  let amt = parseInt($('betAmount').value, 10);
+  if (!hid || !(amt > 0) || bankroll + (bet.horseId ? bet.amount : 0) <= 0) return;
+  if (bet.horseId) bankroll += bet.amount;
+  amt = Math.min(amt, bankroll);
+  bankroll -= amt;
+  bet = { horseId: hid, amount: amt, target: 'single' };
+  saveBankroll(); updateBetUI();
+});
+$('btnBetCancel').addEventListener('click', () => {
+  if (bet.horseId) { bankroll += bet.amount; bet = { horseId: null, amount: 0 }; saveBankroll(); updateBetUI(); }
+});
+$('btnResetBank').addEventListener('click', () => {
+  if (bet.horseId) { bankroll += bet.amount; }
+  bankroll = 50; bet = emptyBet(); saveBankroll(); updateBetUI();
+});
+/* 生涯模式 */
+$('btnNextWeek').addEventListener('click', advanceWeek);
+$('btnCareerDebug').addEventListener('click', () => { career.debug = !career.debug; renderCareer(); });
+$('btnCloseDetail').addEventListener('click', () => { $('horseDetail').style.display = 'none'; });
+$('btnCloseNews').addEventListener('click', () => { $('newsModal').style.display = 'none'; });
+$('newsModal').addEventListener('click', (e) => { if (e.target === $('newsModal')) $('newsModal').style.display = 'none'; });
+$('btnNews').addEventListener('click', showWeeklyNews);
+$('horseDetail').addEventListener('click', (e) => { if (e.target === $('horseDetail')) $('horseDetail').style.display = 'none'; });
+$('btnBetCancelAll').addEventListener('click', () => {
+  Object.keys(career.weekBets).forEach((rid) => { bankroll += career.weekBets[rid].amount; });
+  career.weekBets = {};
+  saveBankroll(); renderCareer();
+});
+$('btnModeCareer').addEventListener('click', () => switchMode('career'));
+$('btnModeSingle').addEventListener('click', () => switchMode('single'));
+$('btnModeBreed').addEventListener('click', () => switchMode('breed'));
+$('sireSel').addEventListener('change', () => { breedState.sireId = $('sireSel').value; updateBreedInfo(); });
+$('damSel').addEventListener('change', () => { breedState.damId = $('damSel').value; updateBreedInfo(); });
+$('btnBreed').addEventListener('click', doBreed);
+$('btnBreedMC').addEventListener('click', drawBreedChart);
+$('btnFoalEnter').addEventListener('click', enterFoalToRoster);
+window.addEventListener('error', (e) => {
+  const b = $('autotest');
+  if (b && b.style.display !== 'none') { b.textContent = '❌ 页面错误: ' + (e.message || ''); b.style.display = 'block'; }
+});
+
+/* ---------- 调试入口 ---------- */
+function runSnap() {
+  genField(seed);
+  race = S.createRace(field, { length: 2000, styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
+  let g = 0;
+  while (g++ < 1800) race.step(1 / 30);
+  show('race'); paused = true;
+  renderRace(performance.now());
+  const st = race.state();
+  $('distRemain').textContent = '截图模式 · 比赛进行到 ' + st.t.toFixed(0) + ' 秒（' + Math.round(st.leaderProgress * 100) + '%）';
+}
+
+/* ---------- 启动 ---------- */
+loadBankroll();
+$('seedInput').value = seed;
+const BOOT = {
+  autotest: new URLSearchParams(location.search).has('autotest') || location.hash === '#autotest',
+  snap: location.hash === '#snap',
+};
+if (BOOT.autotest) {
+  mode = 'single';
+  window.addEventListener('load', () => setTimeout(runAutotest, 120));
+} else if (BOOT.snap) {
+  mode = 'single';
+  window.addEventListener('load', () => setTimeout(runSnap, 120));
+} else {
+  switchMode('career');
+}
+</script>
+</body>
+</html>
