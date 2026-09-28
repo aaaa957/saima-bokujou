@@ -20,6 +20,7 @@
 ![比赛实况](docs/screenshots/02-比赛实况.png)
 ![马匹档案](docs/screenshots/03-马匹档案.png)
 ![繁殖工坊](docs/screenshots/04-繁殖工坊.png)
+![多场模拟](docs/screenshots/05-多场模拟.png)
 
 ## 四个模式
 
@@ -92,7 +93,19 @@ node tests/page-smoke.js                               # 整页冒烟：启动 +
 
 - 在线：GitHub Pages 链接
 - 本地：双击 index.html（无需服务器）
-- 直达多场模拟：`index.html#multi`（带 `?mc=200` 可指定场次并自动开跑，便于演示/截图）
-- 引擎自检：`index.html?autotest`
+
+直达各模式的入口（便于演示与截图）：
+
+| 入口 | 作用 |
+|---|---|
+| `#multi` | 多场模拟；加 `?mc=200` 指定场次并自动开跑 |
+| `#breed` | 繁殖模拟；加 `?breedmc=1` 自动跑一次配种蒙特卡洛 |
+| `#single` | 单场模拟（数值沙盒） |
+| `#snap` + `?steps=N` | 推进到比赛第 N 帧后定格，用于截图 |
+| `?horse=1` | 直接打开第 1 匹马的档案（也可传马 id） |
+| `?autotest` | 引擎自检：跑 3 场并输出结果 |
+
+页面底部会显示构建版本号（如 `构建 v2026.09.28.6`）。
+GitHub Pages 的缓存是 10 分钟，改了却看不到新效果时，先核对这个版本号，再按 Ctrl+F5 硬刷新。
 
 *全部马名、马主、赛事名为程序虚构。*

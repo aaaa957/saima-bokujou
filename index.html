@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>赛马牧场物语 · 比赛模拟 Demo</title>
+<title>赛马风云 · 比赛模拟 Demo</title>
 <style>
 :root {
   --bg: #0d1512; --panel: #14211b; --panel2: #1a2b23; --line: #2c4636;
@@ -107,7 +107,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
 </head>
 <body>
 <header>
-  <h1>🐎 赛马牧场物语 · 比赛模拟 Demo</h1>
+  <h1>🐎 赛马风云 · 比赛模拟 Demo</h1>
   <span class="sub">引擎公式对应《系统数值设计文档》3.10 · 情报误差对应《游戏策划案》4.5</span>
   <a href="README.md" target="_blank">README</a>
   <span class="bankroll" id="bankrollDisplay">💰 50万</span>
@@ -422,7 +422,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.09.28.6"></script>
+<script src="sim.js?v=v2026.09.28.7"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -438,7 +438,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.09.28.6';
+const APP_VER = 'v2026.09.28.7';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -1706,8 +1706,9 @@ function mcFinish() {
   mc.running = false;
   $('btnRunMC').disabled = false;
   const secs = ((performance.now() - mc.t0) / 1000).toFixed(1);
-  $('mcProgress').textContent = '✅ 完成：' + mc.doc.n + ' + ' + mc.balanced.n + ' 场（含着差配对），用时 ' +
-    secs + ' 秒　·　每档 ' + mc.trials + ' 场 · ' + mc.L + 'm · ' + mc.surface;
+  $('mcProgress').textContent = '✅ 完成：' + mc.doc.n + ' + ' + mc.balanced.n + ' 场（含着差配对）' +
+    (secs >= 0.1 ? '，用时 ' + secs + ' 秒' : '') +
+    '　·　每档 ' + mc.trials + ' 场 · ' + mc.L + 'm · ' + mc.surface;
   lastMc = { doc: mc.doc, bal: mc.balanced, gapDoc: mc.gapDoc, gapBal: mc.gapBal,
              trials: mc.trials, L: mc.L, surface: mc.surface };
   mcRenderStyle(lastMc);
@@ -1937,6 +1938,8 @@ const BOOT = {
   autotest: new URLSearchParams(location.search).has('autotest') || location.hash === '#autotest',
   snap: location.hash === '#snap',
   multi: location.hash.indexOf('#multi') === 0,
+  breed: location.hash === '#breed',
+  single: location.hash === '#single',
   mcTrials: parseInt(new URLSearchParams(location.search).get('mc'), 10) || 0,
 };
 if (BOOT.autotest) {
@@ -1955,8 +1958,25 @@ if (BOOT.autotest) {
       mcStart();
     }
   }, 120));
+} else if (BOOT.breed) {
+  mode = 'breed'; switchMode('breed');
+} else if (BOOT.single) {
+  mode = 'single'; switchMode('single');
 } else {
   switchMode('career');
+}
+// ?horse=<序号|id> 直接打开马匹档案（演示/截图用）
+const bootHorse = new URLSearchParams(location.search).get('horse');
+if (bootHorse) {
+  const idx = parseInt(bootHorse, 10);
+  const target = isNaN(idx)
+    ? career.roster.find((h) => h.id === bootHorse)
+    : career.roster[idx - 1];
+  if (target) setTimeout(() => openHorseDetail(target.id), 60);
+}
+// ?breedmc=1 进入繁殖模拟并直接跑一次配种蒙特卡洛（演示/截图用）
+if (new URLSearchParams(location.search).has('breedmc') && mode === 'breed') {
+  setTimeout(() => { try { drawBreedChart(); } catch (e) { /* 无种马时忽略 */ } }, 80);
 }
 </script>
 </body>
