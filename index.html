@@ -398,6 +398,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
 </section>
 
 <footer>
+  <span id="appVer"></span>
   演示 Demo · 全部马名/马主/调教师为程序虚构，与真实赛马无关 · 公式实现见 sim.js，简化点与调参建议见 README.md
 </footer>
 
@@ -421,7 +422,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js"></script>
+<script src="sim.js?v=v2026.09.28.4"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -433,6 +434,12 @@ const numColor = (i) => (NUM_DARK.includes(i % 8) ? '#111' : '#fff');
 /* ---------- 全局状态 ---------- */
 let seed = 186, field = [], staff = null, report = null, oddsMap = {};
 let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
+/* 构建版本号：每次改动上线时手动递增。
+   目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
+   max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
+   对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
+const APP_VER = 'v2026.09.28.4';
+
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
    支持用 URL 参数临时覆盖，方便调参与对比截图：
@@ -1903,6 +1910,7 @@ function runSnap() {
 }
 
 /* ---------- 启动 ---------- */
+$('appVer').textContent = '构建 ' + APP_VER + ' · ';
 loadBankroll();
 $('seedInput').value = seed;
 const BOOT = {
