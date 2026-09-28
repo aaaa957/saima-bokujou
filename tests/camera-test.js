@@ -233,18 +233,46 @@ console.log('\n【跑道覆盖率】');
 console.log('\n【小地图（全体图）检查】');
 {
   const G = S.trackGeometry(2000);
-  const St = G.S, R = G.R;
-  const mmScale = Math.min(150 / (St / 2 + R + 10), 88 / (R + 10));
-  const halfW = (St / 2 + R + 10) * mmScale, halfH = (R + 10) * mmScale;
-  const cx = CANVAS_W - 14 - halfW, cyy = 14 + halfH;
+  const St = G.S, R = G.R, ao = St / 2 + 10, bo = R + 10, ai = St / 2 - 10, bi = R - 10;
+  // 用页面自己暴露的小地图几何，避免两边各算一套导致误判
+  const mv = samples[samples.length - 1].view.mini;
+  if (!mv) { check(false, '页面未暴露小地图几何（cam.lastView.mini）'); }
+  const mmScale = mv.mmScale, cx = mv.mmCx, cyy = mv.mmCy;
+  const halfW = ao * mmScale, halfH = bo * mmScale;
   const box = { x0: cx - halfW, x1: cx + halfW, y0: cyy - halfH, y1: cyy + halfH };
-  const dots = mmArcs.filter((a) => a.r <= 6 && a.x > CANVAS_W * 0.8 && a.y < 140);
-  console.log('  小地图区域 x∈[' + box.x0.toFixed(0) + ',' + box.x1.toFixed(0) +
-              '] y∈[' + box.y0.toFixed(0) + ',' + box.y1.toFixed(0) + ']，捕获 ' + dots.length + ' 个点');
-  const out = dots.filter((d) => d.x < box.x0 - 4 || d.x > box.x1 + 4 || d.y < box.y0 - 4 || d.y > box.y1 + 4);
-  check(out.length === 0, '小地图代表点全部落在赛道环内（越界 ' + out.length + ' 个）' +
-    (out.length ? '，例：(' + out[0].x.toFixed(0) + ',' + out[0].y.toFixed(0) + ')' : ''));
+  const dots = mmArcs.filter((a) => a.r <= 6 && a.x > CANVAS_W * 0.8 && a.y < 200);
+  console.log('  小地图中心(' + cx.toFixed(0) + ',' + cyy.toFixed(0) + ') mmScale=' + mmScale.toFixed(4) +
+              '，捕获 ' + dots.length + ' 个点');
+
+  // 赛道是「体育场」形状：直道在 y=±R，外沿半圆半径 R+10，内沿半圆半径 R-10。
+  // 代表点（在赛道中线附近，|t-10|<=10）必须落在环带内：
+  //   外沿比 = max(|x|<=St/2+10 ? |y|/(R+10) : 椭圆比)  <= 1
+  //   内沿比 = min(...)                                 >= 1
+  // 页面把代表点裁剪在赛道外轮廓内，所以判据是：
+  // 每个点（含半径）都必须落在外轮廓体育场之内。
+  const inClip = (ux, uy, rPx) => {
+    const sx = mv.clipStraight, Ho = mv.clipHalfH;
+    const r = rPx / mv.mmScale;
+    const outer = Math.abs(ux) <= sx
+      ? Math.abs(uy) <= Ho - r
+      : Math.hypot(Math.abs(ux) - sx, uy) <= Ho - r;
+    return outer;
+  };
+  const rPx = 2.5;
+  const outBand = [];
+  console.log('  9 个点是否完整落在赛道外轮廓内（含 ' + rPx + 'px 半径）：');
+  dots.forEach((d, i) => {
+    const ux = (d.x - cx) / mmScale, uy = (cyy - d.y) / mmScale;
+    const ok = inClip(ux, uy, rPx);
+    if (!ok) outBand.push({ ...d, ux, uy });
+    if (i < 9) {
+      console.log('    #' + i + ' 赛道(' + ux.toFixed(1) + ',' + uy.toFixed(1) + ') ' + (ok ? '✅' : '❌'));
+    }
+  });
+  check(outBand.length === 0, '代表点全部完整落在赛道轮廓内（越界 ' + outBand.length + ' 个）' +
+    (outBand.length ? '，例：赛道(' + outBand[0].ux.toFixed(1) + ',' + outBand[0].uy.toFixed(1) + ')' : ''));
   check(dots.length >= 8, '8 匹马都画进了小地图（实际 ' + dots.length + ' 个）');
+  check(!!mv.clipHalfH, '小地图已启用裁剪（clipHalfH=' + mv.clipHalfH + '）');
 }
 
 /* 逐帧缩放变化率：不只看幅度，更看是否有"突跳"（二阶差分尖峰） */

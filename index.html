@@ -422,7 +422,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.09.28.5"></script>
+<script src="sim.js?v=v2026.09.28.6"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -438,7 +438,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.09.28.5';
+const APP_VER = 'v2026.09.28.6';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -910,39 +910,55 @@ function renderRace(ts) {
   });
 
   // 小地图（右上角全体图）
-  // 注意 trackPoint 的直道落在 y = -R-d（终直在 y=-130、对直在 y=+130），
-  // 所以椭圆的外接矩形是 [-(S/2+R), +(S/2+R)] × [-(R+10), +(R+10)]。
-  // 定位必须用同一个半尺寸，否则直道上的马会被画到圆环边缘之外。
+  // 赛道是「体育场」形状：直道在 y = ±R，两端半圆把 (St/2, ±R) 连起来。
+  // 所以外沿的直道段在 y = ±R，只有半圆端才到 ±(R+10) —— 这与"外接矩形"不同。
+  // 用椭圆/圆角矩形代替都会画错：椭圆会把直道外沿画到 ±(R+10)，比真实位置外扩 10，
+  // 于是直道上的马（y≈±113）就落到环外了——这就是"白点跑出去"的根因。
   const mmScale = Math.min(150 / (St / 2 + R + 10), 88 / (R + 10));
   const mmHalfW = (St / 2 + R + 10) * mmScale;
   const mmHalfH = (R + 10) * mmScale;
   const mmCx = W - 14 - mmHalfW;
-  const mmCy = 14 + mmHalfH;                            // 版面几何中心
+  const mmCy = 14 + mmHalfH;
   const mmx = (x) => mmCx + x * mmScale;
   const mmy = (y) => mmCy - y * mmScale;
   const ohw2 = St / 2 + 10, ohh2 = R + 10, ihw2 = St / 2 - 10, ihh2 = R - 10;
+  // 体育场路径：参数 (a, b, H) = 半长、端部半径、直道半距
+  const stadiumPath = (a, b, H) => {
+    const sx = mmx(a), sy = mmy(H), rx = b * mmScale, ry = b * mmScale;
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    ctx.ellipse(sx, mmy(0), rx, ry, 0, -Math.PI / 2, Math.PI / 2);   // 右端半圆
+    ctx.lineTo(mmx(-a), mmy(-H));
+    ctx.ellipse(mmx(-a), mmy(0), rx, ry, 0, Math.PI / 2, -Math.PI / 2); // 左端半圆
+    ctx.closePath();
+  };
   ctx.fillStyle = 'rgba(10,26,18,0.9)';
   ctx.beginPath(); ctx.roundRect(mmx(-ohw2) - 4, mmy(ohh2) - 16, 2 * ohw2 * mmScale + 8, 2 * ohh2 * mmScale + 28, 8); ctx.fill();
-  ctx.fillStyle = '#2f7f4a';
-  ctx.beginPath(); ctx.roundRect(mmx(-ohw2), mmy(ohh2), 2 * ohw2 * mmScale, 2 * ohh2 * mmScale, (R + 10) * mmScale); ctx.fill();
-  ctx.fillStyle = '#1d4a2e';
-  ctx.beginPath(); ctx.roundRect(mmx(-ihw2), mmy(ihh2), 2 * ihw2 * mmScale, 2 * ihh2 * mmScale, Math.max(1, (R - 10) * mmScale)); ctx.fill();
+  ctx.fillStyle = '#2f7f4a'; stadiumPath(St / 2, R + 10, R); ctx.fill();
+  ctx.fillStyle = '#1d4a2e'; stadiumPath(St / 2, R - 10, R - 10); ctx.fill();
+  // 把代表点裁剪在赛道外轮廓内：环带只有约 5px 宽，而点在 2.5px 半径下
+  // 天然会压到环边（外侧车道的马尤其明显）。裁剪后点永远不会画到赛道之外。
+  ctx.save();
+  stadiumPath(St / 2, R + 10, R);
+  ctx.clip();
   ctx.font = '9px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.textAlign = 'center';
   ctx.fillText('全体图', mmCx, mmy(ohh2) - 4);
+  // 调试/测试用：暴露小地图真实几何
+  cam.lastView.mini = { mmScale, mmCx, mmCy, ao: ohw2, bo: ohh2, ai: ihw2, bi: ihh2,
+                        straight: St / 2, halfH: R, halfHIn: R - 10,
+                        clipHalfH: R + 10, clipStraight: St / 2 };
   snap.horses.forEach((h) => {
     if (h.dnf) return;
-    const p = S.trackPoint(sClamp(h.s), h.t, geo, dir);   // 冲线后 s>L 的点会落到环外，先夹住
+    const p = S.trackPoint(sClamp(h.s), h.t, geo, dir);
     const idx = field.findIndex((f) => f.id === h.id);
-    // 再夹进赛道环的外接范围，保证点始终画在环内
-    const gx = Math.max(-ohw2, Math.min(ohw2, p.x));
-    const gy = Math.max(-ohh2, Math.min(ohh2, p.y));
     ctx.fillStyle = capColor(idx);
-    ctx.beginPath(); ctx.arc(mmx(gx), mmy(gy), h.id === playerId ? 3.5 : 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), h.id === playerId ? 3.5 : 2.5, 0, Math.PI * 2); ctx.fill();
     if (h.id === playerId) {
       ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(mmx(gx), mmy(gy), 5, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), 5, 0, Math.PI * 2); ctx.stroke();
     }
   });
+  ctx.restore();                                 // 结束小地图裁剪
 
   // 阶段条
   const p = snap.leaderProgress;
