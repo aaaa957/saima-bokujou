@@ -114,6 +114,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
   <button id="btnModeCareer">💰 赌马生涯</button>
   <button id="btnModeSingle">🎬 单场模拟</button>
   <button id="btnModeBreed">🔬 繁殖模拟</button>
+  <button id="btnModeMulti">📈 多场模拟</button>
   <span class="seedbox">阵容种子 <input id="seedInput" type="number"> <button id="seedApply">应用</button></span>
 </header>
 
@@ -144,6 +145,64 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
   <div class="card">
     <h2>📊 子代速度分布（100次配种蒙特卡洛）</h2>
     <canvas id="breedChart" width="1100" height="220" style="width:100%;height:auto"></canvas>
+  </div>
+</section>
+
+<!-- ============ 多场模拟（蒙特卡洛验证） ============ -->
+<section id="multi" class="screen">
+  <div class="card">
+    <h2>📈 多场模拟 · 蒙特卡洛 <span class="note">（比赛引擎 · 点按钮即跑，结果与 tests/mc.js 同口径）</span></h2>
+    <div class="row">
+      <label>模拟场次（每档）
+        <select id="mcTrials">
+          <option value="50">50 场</option>
+          <option value="100">100 场</option>
+          <option value="200" selected>200 场（对应验证报告）</option>
+          <option value="500">500 场</option>
+          <option value="2000">2000 场</option>
+        </select>
+      </label>
+      <label>比赛距离
+        <select id="mcLength">
+          <option value="2000" selected>2000m</option>
+          <option value="1600">1600m</option>
+          <option value="2400">2400m</option>
+        </select>
+      </label>
+      <label>场地
+        <select id="mcSurface">
+          <option value="草地" selected>草地</option>
+          <option value="泥地">泥地</option>
+        </select>
+      </label>
+      <button class="primary" id="btnRunMC">▶ 开始多场模拟</button>
+      <button id="btnResetMC">✕ 清空结果</button>
+    </div>
+    <div class="note" style="margin-top:8px">
+      控制变量：两档使用<strong>完全相同</strong>的马匹阵容与随机种子，骑手固定「普通」（加成 0）、疲劳归零，
+      唯一变量是跑法系数档位 —— 因此差异可归因到系数本身。8 匹出马，四种跑法各 2 匹。
+    </div>
+    <div class="note" id="mcProgress" style="margin-top:6px;font-weight:700"></div>
+  </div>
+
+  <div class="card">
+    <h2>① 跑法胜率对比</h2>
+    <div id="mcStyleOut"><div class="note">尚未运行。选择场次后点「开始多场模拟」。</div></div>
+  </div>
+
+  <div class="card">
+    <h2>② 冠军-亚军着差（马身）分布</h2>
+    <div class="row" style="align-items:flex-start">
+      <div style="flex:1 1 480px">
+        <div class="note" style="margin-bottom:4px">文档原版系数</div>
+        <canvas id="mcChartDoc" width="1100" height="200" style="width:100%;height:auto"></canvas>
+      </div>
+      <div style="flex:1 1 480px">
+        <div class="note" style="margin-bottom:4px">平衡修正后</div>
+        <canvas id="mcChartBal" width="1100" height="200" style="width:100%;height:auto"></canvas>
+      </div>
+    </div>
+    <div id="mcGapOut" style="margin-top:10px"><div class="note">统计指标在模拟完成后显示。</div></div>
   </div>
 </section>
 
@@ -510,7 +569,7 @@ function applyEditor() {
 /* ---------- 状态切换 ---------- */
 function show(name) {
   state = name;
-  ['setup','race','result','career','breeding'].forEach((s) => $(s).classList.toggle('active', s === name));
+  ['setup','race','result','career','breeding','multi'].forEach((s) => $(s).classList.toggle('active', s === name));
 }
 function showSetup() {
   if (rafId) cancelAnimationFrame(rafId);
@@ -1341,12 +1400,16 @@ function switchMode(m) {
   $('btnModeCareer').classList.toggle('on', m === 'career');
   $('btnModeSingle').classList.toggle('on', m === 'single');
   $('btnModeBreed').classList.toggle('on', m === 'breed');
+  $('btnModeMulti').classList.toggle('on', m === 'multi');
   if (m === 'career') {
     if (!career) newCareer();
     else { renderCareer(); show('career'); }
   } else if (m === 'breed') {
     if (!career) { newCareer(); show('breeding'); renderBreeding(); }
     else { renderBreeding(); show('breeding'); }
+  } else if (m === 'multi') {
+    if (mc.running) return;
+    show('multi');
   } else {
     showSetup();
   }
@@ -1440,6 +1503,208 @@ function enterFoalToRoster() {
   $('btnFoalEnter').disabled = true;
   $('foalCard').innerHTML = '<div style="color:var(--green);font-weight:700">✅ ' + h.name + ' 已入厩！它将在6月的新马赛出道——届时去赛程里找它下注吧。</div>';
 }
+/* ---------- 多场模拟（蒙特卡洛验证） ----------
+ * 与 tests/mc.js 同口径：两档使用完全相同的阵容与随机种子，
+ * 骑手固定「普通」（JOCKEY_BONUS=0）、疲劳归零，唯一变量是跑法系数档位。
+ * 分片异步执行（每片约 60ms）以免阻塞界面，过程中持续显示进度。
+ */
+const MC_STYLES = ['逃', '先', '差', '追'];
+const MC_DT = 1 / 30, MC_MAX_STEPS = 300000, MC_BIN = 2, MC_BINS = 21; // 着差直方图：0~40马身，每格2
+const mc = { running: false, stage: null, mode: null, i: 0, trials: 0,
+             L: 2000, surface: '草地', t0: 0,
+             doc: null, balanced: null, gapDoc: null, gapBal: null };
+let lastMc = null;
+
+function mcField(seed) {
+  return S.makeField(S.mulberry32(seed), { n: 8, strongIndex: 2, playerIndex: 2, level: 70 });
+}
+function mcRace(field, coefMode, seed) {
+  const r = S.createRace(field, {
+    length: mc.L, surface: mc.surface, state: '良', profile: '缓坂',
+    styleCoefs: coefMode, rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0),
+  });
+  let g = 0;
+  while (!r.race.finished && g++ < MC_MAX_STEPS) r.step(MC_DT);
+  return r;
+}
+function mcBlankAcc() { return { win: { 逃: 0, 先: 0, 差: 0, 追: 0 }, n: 0, aborted: 0, gaps: [], tSum: 0, tN: 0 }; }
+function mcMerge(acc, r) {
+  if (!r.race.finished) { acc.aborted++; return; }
+  const w = r.race.order[0];
+  if (w) acc.win[w.style]++;
+  acc.n++;
+  const second = r.race.order[1];
+  if (w && second && second.gapAtWin !== null) acc.gaps.push(Math.max(0, second.gapAtWin) / 2.4);
+  if (r.race.winnerTime) { acc.tSum += r.race.winnerTime; acc.tN++; }
+}
+function mcStart() {
+  if (mc.running) return;
+  mc.running = true;
+  mc.trials = parseInt($('mcTrials').value, 10) || 200;
+  mc.L = parseInt($('mcLength').value, 10) || 2000;
+  mc.surface = $('mcSurface').value;
+  mc.stage = 'doc'; mc.mode = 'doc'; mc.i = 0;
+  mc.doc = mcBlankAcc(); mc.balanced = mcBlankAcc();
+  mc.gapDoc = mcBlankAcc(); mc.gapBal = mcBlankAcc();
+  mc.t0 = performance.now();
+  $('btnRunMC').disabled = true;
+  $('mcStyleOut').innerHTML = '<div class="note">模拟中…</div>';
+  $('mcGapOut').innerHTML = '';
+  mcChunk();
+}
+function mcChunk() {
+  if (!mc.running) return;
+  const t = performance.now();
+  while (performance.now() - t < 60) {
+    if (mc.mode === 'gap') {
+      const seed = 50000 + mc.i * 17;
+      mcMerge(mc.gapDoc, mcRace(mcField(seed), 'doc', seed + 3));
+      mcMerge(mc.gapBal, mcRace(mcField(seed), 'balanced', seed + 3));
+      mc.i++;
+      if (mc.i >= mc.trials) {
+        mc.i = 0; mc.mode = null; mc.stage = 'done';
+        mcFinish(); return;
+      }
+    } else {
+      const seed = 1000 + mc.i * 31;
+      mcMerge(mc[mc.mode], mcRace(mcField(seed), mc.mode, seed + 7));
+      mc.i++;
+      if (mc.i >= mc.trials) {
+        mc.i = 0;
+        if (mc.mode === 'doc') { mc.mode = 'balanced'; mc.stage = 'balanced'; }
+        else { mc.mode = 'gap'; mc.stage = 'gap'; }
+      }
+    }
+  }
+  const label = mc.stage === 'doc' ? '文档原版系数' : (mc.stage === 'balanced' ? '平衡修正系数' : '冠军-亚军着差');
+  const done = mc.stage === 'doc' ? mc.doc.n : (mc.stage === 'balanced' ? mc.doc.n + mc.balanced.n : mc.doc.n + mc.balanced.n + mc.i);
+  const totalRaces = mc.trials * 4;
+  const pctDone = Math.min(99, Math.round(done / totalRaces * 100));
+  $('mcProgress').textContent = '⏳ 正在跑：' + label + '　' + done + ' / ' + totalRaces + ' 场（' + pctDone + '%）';
+  setTimeout(mcChunk, 0);
+}
+function mcFinish() {
+  mc.running = false;
+  $('btnRunMC').disabled = false;
+  const secs = ((performance.now() - mc.t0) / 1000).toFixed(1);
+  $('mcProgress').textContent = '✅ 完成：' + mc.doc.n + ' + ' + mc.balanced.n + ' 场（含着差配对），用时 ' +
+    secs + ' 秒　·　每档 ' + mc.trials + ' 场 · ' + mc.L + 'm · ' + mc.surface;
+  lastMc = { doc: mc.doc, bal: mc.balanced, gapDoc: mc.gapDoc, gapBal: mc.gapBal,
+             trials: mc.trials, L: mc.L, surface: mc.surface };
+  mcRenderStyle(lastMc);
+  mcHistogram($('mcChartDoc'), mc.gapDoc.gaps);
+  mcHistogram($('mcChartBal'), mc.gapBal.gaps);
+  mcRenderGap(lastMc);
+}
+function mcRenderStyle(d) {
+  const r = (a, s) => a.n ? a.win[s] / a.n : 0;
+  const rows = MC_STYLES.map((s) => {
+    const a = r(d.doc, s) * 100, b = r(d.bal, s) * 100;
+    const diff = b - a;
+    return '<tr><td>' + s + '</td>' +
+      '<td style="text-align:right">' + a.toFixed(1) + '%</td>' +
+      '<td style="text-align:right">' + b.toFixed(1) + '%</td>' +
+      '<td style="text-align:right;color:' + (Math.abs(diff) < 3 ? 'var(--green)' : 'var(--gold)') + '">' +
+        (diff >= 0 ? '+' : '') + diff.toFixed(1) + '</td>' +
+      '<td style="text-align:right;color:var(--dim)">25.0%</td></tr>';
+  }).join('');
+  const spread = (a) => 100 * (Math.max.apply(null, MC_STYLES.map((s) => r(a, s))) - Math.min.apply(null, MC_STYLES.map((s) => r(a, s))));
+  $('mcStyleOut').innerHTML =
+    '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+      '<thead><tr style="color:var(--dim)">' +
+        '<th style="text-align:left;padding:4px 0">跑法</th>' +
+        '<th style="text-align:right">文档原版</th>' +
+        '<th style="text-align:right">平衡修正后</th>' +
+        '<th style="text-align:right">变化</th>' +
+        '<th style="text-align:right">理想值</th></tr></thead><tbody>' +
+      rows +
+      '<tr style="border-top:1px solid var(--line);font-weight:700">' +
+        '<td style="padding-top:6px">极差</td>' +
+        '<td style="text-align:right">' + spread(d.doc).toFixed(1) + '%</td>' +
+        '<td style="text-align:right;color:var(--green)">' + spread(d.bal).toFixed(1) + '%</td>' +
+        '<td colspan="2" style="text-align:right;color:var(--gold)">压缩 ' +
+          (spread(d.doc) - spread(d.bal)).toFixed(1) + ' 个百分点</td></tr>' +
+    '</tbody></table>' +
+    '<div class="note" style="margin-top:6px">' +
+      '有效场次：文档原版 ' + d.doc.n + ' · 平衡修正后 ' + d.bal.n +
+      '（异常中断 ' + (d.doc.aborted + d.bal.aborted) + ' 场）。四种跑法若完全平衡，各应为 25%。' +
+    '</div>';
+}
+function mcHistogram(cv, gaps) {
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#14211b'; ctx.fillRect(0, 0, W, H);
+  if (!gaps.length) {
+    ctx.fillStyle = '#7f9c8b'; ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('无数据', W / 2, H / 2);
+    return;
+  }
+  const bins = new Array(MC_BINS).fill(0);
+  gaps.forEach((v) => bins[Math.min(MC_BINS - 1, Math.floor(v / MC_BIN))]++);
+  const max = Math.max.apply(null, bins);
+  const bw = (W - 40) / MC_BINS;
+  const med = mcMedian(gaps);
+  bins.forEach((c, i) => {
+    const h2 = c / max * (H - 40);
+    ctx.fillStyle = (i * MC_BIN) <= med && med < (i + 1) * MC_BIN ? '#e8c96a' : '#59c98e';
+    ctx.fillRect(20 + i * bw, H - 18 - h2, bw - 2, h2);
+    if (i % 5 === 0) {
+      ctx.fillStyle = '#7f9c8b'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(String(i * MC_BIN), 20 + i * bw + bw / 2, H - 6);
+    }
+  });
+  ctx.fillStyle = '#7f9c8b'; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('场次 ' + gaps.length + ' · 金色柱=中位数所在区间', 22, 12);
+}
+function mcMedian(arr) {
+  const a = arr.slice().sort((x, y) => x - y);
+  if (!a.length) return NaN;
+  const m = a.length >> 1;
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+}
+function mcRenderGap(d) {
+  const f = (x, n) => Number(x).toFixed(n === undefined ? 2 : n);
+  const row = (k, a, b, hi) => {
+    const better = b < a;
+    return '<tr><td>' + k + '</td>' +
+      '<td style="text-align:right">' + f(a) + '</td>' +
+      '<td style="text-align:right;font-weight:700;color:' + (better ? 'var(--green)' : 'var(--gold)') + '">' + f(b) + '</td></tr>';
+  };
+  const A = d.gapDoc, B = d.gapBal;
+  const medA = mcMedian(A.gaps), medB = mcMedian(B.gaps);
+  const avg = (a) => a.gaps.length ? a.gaps.reduce((s, x) => s + x, 0) / a.gaps.length : 0;
+  $('mcGapOut').innerHTML =
+    '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+      '<thead><tr style="color:var(--dim)"><th style="text-align:left;padding:4px 0">冠军-亚军着差</th>' +
+      '<th style="text-align:right">文档原版</th><th style="text-align:right">平衡修正后</th></tr></thead><tbody>' +
+      row('中位数（马身）', medA, medB) +
+      row('平均值（马身）', avg(A), avg(B)) +
+      row('最大值（马身）', Math.max.apply(null, A.gaps), Math.max.apply(null, B.gaps)) +
+      row('最小（马身）', Math.min.apply(null, A.gaps), Math.min.apply(null, B.gaps)) +
+      '<tr style="border-top:1px solid var(--line)"><td style="padding-top:6px">冠军均时（秒）</td>' +
+        '<td style="text-align:right">' + f(A.tSum / Math.max(1, A.tN)) + '</td>' +
+        '<td style="text-align:right">' + f(B.tSum / Math.max(1, B.tN)) + '</td></tr>' +
+    '</tbody></table>' +
+    '<div style="margin-top:8px;font-weight:700;color:var(--gold)">着差中位数：' + f(medA) + ' 马身 → ' +
+      f(medB) + ' 马身（收敛 ' + f((medA - medB) / Math.max(0.01, medA) * 100, 1) + '%）</div>' +
+    '<div class="note" style="margin-top:6px">' +
+      '本项为「配对比赛」：每场用同一批马、同一种子分别跑两档，共 ' + A.gaps.length + ' 对。' +
+      '修复项：马群跟跑耦合 + 属性向全场均值回归 + 跑法系数收敛 + 爆发因子 0.25→0.10。' +
+      '大差逃切与鼻差绝杀两种结局均保留。复现口径见仓库 tests/mc.js。</div>';
+}
+function mcReset() {
+  if (mc.running) return;
+  lastMc = null;
+  mc.doc = null; mc.balanced = null; mc.gapDoc = null; mc.gapBal = null;
+  $('mcProgress').textContent = '';
+  $('mcStyleOut').innerHTML = '<div class="note">尚未运行。选择场次后点「开始多场模拟」。</div>';
+  $('mcGapOut').innerHTML = '<div class="note">统计指标在模拟完成后显示。</div>';
+  [$('mcChartDoc'), $('mcChartBal')].forEach((cv) => {
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#14211b'; ctx.fillRect(0, 0, cv.width, cv.height);
+  });
+}
+
 /* ---------- 事件绑定 ---------- */
 $('btnStart').addEventListener('click', startRace);
 $('btnGen').addEventListener('click', () => genField(Math.floor(Math.random() * 1e9)));
@@ -1511,6 +1776,9 @@ $('btnBetCancelAll').addEventListener('click', () => {
 $('btnModeCareer').addEventListener('click', () => switchMode('career'));
 $('btnModeSingle').addEventListener('click', () => switchMode('single'));
 $('btnModeBreed').addEventListener('click', () => switchMode('breed'));
+$('btnModeMulti').addEventListener('click', () => switchMode('multi'));
+$('btnRunMC').addEventListener('click', mcStart);
+$('btnResetMC').addEventListener('click', mcReset);
 $('sireSel').addEventListener('change', () => { breedState.sireId = $('sireSel').value; updateBreedInfo(); });
 $('damSel').addEventListener('change', () => { breedState.damId = $('damSel').value; updateBreedInfo(); });
 $('btnBreed').addEventListener('click', doBreed);
@@ -1539,6 +1807,8 @@ $('seedInput').value = seed;
 const BOOT = {
   autotest: new URLSearchParams(location.search).has('autotest') || location.hash === '#autotest',
   snap: location.hash === '#snap',
+  multi: location.hash.indexOf('#multi') === 0,
+  mcTrials: parseInt(new URLSearchParams(location.search).get('mc'), 10) || 0,
 };
 if (BOOT.autotest) {
   mode = 'single';
@@ -1546,6 +1816,16 @@ if (BOOT.autotest) {
 } else if (BOOT.snap) {
   mode = 'single';
   window.addEventListener('load', () => setTimeout(runSnap, 120));
+} else if (BOOT.multi) {
+  /* #multi 直接进多场模拟；附带 ?mc=200 可指定场次并自动开跑（便于截图/演示） */
+  mode = 'multi';
+  window.addEventListener('load', () => setTimeout(() => {
+    switchMode('multi');
+    if (BOOT.mcTrials) {
+      $('mcTrials').value = String(BOOT.mcTrials);
+      mcStart();
+    }
+  }, 120));
 } else {
   switchMode('career');
 }
