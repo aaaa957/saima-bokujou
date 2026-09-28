@@ -149,7 +149,14 @@
   };
   function actionBonus(a) { return ACTION_DEF[a] || { coef: 0, stamina: 1 }; }
 
-  /* 基础速度（3.10） */
+  /* 基础速度（3.10）
+     ⚠️ 已知问题（见 tests/attribute-impact.js 的实测）：
+     这里的斜率让「速度」成为唯一决定胜负的属性——速度 +20 的胜率约 73%，
+     而耐力/毅力/爆发力 +20 几乎毫无影响（±3 个百分点以内）。
+     原因是 base 会乘进全部五个阶段的潜在速度，等效杠杆远大于其它属性。
+     修它需要连同「耐力池消耗」与「终盘爆发系数」一起重新标定，
+     会改变着差中位数等既有基线（实测会让中位数从 10.99 降到 6.07），
+     因此单独作为一次专项改动处理，不在本次市场模型改动里夹带。 */
   function baseSpeed(spd) {
     return 1.944 + 0.15552 * Math.min(spd, 50) + 0.1944 * Math.max(spd - 50, 0);
   }
@@ -333,8 +340,17 @@
     const age = 2 + Math.floor(rng() * 4);
     const sex = rng() < 0.5 ? '牡' : '牝';
     const 出赛 = Math.max(1, (age - 1) * 4 + Math.floor(rng() * 5));
-    const 胜利 = Math.max(0, Math.round(出赛 * (0.15 + rng() * 0.3)));
-    const 前三 = Math.min(出赛, 胜利 + Math.round(rng() * 4));
+    /* 战绩必须是「实力的有噪声结果」，不能是纯随机。
+       原来的写法（出赛 × 随机 0.15~0.45）让战绩与隐藏属性完全无关，
+       于是任何"public-only"的人气模型都在给噪声定价——市场必然抓不住真实实力，
+       赔率会离谱到出现 +500% 期望值的机会。现实中战绩正是实力的公开投影，
+       所以这里按"该马相对同场的实力水平"反推一个带噪声的胜率。 */
+    const hp = (k, c) => clamp(((stats[k] === undefined ? 70 : stats[k]) - c) / 26, -1.6, 1.6);
+    const strength = hp('速度', 72) * 0.34 + hp('爆发力', 70) * 0.20 + hp('耐力', 65) * 0.16 +
+                     hp('出闸能力', 65) * 0.10 + hp('毅力', 68) * 0.10 + hp('力量', 62) * 0.10;
+    const rawRate = clamp(0.24 + strength * 0.085 + (rng() - 0.5) * 0.10, 0.03, 0.62);
+    const 胜利 = clamp(Math.round(出赛 * rawRate), 0, 出赛);
+    const 前三 = Math.min(出赛, 胜利 + Math.round(出赛 * (0.20 + rng() * 0.22)));
     return {
       id: o.id || ('h' + Math.floor(rng() * 1e9)),
       name: o.name || '', sire: o.sire || '', dam: o.dam || '',
@@ -392,6 +408,147 @@
     });
     return map;
   }
+
+  /* ============================================================
+   * 人气/赔率模型（市场）——独立于比赛引擎
+   * ------------------------------------------------------------
+   * 铁律：
+   *   ① 本模型**只许读公开信息**（战绩、骑手、血统、年龄、适性），
+   *      永远不许读 h.stats 里的隐藏属性（速度/爆发力/耐力/毅力/力量/出闸能力…）。
+   *   ② 比赛结果不许读赔率。市场是旁观者的看法，不影响比赛。
+   *   ③ 市场看到的不能比玩家更多——玩家的信息集 = 公开信息 + 自己的员工报告。
+   *      这块差额就是信息差博弈里玩家要赚的钱。
+   *
+   * 玩家（也就是未来的员工情报系统）能看到隐藏属性，市场看不到；
+   * 于是"隐藏属性强、但公开信息平庸"的马会被系统性低估——那就是套利空间。
+   * ============================================================ */
+  /* 市场参数：全部集中在这里，便于用蒙特卡洛扫描标定。
+     目标是让"公开智能投注"的期望回报落在 1.05~1.20（技术能赢、新手会亏）。 */
+  const MARKET = {
+    /* 公开信号权重（相对权重，内部会归一化；不参与"真实实力"的权重分配） */
+    wForm: 0.34,      // 战绩：公众最依赖，也最容易高估
+    wJockey: 0.18,    // 骑手名气
+    wBlood: 0.14,     // 血统（父系/母系成绩）
+    wAge: 0.10,       // 年龄与出赛经验
+    wFit: 0.14,       // 场地/回向适性（公开记录）
+    wBody: 0.06,      // 体格等公开外观
+    wNoise: 0.04,     // 群体非理性噪声
+    /* 软最大化温度：越小 → 热门越热、冷门越冷（市场越"自信"）。
+       注意：评分会先按本场标准差归一化，所以这个值有稳定含义，
+       不会因为"权重和"或"几匹马参赛"而漂移。 */
+    temp: 1.05,
+    /* 抽水：玩家必须跨过的门槛。现实赛马场约 15~25%。
+       赔率 = (1 - takeout) / 概率，这样 Σ(1/赔率) = 1/(1-takeout)，
+       即抽水恒为 takeout，与概率分布形状无关。 */
+    takeout: 0.18,
+    /* 群体系统性偏差（这三条是玩家可以学会并利用的"市场规律"） */
+    biasWinStreak: 0.90,   // 连胜溢价：上一场赢了 → 人气被过度推高（乘数<1）
+    biasUnraced: 1.10,     // 新马被低估
+    biasBloodNeglect: 0.92,// 血统被系统性轻视（对血统分做压缩）
+    biasJockeyHalo: 1.06,  // 名骑手光环：骑手分被放大
+  };
+  /* ---------------- 市场模型的公开信号（绝不含隐藏属性） ---------------- */
+  function marketFormScore(h) {
+    const f = h.form || { '出赛': 0, '胜利': 0, '前三': 0 };
+    const starts = Math.max(0, f['出赛'] || 0);
+    if (starts === 0) return 0.5;                        // 新马：市场只能给中性
+    const win = (f['胜利'] || 0) / starts;
+    const place = (f['前三'] || 0) / starts;
+    const exp = Math.min(starts, 12) / 12;               // 经验越多越可信
+    const raw = win * 0.62 + place * 0.38;
+    return clamp(0.5 + (raw - 0.25) * 1.5 * exp, 0, 1);
+  }
+  function marketJockeyScore(h) {
+    const base = { '新人': 0.30, '普通': 0.50, '优秀': 0.74, '殿堂': 0.94 };
+    const v = base[h.jockeyGrade] !== undefined ? base[h.jockeyGrade] : 0.5;
+    // 公众放大名骑手 → 让高等级骑手的分更极端
+    return h.jockeyGrade === '殿堂' || h.jockeyGrade === '优秀'
+      ? clamp(v * MARKET.biasJockeyHalo, 0, 1) : v;
+  }
+  function marketBloodScore(h) {
+    const s = (h.stats && h.stats['血统力'] !== undefined) ? h.stats['血统力'] : 50;
+    const v = clamp(s / 100, 0, 1);
+    return clamp(v * MARKET.biasBloodNeglect, 0, 1);     // 公众轻视血统
+  }
+  function marketAgeScore(h) {
+    const age = h.age || 3;
+    const exp = Math.min(1, (h.form ? h.form['出赛'] : 0) / 10);
+    const t = clamp((age - 2) / 5, 0, 1);
+    return clamp(0.45 + t * 0.4 + exp * 0.15, 0, 1);
+  }
+  function marketFitScore(h, raceOpts) {
+    raceOpts = raceOpts || {};
+    let s = 0.5;
+    if (raceOpts.surface && h.surface) {
+      const ok = (h.surface === raceOpts.surface ||
+                  (h.surface === '泥草双刀' && raceOpts.surface !== undefined));
+      s += ok ? 0.22 : -0.22;
+    }
+    if (raceOpts.dir && h.special) {
+      if (h.special === '左右皆可') s += 0.12;
+      else if (h.special === raceOpts.dir) s += 0.18;
+      else if (h.special === '左右皆不可') s -= 0.20;
+      else s -= 0.14;
+    }
+    return clamp(s, 0, 1);
+  }
+  function marketBodyScore(h) {
+    const g = (h.stats && h.stats['体格'] !== undefined) ? h.stats['体格'] : 60;
+    return clamp(g / 100, 0, 1);
+  }
+  function marketEntryScore(h, raceOpts, rng) {
+    const f = marketFormScore(h);
+    const j = marketJockeyScore(h);
+    const b = marketBloodScore(h);
+    const a = marketAgeScore(h);
+    const fit = marketFitScore(h, raceOpts);
+    const body = marketBodyScore(h);
+    const noise = rng ? (rng() - 0.5) * 2 : 0;           // [-1,1]
+    const W = MARKET;
+    let s = f * W.wForm + j * W.wJockey + b * W.wBlood + a * W.wAge +
+            fit * W.wFit + body * W.wBody + noise * W.wNoise;
+    /* 群体偏差：连胜溢价 / 新马被低估 */
+    const starts = h.form ? (h.form['出赛'] || 0) : 0;
+    const wins = h.form ? (h.form['胜利'] || 0) : 0;
+    const winRate = starts ? wins / starts : 0;
+    if (starts > 0 && winRate >= 0.35) s *= W.biasWinStreak;
+    if (starts === 0) s *= W.biasUnraced;
+    return { score: s, parts: { form: f, jockey: j, blood: b, age: a, fit, body, noise } };
+  }
+  /* 由公开信息算出人气与赔率。
+     返回 { byId, order }；每项含 人气/赔率/概率/公开评分
+     关键：评分先按本场标准差标准化，再进 softmax。
+     否则"权重和"和"参赛马数量"会间接改变市场自信度——参数就失去意义了。 */
+  function marketOddsAndPopularity(horses, raceOpts, rng) {
+    const scored = horses.map((h) => {
+      const e = marketEntryScore(h, raceOpts, rng);
+      return { h, score: e.score, parts: e.parts };
+    });
+    /* 标准化：让评分分布与权重无关 */
+    const n = scored.length || 1;
+    const mu = scored.reduce((s, x) => s + x.score, 0) / n;
+    const sd = Math.sqrt(scored.reduce((s, x) => s + (x.score - mu) * (x.score - mu), 0) / n);
+    const std = sd > 1e-9 ? (x) => (x - mu) / sd : () => 0;
+    const exps = scored.map((x) => Math.exp(std(x.score) / MARKET.temp));
+    const sum = exps.reduce((s, v) => s + v, 0) || 1;
+    scored.forEach((x, i) => { x.p = exps[i] / sum; });
+    const byId = {};
+    scored.forEach((x) => {
+      /* 赔率 = (1-takeout)/p：Σ(1/赔率) = 1/(1-takeout)，抽水恒定 */
+      const odds = Math.max(1.05, (1 - MARKET.takeout) / Math.max(1e-6, x.p));
+      byId[x.h.id] = {
+        '人气': 0, '赔率': Math.round(odds * 10) / 10, '概率': x.p,
+        '公开评分': x.score, '标准分': std(x.score), parts: x.parts,
+      };
+    });
+    const order = scored.slice().sort((a, b) => b.p - a.p);
+    order.forEach((x, i) => { byId[x.h.id]['人气'] = i + 1; });
+    return { byId, order: order.map((x) => x.h.id) };
+  }
+  /* 由赔率反推市场隐含概率（含抽水），供"是否存在正期望"判断 */
+  function marketImpliedProb(odds) { return Math.max(0, 1 / Math.max(1.0001, odds)); }
+  /* 正期望判断：真实概率 × 赔率 > 1 才值得下注 */
+  function expectedValue(trueP, odds) { return trueP * Math.max(0, odds) - 1; }
 
   /* ---------------- 情报生成（4.5 三层误差） ---------------- */
   function makeStaff(rng) {
@@ -1628,6 +1785,8 @@
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
     STAFF, CAT_ERROR_POOL, catText, fatigueBand, fatigueText,
     makeHorse, makeField, makeStaff, generateReport, oddsAndPopularity,
+    /* 人气/赔率模型（市场）：独立于比赛引擎，只吃公开信息 */
+    MARKET, marketEntryScore, marketOddsAndPopularity, marketImpliedProb, expectedValue,
     makeName, createRace,
     RACE_TIERS, TIER_BY_KEY, TIER_RANK, TRAINING_DEF, PRIZE_SHARE, prizeForPlace, makeRaceName,
     makeCareerHorse, careerWeeklyTick, makeCareerRaceField, raceOptionsFor, makeFeaturedRace,
