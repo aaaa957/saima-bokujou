@@ -124,6 +124,13 @@ check(String(els.mcProgress.textContent).indexOf('完成') >= 0, '进度文本�
 check(String(els.mcStyleOut.innerHTML).indexOf('<table') >= 0, '胜率表已渲染');
 check(String(els.mcGapOut.innerHTML).indexOf('收敛') >= 0, '着差汇总含收敛结论');
 check(ctxObj.__mc.running === false, '运行标志已复位');
+const spreadRow = (String(els.mcStyleOut.innerHTML).match(/colspan="2"[^>]*>([^<]*)</) || [])[1] || '';
+console.log('  极差行文案：' + spreadRow.trim());
+if (TRIALS < 200) {
+  check(/样本仅/.test(spreadRow), '小样本时提示波动（不给出「压缩」结论）');
+} else {
+  check(!/-/.test(spreadRow) || /反而略高/.test(spreadRow), '足量样本时给出明确结论');
+}
 
 console.log('\n【确定性】');
 const sig = (d) => STYLES.map((s) => d.win[s]).join(',') + '|' + fmt(median(d.gaps), 6) + '|' + d.gaps.length;

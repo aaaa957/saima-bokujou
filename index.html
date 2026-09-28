@@ -1609,6 +1609,14 @@ function mcRenderStyle(d) {
       '<td style="text-align:right;color:var(--dim)">25.0%</td></tr>';
   }).join('');
   const spread = (a) => 100 * (Math.max.apply(null, MC_STYLES.map((s) => r(a, s))) - Math.min.apply(null, MC_STYLES.map((s) => r(a, s))));
+  const spD = spread(d.doc), spB = spread(d.bal);
+  const delta = spD - spB;                       // >0 表示平衡档更均衡
+  const enough = d.trials >= 200;
+  const note = enough
+    ? (delta >= 0
+        ? '压缩 ' + delta.toFixed(1) + ' 个百分点'
+        : '本次样本下平衡档极差反而略高（' + Math.abs(delta).toFixed(1) + ' 个百分点），多为抽样波动')
+    : '样本仅 ' + d.trials + ' 场，波动较大——建议选 200 场以上再下结论';
   $('mcStyleOut').innerHTML =
     '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
       '<thead><tr style="color:var(--dim)">' +
@@ -1620,10 +1628,9 @@ function mcRenderStyle(d) {
       rows +
       '<tr style="border-top:1px solid var(--line);font-weight:700">' +
         '<td style="padding-top:6px">极差</td>' +
-        '<td style="text-align:right">' + spread(d.doc).toFixed(1) + '%</td>' +
-        '<td style="text-align:right;color:var(--green)">' + spread(d.bal).toFixed(1) + '%</td>' +
-        '<td colspan="2" style="text-align:right;color:var(--gold)">压缩 ' +
-          (spread(d.doc) - spread(d.bal)).toFixed(1) + ' 个百分点</td></tr>' +
+        '<td style="text-align:right">' + spD.toFixed(1) + '%</td>' +
+        '<td style="text-align:right;color:' + (delta >= 0 ? 'var(--green)' : 'var(--gold)') + '">' + spB.toFixed(1) + '%</td>' +
+        '<td colspan="2" style="text-align:right;color:var(--dim);font-weight:400">' + note + '</td></tr>' +
     '</tbody></table>' +
     '<div class="note" style="margin-top:6px">' +
       '有效场次：文档原版 ' + d.doc.n + ' · 平衡修正后 ' + d.bal.n +
