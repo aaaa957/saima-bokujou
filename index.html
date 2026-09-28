@@ -422,7 +422,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.09.28.4"></script>
+<script src="sim.js?v=v2026.09.28.5"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -438,7 +438,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.09.28.4';
+const APP_VER = 'v2026.09.28.5';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -703,8 +703,13 @@ function renderRace(ts) {
   cam.s += Math.max(-8, Math.min(8, camDelta * 0.30));
 
   const scale = pxPerM;
-  const winBack = Math.min(cam.s, 6 * scale);           // 起点后没有赛道
-  const winFwd = (leadS - cam.s) + 5 * scale;
+  const sClamp = (s) => Math.max(0, Math.min(L, s));
+  // 跑道必须铺满整个画布宽度：
+  // 比赛刚开始时可视窗口只有几十米，若只按 cam.s±窗口 取样，跑道只画到屏幕左侧，
+  // 右边会留一大片暗色（看起来像地图没加载完）。
+  // 这里把取样范围钉在画布左右边缘上，超出的部分由 trackPtExt 沿切线外推补齐。
+  const winBack = 18 / scale;
+  const winFwd = (W - 18) / scale - 0;
   const p0 = S.trackPoint(cam.s, 10, geo, dir);
   const e0 = S.trackPoint(Math.max(0, cam.s - 2), 10, geo, dir);
   const e1 = S.trackPoint(Math.min(L, cam.s + 2), 10, geo, dir);
@@ -719,7 +724,6 @@ function renderRace(ts) {
   const midAt20 = (S.trackPoint(cam.s, 20, geo, dir).x - p0.x) * innerX +
                   (S.trackPoint(cam.s, 20, geo, dir).y - p0.y) * innerY;
   const cy = H * SNAP_VIEW.anchor - (midAt0 + midAt20) / 2 * yScale;
-  const sClamp = (s) => Math.max(0, Math.min(L, s));
   // 横向偏移按"该点自身的跑道横截面"计算，不能用镜头处的切向：
   // 弯道里 200m 外的切线已转了近 90°，用镜头切向投影会把 10m 的横向偏移
   // 量成 ~100m，马匹被推出画布（实测 y 达 -366）。逐点取该处切线的法向即可。

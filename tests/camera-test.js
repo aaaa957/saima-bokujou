@@ -214,6 +214,22 @@ console.log('  纵向范围 y = ' + (yMin > 1e8 ? 'n/a' : yMin.toFixed(0) + ' ~ 
 check(yBad === 0, '马匹纵向也全部在画布内（越界 ' + yBad + ' / ' + totalHorseFrames + '）' +
   (worstY ? '，最坏 y=' + worstY.y.toFixed(0) + ' @t=' + worstY.t.toFixed(1) + 's' : ''));
 
+console.log('\n【跑道覆盖率】');
+{
+  let worstL = -1e9, worstR = 1e9, badFrames = 0;
+  samples.forEach((fr) => {
+    const v = fr.view;
+    const xL = 18 + (v.camS - v.winBack - v.camS) * v.scale;   // 左端取样点
+    const xR = 18 + v.winFwd * v.scale;                        // 右端取样点
+    if (xL > worstL) worstL = xL;
+    if (xR < worstR) worstR = xR;
+    if (xL > 2 || xR < CANVAS_W - 2) badFrames++;
+  });
+  console.log('  最差覆盖：左端 x=' + worstL.toFixed(1) + '，右端 x=' + worstR.toFixed(1) +
+              '（画布宽 ' + CANVAS_W + '）');
+  check(badFrames === 0, '每一帧跑道都铺满画布宽度（未铺满的帧 ' + badFrames + ' / ' + samples.length + '）');
+}
+
 console.log('\n【小地图（全体图）检查】');
 {
   const G = S.trackGeometry(2000);
