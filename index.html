@@ -434,6 +434,14 @@ const numColor = (i) => (NUM_DARK.includes(i % 8) ? '#111' : '#fff');
 let seed = 186, field = [], staff = null, report = null, oddsMap = {};
 let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
+/* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
+   支持用 URL 参数临时覆盖，方便调参与对比截图：
+   index.html?perspD=180&yScale=15&anchor=0.46#snap */
+const SNAP_VIEW = (() => {
+  const q = (typeof location !== 'undefined' && location.search) ? new URLSearchParams(location.search) : null;
+  const num = (k, d) => { const v = q ? parseFloat(q.get(k)) : NaN; return isFinite(v) ? v : d; };
+  return { perspD: num('perspD', 180), yScale: num('yScale', 12), anchor: num('anchor', 0.58) };
+})();
 let bankroll = 50, bet = { horseId: null, amount: 0, target: null };
 let mode = 'career', career = null, careerStaff = null;
 let betResult = null;
@@ -644,20 +652,52 @@ function renderRace(ts) {
   const { R, B, S: St } = geo;
   const dir = snap.dir;
   const slopeG = snap.g;
-  // ---- 转播镜头：跟随领头马，行进方向固定为画面横轴 ----
-  // 镜头窗口随曲率动态变焦：直道宽景(马群铺开)、弯道紧追(跑道在画面中转弯)
-  // 乱晃修复：bendF 平滑过渡 + 镜头位置指数逼近（前进限速、后退缓收），
-  // 消除弯道出入口的"变焦突跳"与"镜头瞬间后跳"
-  const kHere = S.kAt(Math.min(L, Math.max(0, leaderH ? leaderH.s : 0)), geo);
-  const targetBendF = Math.min(1, kHere * R);
-  if (!cam) cam = { s: Math.max(0, (leaderH ? leaderH.s : 0) - 150), bendF: targetBendF };
-  cam.bendF += (targetBendF - cam.bendF) * 0.10;
-  const lookBehind = 150 - cam.bendF * 115;
-  const lookAhead = 50 - cam.bendF * 20;
-  const camTarget = Math.max(0, (leaderH ? leaderH.s : 0) - lookBehind);
+  // ---- 转播镜头 ----
+  // 设计目标（修三个问题）：弯道不乱缩放、马绝不出画、远景不再压成细线。
+  // 做法：
+  //  1) bendF 同时驱动"缩放"和"后视距离"，两者按同一比例变化，
+  //     因此取景窗口的横向范围随缩放同比收缩，画面观感稳定；
+  //     且弯道缩放上限只有约 1.45 倍（原来 3.0 倍），不会突跳。
+  //  2) 镜头位置直接由「头马位置 − 后视距离」给出，并且平移速度按窗口缩放，
+  //     不再有"每帧最多前进 12m"的限速——那是马跑出画面的直接原因。
+  //  3) 透视距离放宽到 340，远处跑道不再被压成一条线。
+  // 全部马匹冲线后 snap.leader 会变成 null，若直接用 0 会让取景窗口塌缩、
+  // 镜头瞬间跳回起点。此时把镜头钉在终点，让最后一眼停在冲线画面。
+  const allHome = !leaderH && snap.horses.every((h) => h.place || h.dnf);
+  const leadS = leaderH ? leaderH.s : (allHome ? L : 0);
+  // 弯道因子取「窗口平均曲率」而非瞬时曲率：
+  // kAt 在弯道口是阶跃的，直接用会让缩放出现急动（实测二阶差分 1.8%/帧）。
+  // 在头马前后各取若干采样点求平均，缩放就会提前缓入、过后缓出——像真实转播镜头。
+  let kSum = 0, kN = 0;
+  for (let d = -70; d <= 30; d += 10) {
+    kSum += S.kAt(Math.min(L, Math.max(0, leadS + d)), geo);
+    kN++;
+  }
+  /* 赛道观感参数。
+     yScale 决定跑道带的高度：带高 = 20 * yScale（固定，与镜头距离无关）。
+     H=460 的画布下取 12 → 240px，约占画面一半；再大就会把外栏顶出画布，
+     马会贴在画布上边缘（曾取 15 → 带高 300px，外栏 y=-116 被裁掉）。
+     anchor 是"镜头处跑道中点"落在画面的纵向比例，0.58 让跑道略偏下、
+     上方留出远景空间，接近电视赛马转播的取景。 */
+  const yScale = SNAP_VIEW.yScale;
+  const camBehindOf = (b) => 120 + b * 50;             // 170 → 120（1.42 倍）
+  const camAheadOf = (b) => 40 + b * 15;               // 55 → 40
+  const targetBendF = Math.min(1, Math.max(0, (kSum / kN) * R));
+  if (!cam) cam = { s: Math.max(0, leadS - camBehindOf(targetBendF)), bendF: targetBendF };
+  cam.bendF += (targetBendF - cam.bendF) * 0.05;
+
+  const pxPerM = (W - 38) / (camBehindOf(cam.bendF) + camAheadOf(cam.bendF));
+  const camTarget = Math.max(0, leadS - camBehindOf(cam.bendF));
   const camDelta = camTarget - cam.s;
-  if (camDelta > 0) cam.s += Math.min(12, camDelta * 0.25);
-  else cam.s = Math.max(camTarget, cam.s + Math.max(-8, camDelta * 0.15));
+  // 平移：按比例逼近 + 只做大跳保护。
+  // 这个上限必须远大于马速（头马约 0.5m/帧），否则镜头追不上、马会跑出取景窗口
+  // （曾误设为 0.66m/帧，实测镜头落后头马 1800m）。平滑由 0.30 的指数系数负责，
+  // 上限只用于防止镜头瞬移。
+  cam.s += Math.max(-8, Math.min(8, camDelta * 0.30));
+
+  const scale = pxPerM;
+  const winBack = Math.min(cam.s, 6 * scale);           // 起点后没有赛道
+  const winFwd = (leadS - cam.s) + 5 * scale;
   const p0 = S.trackPoint(cam.s, 10, geo, dir);
   const e0 = S.trackPoint(Math.max(0, cam.s - 2), 10, geo, dir);
   const e1 = S.trackPoint(Math.min(L, cam.s + 2), 10, geo, dir);
@@ -665,28 +705,42 @@ function renderRace(ts) {
   const tl = Math.hypot(tx, ty) || 1; tx /= tl; ty /= tl;
   const innerX = dir === '右回' ? ty : -ty;
   const innerY = dir === '右回' ? -tx : tx;
-  const scale = (W - 36) / (lookBehind + lookAhead);
-  const cy = H - 125;
-  const yScale = 9;
-  // 伪透视投影：x 按行进弧长（行进方向恒为右），y 为横向偏移并按 1/(1+|d|/D) 衰减，
-  // 远处跑道自然收窄、弯道曲率被透视压缩——模仿电视长焦镜头
-  const perspD = 90;
-  const proj = (p, s) => {
-    const rx = p.x - p0.x, ry = p.y - p0.y;
-    const l = rx * innerX + ry * innerY;
+  const perspD = SNAP_VIEW.perspD;
+  // 画面纵向锚点取"镜头处跑道中点"，跑道不会随透视上下漂移
+  const midAt0 = (S.trackPoint(cam.s, 0, geo, dir).x - p0.x) * innerX +
+                 (S.trackPoint(cam.s, 0, geo, dir).y - p0.y) * innerY;
+  const midAt20 = (S.trackPoint(cam.s, 20, geo, dir).x - p0.x) * innerX +
+                  (S.trackPoint(cam.s, 20, geo, dir).y - p0.y) * innerY;
+  const cy = H * SNAP_VIEW.anchor - (midAt0 + midAt20) / 2 * yScale;
+  // 横向偏移按"该点自身的跑道横截面"计算，不能用镜头处的切向：
+  // 弯道里 200m 外的切线已转了近 90°，用镜头切向投影会把 10m 的横向偏移
+  // 量成 ~100m，马匹被推出画布（实测 y 达 -366）。逐点取该处切线的法向即可。
+  const projT = (s, lane) => {
+    const q = S.trackPoint(s, lane, geo, dir);
+    const ref = S.trackPoint(s, 10, geo, dir);
+    const a = S.trackPoint(Math.max(0, s - 2), 10, geo, dir);
+    const b = S.trackPoint(Math.min(L, s + 2), 10, geo, dir);
+    let dx = b.x - a.x, dy = b.y - a.y;
+    const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
+    const lat = (q.x - ref.x) * (-dy) + (q.y - ref.y) * dx;  // 相对跑道中线的横向偏移
     const ps = 1 / (1 + Math.abs(s - cam.s) / perspD);
-    return { x: 18 + (s - cam.s) * scale, y: cy - l * yScale * ps, ps };
+    return { x: 18 + (s - cam.s) * scale, y: cy - lat * yScale * ps, ps, lat };
   };
   const sClamp = (s) => Math.max(0, Math.min(L, s));
+  // 调试/测试用：暴露本帧实际使用的取景参数与投影函数
+  cam.lastView = { scale, camS: cam.s, leadS, winBack, winFwd, bendF: cam.bendF,
+                   cy, yScale, project: (s, lane) => projT(s, lane) };
 
   ctx.fillStyle = '#152c1e'; ctx.fillRect(0, 0, W, H);
   // 跑道带：采样内外栏，直道呈水平、弯道自然弯曲
+  // 采样范围 = 马匹绘制范围，保证画到的马都在已铺好的跑道上
   const bandIn = [], bandOut = [];
   const step = 3;
-  for (let s = cam.s - 8; s <= cam.s + lookBehind + lookAhead + 8; s += step) {
+  const winLo = cam.s - winBack, winHi = cam.s + winFwd;
+  for (let s = winLo; s <= winHi + 8; s += step) {
     const ss = sClamp(s);
-    bandIn.push(proj(S.trackPoint(ss, 0, geo, dir), ss));
-    bandOut.push(proj(S.trackPoint(ss, 20, geo, dir), ss));
+    bandIn.push(projT(ss, 0));
+    bandOut.push(projT(ss, 20));
   }
   const poly = (pts) => { ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y); for (const p of pts) ctx.lineTo(p.x, p.y); };
   ctx.fillStyle = '#2f7f4a';
@@ -706,7 +760,7 @@ function renderRace(ts) {
   // 坡度着色（逐段贴色）与标注
   if (slopeG > 0) {
     for (let i = 0; i < bandIn.length - 1; i++) {
-      const sMid = sClamp(cam.s - 8 + i * step + step / 2);
+      const sMid = sClamp(winLo + i * step + step / 2);
       const gr = S.gradientAt(sMid, geo, slopeG);
       if (gr > 0.001) {
         ctx.fillStyle = 'rgba(255,170,60,0.18)';
@@ -729,7 +783,7 @@ function renderRace(ts) {
     ];
     ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
     slopeLabels.forEach((lb) => {
-      const q = proj(S.trackPoint(sClamp(lb.s), 22, geo, dir), sClamp(lb.s));
+      const q = projT(sClamp(lb.s), 22);
       if (q.x > 30 && q.x < W - 30 && q.y > 12 && q.y < H) { ctx.fillStyle = lb.color; ctx.fillText(lb.text, q.x, Math.max(14, q.y - 8)); }
     });
   }
@@ -737,28 +791,28 @@ function renderRace(ts) {
   // 距离标记（每200m）
   ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
   for (let m = 200; m < L; m += 200) {
-    const q0 = proj(S.trackPoint(m, 0, geo, dir), m);
-    const q1 = proj(S.trackPoint(m, 20, geo, dir), m);
+    const q0 = projT(m, 0);
+    const q1 = projT(m, 20);
     if (q0.x < -20 || q0.x > W + 20 || q0.y < -20 || q0.y > H + 20) continue;
     ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(q0.x, q0.y); ctx.lineTo(q1.x, q1.y); ctx.stroke();
-    const qm = proj(S.trackPoint(m, 23, geo, dir), m);
+    const qm = projT(m, 23);
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.fillText('残' + (L - m), qm.x, qm.y);
   }
 
   // 起跑线（虚线）与终点线（黑白格）
-  const st0 = proj(S.trackPoint(0, 0, geo, dir), 0), st1 = proj(S.trackPoint(0, 20, geo, dir), 0);
+  const st0 = projT(0, 0), st1 = projT(0, 20);
   if (st0.x > -10 && st0.x < W + 10) {
     ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.setLineDash([6, 6]); ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(st0.x, st0.y); ctx.lineTo(st1.x, st1.y); ctx.stroke();
     ctx.setLineDash([]);
   }
-  const fnA = proj(S.trackPoint(L, 0, geo, dir)), fnB = proj(S.trackPoint(L, 20, geo, dir));
+  const fnA = projT(L, 0), fnB = projT(L, 20);
   if (fnA.x > -20 && fnA.x < W + 20) {
     for (let i = 0; i < 8; i++) {
-      const ta = proj(S.trackPoint(L, i * 2.5, geo, dir), L);
-      const tb = proj(S.trackPoint(L, (i + 1) * 2.5, geo, dir), L);
+      const ta = projT(L, i * 2.5);
+      const tb = projT(L, (i + 1) * 2.5);
       ctx.fillStyle = i % 2 ? '#141414' : '#f0f0f0';
       ctx.beginPath(); ctx.moveTo(ta.x, ta.y); ctx.lineTo(tb.x, tb.y);
       ctx.lineTo(tb.x + 2, tb.y + 2); ctx.lineTo(ta.x + 2, ta.y + 2);
@@ -770,18 +824,27 @@ function renderRace(ts) {
   ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(232,201,106,0.9)';
   [[St, '1弯'], [St + B, '2弯'], [2 * St + B, '3弯'], [2 * St + 2 * B, '4弯']].forEach(([sJ, label]) => {
-    const q = proj(S.trackPoint(sJ, 22, geo, dir), sJ);
+    const q = projT(sJ, 22);
     if (q.x > 24 && q.x < W - 24 && q.y > 10 && q.y < H) ctx.fillText(label, q.x, Math.max(16, q.y - 10));
   });
 
-  // 马匹（画面外的马堆叠在左缘显示）
+  // 远端淡出：让画面右侧收在雾里，而不是生硬截断
+  const fogW = Math.max(70, W * 0.10);
+  const fog = ctx.createLinearGradient(W - fogW, 0, W, 0);
+  fog.addColorStop(0, 'rgba(21,44,30,0)');
+  fog.addColorStop(1, 'rgba(21,44,30,1)');
+  ctx.fillStyle = fog; ctx.fillRect(W - fogW, 0, fogW, H);
+
+  // 马匹
+  // 1) 被镜头落在身后的马 → 收在左缘竖排，避免"凭空消失"
+  // 2) 名字标签按屏幕位置错行，解决近景时挤成一团
   const sorted = snap.horses.slice().sort((a, b) => b.s - a.s);
+  const laneOff = [];
   let offCount = 0;
   sorted.forEach((h) => {
     if (h.dnf) return;
-    const q = proj(S.trackPoint(h.s, h.t, geo, dir), h.s);
     const idx = field.findIndex((f) => f.id === h.id);
-    if (q.x < 14 || q.y < -30 || q.y > H + 30) {
+    if (h.s < cam.s - 4) {                       // 在镜头后方
       const iy = 64 + offCount * 17; offCount++;
       ctx.fillStyle = capColor(idx);
       ctx.beginPath(); ctx.arc(11, iy, 6.5, 0, Math.PI * 2); ctx.fill();
@@ -792,7 +855,8 @@ function renderRace(ts) {
       ctx.fillText(h.name, 21, iy + 3);
       return;
     }
-    if (q.x > W + 40) return;
+    const q = projT(h.s, h.t);
+    if (q.x < -10 || q.x > W + 60) return;       // 窗口外（含镜头前极限）
     const xx = q.x, yy = q.y;
     const cc = capColor(idx), nc = numColor(idx);
     const hs = Math.max(5.5, 8.5 * q.ps);
@@ -807,10 +871,15 @@ function renderRace(ts) {
     ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = 1; ctx.stroke();
     ctx.fillStyle = nc; ctx.font = 'bold ' + Math.max(8, Math.round(10 * q.ps)) + 'px sans-serif'; ctx.textAlign = 'center';
     ctx.fillText(String(idx + 1), xx, yy + 3.5 * q.ps);
+    // 名字：横向相邻的马错行显示，避免重叠
+    const laneGap = laneOff.length && Math.abs(xx - laneOff[laneOff.length - 1]) < 44;
+    const dy = laneGap ? 15 : 0;
+    laneOff.push(xx);
     ctx.font = '10px sans-serif';
     const tw = ctx.measureText(h.name).width;
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(xx - tw / 2 - 3, yy - hs - 16, tw + 6, 13);
-    ctx.fillStyle = '#fff'; ctx.fillText(h.name, xx, yy - hs - 6);
+    const ty = Math.max(12, yy - hs - 8 - dy);
+    ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(xx - tw / 2 - 3, ty - 11, tw + 6, 13);
+    ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.fillText(h.name, xx, ty);
     if (h.stage === '失速') { ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('失速', xx, yy + hs + 9); }
     else if (h.stage === '毅力') { ctx.fillStyle = '#ffb84d'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('毅', xx, yy + hs + 9); }
   });
@@ -1800,8 +1869,10 @@ window.addEventListener('error', (e) => {
 function runSnap() {
   genField(seed);
   race = S.createRace(field, { length: 2000, styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
+  // #snap?steps=N 可指定推进步数，便于截取直道/弯道等不同位置
+  const wantSteps = parseInt(new URLSearchParams(location.search).get('steps'), 10) || 1800;
   let g = 0;
-  while (g++ < 1800) race.step(1 / 30);
+  while (g++ < wantSteps && !race.race.finished) race.step(1 / 30);
   show('race'); paused = true;
   renderRace(performance.now());
   const st = race.state();
