@@ -440,7 +440,7 @@ let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = 
 const SNAP_VIEW = (() => {
   const q = (typeof location !== 'undefined' && location.search) ? new URLSearchParams(location.search) : null;
   const num = (k, d) => { const v = q ? parseFloat(q.get(k)) : NaN; return isFinite(v) ? v : d; };
-  return { perspD: num('perspD', 180), yScale: num('yScale', 12), anchor: num('anchor', 0.58) };
+  return { perspD: num('perspD', 180), yScale: num('yScale', 12), anchor: num('anchor', 0.48) };
 })();
 let bankroll = 50, bet = { horseId: null, amount: 0, target: null };
 let mode = 'career', career = null, careerStaff = null;
@@ -712,21 +712,36 @@ function renderRace(ts) {
   const midAt20 = (S.trackPoint(cam.s, 20, geo, dir).x - p0.x) * innerX +
                   (S.trackPoint(cam.s, 20, geo, dir).y - p0.y) * innerY;
   const cy = H * SNAP_VIEW.anchor - (midAt0 + midAt20) / 2 * yScale;
+  const sClamp = (s) => Math.max(0, Math.min(L, s));
   // 横向偏移按"该点自身的跑道横截面"计算，不能用镜头处的切向：
   // 弯道里 200m 外的切线已转了近 90°，用镜头切向投影会把 10m 的横向偏移
   // 量成 ~100m，马匹被推出画布（实测 y 达 -366）。逐点取该处切线的法向即可。
+  // 端点延伸：赛道在 s=0 / s=L 之外仍然存在（起跑区与冲线缓冲）。
+  // 不延伸的话，画布右缘会出现"跑道被截断"的空缺——像地图没加载完。
+  const trackPtExt = (s, lane) => {
+    if (s < 0 || s > L) {
+      const endS = s < 0 ? 0 : L;
+      const q = S.trackPoint(endS, lane, geo, dir);
+      const a = S.trackPoint(Math.max(0, endS - 2), 10, geo, dir);
+      const b = S.trackPoint(endS, 10, geo, dir);
+      let dx = b.x - a.x, dy = b.y - a.y;
+      const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
+      const over = s < 0 ? s : s - L;          // 负=起点之前，正=终点之后
+      return { x: q.x + dx * over, y: q.y + dy * over };
+    }
+    return S.trackPoint(s, lane, geo, dir);
+  };
+  // 统一投影：横向按该点自身的跑道横截面，纵向按该处切线法向
   const projT = (s, lane) => {
-    const q = S.trackPoint(s, lane, geo, dir);
-    const ref = S.trackPoint(s, 10, geo, dir);
-    const a = S.trackPoint(Math.max(0, s - 2), 10, geo, dir);
-    const b = S.trackPoint(Math.min(L, s + 2), 10, geo, dir);
+    const q = trackPtExt(s, lane);
+    const ref = trackPtExt(s, 10);
+    const a = trackPtExt(s - 2, 10), b = trackPtExt(s + 2, 10);
     let dx = b.x - a.x, dy = b.y - a.y;
     const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
-    const lat = (q.x - ref.x) * (-dy) + (q.y - ref.y) * dx;  // 相对跑道中线的横向偏移
+    const lat = (q.x - ref.x) * (-dy) + (q.y - ref.y) * dx;
     const ps = 1 / (1 + Math.abs(s - cam.s) / perspD);
     return { x: 18 + (s - cam.s) * scale, y: cy - lat * yScale * ps, ps, lat };
   };
-  const sClamp = (s) => Math.max(0, Math.min(L, s));
   // 调试/测试用：暴露本帧实际使用的取景参数与投影函数
   cam.lastView = { scale, camS: cam.s, leadS, winBack, winFwd, bendF: cam.bendF,
                    cy, yScale, project: (s, lane) => projT(s, lane) };
@@ -738,9 +753,8 @@ function renderRace(ts) {
   const step = 3;
   const winLo = cam.s - winBack, winHi = cam.s + winFwd;
   for (let s = winLo; s <= winHi + 8; s += step) {
-    const ss = sClamp(s);
-    bandIn.push(projT(ss, 0));
-    bandOut.push(projT(ss, 20));
+    bandIn.push(projT(s, 0));       // 不 clamp：超出 s∈[0,L] 时沿切线延伸，
+    bandOut.push(projT(s, 20));     // 避免画布边缘出现"跑道被截断"的空缺
   }
   const poly = (pts) => { ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y); for (const p of pts) ctx.lineTo(p.x, p.y); };
   ctx.fillStyle = '#2f7f4a';
@@ -885,8 +899,14 @@ function renderRace(ts) {
   });
 
   // 小地图（右上角全体图）
-  const mmScale = Math.min(150 / (St + 2 * R), 92 / (2 * R));
-  const mmCx = W - 92, mmCy = 84;
+  // 注意 trackPoint 的直道落在 y = -R-d（终直在 y=-130、对直在 y=+130），
+  // 所以椭圆的外接矩形是 [-(S/2+R), +(S/2+R)] × [-(R+10), +(R+10)]。
+  // 定位必须用同一个半尺寸，否则直道上的马会被画到圆环边缘之外。
+  const mmScale = Math.min(150 / (St / 2 + R + 10), 88 / (R + 10));
+  const mmHalfW = (St / 2 + R + 10) * mmScale;
+  const mmHalfH = (R + 10) * mmScale;
+  const mmCx = W - 14 - mmHalfW;
+  const mmCy = 14 + mmHalfH;                            // 版面几何中心
   const mmx = (x) => mmCx + x * mmScale;
   const mmy = (y) => mmCy - y * mmScale;
   const ohw2 = St / 2 + 10, ohh2 = R + 10, ihw2 = St / 2 - 10, ihh2 = R - 10;
@@ -900,13 +920,16 @@ function renderRace(ts) {
   ctx.fillText('全体图', mmCx, mmy(ohh2) - 4);
   snap.horses.forEach((h) => {
     if (h.dnf) return;
-    const p = S.trackPoint(h.s, h.t, geo, dir);
+    const p = S.trackPoint(sClamp(h.s), h.t, geo, dir);   // 冲线后 s>L 的点会落到环外，先夹住
     const idx = field.findIndex((f) => f.id === h.id);
+    // 再夹进赛道环的外接范围，保证点始终画在环内
+    const gx = Math.max(-ohw2, Math.min(ohw2, p.x));
+    const gy = Math.max(-ohh2, Math.min(ohh2, p.y));
     ctx.fillStyle = capColor(idx);
-    ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), h.id === playerId ? 3.5 : 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(mmx(gx), mmy(gy), h.id === playerId ? 3.5 : 2.5, 0, Math.PI * 2); ctx.fill();
     if (h.id === playerId) {
       ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), 5, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(mmx(gx), mmy(gy), 5, 0, Math.PI * 2); ctx.stroke();
     }
   });
 

@@ -22,7 +22,6 @@ const frames = [];          // 记录每帧绘制内容，供离线渲染成图
 
 function makeCtx(rec) {
   const noop = () => {};
-  let cur = { fillStyle: '#000', strokeStyle: '#000', lineWidth: 1 };
   const ctx = {
     fillStyle: '#000', strokeStyle: '#000', font: '10px sans-serif',
     textAlign: 'left', textBaseline: 'alphabetic', lineWidth: 1, globalAlpha: 1,
@@ -35,13 +34,20 @@ function makeCtx(rec) {
     translate: noop, rotate: noop, scale: noop, setTransform: noop,
     drawImage: noop, setLineDash: noop, clip: noop,
     quadraticCurveTo: noop, bezierCurveTo: noop, ellipse: noop,
-    arc: (x, y, r) => { if (rec) rec.push({ op: 'arc', x, y, r, c: ctx.fillStyle, lw: ctx.lineWidth }); },
+    arc: (x, y, r) => {
+      if (rec) rec.push({ op: 'arc', x, y, r, c: ctx.fillStyle, lw: ctx.lineWidth });
+      if (MINI_ARCS) MINI_ARCS.push({ x, y, r, stroke: ctx.strokeStyle });
+    },
     measureText: (t) => ({ width: String(t).length * 6 }),
     createLinearGradient: () => ({ addColorStop: noop }),
-    roundRect: noop,
+    roundRect: (x, y, w, h, rr) => {
+      if (rec) rec.push({ op: 'roundRect', x, y, w, h, rr, c: ctx.fillStyle });
+      if (MINI_RECTS) MINI_RECTS.push({ x, y, w, h, c: ctx.fillStyle });
+    },
   };
   return ctx;
 }
+let MINI_ARCS = null, MINI_RECTS = null;
 
 /* ---- stub DOM ---- */
 const els = {};
@@ -139,6 +145,13 @@ while (!rc.race.finished && stepCount++ < MAX) {
   }
 }
 
+/* 再渲染最后一帧，专门收集小地图的圆点位置 */
+MINI_ARCS = [];
+recCtx = makeCtx(null);
+ctxObj.__renderRace(performance.now());
+const mmArcs = MINI_ARCS.slice();
+MINI_ARCS = null;
+
 console.log('比赛用时 ' + rc.race.winnerTime.toFixed(1) + 's，采样 ' + samples.length + ' 帧\n');
 if (process.env.TRACE) {
   console.log('【镜头轨迹抽样】(t, camS, leadS, gap=camS-behind, 头马s)');
@@ -200,6 +213,23 @@ console.log('  纵向范围 y = ' + (yMin > 1e8 ? 'n/a' : yMin.toFixed(0) + ' ~ 
             '（画布高 ' + CANVAS_H + '）');
 check(yBad === 0, '马匹纵向也全部在画布内（越界 ' + yBad + ' / ' + totalHorseFrames + '）' +
   (worstY ? '，最坏 y=' + worstY.y.toFixed(0) + ' @t=' + worstY.t.toFixed(1) + 's' : ''));
+
+console.log('\n【小地图（全体图）检查】');
+{
+  const G = S.trackGeometry(2000);
+  const St = G.S, R = G.R;
+  const mmScale = Math.min(150 / (St / 2 + R + 10), 88 / (R + 10));
+  const halfW = (St / 2 + R + 10) * mmScale, halfH = (R + 10) * mmScale;
+  const cx = CANVAS_W - 14 - halfW, cyy = 14 + halfH;
+  const box = { x0: cx - halfW, x1: cx + halfW, y0: cyy - halfH, y1: cyy + halfH };
+  const dots = mmArcs.filter((a) => a.r <= 6 && a.x > CANVAS_W * 0.8 && a.y < 140);
+  console.log('  小地图区域 x∈[' + box.x0.toFixed(0) + ',' + box.x1.toFixed(0) +
+              '] y∈[' + box.y0.toFixed(0) + ',' + box.y1.toFixed(0) + ']，捕获 ' + dots.length + ' 个点');
+  const out = dots.filter((d) => d.x < box.x0 - 4 || d.x > box.x1 + 4 || d.y < box.y0 - 4 || d.y > box.y1 + 4);
+  check(out.length === 0, '小地图代表点全部落在赛道环内（越界 ' + out.length + ' 个）' +
+    (out.length ? '，例：(' + out[0].x.toFixed(0) + ',' + out[0].y.toFixed(0) + ')' : ''));
+  check(dots.length >= 8, '8 匹马都画进了小地图（实际 ' + dots.length + ' 个）');
+}
 
 /* 逐帧缩放变化率：不只看幅度，更看是否有"突跳"（二阶差分尖峰） */
 const ratio = Math.max.apply(null, scales) / Math.min.apply(null, scales);
