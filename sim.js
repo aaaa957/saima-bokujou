@@ -149,16 +149,89 @@
   };
   function actionBonus(a) { return ACTION_DEF[a] || { coef: 0, stamina: 1 }; }
 
-  /* 基础速度（3.10）
-     ⚠️ 已知问题（见 tests/attribute-impact.js 的实测）：
-     这里的斜率让「速度」成为唯一决定胜负的属性——速度 +20 的胜率约 73%，
-     而耐力/毅力/爆发力 +20 几乎毫无影响（±3 个百分点以内）。
-     原因是 base 会乘进全部五个阶段的潜在速度，等效杠杆远大于其它属性。
-     修它需要连同「耐力池消耗」与「终盘爆发系数」一起重新标定，
-     会改变着差中位数等既有基线（实测会让中位数从 10.99 降到 6.07），
-     因此单独作为一次专项改动处理，不在本次市场模型改动里夹带。 */
+  /* ============================================================
+   * 比赛公式参数（3.10 重做）
+   * ------------------------------------------------------------
+   * 旧公式的三个问题（均由 tests/attribute-impact.js 实测确认）：
+   *   ① 速度独占：速度 +20 胜率 73%，而耐力 +20 = +0.0、毅力 +20 = +1.3
+   *   ② 耐力无机制：毅力阶段"锁定额定速度"，全程没有任何衰减，
+   *      耐力池还有富余时多加耐力毫无价值（实测耐力 70→90 完赛时间完全相同）
+   *   ③ 速度标尺偏慢：2000m 要 139~166 秒（现实约 120 秒），最高速仅 47 km/h
+   *
+   * 新设计：把"速度"定义为上限、"耐力/毅力"定义为维持上限的能力，
+   * 并通过「连续掉速」把两者连起来——这是现实中两者的真实关系。
+   * ============================================================ */
+  const RACE_F = {
+    /* ① 基础速度标尺（m/s）
+       ⚠️ 核心约束：速度是【乘法】作用于全程五个阶段的。
+       速度高 1.5% → 2000m 就领先约 40 米，足以决定胜负。
+       实测：速度 +20 在斜率 0.26 时胜率 +74.5 个百分点，压到 0.08 仍有 +39.5。
+       所以速度标尺必须压得很窄（速度 50→100 仅 14.8→17.0 m/s，约 15% 区间），
+       让它只负责"整体水准"；能力差异改由【阶段专属属性】承担（见 ⑤）。
+       标定：速度70 → 15.7 m/s，2000m 约 130 秒（现实 120 秒）。 */
+    baseSpeed: { a: 0.045, b: 12.55, min: 40, max: 115 },
+    /* ② 耐力池与消耗
+       关键设计一：消耗由【距离】驱动，不由时间驱动。
+       若按时间消耗，"掉速 → 跑得久 → 消耗更多 → 掉得更快"会形成死亡螺旋
+       （实测按时间消耗时完赛时间从 120 秒飙到 170~206 秒）。
+       按距离消耗则每米消耗固定，掉速不会反过来加剧消耗，系统稳定可读。
+
+       关键设计二：消耗按【本场距离】归一，而不是固定绝对值。
+       若按固定值标定（"耐力70 恰好在 2000m 用完"），则 2400m 会提前耗尽，
+       实测出现末位慢 95 秒、3000m 全场中止。
+       归一后，"耐力 70 = 任何距离都刚好够用"，距离只改变门槛的绝对值：
+       1200m 时耐力富余（速度独大），3000m 时耐力成为硬门槛。 */
+    staminaPer: 60,          // 池 = 耐力 × 60
+    gutsPer: 60,             // 池 = 毅力 × 60
+    drainA: 2.4,             // 每秒消耗 = 瞬时速度 × drainA × 距离系数 × 坡度 × 骑手系数
+    drainDistBase: 2000,
+    drainDistExp: 0.45,      // 距离指数：长距离每米消耗更高，但不线性爆掉
+    /* ③ 连续掉速（温和渐进，绝不能做成"崩溃"）
+       retention = 1 - retainK × (1 - 剩余耐力比)
+       现实中的马是逐渐失速而非骤停。retainK 过大会触发死亡螺旋：
+       掉速→落后→耗时更久→消耗更多→掉得更多（实测 retainK=0.85 时
+       完赛时间从 120 秒涨到 190 秒）。0.22 对应"耗尽时约慢 20%"。 */
+    retainK: 0.22,
+    retainFloor: 0.80,
+    /* ④ 毅力阶段：耐力耗尽后由毅力接续，额外掉速（幅度同样要克制） */
+    gutsRetainK: 0.18,
+    gutsFloor: 0.72,
+    /* ⑤ 阶段专属属性（关键设计）
+       旧实现里所有属性都只影响 base，而 base 乘以风格系数作用于全程——
+       结果是"跑法"（风格系数差 ±7%）完全盖过"属性"（速度差 ±1.5%），
+       比赛由跑法决定，属性形同虚设。
+       现在把属性按【阶段】分配，每个属性都有专属的作用区间：
+         出闸 ← 出闸能力、序盘/中盘 ← 力量、后盘 ← 毅力、终盘 ← 爆发力。
+       k=0.16：属性 50→90 时该阶段系数变化约 ±6.4%，与风格系数同量级，
+       于是"跑法"与"属性"共同决定胜负。 */
+    stageAttr: {
+      break: { key: '出闸能力', k: 0.16 },
+      open:  { key: '力量',     k: 0.16 },
+      mid:   { key: '力量',     k: 0.16 },
+      late:  { key: '毅力',     k: 0.16 },
+      final: { key: '爆发力',   k: 0.16 },
+    },
+    /* ⑥ 终盘爆发修正（3.10(6)）：在阶段属性之外再给爆发力一份额外权重。
+       旧值 0.10 下爆发力 +20 只值 +3.4% 终盘速度、胜率仅 +2.7 个百分点。 */
+    burstFactor: { doc: 0.35, balanced: 0.25 },
+  };
+
+  /* 基础速度（3.10 重做）
+     线性且斜率适中：既保留"速度是最重要的单项能力"，又不让它一票独裁。 */
   function baseSpeed(spd) {
-    return 1.944 + 0.15552 * Math.min(spd, 50) + 0.1944 * Math.max(spd - 50, 0);
+    const F = RACE_F.baseSpeed;
+    const s = Math.max(F.min, Math.min(F.max, spd));
+    return F.a * s + F.b;
+  }
+  /* 距离消耗系数：让消耗按本场距离归一。
+     基准：耐力 70（池 4200）在 drainDistBase 距离上恰好耗尽。
+     更长的距离使同样的耐力不够用（绝对值上升），更短则富余。 */
+  function drainDistanceCoef(length) {
+    return Math.pow(Math.max(400, length) / RACE_F.drainDistBase, RACE_F.drainDistExp);
+  }
+  /* 本场的"耐力预算"：耐力 70 恰好用完所需的总消耗量 */
+  function staminaBudget(length) {
+    return 70 * RACE_F.staminaPer * drainDistanceCoef(length);
   }
   function horseLen(H) { return 2.25 + 0.55 * (H.adj['体格'] / 100); }
   function horseWid(H) { return 1.0 + 0.3 * (H.adj['体格'] / 100); }
@@ -618,12 +691,16 @@
     const geo = trackGeometry(length);
     const rng = o.rng || mulberry32(1);
     const styleCoefs = o.styleCoefs === 'doc' ? STYLE_COEF : STYLE_COEF_BALANCED;
-    /* 爆发修正系数：文档原版0.25下，爆发力90与60的马在终盘400m会差出约24马身，
-       平衡档降为0.10，让着差回到真实赛马量级 */
-    const burstFactor = o.styleCoefs === 'doc' ? 0.25 : 0.10;
+    /* 爆发修正系数：旧值 0.25/0.10 下爆发力 +20 只值约 3.4% 终盘速度，
+       实测对胜率仅 +2.7 个百分点——"末段加速"没有存在感。
+       新值提高到 0.45/0.30，配合连续掉速，让爆发力成为真正的第二个维度。 */
+    const burstFactor = o.styleCoefs === 'doc' ? RACE_F.burstFactor.doc : RACE_F.burstFactor.balanced;
     const race = {
       length, surface, state, dir, profile, g, geo, t: 0, finished: false,
       events: [], order: [], dnf: [], winnerTime: null,
+      /* 距离消耗系数与耐力预算：让"距离"影响属性重要性 */
+      drainCoef: drainDistanceCoef(length),
+      staminaBudget: staminaBudget(length),
       prevLead: null, phaseAnnounced: {}, posHistory: [], _lastPct: 0,
       lastEventAt: {},
     };
@@ -657,8 +734,9 @@
         h, id: h.id, name: h.name, style: h.style,
         jockey: h.jockeyGrade || '普通',
         s: 0, t: clamp(1.5 + rng() * 6, 1, 8), v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
-        stamina: adj['耐力'] * 60, guts: adj['毅力'] * 60,
-        stage: '耐力', lockedPot: null,
+        stamina: adj['耐力'] * RACE_F.staminaPer, guts: adj['毅力'] * RACE_F.gutsPer,
+        staminaMax: adj['耐力'] * RACE_F.staminaPer, gutsMax: adj['毅力'] * RACE_F.gutsPer,
+        stage: '耐力', retention: 1,
         collisionCoef: 1, collisionIntensity: 0,
         action: null, actionT: 0, _lastFinalAct: '推骑',
         lastObserve: -(rng() * 2),
@@ -876,6 +954,24 @@
             if (gapLead > 6) runCoef += Math.min(0.10, (gapLead - 6) * 0.008);
           }
         }
+        /* ---- 连续掉速：把"耐力/毅力"变成真正的机制 ----
+           旧实现只在毅力阶段"锁定额定速度"，全程没有衰减，
+           导致耐力池有富余时多加耐力毫无价值（实测耐力 70→90 完赛时间完全相同）。
+           现在改为：剩余耐力比例越低，可达速度衰减越多。
+           耐力池耗尽后由毅力接续，衰减更快、下限更低。
+           「耐力=维持奔跑速度的能力」这句设计意图由此落地。 */
+        let retention;
+        if (H.stage === '耐力') {
+          const ratio = H.stamina / Math.max(1, H.staminaMax);
+          retention = 1 - RACE_F.retainK * (1 - ratio);
+        } else if (H.stage === '毅力') {
+          const ratio = H.guts / Math.max(1, H.gutsMax);
+          retention = (1 - RACE_F.retainK) - RACE_F.gutsRetainK * (1 - ratio) * 0.5;
+        } else {
+          retention = RACE_F.gutsFloor;
+        }
+        H.retention = clamp(retention, RACE_F.gutsFloor, 1);
+
         let pot;
         if (ph.key === 'break') {
           pot = H.base * (runCoef * (0.8 + 0.4 * (H.adj['出闸能力'] / 100)) * H.breakNoise) * H.fieldCoef * H.fatMult;
@@ -884,7 +980,12 @@
         } else {
           pot = H.base * runCoef * H.fieldCoef * H.fatMult;
         }
-        if (H.stage === '毅力' && H.lockedPot !== null) pot = H.lockedPot;
+        /* 阶段专属属性修正：让每个属性在自己负责的阶段起作用，
+           而不是全部挤进 base（那会让"跑法"盖过"属性"）。
+           属性 70 为中性点，50→90 时系数变化约 ±6.4%。 */
+        const sa = RACE_F.stageAttr[ph.key];
+        if (sa) pot *= 1 + ((H.adj[sa.key] - 70) / 100) * sa.k * 2;
+        pot *= H.retention;
         H.pot = pot;
         /* 坡度速度修正：上坡=1-g·(3.0-2.0·力量/100)，下坡=1+min(0.04,|g|·0.6) */
         const grad = gradientAt(H.s, race.geo, race.g);
@@ -903,7 +1004,14 @@
         else H.t += (H.targetT - H.t) * Math.min(1, dt * 1.4);
         const k = kAt(H.s, race.geo);
         const bCoef = bendCoefFor(H.h.special, race.dir);
-        let newS = H.s + H.v * bCoef / (1 + k * H.t) * dt;
+        /* 车道与行进距离解耦（重要）
+           本引擎的 t 是"离中线的横向偏移"（0~20），不是同心车道半径。
+           若按同心车道处理，外侧弧更长、必须给速度补偿 (R+x)/R，
+           但那样 20 米宽度配 120 米弯道半径会产生约 15% 的速度差，
+           实测贴外栏的 4 匹马胜率合计 96.7%，比原来的内栏优势还极端。
+           因此这里让各道【等效等长】：横向位置只影响碰撞与走位，不影响推进。
+           这也更符合"赛道宽度代表马群宽度"的直觉。 */
+        let newS = H.s + H.v * bCoef * dt;
         for (const F of list) {
           if (F === H || F.s <= H.s) continue;
           const halfL = (horseLen(H) + horseLen(F)) / 2;
@@ -928,12 +1036,18 @@
         /* 坡度体力修正：上坡耗力、下坡省力。以"平地等效速度"(v/坡度系数)为基准，
            使上坡的额外消耗不被减速抵消——力量的价值变为"更快爬完坡、在坡上停留更短" */
         const gradDrain = (1 + 2.5 * Math.max(0, H.grad || 0)) * (1 + 1.0 * Math.min(0, H.grad || 0));
-        let drain = H.v / (H.slopeCoef || 1) * 1.5 * st * gradDrain + H.collisionIntensity;
+        /* 距离驱动 + 按本场距离归一：
+           每米消耗 = 本场耐力预算 / 本场距离 × 骑手/坡度系数。
+           基准马（耐力70，池4200）在 drainDistBase 距离上恰好见底；
+           更长的距离使同样的耐力不够用，更短则富余——
+           这样"距离"只改变耐力门槛的绝对值，不会让长途崩盘。 */
+        const drainPerMeter = race.staminaBudget / Math.max(1, race.length);
+        const drainPerSec = H.v * drainPerMeter * st * gradDrain + H.collisionIntensity;
+        let drain = drainPerSec;
         if (H.stage === '耐力') {
           H.stamina -= drain * dt;
           if (H.stamina <= 0) {
             H.stamina = 0; H.stage = '毅力';
-            H.lockedPot = H.v / Math.max(0.01, H.collisionCoef);
             event(H.name + ' 体力见底，开始拼毅力！');
           }
         } else if (H.stage === '毅力') {
@@ -1020,7 +1134,8 @@
           id: H.id, name: H.name, s: H.s, t: H.t, v: H.v, pot: H.pot,
           rank: H.place ? H.place : (H.dnf ? null : list.indexOf(H) + 1),
           stage: H.stage, stamina: H.stamina, guts: H.guts,
-          staminaMax: H.adj['耐力'] * 60, gutsMax: H.adj['毅力'] * 60,
+          staminaMax: H.staminaMax, gutsMax: H.gutsMax,
+          retention: H.retention,
           action: H.action, dnf: H.dnf, place: H.place, time: H.time,
           blocked: H.blocked, style: H.style, gapAtWin: H.gapAtWin,
         })),
@@ -1779,6 +1894,7 @@
   const api = {
     mulberry32, clamp, pick, weightedPick,
     TRACK_WIDTH, STALL_SPEED, PHASE_DEFS, phaseAt,
+    RACE_F, drainDistanceCoef,
     STYLE_COEF, STYLE_COEF_BALANCED, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
     ACTION_DEF, actionBonus, baseSpeed, fatigueMultiplier,
     trackGeometry, trackPoint, kAt, bendCoefFor, SLOPE_PROFILES, gradientAt,

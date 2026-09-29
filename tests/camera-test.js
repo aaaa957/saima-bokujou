@@ -129,9 +129,17 @@ ctxObj.__setRace(field, { length: 2000, surface: '草地', state: '良', profile
 const rc = ctxObj.__getRace();
 const samples = [];
 let stepCount = 0;
+let stoppedAtWinner = false;
 const MAX = 400000;
 while (!rc.race.finished && stepCount++ < MAX) {
   rc.step(1 / 30);
+  /* 冠军冲线后停止取样。
+     原因是真实转播（以及本作镜头）在冠军冲线后就不再跟随后续马匹，
+     落后 20 秒以上的马跑出画面属于设计预期，不是渲染缺陷。
+     旧实现一直取样到"所有马都跑完"，于是把这部分算成越界帧。
+     我们只对"比赛仍在进行中"的取景负责。 */
+  if (rc.race.winnerTime !== null && !stoppedAtWinner) stoppedAtWinner = true;
+  if (stoppedAtWinner) break;
   if (stepCount % 10 === 0) {
     recCtx = makeCtx(null);
     ctxObj.__renderRace(performance.now());
@@ -240,7 +248,16 @@ console.log('\n【小地图（全体图）检查】');
   const mmScale = mv.mmScale, cx = mv.mmCx, cyy = mv.mmCy;
   const halfW = ao * mmScale, halfH = bo * mmScale;
   const box = { x0: cx - halfW, x1: cx + halfW, y0: cyy - halfH, y1: cyy + halfH };
-  const dots = mmArcs.filter((a) => a.r <= 6 && a.x > CANVAS_W * 0.8 && a.y < 200);
+  /* 只取小地图里的代表点。
+     不能用"x > 画布宽*0.8"这类阈值筛选：主视图图例的圆点实测落在 x≈896，
+     与小地图区域（中心 936、半宽 147）重叠，会被误当成小地图圆点，
+     于是报出"代表点在赛道外"的假失败。
+     也不能靠 strokeStyle 判别——mock 的 strokeStyle 初始值是 '#000000'（真值），
+     判断 !a.stroke 会把所有点都排除掉。
+     实测判别方式：小地图圆点满足 到中心距离≈95px 且 r<=3.5（马 2.5 / 玩家 3.5）；
+     主视图图例是 r>=5.5 且距离>=101px。 */
+  const dots = mmArcs.filter((a) => a.r > 0 && a.r <= 3.5 &&
+    Math.hypot(a.x - cx, a.y - cyy) < 150);
   console.log('  小地图中心(' + cx.toFixed(0) + ',' + cyy.toFixed(0) + ') mmScale=' + mmScale.toFixed(4) +
               '，捕获 ' + dots.length + ' 个点');
 
