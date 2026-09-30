@@ -185,16 +185,25 @@
     gutsPer: 60,             // 池 = 毅力 × 60
     drainDistBase: 2000,
     drainDistExp: 0.45,      // 距离指数：长距离每米消耗更高，但不线性爆掉
-    /* ③ 连续掉速（温和渐进，绝不能做成"崩溃"）
-       retention = 1 - retainK × (1 - 剩余耐力比)
-       现实中的马是逐渐失速而非骤停。retainK 过大会触发死亡螺旋：
-       掉速→落后→耗时更久→消耗更多→掉得更多（实测 retainK=0.85 时
-       完赛时间从 120 秒涨到 190 秒）。0.22 对应"耗尽时约慢 20%"。 */
-    retainK: 0.22,
-    retainFloor: 0.80,
-    /* ④ 毅力阶段：耐力耗尽后由毅力接续，额外掉速（幅度同样要克制） */
-    gutsRetainK: 0.18,
-    gutsFloor: 0.72,
+    /* ③ 三段式：耐力 / 毅力 / 失速（3.10(10) 重做）
+       ------------------------------------------------------------
+       设计意图（用户原始设计）：
+         耐力阶段 —— 消耗耐力【可以提升速度】，也能维持速度
+         毅力阶段 —— 耐力耗尽后，【只能维持速度，不能提升】
+         失速阶段 —— 毅力也耗尽，掉速
+       旧实现的两个缺陷（已实测确认）：
+         ① 毅力阶段与"耐力耗尽瞬间"的数值几乎相同（都是 0.78），毅力没有独立作用
+         ② "毅力不能提升速度"根本没实现——爆发力加速项对三个阶段一视同仁
+       现在拆成两个独立能力：
+         staminaAccel  —— 加速能力，仅在耐力阶段且耐力有富余时可用
+         staminaMaintain / gutsMaintain —— 维持能力，决定基础速度能保住多少 */
+    staminaAccel: 0.10,      // 耐力满时 +10% 速度，油尽时 +0
+    staminaMaintain: 0.22,   // 耐力阶段的掉速幅度（剩余耐力比越低掉越多）
+    enforceAccel: 0.06,      // 毅力阶段的维持系数（略低于耐力满值）
+    gutsMaintain: 0.34,      // 毅力阶段的额外掉速幅度（毅力剩越少掉越多）
+    stallFall: 0.78,         // 刚进入失速时保留的速度比例
+    stallDrop: 0.40,         // 失速阶段随速度下降继续衰减的幅度
+    stallFloor: 0.30,        // 失速下限
     /* ⑤ 阶段专属属性（关键设计）
        旧实现里所有属性都只影响 base，而 base 乘以风格系数作用于全程——
        结果是"跑法"（风格系数差 ±7%）完全盖过"属性"（速度差 ±1.5%），
@@ -1005,29 +1014,42 @@
             if (gapLead > 6) runCoef += Math.min(0.10, (gapLead - 6) * 0.008);
           }
         }
-        /* ---- 连续掉速：把"耐力/毅力"变成真正的机制 ----
-           旧实现只在毅力阶段"锁定额定速度"，全程没有衰减，
-           导致耐力池有富余时多加耐力毫无价值（实测耐力 70→90 完赛时间完全相同）。
-           现在改为：剩余耐力比例越低，可达速度衰减越多。
-           耐力池耗尽后由毅力接续，衰减更快、下限更低。
-           「耐力=维持奔跑速度的能力」这句设计意图由此落地。 */
-        let retention;
+        /* ---- 三段式：把「加速能力」与「维持能力」拆开 ----
+           ① 耐力阶段：可【提速】。油越足提速越多；同时油越少掉速越多。
+           ② 毅力阶段：只能【维持】。提速项在此阶段完全不生效。
+           ③ 失速阶段：掉速。
+           旧实现把两者混在一个 retention 里且 clamp 到 ≤1，
+           结果"加速"根本表达不出来，而毅力与耐力耗尽瞬间的值相同。
+           阶段切换时 maintain 从上一阶段的值【接续】而不是重新起算，
+           否则会出现"切到毅力反而变快"的跳变。 */
+        const stRatio = H.stamina / Math.max(1, H.staminaMax);
+        const gtRatio = H.guts / Math.max(1, H.gutsMax);
+        let accel = 0, maintain;
         if (H.stage === '耐力') {
-          const ratio = H.stamina / Math.max(1, H.staminaMax);
-          retention = 1 - RACE_F.retainK * (1 - ratio);
+          accel = RACE_F.staminaAccel * clamp(stRatio, 0, 1);          // 有油才能提速
+          maintain = 1 - RACE_F.staminaMaintain * (1 - stRatio);
+          H.staminaEndMaintain = maintain;                             // 交给毅力阶段接续
         } else if (H.stage === '毅力') {
-          const ratio = H.guts / Math.max(1, H.gutsMax);
-          retention = (1 - RACE_F.retainK) - RACE_F.gutsRetainK * (1 - ratio) * 0.5;
+          accel = 0;                                                    // 不能提速
+          maintain = (H.staminaEndMaintain || 1) * (1 - RACE_F.gutsMaintain * (1 - gtRatio));
+          H.gutsEndMaintain = maintain;
         } else {
-          retention = RACE_F.gutsFloor;
+          /* 失速：从"毅力耗尽那一刻"的值再乘失速系数，并随速度继续衰减 */
+          accel = 0;
+          const ref = Math.max(1e-6, H.stallRef || H.v);
+          maintain = (H.gutsEndMaintain || 1) * RACE_F.stallFall *
+            (1 - RACE_F.stallDrop * (1 - H.v / ref));
         }
-        H.retention = clamp(retention, RACE_F.gutsFloor, 1);
+        H.retention = clamp(maintain, RACE_F.stallFloor, 1);
+        H.accel = accel;
 
         let pot;
         if (ph.key === 'break') {
           pot = H.base * (runCoef * (0.8 + 0.4 * (H.adj['出闸能力'] / 100)) * H.breakNoise) * H.fieldCoef * H.fatMult;
         } else if (ph.key === 'final') {
-          pot = H.base * (burstFactor * (H.adj['爆发力'] / 100) + runCoef) * H.fieldCoef * H.fatMult;
+          /* 爆发力加速项只在【耐力阶段】生效——这是"毅力不能提升速度"的落地处 */
+          const burst = H.stage === '耐力' ? burstFactor * (H.adj['爆发力'] / 100) : 0;
+          pot = H.base * (burst + runCoef) * H.fieldCoef * H.fatMult;
         } else {
           pot = H.base * runCoef * H.fieldCoef * H.fatMult;
         }
@@ -1036,7 +1058,7 @@
            属性 70 为中性点，50→90 时系数变化约 ±6.4%。 */
         const sa = RACE_F.stageAttr[ph.key];
         if (sa) pot *= 1 + ((H.adj[sa.key] - 70) / 100) * sa.k * 2;
-        pot *= H.retention;
+        pot *= H.retention * (1 + accel);
         H.pot = pot;
         /* 坡度速度修正：上坡=1-g·(3.0-2.0·力量/100)，下坡=1+min(0.04,|g|·0.6) */
         const grad = gradientAt(H.s, race.geo, race.g);
@@ -1104,7 +1126,10 @@
           }
         } else if (H.stage === '毅力') {
           H.guts -= drain * dt;
-          if (H.guts <= 0) { H.guts = 0; H.stage = '失速'; event(H.name + ' 失速！！'); }
+          if (H.guts <= 0) {
+            H.guts = 0; H.stage = '失速'; H.stallRef = H.v;
+            event(H.name + ' 失速！！');
+          }
         }
       }
       /* 4) 动作计时与 AI */
