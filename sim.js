@@ -31,12 +31,17 @@
   /* ---------------- 赛道与阶段（3.10） ---------------- */
   const TRACK_WIDTH = 20; // 演示用赛道宽度(米)
   const STALL_SPEED = 2;
+  /* 阶段划分（3.10 重做，对齐现实赛马的分段）
+     现实 2000m 一级赛的通行分段：
+       出闸 0~100m(5%)  序盘 ~600m(30%)  中盘 ~1200m(30%)  后盘 ~1400m(10%)  末段 600m(30%)
+     旧划分的中盘占 40%、终盘只占 20%（300m），把决定胜负的段落压缩了一半，
+     后上型根本没有足够距离完成超越。现在末段扩到 30%（600m）。 */
   const PHASE_DEFS = [
     { key: 'break', name: '出闸', from: 0.00, to: 0.05 },
-    { key: 'open',  name: '序盘', from: 0.05, to: 0.20 },
-    { key: 'mid',   name: '中盘', from: 0.20, to: 0.60 },
-    { key: 'late',  name: '后盘', from: 0.60, to: 0.80 },
-    { key: 'final', name: '终盘', from: 0.80, to: 1.00 },
+    { key: 'open',  name: '序盘', from: 0.05, to: 0.32 },
+    { key: 'mid',   name: '中盘', from: 0.32, to: 0.62 },
+    { key: 'late',  name: '后盘', from: 0.62, to: 0.70 },
+    { key: 'final', name: '终盘', from: 0.70, to: 1.00 },
   ];
   function phaseAt(s, length) {
     const f = length > 0 ? s / length : 0;
@@ -44,21 +49,27 @@
     return PHASE_DEFS[PHASE_DEFS.length - 1];
   }
 
-  /* 跑法系数：出闸/序盘、中盘、后盘、终盘 */
-  const STYLE_COEF = {
+  /* 跑法系数（现实取向，见"位置即代价"机制）
+     ------------------------------------------------------------
+     现实里跑法的差异不是"谁速度系数高"，而是【把体力花在哪一段】：
+       逃 —— 序盘抢位（早期系数高），但承受风阻、烧油最多，末段必然最弱
+       先 —— 中段位置好、可攻可守，全程中庸
+       差 —— 前段省力，末段提速
+       追 —— 前段最省，末段最强，但落后最多
+     所以系数的形状必须是：早期 逃>先>差>追，末段 追>差>先>逃。
+     注意末段应取【负系数】——逃马末段不是"稍慢"，而是明显慢于基准。
+     历史遗留：STYLE_COEF 是文档原版，保留以供对比测试。 */
+  const STYLE_COEF_DOC = {
     '逃': { break: 1.08, open: 1.08, mid: 1.03, late: 1.02, final: 0.97 },
     '先': { break: 1.03, open: 1.03, mid: 1.00, late: 1.02, final: 1.04 },
     '差': { break: 0.96, open: 0.96, mid: 0.97, late: 1.03, final: 1.06 },
     '追': { break: 0.88, open: 0.88, mid: 0.95, late: 1.02, final: 1.10 },
   };
-  /* 骑手等级修正：跑法系数加成 & 观察间隔(秒) */
-  /* 平衡修正系数：压缩序盘/中盘差距，让四种跑法都能赢（默认）；
-     文档原版系数下追马按公式推演永远追不上逃马，详见 README */
-  const STYLE_COEF_BALANCED = {
-    '逃': { break: 1.06, open: 1.06, mid: 1.02, late: 1.01, final: 1.05 },
-    '先': { break: 1.03, open: 1.03, mid: 1.00, late: 1.02, final: 1.06 },
-    '差': { break: 0.98, open: 0.98, mid: 0.99, late: 1.03, final: 1.07 },
-    '追': { break: 0.93, open: 0.93, mid: 0.97, late: 1.03, final: 1.08 },
+  const STYLE_COEF = {
+    '逃': { break: 1.015, open: 1.012, mid: 1.005, late: 0.985, final: 0.970 },
+    '先': { break: 1.005, open: 1.004, mid: 1.002, late: 0.999, final: 0.995 },
+    '差': { break: 0.995, open: 0.996, mid: 0.999, late: 1.004, final: 1.008 },
+    '追': { break: 0.982, open: 0.986, mid: 0.994, late: 1.008, final: 1.018 },
   };
   const JOCKEY_BONUS = { '新人': 0, '普通': 0, '优秀': 0.02, '殿堂': 0.04 };
   const JOCKEY_CADENCE = { '新人': 4, '普通': 2, '优秀': 1.5, '殿堂': 1 };
@@ -191,19 +202,34 @@
          耐力阶段 —— 消耗耐力【可以提升速度】，也能维持速度
          毅力阶段 —— 耐力耗尽后，【只能维持速度，不能提升】
          失速阶段 —— 毅力也耗尽，掉速
-       旧实现的两个缺陷（已实测确认）：
-         ① 毅力阶段与"耐力耗尽瞬间"的数值几乎相同（都是 0.78），毅力没有独立作用
-         ② "毅力不能提升速度"根本没实现——爆发力加速项对三个阶段一视同仁
-       现在拆成两个独立能力：
-         staminaAccel  —— 加速能力，仅在耐力阶段且耐力有富余时可用
-         staminaMaintain / gutsMaintain —— 维持能力，决定基础速度能保住多少 */
-    staminaAccel: 0.10,      // 耐力满时 +10% 速度，油尽时 +0
+       加速能力的正确形式：正比于【已消耗的耐力】，而不是剩余耐力。
+       现实里出力的代价是耗油，所以"省下来的油"才是末段能变现的功率。
+       若正比于剩余量会形成正反馈（越领先→油越多→提速越大→更领先）：
+       实测那样做会让逃马胜率飙到 54.7%、差+追合计只剩 3.9%。
+          accel = staminaAccel × 已消耗比例
+       即"前段省下的体力"在末段转化为冲刺能力。 */
+    staminaAccel: 0.22,      // 已消耗耐力全额兑现时的提速上限
+    accelWindow: 0.05,       // 进入终盘后多少进度内完成兑现
     staminaMaintain: 0.22,   // 耐力阶段的掉速幅度（剩余耐力比越低掉越多）
-    enforceAccel: 0.06,      // 毅力阶段的维持系数（略低于耐力满值）
     gutsMaintain: 0.34,      // 毅力阶段的额外掉速幅度（毅力剩越少掉越多）
     stallFall: 0.78,         // 刚进入失速时保留的速度比例
     stallDrop: 0.40,         // 失速阶段随速度下降继续衰减的幅度
     stallFloor: 0.30,        // 失速下限
+    /* ④ 位置即代价（3.10 新增）—— 这是四种跑法能平衡的根源
+       现实里领放者承受全部风阻，跟跑者借前马的尾流省力，
+       赛马界的经验值是跟跑约省 1~2 马身的能量（≈10~12%）。
+       所以"抢到前面"不是免费的，而是要用体力买的。
+       判定：正前方 draftRange 米内有马 = 被遮挡省力；
+             独自领放 = 承受全风阻。 */
+    draftRange: 12,          // 被遮挡的判定距离(米)
+    draftSave: 0.88,         // 被遮挡时的耐力消耗倍率
+    leadCost: 1.10,          // 独自领放时的耐力消耗倍率
+    /* ⑤ 节奏博弈（3.10 新增）
+       同场争抢领放的逃马越多，前段节奏越快：速度上升的同时油耗也上升，
+       于是互相消耗、末段集体崩溃——这是真实赛马最好看的部分。 */
+    paceContestCoef: 0.012,  // 每多一匹争抢者，前段速度系数上升
+    paceContestDrain: 0.14,  // 每多一匹争抢者，前段油耗上升
+    paceContestCap: 3,       // 计入节奏博弈的最大争抢者数
     /* ⑤ 阶段专属属性（关键设计）
        旧实现里所有属性都只影响 base，而 base 乘以风格系数作用于全程——
        结果是"跑法"（风格系数差 ±7%）完全盖过"属性"（速度差 ±1.5%），
@@ -743,7 +769,7 @@
     const g = SLOPE_PROFILES[profile].g;
     const geo = trackGeometry(length);
     const rng = o.rng || mulberry32(1);
-    const styleCoefs = o.styleCoefs === 'doc' ? STYLE_COEF : STYLE_COEF_BALANCED;
+    const styleCoefs = o.styleCoefs === 'doc' ? STYLE_COEF_DOC : STYLE_COEF;
     /* 爆发修正系数：旧值 0.25/0.10 下爆发力 +20 只值约 3.4% 终盘速度，
        实测对胜率仅 +2.7 个百分点——"末段加速"没有存在感。
        新值提高到 0.45/0.30，配合连续掉速，让爆发力成为真正的第二个维度。 */
@@ -753,17 +779,13 @@
       events: [], order: [], dnf: [], winnerTime: null,
       /* 本场耐力预算（已含场地修正；力量与疲劳是每匹马各自的，在消耗处结算） */
       staminaBudget: staminaBudget(length),
+      paceContest: 0,          // 节奏博弈强度（同场争抢领放的逃马数-1），每帧更新
       prevLead: null, phaseAnnounced: {}, posHistory: [], _lastPct: 0,
       lastEventAt: {},
     };
     /* 第一遍：斗志修正后的参赛属性（文档：±10%；平衡档：±5% 减半）
-       注意：耐力与毅力【不参与】下一阶段的"向全场均值回归"压缩。
-       压缩是为旧结构（所有属性只影响 base）调的，若施加在耐力上，
-       会把"能跑多远"也抹平——实测耐力 50/100 的可跑距离从名义
-       1600/3200m 被压成 1888/2880m（区间 1.53 倍 vs 名义 2 倍）。
-       而"耐力 90 = 能跑 2880 米"必须是确定事实，不能因同场对手强弱而变。 */
+       属性不再做任何"向全场均值回归"的压缩——见下方说明。 */
     const morRate = o.styleCoefs === 'doc' ? 0.002 : 0.001;
-    const COMPRESS_EXEMPT = ['耐力', '毅力'];
     const pre = field.map((h) => {
       const mor = ((h['斗志'] !== undefined ? h['斗志'] : 70) - 50) * morRate;
       const adj = {};
@@ -772,21 +794,12 @@
       }
       return { h, mor, adj };
     });
-    /* 平衡档：参赛属性向全场均值回归35%，压缩"属性差→全程线性累积"的杠杆
-       （文档原版不压缩，保留原始设计供对比）
-       耐力/毅力按上面的理由豁免。 */
-    if (o.styleCoefs !== 'doc') {
-      const means = {};
-      for (const k of ['速度', '爆发力', '出闸能力', '耐力', '力量', '毅力', '体格']) {
-        means[k] = pre.reduce((sum, p) => sum + p.adj[k], 0) / pre.length;
-      }
-      for (const p of pre) {
-        for (const k of ['速度', '爆发力', '出闸能力', '耐力', '力量', '毅力', '体格']) {
-          if (COMPRESS_EXEMPT.indexOf(k) !== -1) continue;
-          p.adj[k] = clamp(Math.round(means[k] + (p.adj[k] - means[k]) * 0.55), 1, 115);
-        }
-      }
-    }
+    /* 「属性向全场均值回归 35%」已删除。
+       它是为旧结构（所有属性只影响 base，属性差会线性累积）打的补丁，
+       作用是抹平真实实力差距。现实不压缩实力——强弱马同场就是有差距，
+       差距应该由【距离/场地/跑法/节奏】这些真实因素去调节，而不是把属性拉平。
+       它同时是"着差中位数 16.87 马身"与"收敛机制失效"的根源。
+       两个系数档位现在共用同一套压缩前的属性。 */
     const horses = pre.map(({ h, mor, adj }) => {
       const surfC = (SURFACE_COEF[surface] || {})[h.surface];
       const fieldCoef = (FIELD_STATE_COEF[state] || 1) * (surfC !== undefined ? surfC : 1);
@@ -1000,41 +1013,52 @@
       if (race.finished) return;
       const act = active();
       const list = act.slice().sort((a, b) => b.s - a.s);
+      /* 节奏博弈强度：同场有几匹逃马在争抢领放（超出上限的按上限计）。
+         两匹逃马互抢 → 前段更快也更费油 → 双双在末段崩溃，后上型受益；
+         只有一匹逃马 → 无人争抢 → 可慢节奏"偷走比赛"。
+         这是真实赛马最有战术深度的部分。 */
+      let contesters = 0;
+      for (const H of act) if (H.style === '逃') contesters++;
+      race.paceContest = Math.max(0, Math.min(RACE_F.paceContestCap, contesters) - 1);
       /* 1) 瞬时速度 */
       for (const H of act) {
         const ph = phaseAt(H.s, race.length);
         let runCoef = styleCoefs[H.style][ph.key] + (JOCKEY_BONUS[H.jockey] || 0) + actionBonus(H.action).coef;
-        /* 马群跟跑耦合（演示补充机制）：序盘/中盘/后盘时，与直接前方马距离越远，
-           加成越大（上限+0.07），模拟真实赛马"跟随领放节奏"的马群动力学；
-           出闸/终盘不生效，让差距留到终盘才真正拉开 */
-        if (ph.key === 'open' || ph.key === 'mid' || ph.key === 'late') {
-          const leaderH = list[0];
-          if (leaderH && leaderH !== H) {
-            const gapLead = leaderH.s - H.s;
-            if (gapLead > 6) runCoef += Math.min(0.10, (gapLead - 6) * 0.008);
-          }
+        /* 「马群跟跑耦合」已删除。原实现是"离领头马越远、速度加成越大"，
+           两个错误：① 方向反了——现实的跟跑是【省力】（借尾流），不是加速；
+           ② 判定对象错了——省力取决于"是否紧跟某匹马"，而非"离领头马多远"
+           （掉队到 50 米外就没有遮挡，一点也省不了）。
+           真正的跟跑收益现在由「位置即代价」按【耐力消耗】结算，见下方第 3 步。 */
+        /* 节奏博弈：同场争抢领放的逃马越多，前段节奏越快、也越费油。
+           速度加成在这里给，油耗惩罚在下方的消耗环节结算。 */
+        if (race.paceContest > 0 && (ph.key === 'open' || ph.key === 'mid')) {
+          runCoef += race.paceContest * RACE_F.paceContestCoef;
         }
         /* ---- 三段式：把「加速能力」与「维持能力」拆开 ----
-           ① 耐力阶段：可【提速】。油越足提速越多；同时油越少掉速越多。
+           ① 耐力阶段：可【提速】。提速正比于已消耗的耐力——前段省下的油
+              才是末段能变现的功率；同时剩余越少掉速越多。
            ② 毅力阶段：只能【维持】。提速项在此阶段完全不生效。
            ③ 失速阶段：掉速。
-           旧实现把两者混在一个 retention 里且 clamp 到 ≤1，
-           结果"加速"根本表达不出来，而毅力与耐力耗尽瞬间的值相同。
-           阶段切换时 maintain 从上一阶段的值【接续】而不是重新起算，
-           否则会出现"切到毅力反而变快"的跳变。 */
+           阶段切换时 maintain 从上一阶段的值【接续】，否则会出现
+           "切到毅力反而变快"的跳变。 */
         const stRatio = H.stamina / Math.max(1, H.staminaMax);
         const gtRatio = H.guts / Math.max(1, H.gutsMax);
         let accel = 0, maintain;
         if (H.stage === '耐力') {
-          accel = RACE_F.staminaAccel * clamp(stRatio, 0, 1);          // 有油才能提速
+          /* 只在进入终盘后的 accelWindow 内兑现，此前为 0：
+             前段省下的体力不能提前变成速度，否则逃马依旧占尽便宜 */
+          const f = race.length > 0 ? H.s / race.length : 0;
+          const showFrac = ph.key === 'final'
+            ? clamp((f - 0.70) / RACE_F.accelWindow, 0, 1)
+            : (f >= 0.75 ? 1 : 0);
+          accel = RACE_F.staminaAccel * clamp(1 - stRatio, 0, 1) * showFrac;
           maintain = 1 - RACE_F.staminaMaintain * (1 - stRatio);
-          H.staminaEndMaintain = maintain;                             // 交给毅力阶段接续
+          H.staminaEndMaintain = maintain;
         } else if (H.stage === '毅力') {
           accel = 0;                                                    // 不能提速
           maintain = (H.staminaEndMaintain || 1) * (1 - RACE_F.gutsMaintain * (1 - gtRatio));
           H.gutsEndMaintain = maintain;
         } else {
-          /* 失速：从"毅力耗尽那一刻"的值再乘失速系数，并随速度继续衰减 */
           accel = 0;
           const ref = Math.max(1e-6, H.stallRef || H.v);
           maintain = (H.gutsEndMaintain || 1) * RACE_F.stallFall *
@@ -1117,7 +1141,23 @@
         const myRange = rangeCoef(race.state, H.adj['力量']);
         const drainPerMeter = (race.staminaBudget / Math.max(1, race.length)) /
           Math.max(0.35, myRange) * ACTION_STAMINA_BASE;
-        const drain = H.v * drainPerMeter * (st / ACTION_STAMINA_BASE) * gradDrain + H.collisionIntensity;
+        /* 位置即代价：这是"抢到前面要用体力买"的落地处，也是四种跑法的平衡根源。
+           正前方 draftRange 米内有马 → 借尾流省力（draftSave）；
+           独自领放 → 承受全部风阻（leadCost）。
+           现实依据：跟跑约省 1~2 马身的能量（赛马界通行经验值，≈10~12%）。 */
+        let ahead = false;
+        for (const F of list) {
+          if (F === H) continue;
+          if (F.s > H.s && F.s - H.s <= RACE_F.draftRange) { ahead = true; break; }
+        }
+        const posCoef = ahead ? RACE_F.draftSave : RACE_F.leadCost;
+        H.drafting = ahead;
+        /* 节奏惩罚：同场争抢领放的逃马越多，前段油耗越高（互相消耗） */
+        const phNow = phaseAt(H.s, race.length);
+        const contestDrain = (phNow.key === 'open' || phNow.key === 'mid')
+          ? 1 + race.paceContest * RACE_F.paceContestDrain : 1;
+        const drain = H.v * drainPerMeter * (st / ACTION_STAMINA_BASE) * gradDrain *
+          posCoef * contestDrain + H.collisionIntensity;
         if (H.stage === '耐力') {
           H.stamina -= drain * dt;
           if (H.stamina <= 0) {
@@ -1973,7 +2013,7 @@
     TRACK_WIDTH, STALL_SPEED, PHASE_DEFS, phaseAt,
     RACE_F, drainDistanceCoef, staminaBudget, rangeCoef, powerDrainCoef,
     STAMINA_RANGE_PER_POINT, GROUND_RANGE_COEF,
-    STYLE_COEF, STYLE_COEF_BALANCED, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
+    STYLE_COEF, STYLE_COEF_DOC, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
     ACTION_DEF, actionBonus, baseSpeed, fatigueMultiplier,
     trackGeometry, trackPoint, kAt, bendCoefFor, SLOPE_PROFILES, gradientAt,
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
