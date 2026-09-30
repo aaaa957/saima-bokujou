@@ -422,7 +422,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.09.29.2"></script>
+<script src="sim.js?v=v2026.09.29.3"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -438,7 +438,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.09.29.2';
+const APP_VER = 'v2026.09.29.3';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。

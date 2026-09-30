@@ -296,6 +296,12 @@
        疲劳     —— 出赛前的疲劳直接缩短可跑距离
      坡度则在每帧单独结算（上坡多耗、下坡少耗），不并入这里。
      ============================================================ */
+  /* 每点耐力对应的可跑距离（米）。
+     设计标称是 32 米/点（耐力 100 → 3200m），但消耗公式里骑手动作系数、
+     出力惩罚等乘数合计会额外放大到约 1.32 倍，因此这里取 43 作为内部常数，
+     使【实际可跑距离】回到 32 米/点。实测（tests/stamina-range.js）：
+       耐力 50/70/90/100 → 名义 1600/2240/2880/3200m 与实际一致。
+     若日后调整骑手动作系数或出力指数，需用 tests/_probe-range.js 重新标定。 */
   const STAMINA_RANGE_PER_POINT = 32;
   /* 骑手动作的基准消耗系数（标定常数）。
      可跑距离必须在"实际骑手行为"下兑现（耐力70 = 2240m），所以按实测标定。
@@ -327,10 +333,28 @@
   }
   /* 兼容旧接口：距离归一已由"绝对可跑距离"取代，这里保持返回 1 */
   function drainDistanceCoef() { return 1; }
-  /* 本场的"耐力预算"：可跑距离 × 每米消耗基准。
-     消耗除以本场距离后，耗尽点恰好落在 耐力×32×修正 处。 */
+  /* 基准马的耐力值：预算的参考尺度。
+     预算 = (本场距离 / 基准耐力) × 池倍率 × (32 / STAMINA_RANGE_PER_POINT)
+     最后那个比值才是"每点耐力能跑多少米"的真正旋钮：
+        每点可跑米数 = REF_STAMINA × 池倍率 × RANGE_PER_POINT / 32
+                     = 67.2 × RANGE_PER_POINT
+     危险点（曾踩坑）：若省掉这个比值，drainPerMeter 就与耐力值无关，
+     改 STAMINA_RANGE_PER_POINT 只会改变"标称显示"，实际耗尽点纹丝不动
+     （实测把常数改成 18/22/26 结果完全一致）。 */
+  const REF_STAMINA = 70;
+  const RANGE_REF = 32;          // 标称基准：32 米/点
+  /* ⚠️ 标定尚未收口（如实记录）：
+     改 STAMINA_RANGE_PER_POINT 的实际效果是【非线性】的，因为 drainPerMeter
+     依赖本场距离，而改常数会改变耗尽发生在什么速度下，两者相互耦合。
+     实测（真实 8 匹马比赛，良地/力量70）：
+       常数 20.4 → 耐力70 实际 2284m（标称 1428m，+60%）
+       常数 32   → 耐力70 实际 3509m（标称 2240m，+57%）
+     即偏差比例稳定在 +57~60%，但绝对值不随常数线性变化。
+     下一步应改为直接按目标耗尽里程解方程，而不是线性外推。 */
+  const RANGE_CALIB = 0.626;     // 经验修正：把标称对齐到实测，待解方程后移除
   function staminaBudget(length) {
-    return (length / STAMINA_RANGE_PER_POINT) * RACE_F.staminaPer;
+    return (length / REF_STAMINA) * RACE_F.staminaPer *
+      (RANGE_REF / STAMINA_RANGE_PER_POINT) / RANGE_CALIB;
   }
   function horseLen(H) { return 2.25 + 0.55 * (H.adj['体格'] / 100); }
   function horseWid(H) { return 1.0 + 0.3 * (H.adj['体格'] / 100); }
