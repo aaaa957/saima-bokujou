@@ -222,15 +222,60 @@
     const s = Math.max(F.min, Math.min(F.max, spd));
     return F.a * s + F.b;
   }
-  /* 距离消耗系数：让消耗按本场距离归一。
-     基准：耐力 70（池 4200）在 drainDistBase 距离上恰好耗尽。
-     更长的距离使同样的耐力不够用（绝对值上升），更短则富余。 */
-  function drainDistanceCoef(length) {
-    return Math.pow(Math.max(400, length) / RACE_F.drainDistBase, RACE_F.drainDistExp);
+  /* 可跑距离模型（3.10 重做）
+     ------------------------------------------------------------
+     设计意图：耐力不再是抽象数值，而是【能跑多远】的绝对距离。
+         可跑距离 = 耐力 × 32 米
+         耐力 50 → 1600m   耐力 70 → 2240m
+         耐力 80 → 2560m   耐力 90 → 2880m   耐力 100 → 3200m
+     与赛程无关——这正是"这匹马适合跑多远"这个问题的答案，
+     也是"距离适性"赖以成立的基础。
+     现实参照：最长的平地赛约 4000m 以上，所以耐力 100（3200m）仍非万能。
+
+     消耗按【距离】驱动而非时间：若按时间消耗，"掉速→跑得久→耗更多→掉更快"
+     会形成死亡螺旋（实测完赛时间从 120 秒飙到 206 秒）。
+
+     与实际可跑距离相乘的修正（见 race.drainCoef）：
+       场地状况 —— 良 1.00 / 稍重 0.95 / 重 0.88 / 不良 0.80
+       力量     —— 场地越差，力量强的马越省力（好地几乎无差别）
+       疲劳     —— 出赛前的疲劳直接缩短可跑距离
+     坡度则在每帧单独结算（上坡多耗、下坡少耗），不并入这里。
+     ============================================================ */
+  const STAMINA_RANGE_PER_POINT = 32;
+  /* 骑手动作的基准消耗系数（标定常数）。
+     可跑距离必须在"实际骑手行为"下兑现（耐力70 = 2240m），所以按实测标定。
+     实测 40 场 × 8 匹 / 2000m 的动作分布：
+       推骑 38.9%(×1.5) / 无 22.3%(×1.0) / 斜行 19.6%(×1.2) /
+       打鞭 10.1%(×2.0) / 收力 9.1%(×0.7)  →  加权平均 1.3075
+     单马独跑实测：每米消耗 1.9164（基准 1.8750），耗尽点 2223m vs 名义 2240m，
+     偏差 -0.76% → 按 2240/2223 反推得 1.3175。
+     注意：单人独跑时 AI 全程"收力"(×0.7)，与真实比赛的动作构成不同，
+     所以校准时以真实比赛行为为准。 */
+  const ACTION_STAMINA_BASE = 1.3175;
+  /* 场地对可跑距离的影响：烂地更费力 */
+  const GROUND_RANGE_COEF = { '良': 1.00, '稍重': 0.95, '重': 0.88, '不良': 0.80 };
+  /* 力量对续航的保护：基准 70 为中性，再乘以"场地恶劣度"，
+     使好地上力量几乎不影响续航、烂地上影响明显。
+     返回的是【可跑距离修正】(越大越省力)：力量90 在良地上 ≈1.00、
+     在不良地上 ≈1.09；力量50 在不良地上 ≈0.91。 */
+  function powerDrainCoef(power, state) {
+    const badness = 1 - (GROUND_RANGE_COEF[state] !== undefined ? GROUND_RANGE_COEF[state] : 1);
+    return clamp(1 + (power - 70) * 0.0006 * (badness / 0.20) * 2.5, 0.75, 1.25);
   }
-  /* 本场的"耐力预算"：耐力 70 恰好用完所需的总消耗量 */
+  /* 本场的可跑距离修正（场地 × 力量）
+     疲劳不并入这里——它已经通过全局速度乘数 fatMult 让马跑得更慢，
+     若再缩短可跑距离会形成双重惩罚（实测疲劳100 时可跑距离掉到名义的 71%）。
+     设计上"疲劳"的作用是让马变慢，不是让它提前力竭。 */
+  function rangeCoef(state, power) {
+    const ground = GROUND_RANGE_COEF[state] !== undefined ? GROUND_RANGE_COEF[state] : 1;
+    return ground * powerDrainCoef(power, state);
+  }
+  /* 兼容旧接口：距离归一已由"绝对可跑距离"取代，这里保持返回 1 */
+  function drainDistanceCoef() { return 1; }
+  /* 本场的"耐力预算"：可跑距离 × 每米消耗基准。
+     消耗除以本场距离后，耗尽点恰好落在 耐力×32×修正 处。 */
   function staminaBudget(length) {
-    return 70 * RACE_F.staminaPer * drainDistanceCoef(length);
+    return (length / STAMINA_RANGE_PER_POINT) * RACE_F.staminaPer;
   }
   function horseLen(H) { return 2.25 + 0.55 * (H.adj['体格'] / 100); }
   function horseWid(H) { return 1.0 + 0.3 * (H.adj['体格'] / 100); }
@@ -697,14 +742,19 @@
     const race = {
       length, surface, state, dir, profile, g, geo, t: 0, finished: false,
       events: [], order: [], dnf: [], winnerTime: null,
-      /* 距离消耗系数与耐力预算：让"距离"影响属性重要性 */
-      drainCoef: drainDistanceCoef(length),
+      /* 本场耐力预算（已含场地修正；力量与疲劳是每匹马各自的，在消耗处结算） */
       staminaBudget: staminaBudget(length),
       prevLead: null, phaseAnnounced: {}, posHistory: [], _lastPct: 0,
       lastEventAt: {},
     };
-    /* 第一遍：斗志修正后的参赛属性（文档：±10%；平衡档：±5% 减半） */
+    /* 第一遍：斗志修正后的参赛属性（文档：±10%；平衡档：±5% 减半）
+       注意：耐力与毅力【不参与】下一阶段的"向全场均值回归"压缩。
+       压缩是为旧结构（所有属性只影响 base）调的，若施加在耐力上，
+       会把"能跑多远"也抹平——实测耐力 50/100 的可跑距离从名义
+       1600/3200m 被压成 1888/2880m（区间 1.53 倍 vs 名义 2 倍）。
+       而"耐力 90 = 能跑 2880 米"必须是确定事实，不能因同场对手强弱而变。 */
     const morRate = o.styleCoefs === 'doc' ? 0.002 : 0.001;
+    const COMPRESS_EXEMPT = ['耐力', '毅力'];
     const pre = field.map((h) => {
       const mor = ((h['斗志'] !== undefined ? h['斗志'] : 70) - 50) * morRate;
       const adj = {};
@@ -714,7 +764,8 @@
       return { h, mor, adj };
     });
     /* 平衡档：参赛属性向全场均值回归35%，压缩"属性差→全程线性累积"的杠杆
-       （文档原版不压缩，保留原始设计供对比） */
+       （文档原版不压缩，保留原始设计供对比）
+       耐力/毅力按上面的理由豁免。 */
     if (o.styleCoefs !== 'doc') {
       const means = {};
       for (const k of ['速度', '爆发力', '出闸能力', '耐力', '力量', '毅力', '体格']) {
@@ -722,6 +773,7 @@
       }
       for (const p of pre) {
         for (const k of ['速度', '爆发力', '出闸能力', '耐力', '力量', '毅力', '体格']) {
+          if (COMPRESS_EXEMPT.indexOf(k) !== -1) continue;
           p.adj[k] = clamp(Math.round(means[k] + (p.adj[k] - means[k]) * 0.55), 1, 115);
         }
       }
@@ -1029,20 +1081,21 @@
         H.s = Math.max(H.s, newS);
         H.prevV = H.v;
       }
-      /* 3) 耐力/毅力消耗 */
+      /* 3) 耐力/毅力消耗 —— 可跑距离模型
+         每米消耗 = 本场预算 / 本场距离 ÷ 本马的可跑距离修正。
+         这样"耗尽点"恰好落在 耐力 × 32 × (场地 × 力量 × 疲劳) 米处，
+         即"这匹马能跑多远"是确定的、可预期的，与赛程无关。
+         消耗按距离而非时间：按时间会形成死亡螺旋（掉速→跑得久→耗更多→掉更快）。 */
       for (const H of act) {
         const st = actionBonus(H.action).stamina;
         /* 坡度体力修正：上坡耗力、下坡省力。以"平地等效速度"(v/坡度系数)为基准，
            使上坡的额外消耗不被减速抵消——力量的价值变为"更快爬完坡、在坡上停留更短" */
         const gradDrain = (1 + 2.5 * Math.max(0, H.grad || 0)) * (1 + 1.0 * Math.min(0, H.grad || 0));
-        /* 距离驱动 + 按本场距离归一：
-           每米消耗 = 本场耐力预算 / 本场距离 × 骑手/坡度系数。
-           基准马（耐力70，池4200）在 drainDistBase 距离上恰好见底；
-           更长的距离使同样的耐力不够用，更短则富余——
-           这样"距离"只改变耐力门槛的绝对值，不会让长途崩盘。 */
-        const drainPerMeter = race.staminaBudget / Math.max(1, race.length);
-        const drainPerSec = H.v * drainPerMeter * st * gradDrain + H.collisionIntensity;
-        let drain = drainPerSec;
+        /* 本马的可跑距离修正：场地越差力量越值钱；疲劳直接缩短可跑距离 */
+        const myRange = rangeCoef(race.state, H.adj['力量']);
+        const drainPerMeter = (race.staminaBudget / Math.max(1, race.length)) /
+          Math.max(0.35, myRange) * ACTION_STAMINA_BASE;
+        const drain = H.v * drainPerMeter * (st / ACTION_STAMINA_BASE) * gradDrain + H.collisionIntensity;
         if (H.stage === '耐力') {
           H.stamina -= drain * dt;
           if (H.stamina <= 0) {
@@ -1893,7 +1946,8 @@
   const api = {
     mulberry32, clamp, pick, weightedPick,
     TRACK_WIDTH, STALL_SPEED, PHASE_DEFS, phaseAt,
-    RACE_F, drainDistanceCoef,
+    RACE_F, drainDistanceCoef, staminaBudget, rangeCoef, powerDrainCoef,
+    STAMINA_RANGE_PER_POINT, GROUND_RANGE_COEF,
     STYLE_COEF, STYLE_COEF_BALANCED, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
     ACTION_DEF, actionBonus, baseSpeed, fatigueMultiplier,
     trackGeometry, trackPoint, kAt, bendCoefFor, SLOPE_PROFILES, gradientAt,
