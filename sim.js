@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
  * 赛马风云 Demo · 比赛模拟引擎 v0.1
  * 公式来源：《系统数值设计文档》3.10 比赛系统设计
  * 情报误差机制来源：《游戏策划案》4.5 情报系统
@@ -29,7 +29,13 @@
   }
 
   /* ---------------- 赛道与阶段（3.10） ---------------- */
-  const TRACK_WIDTH = 20; // 演示用赛道宽度(米)
+  /* 赛道宽度（米）。
+     原来是 20。改为 11 的理由：现实跑道虽宽 20~30m，但同时并排只占约 8~10m；
+     而弯道半径在 100~150m 量级。宽度/半径比应为 11/120 ≈ 9%，
+     这样"外道多跑的距离"约 5%，接近现实内栏优势（1~2 马身 ≈ 3~5%）。
+     取 20 时该比值达 17%，外道速度差约 15%——实测外道 4 匹马胜率合计 96.7%，
+     正是当初不得不把车道与距离解耦的原因。收窄后可以恢复真实的几何差异。 */
+  const TRACK_WIDTH = 11;
   const STALL_SPEED = 2;
   /* 阶段划分（3.10 重做，对齐现实赛马的分段）
      现实 2000m 一级赛的通行分段：
@@ -180,7 +186,7 @@
        所以速度标尺必须压得很窄（速度 50→100 仅 14.8→17.0 m/s，约 15% 区间），
        让它只负责"整体水准"；能力差异改由【阶段专属属性】承担（见 ⑤）。
        标定：速度70 → 15.7 m/s，2000m 约 130 秒（现实 120 秒）。 */
-    baseSpeed: { a: 0.045, b: 12.55, min: 40, max: 115 },
+    baseSpeed: { a: 0.045, b: 14.2, min: 40, max: 115 },
     /* ② 耐力池与消耗
        关键设计一：消耗由【距离】驱动，不由时间驱动。
        若按时间消耗，"掉速 → 跑得久 → 消耗更多 → 掉得更快"会形成死亡螺旋
@@ -230,6 +236,20 @@
     paceContestCoef: 0.012,  // 每多一匹争抢者，前段速度系数上升
     paceContestDrain: 0.14,  // 每多一匹争抢者，前段油耗上升
     paceContestCap: 3,       // 计入节奏博弈的最大争抢者数
+    /* ⑥ 赛道几何（3.10 新增）—— 让弯道真正参与竞争
+       弯道速度上限：过弯要抵抗离心力，半径越小越要减速。
+         速度系数 = 1/(1 + k·bendPenaltyLen)，k = 1/R。
+         R=100(1200m) → 0.917；R=145(3000m) → 0.942。
+       内外道：弯道外侧弧更长，半径 (R+x) 对基准的比值即真实速度差，
+         所以外侧必须更快才等价。这就是内栏优势与"抢位有价值"的来源。
+       弯道屏蔽加速：现实过弯要维持平衡且容易被堵，后上型的加速窗口
+         因此被弯道切碎——弯道占比越高，后上型越吃亏。 */
+    bendPenaltyLen: 9,       // 弯道减速强度（米），配合 k=1/R 使用
+    /* ⑦ 消耗 ∝ 出力强度
+       原来按"速度×距离"算，于是"跑得更快"本身免费——逃马配速最高却
+       不多耗油。现实里跑更快应显著更费油，这是逃马末段崩溃的根因。
+       出力比 = v / 全场均速，消耗 ×= 出力比^effortExp。 */
+    effortExp: 1.5,
     /* ⑤ 阶段专属属性（关键设计）
        旧实现里所有属性都只影响 base，而 base 乘以风格系数作用于全程——
        结果是"跑法"（风格系数差 ±7%）完全盖过"属性"（速度差 ±1.5%），
@@ -780,6 +800,7 @@
       /* 本场耐力预算（已含场地修正；力量与疲劳是每匹马各自的，在消耗处结算） */
       staminaBudget: staminaBudget(length),
       paceContest: 0,          // 节奏博弈强度（同场争抢领放的逃马数-1），每帧更新
+      avgV: 0,                 // 全场瞬时均速，用于计算"出力强度"（每帧更新）
       prevLead: null, phaseAnnounced: {}, posHistory: [], _lastPct: 0,
       lastEventAt: {},
     };
@@ -806,7 +827,7 @@
       return {
         h, id: h.id, name: h.name, style: h.style,
         jockey: h.jockeyGrade || '普通',
-        s: 0, t: clamp(1.5 + rng() * 6, 1, 8), v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
+        s: 0, t: clamp(1.0 + rng() * 4, 0.8, 6), v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
         stamina: adj['耐力'] * RACE_F.staminaPer, guts: adj['毅力'] * RACE_F.gutsPer,
         staminaMax: adj['耐力'] * RACE_F.staminaPer, gutsMax: adj['毅力'] * RACE_F.gutsPer,
         stage: '耐力', retention: 1,
@@ -897,11 +918,11 @@
       /* 过弯贴内栏：现实骑手在弯道切内线省路程（文档 3.10(11) 外道惩罚），
          弯道期间所有跑法都向内栏靠拢，直道再按各自跑法展开 */
       const onBend = kAt(H.s, race.geo) > 0;
-      if (onBend && !isFinal) H.targetT = 2.0 + H.laneJitter * 0.5;
+      if (onBend && !isFinal) H.targetT = 1.2 + H.laneJitter * 0.3;
 
       switch (H.style) {
         case '逃': {
-          H.targetT = 1.8;
+          H.targetT = 1.2;
           if (isFinal) {
             if (H.stage === '耐力' && staminaRatio > 0.2) setAction(H, '打鞭', 1.5);
             else setAction(H, '推骑', 2);
@@ -920,7 +941,7 @@
           return;
         }
         case '先': {
-          H.targetT = 3.2 + H.laneJitter;
+          H.targetT = 2.2 + H.laneJitter * 0.6;
           if (isFinal) {
             const next = H._lastFinalAct === '打鞭' ? '推骑' : '打鞭';
             H._lastFinalAct = next;
@@ -947,7 +968,7 @@
           return;
         }
         case '差': {
-          H.targetT = 5.2 + H.laneJitter;
+          H.targetT = 3.4 + H.laneJitter * 0.6;
           if (isFinal) {
             const next = H._lastFinalAct === '打鞭' ? '推骑' : '打鞭';
             H._lastFinalAct = next;
@@ -976,7 +997,7 @@
           return;
         }
         case '追': {
-          H.targetT = 6.8 + H.laneJitter;
+          H.targetT = 4.4 + H.laneJitter * 0.6;
           if (isFinal) {
             const g = findGap(H, true);
             if (g) {
@@ -1020,6 +1041,12 @@
       let contesters = 0;
       for (const H of act) if (H.style === '逃') contesters++;
       race.paceContest = Math.max(0, Math.min(RACE_F.paceContestCap, contesters) - 1);
+      /* 全场瞬时均速：作为"出力强度"的基准。
+         用瞬时值而非整场均值，好处是逃马在序盘高速领放时立刻承担更高油耗，
+         而比赛后段全场都慢下来时不会凭空产生额外惩罚。 */
+      let vSum = 0, vN = 0;
+      for (const H of act) { vSum += H.v; vN++; }
+      race.avgV = vN > 0 ? vSum / vN : 0;
       /* 1) 瞬时速度 */
       for (const H of act) {
         const ph = phaseAt(H.s, race.length);
@@ -1051,7 +1078,12 @@
           const showFrac = ph.key === 'final'
             ? clamp((f - 0.70) / RACE_F.accelWindow, 0, 1)
             : (f >= 0.75 ? 1 : 0);
-          accel = RACE_F.staminaAccel * clamp(1 - stRatio, 0, 1) * showFrac;
+          /* 弯道上不能发力：现实里过弯要维持平衡、且容易被堵，
+             后上型的加速窗口因此被弯道切碎。
+             效果——弯道占比越高，后上型越吃亏（1200m 弯道占 52%、
+             3000m 只占 30%），"距离适性"由几何自动产生。 */
+          const bendLock = kAt(H.s, race.geo) > 0 ? 0 : 1;
+          accel = RACE_F.staminaAccel * clamp(1 - stRatio, 0, 1) * showFrac * bendLock;
           maintain = 1 - RACE_F.staminaMaintain * (1 - stRatio);
           H.staminaEndMaintain = maintain;
         } else if (H.stage === '毅力') {
@@ -1108,7 +1140,19 @@
            实测贴外栏的 4 匹马胜率合计 96.7%，比原来的内栏优势还极端。
            因此这里让各道【等效等长】：横向位置只影响碰撞与走位，不影响推进。
            这也更符合"赛道宽度代表马群宽度"的直觉。 */
-        let newS = H.s + H.v * bCoef * dt;
+        /* 弯道速度上限：过弯要抵抗离心力，半径越小越要减速。
+           曲率 k = 1/R，故速度系数 = 1/(1 + k·bendPenaltyLen)。
+           bendPenaltyLen 取 9m：R=100（1200m）时系数 0.917，
+           R=145（3000m）时 0.942 —— 短途赛道弯道惩罚天然更重。 */
+        const bendSlow = k > 0 ? 1 / (1 + k * RACE_F.bendPenaltyLen) : 1;
+        /* 内外道几何差异：弯道外侧走的弧更长，半径 (R+x) 对基准 (R+halfW)。
+           比值即真实速度差，所以外侧必须更快才等价（x > halfW 时加速）。
+           这就是"内栏省距离、外道吃亏"的来源，也是抢位有价值的原因。
+           直道 k=0 时该系数为 1，不产生任何影响。 */
+        const laneRatio = k > 0
+          ? Math.max(0.90, Math.min(1.10, (k * H.t + 1) / (k * TRACK_WIDTH / 2 + 1)))
+          : 1;
+        let newS = H.s + H.v * bCoef * bendSlow * laneRatio * dt;
         for (const F of list) {
           if (F === H || F.s <= H.s) continue;
           const halfL = (horseLen(H) + horseLen(F)) / 2;
@@ -1156,8 +1200,18 @@
         const phNow = phaseAt(H.s, race.length);
         const contestDrain = (phNow.key === 'open' || phNow.key === 'mid')
           ? 1 + race.paceContest * RACE_F.paceContestDrain : 1;
+        /* 消耗 ∝ 出力强度（关键修正）
+           原来按 `速度 × 距离` 算，于是"跑得更快"这件事本身是免费的——
+           逃马抢占领放、配速最高，却并不因此多耗油，只承担一个静态的领放惩罚。
+           现实里跑更快应当显著更费油，这正是逃马末段崩溃的根本原因。
+           现在用【相对全场均速的出力比】的 2.2 次方计算：
+             出力 1.10 倍 → 消耗 1.23 倍；出力 0.93 倍 → 消耗 0.85 倍。
+           指数 2.2 略高于空气阻力的三次方直觉，用来补偿状态机的离散性。 */
+        const fieldAvgV = Math.max(1, race.avgV || H.v);
+        const effort = clamp(H.v / fieldAvgV, 0.6, 1.6);
+        const effortDrain = Math.pow(effort, RACE_F.effortExp);
         const drain = H.v * drainPerMeter * (st / ACTION_STAMINA_BASE) * gradDrain *
-          posCoef * contestDrain + H.collisionIntensity;
+          posCoef * contestDrain * effortDrain + H.collisionIntensity;
         if (H.stage === '耐力') {
           H.stamina -= drain * dt;
           if (H.stamina <= 0) {
