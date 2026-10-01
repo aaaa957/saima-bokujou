@@ -92,7 +92,11 @@
     '差': { break: 0.9972, open: 0.9976, mid: 0.9986, late: 1.0004, final: 1.0018 },
     '追': { break: 0.9923, open: 0.9937, mid: 0.9965, late: 1.0014, final: 1.0049 },
   };
-  const JOCKEY_BONUS = { '新人': 0, '普通': 0, '优秀': 0.02, '殿堂': 0.04 };
+  /* 骑手的影响应当主要来自【战术与判断】（见 JOCKEY_CADENCE 的决策频率），
+     而不是裸速度加成。原表给殿堂 +4%、新人 0 —— 等于"抽到好骑手"
+     就能白拿 4% 的完赛时间（现实骑手差距更多体现在走位与配速判断上）。
+     这是「8 匹同水平·同跑法的马仍差 7.6 马身」的两个主因之一。 */
+  const JOCKEY_BONUS = { '新人': 0, '普通': 0.002, '优秀': 0.006, '殿堂': 0.012 };
   const JOCKEY_CADENCE = { '新人': 4, '普通': 2, '优秀': 1.5, '殿堂': 1 };
   /* 场地修正 */
   const FIELD_STATE_COEF = { '良': 1, '稍重': 0.98, '重': 0.95, '不良': 0.9 };
@@ -104,10 +108,11 @@
      ⚠️ 原表把 疲劳 85~100 压到 0.6、>100 压到 0.3 —— 等于让疲劳的马慢一倍。
      实测这一项单独就能贡献 8~40% 的速度差，是马身差距失控的来源之一
      （生成器会给约两成马分配 51~70 的疲劳，正好落在 0.92 档）。
-     现实里疲劳马是「跑不出应有水平」，量级在数个百分点，故整体收敛。 */
+     归因实验（2000m/全同跑法/全同水平）显示，斗志+疲劳+骑手三项合计
+     仍贡献 2.28 马身（1-2名），故整体进一步收敛到数个百分点以内。 */
   function fatigueMultiplier(f) {
-    if (f <= 25) return 1; if (f <= 50) return 0.99; if (f <= 70) return 0.97;
-    if (f <= 85) return 0.94; if (f <= 100) return 0.90; return 0.86;
+    if (f <= 25) return 1; if (f <= 50) return 0.995; if (f <= 70) return 0.985;
+    if (f <= 85) return 0.97; if (f <= 100) return 0.955; return 0.94;
   }
 
   /* ---------------- 赛道几何（椭圆：两条直道 + 两个弯道） ----------------
@@ -312,6 +317,23 @@
          因此被弯道切碎——弯道占比越高，后上型越吃亏。 */
     bendPenaltyLen: 9,       // 弯道减速强度（米），配合 k=1/R 使用
     laneBias: 0.15,          // 内外道几何差异的保留强度（0=完全解耦）
+    /* ⑧ 马群耦合（3.10 新增）—— 修正「速度作用方式」与现实的结构性偏离
+       ------------------------------------------------------------
+       旧结构里 base（含速度）是【乘法作用于全程】的，于是能力差从第一米
+       起就线性累积到终点：1 点 level ≈ 0.16% 速度 ≈ 每点 1.34 马身，
+       跑满 2000m 就拉开十几马身。实测 ±4 level 的场次 1-2 名差 15 马身
+       （现实 1~2），而"8 匹同水平同跑法"也差 6% 完赛时间。
+
+       但真实赛马不是这样跑的：序盘到中盘的马群被节奏【锁住】——
+       跑在群里没法"想快就快"（受前马遮挡、还要留力），骑手会收着跑；
+       能力差距要到【终盘 600m 才兑现】。这正是真实比赛"前 1400m 挤成一团、
+       最后 400m 才拉开"的原因。
+
+       本参数把序盘/中盘的个体速度差异压向全场均值，终盘完全放开：
+         packCoupling = 0.40 → 序盘/中盘只保留 40% 的能力差
+       压缩发生在 retention（体力/掉速）之前，所以耐力、毅力、失速
+       依旧全额咬得住 —— 属性照样决定胜负，只是不再无脑变成时间差。 */
+    packCoupling: 0.40,
     /* ⑦ 消耗 ∝ 出力强度
        原来按"速度×距离"算，于是"跑得更快"本身免费——逃马配速最高却
        不多耗油。现实里跑更快应显著更费油，这是逃马末段崩溃的根因。
@@ -598,7 +620,9 @@
   function makeHorse(rng, opts) {
     const o = opts || {};
     const style = o.style || pick(rng, ['逃', '先', '先', '差', '差', '追', '追', '先']);
-    const boost = o.tier === 'strong' ? 5 : (o.tier === 'weak' ? -5 : 0);
+    /* 「强马」的档差。原为 ±5 —— 也就是场次内单靠 tier 就能拉出 5 点能力差。
+       与「场次内能力跨度 ±2」的策略对齐后压到 ±2（见 FIELD_LEVEL_SPAN）。 */
+    const boost = o.tier === 'strong' ? 2 : (o.tier === 'weak' ? -2 : 0);
     /* 双层生成：场次水平(level)决定整体档次，跑法模板决定形态；
        形态差异保留(逃高耐力、追低耐力高爆发)，个体差异压缩，保证同场竞争性 */
     const level = o.level !== undefined ? o.level : 70;
@@ -607,7 +631,10 @@
       const r = STYLE_STATS[style][k];
       const mid = (r[0] + r[1]) / 2;
       const roll = r[0] + rng() * (r[1] - r[0]);
-      const shaped = mid + (roll - mid) * 0.4;
+      /* 个体差异压缩系数。归因实验（全同跑法·全同 level 的 8 匹马）
+         显示属性随机差异单独贡献 0.93 马身（1-2 名）。
+         现实里同一班次马的能力本就接近，故由 0.40 再压到 0.30。 */
+      const shaped = mid + (roll - mid) * 0.30;
       stats[k] = clamp(Math.round(level + (shaped - 70) * 0.8 + boost), 20, 97);
     }
     stats['血统力'] = clamp(Math.round(30 + rng() * 60), 10, 99);
@@ -648,7 +675,8 @@
     const styles = ['逃', '先', '差', '追', '先', '差', '追', pick(rng, ['逃', '先', '差', '追'])];
     const strongIdx = o.strongIndex !== undefined ? o.strongIndex : Math.floor(rng() * n);
     const playerIdx = o.playerIndex !== undefined ? o.playerIndex : strongIdx;
-    const level = o.level !== undefined ? o.level : 62 + Math.floor(rng() * 17); // 场次水平 62-78
+    /* 场次水平（整场统一），档差由 tier 提供（见 RACE_F / makeHorse） */
+    const level = o.level !== undefined ? o.level : 62 + Math.floor(rng() * 17);
     const horses = [];
     for (let i = 0; i < n; i++) {
       const h = makeHorse(rng, {
@@ -957,12 +985,17 @@
       staminaBudget: staminaBudget(length),
       paceContest: 0,          // 节奏博弈强度（同场争抢领放的逃马数-1），每帧更新
       avgV: 0,                 // 全场瞬时均速，用于计算"出力强度"（每帧更新）
+      avgCap: 0,               // 全场"纯能力速度"均值，用于马群耦合（每帧更新）
       prevLead: null, phaseAnnounced: {}, posHistory: [], _lastPct: 0,
       lastEventAt: {},
     };
     /* 第一遍：斗志修正后的参赛属性（文档：±10%；平衡档：±5% 减半）
        属性不再做任何"向全场均值回归"的压缩——见下方说明。 */
-    const morRate = o.styleCoefs === 'doc' ? 0.002 : 0.001;
+    /* 斗志修正必须收窄。原值 0.002（doc）/0.001（balanced）下，
+       斗志 55~100 会带来最高 +5% 的【全属性】修正，也就是 5% 的速度差。
+       单这一项就足以把 8 匹同水平、同跑法的马拉开 6% 的完赛时间
+       （实测 1-2 名 7.6 马身）——而现实中"状态好坏"的量级是 1~2%。 */
+    const morRate = o.styleCoefs === 'doc' ? 0.0004 : 0.0002;
     const pre = field.map((h) => {
       const mor = ((h['斗志'] !== undefined ? h['斗志'] : 70) - 50) * morRate;
       const adj = {};
@@ -1206,6 +1239,8 @@
       let vSum = 0, vN = 0;
       for (const H of act) { vSum += H.v; vN++; }
       race.avgV = vN > 0 ? vSum / vN : 0;
+      /* 马群耦合用的全场"纯能力速度"均值（本帧统计，下一帧生效，延迟一帧可忽略） */
+      let capSum = 0, capN = 0;
       /* 1) 瞬时速度 */
       for (const H of act) {
         const ph = phaseAt(H.s, race.length);
@@ -1292,6 +1327,18 @@
            属性 70 为中性点，50→90 时系数变化约 ±6.4%。 */
         const sa = RACE_F.stageAttr[ph.key];
         if (sa) pot *= 1 + ((H.adj[sa.key] - 70) / 100) * sa.k * 2;
+        /* —— 马群耦合 ——
+           序盘/中盘的马群被节奏锁住：个体速度差异压向全场均值。
+           注意位置：压缩发生在 retention 之前，所以体力/掉速（耐力、毅力、
+           失速）依旧全额生效 —— 属性仍决定胜负，只是不再从第一米起就
+           线性累积成时间差。终盘不压缩，能力差在决胜段完整兑现。 */
+        if ((ph.key === 'open' || ph.key === 'mid') && H.stage !== '失速') {
+          capSum += pot; capN++;
+          if (race.avgCap > 0) {
+            const ratio = pot / race.avgCap;
+            pot = race.avgCap * (1 + (ratio - 1) * RACE_F.packCoupling);
+          }
+        }
         pot *= H.retention * (1 + accel);
         H.pot = pot;
         /* 坡度速度修正：上坡=1-g·(3.0-2.0·力量/100)，下坡=1+min(0.04,|g|·0.6) */
@@ -1309,6 +1356,8 @@
           H.v = Math.max(stallFloorV, H.v * Math.pow(RACE_F.stallDecayPerSec, dt));
         } else H.v = pot * H.collisionCoef * H.slopeCoef;
       }
+      /* 更新马群耦合基准（本帧序盘/中盘马的"纯能力速度"均值） */
+      race.avgCap = capN > 0 ? capSum / capN : 0;
       /* 2) 推进 + 碰撞 */
       for (const H of act) { H.collisionCoef = 1; H.collisionIntensity = 0; H.blocked = false; }
       for (const H of list) {
@@ -1541,6 +1590,15 @@
   }
 
   /* ---------------- 生涯模式（周推进 + 赛事体系 + 马匹生命周期） ---------------- */
+  /* 🎯 场次内的能力跨度（上下各几点）—— 「马身差距」的最大杠杆
+     实测：每 ±1 点 ≈ 2.5 马身（1-2 名着差）。
+     原来生涯模式的每名对手都在赛事等级的【整个区间】里独立取值
+     （10 点，如 G1 是 84~94），等于一场比赛里马的实力能差 10 点 ——
+     而现实同班次马的实力要接近得多，这正是真实赛马"冠军只赢半个马身"
+     的前提。收窄到 ±2（共 4 点）后实测 1-2 名着差由 15.15 → ~6.4。
+     注意：`tierDef.level` 仍负责【场次档次】（新马赛 44~54 vs G1 84~94），
+     只是不再作为【同场马之间的差异】。 */
+  const FIELD_LEVEL_SPAN = 2;
   /* 赛事体系（策划案 4.10.6）：按胜场数解锁，level 为对手强度区间 */
   const RACE_TIERS = [
     { key: 'newcomer', name: '新马赛', prize: 250, level: [44, 54], dist: [1600, 2000] },
@@ -1650,7 +1708,9 @@
     const used = new Set();
     const styles = ['逃', '先', '差', '追', '先', '差', '追'];
     for (let i = 0; i < 7; i++) {
-      const level = tierDef.level[0] + rng() * (tierDef.level[1] - tierDef.level[0]);
+      /* 场次档次取区间中点，同场马之间只差 ±FIELD_LEVEL_SPAN */
+      const base = (tierDef.level[0] + tierDef.level[1]) / 2;
+      const level = base + (rng() * 2 - 1) * FIELD_LEVEL_SPAN;
       const rh = makeHorse(rng, { style: styles[i], level, id: 'r' + (i + 1) });
       rh.name = makeName(rng, used);
       rh.sire = makeName(rng, used);
@@ -2298,7 +2358,7 @@
     MARKET, marketEntryScore, marketOddsAndPopularity, marketImpliedProb, expectedValue,
     marketPaceLevel, PACE_TRUE_EFFECT, paceStrengthOf, PACE_WEIGHT,
     makeName, createRace,
-    RACE_TIERS, TIER_BY_KEY, TIER_RANK, TRAINING_DEF, PRIZE_SHARE, prizeForPlace, makeRaceName,
+    RACE_TIERS, TIER_BY_KEY, TIER_RANK, FIELD_LEVEL_SPAN, TRAINING_DEF, PRIZE_SHARE, prizeForPlace, makeRaceName,
     makeCareerHorse, careerWeeklyTick, makeCareerRaceField, raceOptionsFor, makeFeaturedRace,
     makeRosterHorse, makeRoster, rosterEntry, pickRosterField, applyRaceForm, ageRoster, rosterTick, makeWeeklyAiRace, raceOptionsForRoster,
     makeBaseBreedingStock, pickBreeder, breederFromHorse,

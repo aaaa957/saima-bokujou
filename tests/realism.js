@@ -85,8 +85,11 @@ function dramaAndMargin(n) {
     const seed = 900001 + k * 7919;
     const rng = S.mulberry32(seed);
     const field = [];
+    /* 场次内能力跨度 ±2（64/66/68）。
+       刻意不用 ±4 以上的跨度：现实同班次马的实力要接近得多，
+       游戏内的对手生成也已按 FIELD_LEVEL_SPAN=2 收窄（见 sim.js）。 */
     for (let i = 0; i < 8; i++) {
-      field.push(S.makeHorse(rng, { style: STYLES[i % 4], level: 62 + (i % 3) * 4, id: 'h' + i }));
+      field.push(S.makeHorse(rng, { style: STYLES[i % 4], level: 64 + (i % 3) * 2, id: 'h' + i }));
     }
     const rc = S.createRace(field, {
       length: 2000, surface: '草地', state: '良', profile: '缓坂',
