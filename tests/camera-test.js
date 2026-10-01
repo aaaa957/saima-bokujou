@@ -99,6 +99,7 @@ const ctxObj = {
 };
 ctxObj.$ = (id) => ctxObj.document.getElementById(id);
 ctxObj.SaimaSim = S;
+ctxObj.SaimaCareerSave = require(path.join(repo, 'career-save.js'));
 ctxObj.addEventListener = () => {};
 ctxObj.removeEventListener = () => {};
 ctxObj.dispatchEvent = () => true;

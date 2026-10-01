@@ -88,6 +88,7 @@ const ctxObj = {
 };
 ctxObj.$ = (id) => ctxObj.document.getElementById(id);
 ctxObj.SaimaSim = S;          // 页面第 427 行：const S = window.SaimaSim
+ctxObj.SaimaCareerSave = require(path.join(repo, 'career-save.js'));
 ctxObj.addEventListener = () => {};
 ctxObj.removeEventListener = () => {};
 ctxObj.dispatchEvent = () => true;

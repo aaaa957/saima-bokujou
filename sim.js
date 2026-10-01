@@ -755,21 +755,10 @@
     return horses;
   }
 
-  /* 人气与赔率（演示用简化模型） */
-  function oddsAndPopularity(horses, rng) {
-    const scored = horses.map((h) => {
-      const f = h.form;
-      const formScore = f.出赛 ? (f.胜利 / f.出赛) * 40 : 0;
-      const s = h.stats['速度'] * 0.4 + h.stats['耐力'] * 0.2 + h.stats['爆发力'] * 0.15
-        + h.stats['出闸能力'] * 0.1 + formScore * 0.4 + (rng() - 0.5) * 12;
-      return { h, s };
-    }).sort((a, b) => b.s - a.s);
-    const ODDS = [1.9, 2.8, 4.5, 7.0, 11.0, 17.0, 28.0, 45.0];
-    const map = {};
-    scored.forEach((e, rank) => {
-      map[e.h.id] = { '人气': rank + 1, '赔率': ODDS[Math.min(rank, ODDS.length - 1)] };
-    });
-    return map;
+  /* 兼容旧调用的返回形状；所有赔率统一使用只读公开信息的市场模型。
+     原签名 (horses, rng) 仍可用，第三个参数可补充本场赛道条件。 */
+  function oddsAndPopularity(horses, rng, raceOpts) {
+    return marketOddsAndPopularity(horses, raceOpts, rng).byId;
   }
 
   /* ---------------- 步速（展开）判定（3.10 新增） ----------------
@@ -836,8 +825,8 @@
        即抽水恒为 takeout，与概率分布形状无关。 */
     takeout: 0.18,
     /* 群体系统性偏差（这三条是玩家可以学会并利用的"市场规律"） */
-    biasWinStreak: 0.90,   // 连胜溢价：上一场赢了 → 人气被过度推高（乘数<1）
-    biasUnraced: 1.10,     // 新马被低估
+    biasWinStreak: 0.90,   // 高胜率溢价：公开评分除以该系数（<1），提高人气
+    biasUnraced: 1.10,     // 新马被低估：公开评分除以该系数（>1），降低人气
     biasBloodNeglect: 0.92,// 血统被系统性轻视（对血统分做压缩）
     biasJockeyHalo: 1.06,  // 名骑手光环：骑手分被放大
     /* 步速（展开）—— 市场看得见，但会系统性低估。
@@ -919,8 +908,8 @@
     const starts = h.form ? (h.form['出赛'] || 0) : 0;
     const wins = h.form ? (h.form['胜利'] || 0) : 0;
     const winRate = starts ? wins / starts : 0;
-    if (starts > 0 && winRate >= 0.35) s *= W.biasWinStreak;
-    if (starts === 0) s *= W.biasUnraced;
+    if (starts > 0 && winRate >= 0.35) s /= W.biasWinStreak;
+    if (starts === 0) s /= W.biasUnraced;
     return { score: s, parts: { form: f, jockey: j, blood: b, age: a, fit, body, noise } };
   }
   /* 由公开信息算出人气与赔率。
@@ -1843,7 +1832,7 @@
       const dir = rng() < 0.5 ? '左回' : '右回';
       const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
       const field = makeCareerRaceField(h, t, rng);
-      const odds = oddsAndPopularity(field, rng);
+      const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
       return { key, name: t.name, prize: t.prize, dist, surface, state, dir, profile, field, odds };
     });
   }
@@ -1857,7 +1846,7 @@
     const dir = rng() < 0.5 ? '左回' : '右回';
     const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
     const field = makeField(rng, { n: 8, level: t.level[0] + rng() * (t.level[1] - t.level[0]) });
-    const odds = oddsAndPopularity(field, rng);
+    const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
     return {
       name: makeRaceName(rng, 5 + (weekNum % 30)), key, tier: t.name, prize: t.prize,
       dist, surface, state, dir, profile, field, odds,
@@ -2072,7 +2061,7 @@
       startsMax: spec.startsMax, abilityMin: spec.abilityMin, n: 8, cooldown: spec.cooldown,
     });
     const field = chosen.map((rh) => rosterEntry(rh, rng));
-    const odds = oddsAndPopularity(field, rng);
+    const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
     const graded = spec.key === 'g1' || spec.key === 'g2' || spec.key === 'g3' || spec.key === 'listed';
     return {
       id: 'ai' + idx,
@@ -2158,7 +2147,7 @@
     const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
     const chosen = pickRosterField(roster, rng, weekNum, { ageMin: spec.ageMin, ageMax: spec.ageMax, winsMax: spec.winsMax, abilityMin, n: 8 });
     const field = chosen.map((rh) => rosterEntry(rh, rng));
-    const odds = oddsAndPopularity(field, rng);
+    const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
     return {
       id: 'ai' + idx,
       name: key === 'g' ? makeRaceName(rng, 8 + ((weekNum * 7 + idx) % 40)) : tierName + '（' + dist + 'm）',
@@ -2200,7 +2189,7 @@
         player: true, sire: h.sire, dam: h.dam,
       };
       field.splice(Math.floor(rng() * 8), 0, playerEntry);
-      const odds = oddsAndPopularity(field, rng);
+      const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
       return { id: 'my' + key, key, name: t.name, prize: t.prize, dist, surface, state, dir, profile, field, odds };
     });
   }
@@ -2212,17 +2201,36 @@
     '三連複': '猜前三(不分顺序)', '三連単': '猜前三(分顺序)',
   };
   const BET_NEED = { '単勝': 1, '複勝': 1, '馬連': 2, '馬単': 2, '三連複': 3, '三連単': 3 };
+  /* 下单与结算共用：一张券必须选够互不重复的马。
+     fieldIds 可传本场合法马 ID 的数组或 Set；非法输入返回 false。 */
+  function validBetSelection(type, ids, fieldIds) {
+    if (BET_TYPES.indexOf(type) < 0 || !Array.isArray(ids) || ids.length !== BET_NEED[type]) return false;
+    for (const id of ids) if (typeof id !== 'string' || id.trim().length === 0) return false;
+    if (new Set(ids).size !== ids.length) return false;
+    if (fieldIds !== undefined) {
+      if (!Array.isArray(fieldIds) && !(fieldIds instanceof Set)) return false;
+      const allowed = fieldIds instanceof Set ? fieldIds : new Set(fieldIds);
+      if (!ids.every((id) => allowed.has(id))) return false;
+    }
+    return true;
+  }
   /* 复式赔率模型：由各马单胜赔率推导（演示用近似模型） */
   function calcBetOdds(type, winOddsArr) {
-    const w1 = winOddsArr[0] || 5, w2 = winOddsArr[1] || 5, w3 = winOddsArr[2] || 5;
-    if (type === '単勝') return Math.max(1.1, w1);
-    if (type === '複勝') return Math.max(1.05, 1 + (w1 - 1) * 0.35);
-    if (type === '馬連') return Math.max(1.5, Math.round(w1 * w2 * 0.28 * 10) / 10);
-    if (type === '馬単') return Math.max(2, Math.round(w1 * w2 * 0.5 * 10) / 10);
-    if (type === '三連複') return Math.max(3, Math.round(w1 * w2 * w3 * 0.07 * 10) / 10);
-    return Math.max(5, Math.round(w1 * w2 * w3 * 0.45 * 10) / 10);
+    if (BET_TYPES.indexOf(type) < 0 || !Array.isArray(winOddsArr) || winOddsArr.length !== BET_NEED[type]) return null;
+    if (!winOddsArr.every((w) => typeof w === 'number' && Number.isFinite(w) && w > 0)) return null;
+    const [w1, w2, w3] = winOddsArr;
+    let odds;
+    if (type === '単勝') odds = Math.max(1.1, w1);
+    else if (type === '複勝') odds = Math.max(1.05, 1 + (w1 - 1) * 0.35);
+    else if (type === '馬連') odds = Math.max(1.5, Math.round(w1 * w2 * 0.28 * 10) / 10);
+    else if (type === '馬単') odds = Math.max(2, Math.round(w1 * w2 * 0.5 * 10) / 10);
+    else if (type === '三連複') odds = Math.max(3, Math.round(w1 * w2 * w3 * 0.07 * 10) / 10);
+    else odds = Math.max(5, Math.round(w1 * w2 * w3 * 0.45 * 10) / 10);
+    return Number.isFinite(odds) ? odds : null;
   }
   function betTypeHit(type, ids, orderIds) {
+    if (!Array.isArray(orderIds) || Array.from(orderIds).some((id) => typeof id !== 'string' || id.trim().length === 0) ||
+        new Set(orderIds).size !== orderIds.length || !validBetSelection(type, ids, orderIds)) return false;
     const top2 = orderIds.slice(0, 2), top3 = orderIds.slice(0, 3);
     if (type === '単勝') return ids[0] === orderIds[0];
     if (type === '複勝') return top3.indexOf(ids[0]) !== -1;
@@ -2457,7 +2465,7 @@
     makeCareerHorse, careerWeeklyTick, makeCareerRaceField, raceOptionsFor, makeFeaturedRace,
     makeRosterHorse, makeRoster, rosterEntry, pickRosterField, applyRaceForm, ageRoster, rosterTick, makeWeeklyAiRace, raceOptionsForRoster,
     makeBaseBreedingStock, pickBreeder, breederFromHorse,
-    BET_TYPES, BET_TYPE_LABEL, BET_NEED, calcBetOdds, betTypeHit,
+    BET_TYPES, BET_TYPE_LABEL, BET_NEED, validBetSelection, calcBetOdds, betTypeHit,
     checkInbreeding, inbreedingPenalty, inheritQuantile, stateFromQuantile, weeklyDrainFromQuantile, bloodlineFromQuantile,
     INHERIT_DEF, inheritAttr, inheritSurface, inheritSpecial, breedFoal, foalToRosterHorse, FEE_TIERS, studFeeFor,
     VENUES, weekRaceSpecs, makeScheduledRace, makeWeekIntel,

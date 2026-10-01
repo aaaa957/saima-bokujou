@@ -212,10 +212,12 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div class="row">
       <h2 style="margin:0" id="careerDate">📅 —</h2>
       <div style="margin-left:auto" class="row">
+        <button id="btnSaveCareer">💾 保存</button>
         <button id="btnNews">📰 周报</button>
         <button class="primary" id="btnNextWeek">▶ 进入下一周</button>
       </div>
     </div>
+    <div id="careerSaveStatus" class="note" role="status" style="margin-top:8px"></div>
   </div>
   <div class="row" style="align-items:flex-start">
     <div class="card" style="flex:1 1 300px">
@@ -236,6 +238,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
       <label>下注金额 <input id="betAmountSel" type="number" value="5" style="width:60px"> 万</label>
       <button id="btnBetCancelAll">取消全部下注</button>
     </div>
+    <div id="betError" class="note" role="alert" style="color:var(--red);margin-bottom:8px"></div>
     <div id="programList"></div>
   </div>
   <div class="card" id="recapCard">
@@ -422,7 +425,8 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.10.01.2"></script>
+<script src="sim.js?v=v2026.10.01.3"></script>
+<script src="career-save.js?v=v2026.10.01.3"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -438,7 +442,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.10.01.2';
+const APP_VER = 'v2026.10.01.3';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -451,13 +455,55 @@ const SNAP_VIEW = (() => {
 })();
 let bankroll = 50, bet = { horseId: null, amount: 0, target: null };
 let mode = 'career', career = null, careerStaff = null;
+let careerSaveBlocked = false, careerSaveMessage = '进度自动保存在本机浏览器，刷新后继续。';
 let betResult = null;
 const emptyBet = () => ({ horseId: null, amount: 0, target: null });
 function loadBankroll() {
   try { const v = localStorage.getItem('saima-bankroll'); if (v !== null && isFinite(+v)) bankroll = Math.max(0, +v); } catch (e) {}
 }
 function saveBankroll() {
-  try { localStorage.setItem('saima-bankroll', String(bankroll)); } catch (e) {}
+  try { localStorage.setItem('saima-bankroll', String(bankroll + (bet.horseId ? bet.amount : 0))); } catch (e) {}
+  saveCareer();
+}
+function careerStorage() {
+  try { return localStorage; } catch (e) { return null; }
+}
+function renderSaveStatus() {
+  const el = document.getElementById('careerSaveStatus');
+  if (el) el.textContent = careerSaveMessage;
+}
+function saveCareer() {
+  if (!career || !careerStaff) return false;
+  if (careerSaveBlocked) { renderSaveStatus(); return false; }
+  const result = window.SaimaCareerSave.save(careerStorage(), {
+    career: Object.assign({}, career, { watchInfo: null }), careerStaff,
+    // 单场沙盒不保存播放状态；刷新时退还其尚未结算的下注。
+    bankroll: bankroll + (bet.horseId ? bet.amount : 0), breedState,
+  });
+  careerSaveMessage = result.ok
+    ? '💾 已保存 · 刷新后继续 · 观赛中断后可重新观看，注单保留。'
+    : '⚠ 自动存档失败：' + (result.error || '浏览器存储不可用') + '。当前进度仅保留在页面中。';
+  if (result.status === 'unsupported' || result.status === 'corrupt') careerSaveBlocked = true;
+  renderSaveStatus();
+  return result.ok;
+}
+function loadCareer() {
+  const result = window.SaimaCareerSave.load(careerStorage());
+  if (result.ok) {
+    const saved = result.snapshot;
+    career = saved.career; careerStaff = saved.careerStaff;
+    bankroll = saved.bankroll; breedState = saved.breedState;
+    career.watchInfo = null;
+    careerSaveMessage = result.status === 'recovered'
+      ? '💾 已从备份恢复进度 · 刷新后继续。'
+      : '💾 已恢复生涯进度 · 自动保存在本机浏览器。';
+  } else if (result.status !== 'missing') {
+    careerSaveBlocked = result.status === 'corrupt' || result.status === 'unsupported';
+    careerSaveMessage = '⚠ 无法恢复存档：' + (result.error || '存档无法读取') +
+      '。原存档已保留，' + (careerSaveBlocked ? '本次进度暂不写入。' : '可点击保存重试。');
+  }
+  renderSaveStatus();
+  return result.ok;
 }
 const fmtWan = (x) => (x >= 1000 ? (x / 1000).toFixed(2) + '亿' : x.toFixed(0) + '万');
 
@@ -469,7 +515,7 @@ function genField(seedValue) {
   const rng = S.mulberry32(seed);
   field = S.makeField(rng, { n: 8 });
   staff = S.makeStaff(rng);
-  oddsMap = S.oddsAndPopularity(field, rng);
+  oddsMap = S.marketOddsAndPopularity(field, singleRaceOptions(), S.mulberry32((seed ^ 0x33) >>> 0)).byId;
   playerId = field.find((h) => h.player).id;
   reportRng = S.mulberry32((seed ^ 0x51ab1) >>> 0);
   refreshReport();
@@ -533,7 +579,7 @@ function updateBetUI() {
     const h = field.find((f) => f.id === bet.horseId);
     const od = oddsMap[bet.horseId];
     if (h && od) {
-      const pay = bet.amount * od['赔率'];
+      const pay = bet.amount * (bet.odds || od['赔率']);
       st.textContent = '已下注：' + h.name + ' ' + bet.amount + '万 → 夺冠得 ' + pay.toFixed(1) + '万（净赚 ' + (pay - bet.amount).toFixed(1) + '万）';
     } else st.textContent = '尚未下注';
   } else {
@@ -564,6 +610,25 @@ function buildEditor() {
     }).join('') + '</tbody></table>';
 }
 
+function singleRaceOptions() {
+  return { length: parseInt($('cfgLength').value, 10) || 2000,
+    surface: $('cfgSurface').value || '草地', state: $('cfgState').value || '良',
+    dir: $('cfgDir').value || '左回', profile: $('cfgProfile').value || '缓坂' };
+}
+function settleBetWith(odds, horses, winner) {
+  const ticket = bet;
+  if (!ticket.horseId) return;
+  const won = winner && winner.id === ticket.horseId;
+  const price = ticket.odds || (odds[ticket.horseId] || {})['赔率'];
+  const pay = won && Number.isFinite(price) ? ticket.amount * price : 0;
+  bankroll += pay;
+  bet = emptyBet();
+  betResult = { text: won ? '🎫 单胜命中！赢得 ' + pay.toFixed(1) + '万' : '🎫 单胜落空，损失 ' + ticket.amount + '万' };
+  saveBankroll();
+}
+function refreshMarketOdds() {
+  oddsMap = S.marketOddsAndPopularity(field, singleRaceOptions(), S.mulberry32((seed ^ 0x33) >>> 0)).byId;
+}
 function applyEditor() {
   document.querySelectorAll('.ed').forEach((inp) => {
     const h = field.find((x) => x.id === inp.dataset.id);
@@ -576,7 +641,7 @@ function applyEditor() {
     else if (k === '疲劳') h['疲劳'] = S.clamp(v || 0, 0, 200);
     else h.stats[k] = S.clamp(v || 1, 1, 115);
   });
-  oddsMap = S.oddsAndPopularity(field, S.mulberry32((seed ^ 0x33) >>> 0));
+  refreshMarketOdds();
   refreshReport();
   renderSetup();
 }
@@ -1037,11 +1102,9 @@ function renderResult() {
     : (bet.horseId ? [bet.horseId] : []);
   let careerIntelLine = '';
   if (isCareer) {
-    S.applyRaceForm(career.roster, career.watchInfo.race.field, R.order, career.weekNum,
-      S.mulberry32(((career.weekNum * 97 + career.watchInfo.race.rngSeed) >>> 0)), career.breedingStock,
-      career.watchInfo.race.name, career.watchInfo.race.tier, career.watchInfo.race.dist, career.watchInfo.race.prize);
-    settleRaceBets(career.watchInfo.race, R.order.map((H) => H.id));
-    const il = annotateIntel(career.watchInfo.race.id);
+    const completed = completeCareerRace(career.watchInfo.race, R);
+    const il = completed ? completed.intelLines : [];
+    if (completed && completed.betText) betResult = { text: completed.betText };
     if (il.length) careerIntelLine = '<div class="info">' + il.join('<br>') + '</div>';
   }
   // 单场模式注单结算
@@ -1222,7 +1285,7 @@ function newCareer() {
     roster: S.makeRoster(rng, stock),
     breedingStock: stock,
     date: { year: 1968, week: 22 }, weekNum: 1,
-    aiRaces: [], weekBets: {}, watchedIds: {}, betTypes: {},
+    aiRaces: [], weekBets: {}, startedIds: {}, watchedIds: {}, settledIds: {}, betTypes: {},
     watchInfo: null, recap: null, debug: false,
     intel: [],
     stats: loadStats(),
@@ -1237,8 +1300,11 @@ function genWeek() {
     S.makeScheduledRace(rng, career.roster, career.weekNum, career.weekNum * 20 + i, spec));
   career.intel = S.makeWeekIntel(career.aiRaces, careerStaff, rng);
   career.weekBets = {};
+  career.startedIds = {};
   career.watchedIds = {};
+  career.settledIds = {};
   career.watchInfo = null;
+  saveCareer();
   renderCareer();
 }
 function buildRaceRow(raceId, race) {
@@ -1254,15 +1320,22 @@ function buildRaceRow(raceId, race) {
   const betType = career.betTypes[raceId] || '単勝';
   const need = S.BET_NEED[betType];
   const orderHints = betType === '馬単' || betType === '三連単';
-  const optsFor = (prefix) => race.field.map((f, i) => '<option value="' + f.id + '">' + (prefix || '') + (i + 1) + '番 ' + f.name + ' ' + (race.odds[f.id] ? race.odds[f.id]['赔率'] : '-') + '倍</option>').join('');
+  const optsFor = (prefix, position) => {
+    const selected = b && b.type === betType ? b.ids[position] : (race.field[position] || {}).id;
+    return race.field.map((f, i) => '<option value="' + f.id + '"' + (f.id === selected ? ' selected' : '') + '>' + (prefix || '') + (i + 1) + '番 ' + f.name + ' ' + (race.odds[f.id] ? race.odds[f.id]['赔率'] : '-') + '倍</option>').join('');
+  };
   let act = '';
   if (watched) {
-    act = '<span class="note">✓ 已观看' + (b ? ' · 🎫注单已结算' : '') + '</span>';
+    act = '<span class="note">✓ 已结算</span>';
+  } else if (career.startedIds[raceId]) {
+    act = '<span class="note">🔒 已开赛，停止下注' + (b ? ' · ' + b.type + ' ' + b.amount + '万（赔率' + b.odds + '）' : '') + '</span>' +
+      '<button class="rr-watch" data-race="' + raceId + '">👁观看</button>' +
+      '<button class="rr-horses-toggle" data-race="' + raceId + '">🐎 参赛马</button>';
   } else {
-    act = '<select class="rr-bt" data-race="' + raceId + '">' + S.BET_TYPES.map((t) => '<option' + (t === betType ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>' +
-      '<select class="rr-h1" data-race="' + raceId + '">' + optsFor(orderHints ? '1着 ' : '') + '</select>' +
-      (need >= 2 ? '<select class="rr-h2" data-race="' + raceId + '">' + optsFor(orderHints ? '2着 ' : '') + '</select>' : '') +
-      (need >= 3 ? '<select class="rr-h3" data-race="' + raceId + '">' + optsFor(orderHints ? '3着 ' : '') + '</select>' : '') +
+    act = '<select class="rr-bt" data-race="' + raceId + '">' + S.BET_TYPES.map((t) => '<option' + (t === betType ? ' selected' : '') + (S.BET_NEED[t] > race.field.length ? ' disabled' : '') + '>' + t + '</option>').join('') + '</select>' +
+      '<select class="rr-h1" data-race="' + raceId + '">' + optsFor(orderHints ? '1着 ' : '', 0) + '</select>' +
+      (need >= 2 ? '<select class="rr-h2" data-race="' + raceId + '">' + optsFor(orderHints ? '2着 ' : '', 1) + '</select>' : '') +
+      (need >= 3 ? '<select class="rr-h3" data-race="' + raceId + '">' + optsFor(orderHints ? '3着 ' : '', 2) + '</select>' : '') +
       '<button class="rr-bet" data-race="' + raceId + '">🎫下注</button>' +
       '<button class="rr-watch" data-race="' + raceId + '">👁观看</button>' +
       '<button class="rr-horses-toggle" data-race="' + raceId + '">🐎 参赛马</button>' +
@@ -1272,6 +1345,7 @@ function buildRaceRow(raceId, race) {
 }
 function renderCareer() {
   if (!career) return;
+  renderSaveStatus();
   $('careerDate').textContent = '📅 ' + fmtDate() + ' · 生涯第 ' + career.weekNum + ' 周';
   $('statsCard').innerHTML =
     '<div style="font-size:20px;font-weight:700;color:var(--gold)">💰 ' + fmtWan(bankroll) + '</div>' +
@@ -1299,6 +1373,8 @@ function renderCareer() {
   $('programList').innerHTML = rows.join('');
   document.querySelectorAll('.rr-bt').forEach((sel) => sel.addEventListener('change', () => {
     career.betTypes[sel.dataset.race] = sel.value;
+    $('betError').textContent = '';
+    saveCareer();
     renderCareer();
   }));
   document.querySelectorAll('.rr-bet').forEach((btn) => btn.addEventListener('click', () => {
@@ -1333,7 +1409,12 @@ function renderCareer() {
 }
 function betOnRace(raceId) {
   const race = career.aiRaces.find((r) => r.id === raceId);
-  if (!race) return;
+  $('betError').textContent = '';
+  if (!race || career.watchedIds[raceId]) return false;
+  if (career.startedIds[raceId]) {
+    $('betError').textContent = '比赛已开赛，不能再下注、改票或取消已有注单。';
+    return false;
+  }
   const type = career.betTypes[raceId] || '単勝';
   const need = S.BET_NEED[type];
   const ids = [];
@@ -1341,16 +1422,21 @@ function betOnRace(raceId) {
     const sel = document.querySelector('.rr-h' + (i + 1) + '[data-race="' + raceId + '"]');
     if (sel && sel.value) ids.push(sel.value);
   }
-  if (ids.length !== need) return;
+  if (!S.validBetSelection(type, ids, race.field.map((h) => h.id))) {
+    $('betError').textContent = '请选择所需数量的不同马匹，复合马券不能重复选同一匹马。';
+    return false;
+  }
+  const odds = S.calcBetOdds(type, ids.map((id) => race.odds[id] && race.odds[id]['赔率']));
+  if (odds === null) { $('betError').textContent = '本场赔率无效，无法下注。'; return false; }
   const amt = parseInt($('betAmountSel').value, 10);
-  if (!(amt > 0)) return;
+  if (!(amt > 0) || !Number.isFinite(amt)) return false;
   if (career.weekBets[raceId]) bankroll += career.weekBets[raceId].amount;
   const a = Math.min(amt, bankroll);
-  if (a <= 0) return;
+  if (a <= 0) return false;
   bankroll -= a;
-  const odds = S.calcBetOdds(type, ids.map((id) => (race.odds[id] ? race.odds[id]['赔率'] : 5)));
   career.weekBets[raceId] = { type, ids, amount: a, odds };
   saveBankroll(); renderCareer();
+  return true;
 }
 function settleRaceBets(race, orderIds) {
   betResult = null;
@@ -1371,7 +1457,27 @@ function settleRaceBets(race, orderIds) {
     career.stats.profit -= b.amount;
     betResult = { text: '🎫「' + race.name + '」' + combo + ' ' + b.amount + '万 落空，损失 ' + b.amount + '万' };
   }
-  saveBankroll(); saveStats();
+}
+function completeCareerRace(raceCard, result) {
+  if (!result.finished) return null;
+  if (career.settledIds[raceCard.id]) return career.settledIds[raceCard.id];
+  const b = career.weekBets[raceCard.id];
+  const retireLines = S.applyRaceForm(career.roster, raceCard.field, result.order, career.weekNum,
+    S.mulberry32((career.weekNum * 97 + raceCard.rngSeed) >>> 0), career.breedingStock,
+    raceCard.name, raceCard.tier, raceCard.dist, raceCard.prize).map((e) => e.text);
+  settleRaceBets(raceCard, result.order.map((h) => h.id));
+  const winner = result.order[0];
+  const completed = {
+    orderIds: result.order.map((h) => h.id),
+    result: raceCard.name + '：' + (winner ? winner.name + ' 勝（' + winner.style + '）' : '—'),
+    betText: betResult ? betResult.text : null, betIds: b ? b.ids.slice() : [],
+    intelLines: annotateIntel(raceCard.id), retireLines,
+  };
+  career.settledIds[raceCard.id] = completed;
+  career.startedIds[raceCard.id] = true;
+  career.watchedIds[raceCard.id] = true;
+  saveStats(); saveBankroll();
+  return completed;
 }
 function annotateIntel(raceId) {
   const lines = [];
@@ -1396,14 +1502,16 @@ function simulateRace(race) {
   return sim;
 }
 function watchAiRace(raceCard) {
+  if (career.watchedIds[raceCard.id]) return;
+  career.startedIds[raceCard.id] = true;
+  saveCareer();
   career.watchInfo = { race: raceCard };
-  career.watchedIds[raceCard.id] = true;
   mode = 'career';
   raceCount++;
   race = S.createRace(raceCard.field, {
     length: raceCard.dist, surface: raceCard.surface, state: raceCard.state, dir: raceCard.dir, profile: raceCard.profile,
     styleCoefs: 'balanced',
-    rng: S.mulberry32(((raceCard.rngSeed !== undefined ? raceCard.rngSeed : 0) + raceCount) >>> 0),
+    rng: S.mulberry32((raceCard.rngSeed || 0) >>> 0),
   });
   paused = false; speedMult = 1; acc = 0; lastTs = 0; cam = null;
   $('btnPause').textContent = '⏸ 暂停';
@@ -1419,19 +1527,15 @@ function advanceWeek() {
   const betLines = [];
   const intelLines = [];
   const retireLines = [];
-  const toSettle = career.aiRaces.filter((r) => !career.watchedIds[r.id]);
-  for (const r of toSettle) {
-    const sim = simulateRace(r);
-    const R = sim.race;
-    const w = R.order[0];
-    const revs = S.applyRaceForm(career.roster, r.field, R.order, career.weekNum,
-      S.mulberry32(((career.weekNum * 97 + r.rngSeed) >>> 0)), career.breedingStock, r.name, r.tier, r.dist, r.prize);
-    retireLines.push(...revs.map((e) => e.text));
-    results.push(r.name + '：' + (w ? w.name + ' 勝（' + w.style + '）' : '—'));
-    settleRaceBets(r, R.order.map((H) => H.id));
-    if (betResult) { betLines.push(betResult.text); betResult = null; }
-    intelLines.push(...annotateIntel(r.id));
+  for (const r of career.aiRaces) {
+    const completed = career.settledIds[r.id] || completeCareerRace(r, simulateRace(r).race);
+    if (!completed) return;
+    retireLines.push(...completed.retireLines);
+    results.push(completed.result);
+    if (completed.betText) betLines.push(completed.betText);
+    intelLines.push(...completed.intelLines);
   }
+  betResult = null;
   // 每周生活费
   bankroll = Math.max(0, bankroll - 1);
   const broke = bankroll <= 0;
@@ -1445,8 +1549,8 @@ function advanceWeek() {
     retireLines.push(...aevs.map((e) => e.text));
   }
   career.recap = { results, betLines, intelLines, retireLines, broke };
-  saveBankroll();
   genWeek();
+  saveBankroll();
   showWeeklyNews();
 }
 /* ---------- 赛马业周报 ---------- */
@@ -1514,6 +1618,8 @@ function openHorseDetail(hid) {
   $('horseDetail').style.display = '';
 }
 function switchMode(m) {
+  if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+  if (career && career.watchInfo) career.watchInfo = null;
   if (bet.horseId) { bankroll += bet.amount; bet = emptyBet(); saveBankroll(); }
   mode = m;
   $('btnModeCareer').classList.toggle('on', m === 'career');
@@ -1530,6 +1636,7 @@ function switchMode(m) {
     if (mc.running) return;
     show('multi');
   } else {
+    if (!field.length) genField(seed);
     showSetup();
   }
 }
@@ -1545,6 +1652,8 @@ function renderBreeding() {
   $('sireSel').innerHTML = males.map((h) => '<option value="' + h.id + '"' + (h.id === breedState.sireId ? ' selected' : '') + '>' + h.name + '（' + h.bestTier + ' · ' + h.starts + '战' + h.wins + '胜' + (h.g1 ? ' · G1' + h.g1 : '') + '）</option>').join('');
   $('damSel').innerHTML = females.map((h) => '<option value="' + h.id + '"' + (h.id === breedState.damId ? ' selected' : '') + '>' + h.name + '（' + h.bestTier + ' · ' + h.starts + '战' + h.wins + '胜' + (h.g1 ? ' · G1' + h.g1 : '') + '）</option>').join('');
   updateBreedInfo();
+  renderFoalCard();
+  saveCareer();
 }
 function statTable(h) {
   return ['速度', '爆发力', '出闸能力', '耐力', '力量', '毅力', '智力', '体格'].map((k) => k + ' ' + Math.round(h.stats[k])).join(' · ');
@@ -1565,26 +1674,33 @@ function doBreed() {
   const fee = S.studFeeFor(sire);
   if (bankroll < fee) { $('breedMsg').innerHTML = '<span style="color:var(--red)">资金不足！种费 ' + fee + '万，当前 ' + fmtWan(bankroll) + '</span>'; return; }
   bankroll -= fee;
-  saveBankroll();
   const rng = S.mulberry32(Math.floor(Math.random() * 1e9));
   const foal = S.breedFoal(rng, sire, dam);
   breedState.foal = foal;
   const foalName = S.makeName(S.mulberry32(Math.floor(Math.random() * 1e9)), new Set());
   breedState.foalName = foalName;
-  const growth = foal.state > 7500 ? (foal.drain > 14.6 ? '觉醒马' : '晚成马') : (foal.drain > 14.6 ? '早熟马' : '早普马');
-  if (foal.earlyDeath) {
-    $('foalCard').innerHTML = '<div style="color:var(--red);font-weight:700">☠ 幼驹早夭！种费 ' + fee + '万打水漂——这正是繁殖的风险。</div>';
-    $('btnFoalEnter').disabled = true;
-  } else {
-    $('foalCard').innerHTML =
-      '<h2>🐴 ' + foalName + '（幼驹）</h2>' +
-      '<div class="note">父 ' + sire.name + ' × 母 ' + dam.name + ' · ' + foal.surface + ' · ' + foal.special + ' · 近亲：' + foal.inbredName + '</div>' +
-      '<div class="note">血统力 ' + foal.bloodline + ' · 状态值 ' + foal.state + ' · 周消耗 ' + foal.drain + '/周 · 成长类型：' + growth + '</div>' +
-      '<div class="note">' + statTable({ stats: foal.stats }) + '</div>';
-    $('btnFoalEnter').disabled = false;
-  }
+  breedState.foalSireId = sire.id; breedState.foalDamId = dam.id;
+  renderFoalCard();
+  saveBankroll();
   $('breedMsg').innerHTML = '已支付种费 ' + fee + '万（剩余 ' + fmtWan(bankroll) + '）';
   drawBreedChart();
+}
+function renderFoalCard() {
+  const foal = breedState.foal;
+  $('btnFoalEnter').disabled = !foal || !!foal.earlyDeath;
+  if (!foal) { $('foalCard').innerHTML = '<div class="note">配种后可查看幼驹；存档会保留尚未入厩的幼驹。</div>'; return; }
+  const sire = career.breedingStock.find((h) => h.id === breedState.foalSireId);
+  const dam = career.breedingStock.find((h) => h.id === breedState.foalDamId);
+  if (foal.earlyDeath) {
+    $('foalCard').innerHTML = '<div style="color:var(--red);font-weight:700">☠ 幼驹早夭！本次种费已支付。</div>';
+  } else {
+    const growth = foal.state > 7500 ? (foal.drain > 14.6 ? '觉醒马' : '晚成马') : (foal.drain > 14.6 ? '早熟马' : '早普马');
+    $('foalCard').innerHTML =
+      '<h2>🐴 ' + breedState.foalName + '（幼驹）</h2>' +
+      '<div class="note">父 ' + (sire ? sire.name : '—') + ' × 母 ' + (dam ? dam.name : '—') + ' · ' + foal.surface + ' · ' + foal.special + ' · 近亲：' + foal.inbredName + '</div>' +
+      '<div class="note">血统力 ' + foal.bloodline + ' · 状态值 ' + foal.state + ' · 周消耗 ' + foal.drain + '/周 · 成长类型：' + growth + '</div>' +
+      '<div class="note">' + statTable({ stats: foal.stats }) + '</div>';
+  }
 }
 function drawBreedChart() {
   const sire = career.breedingStock.find((h) => h.id === breedState.sireId);
@@ -1612,13 +1728,15 @@ function drawBreedChart() {
 function enterFoalToRoster() {
   const f = breedState.foal;
   if (!f || f.earlyDeath) return;
-  const sire = career.breedingStock.find((h) => h.id === breedState.sireId);
-  const dam = career.breedingStock.find((h) => h.id === breedState.damId);
+  const sire = career.breedingStock.find((h) => h.id === breedState.foalSireId);
+  const dam = career.breedingStock.find((h) => h.id === breedState.foalDamId);
+  if (!sire || !dam) return;
   const maxId = career.roster.reduce((m, h) => Math.max(m, parseInt(h.id.slice(2), 10)), 0);
   const h = S.foalToRosterHorse(S.mulberry32(Math.floor(Math.random() * 1e9)), f, sire, dam, maxId + 1);
   h.name = breedState.foalName;
   career.roster.push(h);
   breedState.foal = null;
+  saveCareer();
   $('btnFoalEnter').disabled = true;
   $('foalCard').innerHTML = '<div style="color:var(--green);font-weight:700">✅ ' + h.name + ' 已入厩！它将在6月的新马赛出道——届时去赛程里找它下注吧。</div>';
 }
@@ -1838,6 +1956,9 @@ $('btnGen').addEventListener('click', () => genField(Math.floor(Math.random() * 
 $('btnGen2').addEventListener('click', () => { genField(Math.floor(Math.random() * 1e9)); showSetup(); });
 $('btnRerollStaff').addEventListener('click', () => { staff = S.makeStaff(S.mulberry32(Math.floor(Math.random() * 1e9))); reportRng = S.mulberry32(Math.floor(Math.random() * 1e9)); refreshReport(); });
 $('btnApplyEditor').addEventListener('click', applyEditor);
+['cfgLength', 'cfgSurface', 'cfgState', 'cfgDir', 'cfgProfile'].forEach((id) => {
+  $(id).addEventListener('change', () => { refreshMarketOdds(); renderSetup(); });
+});
 $('seedApply').addEventListener('click', () => { const v = parseInt($('seedInput').value, 10); if (!isNaN(v)) genField(v); });
 $('btnPause').addEventListener('click', () => {
   paused = !paused;
@@ -1877,7 +1998,7 @@ $('btnBet').addEventListener('click', () => {
   if (bet.horseId) bankroll += bet.amount;
   amt = Math.min(amt, bankroll);
   bankroll -= amt;
-  bet = { horseId: hid, amount: amt, target: 'single' };
+  bet = { horseId: hid, amount: amt, target: 'single', odds: oddsMap[hid]['赔率'] };
   saveBankroll(); updateBetUI();
 });
 $('btnBetCancel').addEventListener('click', () => {
@@ -1889,15 +2010,18 @@ $('btnResetBank').addEventListener('click', () => {
 });
 /* 生涯模式 */
 $('btnNextWeek').addEventListener('click', advanceWeek);
-$('btnCareerDebug').addEventListener('click', () => { career.debug = !career.debug; renderCareer(); });
+$('btnSaveCareer').addEventListener('click', saveCareer);
+$('btnCareerDebug').addEventListener('click', () => { career.debug = !career.debug; saveCareer(); renderCareer(); });
 $('btnCloseDetail').addEventListener('click', () => { $('horseDetail').style.display = 'none'; });
 $('btnCloseNews').addEventListener('click', () => { $('newsModal').style.display = 'none'; });
 $('newsModal').addEventListener('click', (e) => { if (e.target === $('newsModal')) $('newsModal').style.display = 'none'; });
 $('btnNews').addEventListener('click', showWeeklyNews);
 $('horseDetail').addEventListener('click', (e) => { if (e.target === $('horseDetail')) $('horseDetail').style.display = 'none'; });
 $('btnBetCancelAll').addEventListener('click', () => {
-  Object.keys(career.weekBets).forEach((rid) => { bankroll += career.weekBets[rid].amount; });
-  career.weekBets = {};
+  Object.keys(career.weekBets).forEach((rid) => {
+    if (!career.startedIds[rid]) { bankroll += career.weekBets[rid].amount; delete career.weekBets[rid]; }
+  });
+  $('betError').textContent = Object.keys(career.weekBets).length ? '已取消未开赛注单；已开赛的注单保留，赛后结算。' : '';
   saveBankroll(); renderCareer();
 });
 $('btnModeCareer').addEventListener('click', () => switchMode('career'));
@@ -1906,8 +2030,8 @@ $('btnModeBreed').addEventListener('click', () => switchMode('breed'));
 $('btnModeMulti').addEventListener('click', () => switchMode('multi'));
 $('btnRunMC').addEventListener('click', mcStart);
 $('btnResetMC').addEventListener('click', mcReset);
-$('sireSel').addEventListener('change', () => { breedState.sireId = $('sireSel').value; updateBreedInfo(); });
-$('damSel').addEventListener('change', () => { breedState.damId = $('damSel').value; updateBreedInfo(); });
+$('sireSel').addEventListener('change', () => { breedState.sireId = $('sireSel').value; updateBreedInfo(); saveCareer(); });
+$('damSel').addEventListener('change', () => { breedState.damId = $('damSel').value; updateBreedInfo(); saveCareer(); });
 $('btnBreed').addEventListener('click', doBreed);
 $('btnBreedMC').addEventListener('click', drawBreedChart);
 $('btnFoalEnter').addEventListener('click', enterFoalToRoster);
@@ -1915,6 +2039,7 @@ window.addEventListener('error', (e) => {
   const b = $('autotest');
   if (b && b.style.display !== 'none') { b.textContent = '❌ 页面错误: ' + (e.message || ''); b.style.display = 'block'; }
 });
+window.addEventListener('pagehide', saveCareer);
 
 /* ---------- 调试入口 ---------- */
 function runSnap() {
@@ -1933,6 +2058,7 @@ function runSnap() {
 /* ---------- 启动 ---------- */
 $('appVer').textContent = '构建 ' + APP_VER + ' · ';
 loadBankroll();
+loadCareer();
 $('seedInput').value = seed;
 const BOOT = {
   autotest: new URLSearchParams(location.search).has('autotest') || location.hash === '#autotest',
@@ -1967,7 +2093,7 @@ if (BOOT.autotest) {
 }
 // ?horse=<序号|id> 直接打开马匹档案（演示/截图用）
 const bootHorse = new URLSearchParams(location.search).get('horse');
-if (bootHorse) {
+if (bootHorse && career) {
   const idx = parseInt(bootHorse, 10);
   const target = isNaN(idx)
     ? career.roster.find((h) => h.id === bootHorse)
