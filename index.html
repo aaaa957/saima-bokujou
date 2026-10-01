@@ -79,6 +79,11 @@ select, input[type=number] {
 .bar > div { height: 100%; border-radius: 4px; }
 .stage-badge { font-size: 11px; padding: 1px 8px; border-radius: 8px; }
 .stage-耐力 { background: #2e5a3f; } .stage-毅力 { background: #6a5a2e; } .stage-失速 { background: #7a2f2f; }
+.table-scroll { overflow-x: auto; }
+.diagnostic-grid { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-start; }
+.diagnostic-grid > div { flex: 1 1 400px; min-width: 0; }
+#raceDiagnostics h3 { font-size: 13px; margin: 14px 0 6px; color: var(--text); }
+#raceDiagnostics td, #raceDiagnostics th { font-variant-numeric: tabular-nums; }
 table.debug td { font-size: 11px; padding: 2px 5px; }
 /* 结果 */
 .banner { text-align: center; padding: 22px; background: linear-gradient(180deg, #1d3327, #14211b); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px; }
@@ -108,7 +113,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
 <body>
 <header>
   <h1>🐎 赛马风云 · 比赛模拟 Demo</h1>
-  <span class="sub">引擎公式对应《系统数值设计文档》3.10 · 情报误差对应《游戏策划案》4.5</span>
+  <span class="sub">信息差博弈 · 连续出力比赛引擎 · 繁殖与生涯模拟</span>
   <a href="README.md" target="_blank">README</a>
   <span class="bankroll" id="bankrollDisplay">💰 50万</span>
   <button id="btnModeCareer">💰 赌马生涯</button>
@@ -151,7 +156,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
 <!-- ============ 多场模拟（蒙特卡洛验证） ============ -->
 <section id="multi" class="screen">
   <div class="card">
-    <h2>📈 多场模拟 · 蒙特卡洛 <span class="note">（比赛引擎 · 点按钮即跑，结果与 tests/mc.js 同口径）</span></h2>
+      <h2>📈 多场模拟 · 蒙特卡洛 <span class="note">（当前引擎 · 两次配对运行验证可复现性）</span></h2>
     <div class="row">
       <label>模拟场次（每档）
         <select id="mcTrials">
@@ -164,9 +169,12 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
       </label>
       <label>比赛距离
         <select id="mcLength">
-          <option value="2000" selected>2000m</option>
+          <option value="1200">1200m</option>
           <option value="1600">1600m</option>
+          <option value="2000" selected>2000m</option>
           <option value="2400">2400m</option>
+          <option value="3000">3000m</option>
+          <option value="3200">3200m</option>
         </select>
       </label>
       <label>场地
@@ -179,14 +187,14 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
       <button id="btnResetMC">✕ 清空结果</button>
     </div>
     <div class="note" style="margin-top:8px">
-      控制变量：两档使用<strong>完全相同</strong>的马匹阵容与随机种子，骑手固定「普通」、疲劳归零，
-      唯一变量是跑法系数档位 —— 因此差异可归因到系数本身。8 匹出马，四种跑法各 2 匹。
+      两次运行使用<strong>完全相同</strong>的马匹阵容与随机种子，骑手固定「普通」、疲劳归零。
+      当前版本共用连续出力引擎，配对结果应一致。8 匹出马，四种跑法各 2 匹；冠军占比用来观察策略表现，不要求各为 25%。
     </div>
     <div class="note" id="mcProgress" style="margin-top:6px;font-weight:700"></div>
   </div>
 
   <div class="card">
-    <h2>① 跑法胜率对比</h2>
+    <h2>① 跑法冠军占比与重复运行核对</h2>
     <div id="mcStyleOut"><div class="note">尚未运行。选择场次后点「开始多场模拟」。</div></div>
   </div>
 
@@ -194,11 +202,11 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <h2>② 冠军-亚军着差（马身）分布</h2>
     <div class="row" style="align-items:flex-start">
       <div style="flex:1 1 480px">
-        <div class="note" style="margin-bottom:4px">文档原版系数</div>
+        <div class="note" style="margin-bottom:4px">当前引擎 · 首次运行</div>
         <canvas id="mcChartDoc" width="1100" height="200" style="width:100%;height:auto"></canvas>
       </div>
       <div style="flex:1 1 480px">
-        <div class="note" style="margin-bottom:4px">平衡修正后</div>
+        <div class="note" style="margin-bottom:4px">当前引擎 · 配对复跑</div>
         <canvas id="mcChartBal" width="1100" height="200" style="width:100%;height:auto"></canvas>
       </div>
     </div>
@@ -253,7 +261,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div class="row">
       <h2 style="margin:0">① 赛前：出战表与情报</h2>
       <label style="margin-left:auto">距离
-        <select id="cfgLength"><option value="1600">1600m</option><option value="2000" selected>2000m</option><option value="2400">2400m</option><option value="3200">3200m</option></select>
+        <select id="cfgLength"><option value="1200">1200m</option><option value="1600">1600m</option><option value="2000" selected>2000m</option><option value="2400">2400m</option><option value="3000">3000m</option><option value="3200">3200m</option></select>
       </label>
       <label>场地
         <select id="cfgSurface"><option value="草地" selected>草地</option><option value="泥地">泥地</option></select>
@@ -261,14 +269,17 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
       <label>马场状态
         <select id="cfgState"><option value="良" selected>良</option><option value="稍重">稍重</option><option value="重">重</option><option value="不良">不良</option></select>
       </label>
-      <label>跑法系数
-        <select id="cfgCoef"><option value="balanced" selected>平衡修正</option><option value="doc">文档原版</option></select>
+      <label>比赛引擎
+        <select id="cfgCoef"><option value="balanced" selected>连续出力</option></select>
       </label>
       <label>回り方向
         <select id="cfgDir"><option value="左回" selected>左回</option><option value="右回">右回</option></select>
       </label>
       <label>赛道起伏
         <select id="cfgProfile"><option value="平坦">平坦</option><option value="缓坂" selected>缓坂</option><option value="中坂">中坂</option><option value="急坂">急坂</option></select>
+      </label>
+      <label>赛道布局
+        <select id="cfgCourse"><option value="标准" selected>标准</option><option value="长直道">长直道</option><option value="小回り">小回り</option></select>
       </label>
       <button class="primary" id="btnStart">▶ 开赛</button>
       <button id="btnGen">🎲 重新生成阵容</button>
@@ -279,7 +290,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div class="card" style="flex:1 1 520px">
       <h2>出战表（点击选择你旗下的马）</h2>
       <table>
-        <thead><tr><th>枠</th><th>马名</th><th>跑法</th><th>骑手</th><th>人气/赔率</th><th>战绩</th><th>选择</th></tr></thead>
+        <thead><tr><th>马号</th><th>马名</th><th>跑法</th><th>骑手</th><th>人气/赔率</th><th>战绩</th><th>选择</th></tr></thead>
         <tbody id="fieldTable"></tbody>
       </table>
       <p class="hint">所有数值对玩家隐藏——你只能通过下面的情报报告、赔率和战绩猜测马匹实力。跑完比赛才会揭晓真相。</p>
@@ -393,6 +404,12 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <h2>⑥ 全员真实能力表</h2>
     <table><thead><tr><th>马名</th><th>速度</th><th>爆发力</th><th>出闸</th><th>耐力</th><th>力量</th><th>毅力</th><th>智力</th><th>体格</th><th>斗志</th><th>疲劳</th><th>跑法</th><th>骑手</th><th>适性</th></tr></thead><tbody id="statsTable"></tbody></table>
   </div>
+  <div class="card">
+    <details id="raceDiagnosticsBox">
+      <summary>⑦ 分段与骑乘回放：节奏、发动时机和余力</summary>
+      <div id="raceDiagnostics"></div>
+    </details>
+  </div>
   <div class="row">
     <button class="primary" id="btnAgain">🔁 再赛一场（同阵容）</button>
     <button id="btnBack">◀ 返回赛前</button>
@@ -402,7 +419,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
 
 <footer>
   <span id="appVer"></span>
-  演示 Demo · 全部马名/马主/调教师为程序虚构，与真实赛马无关 · 公式实现见 sim.js，简化点与调参建议见 README.md
+  演示 Demo · 全部马名/马主/调教师为程序虚构，与真实赛马无关 · 比赛与繁殖实现见 sim.js，模型说明与验证记录见 README.md
 </footer>
 
 <!-- 马匹档案弹窗 -->
@@ -425,8 +442,8 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.10.01.5"></script>
-<script src="career-save.js?v=v2026.10.01.5"></script>
+<script src="sim.js?v=v2026.10.01.6"></script>
+<script src="career-save.js?v=v2026.10.01.6"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -442,7 +459,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.10.01.5';
+const APP_VER = 'v2026.10.01.6';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -613,7 +630,8 @@ function buildEditor() {
 function singleRaceOptions() {
   return { length: parseInt($('cfgLength').value, 10) || 2000,
     surface: $('cfgSurface').value || '草地', state: $('cfgState').value || '良',
-    dir: $('cfgDir').value || '左回', profile: $('cfgProfile').value || '缓坂' };
+    dir: $('cfgDir').value || '左回', profile: $('cfgProfile').value || '缓坂',
+    course: $('cfgCourse').value || '标准' };
 }
 function settleBetWith(odds, horses, winner) {
   const ticket = bet;
@@ -667,6 +685,7 @@ function startRace() {
     styleCoefs: $('cfgCoef').value,
     dir: $('cfgDir').value,
     profile: $('cfgProfile').value,
+    course: $('cfgCourse').value || '标准',
     rng: S.mulberry32(((seed ^ 0x9e3779b9) + raceCount * 7919) >>> 0),
   });
   paused = false; speedMult = 1; acc = 0; lastTs = 0; cam = null;
@@ -706,11 +725,15 @@ function fmtTime(t) {
 
 /* ---------- 赛中渲染 ---------- */
 function sectionNameAt(s, geo) {
-  const { B, S } = geo;
-  if (s < S) return '序盘直线';
-  if (s < S + B) return '右弯道';
-  if (s < 2 * S + B) return '对直';
-  if (s < 2 * S + 2 * B) return '左弯道';
+  if (geo.boundaries) {
+    if (s >= geo.length - geo.finishStraight) return '终直';
+    return S.kAt(s, geo) > 0 ? '弯道' : '直道';
+  }
+  const { B, S: straight } = geo;
+  if (s < straight) return '序盘直线';
+  if (s < straight + B) return '右弯道';
+  if (s < 2 * straight + B) return '对直';
+  if (s < 2 * straight + 2 * B) return '左弯道';
   return '终直';
 }
 function renderRace(ts) {
@@ -720,7 +743,7 @@ function renderRace(ts) {
   const W = cv.width, H = cv.height;
   const L = snap.length;
   const leaderH = snap.horses.find((h) => h.id === snap.leader);
-  const geo = S.trackGeometry(L);
+  const geo = race.race.geo;
   const { R, B, S: St } = geo;
   const trackWidth = S.TRACK_WIDTH, halfWidth = trackWidth / 2;
   const miniScale = Math.min(150 / (St / 2 + R + halfWidth), 88 / (R + halfWidth));
@@ -897,11 +920,17 @@ function renderRace(ts) {
         ctx.closePath(); ctx.fill();
       }
     }
-    const slopeLabels = [
-      { s: St + B, text: '▲对直上坡 +' + (slopeG * 100).toFixed(1) + '%', color: 'rgba(255,205,120,0.95)' },
-      { s: 2 * St + B, text: '▲左弯上坡 +' + (0.6 * slopeG * 100).toFixed(1) + '%', color: 'rgba(255,205,120,0.95)' },
-      { s: 2 * St + 2 * B, text: '▼终直下坡 -' + (0.4 * slopeG * 100).toFixed(1) + '%', color: 'rgba(165,210,255,0.95)' },
-    ];
+    const slopeLabels = [];
+    let lastGrade = 0;
+    for (let labelS = Math.max(0, Math.floor(winLo / 100) * 100); labelS < Math.min(L, winHi); labelS += 100) {
+      const grade = S.gradientAt(labelS + 1, geo, slopeG);
+      const gradeKey = Math.round(grade * 10000);
+      if (Math.abs(grade) > 0.001 && gradeKey !== lastGrade) slopeLabels.push({
+        s: labelS, text: (grade > 0 ? '▲上坡 +' : '▼下坡 −') + (Math.abs(grade) * 100).toFixed(1) + '%',
+        color: grade > 0 ? 'rgba(255,205,120,0.95)' : 'rgba(165,210,255,0.95)',
+      });
+      lastGrade = gradeKey;
+    }
     ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
     slopeLabels.forEach((lb) => {
       const q = projT(sClamp(lb.s), trackWidth + 2);
@@ -944,7 +973,9 @@ function renderRace(ts) {
   // 弯道编号（行进顺序，s 位置与回向无关）
   ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(232,201,106,0.9)';
-  [[St, '1弯'], [St + B, '2弯'], [2 * St + B, '3弯'], [2 * St + 2 * B, '4弯']].forEach(([sJ, label]) => {
+  const bendLabels = geo.boundaries ? geo.boundaries.map((boundary) => [boundary.s, boundary.label || (boundary.kind === 'bendStart' ? '入弯' : '出弯')]) :
+    [[St, '1弯'], [St + B, '2弯'], [2 * St + B, '3弯'], [2 * St + 2 * B, '4弯']];
+  bendLabels.forEach(([sJ, label]) => {
     const q = projT(sJ, trackWidth + 2);
     if (q.x > 24 && q.x < W - 24 && q.y > 10 && q.y < H) ctx.fillText(label, q.x, Math.max(16, q.y - 10));
   });
@@ -1001,8 +1032,8 @@ function renderRace(ts) {
     const ty = Math.max(12, yy - hs - 8 - dy);
     ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(xx - tw / 2 - 3, ty - 11, tw + 6, 13);
     ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.fillText(h.name, xx, ty);
-    if (h.stage === '失速') { ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('失速', xx, yy + hs + 9); }
-    else if (h.stage === '毅力') { ctx.fillStyle = '#ffb84d'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('毅', xx, yy + hs + 9); }
+    if (h.stage === '失速') { ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('乏力', xx, yy + hs + 9); }
+    else if (h.stage === '毅力') { ctx.fillStyle = '#ffb84d'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('储备低', xx, yy + hs + 9); }
   });
 
   // 小地图（右上角全体图）
@@ -1088,7 +1119,7 @@ function renderRace(ts) {
     if (ph) {
       $('playerInfo').innerHTML =
         '<div style="font-weight:700">' + ph.name + ' <span class="stage-badge stage-' + ph.stage + '">' +
-        (ph.stage === '耐力' ? '耐力阶段' : ph.stage === '毅力' ? '毅力阶段' : '失速') + '</span>' +
+        (ph.stage === '耐力' ? '尚有储备' : ph.stage === '毅力' ? '储备偏低' : '储备用尽') + '</span>' +
         (ph.action ? ' <span class="chip">' + ph.action + '</span>' : '') + '</div>' +
         '<div style="font-size:12px;color:var(--dim);margin-top:4px">当前 ' + ph.v.toFixed(1) + ' m/s · ' + (ph.v * 3.6).toFixed(1) + ' km/h' +
         (ph.blocked ? ' · ⚠ 被马群挡住' : '') + '</div>' +
@@ -1098,8 +1129,9 @@ function renderRace(ts) {
           const slopeTxt = g2 > 0.001 ? '▲上坡+' + (g2 * 100).toFixed(1) + '%' : g2 < -0.001 ? '▼下坡-' + (Math.abs(g2) * 100).toFixed(1) + '%' : '平坦';
           return '<div style="font-size:12px;color:var(--dim)">路段：' + sec2 + ' · ' + slopeTxt + (dir === '左回' ? ' · 左回' : ' · 右回') + '</div>';
         })() +
-        '<div style="font-size:12px;color:var(--dim)">耐力</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.stamina / ph.staminaMax * 100)) + '%;background:#59c98e"></div></div>' +
-        '<div style="font-size:12px;color:var(--dim)">毅力</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.guts / ph.gutsMax * 100)) + '%;background:#e8c96a"></div></div>';
+        '<div style="font-size:12px;color:var(--dim)">可用储备</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.stamina / ph.staminaMax * 100)) + '%;background:#59c98e"></div></div>' +
+        '<div style="font-size:12px;color:var(--dim)">疲劳余量</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.guts / ph.gutsMax * 100)) + '%;background:#e8c96a"></div></div>' +
+        '<div class="note">两项随实际出力共同耗用，收力可减少消耗；储备用尽后仍可维持较低配速。</div>';
     }
 
     if ($('debugPanel').style.display !== 'none') {
@@ -1154,7 +1186,8 @@ function renderResult() {
       : '你的马「' + (ph ? ph.name : '—') + '」竞走中止';
   }
   banner.innerHTML = winner
-    ? '<div class="win">🏆 ' + winner.name + ' 胜出！</div><div class="info">タイム ' + fmtTime(R.winnerTime) + ' · ' + R.length + 'm · ' + R.surface + ' · ' + R.state + ' · ' + R.dir + ' · ' + R.profile + '</div><div class="info">' + playerLine + '</div>' +
+    ? '<div class="win">🏆 ' + winner.name + ' 胜出！</div><div class="info">タイム ' + fmtTime(R.winnerTime) + ' · ' + R.length + 'm · ' + R.surface + ' · ' + R.state + ' · ' + R.dir + ' · ' + R.profile +
+      ' · ' + (R.course || (R.geo && R.geo.course) || '标准') + '</div><div class="info">' + playerLine + '</div>' +
       careerIntelLine + betLine +
       '<div class="info">💰 所持金 ' + fmtWan(bankroll) + '</div>'
     : '<div>比赛结束</div>';
@@ -1213,7 +1246,66 @@ function renderResult() {
       '<td>' + f.surface + (f.special === '左右皆可' ? '' : '/' + f.special) + '</td></tr>';
   }).join('');
 
+  renderRaceDiagnostics(R, fld);
   drawChart();
+}
+
+function renderRaceDiagnostics(R, fld) {
+  const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]);
+  const seconds = (value) => Number.isFinite(value) ? value.toFixed(2) + '秒' : '—';
+  const percent = (value, maximum) => Number.isFinite(value) && maximum > 0
+    ? Math.round(S.clamp(value / maximum, 0, 1) * 100) + '%' : '—';
+  const ordered = R.order.concat(R.dnf);
+  const leaderSections = Array.isArray(R.sectionals) ? R.sectionals : [];
+  if (!leaderSections.length) {
+    $('raceDiagnostics').innerHTML = '<p class="note">本场没有分段记录。</p>';
+    return;
+  }
+  const complete = leaderSections.filter((section, index) => {
+    const previous = index ? leaderSections[index - 1].distance : 0;
+    return section.distance - previous === 200 && Number.isFinite(section.split);
+  });
+  const half = Math.floor(complete.length / 2);
+  const average = (list) => list.reduce((sum, section) => sum + section.split, 0) / Math.max(1, list.length);
+  let paceText = '完整分段不足，未计算前后段差。';
+  if (half > 0) {
+    const early = average(complete.slice(0, half)), late = average(complete.slice(-half));
+    paceText = '前段平均每200米 ' + seconds(early) + '，后段 ' + seconds(late) + '；后段' +
+      (late < early ? '加快 ' : '放慢 ') + seconds(Math.abs(late - early)) + '。';
+  }
+  const leaderRows = leaderSections.map((section) => '<tr><td>' + section.distance + 'm</td><td>' +
+    seconds(section.split) + '</td><td>' + seconds(section.time) + '</td></tr>').join('');
+  const summaryRows = ordered.map((H) => {
+    const stats = H.statsSummary || {};
+    const sprint = Number.isFinite(H.sprintAt) ? H.sprintAt : stats.sprintAt;
+    const sprintText = Number.isFinite(sprint) ? '残' + Math.round(Math.max(0, R.length - sprint)) + 'm' : '未发动';
+    return '<tr' + (H.id === playerId ? ' class="is-player"' : '') + '><td>' + (H.place || '中止') + '</td><td>' +
+      escape(H.name) + '</td><td>' + sprintText + '</td><td>' + percent(H.stamina, H.staminaMax) + '</td><td>' +
+      percent(H.guts, H.gutsMax) + '</td><td>' + seconds(stats.draftSeconds) + '</td><td>' +
+      seconds(stats.blockedSeconds) + '</td><td>' + (Number.isFinite(stats.peakSpeed) ? (stats.peakSpeed * 3.6).toFixed(1) + 'km/h' : '—') + '</td></tr>';
+  }).join('');
+  const horseSections = ordered.map((H) => {
+    const sections = Array.isArray(H.sectionals) ? H.sectionals : [];
+    const entry = fld.find((horse) => horse.id === H.id);
+    const rows = sections.map((section) => '<tr><td>' + section.distance + 'm</td><td>' + seconds(section.split) +
+      '</td><td>' + seconds(section.time) + '</td><td>' + percent(section.stamina, H.staminaMax) + '</td><td>' +
+      percent(section.guts, H.gutsMax) + '</td></tr>').join('');
+    return '<details><summary>' + escape(H.name) + ' · ' + escape(entry ? entry.style : H.style) + ' · ' +
+      (H.place ? H.place + '着' : '中止') + '</summary><div class="table-scroll"><table><thead><tr>' +
+      '<th>通过距离</th><th>本段用时</th><th>累计用时</th><th>可用储备</th><th>疲劳余量</th>' +
+      '</tr></thead><tbody>' + rows + '</tbody></table></div></details>';
+  }).join('');
+  $('raceDiagnostics').innerHTML = '<p class="note" style="margin-top:10px">' + paceText + '</p>' +
+    '<div class="diagnostic-grid"><div><h3>比赛分段</h3><div class="table-scroll"><table><thead><tr>' +
+    '<th>通过距离</th><th>本段用时</th><th>累计用时</th></tr></thead><tbody>' + leaderRows + '</tbody></table></div>' +
+    '<p class="note">记录各标志点首匹马通过的时间，领头马可能更换。计时按实际通过位置插值，末段不足200米时按实际距离显示。</p></div>' +
+    '<div><h3>骑乘与终点余力</h3><div class="table-scroll"><table><thead><tr><th>名次</th><th>马名</th>' +
+    '<th>冲刺发动</th><th>可用储备</th><th>疲劳余量</th><th>跟跑省力</th><th>受阻</th><th>最高速度</th>' +
+    '</tr></thead><tbody>' + summaryRows + '</tbody></table></div>' +
+    '<p class="note">冲刺发动是骑手决定持续加力的地点，实际提速受加速能力与余力限制；跟跑与受阻为全程累计时间，终点余力显示剩余比例。</p></div></div>' +
+    '<h3>逐马分段</h3>' + horseSections;
 }
 
 function drawChart() {
@@ -1269,7 +1361,7 @@ function runAutotest() {
     const out = [];
     for (let s = 1; s <= 3; s++) {
       const f = S.makeField(S.mulberry32(s * 7919), { n: 8 });
-      const r = S.createRace(f, { length: 2000, rng: S.mulberry32(s * 104729) });
+      const r = S.createRace(f, { length: 2000, course: '标准', rng: S.mulberry32(s * 104729) });
       let guard = 0;
       while (!r.race.finished && guard++ < 300000) r.step(1 / 30);
       out.push({ w: r.race.order[0] && r.race.order[0].name, t: r.race.winnerTime, fin: r.race.order.length, dnf: r.race.dnf.length });
@@ -1278,7 +1370,7 @@ function runAutotest() {
       out.map((o) => (o.t ? o.t.toFixed(1) + 's' : '?' )).join(' / ') +
       ' · 完赛数 ' + out.map((o) => o.fin).join('/') + ' · 中止 ' + out.map((o) => o.dnf).join('/');
     seed = 186; genField(seed);
-    race = S.createRace(field, { length: 2000, styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
+    race = S.createRace(field, { length: 2000, course: '标准', styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
     let g = 0;
     while (!race.race.finished && g++ < 300000) race.step(1 / 30);
     showResult();
@@ -1523,6 +1615,7 @@ function simulateRace(race) {
   const seedVal = race.rngSeed !== undefined ? race.rngSeed : (career.weekNum * 7919 + raceCount);
   const sim = S.createRace(race.field, {
     length: race.dist, surface: race.surface, state: race.state, dir: race.dir, profile: race.profile,
+    course: race.course || race.venue || '标准',
     styleCoefs: 'balanced',
     rng: S.mulberry32(seedVal >>> 0),
   });
@@ -1539,6 +1632,7 @@ function watchAiRace(raceCard) {
   raceCount++;
   race = S.createRace(raceCard.field, {
     length: raceCard.dist, surface: raceCard.surface, state: raceCard.state, dir: raceCard.dir, profile: raceCard.profile,
+    course: raceCard.course || raceCard.venue || '标准',
     styleCoefs: 'balanced',
     rng: S.mulberry32((raceCard.rngSeed || 0) >>> 0),
   });
@@ -1770,8 +1864,8 @@ function enterFoalToRoster() {
   $('foalCard').innerHTML = '<div style="color:var(--green);font-weight:700">✅ ' + h.name + ' 已入厩！它将在6月的新马赛出道——届时去赛程里找它下注吧。</div>';
 }
 /* ---------- 多场模拟（蒙特卡洛验证） ----------
- * 与 tests/mc.js 同口径：两档使用完全相同的阵容与随机种子，
- * 骑手固定「普通」、疲劳归零，唯一变量是跑法系数档位。
+ * 与 tests/mc.js 同口径：使用完全相同的阵容与随机种子配对复跑，
+ * 骑手固定「普通」、疲劳归零；doc/balanced 保留为历史 API 别名，均使用当前引擎。
  * 分片异步执行（每片约 60ms）以免阻塞界面，过程中持续显示进度。
  */
 const MC_STYLES = ['逃', '先', '差', '追'];
@@ -1786,7 +1880,7 @@ function mcField(seed) {
 }
 function mcRace(field, coefMode, seed) {
   const r = S.createRace(field, {
-    length: mc.L, surface: mc.surface, state: '良', profile: '缓坂',
+    length: mc.L, surface: mc.surface, state: '良', profile: '缓坂', course: '标准',
     styleCoefs: coefMode, rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0),
   });
   let g = 0;
@@ -1842,7 +1936,7 @@ function mcChunk() {
       }
     }
   }
-  const label = mc.stage === 'doc' ? '文档原版系数' : (mc.stage === 'balanced' ? '平衡修正系数' : '冠军-亚军着差');
+  const label = mc.stage === 'doc' ? '首次运行' : (mc.stage === 'balanced' ? '配对复跑' : '冠军-亚军着差');
   const done = mc.stage === 'doc' ? mc.doc.n : (mc.stage === 'balanced' ? mc.doc.n + mc.balanced.n : mc.doc.n + mc.balanced.n + mc.i);
   const totalRaces = mc.trials * 4;
   const pctDone = Math.min(99, Math.round(done / totalRaces * 100));
@@ -1855,7 +1949,7 @@ function mcFinish() {
   const secs = ((performance.now() - mc.t0) / 1000).toFixed(1);
   $('mcProgress').textContent = '✅ 完成：' + mc.doc.n + ' + ' + mc.balanced.n + ' 场（含着差配对）' +
     (secs >= 0.1 ? '，用时 ' + secs + ' 秒' : '') +
-    '　·　每档 ' + mc.trials + ' 场 · ' + mc.L + 'm · ' + mc.surface;
+    '　·　每组 ' + mc.trials + ' 场 · ' + mc.L + 'm · ' + mc.surface;
   lastMc = { doc: mc.doc, bal: mc.balanced, gapDoc: mc.gapDoc, gapBal: mc.gapBal,
              trials: mc.trials, L: mc.L, surface: mc.surface };
   mcRenderStyle(lastMc);
@@ -1873,36 +1967,33 @@ function mcRenderStyle(d) {
       '<td style="text-align:right">' + b.toFixed(1) + '%</td>' +
       '<td style="text-align:right;color:' + (Math.abs(diff) < 3 ? 'var(--green)' : 'var(--gold)') + '">' +
         (diff >= 0 ? '+' : '') + diff.toFixed(1) + '</td>' +
-      '<td style="text-align:right;color:var(--dim)">25.0%</td></tr>';
+      '</tr>';
   }).join('');
   const spread = (a) => 100 * (Math.max.apply(null, MC_STYLES.map((s) => r(a, s))) - Math.min.apply(null, MC_STYLES.map((s) => r(a, s))));
   const spD = spread(d.doc), spB = spread(d.bal);
-  const delta = spD - spB;                       // >0 表示平衡档更均衡
-  const enough = d.trials >= 200;
-  const note = enough
-    ? (delta >= 0
-        ? '压缩 ' + delta.toFixed(1) + ' 个百分点'
-        : '本次样本下平衡档极差反而略高（' + Math.abs(delta).toFixed(1) + ' 个百分点），多为抽样波动')
-    : '样本仅 ' + d.trials + ' 场，波动较大——建议选 200 场以上再下结论';
+  const equal = JSON.stringify(d.doc) === JSON.stringify(d.bal);
+  const sampleNote = d.trials < 200
+    ? '样本仅 ' + d.trials + ' 场，冠军占比与着差分布波动较大；建议增加场次再解释策略表现。'
+    : '冠军占比与着差分布是当前阵容样本的结果；配对一致只验证可复现性。';
   $('mcStyleOut').innerHTML =
     '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
       '<thead><tr style="color:var(--dim)">' +
         '<th style="text-align:left;padding:4px 0">跑法</th>' +
-        '<th style="text-align:right">文档原版</th>' +
-        '<th style="text-align:right">平衡修正后</th>' +
-        '<th style="text-align:right">变化</th>' +
-        '<th style="text-align:right">理想值</th></tr></thead><tbody>' +
+        '<th style="text-align:right">首次运行</th>' +
+        '<th style="text-align:right">配对复跑</th>' +
+        '<th style="text-align:right">差值（百分点）</th></tr></thead><tbody>' +
       rows +
       '<tr style="border-top:1px solid var(--line);font-weight:700">' +
         '<td style="padding-top:6px">极差</td>' +
         '<td style="text-align:right">' + spD.toFixed(1) + '%</td>' +
-        '<td style="text-align:right;color:' + (delta >= 0 ? 'var(--green)' : 'var(--gold)') + '">' + spB.toFixed(1) + '%</td>' +
-        '<td colspan="2" style="text-align:right;color:var(--dim);font-weight:400">' + note + '</td></tr>' +
+        '<td style="text-align:right">' + spB.toFixed(1) + '%</td>' +
+        '<td style="text-align:right;color:' + (equal ? 'var(--green)' : 'var(--red)') + ';font-weight:400">' +
+          (equal ? '配对统计一致' : '配对统计不一致，请检查') + '</td></tr>' +
     '</tbody></table>' +
     '<div class="note" style="margin-top:6px">' +
-      '有效场次：文档原版 ' + d.doc.n + ' · 平衡修正后 ' + d.bal.n +
-      '（异常中断 ' + (d.doc.aborted + d.bal.aborted) + ' 场）。四种跑法若完全平衡，各应为 25%。' +
-    '</div>';
+      '有效场次：首次运行 ' + d.doc.n + ' · 配对复跑 ' + d.bal.n +
+      '（异常中断 ' + (d.doc.aborted + d.bal.aborted) + ' 场）。策略冠军占比受阵容、距离、路线和临场骑乘影响。' +
+    '</div><div class="note" style="margin-top:6px">' + sampleNote + '</div>';
 }
 function mcHistogram(cv, gaps) {
   const ctx = cv.getContext('2d');
@@ -1950,7 +2041,7 @@ function mcRenderGap(d) {
   $('mcGapOut').innerHTML =
     '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
       '<thead><tr style="color:var(--dim)"><th style="text-align:left;padding:4px 0">冠军-亚军着差</th>' +
-      '<th style="text-align:right">文档原版</th><th style="text-align:right">平衡修正后</th></tr></thead><tbody>' +
+      '<th style="text-align:right">首次运行</th><th style="text-align:right">配对复跑</th></tr></thead><tbody>' +
       row('中位数（马身）', medA, medB) +
       row('平均值（马身）', avg(A), avg(B)) +
       row('最大值（马身）', Math.max.apply(null, A.gaps), Math.max.apply(null, B.gaps)) +
@@ -1959,12 +2050,11 @@ function mcRenderGap(d) {
         '<td style="text-align:right">' + f(A.tSum / Math.max(1, A.tN)) + '</td>' +
         '<td style="text-align:right">' + f(B.tSum / Math.max(1, B.tN)) + '</td></tr>' +
     '</tbody></table>' +
-    '<div style="margin-top:8px;font-weight:700;color:var(--gold)">着差中位数：' + f(medA) + ' 马身 → ' +
-      f(medB) + ' 马身（收敛 ' + f((medA - medB) / Math.max(0.01, medA) * 100, 1) + '%）</div>' +
+    '<div style="margin-top:8px;font-weight:700;color:var(--gold)">着差中位数：首次 ' + f(medA) + ' 马身 · 复跑 ' +
+      f(medB) + ' 马身</div>' +
     '<div class="note" style="margin-top:6px">' +
-      '本项为「配对比赛」：每场用同一批马、同一种子分别跑两档，共 ' + A.gaps.length + ' 对。' +
-      '修复项：马群跟跑耦合 + 属性向全场均值回归 + 跑法系数收敛 + 爆发因子 0.25→0.10。' +
-      '大差逃切与鼻差绝杀两种结局均保留。复现口径见仓库 tests/mc.js。</div>';
+      '本项为配对复跑：每场用同一批马、同一种子运行当前引擎两次，共 ' + A.gaps.length + ' 对。' +
+      '结果用于观察着差量级与验证确定性；不代表两套不同模型或现实数据拟合。复现口径见仓库 tests/mc.js。</div>';
 }
 function mcReset() {
   if (mc.running) return;
@@ -1985,7 +2075,7 @@ $('btnGen').addEventListener('click', () => genField(Math.floor(Math.random() * 
 $('btnGen2').addEventListener('click', () => { genField(Math.floor(Math.random() * 1e9)); showSetup(); });
 $('btnRerollStaff').addEventListener('click', () => { staff = S.makeStaff(S.mulberry32(Math.floor(Math.random() * 1e9))); reportRng = S.mulberry32(Math.floor(Math.random() * 1e9)); refreshReport(); });
 $('btnApplyEditor').addEventListener('click', applyEditor);
-['cfgLength', 'cfgSurface', 'cfgState', 'cfgDir', 'cfgProfile'].forEach((id) => {
+['cfgLength', 'cfgSurface', 'cfgState', 'cfgDir', 'cfgProfile', 'cfgCourse'].forEach((id) => {
   $(id).addEventListener('change', () => { refreshMarketOdds(); renderSetup(); });
 });
 $('seedApply').addEventListener('click', () => { const v = parseInt($('seedInput').value, 10); if (!isNaN(v)) genField(v); });
@@ -2073,7 +2163,7 @@ window.addEventListener('pagehide', saveCareer);
 /* ---------- 调试入口 ---------- */
 function runSnap() {
   genField(seed);
-  race = S.createRace(field, { length: 2000, styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
+  race = S.createRace(field, { length: 2000, course: '标准', styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
   // #snap?steps=N 可指定推进步数，便于截取直道/弯道等不同位置
   const wantSteps = parseInt(new URLSearchParams(location.search).get('steps'), 10) || 1800;
   let g = 0;

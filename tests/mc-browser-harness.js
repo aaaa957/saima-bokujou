@@ -101,19 +101,19 @@ const check = (cond, msg) => { console.log((cond ? '  ✅ ' : '  ❌ ') + msg); 
 const last = runOnce();
 if (!last) { console.error('❌ 模拟未产出结果'); process.exit(1); }
 
-console.log('\n【页面内 MC 结果】每档 ' + last.trials + ' 场');
-console.log('  文档原版 : ' + STYLES.map((s) => s + ' ' + (rate(last.doc, s) * 100).toFixed(1) + '%').join('  ') +
+console.log('\n【页面内 MC 结果】每组 ' + last.trials + ' 场');
+console.log('  首次运行 : ' + STYLES.map((s) => s + ' ' + (rate(last.doc, s) * 100).toFixed(1) + '%').join('  ') +
   '   极差 ' + spread(last.doc).toFixed(1) + '%');
-console.log('  平衡修正 : ' + STYLES.map((s) => s + ' ' + (rate(last.bal, s) * 100).toFixed(1) + '%').join('  ') +
+console.log('  配对复跑 : ' + STYLES.map((s) => s + ' ' + (rate(last.bal, s) * 100).toFixed(1) + '%').join('  ') +
   '   极差 ' + spread(last.bal).toFixed(1) + '%');
-console.log('  着差中位数: 文档 ' + fmt(median(last.gapDoc.gaps)) + ' 马身 → 平衡 ' + fmt(median(last.gapBal.gaps)) + ' 马身');
+console.log('  着差中位数: 首次 ' + fmt(median(last.gapDoc.gaps)) + ' 马身 · 复跑 ' + fmt(median(last.gapBal.gaps)) + ' 马身');
 
 console.log('\n【抽样数】');
-check(last.doc.n === last.trials, '胜率样本（文档原版）= ' + last.trials + '（实际 ' + last.doc.n + '）');
-check(last.bal.n === last.trials, '胜率样本（平衡修正）= ' + last.trials + '（实际 ' + last.bal.n + '）');
+check(last.doc.n === last.trials, '冠军占比样本（首次）= ' + last.trials + '（实际 ' + last.doc.n + '）');
+check(last.bal.n === last.trials, '冠军占比样本（复跑）= ' + last.trials + '（实际 ' + last.bal.n + '）');
 check(last.gapDoc.n === last.trials, '着差配对样本 = ' + last.trials + ' 对（实际 ' + last.gapDoc.n + '）');
 check(last.gapDoc.gaps.length === last.gapBal.gaps.length,
-  '两档配对样本数相等（' + last.gapDoc.gaps.length + ' / ' + last.gapBal.gaps.length + '）');
+  '配对样本数相等（' + last.gapDoc.gaps.length + ' / ' + last.gapBal.gaps.length + '）');
 check(last.gapDoc.n === last.gapDoc.gaps.length, '直方图取用配对样本，未被胜率档污染');
 check(last.doc.aborted === 0 && last.bal.aborted === 0, '无异常中断场次');
 check(last.gapDoc.gaps.every((v) => v >= 0 && isFinite(v)), '着差全部为有限非负值');
@@ -122,14 +122,18 @@ check(last.doc.tN === last.trials, '冠军用时可取（' + last.doc.tN + '/' +
 console.log('\n【渲染与状态】');
 check(String(els.mcProgress.textContent).indexOf('完成') >= 0, '进度文本为完成态');
 check(String(els.mcStyleOut.innerHTML).indexOf('<table') >= 0, '胜率表已渲染');
-check(String(els.mcGapOut.innerHTML).indexOf('收敛') >= 0, '着差汇总含收敛结论');
+const paired = JSON.stringify(last.doc) === JSON.stringify(last.bal) &&
+  JSON.stringify(last.gapDoc) === JSON.stringify(last.gapBal);
+const output = String(els.mcStyleOut.innerHTML) + String(els.mcGapOut.innerHTML);
+check(paired && /配对统计一致/.test(output) && /首次运行/.test(output) && /配对复跑/.test(output) &&
+  !/收敛|压缩|文档原版|平衡修正|理想值/.test(output), '配对一致提示与实际统计一致，未声称旧版改进');
 check(ctxObj.__mc.running === false, '运行标志已复位');
-const spreadRow = (String(els.mcStyleOut.innerHTML).match(/colspan="2"[^>]*>([^<]*)</) || [])[1] || '';
-console.log('  极差行文案：' + spreadRow.trim());
 if (TRIALS < 200) {
-  check(/样本仅/.test(spreadRow), '小样本时提示波动（不给出「压缩」结论）');
+  check(output.includes('样本仅 ' + last.trials + ' 场') && /波动较大/.test(output),
+    '小样本提示统计波动，配对可复现不等于表现已标定');
 } else {
-  check(!/-/.test(spreadRow) || /反而略高/.test(spreadRow), '足量样本时给出明确结论');
+  check(/当前阵容样本的结果/.test(output) && /配对一致只验证可复现性/.test(output),
+    '足量样本仍说明统计口径与配对验证范围');
 }
 
 console.log('\n【确定性】');

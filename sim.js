@@ -1,5 +1,5 @@
 ﻿/* ============================================================
- * 赛马风云 Demo · 比赛模拟引擎 v0.1
+ * 赛马风云 · 连续比赛模拟引擎 v2026.10.01.6
  * 公式来源：《系统数值设计文档》3.10 比赛系统设计
  * 情报误差机制来源：《游戏策划案》4.5 情报系统
  * 运行环境：浏览器(挂载到 window.SaimaSim) / Node(require)
@@ -33,15 +33,10 @@
      原物理宽度 11 与画面宽度 20 不一致；走位空间与弧长惩罚应分别由
      TRACK_WIDTH 和 laneBias 控制，避免用收窄跑道调节胜率。 */
   const TRACK_WIDTH = 20;
-  /* 跑法的默认战术位置（米，0=内沿）：展开马群的游戏假设，
-     并非规定后上马必须走外道；找空档和突破时可以覆盖该目标。 */
-  const STYLE_BASE_T = { '逃': 4.0, '先': 7.5, '差': 11.0, '追': 14.5 };
+  /* 历史默认路线接口；当前跑法不绑定横向位置。 */
+  const STYLE_BASE_T = { '逃': 3, '先': 3, '差': 3, '追': 3 }; // 历史接口，默认路线不按跑法区分
   const STALL_SPEED = 2;
-  /* 阶段划分（3.10 重做，对齐现实赛马的分段）
-     现实 2000m 一级赛的通行分段：
-       出闸 0~100m(5%)  序盘 ~600m(30%)  中盘 ~1200m(30%)  后盘 ~1400m(10%)  末段 600m(30%)
-     旧划分的中盘占 40%、终盘只占 20%（300m），把决定胜负的段落压缩了一半，
-     后上型根本没有足够距离完成超越。现在末段扩到 30%（600m）。 */
+  /* 进程标签仅用于播报与显示，不控制速度或资源，也不触发冲刺。 */
   const PHASE_DEFS = [
     { key: 'break', name: '出闸', from: 0.00, to: 0.05 },
     { key: 'open',  name: '序盘', from: 0.05, to: 0.32 },
@@ -55,36 +50,21 @@
     return PHASE_DEFS[PHASE_DEFS.length - 1];
   }
 
-  /* 跑法系数（现实取向，见"位置即代价"机制）
-     ------------------------------------------------------------
-     现实里跑法的差异不是"谁速度系数高"，而是【把体力花在哪一段】：
-       逃 —— 序盘抢位（早期系数高），但承受风阻、烧油最多，末段必然最弱
-       先 —— 中段位置好、可攻可守，全程中庸
-       差 —— 前段省力，末段提速
-       追 —— 前段最省，末段最强，但落后最多
-     所以系数的形状必须是：早期 逃>先>差>追，末段 追>差>先>逃。
-     注意末段应取【负系数】——逃马末段不是"稍慢"，而是明显慢于基准。
-     STYLE_COEF_DOC 是文档原版，保留以供对比测试。 */
+  /* 历史系数接口：用于读取旧脚本/资料，当前比赛不使用跑法裸速度系数。 */
   const STYLE_COEF_DOC = {
     '逃': { break: 1.08, open: 1.08, mid: 1.03, late: 1.02, final: 0.97 },
     '先': { break: 1.03, open: 1.03, mid: 1.00, late: 1.02, final: 1.04 },
     '差': { break: 0.96, open: 0.96, mid: 0.97, late: 1.03, final: 1.06 },
     '追': { break: 0.88, open: 0.88, mid: 0.95, late: 1.02, final: 1.10 },
   };
-  /* 平衡档：逃侧重前段、追侧重终盘；胜负同时受到余力、走位、步速与属性影响。
-     修复同道尾流和横移机制后，小幅降低逃各阶段 0.0025、提高差 0.001，
-     避免机制修复后领放在同源属性测试中过强。固定种子候选与最终验收见
-     docs/比赛系统-现实差距评估.md §14；现有现实贴合目标尚未全部通过。 */
+  // 历史档案；doc/balanced 调用统一使用当前连续引擎。
   const STYLE_COEF = {
     '逃': { break: 1.0094, open: 1.0084, mid: 1.0059, late: 0.9988, final: 0.9936 },
     '先': { break: 1.0035, open: 1.0031, mid: 1.0024, late: 1.0014, final: 1.0000 },
     '差': { break: 1.0022, open: 1.0026, mid: 1.0036, late: 1.0054, final: 1.0068 },
     '追': { break: 0.9966, open: 0.9980, mid: 1.0008, late: 1.0057, final: 1.0092 },
   };
-  /* 骑手的影响应当主要来自【战术与判断】（见 JOCKEY_CADENCE 的决策频率），
-     而不是裸速度加成。原表给殿堂 +4%、新人 0 —— 等于"抽到好骑手"
-     就能白拿 4% 的完赛时间（现实骑手差距更多体现在走位与配速判断上）。
-     这是「8 匹同水平·同跑法的马仍差 7.6 马身」的两个主因之一。 */
+  // 旧速度加成表保留导出兼容；实际骑手只影响判断与观察时机。
   const JOCKEY_BONUS = { '新人': 0, '普通': 0.002, '优秀': 0.006, '殿堂': 0.012 };
   const JOCKEY_CADENCE = { '新人': 4, '普通': 2, '优秀': 1.5, '殿堂': 1 };
   /* 场地修正 */
@@ -93,90 +73,60 @@
     '草地': { '草地': 1, '泥地': 0.92, '泥草双刀': 0.97 },
     '泥地': { '草地': 0.92, '泥地': 1, '泥草双刀': 0.97 },
   };
-  /* 疲劳对比赛发挥的影响（3.6 疲劳影响表）
-     ⚠️ 原表把 疲劳 85~100 压到 0.6、>100 压到 0.3 —— 等于让疲劳的马慢一倍。
-     实测这一项单独就能贡献 8~40% 的速度差，是马身差距失控的来源之一
-     （生成器会给约两成马分配 51~70 的疲劳，正好落在 0.92 档）。
-     归因实验（2000m/全同跑法/全同水平）显示，斗志+疲劳+骑手三项合计
-     仍贡献 2.28 马身（1-2名），故整体进一步收敛到数个百分点以内。 */
+  /* 赛前疲劳降低可持续供能与最高能力，幅度为游戏标定值。 */
   function fatigueMultiplier(f) {
     if (f <= 25) return 1; if (f <= 50) return 0.995; if (f <= 70) return 0.985;
     if (f <= 85) return 0.97; if (f <= 100) return 0.955; return 0.94;
   }
 
-  /* ---------------- 赛道几何（椭圆：两条直道 + 两个弯道） ----------------
-   * 出发门在终直左端，跑"终直 + 右弯 + 对直 + 左弯 + 终直"，全程 = 3S + 2πR */
-  function trackGeometry(length) {
-    const R = 70 + length / 40;          // 弯道半径(米)，随距离放大
-    const B = Math.PI * R;               // 单个弯道弧长
-    const S = (length - 2 * B) / 3;      // 单条直道长度
-    return { length, R, B, S };
-  }
-  /* s→(x,y)：赛道坐标，y轴向上；dir='右回' 时水平镜像 */
-  function trackPoint(s, t, geo, dir) {
-    const { R, B, S } = geo;
-    const d = t - TRACK_WIDTH / 2;       // 相对中线偏移：负=内侧
-    let x, y;
-    if (s < S) { x = -S / 2 + s; y = -R - d; }                                   // 终直(序盘)
-    else if (s < S + B) { const a = -Math.PI / 2 + (s - S) / R; x = S / 2 + (R + d) * Math.cos(a); y = (R + d) * Math.sin(a); }   // 右弯
-    else if (s < 2 * S + B) { x = S / 2 - (s - (S + B)); y = R + d; }             // 对直
-    else if (s < 2 * S + 2 * B) { const a = Math.PI / 2 + (s - (2 * S + B)) / R; x = -S / 2 + (R + d) * Math.cos(a); y = (R + d) * Math.sin(a); } // 左弯
-    else { x = -S / 2 + (s - (2 * S + 2 * B)); y = -R - d; }                      // 终直(冲刺)
-    if (dir === '右回') x = -x;
-    return { x, y };
-  }
-  /* 弯道曲率：直道 k=0，弯道 k=1/R */
-  function kAt(s, geo) {
-    const { R, B, S } = geo;
-    if ((s >= S && s < S + B) || (s >= 2 * S + B && s < 2 * S + 2 * B)) return 1 / R;
-    return 0;
-  }
-  /* R 是中线半径；同一弧段外道的路程为中线的 1+k·(t-半宽) 倍。
-     laneBias 保留几何差异的一部分，1 表示严格按弧长换算推进。 */
-  function laneProgressCoef(s, t, geo) {
-    const k = kAt(s, geo);
-    const raw = 1 / (1 + k * (t - TRACK_WIDTH / 2));
-    return 1 + (raw - 1) * RACE_F.laneBias;
-  }
-  /* 弯道系数（文档 3.10(11)）：适性匹配=1，不匹配=0.9 */
-  function bendCoefFor(special, dir) {
-    if (special === '左右皆可') return 1;
-    if (special === '左右皆不可') return 0.9;
-    return special === dir ? 1 : 0.9;
-  }
-
-  /* ---------------- 坡度系统（新增，文档 3.13 待补） ----------------
-   * 坡度 g = 高差/水平距离。赛道分段（40m 平滑过渡）：
-   * 序盘直线 0 → 右弯 0 → 对直 +g → 左弯 +0.6g → 终直 -0.4g（下坡冲线） */
-  const SLOPE_PROFILES = { '平坦': { g: 0 }, '缓坂': { g: 0.015 }, '中坂': { g: 0.03 }, '急坂': { g: 0.05 } };
-  function gradientAt(s, geo, g) {
-    if (!g) return 0;
-    const { B, S } = geo;
-    const segs = [
-      { from: 0, to: S, v: 0 },
-      { from: S, to: S + B, v: 0 },
-      { from: S + B, to: 2 * S + B, v: g },
-      { from: 2 * S + B, to: 2 * S + 2 * B, v: 0.6 * g },
-      { from: 2 * S + 2 * B, to: 3 * S + 2 * B, v: -0.4 * g },
-    ];
-    for (let i = 0; i < segs.length; i++) {
-      const seg = segs[i];
-      if (s >= seg.from && s <= seg.to) {
-        const ramp = Math.min(40, (seg.to - seg.from) / 4);
-        let v = seg.v;
-        if (s > seg.to - ramp) {
-          const next = segs[(i + 1) % segs.length];
-          const k = (s - (seg.to - ramp)) / ramp;
-          v = v * (1 - k) + next.v * k;
-        }
-        return v;
+  // 固定赛道布局；比赛距离只改变起跑点和圈数，不改变弯道半径。
+  // 三种布局为机制对照用的抽象场地，不声称复刻同名现实赛马场。
+  const COURSES = { '标准': { R: 120, S: 420 }, '长直道': { R: 140, S: 540 }, '小回り': { R: 95, S: 310 } };
+  const VENUE_COURSE = { '東京': '长直道', '新潟': '长直道', '中山': '小回り', '福島': '小回り', '小倉': '小回り' };
+  const mod = (x, n) => ((x % n) + n) % n;
+  function trackGeometry(length, course) {
+    const key = COURSES[course] ? course : (VENUE_COURSE[course] || '标准');
+    const { R, S } = COURSES[key], referenceLane=1.4, referenceR=R+referenceLane-TRACK_WIDTH/2;
+    const B = Math.PI * referenceR, lap = 2 * S + 2 * B;
+    const startOffset = mod(S - length, lap), boundaries = [];
+    for (let loop = -1; loop <= Math.ceil(length / lap) + 1; loop++) {
+      for (const [at, kind, label] of [[S, 'bendStart', '入弯'], [S+B, 'bendEnd', '出弯'], [2*S+B, 'bendStart', '入弯'], [lap, 'bendEnd', '出弯']]) {
+        const s = loop * lap + at - startOffset;
+        if (s > 0 && s < length) boundaries.push({ s, kind, label });
       }
     }
-    return 0;
+    boundaries.sort((a,b) => a.s-b.s);
+    return { length, R, referenceR, referenceLane, B, S, lap, startOffset, course: key, boundaries, finishStraight: Math.min(length, S) };
+  }
+  function trackPoint(s, t, geo, dir) {
+    const { R, B, S } = geo, turnR=geo.referenceR||R, q = mod(s + (geo.startOffset || 0), geo.lap || (2*S+2*B));
+    const d = t - TRACK_WIDTH / 2; let x,y;
+    if(q < S) { x=-S/2+q; y=-R-d; }
+    else if(q < S+B) { const a=-Math.PI/2+(q-S)/turnR; x=S/2+(R+d)*Math.cos(a); y=(R+d)*Math.sin(a); }
+    else if(q < 2*S+B) { x=S/2-(q-S-B); y=R+d; }
+    else { const a=Math.PI/2+(q-2*S-B)/turnR; x=-S/2+(R+d)*Math.cos(a); y=(R+d)*Math.sin(a); }
+    if(dir==='右回') x=-x; return {x,y};
+  }
+  function kAt(s, geo) {
+    const {S,B,R}=geo, q=mod(s+(geo.startOffset||0),geo.lap||2*S+2*B);
+    return (q>=S && q<S+B) || q>=2*S+B ? 1/R : 0;
+  }
+  function laneProgressCoef(s,t,geo) {
+    const raw=kAt(s,geo)>0?(geo.referenceR||geo.R)/(geo.R+t-TRACK_WIDTH/2):1;
+    return 1+(raw-1)*RACE_F.laneBias;
+  }
+  function bendCoefFor(special,dir) {
+    return special==='左右皆可' || special===dir ? 1 : 0.97;
+  }
+  const SLOPE_PROFILES = { '平坦':{g:0}, '缓坂':{g:0.010}, '中坂':{g:0.018}, '急坂':{g:0.025} };
+  function gradientAt(s,geo,g) {
+    if(!g) return 0;
+    // 周期高程的导数，积分一圈为零；坡度按赛道位置读取。
+    const q=mod(s+(geo.startOffset||0),geo.lap), z=q/geo.lap;
+    return g * (0.65*Math.sin(2*Math.PI*z+0.6)+0.35*Math.sin(4*Math.PI*z));
   }
 
-  /* 骑手动作：收窄原 ±2%~5% 的直接速度影响。
-     推骑最多 +0.8%、打鞭最多 +1.8%，同时增加消耗；收益再由余力调制。 */
+  // 历史动作解释接口。当前动作由目标配速/走位产生，不叠加这些旧加成或税率。
   const ACTION_DEF = {
     '推骑':    { coef: 0.008,  stamina: 1.35 },
     '打鞭':    { coef: 0.018,  stamina: 1.9 },
@@ -198,321 +148,32 @@
     return d.coef * reserve;
   }
 
-  /* ============================================================
-   * 比赛公式参数（3.10 重做）
-   * ------------------------------------------------------------
-   * 旧公式的三个问题（均由 tests/attribute-impact.js 实测确认）：
-   *   ① 速度独占：速度 +20 胜率 73%，而耐力 +20 = +0.0、毅力 +20 = +1.3
-   *   ② 耐力无机制：毅力阶段"锁定额定速度"，全程没有任何衰减，
-   *      耐力池还有富余时多加耐力毫无价值（实测耐力 70→90 完赛时间完全相同）
-   *   ③ 速度标尺偏慢：2000m 要 139~166 秒（现实约 120 秒），最高速仅 47 km/h
-   *
-   * 新设计：把"速度"定义为上限、"耐力/毅力"定义为维持上限的能力，
-   * 并通过「连续掉速」把两者连起来——这是现实中两者的真实关系。
-   * ============================================================ */
+  // 连续运动模型的相对功率单位，参数为游戏标定值而非直接测量的生理常数。
   const RACE_F = {
-    /* ① 基础速度标尺（m/s）
-       ⚠️ 核心约束：速度是【乘法】作用于全程五个阶段的。
-       速度高 1.5% → 2000m 就领先约 40 米，足以决定胜负。
-       实测：速度 +20 在斜率 0.26 时胜率 +74.5 个百分点，压到 0.08 仍有 +39.5。
-       所以速度标尺必须压得很窄，让它只负责"整体水准"；
-       能力差异改由【阶段专属属性】承担（见 ⑤）。
-
-       斜率从 0.045 再压到 0.028 的理由：
-         生成器给同场马的 level 跨度常达 8~10 点（drama 场 62~70、
-         G1 的 RACE_TIERS 是 84~94）。原斜率下这直接等于基速差 4.1%，
-         而现实中同班次马的速度差距只有 2~3%（全场用时差 2~4%）。
-         实测原斜率把「冠军-亚军着差」推高到 12 马身（现实约 1~2）。
-         压窄后基速差降到 2.3%，落在现实量级。
-       标定：速度 70 → 0.028×70+15.39 = 17.35 m/s，
-       配合全程系数后 2000m ≈ 118 秒（现实 120 秒）。 */
-    baseSpeed: { a: 0.014, b: 16.37, min: 40, max: 115 },
-    /* ② 耐力池与消耗
-       关键设计一：消耗由【距离】驱动，不由时间驱动。
-       若按时间消耗，"掉速 → 跑得久 → 消耗更多 → 掉得更快"会形成死亡螺旋
-       （实测按时间消耗时完赛时间从 120 秒飙到 170~206 秒）。
-       按距离消耗则每米消耗固定，掉速不会反过来加剧消耗，系统稳定可读。
-
-       关键设计二：消耗按【本场距离】归一，而不是固定绝对值。
-       若按固定值标定（"耐力70 恰好在 2000m 用完"），则 2400m 会提前耗尽，
-       实测出现末位慢 95 秒、3000m 全场中止。
-       归一后，"耐力 70 = 任何距离都刚好够用"，距离只改变门槛的绝对值：
-       1200m 时耐力富余（速度独大），3000m 时耐力成为硬门槛。 */
-    staminaPer: 60,          // 池 = 耐力 × 60
-    gutsPer: 60,             // 池 = 毅力 × 60
-    drainDistBase: 2000,
-    drainDistExp: 0.45,      // 距离指数：长距离每米消耗更高，但不线性爆掉
-    /* ③ 三段式：耐力 / 毅力 / 失速（3.10(10) 重做）
-       ------------------------------------------------------------
-       设计意图（用户原始设计）：
-         耐力阶段 —— 消耗耐力【可以提升速度】，也能维持速度
-         毅力阶段 —— 耐力耗尽后，【只能维持速度，不能提升】
-         失速阶段 —— 毅力也耗尽，掉速
-       终盘加速正比于剩余耐力，而非已消耗量或固定加成。
-       这样前段省力才能在末段兑现，催马的即刻收益与后续消耗形成取舍。
-       accel = staminaAccel × 剩余耐力比 × 终盘窗口 × 弯道系数。 */
-    staminaAccel: 0.20,      // 余力全额兑现时的提速上限
-    accelWindow: 0.05,       // 进入终盘后多少进度内完成兑现
-    /* 掉速幅度必须【贴近现实量级】。原值 0.22/0.34 下，体力耗尽的马
-       终盘只剩 (1-0.22)×(1-0.34)=0.51 的速度——比正常马慢一倍。
-       实测末段落差拉到 10 秒以上，末位落后 116 马身（约 280m）。
-       现实里「没跑完这口气」的马，终盘也只是慢 3~8%（约 1~3 秒），
-       因为比赛总用时的差距本就只有 2~4%。故压到 0.10/0.14：
-       全力竭 = 保留 90%×86% ≈ 77%，仍能明显看出掉速，但不会停摆。 */
-    staminaMaintain: 0.05,   // 耐力阶段的掉速幅度（剩余耐力比越低掉越多）
-    gutsMaintain: 0.07,      // 毅力阶段的额外掉速幅度（毅力剩越少掉越多）
-    stallFall: 0.96,         // 刚进入失速时保留的速度比例
-    stallDrop: 0.10,         // 失速阶段随速度下降继续衰减的幅度
-    stallFloor: 0.88,        // 失速下限（保留基准速度的 88%）
-    stallDecayPerSec: 0.985, // 失速阶段每秒速度衰减（原为 0.95/帧，下跌过快）
-    /* 失速必须【有界】。旧值 (0.78 / 0.40 / 下限 0.30 + 速度地板 STALL_SPEED=2)
-       会让耗尽体力的马以 2~3 m/s 爬完全程，实测把马群拉开到
-       「冠军-末位 中位数 153 马身」（约 367 米）——而现实里
-       「大差」的含义也只是 10 马身以上，不是几百米。
-       现在把失速收敛为「保留 94%、最多再掉到 86%」：
-       跑崩表现为明显变慢（数秒级），而不是停下来。 */
-    /* ④ 位置即代价（3.10 新增）—— 这是四种跑法能平衡的根源
-       现实里领放者承受全部风阻，跟跑者借前马的尾流省力，
-       赛马界的经验值是跟跑约省 1~2 马身的能量（≈10~12%）。
-       所以"抢到前面"不是免费的，而是要用体力买的。
-       判定：正前方 draftRange 米内有马 = 被遮挡省力；
-             独自领放 = 承受全风阻。 */
-    draftRange: 12,          // 被遮挡的判定距离(米)
-    /* ⚠️ 风阻项的基准是【领放者】，不是"理想无风"。
-       现实：领先马承受全部风阻，跟在后面的马省约 10%（赛马界通行经验值 5~10%）。
-       所以「省油」应该相对领放者来说，领放者本身是 1.00 而不是被额外加罚。
-       旧参数 (1.05 / 0.88，后来 1.05 / 0.93) 把这件事重复计费了两次 ——
-       既给跟跑者打折，又给领放者加价，凭空造出 13% 的落差。
-       实测（属性同源 · 真实构成）：这个 13% 是压死「逃」的头号机制 ——
-       单把它归零，「逃」的 per-start 胜率倍数就从 0.31~1.02 升到 0.92~1.80。 */
-    draftSave: 0.90,         // 被遮挡时的耐力消耗倍率（相对领放者省 10%）
-    leadCost: 1.00,          // 独自领放 = 基准风阻，不再额外加罚
-    /* ⚠️ 领放惩罚必须收窄。原值 (1.10 / 0.88) 是 25% 的耗油差 ——
-       跑满 2000m 必然力竭，于是「只要跑后上就赢」，实测 2000m 追 48%、
-       3000m 追 67%，而前速型全军覆没。
-       现实里尾流只省约 5~10% 体力（赛马界通行经验值），故收敛到 13% 差。
-       领放的真实代价主要来自【节奏税】——即"被迫跑多快"，
-       那已由 paceTax 按步速与跑法分别结算，不该在这里重复征收。 */
-    /* ⑤ 节奏博弈（3.10 新增）
-       同场争抢领放的逃马越多，前段节奏越快：速度上升的同时油耗也上升，
-       于是互相消耗、末段集体崩溃——这是真实赛马最好看的部分。 */
-    paceContestCoef: 0.012,  // （旧接口，保留供对比测试）
-    paceContestDrain: 0.14,  // （旧接口，保留供对比测试）
-    paceContestCap: 3,       // （旧接口，保留供对比测试）
-    /* ⑦ 步速系统（3.10 新增，设计说明见 docs/比赛系统-现实差距评估.md §8）
-       ------------------------------------------------------------
-       旧 paceContest 为何失效：
-         它的油耗端乘在 effortDrain 上，而 effort = H.v / race.avgV 是
-         「相对全场均速」的比值 —— 步速抬高全场速度时分子分母同时变大，
-         效应被数学抵消。于是节奏博弈没能真正改变体力分配
-         （实测 race-drama「半程领先者即冠军」68.7%，几乎没起作用）。
-       解法：旁路新增一个【不参与归一化】的绝对项 paceTax。
-
-       而 paceTax 要乘 pacePull 才有意义：现实里步速由领放者设定，
-       它只把「想跑在前面」的马拖着走；后上型仍按自己的节奏跑，
-       快步速对它的意义是差距被拉开，而不是被拖着提速。 */
-    pacePull: { '逃': 1.00, '先': 0.60, '差': 0.20, '追': 0.10 },
-    paceWeight: { '逃': 1.00, '先': 0.28 },   // 谁在真正争抢领放（先行马会压上施压，但不真正领放）
-    /* ⚠️ paceRef 的标定基准是「无争抢的单骑领放」，不是「1 匹逃 + 3 匹先」。
-       旧值 1.15 会让游戏实际的典型场次（1 匹逃 + 2~3 匹先）算到 1.16 ——
-       即【完全没有争抢】也被判成"要交节奏税"，于是单骑领放者永远在挨罚，
-       「マイペースで逃げる」（单骑领放偷走比赛）这条现实中最经典的战术
-       在本引擎里根本不可能出现。
-       现标定（配合 fieldStyles 的 1~3 匹逃）：
-         1 匹逃 ≈ 0.85（スロー）／2 匹逃 ≈ 1.31（平均）／3 匹逃 ≈ 1.77（ハイ） */
-    paceRef: 1.72,
-    paceSizeFix: 0.03,       // 每多一匹马，争抢强度上升
-    paceSlowGate: 1.00,      // paceStrength < 此值 = スロー
-    paceHighGate: 1.50,      // paceStrength > 此值 = ハイ
-    paceSpeedK: 0.012,       // 步速对前段速度的拉动幅度
-    /* ⚠️ 这个值必须小。原写 0.045 时，ハイペース 下的逃马白拿
-       (paceStrength-1)×0.045×1.0 ≈ +3.7% 的全程速度，而它的代价
-       （节奏税）只在体力见底时才兑现 —— 短途体力富余，于是变成
-       「争抢越快越白赚」，实测 1200m 逃马胜率 97.5%。
-       现实相反：速度争夺的代价必须大于收益，否则就没有"烧掉"一说。
-       现在压到 0.012，让步速的主要作用回到【体力再分配】上。 */
-    paceTaxK: 0.40,          // 节奏税强度（× pacePull × 步速超出量）—— 被迫提速的代价
-    /* 节奏掌控收益（慢节奏一侧的系数）。
-       ⚠️ 现实中「被迫提速的代价」与「掌控节奏的收益」并不对称：
-         代价是硬性的烧油，而收益来自【可以自行分配体力】——领放者按自己要的
-         节奏跑，马群却要跟着它走。所以两侧用不同系数，且收益侧更大。
-       这个系数是把「逃」拉回现实位置（JRA：逃有最高的 per-start 胜率）的主杠杆。 */
-    paceCreditK: 1.20,
-    /* 节奏项的上下限。允许因子 < 1（慢步速 = 省油）—— 见 step() 中的说明。 */
-    paceAdjFloor: 0.70,
-    paceAdjCeil: 1.55,
-    /* ⑥ 赛道几何（3.10 新增）—— 让弯道真正参与竞争
-       弯道速度上限：过弯要抵抗离心力，半径越小越要减速。
-         速度系数 = 1/(1 + k·bendPenaltyLen)，k = 1/R。
-         R=100(1200m) → 0.917；R=145(3000m) → 0.942。
-       内外道：弯道外侧弧更长，半径 (R+x) 对基准的比值即真实速度差，
-         所以外侧必须更快才等价。这就是内栏优势与"抢位有价值"的来源。
-       弯道屏蔽加速：现实过弯要维持平衡且容易被堵，后上型的加速窗口
-         因此被弯道切碎——弯道占比越高，后上型越吃亏。 */
-    bendPenaltyLen: 9,       // 弯道减速强度（米），配合 k=1/R 使用
-    /* 弯道默认向内收拢量（米）；找空档时可覆盖。
-       目标统一计算，避免被跑法分支无条件赋值所覆盖。 */
-    bendInset: 3.0,
-    lateralSpeed: 0.8,       // 所有横移的速度上限（米/秒），包括靠拢战术位置
-    /* 几何差异保留强度（0=各道等效等长，1=严格弧长换算）。
-       当前 0.05 是游戏平衡参数；物理公式正确不代表其强度已完成现实标定。 */
-    laneBias: 0.05,
-    /* 催马动作在【力竭】时的效果下限（见 actionCoef）
-       1.0 = 完全不受余力影响（旧行为，等于无条件加速）；0 = 力竭时催马完全无效。
-       取 0.35：力竭后鞭子还剩三成半效果——保留一点「挣扎」的戏剧性，
-       但不再是「只要打鞭就能一直快」。 */
-    actionReserveFloor: 0.35,
-    /* 弯道上保留的加速能力（见 step 中的 bendLock）
-       1.0 = 弯道不遮蔽加速（等于取消「弯道切碎后上型加速窗口」这条机制）；
-       0   = 弯道上完全不能加速（旧值，导致短途前速型过强）。 */
-    bendAccelLock: 0.4,
-    /* ⑧ 马群耦合（3.10 新增）—— 修正「速度作用方式」与现实的结构性偏离
-       ------------------------------------------------------------
-       旧结构里 base（含速度）是【乘法作用于全程】的，于是能力差从第一米
-       起就线性累积到终点：1 点 level ≈ 0.16% 速度 ≈ 每点 1.34 马身，
-       跑满 2000m 就拉开十几马身。实测 ±4 level 的场次 1-2 名差 15 马身
-       （现实 1~2），而"8 匹同水平同跑法"也差 6% 完赛时间。
-
-       但真实赛马不是这样跑的：序盘到中盘的马群被节奏【锁住】——
-       跑在群里没法"想快就快"（受前马遮挡、还要留力），骑手会收着跑；
-       能力差距要到【终盘 600m 才兑现】。这正是真实比赛"前 1400m 挤成一团、
-       最后 400m 才拉开"的原因。
-
-       本参数把序盘/中盘的【纯能力速度 base】压向全场均值，终盘完全放开；
-       且【只压能力、不压跑法系数】——跑法战术差必须完整保留，否则逃马
-       建立不起领先，比赛会被压成一场 600m 短跑（见 step() 中的详细说明）。
-         packCoupling = 0.40 → 序盘/中盘只保留 40% 的能力差
-       压缩发生在 retention（体力/掉速）之前，所以耐力、毅力、失速
-       依旧全额咬得住 —— 属性照样决定胜负，只是不再无脑变成时间差。 */
-    packCoupling: 0.40,
-    /* ⑦ 消耗 ∝ 出力强度
-       原来按"速度×距离"算，于是"跑得更快"本身免费——逃马配速最高却
-       不多耗油。现实里跑更快应显著更费油，这是逃马末段崩溃的根因。
-       出力比 = v / 全场均速，消耗 ×= 出力比^effortExp。 */
-    effortExp: 1.5,
-    /* ⑤ 阶段专属属性（关键设计）
-       旧实现里所有属性都只影响 base，而 base 乘以风格系数作用于全程——
-       结果是"跑法"（风格系数差 ±7%）完全盖过"属性"（速度差 ±1.5%），
-       比赛由跑法决定，属性形同虚设。
-       现在把属性按【阶段】分配，每个属性都有专属的作用区间：
-         出闸 ← 出闸能力、序盘/中盘 ← 力量、后盘 ← 毅力、终盘 ← 爆发力。
-       k=0.16：属性 50→90 时该阶段系数变化约 ±6.4%，与风格系数同量级，
-       于是"跑法"与"属性"共同决定胜负。 */
-    stageAttr: {
-      break: { key: '出闸能力', k: 0.16 },
-      open:  { key: '力量',     k: 0.16 },
-      mid:   { key: '力量',     k: 0.16 },
-      late:  { key: '毅力',     k: 0.16 },
-      final: { key: '爆发力',   k: 0.16 },
-    },
-    /* ⑥ 终盘爆发修正（3.10(6)）：在阶段属性之外再给爆发力一份额外权重。
-       旧值 0.10 下爆发力 +20 只值 +3.4% 终盘速度、胜率仅 +2.7 个百分点。 */
-    burstFactor: { doc: 0.14, balanced: 0.12 },
-    /* ⑨ 终盘 = 属性的主场（3.10 新增）
-       ------------------------------------------------------------
-       设计意图（回答"属性要有作用、马身又要小"这组矛盾）：
-       速度不再主要靠【全程乘算】取胜 —— 那会让优势从第一米起线性累积成
-       十几马身；而是主要靠【终盘能开多快】。这正是现实中区分强马的方式：
-       强马不是全程快 1%，而是末段能多给一脚。
-       所以 baseSpeed 的斜率已相应压窄（0.028 → 0.014），
-       差额挪到这里：终盘对速度的兑现系数。
-       速度 90（+20 点）→ 终盘 +4% 速度，作用在最后 30% 赛程上；
-       既能决定胜负，又不会在前面就攒出巨大领先。 */
-    finalAttrK: 0.20,
+    baseSpeed:{a:0.020,b:15.80,min:1,max:115}, // 70点=17.2m/s参考速度
+    staminaPer:60, gutsPer:60, energyScale:180,
+    aerobicBase:0.86, aerobicStaminaK:0.0020,
+    peakExtra:1.15, burstSpeedK:0.010,
+    maxAccel:3.2, runningAccel:1.05, braking:3.5,
+    responseTime:1.4, lateralSpeed:0.8, laneBias:1,
+    draftRange:12, draftSave:0.94, leadCost:1,
+    curveLateral:3.25, fatigueWork:5.5, fatigueExcess:16,
+    // 以下只用于赛前公开预测/历史辅助接口，不反馈给比赛物理。
+    paceRef:1.72, paceSizeFix:0.03, paceSlowGate:1, paceHighGate:1.5,
+    actionReserveFloor:0.35,
   };
-
-  /* 基础速度（3.10 重做）
-     线性且斜率适中：既保留"速度是最重要的单项能力"，又不让它一票独裁。 */
-  function baseSpeed(spd) {
-    const F = RACE_F.baseSpeed;
-    const s = Math.max(F.min, Math.min(F.max, spd));
-    return F.a * s + F.b;
+  function baseSpeed(spd) { const F=RACE_F.baseSpeed; return F.a*clamp(spd,F.min,F.max)+F.b; }
+  const STAMINA_RANGE_PER_POINT=32; // 历史展示尺度；不再保证固定里程耗尽。
+  const GROUND_RANGE_COEF={'良':1,'稍重':0.95,'重':0.88,'不良':0.80};
+  function powerDrainCoef(power,state) {
+    const badness=1-(GROUND_RANGE_COEF[state] || 1);
+    return clamp(1+(power-70)*0.0015*badness/0.20,0.8,1.2);
   }
-  /* 可跑距离模型（3.10 重做）
-     ------------------------------------------------------------
-     设计意图：耐力不再是抽象数值，而是【能跑多远】的绝对距离。
-         可跑距离 = 耐力 × 32 米
-         耐力 50 → 1600m   耐力 70 → 2240m
-         耐力 80 → 2560m   耐力 90 → 2880m   耐力 100 → 3200m
-     与赛程无关——这正是"这匹马适合跑多远"这个问题的答案，
-     也是"距离适性"赖以成立的基础。
-     现实参照：最长的平地赛约 4000m 以上，所以耐力 100（3200m）仍非万能。
-
-     消耗按【距离】驱动而非时间：若按时间消耗，"掉速→跑得久→耗更多→掉更快"
-     会形成死亡螺旋（实测完赛时间从 120 秒飙到 206 秒）。
-
-     与实际可跑距离相乘的修正（见 race.drainCoef）：
-       场地状况 —— 良 1.00 / 稍重 0.95 / 重 0.88 / 不良 0.80
-       力量     —— 场地越差，力量强的马越省力（好地几乎无差别）
-       疲劳     —— 出赛前的疲劳直接缩短可跑距离
-     坡度则在每帧单独结算（上坡多耗、下坡少耗），不并入这里。
-     ============================================================ */
-  /* 每点耐力对应的可跑距离（米）。
-     设计标称是 32 米/点（耐力 100 → 3200m），但消耗公式里骑手动作系数、
-     出力惩罚等乘数合计会额外放大到约 1.32 倍，因此这里取 43 作为内部常数，
-     使【实际可跑距离】回到 32 米/点。实测（tests/stamina-range.js）：
-       耐力 50/70/90/100 → 名义 1600/2240/2880/3200m 与实际一致。
-     若日后调整骑手动作系数或出力指数，需用 tests/_probe-range.js 重新标定。 */
-  const STAMINA_RANGE_PER_POINT = 32;
-  /* 骑手动作的基准消耗系数（标定常数）。
-     可跑距离必须在"实际骑手行为"下兑现（耐力70 = 2240m），所以按实测标定。
-     实测 40 场 × 8 匹 / 2000m 的动作分布：
-       推骑 38.9%(×1.5) / 无 22.3%(×1.0) / 斜行 19.6%(×1.2) /
-       打鞭 10.1%(×2.0) / 收力 9.1%(×0.7)  →  加权平均 1.3075
-     单马独跑实测：每米消耗 1.9164（基准 1.8750），耗尽点 2223m vs 名义 2240m，
-     偏差 -0.76% → 按 2240/2223 反推得 1.3175。
-     注意：单人独跑时 AI 全程"收力"(×0.7)，与真实比赛的动作构成不同，
-     所以校准时以真实比赛行为为准。 */
-  const ACTION_STAMINA_BASE = 1.3175;
-  /* 场地对可跑距离的影响：烂地更费力 */
-  const GROUND_RANGE_COEF = { '良': 1.00, '稍重': 0.95, '重': 0.88, '不良': 0.80 };
-  /* 力量对续航的保护：基准 70 为中性，再乘以"场地恶劣度"，
-     使好地上力量几乎不影响续航、烂地上影响明显。
-     返回的是【可跑距离修正】(越大越省力)：力量90 在良地上 ≈1.00、
-     在不良地上 ≈1.09；力量50 在不良地上 ≈0.91。 */
-  function powerDrainCoef(power, state) {
-    const badness = 1 - (GROUND_RANGE_COEF[state] !== undefined ? GROUND_RANGE_COEF[state] : 1);
-    return clamp(1 + (power - 70) * 0.0006 * (badness / 0.20) * 2.5, 0.75, 1.25);
-  }
-  /* 本场的可跑距离修正（场地 × 力量）
-     疲劳不并入这里——它已经通过全局速度乘数 fatMult 让马跑得更慢，
-     若再缩短可跑距离会形成双重惩罚（实测疲劳100 时可跑距离掉到名义的 71%）。
-     设计上"疲劳"的作用是让马变慢，不是让它提前力竭。 */
-  function rangeCoef(state, power) {
-    const ground = GROUND_RANGE_COEF[state] !== undefined ? GROUND_RANGE_COEF[state] : 1;
-    return ground * powerDrainCoef(power, state);
-  }
-  /* 兼容旧接口：距离归一已由"绝对可跑距离"取代，这里保持返回 1 */
+  function rangeCoef(state,power) { return (GROUND_RANGE_COEF[state]||1)*powerDrainCoef(power,state); }
   function drainDistanceCoef() { return 1; }
-  /* 基准马的耐力值：预算的参考尺度。
-     预算 = (本场距离 / 基准耐力) × 池倍率 × (32 / STAMINA_RANGE_PER_POINT)
-     最后那个比值才是"每点耐力能跑多少米"的真正旋钮：
-        每点可跑米数 = REF_STAMINA × 池倍率 × RANGE_PER_POINT / 32
-                     = 67.2 × RANGE_PER_POINT
-     危险点（曾踩坑）：若省掉这个比值，drainPerMeter 就与耐力值无关，
-     改 STAMINA_RANGE_PER_POINT 只会改变"标称显示"，实际耗尽点纹丝不动
-     （实测把常数改成 18/22/26 结果完全一致）。 */
-  const REF_STAMINA = 70;
-  const RANGE_REF = 32;          // 标称基准：32 米/点
-  /* ⚠️ 标定尚未收口（如实记录）：
-     改 STAMINA_RANGE_PER_POINT 的实际效果是【非线性】的，因为 drainPerMeter
-     依赖本场距离，而改常数会改变耗尽发生在什么速度下，两者相互耦合。
-     实测（真实 8 匹马比赛，良地/力量70）：
-       常数 20.4 → 耐力70 实际 2284m（标称 1428m，+60%）
-       常数 32   → 耐力70 实际 3509m（标称 2240m，+57%）
-         即偏差比例稳定在 +57~60%，但绝对值不随常数线性变化。
-     下一步应改为直接按目标耗尽里程解方程，而不是线性外推。
-
-     本轮动作与终盘资源机制变化后重新标定为 0.522。
-     耗尽里程还受配速、跟跑和碰撞影响，耐力×32 是名义基准而非每场保证值；
-     基础、场地与力量的独立诊断见 tests/stamina-range.js。 */
-  const RANGE_CALIB = 0.522;     // 经验修正：把标称对齐到实测，待解方程后移除
-  function staminaBudget(length) {
-    return (length / REF_STAMINA) * RACE_F.staminaPer *
-      (RANGE_REF / STAMINA_RANGE_PER_POINT) / RANGE_CALIB;
-  }
-  function horseLen(H) { return 2.25 + 0.55 * (H.adj['体格'] / 100); }
-  function horseWid(H) { return 1.0 + 0.3 * (H.adj['体格'] / 100); }
+  function staminaBudget(length) { return length*RACE_F.energyScale/baseSpeed(70); } // 历史接口
+  function horseLen(H) { return 2.25+0.55*(H.adj['体格']/100); }
+  function horseWid(H) { return 1+0.3*(H.adj['体格']/100); }
 
   /* ---------------- 评语表（策划案 4.5 情报系统） ---------------- */
   const TIER_LABELS = ['95-100', '85-94', '75-84', '65-74', '55-64', '45-54', '35-44', '25-34', '0-24'];
@@ -1036,687 +697,297 @@
     return { lines, staff };
   }
 
-  /* ---------------- 比赛引擎（3.10） ---------------- */
+  /* ---------------- 连续比赛引擎 ----------------
+     跑法只选择战术；STYLE_COEF/JOCKEY_BONUS/阶段属性表不再进入物理。
+     持续供能与短时储备共同支付实际功率；毅力表示疲劳耐受，两者并行变化。
+     H.control 是验证/外部控制入口：{targetV,targetT}；不读取全场均值决定速度或成本。
+  */
   function createRace(field, opts) {
-    const o = opts || {};
-    const length = o.length || 2000;
-    const surface = o.surface || '草地';
-    const state = o.state || '良';
-    const dir = o.dir === '右回' ? '右回' : '左回';
-    const profile = SLOPE_PROFILES[o.profile] ? o.profile : '缓坂';
-    const g = SLOPE_PROFILES[profile].g;
-    const geo = trackGeometry(length);
-    const rng = o.rng || mulberry32(1);
-    const styleCoefs = o.styleCoefs === 'doc' ? STYLE_COEF_DOC : STYLE_COEF;
-    /* 爆发修正系数：旧值 0.25/0.10 下爆发力 +20 只值约 3.4% 终盘速度，
-       实测对胜率仅 +2.7 个百分点——"末段加速"没有存在感。
-       新值提高到 0.45/0.30，配合连续掉速，让爆发力成为真正的第二个维度。 */
-    const burstFactor = o.styleCoefs === 'doc' ? RACE_F.burstFactor.doc : RACE_F.burstFactor.balanced;
-    const race = {
-      length, surface, state, dir, profile, g, geo, t: 0, finished: false,
-      events: [], order: [], dnf: [], winnerTime: null,
-      /* 本场耐力预算（已含场地修正；力量与疲劳是每匹马各自的，在消耗处结算） */
-      staminaBudget: staminaBudget(length),
-      paceContest: 0,          // 节奏博弈强度（同场争抢领放的逃马数-1），每帧更新
-      avgV: 0,                 // 全场瞬时均速，用于计算"出力强度"（每帧更新）
-      avgBase: 0,              // 全场"纯能力速度"均值，用于马群耦合（每帧更新）
-      prevLead: null, phaseAnnounced: {}, posHistory: [], _lastPct: 0,
-      lastEventAt: {},
-    };
-    /* 第一遍：斗志修正后的参赛属性（文档：±10%；平衡档：±5% 减半）
-       属性不再做任何"向全场均值回归"的压缩——见下方说明。 */
-    /* 斗志修正必须收窄。原值 0.002（doc）/0.001（balanced）下，
-       斗志 55~100 会带来最高 +5% 的【全属性】修正，也就是 5% 的速度差。
-       单这一项就足以把 8 匹同水平、同跑法的马拉开 6% 的完赛时间
-       （实测 1-2 名 7.6 马身）——而现实中"状态好坏"的量级是 1~2%。 */
-    const morRate = o.styleCoefs === 'doc' ? 0.0004 : 0.0002;
-    const pre = field.map((h) => {
-      const mor = ((h['斗志'] !== undefined ? h['斗志'] : 70) - 50) * morRate;
-      const adj = {};
-      for (const k of ['速度', '爆发力', '出闸能力', '耐力', '力量', '毅力', '体格']) {
-        adj[k] = clamp(Math.round(h.stats[k] * (1 + mor)), 1, 115);
+    const o=opts||{}, length=Number(o.length)||2000;
+    if(!Array.isArray(field)||!field.length||!Number.isFinite(length)||length<200) throw new Error('无效参赛阵容或距离');
+    const surface=o.surface||'草地', state=o.state||'良', dir=o.dir==='右回'?'右回':'左回';
+    const profile=SLOPE_PROFILES[o.profile]?o.profile:'缓坂', g=SLOPE_PROFILES[profile].g;
+    const geo=trackGeometry(length,o.course||o.venue), rng=o.rng||mulberry32(1);
+    const prediction=paceStrengthOf(field);
+    const race={length,surface,state,dir,profile,g,geo,course:geo.course,t:0,finished:false,
+      events:[],order:[],dnf:[],winnerTime:null,pacePrediction:prediction,
+      paceStrength:1,paceLevel:'平均',paceContest:0,avgV:0,avgBase:0,
+      prevLead:null,phaseAnnounced:{},posHistory:[],_lastPct:0,lastEventAt:{},sectionals:[]};
+    const gates=field.map((_,i)=>i+1);
+    for(let i=gates.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [gates[i],gates[j]]=[gates[j],gates[i]]; }
+    const horses=field.map((h,i)=>{
+      const adj={}; const mor=((h['斗志']??70)-50)*0.0002;
+      for(const k of ['速度','爆发力','出闸能力','耐力','力量','毅力','体格','智力']) adj[k]=clamp((h.stats[k]??70)*(1+mor),1,115);
+      const gate=gates[i], pitch=Math.min(1.6,(TRACK_WIDTH-3)/field.length), t=1.5+pitch*(gate-0.5);
+      const surfC=(SURFACE_COEF[surface]||{})[h.surface]??1;
+      const base=baseSpeed(adj['速度']), fatMult=fatigueMultiplier(h['疲劳']||0);
+      const H={h,id:h.id,name:h.name,style:h.style||'先',jockey:h.jockeyGrade||'普通',adj,mor,gate,
+        s:0,t,targetT:t,v:0,prevV:0,pot:0,targetV:base,accel:0,power:0,
+        stamina:adj['耐力']*RACE_F.staminaPer,staminaMax:adj['耐力']*RACE_F.staminaPer,
+        guts:adj['毅力']*RACE_F.gutsPer,gutsMax:adj['毅力']*RACE_F.gutsPer,
+        stage:'耐力',retention:1,base,fatMult,fieldCoef:(FIELD_STATE_COEF[state]||1)*surfC,
+        surfaceCost:1/(surfC*surfC),startDelay:0.12+(100-adj['出闸能力'])*0.003+rng()*0.15,
+        action:null,actionT:0,lastObserve:0,laneIntentT:0,laneJitter:0,squeezePass:0,
+        blocked:false,blocker:null,collisionCoef:1,collisionIntensity:0,stallTimer:0,
+        place:null,time:null,gapAtWin:null,dnf:false,sprintAt:null,sectionals:[],
+        cumulativeWork:0,statsSummary:{workUsed:0,energyUsed:0,draftSeconds:0,blockedSeconds:0,peakSpeed:0,sprintAt:null},
+        aggression:h.aggression??1,aiBias:(rng()-0.5)*0.12};
+      H.aerobic=clamp(RACE_F.aerobicBase+(adj['耐力']-70)*RACE_F.aerobicStaminaK,0.66,1.02)*fatMult;
+      H.cruise=base*Math.cbrt(H.aerobic);
+      H.maxV=(base+RACE_F.peakExtra+(adj['爆发力']-70)*RACE_F.burstSpeedK)*fatMult;
+      return H;
+    }); race.horses=horses;
+    function event(text,force) {
+      if(!force && race.lastEventAt[text]!==undefined && race.t-race.lastEventAt[text]<4) return;
+      race.lastEventAt[text]=race.t; if(race.events.length>80) race.events.shift(); race.events.push({t:race.t,text});
+    }
+    const active=()=>horses.filter(H=>!H.place&&!H.dnf);
+    const ranked=()=>active().sort((a,b)=>b.s-a.s || a.gate-b.gate);
+    function setAction(H,type,dur=2) { H.action=type; H.actionT=dur; }
+    function setLaneTarget(H,t) {
+      const margin=horseWid(H)/2+0.2; H.targetT=clamp(t,margin,TRACK_WIDTH-margin);
+      H.laneIntentT=Math.abs(H.targetT-H.t)/RACE_F.lateralSpeed+2;
+    }
+    function frontOf(H,limit=26) {
+      return active().filter(F=>F!==H && F.s>H.s && F.s-H.s<limit && Math.abs(F.t-H.t)<(horseWid(H)+horseWid(F))/2+0.3)
+        .sort((a,b)=>a.s-b.s)[0]||null;
+    }
+    function findGap(H,preferInner) {
+      const others=active().filter(F=>F!==H && F.s>H.s-3 && F.s<H.s+14);
+      let best=null,bestScore=-Infinity;
+      for(let t=1.2;t<=TRACK_WIDTH-1.2;t+=0.35) {
+        if(others.some(F=>Math.abs(F.t-t)<(horseWid(H)+horseWid(F))/2+0.2)) continue;
+        const score=-Math.abs(t-H.t)*1.2-(preferInner?t*0.14:0);
+        if(score>bestScore) {bestScore=score;best={t};}
       }
-      return { h, mor, adj };
-    });
-    /* 「属性向全场均值回归 35%」已删除。
-       它是为旧结构（所有属性只影响 base，属性差会线性累积）打的补丁，
-       作用是抹平真实实力差距。现实不压缩实力——强弱马同场就是有差距，
-       差距应该由【距离/场地/跑法/节奏】这些真实因素去调节，而不是把属性拉平。
-       它同时是"着差中位数 16.87 马身"与"收敛机制失效"的根源。
-       两个系数档位现在共用同一套压缩前的属性。 */
-    const horses = pre.map(({ h, mor, adj }) => {
-      const surfC = (SURFACE_COEF[surface] || {})[h.surface];
-      const fieldCoef = (FIELD_STATE_COEF[state] || 1) * (surfC !== undefined ? surfC : 1);
-      const startT = 3.5 + rng() * 13;
-      return {
-        h, id: h.id, name: h.name, style: h.style,
-        jockey: h.jockeyGrade || '普通',
-        /* 起跑横向位置：旧值 1.0~5.0（赛道宽 11 的内半侧）。现铺到赛道中段
-           3.5~16.5，与 STYLE_BASE_T 的分布区间一致，避免开局就全体贴在内栏。 */
-        s: 0, t: startT, v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
-        stamina: adj['耐力'] * RACE_F.staminaPer, guts: adj['毅力'] * RACE_F.gutsPer,
-        staminaMax: adj['耐力'] * RACE_F.staminaPer, gutsMax: adj['毅力'] * RACE_F.gutsPer,
-        stage: '耐力', retention: 1,
-        collisionCoef: 1, collisionIntensity: 0,
-        action: null, actionT: 0, _lastFinalAct: '推骑',
-        lastObserve: -(rng() * 2),
-        blocked: false, blocker: null, squeezePass: 0, stallTimer: 0,
-        place: null, time: null, gapAtWin: null, dnf: false,
-        base: baseSpeed(adj['速度']), fieldCoef, fatMult: fatigueMultiplier(h['疲劳'] || 0),
-        adj, mor, breakNoise: 0.93 + rng() * 0.14,
-        targetT: startT, laneIntentT: 0, aggression: h.aggression !== undefined ? h.aggression : 1,
-      };
-    });
-    race.horses = horses;
-    /* 步速在赛前就由参赛马的跑法决定，故只判定一次并冻结，
-       不随赛末马匹减少而漂移。整场比赛的速度拉动与节奏税都读它。 */
-    {
-      const pace = paceStrengthOf(field);
-      race.paceStrength = pace.strength;
-      race.paceLevel = pace.level;
-      race.paceContest = Math.max(0, Math.round((pace.strength - 1) * 2));
-    }
-    const event = (text, force) => {
-      const now = race.t;
-      if (!force && race.lastEventAt[text] !== undefined && now - race.lastEventAt[text] < 4) return;
-      race.lastEventAt[text] = now;
-      if (race.events.length > 80) race.events.shift();
-      race.events.push({ t: now, text });
-    };
-    const eventOnce = (key, text) => {
-      if (!race.phaseAnnounced[key]) { race.phaseAnnounced[key] = true; event(text, true); }
-    };
-
-    function active() { return race.horses.filter((H) => !H.place && !H.dnf); }
-    function ranked() { return active().slice().sort((a, b) => b.s - a.s); }
-    function setAction(H, type, dur) {
-      if (type === '收力' && H.jockey === '新人') { H.action = null; H.actionT = 0; return; }
-      H.action = type; H.actionT = dur;
-    }
-    function setLaneTarget(H, t) {
-      const margin = horseWid(H) / 2 + 0.2;
-      H.targetT = clamp(t, margin, TRACK_WIDTH - margin);
-      // 目标保持到完成横移，避免下一次观察立刻把超车/挤出路线改回跑法基准位。
-      H.laneIntentT = Math.abs(H.targetT - H.t) / RACE_F.lateralSpeed + 2;
+      return best;
     }
     function avoidBlock(H) {
-      const gap = findGap(H, false);
-      if (gap && Math.abs(gap.t - H.t) > 0.2) {
-        setLaneTarget(H, gap.t);
-        setAction(H, gap.t < H.t ? '斜行in' : '斜行out', 2);
-      } else setAction(H, '收力', 1.5);
+      const gap=findGap(H,true);
+      if(gap && Math.abs(gap.t-H.t)>0.2) {H.passTarget=H.blocker||frontOf(H);setLaneTarget(H,gap.t);setAction(H,gap.t<H.t?'斜行in':'斜行out');}
+      else setAction(H,'收力');
     }
-    function findGap(H, preferInner) {
-      const ahead = race.horses.filter((F) => F !== H && !F.place && !F.dnf && F.s > H.s && F.s < H.s + 26);
-      // 检查整匹马能否通过，不能只检查其中心点是否位于前马的边缘之外。
-      const blockedRanges = ahead.map((F) => {
-        const clearance = (horseWid(H) + horseWid(F)) / 2 + 0.2;
-        return [F.t - clearance, F.t + clearance];
-      });
-      let best = null; let bestScore = -Infinity;
-      for (let t = 1.0; t <= TRACK_WIDTH - 1.0; t += 0.35) {
-        if (blockedRanges.some((r) => t > r[0] && t < r[1])) continue;
-        const distToMe = Math.abs(t - H.t);
-        const innerBias = preferInner ? (TRACK_WIDTH - t) * 0.8 : 0;
-        const score = innerBias - distToMe * 1.2;
-        if (score > bestScore) { bestScore = score; best = t; }
-      }
-      return best === null ? null : { t: best };
-    }
-    function maneuverGap(H, preferInner) {
-      // 正在执行且未受阻的路线继续走完；被堵时才重新寻找通路。
-      return H.laneIntentT > 0 && !H.blocked ? { t: H.targetT } : findGap(H, preferInner);
-    }
-    function trySqueeze(H, F) {
-      const staminaRatio = H.stage === '耐力' ? H.stamina / Math.max(1, H.adj['耐力'] * 60) : 0;
-      if (staminaRatio < 0.15 || H.adj['体格'] < 40) {
-        avoidBlock(H);
-        return;
-      }
-      const tend = (H.adj['力量'] / 100 * 0.4 + H.adj['体格'] / 100 * 0.4 + H.adj['毅力'] / 100 * 0.2) * H.aggression;
-      if (tend < 0.65) {
-        avoidBlock(H);
-        return;
-      }
-      const 冲撞力 = (H.adj['体格'] * 0.6 + H.adj['力量'] * 0.4) * Math.max(H.v, 5) * 0.2;
-      const 抵抗力 = F.adj['体格'] * 0.5 + F.adj['力量'] * 0.3 + F.adj['毅力'] * 0.2;
-      const ratio = 冲撞力 / Math.max(0.01, 抵抗力);
-      if (ratio > 1.2) {
-        H.squeezePass = 2.5;
-        setLaneTarget(H, F.t + (F.t > TRACK_WIDTH / 2 ? -2.6 : 2.6));
-        setAction(H, H.targetT < H.t ? '斜行in' : '斜行out', 2);
-        event(H.name + ' 强行突破！');
-      } else if (ratio >= 0.8) {
-        event(H.name + ' 强行突破失败！');
-        if (rng() < 0.1) event('⚡ ' + H.name + ' 与 ' + F.name + ' 发生接触！');
-      } else {
-        event(H.name + ' 的强行突破被挡下');
-      }
-    }
-
-    /* 终盘驱动规则（2026-10-01 统一）
-       ⚠️ 原来四个跑法各写一套终盘动作，结果出现实现事故：
-         · 逃 —— 只要还在「耐力」阶段就【持续打鞭】(+0.05)
-         · 追 —— 终盘几乎【永远打鞭】(+0.05)
-         · 先 / 差 —— 【打鞭 / 推骑 交替】，平均只有 +0.035
-       终盘在耦合后的有效权重里占 0.300（五个阶段里最大），于是「追」白拿
-       约 1.5% 的终盘速度 ≈ 每次 0.4 秒。实测（属性完全同源 · 4差+4追 · 2000m）：
-         「追」对「差」拿到 81%:19%；把两者系数交换后是 97%:3%，
-         把两者系数【完全拉平】后仍是 92%:8% —— 说明主因不是系数而是动作表。
-       而现实里「差し」是稳定优于「追込」的（JRA 芝マイル 1着率 差 7.3% vs 追 3.0%）。
-       现在四个跑法共用同一条规则：打鞭不能连续，体力见底后只能推骑。
-       这样终盘表现的差异来自【能力与体力】，而不是各跑法各自的动作表。 */
-    function finalDrive(H, staminaRatio) {
-      if (H.stage === '耐力' && staminaRatio > 0.2) {
-        const next = H._lastFinalAct === '打鞭' ? '推骑' : '打鞭';
-        H._lastFinalAct = next;
-        setAction(H, next, 1.5);
-      } else {
-        setAction(H, '推骑', 2);
-      }
-    }
-
-    /* AI：按文档 3.10 (13) ai跑法逻辑 简化实现 */
     function runAI(H) {
-      const list = ranked();
-      const n = list.length;
-      const rank = list.indexOf(H) + 1;
-      const ph = phaseAt(H.s, race.length);
-      const leader = list[0];
-      const ahead = rank >= 2 ? list[rank - 2] : null;
-      const blocker = H.blocker && !H.blocker.place && !H.blocker.dnf ? H.blocker : ahead;
-      const gapAhead = ahead ? ahead.s - H.s : Infinity;
-      const gapLead = leader.s - H.s;
-      const staminaRatio = H.stage === '耐力' ? H.stamina / Math.max(1, H.adj['耐力'] * 60) : 0;
-      if (H.stage === '失速') { setAction(H, null, 0); return; }
-      const isFinal = ph.key === 'final';
-      const isLate = ph.key === 'late';
-      const early = ph.key === 'break' || ph.key === 'open' || ph.key === 'mid';
-      /* 本跑法的横向位置：直道按基准位展开，弯道向内收拢（切内线、走最短路程）。
-         ⚠️ 旧实现把这行写在 switch 之前，而每个 case 又无条件赋值 H.targetT，
-         于是它被完全覆盖 —— 弯道内移从未生效（死代码）。现改为统一计算，
-         各 case 不再自行赋值 targetT；findGap / trySqueeze 的横向意图仍然保留。 */
-      const onBend = kAt(H.s, race.geo) > 0;
-      const baseT = STYLE_BASE_T[H.style] + H.laneJitter * 0.7;
-      if (H.laneIntentT <= 0 || Math.abs(H.targetT - H.t) < 0.1) {
-        H.laneIntentT = 0;
-        H.targetT = onBend ? Math.max(1.2, baseT - RACE_F.bendInset) : baseT;
+      if(H.control) return;
+      const list=ranked(), leader=list[0], remaining=length-H.s;
+      const localFront=frontOf(H), sr=H.stamina/H.staminaMax;
+      const judgement={'新人':0.87,'普通':0.96,'优秀':1,'殿堂':1.03}[H.jockey]||0.96;
+      // 预测余力还能支持多久的短时出力，而不是按固定百分比发放冲刺。
+      let requiredReserve=0;
+      for(let sample=0;sample<5;sample++) {
+        const at=H.s+remaining*(sample+0.5)/5, bend=kAt(at,geo)>0;
+        const radius=geo.R+H.t-TRACK_WIDTH/2;
+        const projectedV=Math.min(H.maxV*H.retention,bend?Math.sqrt((RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*radius)*bendCoefFor(H.h.special,dir):Infinity);
+        const projectedCost=powerCost(H,projectedV,0,false,at);
+        requiredReserve+=Math.max(0,projectedCost-H.aerobic*H.retention)*RACE_F.energyScale*(remaining/5)/Math.max(projectedV*laneProgressCoef(at,H.t,geo),1);
       }
-
-      switch (H.style) {
-        case '逃': {
-          if (isFinal) { finalDrive(H, staminaRatio); return; }
-          const leadMargin = rank === 1 ? (list[1] ? H.s - list[1].s : 30) : -gapLead;
-          if (ph.key === 'break' || ph.key === 'open') {
-            if (H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
-            else if (leadMargin < 2) setAction(H, '推骑', 2);
-            else setAction(H, '收力', 2);
-          } else {
-            if (leadMargin < 1.2) setAction(H, '推骑', 2);
-            else if (leadMargin > 3.2) setAction(H, '收力', 2);
-            else setAction(H, '收力', 1.2);
-          }
-          return;
-        }
-        case '先': {
-          if (isFinal) { finalDrive(H, staminaRatio); return; }
-          if (early) {
-            if (H.blocked) avoidBlock(H);
-            else if (rank > 6) {
-              if (H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 2);
-              else setAction(H, '推骑', 2);
-            }
-            else if (rank < 2) setAction(H, '收力', 2);
-            else if (gapLead > 10) setAction(H, '推骑', 2);   // 与逃马保持接触(演示补充)
-            else setAction(H, '收力', 1.5);
-          } else if (isLate) {
-            if (H.blocked && blocker) trySqueeze(H, blocker);
-            else {
-              const g = maneuverGap(H, false);
-              if (g) {
-                setLaneTarget(H, g.t);
-                if (Math.abs(g.t - H.t) > 1) setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
-                else setAction(H, '推骑', 2);
-              } else setAction(H, '推骑', 2);
-            }
-          }
-          return;
-        }
-        case '差': {
-          if (isFinal) { finalDrive(H, staminaRatio); return; }
-          if (early) {
-            const lo = Math.max(5, n - 3);
-            if (H.blocked) avoidBlock(H);
-            else if (rank < lo) setAction(H, '收力', 2);
-            else if (gapLead > 20) setAction(H, '推骑', 2);        // 与领头集团保持接触(演示补充)
-            else if (rank > lo) setAction(H, '推骑', 2);
-            else setAction(H, '收力', 1.5);
-            if (!H.blocked && H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
-          } else if (isLate) {
-            if (H.blocked && blocker) trySqueeze(H, blocker);
-            else {
-              const g = maneuverGap(H, false);
-              if (g) {
-                setLaneTarget(H, g.t);
-                if (Math.abs(g.t - H.t) > 1) setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
-                else setAction(H, '推骑', 2);
-              } else setAction(H, '推骑', 2);
-            }
-          }
-          return;
-        }
-        case '追': {
-          if (isFinal) {
-            /* 保留「终盘找空档」的横向意图，但驱动动作与其余跑法统一（见 finalDrive） */
-            const g = maneuverGap(H, true);
-            if (g && Math.abs(g.t - H.t) > 1) {
-              setLaneTarget(H, g.t);
-              setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
-            } else {
-              if (g) setLaneTarget(H, g.t);
-              else if (H.blocked && blocker) trySqueeze(H, blocker);
-              finalDrive(H, staminaRatio);
-            }
-            return;
-          }
-          if (early) {
-            if (H.blocked) avoidBlock(H);
-            /* 跟随马群用无动作滑行；只有逼近前马才收力，避免为保持后位而主动减速。 */
-            else if (gapLead > 25) setAction(H, '推骑', 2);          // 与领头集团保持接触(演示补充)
-            else if (gapAhead > 15) setAction(H, '推骑', 2);
-            else if (gapAhead < 4.5) setAction(H, '收力', 1.5);
-            else setAction(H, null, 0);
-            if (!H.blocked && H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
-          } else if (isLate) {
-            const g = maneuverGap(H, true);
-            if (g) {
-              setLaneTarget(H, g.t);
-              if (Math.abs(g.t - H.t) > 1) setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
-              else setAction(H, '推骑', 2);
-            } else if (H.blocked && blocker) trySqueeze(H, blocker);
-            else setAction(H, '推骑', 2);
-          }
-          return;
-        }
+      const kineticReserve=Math.max(0,H.maxV*H.maxV-H.v*H.v)*1.5/(H.base*H.base)*RACE_F.energyScale;
+      const styleTiming={'逃':0.94,'先':0.98,'差':1.02,'追':1.04}[H.style]||1;
+      const canLaunch=requiredReserve+kineticReserve <= H.stamina*judgement*styleTiming;
+      if(H.sprintAt===null && H.s>80 && canLaunch) {
+        H.sprintAt=H.s;H.statsSummary.sprintAt=H.s;event(H.name+' 开始发力！');
+      }
+      let desired=H.cruise+H.aiBias;
+      if(H.sprintAt!==null) {desired=H.maxV;setAction(H,sr>0.2?'打鞭':'推骑');}
+      else {
+        const gapLead=leader===H?0:leader.s-H.s;
+        const ideal={'逃':0,'先':4.5,'差':10,'追':16}[H.style]??5;
+        if(leader===H) {
+          // 只有实际接近并试图领放的马才施压；远处马不会触发争抢税。
+          const rival=list.find(F=>F!==H && F.style==='逃' && H.s-F.s<9);
+          if(rival) desired+=clamp((9-(H.s-rival.s))*0.065,0,0.55);
+        } else desired+=clamp((gapLead-ideal)*0.075,-0.55,1.0);
+        // 抢位不能无限透支终点前所需的储备：按剩余行程分配早段预算。
+        const timeLeft=remaining/Math.max(1,H.cruise), positionBudget=H.aerobic*H.retention+H.stamina/(RACE_F.energyScale*Math.max(1,timeLeft))*0.28;
+        const budgetV=H.base*Math.cbrt(positionBudget/(H.surfaceCost/Math.max(0.65,rangeCoef(state,H.adj['力量']))));
+        desired=Math.min(desired,budgetV);
+        if(sr<0.15) desired=Math.min(desired,H.cruise);
+        setAction(H,desired>H.v+0.15?'推骑':'收力');
+      }
+      H.targetV=Math.max(3,desired);
+      if(H.blocked || (localFront && localFront.s-H.s<4+Math.max(0,H.targetV-localFront.v)*3 && H.targetV>localFront.v+0.3)) {
+        avoidBlock(H);return;
+      }
+      if(H.laneIntentT>0 && Math.abs(H.targetT-H.t)>0.1) return;
+      H.laneIntentT=0;
+      // 保留仍能完成的超车通道；前马远离或本路线已无法取得推进优势时重新择道。
+      const pass=H.passTarget, gainV=pass?H.targetV*laneProgressCoef(H.s,H.t,geo)-pass.v*laneProgressCoef(pass.s,pass.t,geo):0;
+      if(pass && !pass.place && !pass.dnf && pass.s-H.s<=14 && gainV>0.05 && H.s-pass.s<(horseLen(H)+horseLen(pass))/2+1) return;
+      H.passTarget=null;
+      // 所有跑法都可借前马遮挡、走短路；不再把后上马固定在外道。
+      const wake=list.find(F=>F!==H && F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<3);
+      let goal=H.t;
+      if(wake && H.sprintAt===null) goal=wake.t;
+      else if(kAt(H.s,geo)>0 || !localFront) goal=Math.max(1.4,H.t-2);
+      if(Math.abs(goal-H.t)>0.2) {
+        setLaneTarget(H,goal);setAction(H,goal<H.t?'斜行in':'斜行out');
       }
     }
-
+    function powerCost(H,v,a,drafting,at=H.s) {
+      const ratio=Math.max(0,v/H.base), ground=1/Math.max(0.65,rangeCoef(state,H.adj['力量']));
+      const k=kAt(at,geo), radius=k>0?geo.R+H.t-TRACK_WIDTH/2:Infinity;
+      const turn=Number.isFinite(radius)?1+0.035*Math.pow(v*v/radius/RACE_F.curveLateral,2):1;
+      const shelter=drafting?RACE_F.draftSave:1;
+      const grad=gradientAt(at,geo,g);
+      const uphill=grad*v*2.0; // 重力功率随坡度与实速变化，下坡降低需求。
+      return Math.max(0,Math.pow(ratio,3)*ground*H.surfaceCost*turn*shelter+uphill+
+        a*v/(H.base*H.base)*3.0);
+    }
+    function tick(dt) {
+      const act=active();if(!act.length){race.finished=true;return;}
+      const old=new Map(act.map(H=>[H,{s:H.s,t:H.t,v:H.v,stamina:H.stamina,guts:H.guts}]));
+      for(const H of act) {
+        H.lastObserve-=dt;H.actionT=Math.max(0,H.actionT-dt);H.laneIntentT=Math.max(0,H.laneIntentT-dt);
+        if(!H.control && H.lastObserve<=0) {runAI(H);H.lastObserve=(JOCKEY_CADENCE[H.jockey]||2)*(0.95+rng()*0.10);}
+        if(H.control) {if(Number.isFinite(H.control.targetV)) H.targetV=Math.max(0,H.control.targetV);if(Number.isFinite(H.control.targetT)) H.targetT=H.control.targetT;}
+      }
+      const motion=new Map();
+      for(const H of act) {
+        const before=old.get(H);H.blocked=false;H.blocker=null;H.collisionIntensity=0;H.squeezePass=0;
+        const wake=act.find(F=>F!==H && old.get(F).s>before.s && old.get(F).s-before.s<=RACE_F.draftRange &&
+          Math.abs(old.get(F).t-before.t)<=(horseWid(H)+horseWid(F))/2+0.8);
+        H.drafting=!!wake;
+        const fatigue=1-0.055*(1-H.guts/H.gutsMax);
+        const aerobic=H.aerobic*fatigue*clamp((race.t+dt)/12,0.15,1);
+        const stRatio=clamp(H.stamina/H.staminaMax,0,1);
+        const reserveFade=clamp(stRatio/0.12,0,1);
+        const maxPower=aerobic+(1.70-aerobic)*reserveFade;
+        const ground=1/Math.max(0.65,rangeCoef(state,H.adj['力量']))*H.surfaceCost;
+        let cap=Math.min(H.maxV*fatigue,H.base*Math.cbrt(maxPower/(ground*(wake?RACE_F.draftSave:1))));
+        const curvature=kAt(H.s,geo);
+        if(curvature>0) {
+          const radius=geo.R+H.t-TRACK_WIDTH/2;
+          cap=Math.min(cap,Math.sqrt(Math.max(1,(RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*radius))*bendCoefFor(H.h.special,dir));
+        }
+        const grad=gradientAt(H.s,geo,g); H.grad=grad;H.slopeCoef=1;
+        // 可用功率与能耗共用同一函数，避免力竭后仍透支不存在的储备。
+        const radius=curvature>0?geo.R+H.t-TRACK_WIDTH/2:Infinity;
+        const turnK=Number.isFinite(radius)?0.035/(radius*radius*RACE_F.curveLateral*RACE_F.curveLateral):0;
+        const costK=ground*(wake?RACE_F.draftSave:1)/Math.pow(H.base,3);
+        let energyCap=H.base*Math.cbrt(maxPower/(ground*(wake?RACE_F.draftSave:1)));
+        for(let iteration=0;iteration<4;iteration++) {
+          const v=energyCap, demand=costK*(v*v*v+turnK*Math.pow(v,7))+grad*v*2.0;
+          const derivative=costK*(3*v*v+7*turnK*Math.pow(v,6))+grad*2.0;
+          energyCap=clamp(v-(demand-maxPower)/Math.max(0.01,derivative),0,H.maxV*1.1);
+        }
+        cap=Math.min(cap,energyCap);
+        let desired=Math.min(H.targetV,cap);
+        const front=act.filter(F=>F!==H && old.get(F).s>before.s && Math.abs(old.get(F).t-before.t)<(horseWid(H)+horseWid(F))/2+0.2)
+          .sort((a,b)=>old.get(a).s-old.get(b).s)[0];
+        if(front) {
+          const gap=old.get(front).s-before.s-(horseLen(H)+horseLen(front))/2-0.25;
+          const safe=Math.max(0,old.get(front).v+gap*0.65);
+          if(safe<desired-0.1){H.blocked=true;H.blocker=front;}
+          desired=Math.min(desired,safe);
+        }
+        const startFraction=clamp((race.t+dt-H.startDelay)/dt,0,1);
+        if(!startFraction) desired=0;
+        const maxA=(H.v<8?RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230):RACE_F.runningAccel*(0.65+H.adj['爆发力']/200))*
+          (0.65+0.35*reserveFade);
+        const response=RACE_F.responseTime*clamp(1+(70-H.adj['智力'])*0.004,0.82,1.18);
+        const kineticBudget=Math.max(0,maxPower-powerCost(H,H.v,0,!!wake))*H.base*H.base/(3*Math.max(H.v,1));
+        let a=clamp((desired-H.v)/response,-RACE_F.braking,Math.min(maxA,kineticBudget));
+        let nextV=Math.max(0,H.v+a*dt*startFraction);
+        // 合法横移：同一纵向身体区间内，横移路径不得穿过其他马匹。
+        const margin=horseWid(H)/2+0.2, target=clamp(H.targetT,margin,TRACK_WIDTH-margin);
+        const lateralLimit=Math.min(RACE_F.lateralSpeed,(H.v+nextV)/2*0.06)*dt*startFraction;
+        let nextT=clamp(H.t+clamp(target-H.t,-lateralLimit,lateralLimit),margin,TRACK_WIDTH-margin);
+        for(const F of act) {
+          if(F===H||Math.abs(old.get(F).s-before.s)>(horseLen(H)+horseLen(F))/2+0.3) continue;
+          const clearance=(horseWid(H)+horseWid(F))/2+0.1;
+          if(Math.abs(nextT-old.get(F).t)<clearance && Math.abs(nextT-old.get(F).t)<Math.abs(before.t-old.get(F).t)) nextT=before.t;
+        }
+        const lateral=(nextT-before.t)/dt, travelV=(H.v+nextV)/2;
+        const forwardV=Math.sqrt(Math.max(0,travelV*travelV-lateral*lateral));
+        const nextS=H.s+forwardV*laneProgressCoef(H.s,(H.t+nextT)/2,geo)*dt;
+        motion.set(H,{s:nextS,t:nextT,v:nextV,a,travelV,lateral,aerobic});H.pot=desired;
+      }
+      // 按前方先结算，真实身体间距限制推进；不存在强行突破的穿模豁免。
+      for(const H of act.slice().sort((a,b)=>old.get(b).s-old.get(a).s || a.gate-b.gate)) {
+        const move=motion.get(H), before=old.get(H);
+        for(const F of act) {
+          if(F===H||old.get(F).s<=before.s) continue;
+          const fm=motion.get(F), clearance=(horseLen(H)+horseLen(F))/2+0.2;
+          if(Math.abs(move.t-fm.t)<(horseWid(H)+horseWid(F))/2+0.1 && move.s>fm.s-clearance) {
+            move.s=Math.max(before.s,Math.min(move.s,fm.s-clearance));H.blocked=true;
+            if(!H.blocker||old.get(F).s<old.get(H.blocker).s) H.blocker=F;
+            move.v=Math.min(move.v,Math.max(0,(move.s-before.s)/dt/laneProgressCoef(H.s,H.t,geo)));
+          }
+        }
+        H.s=move.s;H.t=move.t;H.prevV=before.v;H.v=move.v;H.accel=(H.v-before.v)/dt;
+        const usedV=Math.max(0,(before.v+H.v)/2), work=powerCost(H,usedV,H.accel,H.drafting);
+        H.power=work;H.effort=H.targetV/Math.max(1,H.cruise);
+        const excess=Math.max(0,work-move.aerobic), draw=Math.min(H.stamina,excess*RACE_F.energyScale*dt);
+        // 留力降低净消耗；不凭空补满储备。疲劳余量与短时储备并行变化。
+        H.stamina=Math.max(0,H.stamina-draw);
+        H.guts=Math.max(0,H.guts-(RACE_F.fatigueWork*work+RACE_F.fatigueExcess*excess)*dt);
+        H.retention=1-0.055*(1-H.guts/H.gutsMax);
+        H.stage=H.stamina>H.staminaMax*0.12?'耐力':H.stamina>H.staminaMax*0.015?'毅力':'失速';
+        const stats=H.statsSummary;H.cumulativeWork+=work*dt;stats.workUsed=H.cumulativeWork;stats.energyUsed+=draw;stats.draftSeconds+=H.drafting?dt:0;stats.blockedSeconds+=H.blocked?dt:0;stats.peakSpeed=Math.max(stats.peakSpeed,H.v);
+      }
+      const crossings=[];const sectionalCrossings=[];
+      for(const H of act) {
+        const before=old.get(H), delta=H.s-before.s;
+        const crossingTime=at=>race.t+(delta>0?clamp((at-before.s)/delta,0,1)*dt:dt);
+        if(H.t600==null && before.s<length-600 && H.s>=length-600) H.t600=crossingTime(length-600);
+        let next=(Math.floor(before.s/200)+1)*200;
+        while(next<=Math.min(H.s,length)+1e-9) {
+          const time=crossingTime(next),prev=H.sectionals.at(-1)?.time||0;
+          H.sectionals.push({distance:next,time,split:time-prev,stamina:H.stamina,guts:H.guts});sectionalCrossings.push({distance:next,time});next+=200;
+        }
+        if(H.s>=length) crossings.push({H,time:crossingTime(length)});
+      }
+      sectionalCrossings.sort((a,b)=>a.distance-b.distance||a.time-b.time);
+      for(const c of sectionalCrossings) if(!race.sectionals.some(s=>s.distance===c.distance)) {
+        race.sectionals.push({...c,split:c.time-(race.sectionals.at(-1)?.time||0)});
+      }
+      crossings.sort((a,b)=>a.time-b.time||a.H.gate-b.H.gate);
+      for(const {H,time} of crossings) {
+        H.s=length;H.place=race.order.length+1;H.time=time;H.final3f=time-(H.t600??time);
+        if(length%200 && H.sectionals.at(-1)?.distance!==length) H.sectionals.push({distance:length,time,split:time-(H.sectionals.at(-1)?.time||0),stamina:H.stamina,guts:H.guts});
+        race.order.push(H);
+        if(H.place===1) {
+          race.winnerTime=time;
+          if(length%200) race.sectionals.push({distance:length,time,split:time-(race.sectionals.at(-1)?.time||0)});
+          const fraction=clamp((time-race.t)/dt,0,1);
+          for(const F of horses) {
+            const before=old.get(F);F.gapAtWin=F===H?0:before?Math.max(0,length-(before.s+(motion.get(F).s-before.s)*fraction)):0;
+          }
+          event('🏆 '+H.name+' 率先冲线！',true);
+        } else event('第'+H.place+'位 '+H.name+'（'+(H.gapAtWin/2.4).toFixed(1)+'马身差）');
+      }
+      race.t+=dt;race.avgV=act.reduce((sum,H)=>sum+H.v,0)/act.length;
+      const lead=ranked()[0];
+      if(lead) {
+        // 公布实际领跑分段的速度；赛前预测保留在pacePrediction，不给马额外加成。
+        const last=race.sectionals.at(-1), ref=baseSpeed(70)*Math.cbrt(RACE_F.aerobicBase);
+        if(last && last.distance>200) race.paceStrength=((last.distance-(race.sectionals.at(-2)?.distance||0))/last.split)/ref;
+        else race.paceStrength=lead.v/ref;
+        race.paceLevel=race.paceStrength<0.97?'スロー':race.paceStrength>1.03?'ハイ':'平均';
+        race.paceContest=active().filter(F=>F!==lead&&F.style==='逃'&&lead.s-F.s<9).length;
+        if(race.prevLead!==lead) {if(!race.order.length) event(lead.name+' 跑在最前方！');race.prevLead=lead;}
+        const pct=Math.floor(lead.s/length*100);
+        if(pct>race._lastPct){race._lastPct=pct;race.posHistory.push({pct,order:ranked().map(H=>H.id)});}
+      }
+      if(!active().length || race.t>600) {
+        race.finished=true;for(const H of active()){H.dnf=true;race.dnf.push(H);}
+      }
+    }
     function step(dt) {
-      if (race.finished) return;
-      const act = active();
-      const list = act.slice().sort((a, b) => b.s - a.s);
-      /* 步速在 createRace 里已判定一次并冻结（见 paceStrengthOf 的说明）。
-         这里不再重算 —— 若每帧重算，赛末活跃马变少会把 paceStrength 稀释掉。 */
-      race.paceContest = Math.max(0, Math.round((race.paceStrength - 1) * 2));
-      /* 全场瞬时均速：作为"出力强度"的基准。
-         用瞬时值而非整场均值，好处是逃马在序盘高速领放时立刻承担更高油耗，
-         而比赛后段全场都慢下来时不会凭空产生额外惩罚。 */
-      let vSum = 0, vN = 0;
-      for (const H of act) { vSum += H.v; vN++; }
-      race.avgV = vN > 0 ? vSum / vN : 0;
-      /* 马群耦合用的全场"纯能力速度"均值（本帧统计，下一帧生效，延迟一帧可忽略） */
-      let baseSum = 0, baseN = 0;
-      /* 1) 瞬时速度 */
-      for (const H of act) {
-        const ph = phaseAt(H.s, race.length);
-        let runCoef = styleCoefs[H.style][ph.key] + (JOCKEY_BONUS[H.jockey] || 0) + actionCoef(H);
-        /* 「马群跟跑耦合」已删除。原实现是"离领头马越远、速度加成越大"，
-           两个错误：① 方向反了——现实的跟跑是【省力】（借尾流），不是加速；
-           ② 判定对象错了——省力取决于"是否紧跟某匹马"，而非"离领头马多远"
-           （掉队到 50 米外就没有遮挡，一点也省不了）。
-           真正的跟跑收益现在由「位置即代价」按【耐力消耗】结算，见下方第 3 步。 */
-        /* 步速拉动前段速度 —— 按跑法衰减
-           这是「展开」最关键的一层差异：步速由领放者设定，它只把想跑在
-           前面的马拖着走（逃 1.00 / 先 0.60），后上型几乎不受影响
-           （差 0.20 / 追 0.10）—— 对它们而言快步速只意味着差距被拉开。
-           油耗端不在这里结算，见下方第 3 步的 paceTax。 */
-        if (ph.key === 'break' || ph.key === 'open' || ph.key === 'mid') {
-          const pull = RACE_F.pacePull[H.style] !== undefined ? RACE_F.pacePull[H.style] : 0.20;
-          runCoef += (race.paceStrength - 1) * RACE_F.paceSpeedK * pull;
-        }
-        /* ---- 三段式：把「加速能力」与「维持能力」拆开 ----
-           ① 耐力阶段：可【提速】。提速正比于剩余耐力——前段省下的油
-              才是末段能变现的功率；同时剩余越少掉速越多。
-           ② 毅力阶段：只能【维持】。提速项在此阶段完全不生效。
-           ③ 失速阶段：掉速。
-           阶段切换时 maintain 从上一阶段的值【接续】，否则会出现
-           "切到毅力反而变快"的跳变。 */
-        const stRatio = H.stamina / Math.max(1, H.staminaMax);
-        const gtRatio = H.guts / Math.max(1, H.gutsMax);
-        let accel = 0, maintain;
-        if (H.stage === '耐力') {
-          /* 只在进入终盘后的 accelWindow 内兑现，此前为 0：
-             前段省下的体力不能提前变成速度，否则逃马依旧占尽便宜 */
-          const f = race.length > 0 ? H.s / race.length : 0;
-          const showFrac = ph.key === 'final'
-            ? clamp((f - 0.70) / RACE_F.accelWindow, 0, 1)
-            : (f >= 0.75 ? 1 : 0);
-          /* 弯道上遮蔽加速：现实里过弯要维持平衡、且容易被堵，后上型的加速窗口
-             因此被弯道切碎——弯道占比越高，后上型越吃亏（1200m 弯道占 52%、
-             3000m 只占 30%），「距离适性」由几何自动产生。
-             ⚠️ 原值是 0（弯道上完全不能加速）。叠加短途 52% 的弯道占比后过强：
-             实测 1200m 的逃 per-start 胜率 4.49×（目标 2.60×），
-             逃的距离梯度 4.49→1.92（比值 2.34）远陡于目标 2.60→1.45（1.79）。
-             改为保留 bendAccelLock 比例的加速能力。 */
-          const bendLock = kAt(H.s, race.geo) > 0 ? RACE_F.bendAccelLock : 1;
-          /* accel 正比于【剩余耐力】—— 见 RACE_F.staminaAccel 处的完整说明。
-             ⚠️ 上一版曾把体力耦合整个去掉（只由阶段+弯道决定），
-             导致「省下的体力在末段换不到任何东西」，「追」的 per-start 胜率归零。 */
-          accel = RACE_F.staminaAccel * stRatio * showFrac * bendLock;
-          H.accelLock = accel;              // 锁定力竭瞬间的推进，供毅力阶段维持
-          maintain = 1 - RACE_F.staminaMaintain * (1 - stRatio);
-          H.staminaEndMaintain = maintain;
-        } else if (H.stage === '毅力') {
-          /* 设计是「只能维持、不能提升」——所以这里【维持】力竭瞬间已有的
-             推进力，而不是直接归零。归零会造成速度断崖：
-             实测末段 上がり 跨度被拉到 30 秒（现实约 3~6 秒），
-             马群裂开到 150 马身。 */
-          accel = H.accelLock || 0;
-          maintain = (H.staminaEndMaintain || 1) * (1 - RACE_F.gutsMaintain * (1 - gtRatio));
-          H.gutsEndMaintain = maintain;
-        } else {
-          accel = 0;
-          const ref = Math.max(1e-6, H.stallRef || H.v);
-          maintain = (H.gutsEndMaintain || 1) * RACE_F.stallFall *
-            (1 - RACE_F.stallDrop * (1 - H.v / ref));
-        }
-        H.retention = clamp(maintain, RACE_F.stallFloor, 1);
-        H.accel = accel;
-
-        /* —— 马群耦合（只压【能力】，不压【战术】）——
-           ⚠️ 压缩对象必须是【纯能力速度 H.base】，不是乘完系数之后的 pot。
-           原实现压 pot，等于把「跑法战术差」也一起抹平了：逃的领先本来就完全
-           来自序盘/中盘系数，被压掉之后它永远建立不起领先，整场比赛被压成
-           一场 600m 短跑，后上型系统性占优（实测 2000m 追 46.7% / 逃 1.7%）。
-           现实里马群锁住的是【能力差】（强马不能一骑绝尘、骑手会收着跑），
-           不是【战术】：单骑领放照样能跑到最前，只是拉不开十几马身。
-           改为只压 base 之后，属性同源的场次里耦合自动退化为无操作（base 全同），
-           跑法效应因此能被干净地读出来 —— 见 tests/realism.js ① 段。
-           压缩位置仍在 retention 之前，所以耐力/毅力/失速照旧全额咬得住。 */
-        let baseUse = H.base;
-        if (ph.key === 'open' || ph.key === 'mid') {
-          baseSum += H.base; baseN++;
-          if (race.avgBase > 0) {
-            baseUse = race.avgBase * (1 + (H.base / race.avgBase - 1) * RACE_F.packCoupling);
-          }
-        }
-        let pot;
-        if (ph.key === 'break') {
-          pot = baseUse * (runCoef * (0.8 + 0.4 * (H.adj['出闸能力'] / 100)) * H.breakNoise) * H.fieldCoef * H.fatMult;
-        } else if (ph.key === 'final') {
-          /* 终盘 = 属性的主场（见 RACE_F.finalAttrK）。
-             爆发力 + 速度的一个分量，在这里一次性兑现。
-             爆发力项只在【耐力阶段】能继续增长；进入毅力阶段后按设计
-             「只能维持、不能提升」，故把它【锁定】在力竭瞬间的值 ——
-             而不是归零（归零会造成速度断崖，是马身差距失控的主因之一）。
-             若某匹马进入终盘时已在毅力阶段、从未有过锁定值，则按当前值取，
-             同样避免断崖。 */
-          const burstNow = burstFactor * (H.adj['爆发力'] / 100)
-            + RACE_F.finalAttrK * ((H.adj['速度'] - 70) / 100);
-          if (H.stage === '耐力') H.burstLock = burstNow;
-          const burst = H.burstLock !== undefined ? H.burstLock : burstNow;
-          pot = baseUse * (burst + runCoef) * H.fieldCoef * H.fatMult;
-        } else {
-          pot = baseUse * runCoef * H.fieldCoef * H.fatMult;
-        }
-        /* 阶段专属属性修正：让每个属性在自己负责的阶段起作用，
-           而不是全部挤进 base（那会让"跑法"盖过"属性"）。
-           属性 70 为中性点，50→90 时系数变化约 ±6.4%。 */
-        const sa = RACE_F.stageAttr[ph.key];
-        if (sa) pot *= 1 + ((H.adj[sa.key] - 70) / 100) * sa.k * 2;
-        pot *= H.retention * (1 + accel);
-        H.pot = pot;
-        /* 坡度速度修正：上坡=1-g·(3.0-2.0·力量/100)，下坡=1+min(0.04,|g|·0.6) */
-        const grad = gradientAt(H.s, race.geo, race.g);
-        H.grad = grad;
-        H.slopeCoef = grad > 0
-          ? 1 - grad * (3.0 - 2.0 * (H.adj['力量'] / 100))
-          : 1 + Math.min(0.04, -grad * 0.6);
-        if (H.stage === '失速') {
-          /* 失速速度要【有界】。旧实现按 0.95^dt 无限衰减到 STALL_SPEED(2 m/s)，
-             等于让力竭的马停下来；实测把马群拉到「冠军-末位 153 马身」。
-             现在下限取「基准速度 × stallFloor」（默认 86%），
-             跑崩表现为明显变慢，而不是停摆。 */
-          const stallFloorV = Math.max(STALL_SPEED, H.base * RACE_F.stallFloor * (H.gutsEndMaintain || 1));
-          H.v = Math.max(stallFloorV, H.v * Math.pow(RACE_F.stallDecayPerSec, dt));
-        } else H.v = pot * H.collisionCoef * H.slopeCoef;
-      }
-      /* 更新马群耦合基准（本帧序盘/中盘马的"纯能力速度"均值） */
-      race.avgBase = baseN > 0 ? baseSum / baseN : 0;
-      /* 2) 推进 + 碰撞 */
-      for (const H of act) { H.collisionCoef = 1; H.collisionIntensity = 0; H.blocked = false; H.blocker = null; }
-      for (const H of list) {
-        // 动作和自动靠拢共用横移速度，且到达目标后不继续越过它。
-        const lateralStep = RACE_F.lateralSpeed * dt;
-        const margin = horseWid(H) / 2 + 0.2;
-        H.t = clamp(H.t + clamp(H.targetT - H.t, -lateralStep, lateralStep), margin, TRACK_WIDTH - margin);
-        const k = kAt(H.s, race.geo);
-        /* ⚠️ 回向适性只在【弯道】生效。bendCoefFor 是弯道系数，
-           原来被无条件乘进全程（含直道）—— 适性不符的马会全程掉 10%，
-           而生成器会给约 11% 的马分配不符的回向。
-           这是「基速只差 1.8%、实测平均速度却差 11%」的主要剩余来源。
-           直道上方向不构成障碍，故 k=0 时不施加。 */
-        const bCoef = k > 0 ? bendCoefFor(H.h.special, race.dir) : 1;
-        /* 弯道速度上限：过弯要抵抗离心力，半径越小越要减速。
-           曲率 k = 1/R，故速度系数 = 1/(1 + k·bendPenaltyLen)。
-           bendPenaltyLen 取 9m：R=100（1200m）时系数 0.917，
-           R=145（3000m）时 0.942 —— 短途赛道弯道惩罚天然更重。 */
-        const bendSlow = k > 0 ? 1 / (1 + k * RACE_F.bendPenaltyLen) : 1;
-        /* t 从内沿计量，R 则是中线半径：有效半径为 R+t-半宽。
-           同实速下内道推进较快、外道较慢；强度由 laneBias 单独调节。 */
-        const laneRatio = laneProgressCoef(H.s, H.t, race.geo);
-        let newS = H.s + H.v * bCoef * bendSlow * laneRatio * dt;
-        for (const F of list) {
-          if (F === H || F.s <= H.s) continue;
-          const halfL = (horseLen(H) + horseLen(F)) / 2;
-          const halfW = (horseWid(H) + horseWid(F)) / 2;
-          if (F.s - H.s <= halfL * 1.05 && Math.abs(F.t - H.t) <= halfW * 0.65 && H.v > F.v + 0.3) {
-            const 冲撞力 = (H.adj['体格'] * 0.6 + H.adj['力量'] * 0.4) * Math.max(H.prevV, 1) * 0.2;
-            const 抵抗力 = F.adj['体格'] * 0.5 + F.adj['力量'] * 0.3 + F.adj['毅力'] * 0.2;
-            const intensity = 冲撞力 / Math.max(0.01, 抵抗力);
-            H.collisionIntensity = Math.max(H.collisionIntensity, intensity);
-            F.collisionIntensity = Math.max(F.collisionIntensity, intensity * 0.5);
-            /* 碰撞减速要收敛：原下限 0.5（直接掉一半速度）过重，
-               实测单场里可贡献数个百分点到十几的速度差。
-               现实里被撞一下损失的是身位与节奏，不是一半速度。 */
-            /* ⚠️ 被堵的代价下限曾被抬到 0.90（去换马身差距），等于「前が詰まる」不再有代价。
-               现实里被堵住是致命的：马必须收力、绕行、错过加速时机。
-               恢复实质惩罚（下限 0.75），并且【领放者永远不会被堵】——
-               这正是前位在现实中最硬的一条优势。 */
-            H.collisionCoef = Math.min(H.collisionCoef, Math.max(0.75, 1 - intensity * 0.09));
-            F.collisionCoef = Math.min(F.collisionCoef, Math.max(0.85, 1 - intensity * 0.05));
-            if (H.squeezePass <= 0) {
-              newS = Math.min(newS, F.s - halfL * 0.5); H.blocked = true;
-              if (!H.blocker || F.s < H.blocker.s) H.blocker = F;
-            }
-          }
-        }
-        H.s = Math.max(H.s, newS);
-        H.prevV = H.v;
-      }
-      /* 3) 耐力/毅力消耗 —— 可跑距离模型
-         每米消耗 = 本场预算 / 本场距离 ÷ 本马的可跑距离修正。
-         这样"耗尽点"恰好落在 耐力 × 32 × (场地 × 力量 × 疲劳) 米处，
-         即"这匹马能跑多远"是确定的、可预期的，与赛程无关。
-         消耗按距离而非时间：按时间会形成死亡螺旋（掉速→跑得久→耗更多→掉更快）。 */
-      for (const H of act) {
-        const st = actionBonus(H.action).stamina;
-        /* 坡度体力修正：上坡耗力、下坡省力。以"平地等效速度"(v/坡度系数)为基准，
-           使上坡的额外消耗不被减速抵消——力量的价值变为"更快爬完坡、在坡上停留更短" */
-        const gradDrain = (1 + 2.5 * Math.max(0, H.grad || 0)) * (1 + 1.0 * Math.min(0, H.grad || 0));
-        /* 本马的可跑距离修正：场地越差力量越值钱；疲劳直接缩短可跑距离 */
-        const myRange = rangeCoef(race.state, H.adj['力量']);
-        const drainPerMeter = (race.staminaBudget / Math.max(1, race.length)) /
-          Math.max(0.35, myRange) * ACTION_STAMINA_BASE;
-        /* 位置即代价：这是"抢到前面要用体力买"的落地处，也是四种跑法的平衡根源。
-           正前方 draftRange 米内有马 → 借尾流省力（draftSave）；
-           独自领放 → 承受全部风阻（leadCost）。
-           现实依据：跟跑约省 1~2 马身的能量（赛马界通行经验值，≈10~12%）。 */
-        let ahead = false;
-        for (const F of list) {
-          if (F === H) continue;
-          const wakeWidth = (horseWid(H) + horseWid(F)) / 2 + 0.8;
-          if (F.s > H.s && F.s - H.s <= RACE_F.draftRange && Math.abs(F.t - H.t) <= wakeWidth) {
-            ahead = true; break;
-          }
-        }
-        const posCoef = ahead ? RACE_F.draftSave : RACE_F.leadCost;
-        H.drafting = ahead;
-        /* —— 节奏项（步速系统的核心）——
-           这是【不参与归一化】的绝对项，所以不会被 avgV 抵消。
-           只有「承受步速」的马要交：乘上 pacePull 后，快节奏的代价
-           几乎全落在逃马与先行马身上，后上型的油耗基本不变。
-           这正是现实中「快节奏烧掉前速马、后上型捡漏」的机制。
-
-           ⚠️ 2026-10-01 对称化：原来写成 Math.max(0, paceStrength - 1)，【只罚不奖】。
-           后果是「单骑领放」相比「多马争抢」仅仅"少交一点罚金"，领放本身仍是
-           净亏损 —— 于是现实中「マイペースで逃げ切る」这种最经典的胜法
-           在引擎里根本无法发生。实测：单骑领放者比后上型多烧 19% 体力，
-           直接导致「逃」在属性同源的隔离测试里被所有人碾压（对追 1% 胜率）。
-           现在允许 paceStrength < 1 时【按同一比例省油】，并设上下限防跑飞。
-           注意只在序盘/中盘结算 —— 节奏是在那两段跑出来的。 */
-        const phNow = phaseAt(H.s, race.length);
-        const paceMainPhase = (phNow.key === 'open' || phNow.key === 'mid');
-        const pacePull = RACE_F.pacePull[H.style] !== undefined ? RACE_F.pacePull[H.style] : 0.20;
-        const paceDelta = race.paceStrength - 1;
-        const paceK = paceDelta >= 0 ? RACE_F.paceTaxK : RACE_F.paceCreditK;
-        const paceTax = paceMainPhase
-          ? clamp(1 + paceK * pacePull * paceDelta, RACE_F.paceAdjFloor, RACE_F.paceAdjCeil)
-          : 1;
-        /* 消耗 ∝ 出力强度（关键修正）
-           原来按 `速度 × 距离` 算，于是"跑得更快"这件事本身是免费的——
-           逃马抢占领放、配速最高，却并不因此多耗油，只承担一个静态的领放惩罚。
-           现实里跑更快应当显著更费油，这正是逃马末段崩溃的根本原因。
-           现在用【相对全场均速的出力比】的 2.2 次方计算：
-             出力 1.10 倍 → 消耗 1.23 倍；出力 0.93 倍 → 消耗 0.85 倍。
-           指数 2.2 略高于空气阻力的三次方直觉，用来补偿状态机的离散性。 */
-        const fieldAvgV = Math.max(1, race.avgV || H.v);
-        const effort = clamp(H.v / fieldAvgV, 0.6, 1.6);
-        const effortDrain = Math.pow(effort, RACE_F.effortExp);
-        const drain = H.v * drainPerMeter * (st / ACTION_STAMINA_BASE) * gradDrain *
-          posCoef * paceTax * effortDrain + H.collisionIntensity;
-        if (H.stage === '耐力') {
-          H.stamina -= drain * dt;
-          if (H.stamina <= 0) {
-            H.stamina = 0; H.stage = '毅力';
-            event(H.name + ' 体力见底，开始拼毅力！');
-          }
-        } else if (H.stage === '毅力') {
-          H.guts -= drain * dt;
-          if (H.guts <= 0) {
-            H.guts = 0; H.stage = '失速'; H.stallRef = H.v;
-            event(H.name + ' 失速！！');
-          }
-        }
-      }
-      /* 4) 动作计时与 AI */
-      for (const H of act) {
-        if (H.actionT > 0) { H.actionT -= dt; if (H.actionT <= 0) H.action = null; }
-        H.squeezePass = Math.max(0, H.squeezePass - dt);
-        H.laneIntentT = Math.max(0, H.laneIntentT - dt);
-        H.lastObserve -= dt;
-        if (H.lastObserve <= 0) {
-          H.lastObserve = (JOCKEY_CADENCE[H.jockey] || 2) * (0.85 + rng() * 0.3);
-          runAI(H);
-        }
-      }
-      /* 5) 完赛 / 中止 / 事件 */
-      race.t += dt;
-      /* 上がり3ハロン：记录冲过「终点前 600m」的时刻，完赛时相减即得。
-         这是日本赛马的头号公开指标，也是情报系统最该有误差的地方
-         ——它和步速构成「天平两端」：慢步速下跑出快上がり是常态，
-         快步速还能跑出快上がり，才是真有末脚。 */
-      for (const H of list) {
-        if (H.t600 == null && H.s >= race.length - 600) H.t600 = race.t;
-      }
-      for (const H of list) {
-        if (H.place || H.dnf) continue;
-        if (H.s >= race.length) {
-          H.s = race.length;
-          H.place = race.order.length + 1;
-          H.time = race.t;
-          H.final3f = H.t600 != null ? race.t - H.t600 : null;
-          race.order.push(H);
-          if (race.order.length === 1) {
-            race.winnerTime = race.t;
-            for (const F of race.horses) if (!F.place && !F.dnf) F.gapAtWin = race.length - F.s;
-            event('🏆 ' + H.name + ' 率先冲线！', true);
-          } else {
-            const gap = H.gapAtWin !== null ? H.gapAtWin : 0;
-            const 马身 = Math.max(0, gap) / 2.4;
-            event('第' + H.place + '位 ' + H.name + '（' + 马身.toFixed(1) + '马身差）');
-          }
-        }
-      }
-      for (const H of act) {
-        if (H.stage === '失速' && H.v <= STALL_SPEED + 0.35 && (race.length - H.s) > 150) {
-          H.stallTimer += dt;
-          if (H.stallTimer > 8) { H.dnf = true; race.dnf.push(H); event('❗ ' + H.name + ' 竞走中止', true); }
-        } else H.stallTimer = 0;
-      }
-      const cur = ranked();
-      const leader = cur[0];
-      if (leader) {
-        const lf = leader.s / race.length;
-        for (const p of PHASE_DEFS) if (lf >= p.from && p.name !== '出闸') eventOnce('ph' + p.key, '进入' + p.name + '！');
-        /* 步速播报：参赛表上就能数出几匹逃马，所以节奏本来就是公开信息
-           （现实中马评家也正是靠这个判读展开）。 */
-        if (lf >= 0.32) {
-          eventOnce('pace', '本场步速：' + race.paceLevel +
-            '（等效争抢 ' + race.paceStrength.toFixed(2) + '）');
-        }
-        if (race.g > 0) {
-          const { B, S } = race.geo;
-          if (leader.s >= S + B) eventOnce('secHill', '进入对直上坡！');
-          if (leader.s >= 2 * S + B) eventOnce('secHill2', '进入左弯上坡！');
-          if (leader.s >= 2 * S + 2 * B) eventOnce('secDown', '进入终直下坡！');
-        }
-        if (!race.prevLead) { race.prevLead = leader; event(leader.name + ' 出闸领跑！', true); }
-        else if (leader !== race.prevLead) {
-          if (race.order.length === 0) event(leader.name + ' 冲到最前方！', true);
-          race.prevLead = leader;
-        }
-        if (cur[1] && lf > 0.8 && (leader.s - cur[1].s) < 2.2) eventOnce('deadheat', leader.name + ' 与 ' + cur[1].name + ' 并驾齐驱！');
-        const pctNow = Math.floor(lf * 100);
-        if (pctNow > race._lastPct) {
-          race._lastPct = pctNow;
-          race.posHistory.push({ pct: pctNow, order: cur.map((H) => H.id) });
-        }
-      }
-      const remaining = race.horses.filter((H) => !H.place && !H.dnf).length;
-      if (remaining === 0 || race.t > 600) {
-        race.finished = true;
-        for (const H of race.horses) if (!H.place && !H.dnf) { H.dnf = true; race.dnf.push(H); }
-      }
+      if(!Number.isFinite(dt)||dt<=0) throw new Error('比赛步长必须是正数');
+      const count=Math.ceil(dt/(1/60)), sub=dt/count;
+      for(let i=0;i<count&&!race.finished;i++) tick(sub);
     }
-
     function snapshot() {
-      const list = ranked();
-      return {
-        t: race.t, finished: race.finished, length: race.length,
-        dir: race.dir, profile: race.profile, g: race.g,
-        paceLevel: race.paceLevel, paceStrength: race.paceStrength,
-        leader: list[0] ? list[0].id : null,
-        leaderProgress: list[0] ? list[0].s / race.length : 0,
-        events: race.events.slice(-10),
-        order: race.order.map((H) => H.id),
-        horses: race.horses.map((H) => ({
-          id: H.id, name: H.name, s: H.s, t: H.t, v: H.v, pot: H.pot,
-          rank: H.place ? H.place : (H.dnf ? null : list.indexOf(H) + 1),
-          stage: H.stage, stamina: H.stamina, guts: H.guts,
-          staminaMax: H.staminaMax, gutsMax: H.gutsMax,
-          retention: H.retention,
-          action: H.action, dnf: H.dnf, place: H.place, time: H.time,
-          blocked: H.blocked, style: H.style, gapAtWin: H.gapAtWin,
-          final3f: H.final3f,
-        })),
-      };
+      const list=ranked();return {t:race.t,finished:race.finished,length,dir,profile,g,course:geo.course,
+        paceLevel:race.paceLevel,paceStrength:race.paceStrength,pacePrediction:race.pacePrediction,
+        leader:list[0]?.id||null,leaderProgress:list[0]?list[0].s/length:1,events:race.events.slice(-10),order:race.order.map(H=>H.id),
+        horses:horses.map(H=>({id:H.id,name:H.name,s:H.s,t:H.t,v:H.v,pot:H.pot,accel:H.accel,power:H.power,
+          rank:H.place|| (H.dnf?null:list.indexOf(H)+1),stage:H.stage,stamina:H.stamina,guts:H.guts,
+          staminaMax:H.staminaMax,gutsMax:H.gutsMax,retention:H.retention,action:H.action,dnf:H.dnf,
+          place:H.place,time:H.time,blocked:H.blocked,style:H.style,gapAtWin:H.gapAtWin,final3f:H.final3f,sprintAt:H.sprintAt}))};
     }
-
-    return {
-      race, step, snapshot,
-      state: () => snapshot(),
-    };
+    return {race,step,snapshot,state:snapshot};
   }
 
   /* ---------------- 生涯模式（周推进 + 赛事体系 + 马匹生命周期） ---------------- */
@@ -2499,7 +1770,7 @@
     STAMINA_RANGE_PER_POINT, GROUND_RANGE_COEF,
     STYLE_COEF, STYLE_COEF_DOC, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
     ACTION_DEF, actionBonus, actionCoef, baseSpeed, fatigueMultiplier,
-    trackGeometry, trackPoint, kAt, laneProgressCoef, bendCoefFor, SLOPE_PROFILES, gradientAt,
+    COURSES, trackGeometry, trackPoint, kAt, laneProgressCoef, bendCoefFor, SLOPE_PROFILES, gradientAt,
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
     STAFF, CAT_ERROR_POOL, catText, fatigueBand, fatigueText,
     makeHorse, makeField, makeStaff, generateReport, oddsAndPopularity,
