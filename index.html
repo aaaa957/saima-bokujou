@@ -179,7 +179,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
       <button id="btnResetMC">✕ 清空结果</button>
     </div>
     <div class="note" style="margin-top:8px">
-      控制变量：两档使用<strong>完全相同</strong>的马匹阵容与随机种子，骑手固定「普通」（加成 0）、疲劳归零，
+      控制变量：两档使用<strong>完全相同</strong>的马匹阵容与随机种子，骑手固定「普通」、疲劳归零，
       唯一变量是跑法系数档位 —— 因此差异可归因到系数本身。8 匹出马，四种跑法各 2 匹。
     </div>
     <div class="note" id="mcProgress" style="margin-top:6px;font-weight:700"></div>
@@ -425,8 +425,8 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.10.01.4"></script>
-<script src="career-save.js?v=v2026.10.01.4"></script>
+<script src="sim.js?v=v2026.10.01.5"></script>
+<script src="career-save.js?v=v2026.10.01.5"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -442,7 +442,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.10.01.4';
+const APP_VER = 'v2026.10.01.5';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -722,17 +722,17 @@ function renderRace(ts) {
   const leaderH = snap.horses.find((h) => h.id === snap.leader);
   const geo = S.trackGeometry(L);
   const { R, B, S: St } = geo;
+  const trackWidth = S.TRACK_WIDTH, halfWidth = trackWidth / 2;
+  const miniScale = Math.min(150 / (St / 2 + R + halfWidth), 88 / (R + halfWidth));
+  const miniHalfW = (St / 2 + R + halfWidth) * miniScale;
+  const miniHalfH = (R + halfWidth) * miniScale;
+  const miniPanel = { left: W - 18 - miniHalfW * 2, right: W - 10, top: -2, bottom: 26 + miniHalfH * 2 };
   const dir = snap.dir;
   const slopeG = snap.g;
   // ---- 转播镜头 ----
-  // 设计目标（修三个问题）：弯道不乱缩放、马绝不出画、远景不再压成细线。
-  // 做法：
-  //  1) bendF 同时驱动"缩放"和"后视距离"，两者按同一比例变化，
-  //     因此取景窗口的横向范围随缩放同比收缩，画面观感稳定；
-  //     且弯道缩放上限只有约 1.45 倍（原来 3.0 倍），不会突跳。
-  //  2) 镜头位置直接由「头马位置 − 后视距离」给出，并且平移速度按窗口缩放，
-  //     不再有"每帧最多前进 12m"的限速——那是马跑出画面的直接原因。
-  //  3) 透视距离放宽到 340，远处跑道不再被压成一条线。
+  // 镜头覆盖全体参赛马；马群拉开时渐渐扩大取景，弯道变化仍保持平滑。
+  // 窗口平均曲率驱动基础缩放，马群首尾决定可行的缩放和镜头位置；
+  // 平滑趋近目标时始终保留全体马匹，名字与圆点保持可读的像素大小。
   // 全部马匹冲线后 snap.leader 会变成 null，若直接用 0 会让取景窗口塌缩、
   // 镜头瞬间跳回起点。此时把镜头钉在终点，让最后一眼停在冲线画面。
   const allHome = !leaderH && snap.horses.every((h) => h.place || h.dnf);
@@ -746,11 +746,11 @@ function renderRace(ts) {
     kN++;
   }
   /* 赛道观感参数。
-     yScale 决定跑道带的高度：带高 = 20 * yScale（固定，与镜头距离无关）。
+     yScale 决定镜头处跑道带的高度：带高 = TRACK_WIDTH * yScale，远端按透视缩小。
      H=460 的画布下取 12 → 240px，约占画面一半；再大就会把外栏顶出画布，
      马会贴在画布上边缘（曾取 15 → 带高 300px，外栏 y=-116 被裁掉）。
-     anchor 是"镜头处跑道中点"落在画面的纵向比例，0.58 让跑道略偏下、
-     上方留出远景空间，接近电视赛马转播的取景。 */
+     anchor 是"镜头处跑道中点"落在画面的纵向比例；小地图可能覆盖马匹时，
+     跑道会平滑下移，给马匹与标签留出空间。 */
   const yScale = SNAP_VIEW.yScale;
   const camBehindOf = (b) => 120 + b * 50;             // 170 → 120（1.42 倍）
   const camAheadOf = (b) => 40 + b * 15;               // 55 → 40
@@ -758,16 +758,33 @@ function renderRace(ts) {
   if (!cam) cam = { s: Math.max(0, leadS - camBehindOf(targetBendF)), bendF: targetBendF };
   cam.bendF += (targetBendF - cam.bendF) * 0.05;
 
-  const pxPerM = (W - 38) / (camBehindOf(cam.bendF) + camAheadOf(cam.bendF));
-  const camTarget = Math.max(0, leadS - camBehindOf(cam.bendF));
+  const viewHorses = snap.horses.filter((h) => !h.dnf);
+  const frontS = viewHorses.length ? Math.max(...viewHorses.map((h) => h.s)) : leadS;
+  const tailS = viewHorses.length ? Math.min(...viewHorses.map((h) => h.s)) : leadS;
+  const horsePad = 48; // 留出圆点、玩家光圈与马名标签的位置。
+  // 长距离比赛先用更宽的取景，避免末段马群拉开后才做一次大幅缩放。
+  // 马匹圆点和标签仍维持最低像素大小，扩大的是可见距离。
+  const distanceFraming = Math.max(1, L / 2000);
+  const baseScale = (W - 38) / ((camBehindOf(cam.bendF) + camAheadOf(cam.bendF)) * distanceFraming);
+  const fitScale = (W - horsePad * 2) / Math.max(1, frontS - tailS);
+  const wantedScale = Math.min(baseScale, fitScale * 0.95);
+  if (!Number.isFinite(cam.scale)) cam.scale = wantedScale;
+  cam.scale += (wantedScale - cam.scale) * 0.07;
+  const scale = Math.min(cam.scale, fitScale);
+  cam.scale = scale;
+  // 任何相机位置都必须落在这个区间内，才能同时看见头马和末位。
+  const camMin = frontS - (W - horsePad - 18) / scale;
+  const camMax = tailS - (horsePad - 18) / scale;
+  const camTarget = S.clamp(leadS - camBehindOf(cam.bendF), camMin, camMax);
   const camDelta = camTarget - cam.s;
   // 平移：按比例逼近 + 只做大跳保护。
   // 这个上限必须远大于马速（头马约 0.5m/帧），否则镜头追不上、马会跑出取景窗口
   // （曾误设为 0.66m/帧，实测镜头落后头马 1800m）。平滑由 0.30 的指数系数负责，
   // 上限只用于防止镜头瞬移。
   cam.s += Math.max(-8, Math.min(8, camDelta * 0.30));
+  cam.s = S.clamp(cam.s, camMin, camMax);
+  const cameraS = cam.s;
 
-  const scale = pxPerM;
   const sClamp = (s) => Math.max(0, Math.min(L, s));
   // 跑道必须铺满整个画布宽度：
   // 比赛刚开始时可视窗口只有几十米，若只按 cam.s±窗口 取样，跑道只画到屏幕左侧，
@@ -775,9 +792,9 @@ function renderRace(ts) {
   // 这里把取样范围钉在画布左右边缘上，超出的部分由 trackPtExt 沿切线外推补齐。
   const winBack = 18 / scale;
   const winFwd = (W - 18) / scale - 0;
-  const p0 = S.trackPoint(cam.s, 10, geo, dir);
-  const e0 = S.trackPoint(Math.max(0, cam.s - 2), 10, geo, dir);
-  const e1 = S.trackPoint(Math.min(L, cam.s + 2), 10, geo, dir);
+  const p0 = S.trackPoint(cam.s, halfWidth, geo, dir);
+  const e0 = S.trackPoint(Math.max(0, cam.s - 2), halfWidth, geo, dir);
+  const e1 = S.trackPoint(Math.min(L, cam.s + 2), halfWidth, geo, dir);
   let tx = e1.x - e0.x, ty = e1.y - e0.y;
   const tl = Math.hypot(tx, ty) || 1; tx /= tl; ty /= tl;
   const innerX = dir === '右回' ? ty : -ty;
@@ -786,9 +803,9 @@ function renderRace(ts) {
   // 画面纵向锚点取"镜头处跑道中点"，跑道不会随透视上下漂移
   const midAt0 = (S.trackPoint(cam.s, 0, geo, dir).x - p0.x) * innerX +
                  (S.trackPoint(cam.s, 0, geo, dir).y - p0.y) * innerY;
-  const midAt20 = (S.trackPoint(cam.s, 20, geo, dir).x - p0.x) * innerX +
-                  (S.trackPoint(cam.s, 20, geo, dir).y - p0.y) * innerY;
-  const cy = H * SNAP_VIEW.anchor - (midAt0 + midAt20) / 2 * yScale;
+  const midAtOuter = (S.trackPoint(cam.s, trackWidth, geo, dir).x - p0.x) * innerX +
+                     (S.trackPoint(cam.s, trackWidth, geo, dir).y - p0.y) * innerY;
+  let cy = H * SNAP_VIEW.anchor - (midAt0 + midAtOuter) / 2 * yScale;
   // 横向偏移按"该点自身的跑道横截面"计算，不能用镜头处的切向：
   // 弯道里 200m 外的切线已转了近 90°，用镜头切向投影会把 10m 的横向偏移
   // 量成 ~100m，马匹被推出画布（实测 y 达 -366）。逐点取该处切线的法向即可。
@@ -798,8 +815,8 @@ function renderRace(ts) {
     if (s < 0 || s > L) {
       const endS = s < 0 ? 0 : L;
       const q = S.trackPoint(endS, lane, geo, dir);
-      const a = S.trackPoint(Math.max(0, endS - 2), 10, geo, dir);
-      const b = S.trackPoint(endS, 10, geo, dir);
+      const a = S.trackPoint(Math.max(0, endS - 2), halfWidth, geo, dir);
+      const b = S.trackPoint(Math.min(L, endS + 2), halfWidth, geo, dir);
       let dx = b.x - a.x, dy = b.y - a.y;
       const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
       const over = s < 0 ? s : s - L;          // 负=起点之前，正=终点之后
@@ -810,17 +827,31 @@ function renderRace(ts) {
   // 统一投影：横向按该点自身的跑道横截面，纵向按该处切线法向
   const projT = (s, lane) => {
     const q = trackPtExt(s, lane);
-    const ref = trackPtExt(s, 10);
-    const a = trackPtExt(s - 2, 10), b = trackPtExt(s + 2, 10);
+    const ref = trackPtExt(s, halfWidth);
+    const a = trackPtExt(s - 2, halfWidth), b = trackPtExt(s + 2, halfWidth);
     let dx = b.x - a.x, dy = b.y - a.y;
     const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
     const lat = (q.x - ref.x) * (-dy) + (q.y - ref.y) * dx;
-    const ps = 1 / (1 + Math.abs(s - cam.s) / perspD);
-    return { x: 18 + (s - cam.s) * scale, y: cy - lat * yScale * ps, ps, lat };
+    const ps = 1 / (1 + Math.abs(s - cameraS) / perspD);
+    return { x: 18 + (s - cameraS) * scale, y: cy - lat * yScale * ps, ps, lat };
   };
+  // 小地图是前景面板，主视图中的圆点和马名需从它下方经过。
+  // 只在两者的横向范围重叠时下移跑道，保持短距离大地图也不会遮住外道马。
+  const anchorCy = cy;
+  ctx.font = '10px sans-serif';
+  for (const h of viewHorses) {
+    const q = projT(h.s, h.t), halfLabel = ctx.measureText(h.name).width / 2 + 3;
+    const approach = S.clamp((q.x + halfLabel - miniPanel.left + 120) / 120, 0, 1);
+    if (approach > 0 && q.x - halfLabel <= miniPanel.right) {
+      const hs = Math.max(5.5, 8.5 * q.ps);
+      const requiredCy = miniPanel.bottom + hs + 38 + (cy - q.y);
+      const ease = approach * approach * (3 - 2 * approach);
+      cy = Math.max(cy, anchorCy + Math.max(0, requiredCy - anchorCy) * ease);
+    }
+  }
   // 调试/测试用：暴露本帧实际使用的取景参数与投影函数
   cam.lastView = { scale, camS: cam.s, leadS, winBack, winFwd, bendF: cam.bendF,
-                   cy, yScale, project: (s, lane) => projT(s, lane) };
+                   cy, yScale, horsePad, frontS, tailS, miniPanel, project: (s, lane) => projT(s, lane) };
 
   ctx.fillStyle = '#152c1e'; ctx.fillRect(0, 0, W, H);
   // 跑道带：采样内外栏，直道呈水平、弯道自然弯曲
@@ -830,7 +861,7 @@ function renderRace(ts) {
   const winLo = cam.s - winBack, winHi = cam.s + winFwd;
   for (let s = winLo; s <= winHi + 8; s += step) {
     bandIn.push(projT(s, 0));       // 不 clamp：超出 s∈[0,L] 时沿切线延伸，
-    bandOut.push(projT(s, 20));     // 避免画布边缘出现"跑道被截断"的空缺
+    bandOut.push(projT(s, trackWidth)); // 避免画布边缘出现"跑道被截断"的空缺
   }
   const poly = (pts) => { ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y); for (const p of pts) ctx.lineTo(p.x, p.y); };
   ctx.fillStyle = '#2f7f4a';
@@ -873,7 +904,7 @@ function renderRace(ts) {
     ];
     ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
     slopeLabels.forEach((lb) => {
-      const q = projT(sClamp(lb.s), 22);
+      const q = projT(sClamp(lb.s), trackWidth + 2);
       if (q.x > 30 && q.x < W - 30 && q.y > 12 && q.y < H) { ctx.fillStyle = lb.color; ctx.fillText(lb.text, q.x, Math.max(14, q.y - 8)); }
     });
   }
@@ -882,27 +913,27 @@ function renderRace(ts) {
   ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
   for (let m = 200; m < L; m += 200) {
     const q0 = projT(m, 0);
-    const q1 = projT(m, 20);
+    const q1 = projT(m, trackWidth);
     if (q0.x < -20 || q0.x > W + 20 || q0.y < -20 || q0.y > H + 20) continue;
     ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(q0.x, q0.y); ctx.lineTo(q1.x, q1.y); ctx.stroke();
-    const qm = projT(m, 23);
+    const qm = projT(m, trackWidth + 3);
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.fillText('残' + (L - m), qm.x, qm.y);
   }
 
   // 起跑线（虚线）与终点线（黑白格）
-  const st0 = projT(0, 0), st1 = projT(0, 20);
+  const st0 = projT(0, 0), st1 = projT(0, trackWidth);
   if (st0.x > -10 && st0.x < W + 10) {
     ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.setLineDash([6, 6]); ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(st0.x, st0.y); ctx.lineTo(st1.x, st1.y); ctx.stroke();
     ctx.setLineDash([]);
   }
-  const fnA = projT(L, 0), fnB = projT(L, 20);
+  const fnA = projT(L, 0), fnB = projT(L, trackWidth);
   if (fnA.x > -20 && fnA.x < W + 20) {
     for (let i = 0; i < 8; i++) {
-      const ta = projT(L, i * 2.5);
-      const tb = projT(L, (i + 1) * 2.5);
+      const ta = projT(L, i * trackWidth / 8);
+      const tb = projT(L, (i + 1) * trackWidth / 8);
       ctx.fillStyle = i % 2 ? '#141414' : '#f0f0f0';
       ctx.beginPath(); ctx.moveTo(ta.x, ta.y); ctx.lineTo(tb.x, tb.y);
       ctx.lineTo(tb.x + 2, tb.y + 2); ctx.lineTo(ta.x + 2, ta.y + 2);
@@ -914,7 +945,7 @@ function renderRace(ts) {
   ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(232,201,106,0.9)';
   [[St, '1弯'], [St + B, '2弯'], [2 * St + B, '3弯'], [2 * St + 2 * B, '4弯']].forEach(([sJ, label]) => {
-    const q = projT(sJ, 22);
+    const q = projT(sJ, trackWidth + 2);
     if (q.x > 24 && q.x < W - 24 && q.y > 10 && q.y < H) ctx.fillText(label, q.x, Math.max(16, q.y - 10));
   });
 
@@ -975,52 +1006,50 @@ function renderRace(ts) {
   });
 
   // 小地图（右上角全体图）
-  // 赛道是「体育场」形状：直道在 y = ±R，两端半圆把 (St/2, ±R) 连起来。
-  // 所以外沿的直道段在 y = ±R，只有半圆端才到 ±(R+10) —— 这与"外接矩形"不同。
-  // 用椭圆/圆角矩形代替都会画错：椭圆会把直道外沿画到 ±(R+10)，比真实位置外扩 10，
-  // 于是直道上的马（y≈±113）就落到环外了——这就是"白点跑出去"的根因。
-  const mmScale = Math.min(150 / (St / 2 + R + 10), 88 / (R + 10));
-  const mmHalfW = (St / 2 + R + 10) * mmScale;
-  const mmHalfH = (R + 10) * mmScale;
+  // 中线半圆半径为R；内外沿的半圆与直道分别共用R±半宽，连接处不留斜缝。
+  const mmScale = miniScale, mmHalfW = miniHalfW, mmHalfH = miniHalfH;
   const mmCx = W - 14 - mmHalfW;
   const mmCy = 14 + mmHalfH;
   const mmx = (x) => mmCx + x * mmScale;
   const mmy = (y) => mmCy - y * mmScale;
-  const ohw2 = St / 2 + 10, ohh2 = R + 10, ihw2 = St / 2 - 10, ihh2 = R - 10;
-  // 体育场路径：参数 (a, b, H) = 半长、端部半径、直道半距
-  const stadiumPath = (a, b, H) => {
-    const sx = mmx(a), sy = mmy(H), rx = b * mmScale, ry = b * mmScale;
+  const outerR = R + halfWidth, innerR = R - halfWidth;
+  // 体育场路径：半条直道长a、半圆半径b，直道接在半圆的顶部/底部。
+  const stadiumPath = (a, b) => {
+    const sx = mmx(a), sy = mmy(b), rx = b * mmScale, ry = b * mmScale;
     ctx.beginPath();
     ctx.moveTo(sx, sy);
     ctx.ellipse(sx, mmy(0), rx, ry, 0, -Math.PI / 2, Math.PI / 2);   // 右端半圆
-    ctx.lineTo(mmx(-a), mmy(-H));
+    ctx.lineTo(mmx(-a), mmy(-b));
     ctx.ellipse(mmx(-a), mmy(0), rx, ry, 0, Math.PI / 2, -Math.PI / 2); // 左端半圆
     ctx.closePath();
   };
   ctx.fillStyle = 'rgba(10,26,18,0.9)';
-  ctx.beginPath(); ctx.roundRect(mmx(-ohw2) - 4, mmy(ohh2) - 16, 2 * ohw2 * mmScale + 8, 2 * ohh2 * mmScale + 28, 8); ctx.fill();
-  ctx.fillStyle = '#2f7f4a'; stadiumPath(St / 2, R + 10, R); ctx.fill();
-  ctx.fillStyle = '#1d4a2e'; stadiumPath(St / 2, R - 10, R - 10); ctx.fill();
-  // 把代表点裁剪在赛道外轮廓内：环带只有约 5px 宽，而点在 2.5px 半径下
-  // 天然会压到环边（外侧车道的马尤其明显）。裁剪后点永远不会画到赛道之外。
-  ctx.save();
-  stadiumPath(St / 2, R + 10, R);
-  ctx.clip();
+  ctx.beginPath(); ctx.roundRect(mmCx - mmHalfW - 4, mmCy - mmHalfH - 16, mmHalfW * 2 + 8, mmHalfH * 2 + 28, 8); ctx.fill();
+  ctx.fillStyle = '#2f7f4a'; stadiumPath(St / 2, outerR); ctx.fill();
+  ctx.fillStyle = '#1d4a2e'; stadiumPath(St / 2, innerR); ctx.fill();
+  // 代表点有固定像素半径，外沿留足这个半径，避免整块圆点或玩家光圈被裁成半圆。
+  // 只对小地图符号位置做像素留边；主视图和比赛中的真实车道保持原坐标。
   ctx.font = '9px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.textAlign = 'center';
-  ctx.fillText('全体图', mmCx, mmy(ohh2) - 4);
+  ctx.fillText('全体图', mmCx, mmy(outerR) - 4);
+  ctx.save(); stadiumPath(St / 2, outerR); ctx.clip();
   // 调试/测试用：暴露小地图真实几何
-  cam.lastView.mini = { mmScale, mmCx, mmCy, ao: ohw2, bo: ohh2, ai: ihw2, bi: ihh2,
-                        straight: St / 2, halfH: R, halfHIn: R - 10,
-                        clipHalfH: R + 10, clipStraight: St / 2 };
+  cam.lastView.mini = { mmScale, mmCx, mmCy, ao: St / 2 + outerR, bo: outerR, ai: St / 2 + innerR, bi: innerR,
+                        straight: St / 2, halfH: outerR, halfHIn: innerR,
+                        clipHalfH: outerR, clipStraight: St / 2, markers: [] };
   snap.horses.forEach((h) => {
     if (h.dnf) return;
-    const p = S.trackPoint(sClamp(h.s), h.t, geo, dir);
+    const dotR = h.id === playerId ? 3.5 : 2.5;
+    const markerR = h.id === playerId ? 5.5 : dotR + 0.5;
+    const displayLane = Math.min(h.t, trackWidth - markerR / mmScale);
+    const p = S.trackPoint(sClamp(h.s), displayLane, geo, dir);
+    const dotX = mmx(p.x), dotY = mmy(p.y);
+    cam.lastView.mini.markers.push({ id: h.id, x: dotX, y: dotY, r: dotR, markerR, actualLane: h.t, displayLane });
     const idx = field.findIndex((f) => f.id === h.id);
     ctx.fillStyle = capColor(idx);
-    ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), h.id === playerId ? 3.5 : 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(dotX, dotY, dotR, 0, Math.PI * 2); ctx.fill();
     if (h.id === playerId) {
       ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(mmx(p.x), mmy(p.y), 5, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.stroke();
     }
   });
   ctx.restore();                                 // 结束小地图裁剪
@@ -1742,7 +1771,7 @@ function enterFoalToRoster() {
 }
 /* ---------- 多场模拟（蒙特卡洛验证） ----------
  * 与 tests/mc.js 同口径：两档使用完全相同的阵容与随机种子，
- * 骑手固定「普通」（JOCKEY_BONUS=0）、疲劳归零，唯一变量是跑法系数档位。
+ * 骑手固定「普通」、疲劳归零，唯一变量是跑法系数档位。
  * 分片异步执行（每片约 60ms）以免阻塞界面，过程中持续显示进度。
  */
 const MC_STYLES = ['逃', '先', '差', '追'];

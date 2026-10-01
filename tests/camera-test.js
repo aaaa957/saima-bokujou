@@ -22,6 +22,7 @@ const frames = [];          // 记录每帧绘制内容，供离线渲染成图
 
 function makeCtx(rec) {
   const noop = () => {};
+  let currentPath = [];
   const ctx = {
     fillStyle: '#000', strokeStyle: '#000', font: '10px sans-serif',
     textAlign: 'left', textBaseline: 'alphabetic', lineWidth: 1, globalAlpha: 1,
@@ -29,11 +30,17 @@ function makeCtx(rec) {
     strokeRect: noop, clearRect: noop,
     fillText: (t, x, y) => { if (rec) rec.push({ op: 'text', t: String(t).slice(0, 12), x, y, c: ctx.fillStyle, f: ctx.font }); },
     strokeText: noop,
-    beginPath: noop, closePath: noop, moveTo: noop, lineTo: noop, rect: noop,
+    beginPath: () => { currentPath = []; },
+    closePath: () => { currentPath.push({ op: 'closePath' }); },
+    moveTo: (x, y) => { currentPath.push({ op: 'moveTo', x, y }); },
+    lineTo: (x, y) => { currentPath.push({ op: 'lineTo', x, y }); },
+    rect: noop,
     fill: noop, stroke: noop, save: noop, restore: noop,
     translate: noop, rotate: noop, scale: noop, setTransform: noop,
-    drawImage: noop, setLineDash: noop, clip: noop,
-    quadraticCurveTo: noop, bezierCurveTo: noop, ellipse: noop,
+    drawImage: noop, setLineDash: noop,
+    clip: () => { if (rec) rec.push({ op: 'clip', path: currentPath.slice() }); },
+    quadraticCurveTo: noop, bezierCurveTo: noop,
+    ellipse: (x, y, rx, ry, rotation, start, end) => { currentPath.push({ op: 'ellipse', x, y, rx, ry, rotation, start, end }); },
     arc: (x, y, r) => {
       if (rec) rec.push({ op: 'arc', x, y, r, c: ctx.fillStyle, lw: ctx.lineWidth });
       if (MINI_ARCS) MINI_ARCS.push({ x, y, r, stroke: ctx.strokeStyle });
@@ -111,20 +118,24 @@ vm.runInContext(script + `
 globalThis.__genField = genField;
 globalThis.__setRace = function (f, opts) { race = S.createRace(f, opts); field = f; };
 globalThis.__getRace = function () { return race; };
-globalThis.__cam = function () { return cam; };`, ctxObj, { filename: 'page.js' });
+globalThis.__cam = function () { return cam; };
+globalThis.__playerId = function () { return playerId; };
+globalThis.__resetCamera = function () { cam = null; };`, ctxObj, { filename: 'page.js' });
 
 /* ---- 跑一整场，逐帧渲染 ---- */
 const CANVAS_W = W, CANVAS_H = H;
 let fail = 0, pass = 0;
 const check = (cond, msg) => { console.log((cond ? '  ✅ ' : '  ❌ ') + msg); cond ? pass++ : fail++; };
 
-const seed = 186;
+const seed = Number(process.env.CAMERA_SEED) || 186;
+const distance = Number(process.env.CAMERA_DISTANCE) || 2000;
+const direction = process.env.CAMERA_DIRECTION || '左回';
 ctxObj.__genField(seed);
 const fld = ctxObj.$('fieldTable');   // 触发 genField 内部的 field 赋值已生效
 const raceObj = ctxObj.__getRace();
 // genField 不建 race，这里显式建一场并跑完
 const field = S.makeField(S.mulberry32(seed), { n: 8, strongIndex: 2, playerIndex: 2, level: 70 });
-ctxObj.__setRace(field, { length: 2000, surface: '草地', state: '良', profile: '缓坂',
+ctxObj.__setRace(field, { length: distance, dir: direction, surface: '草地', state: '良', profile: '缓坂',
   styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
 
 const rc = ctxObj.__getRace();
@@ -142,15 +153,17 @@ while (!rc.race.finished && stepCount++ < MAX) {
   if (rc.race.winnerTime !== null && !stoppedAtWinner) stoppedAtWinner = true;
   if (stoppedAtWinner) break;
   if (stepCount % 10 === 0) {
-    recCtx = makeCtx(null);
+    const ops = [];
+    recCtx = makeCtx(ops);
     ctxObj.__renderRace(performance.now());
     const cam = ctxObj.__cam();
     const view = cam.lastView;                 // 页面本帧实际使用的取景参数
     const snap = rc.state();
     samples.push({
-      t: snap.t, view, bendF: cam.bendF,
+      t: snap.t, view, bendF: cam.bendF, ops,
       horses: snap.horses.filter((h) => !h.dnf).map((h) => ({ id: h.id, s: h.s, t: h.t })),
     });
+    if (RECORD) frames.push({ t: snap.t, ops });
   }
 }
 
@@ -161,7 +174,7 @@ ctxObj.__renderRace(performance.now());
 const mmArcs = MINI_ARCS.slice();
 MINI_ARCS = null;
 
-console.log('比赛用时 ' + rc.race.winnerTime.toFixed(1) + 's，采样 ' + samples.length + ' 帧\n');
+console.log(distance + 'm · ' + direction + ' · seed ' + seed + ' · 比赛用时 ' + rc.race.winnerTime.toFixed(1) + 's，采样 ' + samples.length + ' 帧\n');
 if (process.env.TRACE) {
   console.log('【镜头轨迹抽样】(t, camS, leadS, gap=camS-behind, 头马s)');
   samples.filter((_, i) => i % 40 === 0).forEach((f) => {
@@ -223,6 +236,28 @@ console.log('  纵向范围 y = ' + (yMin > 1e8 ? 'n/a' : yMin.toFixed(0) + ' ~ 
 check(yBad === 0, '马匹纵向也全部在画布内（越界 ' + yBad + ' / ' + totalHorseFrames + '）' +
   (worstY ? '，最坏 y=' + worstY.y.toFixed(0) + ' @t=' + worstY.t.toFixed(1) + 's' : ''));
 
+const playerId = ctxObj.__playerId();
+const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+const close = (a, b) => Math.abs(a - b) < 1e-6;
+let mainMissing = 0, glyphOutside = 0, miniOccluded = 0, labelOccluded = 0;
+for (const fr of samples) {
+  const arcs = fr.ops.filter((op) => op.op === 'arc');
+  for (const h of fr.horses) {
+    const q = fr.view.project(h.s, h.t), hs = Math.max(5.5, 8.5 * q.ps);
+    const radius = h.id === playerId ? hs + 5.25 : hs;
+    if (!arcs.some((a) => close(a.x, q.x) && close(a.y, q.y) && close(a.r, hs))) mainMissing++;
+    const bounds = { left: q.x - radius, right: q.x + radius, top: q.y - radius, bottom: q.y + radius };
+    if (bounds.left < 0 || bounds.right > W || bounds.top < 0 || bounds.bottom > H) glyphOutside++;
+    if (overlaps(bounds, fr.view.miniPanel)) miniOccluded++;
+  }
+  for (const label of fr.ops.filter((op) => op.op === 'fillRect' && op.c === 'rgba(0,0,0,0.6)')) {
+    if (overlaps({ left: label.x, right: label.x + label.w, top: label.y, bottom: label.y + label.h }, fr.view.miniPanel)) labelOccluded++;
+  }
+}
+check(mainMissing === 0, '主镜头每帧实际绘制全部马匹圆点（缺失 ' + mainMissing + '）');
+check(glyphOutside === 0, '完整圆点与玩家光圈都在画布内（越界 ' + glyphOutside + '）');
+check(miniOccluded === 0 && labelOccluded === 0, '小地图不遮挡主镜头的马匹或马名（圆点 ' + miniOccluded + '，标签 ' + labelOccluded + '）');
+
 console.log('\n【跑道覆盖率】');
 {
   let worstL = -1e9, worstR = 1e9, badFrames = 0;
@@ -241,8 +276,8 @@ console.log('\n【跑道覆盖率】');
 
 console.log('\n【小地图（全体图）检查】');
 {
-  const G = S.trackGeometry(2000);
-  const St = G.S, R = G.R, ao = St / 2 + 10, bo = R + 10, ai = St / 2 - 10, bi = R - 10;
+  const G = S.trackGeometry(distance), halfWidth = S.TRACK_WIDTH / 2;
+  const St = G.S, R = G.R, ao = St / 2 + R + halfWidth, bo = R + halfWidth;
   // 用页面自己暴露的小地图几何，避免两边各算一套导致误判
   const mv = samples[samples.length - 1].view.mini;
   if (!mv) { check(false, '页面未暴露小地图几何（cam.lastView.mini）'); }
@@ -262,12 +297,7 @@ console.log('\n【小地图（全体图）检查】');
   console.log('  小地图中心(' + cx.toFixed(0) + ',' + cyy.toFixed(0) + ') mmScale=' + mmScale.toFixed(4) +
               '，捕获 ' + dots.length + ' 个点');
 
-  // 赛道是「体育场」形状：直道在 y=±R，外沿半圆半径 R+10，内沿半圆半径 R-10。
-  // 代表点（在赛道中线附近，|t-10|<=10）必须落在环带内：
-  //   外沿比 = max(|x|<=St/2+10 ? |y|/(R+10) : 椭圆比)  <= 1
-  //   内沿比 = min(...)                                 >= 1
-  // 页面把代表点裁剪在赛道外轮廓内，所以判据是：
-  // 每个点（含半径）都必须落在外轮廓体育场之内。
+  // 外沿直道与端部半圆使用相同的 R+半宽；检查完整圆，而非仅检查圆心。
   const inClip = (ux, uy, rPx) => {
     const sx = mv.clipStraight, Ho = mv.clipHalfH;
     const r = rPx / mv.mmScale;
@@ -276,12 +306,11 @@ console.log('\n【小地图（全体图）检查】');
       : Math.hypot(Math.abs(ux) - sx, uy) <= Ho - r;
     return outer;
   };
-  const rPx = 2.5;
   const outBand = [];
-  console.log('  9 个点是否完整落在赛道外轮廓内（含 ' + rPx + 'px 半径）：');
+  console.log('  代表点是否完整落在赛道外轮廓内（使用各点实际半径）：');
   dots.forEach((d, i) => {
     const ux = (d.x - cx) / mmScale, uy = (cyy - d.y) / mmScale;
-    const ok = inClip(ux, uy, rPx);
+    const ok = inClip(ux, uy, d.r);
     if (!ok) outBand.push({ ...d, ux, uy });
     if (i < 9) {
       console.log('    #' + i + ' 赛道(' + ux.toFixed(1) + ',' + uy.toFixed(1) + ') ' + (ok ? '✅' : '❌'));
@@ -292,6 +321,57 @@ console.log('\n【小地图（全体图）检查】');
   check(dots.length >= 8, '8 匹马都画进了小地图（实际 ' + dots.length + ' 个）');
   check(!!mv.clipHalfH, '小地图已启用裁剪（clipHalfH=' + mv.clipHalfH + '）');
 }
+
+function completeMiniMarker(view, marker) {
+  const m = view.mini;
+  const ux = (marker.x - m.mmCx) / m.mmScale, uy = (m.mmCy - marker.y) / m.mmScale;
+  const distanceToSpine = Math.hypot(Math.max(0, Math.abs(ux) - m.clipStraight), uy);
+  return distanceToSpine + marker.markerR / m.mmScale <= m.clipHalfH + 1e-6;
+}
+function preciseMiniPath(ops, view) {
+  const clip = ops.filter((op) => op.op === 'clip').pop();
+  if (!clip || clip.path.length !== 5) return false;
+  const [start, right, bottom, left, end] = clip.path, m = view.mini;
+  return start.op === 'moveTo' && right.op === 'ellipse' && bottom.op === 'lineTo' && left.op === 'ellipse' && end.op === 'closePath' &&
+    close(start.x, right.x) && close(start.y, right.y - right.ry) &&
+    close(bottom.x, left.x) && close(bottom.y, left.y + left.ry) &&
+    close(right.rx, m.clipHalfH * m.mmScale) && close(right.ry, right.rx) &&
+    close(left.rx, right.rx) && close(left.ry, right.ry) &&
+    close(right.start, -Math.PI / 2) && close(right.end, Math.PI / 2) &&
+    close(left.start, Math.PI / 2) && close(left.end, -Math.PI / 2);
+}
+let miniMarkerBad = 0, miniMarkerMissing = 0, miniPathBad = 0;
+for (const fr of samples) {
+  if (!preciseMiniPath(fr.ops, fr.view)) miniPathBad++;
+  for (const marker of fr.view.mini.markers) {
+    if (!completeMiniMarker(fr.view, marker)) miniMarkerBad++;
+    if (!fr.ops.some((op) => op.op === 'arc' && close(op.x, marker.x) && close(op.y, marker.y) && close(op.r, marker.r))) miniMarkerMissing++;
+    if (marker.id === playerId && !fr.ops.some((op) => op.op === 'arc' && close(op.x, marker.x) && close(op.y, marker.y) && close(op.r, 5))) miniMarkerMissing++;
+  }
+}
+check(miniMarkerBad === 0 && miniMarkerMissing === 0, '整场小地图实际绘制完整圆点及玩家光圈（裁剪 ' + miniMarkerBad + '，缺失 ' + miniMarkerMissing + '）');
+check(miniPathBad === 0, '外沿直道与半圆精确连接，裁剪轮廓与真实几何一致（错误 ' + miniPathBad + '）');
+
+// 强制最外道，并覆盖直道/弯道接点；避免仅测试终点附近的内道点。
+const G = S.trackGeometry(distance);
+let outerMarkerBad = 0;
+for (const dir of ['左回', '右回']) {
+  for (const s of [0, G.S, G.S + G.B, 2 * G.S + G.B, 2 * G.S + 2 * G.B, distance - 1]) {
+    ctxObj.__setRace(field, { length: distance, dir, rng: S.mulberry32(seed) });
+    const edgeRace = ctxObj.__getRace();
+    edgeRace.race.horses.forEach((h, i) => { h.s = Math.min(distance - 0.01, Math.max(0, s + (i - 4) * 0.01)); h.t = S.TRACK_WIDTH - 0.7; });
+    ctxObj.__resetCamera();
+    const ops = []; recCtx = makeCtx(ops); ctxObj.__renderRace(performance.now());
+    const view = ctxObj.__cam().lastView;
+    if (!preciseMiniPath(ops, view)) outerMarkerBad++;
+    for (const marker of view.mini.markers) {
+      if (!completeMiniMarker(view, marker) || marker.actualLane !== S.TRACK_WIDTH - 0.7) outerMarkerBad++;
+      if (!ops.some((op) => op.op === 'arc' && close(op.x, marker.x) && close(op.y, marker.y) && close(op.r, marker.r))) outerMarkerBad++;
+      if (marker.id === playerId && !ops.some((op) => op.op === 'arc' && close(op.x, marker.x) && close(op.y, marker.y) && close(op.r, 5))) outerMarkerBad++;
+    }
+  }
+}
+check(outerMarkerBad === 0, '两回向与所有弯道接点的最外道圆点、玩家光圈完整可见（错误 ' + outerMarkerBad + '）');
 
 /* 逐帧缩放变化率：不只看幅度，更看是否有"突跳"（二阶差分尖峰） */
 const ratio = Math.max.apply(null, scales) / Math.min.apply(null, scales);

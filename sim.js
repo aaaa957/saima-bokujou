@@ -29,22 +29,12 @@
   }
 
   /* ---------------- 赛道与阶段（3.10） ---------------- */
-  /* 赛道宽度（米）· 与渲染坐标保持一致
-     index.html 的 trackPoint 以 d = t - 10 为中线、赛道外沿取 t = 20，minimap 也用
-     R + 10 作为半宽 —— 即渲染侧一直按【20 米】绘制。
-     历史上物理曾被收窄到 11（理由：20 米配 R=120 会让车道几何差异达 ±8%，
-     实测外道 4 匹马胜率合计 96.7%）。但收窄带来两个副作用：
-       ① 画面上的内外道与物理不一致：马群永远挤在赛道内侧 55%，
-          而物理意义上的「最外道」在画面上还不到中线；
-       ② 走位空间随之被压缩（超车变难），而这是与"车道几何"无关的另一件事。
-     本轮改回 20。车道差异的幅度改用 laneBias 旋钮控制，而不是靠收窄赛道；
-     同时把各跑法靶位分布到全宽（见 STYLE_BASE_T），让「外道」作为战术位置真实存在。 */
+  /* 赛道宽度（米）：物理、主视图和小地图共用此值。
+     原物理宽度 11 与画面宽度 20 不一致；走位空间与弧长惩罚应分别由
+     TRACK_WIDTH 和 laneBias 控制，避免用收窄跑道调节胜率。 */
   const TRACK_WIDTH = 20;
-  /* 各跑法的基准横向位置（米，0 = 赛道内沿，TRACK_WIDTH = 20）
-     逃贴内栏、追走外道 —— 对应现实的脚质分布（差し/追込 本就在外侧）。
-     ⚠️ 旧值 1.2 / 2.2 / 3.4 / 4.4（上限 4.88）全部落在旧中线 5.5 以内，
-     实测全程横向位置均值仅 2.6 米、外侧(t>中线)占比 0.8% —— 也就是说
-     「外道」从未被任何跑法使用，laneRatio 的惩罚侧形同虚设。 */
+  /* 跑法的默认战术位置（米，0=内沿）：展开马群的游戏假设，
+     并非规定后上马必须走外道；找空档和突破时可以覆盖该目标。 */
   const STYLE_BASE_T = { '逃': 4.0, '先': 7.5, '差': 11.0, '追': 14.5 };
   const STALL_SPEED = 2;
   /* 阶段划分（3.10 重做，对齐现实赛马的分段）
@@ -74,30 +64,21 @@
        追 —— 前段最省，末段最强，但落后最多
      所以系数的形状必须是：早期 逃>先>差>追，末段 追>差>先>逃。
      注意末段应取【负系数】——逃马末段不是"稍慢"，而是明显慢于基准。
-     历史遗留：STYLE_COEF 是文档原版，保留以供对比测试。 */
+     STYLE_COEF_DOC 是文档原版，保留以供对比测试。 */
   const STYLE_COEF_DOC = {
     '逃': { break: 1.08, open: 1.08, mid: 1.03, late: 1.02, final: 0.97 },
     '先': { break: 1.03, open: 1.03, mid: 1.00, late: 1.02, final: 1.04 },
     '差': { break: 0.96, open: 0.96, mid: 0.97, late: 1.03, final: 1.06 },
     '追': { break: 0.88, open: 0.88, mid: 0.95, late: 1.02, final: 1.10 },
   };
-  /* ⚠️ 标定要点：决定胜负的是【系数对阶段距离的加权积分】，不是单阶段的大小。
-     所有马同距离、同起点，胜者 = 全程平均速度最高者。
-
-     ⚠️ 本表在 2026-10-01 按【修正后的机制】重标定过一次，务必注意：
-       此前为了让马身差距收窄，曾把四跑法的积分配成"基本相等"
-       （跨度 <0.02%），把"前速 vs 后上"完全交给步速与体力去决定。
-       但那和现实相反：JRA 芝的全競馬場数据里，逃的 per-start 胜率
-       在 1400~2100m 全区间都最高（≈2.2× 均等），追最低（≈0.4×）——
-       顺序是 逃 > 先 > 差 > 追，而且几乎不随距离变化。
-       现在的标定目标就是这个顺序与量级，标定方法与实测见
-       docs/比赛系统-现实差距评估.md §10、tests/realism.js ① 段。
-     形状仍然保留「早期 逃>先>差>追、末段 追>差>先>逃」——
-     变的只是四者的【整体水平】：逃的积分最高，追最低。 */
+  /* 平衡档：逃侧重前段、追侧重终盘；胜负同时受到余力、走位、步速与属性影响。
+     修复同道尾流和横移机制后，小幅降低逃各阶段 0.0025、提高差 0.001，
+     避免机制修复后领放在同源属性测试中过强。固定种子候选与最终验收见
+     docs/比赛系统-现实差距评估.md §14；现有现实贴合目标尚未全部通过。 */
   const STYLE_COEF = {
-    '逃': { break: 1.0119, open: 1.0109, mid: 1.0084, late: 1.0013, final: 0.9961 },
+    '逃': { break: 1.0094, open: 1.0084, mid: 1.0059, late: 0.9988, final: 0.9936 },
     '先': { break: 1.0035, open: 1.0031, mid: 1.0024, late: 1.0014, final: 1.0000 },
-    '差': { break: 1.0012, open: 1.0016, mid: 1.0026, late: 1.0044, final: 1.0058 },
+    '差': { break: 1.0022, open: 1.0026, mid: 1.0036, late: 1.0054, final: 1.0068 },
     '追': { break: 0.9966, open: 0.9980, mid: 1.0008, late: 1.0057, final: 1.0092 },
   };
   /* 骑手的影响应当主要来自【战术与判断】（见 JOCKEY_CADENCE 的决策频率），
@@ -134,7 +115,7 @@
   /* s→(x,y)：赛道坐标，y轴向上；dir='右回' 时水平镜像 */
   function trackPoint(s, t, geo, dir) {
     const { R, B, S } = geo;
-    const d = t - 10;                    // 相对中线偏移：负=内侧
+    const d = t - TRACK_WIDTH / 2;       // 相对中线偏移：负=内侧
     let x, y;
     if (s < S) { x = -S / 2 + s; y = -R - d; }                                   // 终直(序盘)
     else if (s < S + B) { const a = -Math.PI / 2 + (s - S) / R; x = S / 2 + (R + d) * Math.cos(a); y = (R + d) * Math.sin(a); }   // 右弯
@@ -149,6 +130,13 @@
     const { R, B, S } = geo;
     if ((s >= S && s < S + B) || (s >= 2 * S + B && s < 2 * S + 2 * B)) return 1 / R;
     return 0;
+  }
+  /* R 是中线半径；同一弧段外道的路程为中线的 1+k·(t-半宽) 倍。
+     laneBias 保留几何差异的一部分，1 表示严格按弧长换算推进。 */
+  function laneProgressCoef(s, t, geo) {
+    const k = kAt(s, geo);
+    const raw = 1 / (1 + k * (t - TRACK_WIDTH / 2));
+    return 1 + (raw - 1) * RACE_F.laneBias;
   }
   /* 弯道系数（文档 3.10(11)）：适性匹配=1，不匹配=0.9 */
   function bendCoefFor(special, dir) {
@@ -187,18 +175,8 @@
     return 0;
   }
 
-  /* 骑手动作（3.10 骑手行为系统）
-     ⚠️ 本轮修正：原 coef 达 ±2%~5%，是 STYLE_COEF 幅度（±1%）的 2~5 倍。
-     实测四个跑法的「动作平均 coef 贡献」为 逃 +0.66% / 先 +0.78% / 差 +0.58% / 追 +0.49%，
-     即骑手的催马习惯比跑法本身更能决定胜负。受控实验（把本表 coef 全部归零、
-     其余不变）显示：逃 +0.63、先 +0.51（变强），差 −0.49、追 −0.42（变弱），
-     且【追】的 per-start 胜率直接掉到 0.00 —— 说明「追」当时完全靠末段打鞭的
-     +5% 撑着，而它的体力/节奏/跑法机制本身不足以获胜。
-
-     现实里催马只是【有限】的加速手段：马末段能跑多快主要取决于前段省下的体力
-     （上がり3F），催马的作用是把余力兑现出来，代价是把余力提前烧掉。因此把
-     coef 收窄到 ±1% 以内，把收益与代价都交还给体力侧；跑法差异重新由
-     STYLE_COEF、步速与体力经济承担。 */
+  /* 骑手动作：收窄原 ±2%~5% 的直接速度影响。
+     推骑最多 +0.8%、打鞭最多 +1.8%，同时增加消耗；收益再由余力调制。 */
   const ACTION_DEF = {
     '推骑':    { coef: 0.008,  stamina: 1.35 },
     '打鞭':    { coef: 0.018,  stamina: 1.9 },
@@ -208,15 +186,8 @@
     '斜行out': { coef: 0,      stamina: 1.2 },
   };
   function actionBonus(a) { return ACTION_DEF[a] || { coef: 0, stamina: 1 }; }
-  /* 催马动作的【实际】速度收益 —— 受余力调制
-     现实：鞭子只有在马还有余力时才有效（手応えがなくなる）。前段省着跑的马，
-     末段一鞭就窜出去；已经跑空的马再怎么打也没有反应。
-     旧实现给的是【无条件】的 +2%~+5%，于是「前段猛催、末段再催」的跑法白拿
-     两份收益，而「前段存力」的跑法毫无补偿。实测各跑法的动作平均贡献为
-       逃 +0.33% / 先 +0.20% / 差 +0.17% / 追 −0.08%
-     —— 0.41% 的系统性落差在 2000m 上约合 14 马身，足以让「追」的胜率归零。
-     现在把收益与【剩余体力/毅力】挂钩：力竭时只剩 35% 效果。
-     效果是自然的：前段收力的跑法末段催得动，前段猛催的跑法末段催不动。 */
+  /* 催马收益随剩余耐力/毅力单调增加；两池均耗尽时剩 35% 效果。
+     收力/减速不属于正向催马，不随余力衰减。权重与下限是游戏参数。 */
   function actionCoef(H) {
     const d = ACTION_DEF[H.action];
     if (!d) return 0;
@@ -277,19 +248,9 @@
          耐力阶段 —— 消耗耐力【可以提升速度】，也能维持速度
          毅力阶段 —— 耐力耗尽后，【只能维持速度，不能提升】
          失速阶段 —— 毅力也耗尽，掉速
-       加速能力正比于【剩余耐力】—— 这是「前段省力、末段变现」的实现处。
-       ⚠️ 这里有过两次方向性错误，记下来避免重走：
-         ① 最初写成 × (1 - stRatio)（已消耗比例）：变成「跑得越快→耗得越多→
-            末段加速越大」，是真正的正反馈；实测逃马在 1200m 拿到 80% 胜率。
-         ② 改错时把体力耦合【整个删掉】（冲刺只由阶段+弯道决定）：变成「省下的
-            体力在末段换不到任何东西」。8 匹全同跑法的对照实测：
-              逃 冠军 115.58s／结束耐力 0.8%（力竭）
-              追 冠军 117.36s／结束耐力 44.3%
-            —— 把油烧光反而最快，因为省力毫无回报。这也是「追」在混合场次里
-            per-start 胜率归零的根因，而不只是系数问题。
-       正比于剩余量是【负反馈】：跑得快 → 耗得多 → 剩余少 → 末段慢，系统自寻平衡，
-       与能量凸性（同等体力下匀速最省）一致。
-          accel = staminaAccel × 剩余耐力比 */
+       终盘加速正比于剩余耐力，而非已消耗量或固定加成。
+       这样前段省力才能在末段兑现，催马的即刻收益与后续消耗形成取舍。
+       accel = staminaAccel × 剩余耐力比 × 终盘窗口 × 弯道系数。 */
     staminaAccel: 0.20,      // 余力全额兑现时的提速上限
     accelWindow: 0.05,       // 进入终盘后多少进度内完成兑现
     /* 掉速幅度必须【贴近现实量级】。原值 0.22/0.34 下，体力耗尽的马
@@ -389,22 +350,12 @@
        弯道屏蔽加速：现实过弯要维持平衡且容易被堵，后上型的加速窗口
          因此被弯道切碎——弯道占比越高，后上型越吃亏。 */
     bendPenaltyLen: 9,       // 弯道减速强度（米），配合 k=1/R 使用
-    /* 弯道向内收拢量（米）
-       现实中骑手在弯道上都会往内切 —— 走最短路程。旧实现把这行写在 runAI 的
-       switch 之前，而每个 case 又无条件赋值 targetT，于是它被完全覆盖，实际是
-       【死代码】：实测四个跑法在弯道上的横向位置与直道完全相同。
-       现改为在统一计算 targetT 时施加，四个跑法各按自己的基准位向内收拢，
-       既保留「逃最内、追最外」的次序，又让「弯道切内线」真正发生。 */
+    /* 弯道默认向内收拢量（米）；找空档时可覆盖。
+       目标统一计算，避免被跑法分支无条件赋值所覆盖。 */
     bendInset: 3.0,
-    /* 内外道几何差异的保留强度（0=完全解耦，1=纯几何）
-       这个旋钮曾被压到 0.15 去换「马身差距」，代价是把「内栏省距离」这条现实中
-       最基础的机制也一并关掉 —— 而它正是前位（逃/先）价值的来源之一。
-       现在赛道宽度回到 20 米（见 TRACK_WIDTH），几何差异本身变大，故用较低的
-       laneBias 维持整体量级：靶位 逃4.0 → 先7.5 → 差11.0 → 追14.5、弯道内收 3 米，
-       使「逃−追」的全程加权速度差约 0.5% —— 与收窄赛道时相当，
-       但此时「外道」是真实被使用的（追在 11.5~14.5，已越过中线 10）。
-       ⚠️ 实测参考：laneBias 取 0.15 时该差值为 1.08%（≈12 马身），
-       足以让「追」的 per-start 胜率直接归零，故最终取 0.05。 */
+    lateralSpeed: 0.8,       // 所有横移的速度上限（米/秒），包括靠拢战术位置
+    /* 几何差异保留强度（0=各道等效等长，1=严格弧长换算）。
+       当前 0.05 是游戏平衡参数；物理公式正确不代表其强度已完成现实标定。 */
     laneBias: 0.05,
     /* 催马动作在【力竭】时的效果下限（见 actionCoef）
        1.0 = 完全不受余力影响（旧行为，等于无条件加速）；0 = 力竭时催马完全无效。
@@ -552,10 +503,9 @@
          即偏差比例稳定在 +57~60%，但绝对值不随常数线性变化。
      下一步应改为直接按目标耗尽里程解方程，而不是线性外推。
 
-     本轮修正：动作油耗倍率被收窄（推骑 1.5→1.35、打鞭 2→1.9 等），
-     加权平均油耗下降，实测可跑距离系统性偏高约 +20%
-     （耐力 50/70/80/90 分别 +19.7% / +21.2% / +21.1% / +22.0%）。
-     故把本常数按 1/1.20 修正。 */
+     本轮动作与终盘资源机制变化后重新标定为 0.522。
+     耗尽里程还受配速、跟跑和碰撞影响，耐力×32 是名义基准而非每场保证值；
+     基础、场地与力量的独立诊断见 tests/stamina-range.js。 */
   const RANGE_CALIB = 0.522;     // 经验修正：把标称对齐到实测，待解方程后移除
   function staminaBudget(length) {
     return (length / REF_STAMINA) * RACE_F.staminaPer *
@@ -727,17 +677,9 @@
         等于让「跑法」白送实力。现实中同班次的马速度本就接近，
         跑法只是【战术选择】，不应该自带能力优势。
      属性分工保留：出闸能力 逃高追低、爆发力 追高逃低、毅力 追高逃低。 */
-  /* ⚠️ 属性按跑法的分化必须【收窄】—— 否则「跑法」被三重建模
-     （STYLE_COEF 系数 + STYLE_STATS 属性模板 + runAI 行为），跑法平衡会失真。
-     实测证据：属性同源的隔离测试里「差」的 per-start 胜率是 0.77×（2000m，目标 0.96），
-     而混合阵容（属性按本表生成）里「差」飙升到 49.3%、「追」到 30.0% —— 差额全部
-     来自本表给差/追的爆发力高了 24 点、出闸能力低了 28 点：
-       爆发力作用于终盘（权重 0.30，直接乘 burstFactor），24 点 ≈ 2.9% 终盘速度；
-       出闸只作用于出闸阶段（权重 0.054）。于是"末段爆发"被同时写进系数与属性。
-     现实中「跑法」是骑手的战术选择，马的能力（速度/耐力/爆发力）与它相对独立；
-     脚质适性确实存在，但幅度不该到这个量级。
-     故把各属性按跑法的分化统一【向总体均值收缩 60%】（保留 40% 的倾向，
-     即"逃出闸略好、追爆发力略高"的次序不变，跨度从 24~30 点压到 9~12 点）。 */
+  /* 收窄跑法模板的属性分化，保留出闸/爆发倾向。
+     系数、属性模板和 AI 都会影响赛果，须分别做同源属性与实际生成阵容的测量，
+     不能把每场冠军占比当作单匹出赛胜率，或把结果全部归因于模板。 */
   const STYLE_STATS = {
     '逃': { '速度': [66, 90], '耐力': [66, 88], '出闸能力': [57, 84], '爆发力': [56, 78], '力量': [49, 83], '毅力': [56, 84], '智力': [45, 85], '体格': [45, 85] },
     '先': { '速度': [66, 90], '耐力': [65, 87], '出闸能力': [54, 81], '爆发力': [60, 82], '力量': [49, 83], '毅力': [57, 85], '智力': [45, 85], '体格': [45, 85] },
@@ -1145,23 +1087,24 @@
     const horses = pre.map(({ h, mor, adj }) => {
       const surfC = (SURFACE_COEF[surface] || {})[h.surface];
       const fieldCoef = (FIELD_STATE_COEF[state] || 1) * (surfC !== undefined ? surfC : 1);
+      const startT = 3.5 + rng() * 13;
       return {
         h, id: h.id, name: h.name, style: h.style,
         jockey: h.jockeyGrade || '普通',
         /* 起跑横向位置：旧值 1.0~5.0（赛道宽 11 的内半侧）。现铺到赛道中段
            3.5~16.5，与 STYLE_BASE_T 的分布区间一致，避免开局就全体贴在内栏。 */
-        s: 0, t: clamp(3.5 + rng() * 13, 2.0, 18.0), v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
+        s: 0, t: startT, v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
         stamina: adj['耐力'] * RACE_F.staminaPer, guts: adj['毅力'] * RACE_F.gutsPer,
         staminaMax: adj['耐力'] * RACE_F.staminaPer, gutsMax: adj['毅力'] * RACE_F.gutsPer,
         stage: '耐力', retention: 1,
         collisionCoef: 1, collisionIntensity: 0,
         action: null, actionT: 0, _lastFinalAct: '推骑',
         lastObserve: -(rng() * 2),
-        blocked: false, squeezePass: 0, stallTimer: 0,
+        blocked: false, blocker: null, squeezePass: 0, stallTimer: 0,
         place: null, time: null, gapAtWin: null, dnf: false,
         base: baseSpeed(adj['速度']), fieldCoef, fatMult: fatigueMultiplier(h['疲劳'] || 0),
         adj, mor, breakNoise: 0.93 + rng() * 0.14,
-        targetT: 2.5, aggression: h.aggression !== undefined ? h.aggression : 1,
+        targetT: startT, laneIntentT: 0, aggression: h.aggression !== undefined ? h.aggression : 1,
       };
     });
     race.horses = horses;
@@ -1188,12 +1131,28 @@
     function ranked() { return active().slice().sort((a, b) => b.s - a.s); }
     function setAction(H, type, dur) {
       if (type === '收力' && H.jockey === '新人') { H.action = null; H.actionT = 0; return; }
-      if (type === '斜行out' && H.jockey === '新人') { H.action = '推骑'; H.actionT = 1; return; }
       H.action = type; H.actionT = dur;
     }
+    function setLaneTarget(H, t) {
+      const margin = horseWid(H) / 2 + 0.2;
+      H.targetT = clamp(t, margin, TRACK_WIDTH - margin);
+      // 目标保持到完成横移，避免下一次观察立刻把超车/挤出路线改回跑法基准位。
+      H.laneIntentT = Math.abs(H.targetT - H.t) / RACE_F.lateralSpeed + 2;
+    }
+    function avoidBlock(H) {
+      const gap = findGap(H, false);
+      if (gap && Math.abs(gap.t - H.t) > 0.2) {
+        setLaneTarget(H, gap.t);
+        setAction(H, gap.t < H.t ? '斜行in' : '斜行out', 2);
+      } else setAction(H, '收力', 1.5);
+    }
     function findGap(H, preferInner) {
-      const ahead = race.horses.filter((F) => F !== H && !F.place && !F.dnf && F.s > H.s + 3 && F.s < H.s + 26);
-      const blockedRanges = ahead.map((F) => [F.t - horseWid(F) / 2 - 0.2, F.t + horseWid(F) / 2 + 0.2]);
+      const ahead = race.horses.filter((F) => F !== H && !F.place && !F.dnf && F.s > H.s && F.s < H.s + 26);
+      // 检查整匹马能否通过，不能只检查其中心点是否位于前马的边缘之外。
+      const blockedRanges = ahead.map((F) => {
+        const clearance = (horseWid(H) + horseWid(F)) / 2 + 0.2;
+        return [F.t - clearance, F.t + clearance];
+      });
       let best = null; let bestScore = -Infinity;
       for (let t = 1.0; t <= TRACK_WIDTH - 1.0; t += 0.35) {
         if (blockedRanges.some((r) => t > r[0] && t < r[1])) continue;
@@ -1204,15 +1163,19 @@
       }
       return best === null ? null : { t: best };
     }
+    function maneuverGap(H, preferInner) {
+      // 正在执行且未受阻的路线继续走完；被堵时才重新寻找通路。
+      return H.laneIntentT > 0 && !H.blocked ? { t: H.targetT } : findGap(H, preferInner);
+    }
     function trySqueeze(H, F) {
       const staminaRatio = H.stage === '耐力' ? H.stamina / Math.max(1, H.adj['耐力'] * 60) : 0;
       if (staminaRatio < 0.15 || H.adj['体格'] < 40) {
-        setAction(H, H.jockey === '新人' ? '推骑' : '斜行out', 2);
+        avoidBlock(H);
         return;
       }
       const tend = (H.adj['力量'] / 100 * 0.4 + H.adj['体格'] / 100 * 0.4 + H.adj['毅力'] / 100 * 0.2) * H.aggression;
       if (tend < 0.65) {
-        setAction(H, H.jockey === '新人' ? '推骑' : '斜行out', 2);
+        avoidBlock(H);
         return;
       }
       const 冲撞力 = (H.adj['体格'] * 0.6 + H.adj['力量'] * 0.4) * Math.max(H.v, 5) * 0.2;
@@ -1220,7 +1183,8 @@
       const ratio = 冲撞力 / Math.max(0.01, 抵抗力);
       if (ratio > 1.2) {
         H.squeezePass = 2.5;
-        H.targetT = clamp(F.t + (F.t > TRACK_WIDTH / 2 ? -2.6 : 2.6), 0.8, TRACK_WIDTH - 0.8);
+        setLaneTarget(H, F.t + (F.t > TRACK_WIDTH / 2 ? -2.6 : 2.6));
+        setAction(H, H.targetT < H.t ? '斜行in' : '斜行out', 2);
         event(H.name + ' 强行突破！');
       } else if (ratio >= 0.8) {
         event(H.name + ' 强行突破失败！');
@@ -1260,6 +1224,7 @@
       const ph = phaseAt(H.s, race.length);
       const leader = list[0];
       const ahead = rank >= 2 ? list[rank - 2] : null;
+      const blocker = H.blocker && !H.blocker.place && !H.blocker.dnf ? H.blocker : ahead;
       const gapAhead = ahead ? ahead.s - H.s : Infinity;
       const gapLead = leader.s - H.s;
       const staminaRatio = H.stage === '耐力' ? H.stamina / Math.max(1, H.adj['耐力'] * 60) : 0;
@@ -1273,16 +1238,17 @@
          各 case 不再自行赋值 targetT；findGap / trySqueeze 的横向意图仍然保留。 */
       const onBend = kAt(H.s, race.geo) > 0;
       const baseT = STYLE_BASE_T[H.style] + H.laneJitter * 0.7;
-      H.targetT = (onBend && !isFinal)
-        ? Math.max(1.2, baseT - RACE_F.bendInset + H.laneJitter * 0.4)
-        : baseT;
+      if (H.laneIntentT <= 0 || Math.abs(H.targetT - H.t) < 0.1) {
+        H.laneIntentT = 0;
+        H.targetT = onBend ? Math.max(1.2, baseT - RACE_F.bendInset) : baseT;
+      }
 
       switch (H.style) {
         case '逃': {
           if (isFinal) { finalDrive(H, staminaRatio); return; }
           const leadMargin = rank === 1 ? (list[1] ? H.s - list[1].s : 30) : -gapLead;
           if (ph.key === 'break' || ph.key === 'open') {
-            if (H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
+            if (H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
             else if (leadMargin < 2) setAction(H, '推骑', 2);
             else setAction(H, '收力', 2);
           } else {
@@ -1295,17 +1261,20 @@
         case '先': {
           if (isFinal) { finalDrive(H, staminaRatio); return; }
           if (early) {
-            if (H.blocked) setAction(H, H.t > TRACK_WIDTH / 2 ? '斜行in' : '斜行out', 2);
-            else if (rank > 6) { if (H.t > baseT + 1.4) setAction(H, '斜行in', 2); else setAction(H, '推骑', 2); }
+            if (H.blocked) avoidBlock(H);
+            else if (rank > 6) {
+              if (H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 2);
+              else setAction(H, '推骑', 2);
+            }
             else if (rank < 2) setAction(H, '收力', 2);
             else if (gapLead > 10) setAction(H, '推骑', 2);   // 与逃马保持接触(演示补充)
             else setAction(H, '收力', 1.5);
           } else if (isLate) {
-            if (H.blocked && ahead) trySqueeze(H, ahead);
+            if (H.blocked && blocker) trySqueeze(H, blocker);
             else {
-              const g = findGap(H, false);
+              const g = maneuverGap(H, false);
               if (g) {
-                H.targetT = g.t;
+                setLaneTarget(H, g.t);
                 if (Math.abs(g.t - H.t) > 1) setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
                 else setAction(H, '推骑', 2);
               } else setAction(H, '推骑', 2);
@@ -1317,18 +1286,18 @@
           if (isFinal) { finalDrive(H, staminaRatio); return; }
           if (early) {
             const lo = Math.max(5, n - 3);
-            if (H.blocked) setAction(H, H.t > TRACK_WIDTH / 2 ? '斜行in' : '斜行out', 2);
+            if (H.blocked) avoidBlock(H);
             else if (rank < lo) setAction(H, '收力', 2);
             else if (gapLead > 20) setAction(H, '推骑', 2);        // 与领头集团保持接触(演示补充)
             else if (rank > lo) setAction(H, '推骑', 2);
             else setAction(H, '收力', 1.5);
-            if (H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
+            if (!H.blocked && H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
           } else if (isLate) {
-            if (H.blocked && ahead) trySqueeze(H, ahead);
+            if (H.blocked && blocker) trySqueeze(H, blocker);
             else {
-              const g = findGap(H, false);
+              const g = maneuverGap(H, false);
               if (g) {
-                H.targetT = g.t;
+                setLaneTarget(H, g.t);
                 if (Math.abs(g.t - H.t) > 1) setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
                 else setAction(H, '推骑', 2);
               } else setAction(H, '推骑', 2);
@@ -1339,36 +1308,32 @@
         case '追': {
           if (isFinal) {
             /* 保留「终盘找空档」的横向意图，但驱动动作与其余跑法统一（见 finalDrive） */
-            const g = findGap(H, true);
+            const g = maneuverGap(H, true);
             if (g && Math.abs(g.t - H.t) > 1) {
-              H.targetT = g.t;
+              setLaneTarget(H, g.t);
               setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
             } else {
-              if (g) H.targetT = g.t;
-              else if (H.blocked && ahead) trySqueeze(H, ahead);
+              if (g) setLaneTarget(H, g.t);
+              else if (H.blocked && blocker) trySqueeze(H, blocker);
               finalDrive(H, staminaRatio);
             }
             return;
           }
           if (early) {
-            if (H.blocked) setAction(H, H.t > TRACK_WIDTH / 2 ? '斜行in' : '斜行out', 2);
-            /* ⚠️ 原有一条 `rank < n-3 && gapLead < 45 → 收力`：追马跑到前 5 名就
-               主动减速退回后方。但现实中追込马前段只是【跟随马群、骑手不做动作】
-               （不等同于"把马勒慢"）。这条让「追」有 39% 的时间吃 −1% 速度惩罚，
-               而「逃」同期 55% 在推骑 (+0.8%)，两者净差 0.39%——2000m 上约 14 马身，
-               是「追」per-start 胜率归零的直接原因。故移除，"跟随"统一用 null。 */
+            if (H.blocked) avoidBlock(H);
+            /* 跟随马群用无动作滑行；只有逼近前马才收力，避免为保持后位而主动减速。 */
             else if (gapLead > 25) setAction(H, '推骑', 2);          // 与领头集团保持接触(演示补充)
             else if (gapAhead > 15) setAction(H, '推骑', 2);
             else if (gapAhead < 4.5) setAction(H, '收力', 1.5);
             else setAction(H, null, 0);
-            if (H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
+            if (!H.blocked && H.laneIntentT <= 0 && H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
           } else if (isLate) {
-            const g = findGap(H, true);
+            const g = maneuverGap(H, true);
             if (g) {
-              H.targetT = g.t;
+              setLaneTarget(H, g.t);
               if (Math.abs(g.t - H.t) > 1) setAction(H, g.t < H.t ? '斜行in' : '斜行out', 2);
               else setAction(H, '推骑', 2);
-            } else if (H.blocked && ahead) trySqueeze(H, ahead);
+            } else if (H.blocked && blocker) trySqueeze(H, blocker);
             else setAction(H, '推骑', 2);
           }
           return;
@@ -1410,7 +1375,7 @@
           runCoef += (race.paceStrength - 1) * RACE_F.paceSpeedK * pull;
         }
         /* ---- 三段式：把「加速能力」与「维持能力」拆开 ----
-           ① 耐力阶段：可【提速】。提速正比于已消耗的耐力——前段省下的油
+           ① 耐力阶段：可【提速】。提速正比于剩余耐力——前段省下的油
               才是末段能变现的功率；同时剩余越少掉速越多。
            ② 毅力阶段：只能【维持】。提速项在此阶段完全不生效。
            ③ 失速阶段：掉速。
@@ -1519,11 +1484,12 @@
       /* 更新马群耦合基准（本帧序盘/中盘马的"纯能力速度"均值） */
       race.avgBase = baseN > 0 ? baseSum / baseN : 0;
       /* 2) 推进 + 碰撞 */
-      for (const H of act) { H.collisionCoef = 1; H.collisionIntensity = 0; H.blocked = false; }
+      for (const H of act) { H.collisionCoef = 1; H.collisionIntensity = 0; H.blocked = false; H.blocker = null; }
       for (const H of list) {
-        if (H.action === '斜行in') H.t = clamp(H.t - 0.8 * dt, 0.7, TRACK_WIDTH - 0.7);
-        else if (H.action === '斜行out') H.t = clamp(H.t + 0.8 * dt, 0.7, TRACK_WIDTH - 0.7);
-        else H.t += (H.targetT - H.t) * Math.min(1, dt * 1.4);
+        // 动作和自动靠拢共用横移速度，且到达目标后不继续越过它。
+        const lateralStep = RACE_F.lateralSpeed * dt;
+        const margin = horseWid(H) / 2 + 0.2;
+        H.t = clamp(H.t + clamp(H.targetT - H.t, -lateralStep, lateralStep), margin, TRACK_WIDTH - margin);
         const k = kAt(H.s, race.geo);
         /* ⚠️ 回向适性只在【弯道】生效。bendCoefFor 是弯道系数，
            原来被无条件乘进全程（含直道）—— 适性不符的马会全程掉 10%，
@@ -1531,29 +1497,14 @@
            这是「基速只差 1.8%、实测平均速度却差 11%」的主要剩余来源。
            直道上方向不构成障碍，故 k=0 时不施加。 */
         const bCoef = k > 0 ? bendCoefFor(H.h.special, race.dir) : 1;
-        /* 车道与行进距离解耦（重要）
-           本引擎的 t 是"离中线的横向偏移"（0~20），不是同心车道半径。
-           若按同心车道处理，外侧弧更长、必须给速度补偿 (R+x)/R，
-           但那样 20 米宽度配 120 米弯道半径会产生约 15% 的速度差，
-           实测贴外栏的 4 匹马胜率合计 96.7%，比原来的内栏优势还极端。
-           因此这里让各道【等效等长】：横向位置只影响碰撞与走位，不影响推进。
-           这也更符合"赛道宽度代表马群宽度"的直觉。 */
         /* 弯道速度上限：过弯要抵抗离心力，半径越小越要减速。
            曲率 k = 1/R，故速度系数 = 1/(1 + k·bendPenaltyLen)。
            bendPenaltyLen 取 9m：R=100（1200m）时系数 0.917，
            R=145（3000m）时 0.942 —— 短途赛道弯道惩罚天然更重。 */
         const bendSlow = k > 0 ? 1 / (1 + k * RACE_F.bendPenaltyLen) : 1;
-        /* 内外道几何（⚠️ 修正符号）
-           出发点就是「内栏省距离」：横向偏移 t 的马，实跑距离 = s·(R+t)/R。
-           所以同样的实速下，它【沿中线计的推进】应是 v·R/(R+t) —— 内道更快。
-           旧实现写成 (R+t)/R 的反向形式（上方注释还写着"各道等效等长"，
-           注释与代码自相矛盾），等于让外道白拿最多 3.6% 的速度。
-           基准点取中线 t = TRACK_WIDTH/2：比中线靠内 = 加成，靠外 = 惩罚。
-           靶位已分布到全宽（逃 3.0 → 追 16.5，弯道内收 3 米），因此「外道惩罚」
-           首次有马实际承受 —— 此前四个跑法靶位上限 4.88 < 旧中线 5.5，
-           实测外侧占比仅 0.8%，惩罚侧形同虚设。 */
-        const laneRaw = k > 0 ? (1 + k * TRACK_WIDTH / 2) / (1 + k * H.t) : 1;
-        const laneRatio = 1 + (laneRaw - 1) * RACE_F.laneBias;
+        /* t 从内沿计量，R 则是中线半径：有效半径为 R+t-半宽。
+           同实速下内道推进较快、外道较慢；强度由 laneBias 单独调节。 */
+        const laneRatio = laneProgressCoef(H.s, H.t, race.geo);
         let newS = H.s + H.v * bCoef * bendSlow * laneRatio * dt;
         for (const F of list) {
           if (F === H || F.s <= H.s) continue;
@@ -1574,7 +1525,10 @@
                这正是前位在现实中最硬的一条优势。 */
             H.collisionCoef = Math.min(H.collisionCoef, Math.max(0.75, 1 - intensity * 0.09));
             F.collisionCoef = Math.min(F.collisionCoef, Math.max(0.85, 1 - intensity * 0.05));
-            if (H.squeezePass <= 0) { newS = Math.min(newS, F.s - halfL * 0.5); H.blocked = true; }
+            if (H.squeezePass <= 0) {
+              newS = Math.min(newS, F.s - halfL * 0.5); H.blocked = true;
+              if (!H.blocker || F.s < H.blocker.s) H.blocker = F;
+            }
           }
         }
         H.s = Math.max(H.s, newS);
@@ -1601,7 +1555,10 @@
         let ahead = false;
         for (const F of list) {
           if (F === H) continue;
-          if (F.s > H.s && F.s - H.s <= RACE_F.draftRange) { ahead = true; break; }
+          const wakeWidth = (horseWid(H) + horseWid(F)) / 2 + 0.8;
+          if (F.s > H.s && F.s - H.s <= RACE_F.draftRange && Math.abs(F.t - H.t) <= wakeWidth) {
+            ahead = true; break;
+          }
         }
         const posCoef = ahead ? RACE_F.draftSave : RACE_F.leadCost;
         H.drafting = ahead;
@@ -1656,6 +1613,7 @@
       for (const H of act) {
         if (H.actionT > 0) { H.actionT -= dt; if (H.actionT <= 0) H.action = null; }
         H.squeezePass = Math.max(0, H.squeezePass - dt);
+        H.laneIntentT = Math.max(0, H.laneIntentT - dt);
         H.lastObserve -= dt;
         if (H.lastObserve <= 0) {
           H.lastObserve = (JOCKEY_CADENCE[H.jockey] || 2) * (0.85 + rng() * 0.3);
@@ -2541,7 +2499,7 @@
     STAMINA_RANGE_PER_POINT, GROUND_RANGE_COEF,
     STYLE_COEF, STYLE_COEF_DOC, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
     ACTION_DEF, actionBonus, actionCoef, baseSpeed, fatigueMultiplier,
-    trackGeometry, trackPoint, kAt, bendCoefFor, SLOPE_PROFILES, gradientAt,
+    trackGeometry, trackPoint, kAt, laneProgressCoef, bendCoefFor, SLOPE_PROFILES, gradientAt,
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
     STAFF, CAT_ERROR_POOL, catText, fatigueBand, fatigueText,
     makeHorse, makeField, makeStaff, generateReport, oddsAndPopularity,
