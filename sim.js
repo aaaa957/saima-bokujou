@@ -29,13 +29,23 @@
   }
 
   /* ---------------- 赛道与阶段（3.10） ---------------- */
-  /* 赛道宽度（米）。
-     原来是 20。改为 11 的理由：现实跑道虽宽 20~30m，但同时并排只占约 8~10m；
-     而弯道半径在 100~150m 量级。宽度/半径比应为 11/120 ≈ 9%，
-     这样"外道多跑的距离"约 5%，接近现实内栏优势（1~2 马身 ≈ 3~5%）。
-     取 20 时该比值达 17%，外道速度差约 15%——实测外道 4 匹马胜率合计 96.7%，
-     正是当初不得不把车道与距离解耦的原因。收窄后可以恢复真实的几何差异。 */
-  const TRACK_WIDTH = 11;
+  /* 赛道宽度（米）· 与渲染坐标保持一致
+     index.html 的 trackPoint 以 d = t - 10 为中线、赛道外沿取 t = 20，minimap 也用
+     R + 10 作为半宽 —— 即渲染侧一直按【20 米】绘制。
+     历史上物理曾被收窄到 11（理由：20 米配 R=120 会让车道几何差异达 ±8%，
+     实测外道 4 匹马胜率合计 96.7%）。但收窄带来两个副作用：
+       ① 画面上的内外道与物理不一致：马群永远挤在赛道内侧 55%，
+          而物理意义上的「最外道」在画面上还不到中线；
+       ② 走位空间随之被压缩（超车变难），而这是与"车道几何"无关的另一件事。
+     本轮改回 20。车道差异的幅度改用 laneBias 旋钮控制，而不是靠收窄赛道；
+     同时把各跑法靶位分布到全宽（见 STYLE_BASE_T），让「外道」作为战术位置真实存在。 */
+  const TRACK_WIDTH = 20;
+  /* 各跑法的基准横向位置（米，0 = 赛道内沿，TRACK_WIDTH = 20）
+     逃贴内栏、追走外道 —— 对应现实的脚质分布（差し/追込 本就在外侧）。
+     ⚠️ 旧值 1.2 / 2.2 / 3.4 / 4.4（上限 4.88）全部落在旧中线 5.5 以内，
+     实测全程横向位置均值仅 2.6 米、外侧(t>中线)占比 0.8% —— 也就是说
+     「外道」从未被任何跑法使用，laneRatio 的惩罚侧形同虚设。 */
+  const STYLE_BASE_T = { '逃': 4.0, '先': 7.5, '差': 11.0, '追': 14.5 };
   const STALL_SPEED = 2;
   /* 阶段划分（3.10 重做，对齐现实赛马的分段）
      现实 2000m 一级赛的通行分段：
@@ -85,10 +95,10 @@
      形状仍然保留「早期 逃>先>差>追、末段 追>差>先>逃」——
      变的只是四者的【整体水平】：逃的积分最高，追最低。 */
   const STYLE_COEF = {
-    '逃': { break: 1.0113, open: 1.0103, mid: 1.0078, late: 1.0007, final: 0.9955 },
-    '先': { break: 1.0030, open: 1.0026, mid: 1.0019, late: 1.0009, final: 0.9995 },
-    '差': { break: 0.9996, open: 1.0000, mid: 1.0010, late: 1.0028, final: 1.0042 },
-    '追': { break: 0.9904, open: 0.9918, mid: 0.9946, late: 0.9995, final: 1.0030 },
+    '逃': { break: 1.0119, open: 1.0109, mid: 1.0084, late: 1.0013, final: 0.9961 },
+    '先': { break: 1.0035, open: 1.0031, mid: 1.0024, late: 1.0014, final: 1.0000 },
+    '差': { break: 1.0012, open: 1.0016, mid: 1.0026, late: 1.0044, final: 1.0058 },
+    '追': { break: 0.9966, open: 0.9980, mid: 1.0008, late: 1.0057, final: 1.0092 },
   };
   /* 骑手的影响应当主要来自【战术与判断】（见 JOCKEY_CADENCE 的决策频率），
      而不是裸速度加成。原表给殿堂 +4%、新人 0 —— 等于"抽到好骑手"
@@ -177,16 +187,45 @@
     return 0;
   }
 
-  /* 骑手动作（3.10 骑手行为系统） */
+  /* 骑手动作（3.10 骑手行为系统）
+     ⚠️ 本轮修正：原 coef 达 ±2%~5%，是 STYLE_COEF 幅度（±1%）的 2~5 倍。
+     实测四个跑法的「动作平均 coef 贡献」为 逃 +0.66% / 先 +0.78% / 差 +0.58% / 追 +0.49%，
+     即骑手的催马习惯比跑法本身更能决定胜负。受控实验（把本表 coef 全部归零、
+     其余不变）显示：逃 +0.63、先 +0.51（变强），差 −0.49、追 −0.42（变弱），
+     且【追】的 per-start 胜率直接掉到 0.00 —— 说明「追」当时完全靠末段打鞭的
+     +5% 撑着，而它的体力/节奏/跑法机制本身不足以获胜。
+
+     现实里催马只是【有限】的加速手段：马末段能跑多快主要取决于前段省下的体力
+     （上がり3F），催马的作用是把余力兑现出来，代价是把余力提前烧掉。因此把
+     coef 收窄到 ±1% 以内，把收益与代价都交还给体力侧；跑法差异重新由
+     STYLE_COEF、步速与体力经济承担。 */
   const ACTION_DEF = {
-    '推骑':    { coef: 0.02,  stamina: 1.5 },
-    '打鞭':    { coef: 0.05,  stamina: 2 },
-    '收力':    { coef: -0.03, stamina: 0.7 },
-    '减速':    { coef: -0.05, stamina: 0.5 },
-    '斜行in':  { coef: 0,     stamina: 1.2 },
-    '斜行out': { coef: 0,     stamina: 1.2 },
+    '推骑':    { coef: 0.008,  stamina: 1.35 },
+    '打鞭':    { coef: 0.018,  stamina: 1.9 },
+    '收力':    { coef: -0.010, stamina: 0.72 },
+    '减速':    { coef: -0.020, stamina: 0.6 },
+    '斜行in':  { coef: 0,      stamina: 1.2 },
+    '斜行out': { coef: 0,      stamina: 1.2 },
   };
   function actionBonus(a) { return ACTION_DEF[a] || { coef: 0, stamina: 1 }; }
+  /* 催马动作的【实际】速度收益 —— 受余力调制
+     现实：鞭子只有在马还有余力时才有效（手応えがなくなる）。前段省着跑的马，
+     末段一鞭就窜出去；已经跑空的马再怎么打也没有反应。
+     旧实现给的是【无条件】的 +2%~+5%，于是「前段猛催、末段再催」的跑法白拿
+     两份收益，而「前段存力」的跑法毫无补偿。实测各跑法的动作平均贡献为
+       逃 +0.33% / 先 +0.20% / 差 +0.17% / 追 −0.08%
+     —— 0.41% 的系统性落差在 2000m 上约合 14 马身，足以让「追」的胜率归零。
+     现在把收益与【剩余体力/毅力】挂钩：力竭时只剩 35% 效果。
+     效果是自然的：前段收力的跑法末段催得动，前段猛催的跑法末段催不动。 */
+  function actionCoef(H) {
+    const d = ACTION_DEF[H.action];
+    if (!d) return 0;
+    if (d.coef <= 0) return d.coef;
+    const st = H.staminaMax > 0 ? clamp(H.stamina / H.staminaMax, 0, 1) : 1;
+    const gt = H.gutsMax > 0 ? clamp(H.guts / H.gutsMax, 0, 1) : 1;
+    const reserve = RACE_F.actionReserveFloor + (1 - RACE_F.actionReserveFloor) * (st * 0.65 + gt * 0.35);
+    return d.coef * reserve;
+  }
 
   /* ============================================================
    * 比赛公式参数（3.10 重做）
@@ -238,13 +277,20 @@
          耐力阶段 —— 消耗耐力【可以提升速度】，也能维持速度
          毅力阶段 —— 耐力耗尽后，【只能维持速度，不能提升】
          失速阶段 —— 毅力也耗尽，掉速
-       加速能力的正确形式：正比于【已消耗的耐力】，而不是剩余耐力。
-       现实里出力的代价是耗油，所以"省下来的油"才是末段能变现的功率。
-       若正比于剩余量会形成正反馈（越领先→油越多→提速越大→更领先）：
-       实测那样做会让逃马胜率飙到 54.7%、差+追合计只剩 3.9%。
-          accel = staminaAccel × 已消耗比例
-       即"前段省下的体力"在末段转化为冲刺能力。 */
-    staminaAccel: 0.12,      // 已消耗耐力全额兑现时的提速上限
+       加速能力正比于【剩余耐力】—— 这是「前段省力、末段变现」的实现处。
+       ⚠️ 这里有过两次方向性错误，记下来避免重走：
+         ① 最初写成 × (1 - stRatio)（已消耗比例）：变成「跑得越快→耗得越多→
+            末段加速越大」，是真正的正反馈；实测逃马在 1200m 拿到 80% 胜率。
+         ② 改错时把体力耦合【整个删掉】（冲刺只由阶段+弯道决定）：变成「省下的
+            体力在末段换不到任何东西」。8 匹全同跑法的对照实测：
+              逃 冠军 115.58s／结束耐力 0.8%（力竭）
+              追 冠军 117.36s／结束耐力 44.3%
+            —— 把油烧光反而最快，因为省力毫无回报。这也是「追」在混合场次里
+            per-start 胜率归零的根因，而不只是系数问题。
+       正比于剩余量是【负反馈】：跑得快 → 耗得多 → 剩余少 → 末段慢，系统自寻平衡，
+       与能量凸性（同等体力下匀速最省）一致。
+          accel = staminaAccel × 剩余耐力比 */
+    staminaAccel: 0.20,      // 余力全额兑现时的提速上限
     accelWindow: 0.05,       // 进入终盘后多少进度内完成兑现
     /* 掉速幅度必须【贴近现实量级】。原值 0.22/0.34 下，体力耗尽的马
        终盘只剩 (1-0.22)×(1-0.34)=0.51 的速度——比正常马慢一倍。
@@ -343,12 +389,32 @@
        弯道屏蔽加速：现实过弯要维持平衡且容易被堵，后上型的加速窗口
          因此被弯道切碎——弯道占比越高，后上型越吃亏。 */
     bendPenaltyLen: 9,       // 弯道减速强度（米），配合 k=1/R 使用
-    /* ⚠️ 这个旋钮曾被压到 0.15 去换「马身差距」，代价是把「内栏省距离」这条现实中最
-       基础的机制也一并关掉了 —— 而它正是前位（逃/先）价值的来源之一。
-       现实：弯道上跑外道要多跑 (R+t)/R 的距离，内栏是实实在在的便宜；
-       但外道的马可以稍微跑快一点补偿，所以不是几何比率的 100%。
-       取 0.55 作为「有实质价值、但不压倒性」的强度。 */
-    laneBias: 0.55,          // 内外道几何差异的保留强度（0=完全解耦，1=纯几何）
+    /* 弯道向内收拢量（米）
+       现实中骑手在弯道上都会往内切 —— 走最短路程。旧实现把这行写在 runAI 的
+       switch 之前，而每个 case 又无条件赋值 targetT，于是它被完全覆盖，实际是
+       【死代码】：实测四个跑法在弯道上的横向位置与直道完全相同。
+       现改为在统一计算 targetT 时施加，四个跑法各按自己的基准位向内收拢，
+       既保留「逃最内、追最外」的次序，又让「弯道切内线」真正发生。 */
+    bendInset: 3.0,
+    /* 内外道几何差异的保留强度（0=完全解耦，1=纯几何）
+       这个旋钮曾被压到 0.15 去换「马身差距」，代价是把「内栏省距离」这条现实中
+       最基础的机制也一并关掉 —— 而它正是前位（逃/先）价值的来源之一。
+       现在赛道宽度回到 20 米（见 TRACK_WIDTH），几何差异本身变大，故用较低的
+       laneBias 维持整体量级：靶位 逃4.0 → 先7.5 → 差11.0 → 追14.5、弯道内收 3 米，
+       使「逃−追」的全程加权速度差约 0.5% —— 与收窄赛道时相当，
+       但此时「外道」是真实被使用的（追在 11.5~14.5，已越过中线 10）。
+       ⚠️ 实测参考：laneBias 取 0.15 时该差值为 1.08%（≈12 马身），
+       足以让「追」的 per-start 胜率直接归零，故最终取 0.05。 */
+    laneBias: 0.05,
+    /* 催马动作在【力竭】时的效果下限（见 actionCoef）
+       1.0 = 完全不受余力影响（旧行为，等于无条件加速）；0 = 力竭时催马完全无效。
+       取 0.35：力竭后鞭子还剩三成半效果——保留一点「挣扎」的戏剧性，
+       但不再是「只要打鞭就能一直快」。 */
+    actionReserveFloor: 0.35,
+    /* 弯道上保留的加速能力（见 step 中的 bendLock）
+       1.0 = 弯道不遮蔽加速（等于取消「弯道切碎后上型加速窗口」这条机制）；
+       0   = 弯道上完全不能加速（旧值，导致短途前速型过强）。 */
+    bendAccelLock: 0.4,
     /* ⑧ 马群耦合（3.10 新增）—— 修正「速度作用方式」与现实的结构性偏离
        ------------------------------------------------------------
        旧结构里 base（含速度）是【乘法作用于全程】的，于是能力差从第一米
@@ -483,9 +549,14 @@
      实测（真实 8 匹马比赛，良地/力量70）：
        常数 20.4 → 耐力70 实际 2284m（标称 1428m，+60%）
        常数 32   → 耐力70 实际 3509m（标称 2240m，+57%）
-     即偏差比例稳定在 +57~60%，但绝对值不随常数线性变化。
-     下一步应改为直接按目标耗尽里程解方程，而不是线性外推。 */
-  const RANGE_CALIB = 0.626;     // 经验修正：把标称对齐到实测，待解方程后移除
+         即偏差比例稳定在 +57~60%，但绝对值不随常数线性变化。
+     下一步应改为直接按目标耗尽里程解方程，而不是线性外推。
+
+     本轮修正：动作油耗倍率被收窄（推骑 1.5→1.35、打鞭 2→1.9 等），
+     加权平均油耗下降，实测可跑距离系统性偏高约 +20%
+     （耐力 50/70/80/90 分别 +19.7% / +21.2% / +21.1% / +22.0%）。
+     故把本常数按 1/1.20 修正。 */
+  const RANGE_CALIB = 0.522;     // 经验修正：把标称对齐到实测，待解方程后移除
   function staminaBudget(length) {
     return (length / REF_STAMINA) * RACE_F.staminaPer *
       (RANGE_REF / STAMINA_RANGE_PER_POINT) / RANGE_CALIB;
@@ -656,11 +727,22 @@
         等于让「跑法」白送实力。现实中同班次的马速度本就接近，
         跑法只是【战术选择】，不应该自带能力优势。
      属性分工保留：出闸能力 逃高追低、爆发力 追高逃低、毅力 追高逃低。 */
+  /* ⚠️ 属性按跑法的分化必须【收窄】—— 否则「跑法」被三重建模
+     （STYLE_COEF 系数 + STYLE_STATS 属性模板 + runAI 行为），跑法平衡会失真。
+     实测证据：属性同源的隔离测试里「差」的 per-start 胜率是 0.77×（2000m，目标 0.96），
+     而混合阵容（属性按本表生成）里「差」飙升到 49.3%、「追」到 30.0% —— 差额全部
+     来自本表给差/追的爆发力高了 24 点、出闸能力低了 28 点：
+       爆发力作用于终盘（权重 0.30，直接乘 burstFactor），24 点 ≈ 2.9% 终盘速度；
+       出闸只作用于出闸阶段（权重 0.054）。于是"末段爆发"被同时写进系数与属性。
+     现实中「跑法」是骑手的战术选择，马的能力（速度/耐力/爆发力）与它相对独立；
+     脚质适性确实存在，但幅度不该到这个量级。
+     故把各属性按跑法的分化统一【向总体均值收缩 60%】（保留 40% 的倾向，
+     即"逃出闸略好、追爆发力略高"的次序不变，跨度从 24~30 点压到 9~12 点）。 */
   const STYLE_STATS = {
-    '逃': { '速度': [66, 90], '耐力': [68, 90], '出闸能力': [65, 92], '爆发力': [46, 72], '力量': [48, 82], '毅力': [54, 82], '智力': [45, 85], '体格': [45, 85] },
-    '先': { '速度': [66, 90], '耐力': [66, 88], '出闸能力': [56, 84], '爆发力': [56, 80], '力量': [50, 82], '毅力': [56, 84], '智力': [45, 85], '体格': [45, 85] },
-    '差': { '速度': [66, 90], '耐力': [64, 86], '出闸能力': [46, 74], '爆发力': [68, 90], '力量': [54, 84], '毅力': [58, 86], '智力': [45, 85], '体格': [45, 85] },
-    '追': { '速度': [66, 90], '耐力': [62, 84], '出闸能力': [40, 70], '爆发力': [72, 94], '力量': [52, 82], '毅力': [62, 92], '智力': [45, 85], '体格': [45, 85] },
+    '逃': { '速度': [66, 90], '耐力': [66, 88], '出闸能力': [57, 84], '爆发力': [56, 78], '力量': [49, 83], '毅力': [56, 84], '智力': [45, 85], '体格': [45, 85] },
+    '先': { '速度': [66, 90], '耐力': [65, 87], '出闸能力': [54, 81], '爆发力': [60, 82], '力量': [49, 83], '毅力': [57, 85], '智力': [45, 85], '体格': [45, 85] },
+    '差': { '速度': [66, 90], '耐力': [65, 87], '出闸能力': [50, 77], '爆发力': [64, 86], '力量': [51, 85], '毅力': [58, 86], '智力': [45, 85], '体格': [45, 85] },
+    '追': { '速度': [66, 90], '耐力': [64, 86], '出闸能力': [48, 75], '爆发力': [66, 88], '力量': [50, 84], '毅力': [60, 88], '智力': [45, 85], '体格': [45, 85] },
   };
   function makeHorse(rng, opts) {
     const o = opts || {};
@@ -1066,7 +1148,9 @@
       return {
         h, id: h.id, name: h.name, style: h.style,
         jockey: h.jockeyGrade || '普通',
-        s: 0, t: clamp(1.0 + rng() * 4, 0.8, 6), v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
+        /* 起跑横向位置：旧值 1.0~5.0（赛道宽 11 的内半侧）。现铺到赛道中段
+           3.5~16.5，与 STYLE_BASE_T 的分布区间一致，避免开局就全体贴在内栏。 */
+        s: 0, t: clamp(3.5 + rng() * 13, 2.0, 18.0), v: 0, prevV: 0, pot: 0, laneJitter: (rng() - 0.5) * 1.6,
         stamina: adj['耐力'] * RACE_F.staminaPer, guts: adj['毅力'] * RACE_F.gutsPer,
         staminaMax: adj['耐力'] * RACE_F.staminaPer, gutsMax: adj['毅力'] * RACE_F.gutsPer,
         stage: '耐力', retention: 1,
@@ -1183,18 +1267,22 @@
       const isFinal = ph.key === 'final';
       const isLate = ph.key === 'late';
       const early = ph.key === 'break' || ph.key === 'open' || ph.key === 'mid';
-      /* 过弯贴内栏：现实骑手在弯道切内线省路程（文档 3.10(11) 外道惩罚），
-         弯道期间所有跑法都向内栏靠拢，直道再按各自跑法展开 */
+      /* 本跑法的横向位置：直道按基准位展开，弯道向内收拢（切内线、走最短路程）。
+         ⚠️ 旧实现把这行写在 switch 之前，而每个 case 又无条件赋值 H.targetT，
+         于是它被完全覆盖 —— 弯道内移从未生效（死代码）。现改为统一计算，
+         各 case 不再自行赋值 targetT；findGap / trySqueeze 的横向意图仍然保留。 */
       const onBend = kAt(H.s, race.geo) > 0;
-      if (onBend && !isFinal) H.targetT = 1.2 + H.laneJitter * 0.3;
+      const baseT = STYLE_BASE_T[H.style] + H.laneJitter * 0.7;
+      H.targetT = (onBend && !isFinal)
+        ? Math.max(1.2, baseT - RACE_F.bendInset + H.laneJitter * 0.4)
+        : baseT;
 
       switch (H.style) {
         case '逃': {
-          H.targetT = 1.2;
           if (isFinal) { finalDrive(H, staminaRatio); return; }
           const leadMargin = rank === 1 ? (list[1] ? H.s - list[1].s : 30) : -gapLead;
           if (ph.key === 'break' || ph.key === 'open') {
-            if (H.t > 2.6) setAction(H, '斜行in', 1.5);
+            if (H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
             else if (leadMargin < 2) setAction(H, '推骑', 2);
             else setAction(H, '收力', 2);
           } else {
@@ -1205,11 +1293,10 @@
           return;
         }
         case '先': {
-          H.targetT = 2.2 + H.laneJitter * 0.6;
           if (isFinal) { finalDrive(H, staminaRatio); return; }
           if (early) {
-            if (H.blocked) setAction(H, H.t > 10 ? '斜行in' : '斜行out', 2);
-            else if (rank > 6) { if (H.t > 2.8) setAction(H, '斜行in', 2); else setAction(H, '推骑', 2); }
+            if (H.blocked) setAction(H, H.t > TRACK_WIDTH / 2 ? '斜行in' : '斜行out', 2);
+            else if (rank > 6) { if (H.t > baseT + 1.4) setAction(H, '斜行in', 2); else setAction(H, '推骑', 2); }
             else if (rank < 2) setAction(H, '收力', 2);
             else if (gapLead > 10) setAction(H, '推骑', 2);   // 与逃马保持接触(演示补充)
             else setAction(H, '收力', 1.5);
@@ -1227,16 +1314,15 @@
           return;
         }
         case '差': {
-          H.targetT = 3.4 + H.laneJitter * 0.6;
           if (isFinal) { finalDrive(H, staminaRatio); return; }
           if (early) {
             const lo = Math.max(5, n - 3);
-            if (H.blocked) setAction(H, H.t > 10 ? '斜行in' : '斜行out', 2);
+            if (H.blocked) setAction(H, H.t > TRACK_WIDTH / 2 ? '斜行in' : '斜行out', 2);
             else if (rank < lo) setAction(H, '收力', 2);
             else if (gapLead > 20) setAction(H, '推骑', 2);        // 与领头集团保持接触(演示补充)
             else if (rank > lo) setAction(H, '推骑', 2);
             else setAction(H, '收力', 1.5);
-            if (H.t > 3.2) setAction(H, '斜行in', 1.5);
+            if (H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
           } else if (isLate) {
             if (H.blocked && ahead) trySqueeze(H, ahead);
             else {
@@ -1251,7 +1337,6 @@
           return;
         }
         case '追': {
-          H.targetT = 4.4 + H.laneJitter * 0.6;
           if (isFinal) {
             /* 保留「终盘找空档」的横向意图，但驱动动作与其余跑法统一（见 finalDrive） */
             const g = findGap(H, true);
@@ -1266,13 +1351,17 @@
             return;
           }
           if (early) {
-            if (H.blocked) setAction(H, H.t > 10 ? '斜行in' : '斜行out', 2);
-            else if (rank < n - 3 && gapLead < 45) setAction(H, '收力', 2);
+            if (H.blocked) setAction(H, H.t > TRACK_WIDTH / 2 ? '斜行in' : '斜行out', 2);
+            /* ⚠️ 原有一条 `rank < n-3 && gapLead < 45 → 收力`：追马跑到前 5 名就
+               主动减速退回后方。但现实中追込马前段只是【跟随马群、骑手不做动作】
+               （不等同于"把马勒慢"）。这条让「追」有 39% 的时间吃 −1% 速度惩罚，
+               而「逃」同期 55% 在推骑 (+0.8%)，两者净差 0.39%——2000m 上约 14 马身，
+               是「追」per-start 胜率归零的直接原因。故移除，"跟随"统一用 null。 */
             else if (gapLead > 25) setAction(H, '推骑', 2);          // 与领头集团保持接触(演示补充)
             else if (gapAhead > 15) setAction(H, '推骑', 2);
             else if (gapAhead < 4.5) setAction(H, '收力', 1.5);
-            else setAction(H, '收力', 1);
-            if (H.t > 3.6) setAction(H, '斜行in', 1.5);
+            else setAction(H, null, 0);
+            if (H.t > baseT + 1.4) setAction(H, '斜行in', 1.5);
           } else if (isLate) {
             const g = findGap(H, true);
             if (g) {
@@ -1305,7 +1394,7 @@
       /* 1) 瞬时速度 */
       for (const H of act) {
         const ph = phaseAt(H.s, race.length);
-        let runCoef = styleCoefs[H.style][ph.key] + (JOCKEY_BONUS[H.jockey] || 0) + actionBonus(H.action).coef;
+        let runCoef = styleCoefs[H.style][ph.key] + (JOCKEY_BONUS[H.jockey] || 0) + actionCoef(H);
         /* 「马群跟跑耦合」已删除。原实现是"离领头马越远、速度加成越大"，
            两个错误：① 方向反了——现实的跟跑是【省力】（借尾流），不是加速；
            ② 判定对象错了——省力取决于"是否紧跟某匹马"，而非"离领头马多远"
@@ -1337,19 +1426,18 @@
           const showFrac = ph.key === 'final'
             ? clamp((f - 0.70) / RACE_F.accelWindow, 0, 1)
             : (f >= 0.75 ? 1 : 0);
-          /* 弯道上不能发力：现实里过弯要维持平衡、且容易被堵，
-             后上型的加速窗口因此被弯道切碎。
-             效果——弯道占比越高，后上型越吃亏（1200m 弯道占 52%、
-             3000m 只占 30%），"距离适性"由几何自动产生。 */
-          const bendLock = kAt(H.s, race.geo) > 0 ? 0 : 1;
-          /* ⚠️ 原写法是 × clamp(1 - stRatio)。1 - stRatio 是【已消耗比例】，
-             于是「跑得越快 → 耗得越多 → 末段加速越大」成为正反馈，
-             与注释声称的「前段省下的体力在末段变现」正好相反。
-             实测它让逃马在 1200m 拿到 80% 胜率（系数优势仅 0.31%），
-             并把同水平场次的 1-2 名着差推到 8 马身。
-             现在去掉体力耦合：冲刺能力只由【阶段 + 弯道】决定，
-             不再与自己前段跑多快挂钩。 */
-          accel = RACE_F.staminaAccel * showFrac * bendLock;
+          /* 弯道上遮蔽加速：现实里过弯要维持平衡、且容易被堵，后上型的加速窗口
+             因此被弯道切碎——弯道占比越高，后上型越吃亏（1200m 弯道占 52%、
+             3000m 只占 30%），「距离适性」由几何自动产生。
+             ⚠️ 原值是 0（弯道上完全不能加速）。叠加短途 52% 的弯道占比后过强：
+             实测 1200m 的逃 per-start 胜率 4.49×（目标 2.60×），
+             逃的距离梯度 4.49→1.92（比值 2.34）远陡于目标 2.60→1.45（1.79）。
+             改为保留 bendAccelLock 比例的加速能力。 */
+          const bendLock = kAt(H.s, race.geo) > 0 ? RACE_F.bendAccelLock : 1;
+          /* accel 正比于【剩余耐力】—— 见 RACE_F.staminaAccel 处的完整说明。
+             ⚠️ 上一版曾把体力耦合整个去掉（只由阶段+弯道决定），
+             导致「省下的体力在末段换不到任何东西」，「追」的 per-start 胜率归零。 */
+          accel = RACE_F.staminaAccel * stRatio * showFrac * bendLock;
           H.accelLock = accel;              // 锁定力竭瞬间的推进，供毅力阶段维持
           maintain = 1 - RACE_F.staminaMaintain * (1 - stRatio);
           H.staminaEndMaintain = maintain;
@@ -1456,14 +1544,14 @@
            R=145（3000m）时 0.942 —— 短途赛道弯道惩罚天然更重。 */
         const bendSlow = k > 0 ? 1 / (1 + k * RACE_F.bendPenaltyLen) : 1;
         /* 内外道几何（⚠️ 修正符号）
-           出发点就是"内栏省距离"：横向偏移 t 的马，实跑距离 = s·(R+t)/R。
+           出发点就是「内栏省距离」：横向偏移 t 的马，实跑距离 = s·(R+t)/R。
            所以同样的实速下，它【沿中线计的推进】应是 v·R/(R+t) —— 内道更快。
-           旧实现写成 (R+t)/R 的反向形式（且上方注释还写着"各道等效等长"，
+           旧实现写成 (R+t)/R 的反向形式（上方注释还写着"各道等效等长"，
            注释与代码自相矛盾），等于让外道白拿最多 3.6% 的速度。
-           而后上型恰好跑在外道（追 targetT=4.4 vs 逃 1.2），
-           这正是后上型被系统性偏袒、短途「追 74%」的原因之一。
-           TRACK_WIDTH 已从 20 收窄到 11（见顶部常量说明），
-           几何差异现在可控，故恢复真实方向并保留 laneBias 强度旋钮。 */
+           基准点取中线 t = TRACK_WIDTH/2：比中线靠内 = 加成，靠外 = 惩罚。
+           靶位已分布到全宽（逃 3.0 → 追 16.5，弯道内收 3 米），因此「外道惩罚」
+           首次有马实际承受 —— 此前四个跑法靶位上限 4.88 < 旧中线 5.5，
+           实测外侧占比仅 0.8%，惩罚侧形同虚设。 */
         const laneRaw = k > 0 ? (1 + k * TRACK_WIDTH / 2) / (1 + k * H.t) : 1;
         const laneRatio = 1 + (laneRaw - 1) * RACE_F.laneBias;
         let newS = H.s + H.v * bCoef * bendSlow * laneRatio * dt;
@@ -2448,11 +2536,11 @@
   /* ---------------- 导出 ---------------- */
   const api = {
     mulberry32, clamp, pick, weightedPick,
-    TRACK_WIDTH, STALL_SPEED, PHASE_DEFS, phaseAt,
+    TRACK_WIDTH, STALL_SPEED, PHASE_DEFS, phaseAt, STYLE_BASE_T,
     RACE_F, drainDistanceCoef, staminaBudget, rangeCoef, powerDrainCoef,
     STAMINA_RANGE_PER_POINT, GROUND_RANGE_COEF,
     STYLE_COEF, STYLE_COEF_DOC, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
-    ACTION_DEF, actionBonus, baseSpeed, fatigueMultiplier,
+    ACTION_DEF, actionBonus, actionCoef, baseSpeed, fatigueMultiplier,
     trackGeometry, trackPoint, kAt, bendCoefFor, SLOPE_PROFILES, gradientAt,
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
     STAFF, CAT_ERROR_POOL, catText, fatigueBand, fatigueText,
