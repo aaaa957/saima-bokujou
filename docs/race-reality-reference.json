@@ -1,0 +1,753 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-10-02",
+  "publisher": "Japan Association for International Racing and Stud Book, official JRA race reports",
+  "scope": "18 G1 turf races, 2023-2025; elite-speed reference, not all-race population average",
+  "splitRule": "2023-2024 calibration (12); 2025 holdout (6). Holdout not used for fitting.",
+  "sectionalDefinition": "raceSectionals200m/first600/first1000/raceFinal600 are race-leading marker times; winner.final600 follows the winning horse. They need not agree and must not be interchanged.",
+  "goingTranslation": "English Good to Firm→JRA 良; Good→稍重; Yielding→重; Soft→不良. These labels are ground categories, not measured coefficient values.",
+  "railCaveat": "Reports do not consistently specify rail A/B/C/D; venue model uses A-course dimensions. Starting chutes and changing course layout are not reconstructed.",
+  "samples": [
+    {
+      "id": "231001",
+      "date": "2023-10-01",
+      "raceName": "Sprinters Stakes",
+      "grade": "G1",
+      "venue": "中山",
+      "length": 1200,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Mama Cocha (JPN)",
+        "finishTime": 68.0,
+        "final600": 34.5,
+        "carriedWeightKg": 56.0
+      },
+      "raceSectionals200m": [
+        11.7,
+        10.4,
+        11.2,
+        11.2,
+        11.2,
+        12.3
+      ],
+      "first600": 33.3,
+      "first1000": 55.7,
+      "raceFinal600": 34.7,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2023/231001.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 16
+    },
+    {
+      "id": "230604",
+      "date": "2023-06-04",
+      "raceName": "Yasuda Kinen",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 1600,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Songline (JPN)",
+        "finishTime": 91.4,
+        "final600": 33.1,
+        "carriedWeightKg": 56.0
+      },
+      "raceSectionals200m": [
+        12.0,
+        10.8,
+        11.4,
+        11.8,
+        11.6,
+        11.1,
+        11.2,
+        11.5
+      ],
+      "first600": 34.2,
+      "first1000": 57.6,
+      "raceFinal600": 33.8,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2023/230604.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "231029",
+      "date": "2023-10-29",
+      "raceName": "Tenno Sho (Autumn)",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2000,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine",
+      "winner": {
+        "name": "Equinox (JPN)",
+        "finishTime": 115.2,
+        "final600": 34.2,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.4,
+        11.0,
+        11.5,
+        11.4,
+        11.4,
+        11.4,
+        11.4,
+        11.6,
+        11.4,
+        11.7
+      ],
+      "first600": 34.9,
+      "first1000": 57.7,
+      "raceFinal600": 34.7,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2023/231029.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 11
+    },
+    {
+      "id": "231126",
+      "date": "2023-11-26",
+      "raceName": "Japan Cup",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2400,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Equinox (JPN)",
+        "finishTime": 141.8,
+        "final600": 33.5,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.7,
+        11.3,
+        11.5,
+        11.0,
+        11.1,
+        11.5,
+        12.0,
+        12.1,
+        12.1,
+        12.4,
+        12.4,
+        11.7
+      ],
+      "first600": 35.5,
+      "first1000": 57.6,
+      "raceFinal600": 36.5,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/en/japancup/news_results/news2023/231126.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "231022",
+      "date": "2023-10-22",
+      "raceName": "Kikuka Sho",
+      "grade": "G1",
+      "venue": "京都",
+      "length": 3000,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine",
+      "winner": {
+        "name": "Durezza (JPN)",
+        "finishTime": 183.1,
+        "final600": 34.6,
+        "carriedWeightKg": 57.0
+      },
+      "raceSectionals200m": [
+        12.7,
+        11.7,
+        11.1,
+        12.3,
+        12.6,
+        12.9,
+        13.1,
+        13.0,
+        12.8,
+        12.3,
+        12.1,
+        11.6,
+        11.7,
+        11.4,
+        11.8
+      ],
+      "first600": 35.5,
+      "first1000": 60.4,
+      "raceFinal600": 34.9,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2023/231022.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 17
+    },
+    {
+      "id": "230430",
+      "date": "2023-04-30",
+      "raceName": "Tenno Sho (Spring)",
+      "grade": "G1",
+      "venue": "京都",
+      "length": 3200,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "稍重",
+      "goingOriginal": "Good",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Justin Palace (JPN)",
+        "finishTime": 196.1,
+        "final600": 34.9,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.3,
+        10.8,
+        11.9,
+        12.1,
+        12.6,
+        12.0,
+        12.0,
+        12.6,
+        12.8,
+        12.9,
+        13.3,
+        13.2,
+        12.3,
+        11.9,
+        11.5,
+        11.9
+      ],
+      "first600": 35.0,
+      "first1000": 59.7,
+      "raceFinal600": 35.3,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2023/230430.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 17
+    },
+    {
+      "id": "240929",
+      "date": "2024-09-29",
+      "raceName": "Sprinters Stakes",
+      "grade": "G1",
+      "venue": "中山",
+      "length": 1200,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Lugal (JPN)",
+        "finishTime": 67.0,
+        "final600": 34.2,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        11.8,
+        9.9,
+        10.4,
+        11.0,
+        11.6,
+        12.3
+      ],
+      "first600": 32.1,
+      "first1000": 54.7,
+      "raceFinal600": 34.9,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2024/240929.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 16
+    },
+    {
+      "id": "240602",
+      "date": "2024-06-02",
+      "raceName": "Yasuda Kinen",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 1600,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "稍重",
+      "goingOriginal": "Good",
+      "weather": "Drizzle",
+      "winner": {
+        "name": "Romantic Warrior (IRE)",
+        "finishTime": 92.3,
+        "final600": 33.4,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.1,
+        11.0,
+        11.4,
+        11.9,
+        12.0,
+        11.3,
+        11.2,
+        11.4
+      ],
+      "first600": 34.5,
+      "first1000": 58.4,
+      "raceFinal600": 33.9,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2024/240602.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "241027",
+      "date": "2024-10-27",
+      "raceName": "Tenno Sho (Autumn)",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2000,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Do Deuce (JPN)",
+        "finishTime": 117.3,
+        "final600": 32.5,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.8,
+        11.5,
+        11.6,
+        12.0,
+        12.0,
+        11.9,
+        11.8,
+        11.1,
+        11.1,
+        11.5
+      ],
+      "first600": 35.9,
+      "first1000": 59.9,
+      "raceFinal600": 33.7,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2024/241027.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 15
+    },
+    {
+      "id": "241124",
+      "date": "2024-11-24",
+      "raceName": "Japan Cup",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2400,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine",
+      "winner": {
+        "name": "Do Deuce (JPN)",
+        "finishTime": 145.5,
+        "final600": 32.7,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.7,
+        11.4,
+        13.0,
+        12.9,
+        12.2,
+        12.3,
+        12.5,
+        12.6,
+        12.5,
+        11.5,
+        10.8,
+        11.1
+      ],
+      "first600": 37.1,
+      "first1000": 62.2,
+      "raceFinal600": 33.4,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/en/japancup/news_results/news2024/241124-02.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 14
+    },
+    {
+      "id": "241020",
+      "date": "2024-10-20",
+      "raceName": "Kikuka Sho",
+      "grade": "G1",
+      "venue": "京都",
+      "length": 3000,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine",
+      "winner": {
+        "name": "Urban Chic (JPN)",
+        "finishTime": 184.1,
+        "final600": 35.6,
+        "carriedWeightKg": 57.0
+      },
+      "raceSectionals200m": [
+        12.6,
+        12.0,
+        12.4,
+        13.0,
+        12.0,
+        11.7,
+        12.4,
+        12.7,
+        12.3,
+        12.6,
+        12.6,
+        11.9,
+        12.0,
+        11.8,
+        12.1
+      ],
+      "first600": 37.0,
+      "first1000": 62.0,
+      "raceFinal600": 35.9,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2024/241020.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "240428",
+      "date": "2024-04-28",
+      "raceName": "Tenno Sho (Spring)",
+      "grade": "G1",
+      "venue": "京都",
+      "length": 3200,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine",
+      "winner": {
+        "name": "T O Royal (JPN)",
+        "finishTime": 194.2,
+        "final600": 35.0,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.8,
+        11.7,
+        12.1,
+        11.5,
+        11.6,
+        11.5,
+        12.2,
+        12.9,
+        12.8,
+        12.6,
+        12.5,
+        12.8,
+        11.9,
+        11.7,
+        11.6,
+        12.0
+      ],
+      "first600": 36.6,
+      "first1000": 59.7,
+      "raceFinal600": 35.3,
+      "split": "calibration",
+      "source": {
+        "url": "https://japanracing.jp/_news2024/240428.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "250928",
+      "date": "2025-09-28",
+      "raceName": "Sprinters Stakes",
+      "grade": "G1",
+      "venue": "中山",
+      "length": 1200,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine",
+      "winner": {
+        "name": "Win Carnelian (JPN)",
+        "finishTime": 66.9,
+        "final600": 33.0,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.0,
+        10.7,
+        11.0,
+        11.2,
+        10.6,
+        11.4
+      ],
+      "first600": 33.7,
+      "first1000": 55.5,
+      "raceFinal600": 33.2,
+      "split": "holdout",
+      "source": {
+        "url": "https://japanracing.jp/_news2025/250928.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 16
+    },
+    {
+      "id": "250608",
+      "date": "2025-06-08",
+      "raceName": "Yasuda Kinen",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 1600,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Jantar Mantar (JPN)",
+        "finishTime": 92.7,
+        "final600": 34.2,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.5,
+        11.3,
+        11.2,
+        11.7,
+        11.7,
+        11.2,
+        11.3,
+        11.8
+      ],
+      "first600": 35.0,
+      "first1000": 58.4,
+      "raceFinal600": 34.3,
+      "split": "holdout",
+      "source": {
+        "url": "https://japanracing.jp/_news2025/250608.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "251102",
+      "date": "2025-11-02",
+      "raceName": "Tenno Sho (Autumn)",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2000,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Cloudy",
+      "winner": {
+        "name": "Masquerade Ball (JPN)",
+        "finishTime": 118.6,
+        "final600": 32.3,
+        "carriedWeightKg": 56.0
+      },
+      "raceSectionals200m": [
+        12.6,
+        12.3,
+        12.2,
+        12.5,
+        12.4,
+        12.2,
+        11.5,
+        10.9,
+        10.9,
+        11.1
+      ],
+      "first600": 37.1,
+      "first1000": 62.0,
+      "raceFinal600": 32.9,
+      "split": "holdout",
+      "source": {
+        "url": "https://japanracing.jp/_news2025/251102.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 14
+    },
+    {
+      "id": "251130",
+      "date": "2025-11-30",
+      "raceName": "Japan Cup",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2400,
+      "surface": "草地",
+      "direction": "左回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine",
+      "winner": {
+        "name": "Calandagan (IRE)",
+        "finishTime": 140.3,
+        "final600": 33.2,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        12.3,
+        10.8,
+        11.4,
+        11.5,
+        11.6,
+        11.6,
+        12.0,
+        12.2,
+        12.3,
+        11.8,
+        11.5,
+        11.3
+      ],
+      "first600": 34.5,
+      "first1000": 57.6,
+      "raceFinal600": 34.6,
+      "split": "holdout",
+      "source": {
+        "url": "https://japanracing.jp/en/japancup/news_results/news2025/251130-02.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "251026",
+      "date": "2025-10-26",
+      "raceName": "Kikuka Sho",
+      "grade": "G1",
+      "venue": "京都",
+      "length": 3000,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "稍重",
+      "goingOriginal": "Good",
+      "weather": "Drizzle",
+      "winner": {
+        "name": "Energico (JPN)",
+        "finishTime": 184.0,
+        "final600": 35.0,
+        "carriedWeightKg": 57.0
+      },
+      "raceSectionals200m": [
+        13.1,
+        11.6,
+        11.7,
+        12.8,
+        11.6,
+        12.7,
+        13.2,
+        12.9,
+        12.8,
+        12.2,
+        12.0,
+        12.1,
+        11.9,
+        11.5,
+        11.9
+      ],
+      "first600": 36.4,
+      "first1000": 60.8,
+      "raceFinal600": 35.3,
+      "split": "holdout",
+      "source": {
+        "url": "https://japanracing.jp/_news2025/251026.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 18
+    },
+    {
+      "id": "250504",
+      "date": "2025-05-04",
+      "raceName": "Tenno Sho (Spring)",
+      "grade": "G1",
+      "venue": "京都",
+      "length": 3200,
+      "surface": "草地",
+      "direction": "右回",
+      "state": "良",
+      "goingOriginal": "Good to Firm",
+      "weather": "Fine/",
+      "winner": {
+        "name": "Redentor (JPN)",
+        "finishTime": 194.0,
+        "final600": 35.3,
+        "carriedWeightKg": 58.0
+      },
+      "raceSectionals200m": [
+        13.0,
+        11.4,
+        12.0,
+        12.2,
+        12.1,
+        12.0,
+        12.3,
+        12.9,
+        12.5,
+        11.8,
+        12.2,
+        12.1,
+        11.8,
+        12.2,
+        11.8,
+        11.7
+      ],
+      "first600": 36.4,
+      "first1000": 60.7,
+      "raceFinal600": 35.7,
+      "split": "holdout",
+      "source": {
+        "url": "https://japanracing.jp/_news2025/250504.html",
+        "retrievedAt": "2026-10-02"
+      },
+      "fieldSize": 15
+    }
+  ]
+}

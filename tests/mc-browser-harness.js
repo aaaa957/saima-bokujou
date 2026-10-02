@@ -159,7 +159,7 @@ for (let i = 0; i < N; i++) {
   const w = r.race.order[0];
   const ok = !!w;
   if (!ok) xdiff++;
-  if (i < 5) console.log('  第' + (i + 1) + '场 seed=' + seed + ' → ' + (w ? w.style + ' 用时 ' + fmt(r.race.winnerTime, 1) + 's' : '无冠军'));
+  if (i < 5) console.log('  第' + (i + 1) + '场 seed=' + seed + ' → ' + (w ? (w.observedStyle || w.style) + ' 用时 ' + fmt(r.race.winnerTime, 1) + 's' : '无冠军'));
 }
 check(xdiff === 0, N + ' 场全部产生冠军（页面与 CLI 使用同一套种子推导）');
 

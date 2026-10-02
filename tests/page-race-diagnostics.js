@@ -20,6 +20,26 @@ function result(page) {
 }
 
 const single = createPage();
+check('官方场地、风速与骑乘计划编辑传入比赛，标签不被编辑器改写', () => {
+  const page=createPage();
+  page.click('btnModeSingle');
+  page.set('cfgCourse','中山');page.set('cfgLength','2000');page.set('cfgWind','2');
+  page.evaluate('updateCourseInfo();');
+  assert.equal(page.element('cfgDir').value,'右回');
+  assert.equal(page.element('cfgProfile').disabled,true);
+  assert.match(page.element('courseInfo').textContent,/高差 5.3m/);
+  const originalStyle=page.evaluate('field[0].style');
+  page.evaluate('buildEditor();document.querySelectorAll(".ed").forEach(e=>{if(e.dataset.id!==field[0].id)return;if(e.dataset.k==="racePlan")e.value="跟随";if(e.dataset.k==="carriedWeight")e.value="59";if(e.dataset.k==="bodyMass")e.value="";});applyEditor();');
+  assert.deepEqual(page.json('field[0].racePlan'),{position:0.45,risk:0.4,patience:0.7});
+  assert.equal(page.evaluate('field[0].style'),originalStyle);
+  assert.equal(page.evaluate('field[0].carriedWeight'),59);
+  assert.equal(page.evaluate('field[0].bodyMass'),undefined);
+  page.click('btnStart');
+  assert.equal(page.evaluate('race.race.course'),'中山芝内A');
+  assert.equal(page.evaluate('race.race.dir'),'右回');
+  assert.equal(page.evaluate('race.race.wind'),2);
+  assert.equal(page.evaluate('race.race.horses[0].carriedWeight'),59);
+});
 single.click('btnModeSingle');
 single.set('cfgLength', '2000');
 single.set('cfgCourse', '长直道');
@@ -91,7 +111,7 @@ check('旧赛程没有布局字段时按马场映射，观看与后台模拟一�
   page.evaluate('delete ' + select + '.course;' + select + '.venue="東京";');
   const expected = page.json('simulateRace(' + select + ').race.order.map(h=>({id:h.id,time:h.time}))');
   page.evaluate('watchAiRace(' + select + ');');
-  assert.equal(page.evaluate('race.race.course'), '长直道');
+  assert.equal(page.evaluate('race.race.course'), '東京芝A');
   page.click('btnSkip');
   assert.deepEqual(page.json('race.race.order.map(h=>({id:h.id,time:h.time}))'), expected);
 });

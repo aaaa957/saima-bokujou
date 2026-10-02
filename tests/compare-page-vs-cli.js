@@ -41,7 +41,7 @@ for (let i = 0; i < N; i++) {
   const pr = c.__mcRace(c.__mcField(seed), 'doc', seed + 3);
   let pageGap = null, pageWin = null;
   if (pr.race.finished && pr.race.order[0]) {
-    pageWin = pr.race.order[0].name + ':' + pr.race.order[0].style;
+    pageWin = pr.race.order[0].name + ':' + (pr.race.order[0].observedStyle || pr.race.order[0].style);
     const sec = pr.race.order[1];
     if (sec && sec.gapAtWin !== null) pageGap = Math.max(0, sec.gapAtWin) / 2.4;
   }
@@ -56,7 +56,7 @@ for (let i = 0; i < N; i++) {
   while (!r.race.finished && g++ < 300000) r.step(1 / 30);
   let cliGap = null, cliWin = null;
   if (r.race.finished && r.race.order[0]) {
-    cliWin = r.race.order[0].name + ':' + r.race.order[0].style;
+    cliWin = r.race.order[0].name + ':' + (r.race.order[0].observedStyle || r.race.order[0].style);
     const sec = r.race.order[1];
     if (sec && sec.gapAtWin !== null) cliGap = Math.max(0, sec.gapAtWin) / 2.4;
   }

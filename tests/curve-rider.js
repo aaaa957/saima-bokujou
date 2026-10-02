@@ -274,9 +274,10 @@ test('a nearby original blocker keeps the outward lane until the pass is complet
 
 test('a faster nearby original blocker cannot keep an unproductive outward commitment', () => {
   const { race, H, blocker, outerLane } = completedOutwardEscape(4, [70, 100]);
-  // The better horse resumes its normal cruise after the earlier slowdown.
-  // Its achievable pace exceeds our entrant's early target, even at close range.
-  blocker.v = blocker.cruise; blocker.prevV = blocker.v; blocker.targetV = blocker.v;
+  // The better horse uses its available short-term power after slowing.
+  // A sustainable cruise need not exceed another horse's sprint command.
+  blocker.aerobicOutput=blocker.aerobic;
+  blocker.v = blocker.maxV; blocker.prevV = blocker.v; blocker.targetV = blocker.v;
   race.step(0.001);
   assert.ok(blocker.v > H.targetV, 'fixture must make the former blocker genuinely faster than the selected pace');
   assert.equal(H.passTarget, null, 'a futile pass must release the completed outward commitment');

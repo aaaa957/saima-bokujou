@@ -1,6 +1,6 @@
 ﻿/* ============================================================
- * 赛马风云 · 连续比赛模拟引擎 v2026.10.01.6
- * 公式来源：《系统数值设计文档》3.10 比赛系统设计
+ * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.1
+ * 模型结构、实赛约束与验证口径：docs/比赛系统-现实拟合-v2026.10.02.1.md
  * 情报误差机制来源：《游戏策划案》4.5 情报系统
  * 运行环境：浏览器(挂载到 window.SaimaSim) / Node(require)
  * 已简化的部分（碰撞/弯道/出闸噪声）见 README.md
@@ -50,22 +50,11 @@
     return PHASE_DEFS[PHASE_DEFS.length - 1];
   }
 
-  /* 历史系数接口：用于读取旧脚本/资料，当前比赛不使用跑法裸速度系数。 */
-  const STYLE_COEF_DOC = {
-    '逃': { break: 1.08, open: 1.08, mid: 1.03, late: 1.02, final: 0.97 },
-    '先': { break: 1.03, open: 1.03, mid: 1.00, late: 1.02, final: 1.04 },
-    '差': { break: 0.96, open: 0.96, mid: 0.97, late: 1.03, final: 1.06 },
-    '追': { break: 0.88, open: 0.88, mid: 0.95, late: 1.02, final: 1.10 },
-  };
-  // 历史档案；doc/balanced 调用统一使用当前连续引擎。
-  const STYLE_COEF = {
-    '逃': { break: 1.0094, open: 1.0084, mid: 1.0059, late: 0.9988, final: 0.9936 },
-    '先': { break: 1.0035, open: 1.0031, mid: 1.0024, late: 1.0014, final: 1.0000 },
-    '差': { break: 1.0022, open: 1.0026, mid: 1.0036, late: 1.0054, final: 1.0068 },
-    '追': { break: 0.9966, open: 0.9980, mid: 1.0008, late: 1.0057, final: 1.0092 },
-  };
-  // 旧速度加成表保留导出兼容；实际骑手只影响判断与观察时机。
-  const JOCKEY_BONUS = { '新人': 0, '普通': 0.002, '优秀': 0.006, '殿堂': 0.012 };
+  /* 旧调用兼容入口已经中性化；历史数值只保留在历史报告，不再能误用于比赛。 */
+  const STYLE_COEF = Object.fromEntries(['逃','先','差','追'].map(style =>
+    [style, Object.freeze({break:1,open:1,mid:1,late:1,final:1})]));
+  const STYLE_COEF_DOC = STYLE_COEF;
+  const JOCKEY_BONUS = { '新人': 0, '普通': 0, '优秀': 0, '殿堂': 0 };
   const JOCKEY_CADENCE = { '新人': 4, '普通': 2, '优秀': 1.5, '殿堂': 1 };
   /* 场地修正 */
   const FIELD_STATE_COEF = { '良': 1, '稍重': 0.98, '重': 0.95, '不良': 0.9 };
@@ -79,15 +68,55 @@
     if (f <= 85) return 0.97; if (f <= 100) return 0.955; return 0.94;
   }
 
-  // 固定赛道布局；比赛距离只改变起跑点和圈数，不改变弯道半径。
-  // 三种布局为机制对照用的抽象场地，不声称复刻同名现实赛马场。
-  const COURSES = { '标准': { R: 120, S: 420 }, '长直道': { R: 140, S: 540 }, '小回り': { R: 95, S: 310 } };
-  const VENUE_COURSE = { '東京': '长直道', '新潟': '长直道', '中山': '小回り', '福島': '小回り', '小倉': '小回り' };
+  // 官方 A 栏周长/终点直道/高差约束的代理几何；不冒称测绘复刻。
+  // 未建模起跑引入线、混合内外圈与可变弯道半径，见 geo.simplification。
+  const COURSES = {
+    '标准': { R:120, S:420 }, '长直道': { R:140, S:540 }, '小回り': { R:95, S:310 },
+    '東京芝A': { lap:2083.1, S:525.9, elevation:2.7, hill:'tokyo', venue:'東京', direction:'左回', distances:[1400,1600,1800,2000,2300,2400,2500,2600,3400] },
+    '東京泥': { lap:1899, S:501.6, elevation:2.5, hill:'tokyo', venue:'東京', direction:'左回', distances:[1200,1300,1400,1600,2100,2400] },
+    '中山芝内A': { lap:1667.1, S:310, elevation:5.3, hill:'nakayama', venue:'中山', direction:'右回', distances:[1800,2000,2500,3600] },
+    '中山芝外A': { lap:1839.7, S:310, elevation:5.3, hill:'nakayama', venue:'中山', direction:'右回', distances:[1200,1600,2200,2600,3200,4000] },
+    '中山泥': { lap:1493, S:308, elevation:4.5, hill:'nakayama', venue:'中山', direction:'右回', distances:[1000,1200,1700,1800,2400,2500] },
+    '京都芝内A': { lap:1782.8, S:328.4, elevation:3.1, hill:'kyoto', venue:'京都', direction:'右回', distances:[1100,1200,1400,1600,2000] },
+    '京都芝外A': { lap:1894.3, S:403.7, elevation:4.3, hill:'kyoto', venue:'京都', direction:'右回', distances:[1400,1600,1800,2000,2200,2400,3000,3200] },
+    '京都泥': { lap:1607.6, S:329.1, elevation:3, hill:'kyoto', venue:'京都', direction:'右回', distances:[1000,1100,1200,1400,1800,1900,2600] },
+    '阪神芝内A': { lap:1689, S:356.5, elevation:1.9, hill:'hanshin', venue:'阪神', direction:'右回', distances:[1200,1400,2000,2200,3000] },
+    '阪神芝外A': { lap:2089, S:473.6, elevation:2.4, hill:'hanshin', venue:'阪神', direction:'右回', distances:[1400,1600,1800,2400,2600,3200] },
+    '阪神泥': { lap:1517.6, S:352.7, elevation:1.6, hill:'hanshin', venue:'阪神', direction:'右回', distances:[1200,1400,1800,2000,2600] },
+    '新潟芝内A': { lap:1623, S:358.7, elevation:0.8, hill:'niigata', venue:'新潟', direction:'左回', distances:[1200,1400,2000,2200,2400] },
+    '新潟芝外A': { lap:2223, S:658.7, elevation:2.2, hill:'niigata', venue:'新潟', direction:'左回', distances:[1400,1600,1800,2000,3000,3200] },
+    '新潟泥': { lap:1472.5, S:353.9, elevation:0.6, hill:'niigata', venue:'新潟', direction:'左回', distances:[1000,1200,1700,1800,2500] },
+  };
+  const VENUE_COURSE = { '東京':'東京芝A', '东京':'東京芝A', '中山':'中山芝内A', '京都':'京都芝外A', '阪神':'阪神芝外A', '新潟':'新潟芝外A', '福島':'小回り', '小倉':'小回り' };
+  const COURSE_SOURCES = { '東京':'tokyo', '中山':'nakayama', '京都':'kyoto', '阪神':'hanshin', '新潟':'niigata' };
   const mod = (x, n) => ((x % n) + n) % n;
-  function trackGeometry(length, course) {
-    const key = COURSES[course] ? course : (VENUE_COURSE[course] || '标准');
-    const { R, S } = COURSES[key], referenceLane=1.4, referenceR=R+referenceLane-TRACK_WIDTH/2;
-    const B = Math.PI * referenceR, lap = 2 * S + 2 * B;
+  function venueCourseKey(length,course,surface) {
+    if(COURSES[course]) return course;
+    const venue=course==='东京'?'東京':course;
+    if(surface==='泥地' && COURSE_SOURCES[venue]) return venue+'泥';
+    if(venue==='中山') return [1200,1600,2200,2600,3200,4000].includes(length)?'中山芝外A':'中山芝内A';
+    if(venue==='京都') return length<=1400 || length===2000 ?'京都芝内A':'京都芝外A';
+    if(venue==='阪神') return [1200,1400,2000,2200,3000].includes(length)?'阪神芝内A':'阪神芝外A';
+    if(venue==='新潟') return [1200,2200,2400].includes(length)?'新潟芝内A':'新潟芝外A';
+    return VENUE_COURSE[venue] || '标准';
+  }
+  function courseElevationProfile(def,S,B,lap) {
+    const h=def.elevation;
+    if(!h) return null;
+    // 坡段位置是官方文字说明约束的近似值，不是逐米测量数据。
+    if(def.hill==='tokyo') return [[0,0.7],[S-460,0],[S-300,2],[S,2],[S+B,1.2],[2*S+B-180,1.2],[2*S+B,h],[lap,0.7]];
+    if(def.hill==='nakayama') return [[0,0],[S-180,0],[S-70,2.2],[S,2.2],[S+B-40,h],[2*S+B,Math.min(3,h)],[lap,0]];
+    if(def.hill==='kyoto') return [[0,0],[S,0],[S+lap-1200,0],[S+lap-800,h],[S+lap-450,0],[lap,0]];
+    if(def.hill==='hanshin') {
+      const rise=Math.min(1.8,h);
+      return [[0,0],[S-200,0],[S-80,rise],[S,rise],[S+B,h],[2*S+B,h],[lap,0]];
+    }
+    return [[0,h*0.27],[S,h*0.27],[S+B,0],[2*S+B,h],[lap,h*0.27]];
+  }
+  function trackGeometry(length, course, surface) {
+    const key=venueCourseKey(length,course,surface), def=COURSES[key], S=def.S;
+    const referenceLane=1.4, referenceR=def.lap?(def.lap-2*S)/(2*Math.PI):def.R+referenceLane-TRACK_WIDTH/2;
+    const R=referenceR-referenceLane+TRACK_WIDTH/2, B=Math.PI*referenceR, lap=def.lap || 2*S+2*B;
     const startOffset = mod(S - length, lap), boundaries = [];
     for (let loop = -1; loop <= Math.ceil(length / lap) + 1; loop++) {
       for (const [at, kind, label] of [[S, 'bendStart', '入弯'], [S+B, 'bendEnd', '出弯'], [2*S+B, 'bendStart', '入弯'], [lap, 'bendEnd', '出弯']]) {
@@ -96,7 +125,13 @@
       }
     }
     boundaries.sort((a,b) => a.s-b.s);
-    return { length, R, referenceR, referenceLane, B, S, lap, startOffset, course: key, boundaries, finishStraight: Math.min(length, S) };
+    const official=!!def.lap, source=def.venue ? 'https://www.jra.go.jp/facilities/race/'+COURSE_SOURCES[def.venue]+'/course/index.html':null;
+    const mixed=length===3200 && (def.venue==='中山'||def.venue==='阪神');
+    return { length,R,referenceR,referenceLane,B,S,lap,startOffset,course:key,boundaries,finishStraight:Math.min(length,S),
+      venue:def.venue||null,direction:def.direction||null,surface:surface||'草地',officialLap:official?lap:null,
+      elevationRange:def.elevation||0,elevationProfile:courseElevationProfile(def,S,B,lap),source,
+      distanceSupported:official?def.distances.includes(length):true,
+      simplification:official?'官方A栏周长、终点直道与高差约束；两直两弯、统一20m可用宽度；引入线与变曲率未复刻'+(mixed?'；本距离混合内外圈暂以单圈代理':''):'抽象机制对照场地' };
   }
   function trackPoint(s, t, geo, dir) {
     const { R, B, S } = geo, turnR=geo.referenceR||R, q = mod(s + (geo.startOffset || 0), geo.lap || (2*S+2*B));
@@ -120,44 +155,56 @@
   }
   const SLOPE_PROFILES = { '平坦':{g:0}, '缓坂':{g:0.010}, '中坂':{g:0.018}, '急坂':{g:0.025} };
   function gradientAt(s,geo,g) {
+    if(geo.elevationProfile) {
+      const q=mod(s+(geo.startOffset||0),geo.lap), p=geo.elevationProfile;
+      for(let i=1;i<p.length;i++) if(q<p[i][0]) return (p[i][1]-p[i-1][1])/(p[i][0]-p[i-1][0]);
+      return 0;
+    }
     if(!g) return 0;
     // 周期高程的导数，积分一圈为零；坡度按赛道位置读取。
     const q=mod(s+(geo.startOffset||0),geo.lap), z=q/geo.lap;
     return g * (0.65*Math.sin(2*Math.PI*z+0.6)+0.35*Math.sin(4*Math.PI*z));
   }
+  function elevationAt(s,geo,g) {
+    const q=mod(s+(geo.startOffset||0),geo.lap);
+    if(geo.elevationProfile) {
+      const p=geo.elevationProfile;
+      for(let i=1;i<p.length;i++) if(q<p[i][0]) {
+        const a=p[i-1],b=p[i];return a[1]+(b[1]-a[1])*(q-a[0])/(b[0]-a[0]);
+      }
+      return p.at(-1)[1];
+    }
+    const z=q/geo.lap;
+    return -g*geo.lap*(0.65*Math.cos(2*Math.PI*z+0.6)/(2*Math.PI)+0.35*Math.cos(4*Math.PI*z)/(4*Math.PI));
+  }
 
   // 历史动作解释接口。当前动作由目标配速/走位产生，不叠加这些旧加成或税率。
   const ACTION_DEF = {
-    '推骑':    { coef: 0.008,  stamina: 1.35 },
-    '打鞭':    { coef: 0.018,  stamina: 1.9 },
-    '收力':    { coef: -0.010, stamina: 0.72 },
-    '减速':    { coef: -0.020, stamina: 0.6 },
-    '斜行in':  { coef: 0,      stamina: 1.2 },
-    '斜行out': { coef: 0,      stamina: 1.2 },
+    '推骑':    { coef: 0, stamina: 1 },
+    '打鞭':    { coef: 0, stamina: 1 },
+    '收力':    { coef: 0, stamina: 1 },
+    '减速':    { coef: 0, stamina: 1 },
+    '斜行in':  { coef: 0, stamina: 1 },
+    '斜行out': { coef: 0, stamina: 1 },
   };
   function actionBonus(a) { return ACTION_DEF[a] || { coef: 0, stamina: 1 }; }
-  /* 催马收益随剩余耐力/毅力单调增加；两池均耗尽时剩 35% 效果。
-     收力/减速不属于正向催马，不随余力衰减。权重与下限是游戏参数。 */
-  function actionCoef(H) {
-    const d = ACTION_DEF[H.action];
-    if (!d) return 0;
-    if (d.coef <= 0) return d.coef;
-    const st = H.staminaMax > 0 ? clamp(H.stamina / H.staminaMax, 0, 1) : 1;
-    const gt = H.gutsMax > 0 ? clamp(H.guts / H.gutsMax, 0, 1) : 1;
-    const reserve = RACE_F.actionReserveFloor + (1 - RACE_F.actionReserveFloor) * (st * 0.65 + gt * 0.35);
-    return d.coef * reserve;
-  }
+  function actionCoef(H) { return 0; } // 历史调用兼容；动作不凭空产生速度或能耗倍率。
 
-  // 连续运动模型的相对功率单位，参数为游戏标定值而非直接测量的生理常数。
+  // 机械等价的比功率 W/kg、储备 J/kg。不是马的直接代谢测量值。
+  // 结构参考 Mercier & Aftalion (2020)，映射/尾流/恢复参数再用公开赛时约束。
   const RACE_F = {
     baseSpeed:{a:0.020,b:15.80,min:1,max:115}, // 70点=17.2m/s参考速度
-    staminaPer:60, gutsPer:60, energyScale:180,
-    aerobicBase:0.86, aerobicStaminaK:0.0020,
-    peakExtra:1.15, burstSpeedK:0.010,
-    maxAccel:3.2, runningAccel:1.05, braking:3.5,
+    staminaPer:35, gutsPer:60, energyScale:1,
+    aerobicBase:0.86, aerobicStaminaK:0.0020, // 旧展示兼容；物理用下列有单位参数
+    aerobicPower:50, aerobicPerPoint:0.24, aerobicTau:10,
+    resistanceK:0.250, airK:0.00065, recoveryRate:0.12, recoveryMax:2.0,
+    fatigueLoss:0.08, fatigueWork:0.11, fatigueExcess:0.45,
+    reservePower:75, reserveFade:0.10, efficiencyPerPoint:0.0025,
+    peakExtra:1.55, burstSpeedK:0.010,
+    maxAccel:4.6, runningAccel:2.2, braking:3.5,
     responseTime:1.4, lateralSpeed:0.8, laneBias:1,
-    draftRange:12, draftSave:0.94, leadCost:1,
-    curveLateral:3.25, fatigueWork:5.5, fatigueExcess:16,
+    draftRange:12, draftSave:0.72, leadCost:1, // 只减少空气阻力项，不给全部做功打折
+    curveLateral:3.6, turnCost:0.045,
     // 以下只用于赛前公开预测/历史辅助接口，不反馈给比赛物理。
     paceRef:1.72, paceSizeFix:0.03, paceSlowGate:1, paceHighGate:1.5,
     actionReserveFloor:0.35,
@@ -326,39 +373,42 @@
     }
     return pick(rng, NAME_A) + pick(rng, NAME_B) + '号';
   }
-  /* 各跑法的属性模板（生成演示用马）
-     ⚠️ 两条重要修正：
-     ① 耐力不再按跑法大幅分化。旧模板给「追」只有 耐力 40~65
-        （level 66 时约 52 → 可跑距离 1664m），意味着后上型在马厩里
-        就已经跑不完 2000m —— 实测会让马群裂成「两匹能跑完 + 六匹崩盘」，
-        第 3 名就落后 57 马身。
-        现实里跑法决定的是【把体力花在哪一段】，不是【体力的上限】。
-     ② 速度也对齐了。旧模板 逃 速度[70,92] vs 差[60,88]，
-        在同 level 下光速度就差 5.6 点（≈1.5%），2000m 就是 12 马身 ——
-        等于让「跑法」白送实力。现实中同班次的马速度本就接近，
-        跑法只是【战术选择】，不应该自带能力优势。
-     属性分工保留：出闸能力 逃高追低、爆发力 追高逃低、毅力 追高逃低。 */
-  /* 收窄跑法模板的属性分化，保留出闸/爆发倾向。
-     系数、属性模板和 AI 都会影响赛果，须分别做同源属性与实际生成阵容的测量，
-     不能把每场冠军占比当作单匹出赛胜率，或把结果全部归因于模板。 */
-  const STYLE_STATS = {
-    '逃': { '速度': [66, 90], '耐力': [66, 88], '出闸能力': [57, 84], '爆发力': [56, 78], '力量': [49, 83], '毅力': [56, 84], '智力': [45, 85], '体格': [45, 85] },
-    '先': { '速度': [66, 90], '耐力': [65, 87], '出闸能力': [54, 81], '爆发力': [60, 82], '力量': [49, 83], '毅力': [57, 85], '智力': [45, 85], '体格': [45, 85] },
-    '差': { '速度': [66, 90], '耐力': [65, 87], '出闸能力': [50, 77], '爆发力': [64, 86], '力量': [51, 85], '毅力': [58, 86], '智力': [45, 85], '体格': [45, 85] },
-    '追': { '速度': [66, 90], '耐力': [64, 86], '出闸能力': [48, 75], '爆发力': [66, 88], '力量': [50, 84], '毅力': [60, 88], '智力': [45, 85], '体格': [45, 85] },
-  };
+  // 能力先生成，跑法不再选择属性模板。生涯、初始种马和演示马共用此分布。
+  const HORSE_STATS = { '速度':[66,90], '耐力':[65,87], '出闸能力':[51,81],
+    '爆发力':[61,85], '力量':[50,84], '毅力':[58,86], '智力':[45,85], '体格':[45,85] };
+  function horseBehavior(h,generationRng) {
+    // 新马由生成 RNG 取样并持久化；旧档缺少性格时按稳定身份补齐。
+    // 两者均不消费比赛 RNG，也不读取跑法标签。
+    let seed=2166136261; for(const c of String(h.id||h.name||'horse')) seed=Math.imul(seed^c.charCodeAt(0),16777619);
+    const r=generationRng||mulberry32(seed), s=h.stats||{}, supplied=h.behavior||{};
+    const values={forwardness:0.5+((s['出闸能力']??70)-(s['爆发力']??70))*0.006+(r()-0.5)*0.5,
+      settle:0.5+((s['智力']??70)-70)*0.004+(r()-0.5)*0.3,
+      tractability:0.65+((s['智力']??70)-70)*0.003+(r()-0.5)*0.2};
+    for(const key of Object.keys(values)) values[key]=clamp(Number.isFinite(supplied[key])?supplied[key]:values[key],0,1);
+    return values;
+  }
+  function racePlanFor(h,behavior) {
+    const plan=h.racePlan||{};
+    return {position:clamp(Number.isFinite(plan.position)?plan.position:behavior.forwardness,0,1),
+      risk:clamp(Number.isFinite(plan.risk)?plan.risk:0.35+((h.aggression??1)-1)*0.3,0,1),
+      patience:clamp(Number.isFinite(plan.patience)?plan.patience:behavior.settle,0,1)};
+  }
+  function describeHorse(h,historicalStyle,generationRng) {
+    h.behavior=horseBehavior(h,generationRng);
+    const forward=racePlanFor(h,h.behavior).position;
+    h.style=historicalStyle || (forward>=0.75?'逃':forward>=0.55?'先':forward>=0.30?'差':'追');
+    return h;
+  }
   function makeHorse(rng, opts) {
     const o = opts || {};
-    const style = o.style || pick(rng, ['逃', '先', '先', '差', '差', '追', '追', '先']);
     /* 「强马」的档差。原为 ±5 —— 也就是场次内单靠 tier 就能拉出 5 点能力差。
        与「场次内能力跨度 ±2」的策略对齐后压到 ±2（见 FIELD_LEVEL_SPAN）。 */
     const boost = o.tier === 'strong' ? 2 : (o.tier === 'weak' ? -2 : 0);
-    /* 双层生成：场次水平(level)决定整体档次，跑法模板决定形态；
-       形态差异保留(逃高耐力、追低耐力高爆发)，个体差异压缩，保证同场竞争性 */
+    /* 场次水平决定整体档次；个体能力与跑法标签独立。 */
     const level = o.level !== undefined ? o.level : 70;
     const stats = {};
-    for (const k of Object.keys(STYLE_STATS[style])) {
-      const r = STYLE_STATS[style][k];
+    for (const k of Object.keys(HORSE_STATS)) {
+      const r = HORSE_STATS[k];
       const mid = (r[0] + r[1]) / 2;
       const roll = r[0] + rng() * (r[1] - r[0]);
       /* 个体差异压缩系数。归因实验（全同跑法·全同 level 的 8 匹马）
@@ -382,10 +432,12 @@
     const rawRate = clamp(0.24 + strength * 0.085 + (rng() - 0.5) * 0.10, 0.03, 0.62);
     const 胜利 = clamp(Math.round(出赛 * rawRate), 0, 出赛);
     const 前三 = Math.min(出赛, 胜利 + Math.round(出赛 * (0.20 + rng() * 0.22)));
-    return {
+    return describeHorse({
       id: o.id || ('h' + Math.floor(rng() * 1e9)),
       name: o.name || '', sire: o.sire || '', dam: o.dam || '',
-      style, age, sex,
+      age, sex,
+      behavior:o.behavior?{...o.behavior}:undefined, racePlan:o.racePlan?{...o.racePlan}:undefined,
+      carriedWeight:o.carriedWeight, bodyMass:o.bodyMass,
       coat: o.coat || pick(rng, COATS),
       surface: o.surface || weightedPick(rng, [['草地', 85], ['泥草双刀', 10], ['泥地', 5]]),
       special: o.special || weightedPick(rng, [['左右皆可', 80], ['左回', 9], ['右回', 9], ['左右皆不可', 2]]),
@@ -396,29 +448,12 @@
       aggression: o.aggression !== undefined ? o.aggression : Math.round((0.5 + rng()) * 10) / 10,
       form: { 出赛, 胜利, 前三 },
       player: !!o.player,
-    };
+    },o.style,rng);
   }
-  /* 出赛跑法构成的抽取
-     权重取自 JRA 芝的脚质构成（逃 约 8~14%、先 约 25%、差 约 32%、追 约 28%）。
-     ⚠️ 原来 makeField 与生涯对手生成都写死 ['逃','先','差','追','先','差','追',…]，
-        整个赛场最多只有 2 匹逃马 → paceStrength 上不去 → 「ハイペース」几乎判不出来
-        （实测 paceRef=1.45 时 3000 场只有 0.7%）。于是「多马争抢领放 → 前速集体
-        烧油崩溃 → 后上型捡漏高赔率」这条设计路径在实际游戏中是死代码。
-     保底 1 匹逃：现实中极少出现「一匹逃都没有」的场次。
-     其余按权重随机，于是逃马数量会在 1~3 匹之间自然波动，三种步速档位都能出现。 */
-  function fieldStyles(rng, n) {
-    const W = [['逃', 16], ['先', 28], ['差', 30], ['追', 26]];
-    const arr = [];
-    for (let i = 0; i < n; i++) arr.push(weightedPick(rng, W));
-    if (arr.indexOf('逃') < 0) arr[Math.floor(rng() * n)] = '逃';
-    return arr;
-  }
-
   function makeField(rng, opts) {
     const o = opts || {};
     const n = o.n || 8;
     const used = new Set();
-    const styles = fieldStyles(rng, n);
     const strongIdx = o.strongIndex !== undefined ? o.strongIndex : Math.floor(rng() * n);
     const playerIdx = o.playerIndex !== undefined ? o.playerIndex : strongIdx;
     /* 场次水平（整场统一），档差由 tier 提供（见 RACE_F / makeHorse） */
@@ -426,7 +461,6 @@
     const horses = [];
     for (let i = 0; i < n; i++) {
       const h = makeHorse(rng, {
-        style: styles[i % styles.length],
         tier: i === strongIdx ? 'strong' : 'normal',
         level,
         id: 'h' + (i + 1),
@@ -446,24 +480,14 @@
     return marketOddsAndPopularity(horses, raceOpts, rng).byId;
   }
 
-  /* ---------------- 步速（展开）判定（3.10 新增） ----------------
-   * 只吃公开信息：跑法 + 斗心。参赛表上就能数出几匹逃马，
-   * 所以「本场节奏」本来就是赛前可判读的公开信息
-   * ——现实中马评家判读展开用的也正是这个方法。
-   *
-   * 一匹斗心正常的逃马 = 1.0；先行马按 0.12 计入（它们会压上施压，但不真正领放）。
-   * 返回值：1.0 = 标准节奏；< paceSlowGate = スロー；> paceHighGate = ハイ。
-   *   スロー —— 无人认真争抢 → 领放者可控制节奏「偷走比赛」
-   *   ハイ   —— 多马互抢 → 前段更快也更烧油 → 末段集体崩溃、后上型受益
-   *
-   * ⚠️ 只在赛前判定一次。若每帧重算，赛末活跃马变少会把强度稀释掉
-   * （实测 2 匹逃马的场次会被算成 0.67 = スロー）。
-   * ============================================================ */
+  /* 公开的赛前展开预测：战术声明或历史跑法，只供市场/界面参考。
+     不读取隐藏性格/能力，不进入实际速度、耗能或骑手决策。 */
   const PACE_WEIGHT = { '逃': 1.00, '先': 0.12 };
   function paceStrengthOf(horses) {
     let want = 0;
     for (const h of horses) {
-      const w = PACE_WEIGHT[h.style] || 0;
+      const declared=h.racePlan?.position;
+      const w=Number.isFinite(declared)?Math.pow(clamp(declared,0,1),3):(PACE_WEIGHT[h.style]||0);
       if (w <= 0) continue;
       const mor = (h['斗志'] !== undefined) ? h['斗志'] : 70;
       want += w * (0.6 + 0.4 * clamp(mor / 100, 0, 1));
@@ -514,17 +538,15 @@
     biasUnraced: 1.10,     // 新马被低估：公开评分除以该系数（>1），降低人气
     biasBloodNeglect: 0.92,// 血统被系统性轻视（对血统分做压缩）
     biasJockeyHalo: 1.06,  // 名骑手光环：骑手分被放大
-    /* 步速（展开）—— 市场看得见，但会系统性低估。
-       参赛表上就能数出几匹逃马，所以「本场节奏」对市场是公开信息，
-       市场也的确会据此刻度赔率；但它只做了打折处理：真效应 × damp。
-       剩下的差额就是玩家要赚的钱 —— 正对应业界共识
-       「betting market almost never prices pace correctly」。 */
+    /* 步速（展开）的公开信息启发式。历史跑法与已声明计划可用于预测，
+       但真实节奏由比赛中骑乘产生；权重与信念折减是游戏市场假设，
+       不能当作已知比赛效果或现实市场套利保证。 */
     wPace: 0.10,           // 步速在公开评分里的权重
-    marketPaceDamp: 0.40,  // 市场对步速效应的打折比例（越小 → 套利空间越大）
+    marketPaceDamp: 0.40,  // 市场对展开预测的信念折减比例
   };
-  /* 步速对各跑法的「真实」影响方向（正=有利）。
-     ハイペース 烧掉前速马 → 逃/先 受损，差/追 受益；スロー 则相反。 */
-  const PACE_TRUE_EFFECT = { '逃': -1.00, '先': -0.40, '差': +0.50, '追': +0.90 };
+  /* 市场对历史跑法与展开的启发式看法，不能当作真实物理效果。 */
+  const PACE_MARKET_BELIEF = { '逃': -1.00, '先': -0.40, '差': +0.50, '追': +0.90 };
+  const PACE_TRUE_EFFECT = PACE_MARKET_BELIEF; // 旧市场调用兼容名
   /* ---------------- 市场模型的公开信号（绝不含隐藏属性） ---------------- */
   function marketFormScore(h) {
     const f = h.form || { '出赛': 0, '胜利': 0, '前三': 0 };
@@ -605,12 +627,10 @@
     const pace = marketPaceLevel(horses);
     const scored = horses.map((h) => {
       const e = marketEntryScore(h, raceOpts, rng);
-      /* 步速调整：市场知道本场节奏（公开信息），但只兑现真效应的
-         marketPaceDamp 倍 —— 未被兑现的部分正是玩家可以赚的错价。
-         现实中市场对「单骑领放偷走比赛」与「争抢步速烧掉前速马」
-         这两件事的定价都偏轻，这里的打折就是那个偏差。 */
-      const trueEffect = (pace.strength - 1) * (PACE_TRUE_EFFECT[h.style] || 0);
-      const damped = trueEffect * MARKET.marketPaceDamp;
+      // 根据公开历史倾向预测节奏影响；这是市场信念与游戏偏差，
+      // 不是真实物理效应，也不保证市场必然低估某种临场战术。
+      const marketBelief = (pace.strength - 1) * (PACE_MARKET_BELIEF[h.style] || 0);
+      const damped = marketBelief * MARKET.marketPaceDamp;
       e.score += damped * MARKET.wPace;
       e.parts.pace = damped;
       return { h, score: e.score, parts: e.parts };
@@ -698,18 +718,21 @@
   }
 
   /* ---------------- 连续比赛引擎 ----------------
-     跑法只选择战术；STYLE_COEF/JOCKEY_BONUS/阶段属性表不再进入物理。
+     跑法为历史表现标签；物理、属性生成和骑乘决策均不读取跑法系数。
      持续供能与短时储备共同支付实际功率；毅力表示疲劳耐受，两者并行变化。
      H.control 是验证/外部控制入口：{targetV,targetT}；不读取全场均值决定速度或成本。
   */
   function createRace(field, opts) {
     const o=opts||{}, length=Number(o.length)||2000;
     if(!Array.isArray(field)||!field.length||!Number.isFinite(length)||length<200) throw new Error('无效参赛阵容或距离');
-    const surface=o.surface||'草地', state=o.state||'良', dir=o.dir==='右回'?'右回':'左回';
-    const profile=SLOPE_PROFILES[o.profile]?o.profile:'缓坂', g=SLOPE_PROFILES[profile].g;
-    const geo=trackGeometry(length,o.course||o.venue), rng=o.rng||mulberry32(1);
+    const surface=o.surface||'草地', state=o.state||'良';
+    const sandboxProfile=SLOPE_PROFILES[o.profile]?o.profile:'缓坂';
+    const geo=trackGeometry(length,o.course||o.venue,surface), rng=o.rng||mulberry32(1);
+    const dir=geo.direction||(o.dir==='右回'?'右回':'左回');
+    const profile=geo.elevationProfile?'官方高程':sandboxProfile,g=geo.elevationProfile?0:SLOPE_PROFILES[sandboxProfile].g;
+    const wind=clamp(Number(o.wind)||0,-12,12);
     const prediction=paceStrengthOf(field);
-    const race={length,surface,state,dir,profile,g,geo,course:geo.course,t:0,finished:false,
+    const race={length,surface,state,dir,profile,g,geo,wind,course:geo.course,t:0,finished:false,
       events:[],order:[],dnf:[],winnerTime:null,pacePrediction:prediction,
       paceStrength:1,paceLevel:'平均',paceContest:0,avgV:0,avgBase:0,
       prevLead:null,phaseAnnounced:{},posHistory:[],_lastPct:0,lastEventAt:{},sectionals:[]};
@@ -721,20 +744,29 @@
       const gate=gates[i], pitch=Math.min(1.6,(TRACK_WIDTH-3)/field.length), t=1.5+pitch*(gate-0.5);
       const surfC=(SURFACE_COEF[surface]||{})[h.surface]??1;
       const base=baseSpeed(adj['速度']), fatMult=fatigueMultiplier(h['疲劳']||0);
+      const behavior=horseBehavior(h), plan=racePlanFor(h,behavior);
+      const bodyMass=clamp(Number(h.bodyMass)||450+(adj['体格']-70)*1.5,320,650);
+      const carriedWeight=clamp(Number(h.carriedWeight)||57,40,70), massRatio=(bodyMass+carriedWeight)/(bodyMass+57);
       const H={h,id:h.id,name:h.name,style:h.style||'先',jockey:h.jockeyGrade||'普通',adj,mor,gate,
+        behavior,plan,bodyMass,carriedWeight,massRatio,
         s:0,t,targetT:t,v:0,prevV:0,pot:0,targetV:base,accel:0,power:0,
         stamina:adj['耐力']*RACE_F.staminaPer,staminaMax:adj['耐力']*RACE_F.staminaPer,
         guts:adj['毅力']*RACE_F.gutsPer,gutsMax:adj['毅力']*RACE_F.gutsPer,
         stage:'耐力',retention:1,base,fatMult,fieldCoef:(FIELD_STATE_COEF[state]||1)*surfC,
-        surfaceCost:1/(surfC*surfC),startDelay:0.12+(100-adj['出闸能力'])*0.003+rng()*0.15,
+        surfaceCost:1+(1-surfC)*0.75,startDelay:0.12+(100-adj['出闸能力'])*0.003+rng()*0.15,
         action:null,actionT:0,lastObserve:0,laneIntentT:0,laneJitter:0,squeezePass:0,
         blocked:false,blocker:null,collisionCoef:1,collisionIntensity:0,stallTimer:0,
         place:null,time:null,gapAtWin:null,dnf:false,sprintAt:null,sectionals:[],
-        cumulativeWork:0,statsSummary:{workUsed:0,energyUsed:0,draftSeconds:0,blockedSeconds:0,peakSpeed:0,sprintAt:null},
+        cumulativeWork:0,statsSummary:{workUsed:0,aerobicUsed:0,energyUsed:0,unpaidWork:0,recovered:0,draftSeconds:0,blockedSeconds:0,peakSpeed:0,sprintAt:null},
         aggression:h.aggression??1,aiBias:(rng()-0.5)*0.12};
-      H.aerobic=clamp(RACE_F.aerobicBase+(adj['耐力']-70)*RACE_F.aerobicStaminaK,0.66,1.02)*fatMult;
-      H.cruise=base*Math.cbrt(H.aerobic);
+      H.economy=Math.exp((70-adj['速度'])*RACE_F.efficiencyPerPoint);
+      H.aerobic=clamp(RACE_F.aerobicPower+(adj['耐力']-70)*RACE_F.aerobicPerPoint,35,68)*fatMult;
+      H.aerobicOutput=H.aerobic*0.45;
       H.maxV=(base+RACE_F.peakExtra+(adj['爆发力']-70)*RACE_F.burstSpeedK)*fatMult;
+      H.powerFor=(v,a,drafting,at=H.s)=>powerCost(H,v,a,drafting,at);
+      H.sustainableV=(at=H.s,drafting=false,power=H.aerobic*H.retention)=>speedAtPower(H,power,drafting,at);
+      H.kineticCost=(from,to)=>0.5*Math.max(0,to*to-from*from)*H.massRatio;
+      H.cruise=H.sustainableV();
       return H;
     }); race.horses=horses;
     function event(text,force) {
@@ -752,86 +784,216 @@
       return active().filter(F=>F!==H && F.s>H.s && F.s-H.s<limit && Math.abs(F.t-H.t)<(horseWid(H)+horseWid(F))/2+0.3)
         .sort((a,b)=>a.s-b.s)[0]||null;
     }
+    // 路线只比较附近马匹和可达的通道；横移时间与弯道外绕都是机会成本。
     function findGap(H,preferInner) {
-      const others=active().filter(F=>F!==H && F.s>H.s-3 && F.s<H.s+14);
+      const others=active().filter(F=>F!==H && F.s>H.s-8 && F.s<H.s+24);
+      const margin=horseWid(H)/2+0.25;
       let best=null,bestScore=-Infinity;
-      for(let t=1.2;t<=TRACK_WIDTH-1.2;t+=0.35) {
-        if(others.some(F=>Math.abs(F.t-t)<(horseWid(H)+horseWid(F))/2+0.2)) continue;
-        const score=-Math.abs(t-H.t)*1.2-(preferInner?t*0.14:0);
-        if(score>bestScore) {bestScore=score;best={t};}
+      for(let t=margin;t<=TRACK_WIDTH-margin;t+=0.35) {
+        const shift=Math.abs(t-H.t);
+        if(shift>5.6) continue;
+        // 身体并排时不能穿过对手；前方堵塞可先收力再横移。
+        if(others.some(F=>Math.abs(F.s-H.s)<(horseLen(H)+horseLen(F))/2-0.05 &&
+          Math.min(H.t,t)-(horseWid(H)+horseWid(F))/2-0.15<F.t &&
+          F.t<Math.max(H.t,t)+(horseWid(H)+horseWid(F))/2+0.15)) continue;
+        const corridor=others.filter(F=>Math.abs(F.t-t)<(horseWid(H)+horseWid(F))/2+0.25);
+        if(corridor.some(F=>Math.abs(F.s-H.s)<(horseLen(H)+horseLen(F))/2+0.7)) continue;
+        const front=corridor.filter(F=>F.s>H.s).sort((a,b)=>a.s-b.s)[0];
+        const pace=front?Math.min(H.targetV,front.v+Math.max(0,front.s-H.s-4)*0.22):H.targetV;
+        const projected=pace*laneProgressCoef(H.s,t,geo);
+        const score=projected-shift*0.12-(preferInner&&kAt(H.s,geo)>0?t*0.012:0);
+        if(score>bestScore) {bestScore=score;best={t,pace,score};}
       }
       return best;
     }
-    function avoidBlock(H) {
-      const gap=findGap(H,true);
-      if(gap && Math.abs(gap.t-H.t)>0.2) {H.passTarget=H.blocker||frontOf(H);setLaneTarget(H,gap.t);setAction(H,gap.t<H.t?'斜行in':'斜行out');}
-      else setAction(H,'收力');
+    function avoidBlock(H,gap=findGap(H,true)) {
+      const front=H.blocker||frontOf(H);
+      const currentPace=front?Math.min(H.targetV,front.v+Math.max(0,front.s-H.s-4)*0.22):H.targetV;
+      if(gap && Math.abs(gap.t-H.t)>0.25 && gap.pace>currentPace+0.10) {
+        H.passTarget=front;setLaneTarget(H,gap.t);setAction(H,gap.t<H.t?'斜行in':'斜行out');
+        return true;
+      }
+      if(front) H.targetV=Math.min(H.targetV,Math.max(3,front.v+Math.max(0,front.s-H.s-4)*0.25));
+      setAction(H,'收力');return false;
+    }
+    function projectedCap(H,at) {
+      let cap=H.maxV*H.retention;
+      if(kAt(at,geo)>0) cap=Math.min(cap,Math.sqrt(Math.max(1,
+        (RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*(geo.R+H.t-TRACK_WIDTH/2)))*bendCoefFor(H.h.special,dir));
+      return cap;
+    }
+    // 与实际运动使用同一 W/kg 功率函数，积分为 J/kg；遮挡只预测当前近邻的一小段。
+    function reserveToFinish(H,requestedV,draftDistance=0) {
+      const remaining=Math.max(0,length-H.s), samples=8;
+      let required=H.kineticCost(H.v,Math.min(requestedV,projectedCap(H,H.s))), elapsed=0;
+      const maximumSupply=H.aerobic*H.retention;
+      const oxygenDeficit=Math.max(0,maximumSupply-(H.aerobicOutput??maximumSupply));
+      for(let i=0;i<samples;i++) {
+        const distance=remaining*(i+0.5)/samples,at=H.s+distance;
+        const v=Math.max(3,Math.min(requestedV,projectedCap(H,at)));
+        const seconds=remaining/samples/Math.max(1,v*laneProgressCoef(at,H.t,geo));
+        const supply=maximumSupply-oxygenDeficit*Math.exp(-(elapsed+seconds/2)/RACE_F.aerobicTau);
+        required+=Math.max(0,H.powerFor(v,0,distance<draftDistance,at)-supply)*seconds;
+        elapsed+=seconds;
+      }
+      return required;
+    }
+    function budgetSpeed(H,reserve,draftDistance=0) {
+      let low=Math.max(3,H.sustainableV(H.s,!!draftDistance)*0.88),high=H.maxV;
+      for(let i=0;i<9;i++) {
+        const mid=(low+high)/2;
+        if(reserveToFinish(H,mid,draftDistance)<=reserve) low=mid;else high=mid;
+      }
+      return low;
+    }
+    function recordDecision(H,list,mode,reason,reserveEstimate,observedPace) {
+      const stats=H.statsSummary;
+      stats.decisions=(stats.decisions||0)+1;
+      if(H.s>80 && H.s<length*0.8) {
+        const rank=list.indexOf(H)/Math.max(1,list.length-1);
+        stats.positionSamples=(stats.positionSamples||0)+1;
+        stats.meanPosition=(stats.meanPosition||0)+(rank-(stats.meanPosition||0))/stats.positionSamples;
+        H.observedStyle=stats.meanPosition<=0.15?'逃':stats.meanPosition<=0.45?'先':stats.meanPosition<=0.75?'差':'追';
+      }
+      H.strategy={mode,reason,reserveEstimate,observedPace,targetV:H.targetV,at:H.s,time:race.t};
+      if(!H.strategyHistory) H.strategyHistory=[];
+      H.strategyHistory.push({...H.strategy});if(H.strategyHistory.length>80) H.strategyHistory.shift();
     }
     function runAI(H) {
       if(H.control) return;
-      const list=ranked(), leader=list[0], remaining=length-H.s;
-      const localFront=frontOf(H), sr=H.stamina/H.staminaMax;
-      const judgement={'新人':0.87,'普通':0.96,'优秀':1,'殿堂':1.03}[H.jockey]||0.96;
-      // 预测余力还能支持多久的短时出力，而不是按固定百分比发放冲刺。
-      let requiredReserve=0;
-      for(let sample=0;sample<5;sample++) {
-        const at=H.s+remaining*(sample+0.5)/5, bend=kAt(at,geo)>0;
-        const radius=geo.R+H.t-TRACK_WIDTH/2;
-        const projectedV=Math.min(H.maxV*H.retention,bend?Math.sqrt((RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*radius)*bendCoefFor(H.h.special,dir):Infinity);
-        const projectedCost=powerCost(H,projectedV,0,false,at);
-        requiredReserve+=Math.max(0,projectedCost-H.aerobic*H.retention)*RACE_F.energyScale*(remaining/5)/Math.max(projectedV*laneProgressCoef(at,H.t,geo),1);
+      const list=ranked(),remaining=Math.max(0,length-H.s),localFront=frontOf(H);
+      const behavior=H.behavior||{forwardness:0.5,settle:0.5,tractability:0.5};
+      const plan=H.plan||{position:behavior.forwardness,risk:0.5,patience:behavior.settle};
+      const quality={'新人':0.40,'普通':0.70,'优秀':0.88,'殿堂':0.97}[H.jockey]??0.70;
+      // 有限观察间隔与有界误差；优秀骑手更准确，不取得额外速度或能量。
+      const speedError=(rng()*2-1)*(0.05+(1-quality)*0.55);
+      const reserveEstimate=H.stamina*clamp(1+(rng()*2-1)*(0.02+(1-quality)*0.18),0.82,1.18);
+      const judgement=clamp(1+(rng()*2-1)*(1-quality)*0.10,0.92,1.08);
+      const near=list.filter(F=>F!==H && Math.abs(F.s-H.s)<24);
+      const ahead=near.filter(F=>F.s>H.s+3).sort((a,b)=>a.s-b.s)[0];
+      const wake=near.find(F=>F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<2.5);
+      const observedPace=(wake?.v??ahead?.v??H.v)+speedError;
+      const sustainable=H.sustainableV(H.s,!!wake);
+      // 完整滚动预算只保留很小的判断误差余量；耐心不直接扣减巡航速度。
+      const allocation=clamp(0.96+0.025*plan.risk,0.96,0.985);
+      const planned=budgetSpeed(H,reserveEstimate*allocation,wake?Math.min(44,remaining):0);
+      const maxDemand=reserveToFinish(H,H.maxV);
+      const sr=H.stamina/Math.max(1,H.staminaMax);
+      const obstruction=localFront && localFront.s-H.s<4+Math.max(0,H.maxV-localFront.v)*3 && localFront.v<H.maxV-0.35;
+      // 用本次预算速度评估通道，不能沿用上一观察的慢速指令把超越机会误判为无收益。
+      H.targetV=planned;
+      const gap=obstruction||H.blocked?findGap(H,true):null;
+      const hasPass=gap && Math.abs(gap.t-H.t)>0.25 && gap.pace>(localFront?.v??H.v)+0.12;
+      const keepAttack=!!H.attacking && maxDemand<=reserveEstimate*judgement*1.12;
+      let attacking=H.s>30 && sr>0.015 && (keepAttack||maxDemand<=reserveEstimate*judgement*(0.92+0.08*plan.risk));
+      if(obstruction && !hasPass) attacking=false;
+      let desired,mode,reason;
+      if(attacking) {
+        desired=H.maxV;mode='attack';reason='预计余力可支付余程，存在推进机会';
+      } else {
+        desired=planned;mode=sr<0.12||H.attacking?'recover':'settle';
+        reason=H.attacking?'撤回发动，重新分配余力':'按自身能力与余程分配出力';
+        // 跟跑节省的能量必须足以偿付之后追回丢失距离的出力；便宜遮挡不能成为慢跑陷阱。
+        if(wake && observedPace>3 && observedPace<=planned+0.3 && plan.patience>0.25) {
+          const horizon=Math.min(8,remaining/Math.max(3,planned)*0.20);
+          const following=Math.min(planned,observedPace+0.06);
+          const lostDistance=Math.max(0,planned-following)*horizon;
+          const catchWindow=Math.min(8,Math.max(0,remaining/Math.max(3,planned)-horizon));
+          const catchV=planned+lostDistance/Math.max(0.1,catchWindow);
+          const saving=Math.max(0,H.powerFor(planned,0,false)-H.powerFor(following,0,true))*horizon;
+          const regainCost=Math.max(0,H.powerFor(catchV,0,false)-H.powerFor(planned,0,false))*catchWindow+
+            H.kineticCost(following,catchV);
+          const benefit=saving-regainCost;
+          const canRegain=catchWindow>0.5&&catchV<=projectedCap(H,H.s+remaining*0.65);
+          H.followOpportunity={saving,regainCost,lostDistance,benefit};
+          if(canRegain&&benefit>Math.max(0.1,(1-plan.patience)*0.5)&&plan.position<0.85) {
+            desired=following;mode='follow';reason='遮挡收益足以偿付之后追回距离的出力';
+          }
+        }
+        // 前位指令只为可支付的实际超越机会短时出力，不对领先者施加保护或远距追赶。
+        if(ahead&&ahead.s-H.s<12&&plan.position>0.55&&sr>0.06&&mode!=='follow') {
+          const horizon=Math.min(8,remaining/Math.max(3,planned));
+          const clearance=(horseLen(H)+horseLen(ahead))/2+0.5;
+          const requested=Math.min(H.maxV,Math.max(planned,ahead.v+speedError+(ahead.s-H.s+clearance)/Math.max(1,horizon)));
+          const extra=Math.max(0,H.powerFor(requested,0,false)-H.powerFor(planned,0,false))*horizon+
+            Math.max(0,H.kineticCost(H.v,requested)-H.kineticCost(H.v,planned));
+          const available=Math.max(0,reserveEstimate-reserveToFinish(H,planned))*(0.35+plan.risk*0.65);
+          if(extra<=available&&requested>planned+0.05) {
+            desired=requested;mode='position';reason='支付短时超越成本后仍可完成余程预算';
+          }
+        }
+        if(sr<0.04) desired=Math.min(desired,sustainable);
       }
-      const kineticReserve=Math.max(0,H.maxV*H.maxV-H.v*H.v)*1.5/(H.base*H.base)*RACE_F.energyScale;
-      const styleTiming={'逃':0.94,'先':0.98,'差':1.02,'追':1.04}[H.style]||1;
-      const canLaunch=requiredReserve+kineticReserve <= H.stamina*judgement*styleTiming;
-      if(H.sprintAt===null && H.s>80 && canLaunch) {
-        H.sprintAt=H.s;H.statsSummary.sprintAt=H.s;event(H.name+' 开始发力！');
+      if(attacking&&!H.attacking) {
+        H.statsSummary.launches=(H.statsSummary.launches||0)+1;
+        if(H.sprintAt===null) {H.sprintAt=H.s;H.statsSummary.sprintAt=H.s;}
+        event(H.name+' 开始发力！');
+      } else if(!attacking&&H.attacking) {
+        H.statsSummary.withdrawals=(H.statsSummary.withdrawals||0)+1;
+        event(H.name+' 收力重新调整节奏');
       }
-      let desired=H.cruise+H.aiBias;
-      if(H.sprintAt!==null) {desired=H.maxV;setAction(H,sr>0.2?'打鞭':'推骑');}
-      else {
-        const gapLead=leader===H?0:leader.s-H.s;
-        const ideal={'逃':0,'先':4.5,'差':10,'追':16}[H.style]??5;
-        if(leader===H) {
-          // 只有实际接近并试图领放的马才施压；远处马不会触发争抢税。
-          const rival=list.find(F=>F!==H && F.style==='逃' && H.s-F.s<9);
-          if(rival) desired+=clamp((9-(H.s-rival.s))*0.065,0,0.55);
-        } else desired+=clamp((gapLead-ideal)*0.075,-0.55,1.0);
-        // 抢位不能无限透支终点前所需的储备：按剩余行程分配早段预算。
-        const timeLeft=remaining/Math.max(1,H.cruise), positionBudget=H.aerobic*H.retention+H.stamina/(RACE_F.energyScale*Math.max(1,timeLeft))*0.28;
-        const budgetV=H.base*Math.cbrt(positionBudget/(H.surfaceCost/Math.max(0.65,rangeCoef(state,H.adj['力量']))));
-        desired=Math.min(desired,budgetV);
-        if(sr<0.15) desired=Math.min(desired,H.cruise);
-        setAction(H,desired>H.v+0.15?'推骑':'收力');
-      }
-      H.targetV=Math.max(3,desired);
+      H.attacking=attacking;H.targetV=Math.max(3,Math.min(H.maxV,desired));
+      setAction(H,attacking?(sr>0.15?'打鞭':'推骑'):H.targetV>H.v+0.15?'推骑':'收力');
       if(H.blocked || (localFront && localFront.s-H.s<4+Math.max(0,H.targetV-localFront.v)*3 && H.targetV>localFront.v+0.3)) {
-        avoidBlock(H);return;
+        if(!avoidBlock(H,gap||findGap(H,true))) {mode='follow';reason='通道未开放，收力等待机会';}
+        recordDecision(H,list,mode,reason,reserveEstimate,observedPace);return;
       }
+      recordDecision(H,list,mode,reason,reserveEstimate,observedPace);
       if(H.laneIntentT>0 && Math.abs(H.targetT-H.t)>0.1) return;
       H.laneIntentT=0;
-      // 保留仍能完成的超车通道；前马远离或本路线已无法取得推进优势时重新择道。
-      const pass=H.passTarget, gainV=pass?H.targetV*laneProgressCoef(H.s,H.t,geo)-pass.v*laneProgressCoef(pass.s,pass.t,geo):0;
+      const pass=H.passTarget,gainV=pass?H.targetV*laneProgressCoef(H.s,H.t,geo)-pass.v*laneProgressCoef(pass.s,pass.t,geo):0;
       if(pass && !pass.place && !pass.dnf && pass.s-H.s<=14 && gainV>0.05 && H.s-pass.s<(horseLen(H)+horseLen(pass))/2+1) return;
       H.passTarget=null;
-      // 所有跑法都可借前马遮挡、走短路；不再把后上马固定在外道。
-      const wake=list.find(F=>F!==H && F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<3);
       let goal=H.t;
-      if(wake && H.sprintAt===null) goal=wake.t;
+      if(wake&&!attacking&&H.targetV<=wake.v+0.25) goal=wake.t;
       else if(kAt(H.s,geo)>0 || !localFront) goal=Math.max(1.4,H.t-2);
-      if(Math.abs(goal-H.t)>0.2) {
+      // 选短路/遮挡同样需要开放路径，不能给入内指令跨越并排马匹。
+      const side=near.some(F=>Math.abs(F.s-H.s)<(horseLen(H)+horseLen(F))/2+0.4 &&
+        Math.min(H.t,goal)-(horseWid(H)+horseWid(F))/2<F.t && F.t<Math.max(H.t,goal)+(horseWid(H)+horseWid(F))/2);
+      if(!side&&Math.abs(goal-H.t)>0.2) {
         setLaneTarget(H,goal);setAction(H,goal<H.t?'斜行in':'斜行out');
       }
     }
-    function powerCost(H,v,a,drafting,at=H.s) {
-      const ratio=Math.max(0,v/H.base), ground=1/Math.max(0.65,rangeCoef(state,H.adj['力量']));
-      const k=kAt(at,geo), radius=k>0?geo.R+H.t-TRACK_WIDTH/2:Infinity;
-      const turn=Number.isFinite(radius)?1+0.035*Math.pow(v*v/radius/RACE_F.curveLateral,2):1;
-      const shelter=drafting?RACE_F.draftSave:1;
-      const grad=gradientAt(at,geo,g);
-      const uphill=grad*v*2.0; // 重力功率随坡度与实速变化，下坡降低需求。
-      return Math.max(0,Math.pow(ratio,3)*ground*H.surfaceCost*turn*shelter+uphill+
-        a*v/(H.base*H.base)*3.0);
+    function headwindAt(at) {
+      // 固定风向投影到路线切线；终直道迎风时，对向直道为顺风。
+      const q=mod(at+geo.startOffset,geo.lap),{S,B,referenceR}=geo;
+      return wind*(q<S?1:q<S+B?-Math.sin(-Math.PI/2+(q-S)/referenceR):
+        q<2*S+B?-1:-Math.sin(Math.PI/2+(q-2*S-B)/referenceR));
+    }
+    function powerCost(H,v,a,drafting,at=H.s,gravityPower=null,transverse=H.t) {
+      const speed=Math.max(0,v), terms=powerTerms(H,drafting,at,transverse);
+      const airV=Math.max(0,speed+terms.wind);
+      // 推进功率遵循牛顿定律；减速动能可支付阻力，但不能灌回储备。
+      return Math.max(0,(terms.c2*speed*speed+terms.c6*Math.pow(speed,6)+
+        terms.air*airV*airV*speed+(gravityPower??terms.gravity*speed)+a*speed)*H.massRatio);
+    }
+    function powerTerms(H,drafting,at,transverse=H.t) {
+      const condition=(surface==='草地'?{'良':1,'稍重':1.035,'重':1.08,'不良':1.15}:
+        {'良':1,'稍重':0.995,'重':1.02,'不良':1.075})[state]||1;
+      const ground=1+(condition-1)*clamp(1-(H.adj['力量']-70)*0.006,0.7,1.3);
+      const c2=RACE_F.resistanceK*H.economy*ground*H.surfaceCost;
+      const curvature=kAt(at,geo), radius=curvature>0?geo.R+transverse-TRACK_WIDTH/2:Infinity;
+      return {c2,c6:Number.isFinite(radius)?c2*RACE_F.turnCost/(radius*radius*RACE_F.curveLateral*RACE_F.curveLateral):0,
+        air:RACE_F.airK*(drafting?RACE_F.draftSave:1),wind:headwindAt(at),
+        gravity:9.81*gradientAt(at,geo,g)*laneProgressCoef(at,transverse,geo)};
+    }
+    function motionPower(H,before,move,drafting,dt) {
+      // 用实际高差支付势能；跨坡段接点时不能用坡前的点估计限制出力，
+      // 再用坡后的点记账。外道的同一高差也不能按更长弧长重复计费。
+      const gravityPower=9.81*(elevationAt(move.s,geo,g)-elevationAt(before.s,geo,g))/dt;
+      return powerCost(H,(before.v+move.v)/2,(move.v-before.v)/dt,drafting,
+        (before.s+move.s)/2,gravityPower,(before.t+move.t)/2);
+    }
+    function speedAtPower(H,power,drafting,at=H.s) {
+      const terms=powerTerms(H,drafting,at), available=power/H.massRatio;
+      let v=Math.sqrt(Math.max(0,available)/terms.c2);
+      for(let n=0;n<5;n++) {
+        const airV=Math.max(0,v+terms.wind), v2=v*v, v5=v2*v2*v;
+        const demand=terms.c2*v2+terms.c6*v5*v+terms.air*airV*airV*v+terms.gravity*v;
+        const derivative=2*terms.c2*v+6*terms.c6*v5+terms.air*(airV*airV+2*airV*v)+terms.gravity;
+        v=clamp(v-(demand-available)/Math.max(0.1,derivative),0,H.maxV*1.1);
+      }
+      return v;
     }
     function tick(dt) {
       const act=active();if(!act.length){race.finished=true;return;}
@@ -847,30 +1009,22 @@
         const wake=act.find(F=>F!==H && old.get(F).s>before.s && old.get(F).s-before.s<=RACE_F.draftRange &&
           Math.abs(old.get(F).t-before.t)<=(horseWid(H)+horseWid(F))/2+0.8);
         H.drafting=!!wake;
-        const fatigue=1-0.055*(1-H.guts/H.gutsMax);
-        const aerobic=H.aerobic*fatigue*clamp((race.t+dt)/12,0.15,1);
+        const fatigue=1-RACE_F.fatigueLoss*(1-H.guts/H.gutsMax);
+        const aerobicTarget=H.aerobic*fatigue;
+        H.aerobicOutput+=(aerobicTarget-H.aerobicOutput)*(1-Math.exp(-dt/RACE_F.aerobicTau));
+        const aerobic=H.aerobicOutput;
         const stRatio=clamp(H.stamina/H.staminaMax,0,1);
-        const reserveFade=clamp(stRatio/0.12,0,1);
-        const maxPower=aerobic+(1.70-aerobic)*reserveFade;
-        const ground=1/Math.max(0.65,rangeCoef(state,H.adj['力量']))*H.surfaceCost;
-        let cap=Math.min(H.maxV*fatigue,H.base*Math.cbrt(maxPower/(ground*(wake?RACE_F.draftSave:1))));
+        const reserveFade=clamp(stRatio/RACE_F.reserveFade,0,1);
+        // 可用无氧功率同时受剩余容量与本步能量约束，不能先透支再截成零。
+        const reservePower=Math.min(RACE_F.reservePower*reserveFade,H.stamina/dt);
+        const maxPower=aerobic+reservePower;
+        let cap=Math.min(H.maxV*fatigue,speedAtPower(H,maxPower,!!wake));
         const curvature=kAt(H.s,geo);
         if(curvature>0) {
           const radius=geo.R+H.t-TRACK_WIDTH/2;
           cap=Math.min(cap,Math.sqrt(Math.max(1,(RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*radius))*bendCoefFor(H.h.special,dir));
         }
         const grad=gradientAt(H.s,geo,g); H.grad=grad;H.slopeCoef=1;
-        // 可用功率与能耗共用同一函数，避免力竭后仍透支不存在的储备。
-        const radius=curvature>0?geo.R+H.t-TRACK_WIDTH/2:Infinity;
-        const turnK=Number.isFinite(radius)?0.035/(radius*radius*RACE_F.curveLateral*RACE_F.curveLateral):0;
-        const costK=ground*(wake?RACE_F.draftSave:1)/Math.pow(H.base,3);
-        let energyCap=H.base*Math.cbrt(maxPower/(ground*(wake?RACE_F.draftSave:1)));
-        for(let iteration=0;iteration<4;iteration++) {
-          const v=energyCap, demand=costK*(v*v*v+turnK*Math.pow(v,7))+grad*v*2.0;
-          const derivative=costK*(3*v*v+7*turnK*Math.pow(v,6))+grad*2.0;
-          energyCap=clamp(v-(demand-maxPower)/Math.max(0.01,derivative),0,H.maxV*1.1);
-        }
-        cap=Math.min(cap,energyCap);
         let desired=Math.min(H.targetV,cap);
         const front=act.filter(F=>F!==H && old.get(F).s>before.s && Math.abs(old.get(F).t-before.t)<(horseWid(H)+horseWid(F))/2+0.2)
           .sort((a,b)=>old.get(a).s-old.get(b).s)[0];
@@ -882,25 +1036,46 @@
         }
         const startFraction=clamp((race.t+dt-H.startDelay)/dt,0,1);
         if(!startFraction) desired=0;
-        const maxA=(H.v<8?RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230):RACE_F.runningAccel*(0.65+H.adj['爆发力']/200))*
+        const accelerationMix=clamp(H.v/H.base,0,1);
+        const maxA=(RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230)*(1-accelerationMix)+
+          RACE_F.runningAccel*(0.65+H.adj['爆发力']/200)*accelerationMix)*
           (0.65+0.35*reserveFade);
-        const response=RACE_F.responseTime*clamp(1+(70-H.adj['智力'])*0.004,0.82,1.18);
-        const kineticBudget=Math.max(0,maxPower-powerCost(H,H.v,0,!!wake))*H.base*H.base/(3*Math.max(H.v,1));
+        const response=RACE_F.responseTime*clamp(1+(0.65-H.behavior.tractability)*0.4,0.82,1.26);
+        const kineticBudget=Math.max(0,maxPower-powerCost(H,H.v,0,!!wake))/(H.massRatio*Math.max(H.v,1));
         let a=clamp((desired-H.v)/response,-RACE_F.braking,Math.min(maxA,kineticBudget));
         let nextV=Math.max(0,H.v+a*dt*startFraction);
         // 合法横移：同一纵向身体区间内，横移路径不得穿过其他马匹。
         const margin=horseWid(H)/2+0.2, target=clamp(H.targetT,margin,TRACK_WIDTH-margin);
-        const lateralLimit=Math.min(RACE_F.lateralSpeed,(H.v+nextV)/2*0.06)*dt*startFraction;
-        let nextT=clamp(H.t+clamp(target-H.t,-lateralLimit,lateralLimit),margin,TRACK_WIDTH-margin);
-        for(const F of act) {
-          if(F===H||Math.abs(old.get(F).s-before.s)>(horseLen(H)+horseLen(F))/2+0.3) continue;
-          const clearance=(horseWid(H)+horseWid(F))/2+0.1;
-          if(Math.abs(nextT-old.get(F).t)<clearance && Math.abs(nextT-old.get(F).t)<Math.abs(before.t-old.get(F).t)) nextT=before.t;
+        function propose(v) {
+          const lateralLimit=Math.min(RACE_F.lateralSpeed,(H.v+v)/2*0.06)*dt*startFraction;
+          let t=clamp(H.t+clamp(target-H.t,-lateralLimit,lateralLimit),margin,TRACK_WIDTH-margin);
+          for(const F of act) {
+            if(F===H||Math.abs(old.get(F).s-before.s)>(horseLen(H)+horseLen(F))/2+0.3) continue;
+            const clearance=(horseWid(H)+horseWid(F))/2+0.1;
+            if(Math.abs(t-old.get(F).t)<clearance && Math.abs(t-old.get(F).t)<Math.abs(before.t-old.get(F).t)) t=before.t;
+          }
+          const lateral=(t-before.t)/dt,travelV=(H.v+v)/2;
+          const forwardV=Math.sqrt(Math.max(0,travelV*travelV-lateral*lateral));
+          return {s:H.s+forwardV*laneProgressCoef(H.s,(H.t+t)/2,geo)*dt*startFraction,
+            t,v,a:(v-H.v)/dt,travelV,lateral,aerobic};
         }
-        const lateral=(nextT-before.t)/dt, travelV=(H.v+nextV)/2;
-        const forwardV=Math.sqrt(Math.max(0,travelV*travelV-lateral*lateral));
-        const nextS=H.s+forwardV*laneProgressCoef(H.s,(H.t+nextT)/2,geo)*dt;
-        motion.set(H,{s:nextS,t:nextT,v:nextV,a,travelV,lateral,aerobic});H.pot=desired;
+        // 限制与记账使用相同的实际路径、高差及积分中点。
+        let move=propose(nextV);
+        for(let n=0;n<4;n++) {
+          const paid=motionPower(H,before,move,!!wake,dt);
+          if(paid<=maxPower+1e-7) break;
+          nextV=Math.max(0,nextV-(paid-maxPower)*dt/(H.massRatio*Math.max(1,(H.v+nextV)/2)));
+          move=propose(nextV);
+        }
+        if(motionPower(H,before,move,!!wake,dt)>maxPower+1e-7) {
+          let low=0,high=nextV;
+          for(let n=0;n<28;n++) {
+            const mid=(low+high)/2;
+            if(motionPower(H,before,propose(mid),!!wake,dt)<=maxPower) low=mid;else high=mid;
+          }
+          move=propose(low);
+        }
+        motion.set(H,move);H.pot=desired;
       }
       // 按前方先结算，真实身体间距限制推进；不存在强行突破的穿模豁免。
       for(const H of act.slice().sort((a,b)=>old.get(b).s-old.get(a).s || a.gate-b.gate)) {
@@ -915,15 +1090,19 @@
           }
         }
         H.s=move.s;H.t=move.t;H.prevV=before.v;H.v=move.v;H.accel=(H.v-before.v)/dt;
-        const usedV=Math.max(0,(before.v+H.v)/2), work=powerCost(H,usedV,H.accel,H.drafting);
+        const work=motionPower(H,before,move,H.drafting,dt);
         H.power=work;H.effort=H.targetV/Math.max(1,H.cruise);
-        const excess=Math.max(0,work-move.aerobic), draw=Math.min(H.stamina,excess*RACE_F.energyScale*dt);
-        // 留力降低净消耗；不凭空补满储备。疲劳余量与短时储备并行变化。
-        H.stamina=Math.max(0,H.stamina-draw);
+        const excess=Math.max(0,work-move.aerobic), draw=Math.min(H.stamina,excess*dt);
+        // 只有明显低于供能的做功才允许有限恢复；制动不回充动能。
+        const restore=Math.min(H.staminaMax-H.stamina,Math.max(0,move.aerobic*0.90-work)*RACE_F.recoveryRate*dt,RACE_F.recoveryMax*dt);
+        H.stamina=clamp(H.stamina-draw+restore,0,H.staminaMax);
         H.guts=Math.max(0,H.guts-(RACE_F.fatigueWork*work+RACE_F.fatigueExcess*excess)*dt);
-        H.retention=1-0.055*(1-H.guts/H.gutsMax);
+        H.retention=1-RACE_F.fatigueLoss*(1-H.guts/H.gutsMax);
         H.stage=H.stamina>H.staminaMax*0.12?'耐力':H.stamina>H.staminaMax*0.015?'毅力':'失速';
-        const stats=H.statsSummary;H.cumulativeWork+=work*dt;stats.workUsed=H.cumulativeWork;stats.energyUsed+=draw;stats.draftSeconds+=H.drafting?dt:0;stats.blockedSeconds+=H.blocked?dt:0;stats.peakSpeed=Math.max(stats.peakSpeed,H.v);
+        const stats=H.statsSummary,aerobicUsed=Math.min(work,move.aerobic)*dt;
+        H.cumulativeWork+=work*dt;stats.workUsed=H.cumulativeWork;stats.aerobicUsed+=aerobicUsed;
+        stats.energyUsed+=draw;stats.unpaidWork+=Math.max(0,work*dt-aerobicUsed-draw);
+        stats.recovered+=restore;stats.draftSeconds+=H.drafting?dt:0;stats.blockedSeconds+=H.blocked?dt:0;stats.peakSpeed=Math.max(stats.peakSpeed,H.v);
       }
       const crossings=[];const sectionalCrossings=[];
       for(const H of act) {
@@ -944,6 +1123,7 @@
       crossings.sort((a,b)=>a.time-b.time||a.H.gate-b.H.gate);
       for(const {H,time} of crossings) {
         H.s=length;H.place=race.order.length+1;H.time=time;H.final3f=time-(H.t600??time);
+        H.historicalStyle=H.style;H.style=H.observedStyle||H.style;
         if(length%200 && H.sectionals.at(-1)?.distance!==length) H.sectionals.push({distance:length,time,split:time-(H.sectionals.at(-1)?.time||0),stamina:H.stamina,guts:H.guts});
         race.order.push(H);
         if(H.place===1) {
@@ -964,7 +1144,8 @@
         if(last && last.distance>200) race.paceStrength=((last.distance-(race.sectionals.at(-2)?.distance||0))/last.split)/ref;
         else race.paceStrength=lead.v/ref;
         race.paceLevel=race.paceStrength<0.97?'スロー':race.paceStrength>1.03?'ハイ':'平均';
-        race.paceContest=active().filter(F=>F!==lead&&F.style==='逃'&&lead.s-F.s<9).length;
+        race.paceContest=active().filter(F=>F!==lead&&lead.s-F.s<9&&F.v>=lead.v-0.3&&
+          (F.strategy?.mode==='position'||F.strategy?.mode==='attack'||F.targetV>F.cruise+0.1)).length;
         if(race.prevLead!==lead) {if(!race.order.length) event(lead.name+' 跑在最前方！');race.prevLead=lead;}
         const pct=Math.floor(lead.s/length*100);
         if(pct>race._lastPct){race._lastPct=pct;race.posHistory.push({pct,order:ranked().map(H=>H.id)});}
@@ -985,7 +1166,8 @@
         horses:horses.map(H=>({id:H.id,name:H.name,s:H.s,t:H.t,v:H.v,pot:H.pot,accel:H.accel,power:H.power,
           rank:H.place|| (H.dnf?null:list.indexOf(H)+1),stage:H.stage,stamina:H.stamina,guts:H.guts,
           staminaMax:H.staminaMax,gutsMax:H.gutsMax,retention:H.retention,action:H.action,dnf:H.dnf,
-          place:H.place,time:H.time,blocked:H.blocked,style:H.style,gapAtWin:H.gapAtWin,final3f:H.final3f,sprintAt:H.sprintAt}))};
+          place:H.place,time:H.time,blocked:H.blocked,style:H.observedStyle||H.style,observedStyle:H.observedStyle,
+          strategy:H.strategy,aerobicOutput:H.aerobicOutput,gapAtWin:H.gapAtWin,final3f:H.final3f,sprintAt:H.sprintAt}))};
     }
     return {race,step,snapshot,state:snapshot};
   }
@@ -1037,20 +1219,18 @@
   }
   /* 生涯马：2岁出道，属性上限隐藏、当前值约为上限55%，状态值决定成长长度 */
   function makeCareerHorse(rng) {
-    const style = pick(rng, ['逃', '先', '差', '追']);
     const caps = {};
-    for (const k of Object.keys(STYLE_STATS[style])) {
-      const r = STYLE_STATS[style][k];
+    for (const k of Object.keys(HORSE_STATS)) {
+      const r = HORSE_STATS[k];
       caps[k] = clamp(Math.round((r[0] + r[1]) / 2 + (rng() - 0.5) * (r[1] - r[0]) * 0.5 + 20), 50, 97);
     }
     const stats = {};
     for (const k of Object.keys(caps)) stats[k] = Math.max(20, Math.round(caps[k] * 0.55));
     const used = new Set();
     const sv = 2600 + Math.round(rng() * 1800);
-    return {
+    return describeHorse({
       id: 'ph',
       name: makeName(rng, used),
-      style,
       sex: rng() < 0.5 ? '牡' : '牝',
       coat: pick(rng, COATS),
       surface: weightedPick(rng, [['草地', 80], ['泥草双刀', 14], ['泥地', 6]]),
@@ -1064,7 +1244,7 @@
       jockeyGrade: weightedPick(rng, [['普通', 60], ['优秀', 30], ['殿堂', 10]]),
       aggression: Math.round((0.5 + rng()) * 10) / 10,
       history: [],
-    };
+    },undefined,rng);
   }
   /* 每周结算：训练疲劳/成长或衰退/斗志/伤病（文档 3.1/3.2/3.6/3.7/3.8） */
   function careerWeeklyTick(h, training, rng) {
@@ -1107,12 +1287,11 @@
   function makeCareerRaceField(h, tierDef, rng) {
     const horses = [];
     const used = new Set();
-    const styles = fieldStyles(rng, 7);
     for (let i = 0; i < 7; i++) {
       /* 场次档次取区间中点，同场马之间只差 ±FIELD_LEVEL_SPAN */
       const base = (tierDef.level[0] + tierDef.level[1]) / 2;
       const level = base + (rng() * 2 - 1) * FIELD_LEVEL_SPAN;
-      const rh = makeHorse(rng, { style: styles[i], level, id: 'r' + (i + 1) });
+      const rh = makeHorse(rng, { level, id: 'r' + (i + 1) });
       rh.name = makeName(rng, used);
       rh.sire = makeName(rng, used);
       rh.dam = makeName(rng, used);
@@ -1123,6 +1302,8 @@
     const playerEntry = {
       id: h.id, name: h.name, style: h.style, age: h.age, sex: h.sex, coat: h.coat,
       surface: h.surface, special: h.special,
+      behavior:h.behavior?{...h.behavior}:undefined, racePlan:h.racePlan?{...h.racePlan}:undefined,
+      carriedWeight:h.carriedWeight, bodyMass:h.bodyMass,
       stats: JSON.parse(JSON.stringify(h.stats)),
       '斗志': h['斗志'], '疲劳': h['疲劳'],
       jockeyGrade: h.jockeyGrade, aggression: h.aggression,
@@ -1181,11 +1362,10 @@
       const wins = 2 + Math.floor(rng() * (male ? 16 : 10));
       const g1 = rng() < (male ? 0.3 : 0.15) ? 1 + Math.floor(rng() * 4) : 0;
       const bestTier = g1 > 0 ? 'G1' : (rng() < 0.5 ? 'G3' : '公开赛/表列赛');
-      const style = pick(rng, ['逃', '先', '差', '追']);
       const level = 55 + (g1 ? 22 : 10) + rng() * 15;
       const stats = {};
-      for (const k of Object.keys(STYLE_STATS[style])) {
-        const rr = STYLE_STATS[style][k];
+      for (const k of Object.keys(HORSE_STATS)) {
+        const rr = HORSE_STATS[k];
         stats[k] = clamp(Math.round((rr[0] + rr[1]) / 2 + (rng() - 0.5) * (rr[1] - rr[0]) * 0.5 + (level - 70)), 40, 97);
       }
       stock.push({
@@ -1219,6 +1399,8 @@
       sireRec: rh.sireRec, damRec: rh.damRec,
       stats: JSON.parse(JSON.stringify(rh.stats)),
       surface: rh.surface, special: rh.special,
+      behavior:rh.behavior?{...rh.behavior}:undefined, racePlan:rh.racePlan?{...rh.racePlan}:undefined,
+      carriedWeight:rh.carriedWeight, bodyMass:rh.bodyMass,
       blQ: rh.blQ || 0.5, stQ: rh.stQ || 0.5, wQ: rh.wQ || 0.5,
     };
   }
@@ -1232,10 +1414,9 @@
 
   /* ---------------- 马群连续性（参赛马池） ---------------- */
   function makeRosterHorse(rng, age, idSeed, stock) {
-    const style = pick(rng, ['逃', '先', '差', '追']);
     const caps = {};
-    for (const k of Object.keys(STYLE_STATS[style])) {
-      const r = STYLE_STATS[style][k];
+    for (const k of Object.keys(HORSE_STATS)) {
+      const r = HORSE_STATS[k];
       caps[k] = clamp(Math.round((r[0] + r[1]) / 2 + (rng() - 0.5) * (r[1] - r[0]) * 0.5 + 12), 45, 97);
     }
     const ageF = age === 2 ? 0.55 : age === 3 ? 0.82 : age === 4 ? 0.95 : 1.0;
@@ -1247,10 +1428,10 @@
     const winRate = clamp(0.04 + (ability - 50) / 90, 0.03, 0.45);
     const sireRec = pickBreeder(rng, stock || [], '牡');
     const damRec = pickBreeder(rng, stock || [], '牝');
-    return {
+    return describeHorse({
       id: 'rh' + idSeed,
       name: makeName(rng, used),
-      style, sex: rng() < 0.5 ? '牡' : '牝',
+      sex: rng() < 0.5 ? '牡' : '牝',
       coat: pick(rng, COATS),
       surface: weightedPick(rng, [['草地', 80], ['泥草双刀', 14], ['泥地', 6]]),
       special: weightedPick(rng, [['左右皆可', 80], ['左回', 10], ['右回', 10]]),
@@ -1268,7 +1449,7 @@
       sireName: sireRec.name, damName: damRec.name,
       sireRec, damRec,
       blQ: 0.2 + rng() * 0.6, stQ: 0.2 + rng() * 0.6, wQ: 0.2 + rng() * 0.6,
-    };
+    },undefined,rng);
   }
   function makeRoster(rng, stock) {
     if (!stock) stock = makeBaseBreedingStock(rng);
@@ -1283,6 +1464,8 @@
     return {
       id: rh.id, name: rh.name, style: rh.style, age: rh.age, sex: rh.sex, coat: rh.coat,
       surface: rh.surface, special: rh.special,
+      behavior:rh.behavior?{...rh.behavior}:undefined, racePlan:rh.racePlan?{...rh.racePlan}:undefined,
+      carriedWeight:rh.carriedWeight, bodyMass:rh.bodyMass,
       stats: JSON.parse(JSON.stringify(rh.stats)),
       '斗志': clamp(rh['斗志'] + Math.round((rng() - 0.5) * 20), 30, 100),
       '疲劳': rh['疲劳'],
@@ -1328,7 +1511,9 @@
       if (prize && H.place && H.place <= 5) rh.earnings = (rh.earnings || 0) + prizeForPlace(prize, H.place);
       rh.lastRaceWeek = weekNum;
       rh['疲劳'] = clamp((rh['疲劳'] || 0) + 12, 0, 130);
-      rh.history.push({ week: weekNum, race: raceName || '—', tier: tier || '—', place: H.place, dist: dist || 0 });
+      if(H.observedStyle) rh.style=H.observedStyle;
+      rh.history.push({ week: weekNum, race: raceName || '—', tier: tier || '—', place: H.place,
+        dist: dist || 0, style:H.observedStyle||rh.style, time:H.time, final600:H.final3f });
       // 重伤退役判定：疲劳>70概率×3，5岁×2
       if (!rh.retired) {
         let p = 0.002;
@@ -1370,9 +1555,13 @@
     const dist = pick(rng, spec.key === 'g1' ? [2000, 2400, 3200] : (spec.key === 'g3' || spec.key === 'g2' || spec.key === 'listed') ? [1800, 2000, 2400] : [1600, 2000]);
     const surface = rng() < 0.85 ? '草地' : '泥地';
     const state = weightedPick(rng, [['良', 80], ['稍重', 12], ['重', 5], ['不良', 3]]);
-    const dir = rng() < 0.5 ? '左回' : '右回';
-    const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
+    let dir = rng() < 0.5 ? '左回' : '右回';
+    let profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
     const venue = pick(rng, VENUES);
+    const venueGeo=trackGeometry(dist,venue,surface);
+    if(venueGeo.direction) dir=venueGeo.direction;
+    else if(['福島','小倉','中京'].includes(venue)) dir=venue==='中京'?'左回':'右回';
+    if(venueGeo.elevationProfile) profile='官方高程';
     const chosen = pickRosterField(roster, rng, weekNum, {
       ageMin: spec.ageMin, ageMax: spec.ageMax, winsMin: spec.winsMin, winsMax: spec.winsMax,
       startsMax: spec.startsMax, abilityMin: spec.abilityMin, n: 8, cooldown: spec.cooldown,
@@ -1499,6 +1688,8 @@
       const playerEntry = {
         id: h.id, name: h.name, style: h.style, age: h.age, sex: h.sex, coat: h.coat,
         surface: h.surface, special: h.special,
+        behavior:h.behavior?{...h.behavior}:undefined, racePlan:h.racePlan?{...h.racePlan}:undefined,
+        carriedWeight:h.carriedWeight, bodyMass:h.bodyMass,
         stats: JSON.parse(JSON.stringify(h.stats)),
         '斗志': h['斗志'], '疲劳': h['疲劳'],
         jockeyGrade: h.jockeyGrade, aggression: h.aggression,
@@ -1700,14 +1891,13 @@
   }
   /* 幼驹 → 马群马匹（2岁出道） */
   function foalToRosterHorse(rng, foal, sire, dam, id) {
-    const style = pick(rng, ['逃', '先', '差', '追']);
     const caps = {};
     for (const k of Object.keys(foal.stats)) caps[k] = clamp(Math.round(foal.stats[k] * 1.2 + 4), 45, 100);
     const ability = foal.stats['速度'] * 0.4 + foal.stats['耐力'] * 0.2 + foal.stats['爆发力'] * 0.2 + foal.stats['毅力'] * 0.2;
-    return {
+    return describeHorse({
       id: 'rh' + id,
       name: makeName(rng, new Set()),
-      style, sex: rng() < 0.5 ? '牡' : '牝',
+      sex: rng() < 0.5 ? '牡' : '牝',
       coat: pick(rng, COATS),
       surface: foal.surface, special: foal.special,
       age: 2, stats: JSON.parse(JSON.stringify(foal.stats)), caps, ability,
@@ -1722,7 +1912,7 @@
       sireRec: sire, damRec: dam,
       blQ: foal.blQ, stQ: foal.stQ, wQ: foal.wQ,
       '状态值': foal.state, '状态值Max': foal.state, '周消耗': foal.drain,
-    };
+    },undefined,rng);
   }
   /* 种费（3.11 配种费用公式，牝系未实装按0计） */
   const FEE_TIERS = [['未胜利', 0, 30], ['条件赛', 30, 80], ['公开赛/表列赛', 80, 200], ['G3', 200, 500], ['G2', 500, 800], ['G1', 800, 1500]];
@@ -1770,13 +1960,13 @@
     STAMINA_RANGE_PER_POINT, GROUND_RANGE_COEF,
     STYLE_COEF, STYLE_COEF_DOC, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
     ACTION_DEF, actionBonus, actionCoef, baseSpeed, fatigueMultiplier,
-    COURSES, trackGeometry, trackPoint, kAt, laneProgressCoef, bendCoefFor, SLOPE_PROFILES, gradientAt,
+    COURSES, trackGeometry, trackPoint, kAt, laneProgressCoef, bendCoefFor, SLOPE_PROFILES, gradientAt, elevationAt,
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
     STAFF, CAT_ERROR_POOL, catText, fatigueBand, fatigueText,
-    makeHorse, makeField, makeStaff, generateReport, oddsAndPopularity,
+    makeHorse, makeField, horseBehavior, racePlanFor, makeStaff, generateReport, oddsAndPopularity,
     /* 人气/赔率模型（市场）：独立于比赛引擎，只吃公开信息 */
     MARKET, marketEntryScore, marketOddsAndPopularity, marketImpliedProb, expectedValue,
-    marketPaceLevel, PACE_TRUE_EFFECT, paceStrengthOf, PACE_WEIGHT,
+    marketPaceLevel, PACE_MARKET_BELIEF, PACE_TRUE_EFFECT, paceStrengthOf, PACE_WEIGHT,
     makeName, createRace,
     RACE_TIERS, TIER_BY_KEY, TIER_RANK, FIELD_LEVEL_SPAN, TRAINING_DEF, PRIZE_SHARE, prizeForPlace, makeRaceName,
     makeCareerHorse, careerWeeklyTick, makeCareerRaceField, raceOptionsFor, makeFeaturedRace,

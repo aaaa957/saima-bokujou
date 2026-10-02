@@ -188,13 +188,13 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     </div>
     <div class="note" style="margin-top:8px">
       两次运行使用<strong>完全相同</strong>的马匹阵容与随机种子，骑手固定「普通」、疲劳归零。
-      当前版本共用连续出力引擎，配对结果应一致。8 匹出马，四种跑法各 2 匹；冠军占比用来观察策略表现，不要求各为 25%。
+      当前版本共用连续出力引擎，配对结果应一致。8 匹出马；按比赛实际位置归类跑法，标签不增加能力，不要求固定冠军比例。
     </div>
     <div class="note" id="mcProgress" style="margin-top:6px;font-weight:700"></div>
   </div>
 
   <div class="card">
-    <h2>① 跑法冠军占比与重复运行核对</h2>
+    <h2>① 实际跑法冠军占比与重复运行核对</h2>
     <div id="mcStyleOut"><div class="note">尚未运行。选择场次后点「开始多场模拟」。</div></div>
   </div>
 
@@ -276,21 +276,23 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
         <select id="cfgDir"><option value="左回" selected>左回</option><option value="右回">右回</option></select>
       </label>
       <label>赛道起伏
-        <select id="cfgProfile"><option value="平坦">平坦</option><option value="缓坂" selected>缓坂</option><option value="中坂">中坂</option><option value="急坂">急坂</option></select>
+        <select id="cfgProfile"><option value="平坦">平坦</option><option value="缓坂" selected>缓坂</option><option value="中坂">中坂</option><option value="急坂">急坂</option><option value="官方" disabled>官方高程</option></select>
       </label>
       <label>赛道布局
-        <select id="cfgCourse"><option value="标准" selected>标准</option><option value="长直道">长直道</option><option value="小回り">小回り</option></select>
+        <select id="cfgCourse"><option value="标准" selected>标准</option><option value="长直道">长直道</option><option value="小回り">小回り</option><option value="東京">东京</option><option value="中山">中山</option><option value="京都">京都</option><option value="阪神">阪神</option><option value="新潟">新潟</option></select>
       </label>
+      <label>终点直道风速（m/s）<input id="cfgWind" type="number" min="-12" max="12" step="0.5" value="0" title="逆风为正，顺风为负；其他路段按方向投影"></label>
       <button class="primary" id="btnStart">▶ 开赛</button>
       <button id="btnGen">🎲 重新生成阵容</button>
     </div>
+    <p class="note" id="courseInfo"></p>
   </div>
 
   <div class="row" style="align-items:flex-start">
     <div class="card" style="flex:1 1 520px">
       <h2>出战表（点击选择你旗下的马）</h2>
       <table>
-        <thead><tr><th>马号</th><th>马名</th><th>跑法</th><th>骑手</th><th>人气/赔率</th><th>战绩</th><th>选择</th></tr></thead>
+        <thead><tr><th>马号</th><th>马名</th><th>跑法倾向</th><th>骑手</th><th>人气/赔率</th><th>战绩</th><th>选择</th></tr></thead>
         <tbody id="fieldTable"></tbody>
       </table>
       <p class="hint">所有数值对玩家隐藏——你只能通过下面的情报报告、赔率和战绩猜测马匹实力。跑完比赛才会揭晓真相。</p>
@@ -442,8 +444,8 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.10.01.6"></script>
-<script src="career-save.js?v=v2026.10.01.6"></script>
+<script src="sim.js?v=v2026.10.02.1"></script>
+<script src="career-save.js?v=v2026.10.02.1"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -459,7 +461,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.10.01.6';
+const APP_VER = 'v2026.10.02.1';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -558,6 +560,7 @@ function refreshReport() {
 }
 
 function renderSetup() {
+  updateCourseInfo();
   const tb = $('fieldTable');
   tb.innerHTML = '';
   field.forEach((h, i) => {
@@ -610,28 +613,55 @@ function updateBetUI() {
 }
 
 const EDIT_STATS = ['速度','爆发力','出闸能力','耐力','力量','毅力','智力','体格'];
+const RACE_PLANS = {
+  '自由':null,
+  '争取前位':{position:0.9,risk:0.65,patience:0.3},
+  '跟随':{position:0.45,risk:0.4,patience:0.7},
+  '保存余力':{position:0.2,risk:0.25,patience:0.9},
+};
+function selectedRacePlan(h) {
+  if(!h.racePlan) return '自由';
+  return Object.keys(RACE_PLANS).find(k => RACE_PLANS[k] &&
+    ['position','risk','patience'].every(p => h.racePlan[p]===RACE_PLANS[k][p])) || '自定';
+}
 function buildEditor() {
   const box = $('editorContent');
   box.innerHTML = '<table><thead><tr><th>马</th>' +
     EDIT_STATS.map((k) => '<th>' + k + '</th>').join('') +
-    '<th>跑法</th><th>骑手</th><th>斗志</th><th>疲劳</th></tr></thead><tbody>' +
+    '<th>骑乘计划</th><th>骑手</th><th>负重kg</th><th>马体重kg</th><th>斗志</th><th>疲劳</th></tr></thead><tbody>' +
     field.map((h, i) => {
       return '<tr><td><span class="cap-mini" style="background:' + capColor(i) + ';color:' + numColor(i) + '">' + (i + 1) + '</span> ' + h.name + '</td>' +
         EDIT_STATS.map((k) => '<td><input type="number" min="1" max="115" class="ed" data-id="' + h.id + '" data-k="' + k + '" value="' + h.stats[k] + '"></td>').join('') +
-        '<td><select class="ed" data-id="' + h.id + '" data-k="style">' +
-          ['逃','先','差','追'].map((s2) => '<option' + (h.style === s2 ? ' selected' : '') + '>' + s2 + '</option>').join('') + '</select></td>' +
+        '<td><select class="ed" data-id="' + h.id + '" data-k="racePlan">' +
+          Object.keys(RACE_PLANS).concat(selectedRacePlan(h)==='自定'?['自定']:[]).map((plan) => '<option' + (selectedRacePlan(h) === plan ? ' selected' : '') + '>' + plan + '</option>').join('') + '</select><span class="sub">倾向：' + h.style + '</span></td>' +
         '<td><select class="ed" data-id="' + h.id + '" data-k="jockey">' +
           ['新人','普通','优秀','殿堂'].map((j) => '<option' + (h.jockeyGrade === j ? ' selected' : '') + '>' + j + '</option>').join('') + '</select></td>' +
+        '<td><input type="number" min="40" max="70" class="ed" data-id="' + h.id + '" data-k="carriedWeight" value="' + (h.carriedWeight || 57) + '"></td>' +
+        '<td><input type="number" min="320" max="650" class="ed" data-id="' + h.id + '" data-k="bodyMass" placeholder="随体格" value="' + (h.bodyMass || '') + '"></td>' +
         '<td><input type="number" min="1" max="100" class="ed" data-id="' + h.id + '" data-k="斗志" value="' + h['斗志'] + '"></td>' +
         '<td><input type="number" min="0" max="200" class="ed" data-id="' + h.id + '" data-k="疲劳" value="' + h['疲劳'] + '"></td></tr>';
     }).join('') + '</tbody></table>';
 }
 
 function singleRaceOptions() {
-  return { length: parseInt($('cfgLength').value, 10) || 2000,
+  const length=parseInt($('cfgLength').value,10)||2000, surface=$('cfgSurface').value||'草地';
+  const geo=S.trackGeometry(length,$('cfgCourse').value||'标准',surface);
+  return { length,
     surface: $('cfgSurface').value || '草地', state: $('cfgState').value || '良',
-    dir: $('cfgDir').value || '左回', profile: $('cfgProfile').value || '缓坂',
-    course: $('cfgCourse').value || '标准' };
+    dir: geo.direction || $('cfgDir').value || '左回', profile: geo.source ? '官方' : $('cfgProfile').value || '缓坂',
+    course: $('cfgCourse').value || '标准', wind: S.clamp(Number($('cfgWind').value)||0,-12,12) };
+}
+function updateCourseInfo() {
+  const o=singleRaceOptions(), geo=S.trackGeometry(o.length,o.course,o.surface);
+  const profileSelect=$('cfgProfile');
+  if(geo.source) { if(profileSelect.value!=='官方') profileSelect.dataset.sandboxProfile=profileSelect.value; profileSelect.value='官方'; }
+  else if(profileSelect.value==='官方') profileSelect.value=profileSelect.dataset.sandboxProfile||'缓坂';
+  $('cfgProfile').disabled=!!geo.source;
+  $('cfgDir').disabled=!!geo.direction;
+  if(geo.direction) $('cfgDir').value=geo.direction;
+  const info=$('courseInfo');
+  if(info) info.textContent=geo.source ? geo.course+' · 终点直道 '+geo.finishStraight.toFixed(1)+'m · 全程高差 '+geo.elevationRange.toFixed(1)+'m（官方尺寸约束的简化场地）'+
+    (geo.distanceSupported?'':' · 所选距离为沙盒路线，不对应官方发走距离') : '抽象场地：可自由选择回り方向与起伏。';
 }
 function settleBetWith(odds, horses, winner) {
   const ticket = bet;
@@ -653,8 +683,10 @@ function applyEditor() {
     if (!h) return;
     const k = inp.dataset.k;
     const v = inp.tagName === 'SELECT' ? inp.value : parseInt(inp.value, 10);
-    if (k === 'style') h.style = v;
+    if (k === 'racePlan') { if(v !== '自定') h.racePlan = RACE_PLANS[v] ? {...RACE_PLANS[v]} : null; }
     else if (k === 'jockey') h.jockeyGrade = v;
+    else if (k === 'carriedWeight') h.carriedWeight = S.clamp(v || 57,40,70);
+    else if (k === 'bodyMass') { if(Number.isFinite(v)) h.bodyMass=S.clamp(v,320,650); else delete h.bodyMass; }
     else if (k === '斗志') h['斗志'] = S.clamp(v || 1, 1, 100);
     else if (k === '疲劳') h['疲劳'] = S.clamp(v || 0, 0, 200);
     else h.stats[k] = S.clamp(v || 1, 1, 115);
@@ -683,9 +715,10 @@ function startRace() {
   race = S.createRace(field, {
     length, surface, state: fstate,
     styleCoefs: $('cfgCoef').value,
-    dir: $('cfgDir').value,
+    dir: singleRaceOptions().dir,
     profile: $('cfgProfile').value,
     course: $('cfgCourse').value || '标准',
+    wind: singleRaceOptions().wind,
     rng: S.mulberry32(((seed ^ 0x9e3779b9) + raceCount * 7919) >>> 0),
   });
   paused = false; speedMult = 1; acc = 0; lastTs = 0; cam = null;
@@ -1282,7 +1315,8 @@ function renderRaceDiagnostics(R, fld) {
     const sprint = Number.isFinite(H.sprintAt) ? H.sprintAt : stats.sprintAt;
     const sprintText = Number.isFinite(sprint) ? '残' + Math.round(Math.max(0, R.length - sprint)) + 'm' : '未发动';
     return '<tr' + (H.id === playerId ? ' class="is-player"' : '') + '><td>' + (H.place || '中止') + '</td><td>' +
-      escape(H.name) + '</td><td>' + sprintText + '</td><td>' + percent(H.stamina, H.staminaMax) + '</td><td>' +
+      escape(H.name) + '</td><td>' + escape(H.observedStyle || H.style) + '</td><td>' + sprintText + '</td><td>' +
+      (stats.launches || 0) + '/' + (stats.withdrawals || 0) + '</td><td>' + (stats.decisions || 0) + '</td><td>' + percent(H.stamina, H.staminaMax) + '</td><td>' +
       percent(H.guts, H.gutsMax) + '</td><td>' + seconds(stats.draftSeconds) + '</td><td>' +
       seconds(stats.blockedSeconds) + '</td><td>' + (Number.isFinite(stats.peakSpeed) ? (stats.peakSpeed * 3.6).toFixed(1) + 'km/h' : '—') + '</td></tr>';
   }).join('');
@@ -1292,19 +1326,20 @@ function renderRaceDiagnostics(R, fld) {
     const rows = sections.map((section) => '<tr><td>' + section.distance + 'm</td><td>' + seconds(section.split) +
       '</td><td>' + seconds(section.time) + '</td><td>' + percent(section.stamina, H.staminaMax) + '</td><td>' +
       percent(section.guts, H.gutsMax) + '</td></tr>').join('');
-    return '<details><summary>' + escape(H.name) + ' · ' + escape(entry ? entry.style : H.style) + ' · ' +
+    return '<details><summary>' + escape(H.name) + ' · 赛前倾向 ' + escape(entry ? entry.style : H.style) + ' · 实际跑法 ' + escape(H.observedStyle || H.style) + ' · ' +
       (H.place ? H.place + '着' : '中止') + '</summary><div class="table-scroll"><table><thead><tr>' +
       '<th>通过距离</th><th>本段用时</th><th>累计用时</th><th>可用储备</th><th>疲劳余量</th>' +
       '</tr></thead><tbody>' + rows + '</tbody></table></div></details>';
   }).join('');
-  $('raceDiagnostics').innerHTML = '<p class="note" style="margin-top:10px">' + paceText + '</p>' +
+  const geo=R.geo||{}, courseText=geo.source ? escape(geo.course)+' · 终点直道 '+geo.finishStraight.toFixed(1)+'m · 高差 '+geo.elevationRange.toFixed(1)+'m · 官方尺寸约束的简化场地。'+(geo.distanceSupported?'':'本距离为沙盒路线。') : escape(R.course||'标准')+' · 抽象场地。';
+  $('raceDiagnostics').innerHTML = '<p class="note" style="margin-top:10px">' + courseText + ' 终点直道风速 '+(Number(R.wind)||0).toFixed(1)+'m/s（逆风＋／顺风−）。</p><p class="note">' + paceText + '</p>' +
     '<div class="diagnostic-grid"><div><h3>比赛分段</h3><div class="table-scroll"><table><thead><tr>' +
     '<th>通过距离</th><th>本段用时</th><th>累计用时</th></tr></thead><tbody>' + leaderRows + '</tbody></table></div>' +
     '<p class="note">记录各标志点首匹马通过的时间，领头马可能更换。计时按实际通过位置插值，末段不足200米时按实际距离显示。</p></div>' +
     '<div><h3>骑乘与终点余力</h3><div class="table-scroll"><table><thead><tr><th>名次</th><th>马名</th>' +
-    '<th>冲刺发动</th><th>可用储备</th><th>疲劳余量</th><th>跟跑省力</th><th>受阻</th><th>最高速度</th>' +
+    '<th>实际跑法</th><th>首次加力</th><th>加力/收力次数</th><th>判断次数</th><th>可用储备</th><th>疲劳余量</th><th>跟跑省力</th><th>受阻</th><th>最高速度</th>' +
     '</tr></thead><tbody>' + summaryRows + '</tbody></table></div>' +
-    '<p class="note">冲刺发动是骑手决定持续加力的地点，实际提速受加速能力与余力限制；跟跑与受阻为全程累计时间，终点余力显示剩余比例。</p></div></div>' +
+    '<p class="note">骑手可多次加力、收力与重新发动，实际提速受马的能力与余力限制。实际跑法按途中相对位置形成；跟跑与受阻为累计时间。</p></div></div>' +
     '<h3>逐马分段</h3>' + horseSections;
 }
 
@@ -1891,7 +1926,7 @@ function mcBlankAcc() { return { win: { 逃: 0, 先: 0, 差: 0, 追: 0 }, n: 0, 
 function mcMerge(acc, r) {
   if (!r.race.finished) { acc.aborted++; return; }
   const w = r.race.order[0];
-  if (w) acc.win[w.style]++;
+  if (w) acc.win[w.observedStyle || w.style]++;
   acc.n++;
   const second = r.race.order[1];
   if (w && second && second.gapAtWin !== null) acc.gaps.push(Math.max(0, second.gapAtWin) / 2.4);
@@ -2075,7 +2110,7 @@ $('btnGen').addEventListener('click', () => genField(Math.floor(Math.random() * 
 $('btnGen2').addEventListener('click', () => { genField(Math.floor(Math.random() * 1e9)); showSetup(); });
 $('btnRerollStaff').addEventListener('click', () => { staff = S.makeStaff(S.mulberry32(Math.floor(Math.random() * 1e9))); reportRng = S.mulberry32(Math.floor(Math.random() * 1e9)); refreshReport(); });
 $('btnApplyEditor').addEventListener('click', applyEditor);
-['cfgLength', 'cfgSurface', 'cfgState', 'cfgDir', 'cfgProfile', 'cfgCourse'].forEach((id) => {
+['cfgLength', 'cfgSurface', 'cfgState', 'cfgDir', 'cfgProfile', 'cfgCourse', 'cfgWind'].forEach((id) => {
   $(id).addEventListener('change', () => { refreshMarketOdds(); renderSetup(); });
 });
 $('seedApply').addEventListener('click', () => { const v = parseInt($('seedInput').value, 10); if (!isNaN(v)) genField(v); });

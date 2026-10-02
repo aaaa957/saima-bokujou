@@ -70,10 +70,12 @@ for (const state of ['良', '重', '不良']) {
   }
 }
 
-const fatigue = [0, 35, 70].map((value) => ({ value, result: measure({ '耐力': 70 }, '良', value, 17) }));
+// Use the matched sustainable effort: at 17m/s all three reserves approach zero,
+// so endpoint saturation cannot measure a difference in fatigue resilience.
+const fatigue = [0, 35, 70].map((value) => ({ value, result: measure({ '耐力': 70 }, '良', value, TARGET) }));
 test('fatigue reduces reserve resilience at matched effort',
   monotonic(fatigue.map((x) => x.result), (g) => g.reserve.median, -1, 0.005),
-  fatigue.map((x) => ({ fatigue: x.value, targetV: 17, reserve: x.result.reserve.median, cost: x.result.cost.median })));
+  fatigue.map((x) => ({ fatigue: x.value, targetV: TARGET, reserve: x.result.reserve.median, cost: x.result.cost.median })));
 
 const validAll = endurance.every((x) => valid(x.result)) && grounds.every((x) => valid(x.result)) && fatigue.every((x) => valid(x.result));
 test('all controlled measurements are finite and bounded', validAll, { seeds: N, targetV: TARGET, seconds: SECONDS });

@@ -73,7 +73,9 @@ test('the start has finite acceleration instead of assigning racing speed', () =
 });
 
 test('gate reaction and low-speed steering cannot create motion without speed', () => {
-  const race = makeRace(), H = race.race.horses[0], dt = 1 / 30;
+  // Check one internal substep; decreasing acceleration makes the integral
+  // over two substeps differ from a single endpoint trapezoid.
+  const race = makeRace(), H = race.race.horses[0], dt = 1 / 60;
   H.control = { targetV: H.cruise, targetT: 3 };
   const initialT = H.t;
   for (let i = 0; i < 30; i++) {
@@ -249,6 +251,8 @@ test('control trajectories converge with a smaller integration timestep', () => 
 test('finish order and winning margins interpolate all horses at the winning instant', () => {
   const race = makeRace([horse('a'), horse('b')]), [H, F] = race.race.horses;
   race.race.t = 100;
+  // Isolate the finish interpolation from the separately tested oxygen onset.
+  H.aerobicOutput=H.aerobic; F.aerobicOutput=F.aerobic;
   hold(H, { s: 1999.95, t: 3, v: 18 }); hold(F, { s: 1999.94, t: 17, v: 17 });
   race.step(1 / 60);
   assert.deepEqual(race.race.order.map((entrant) => entrant.id), ['a', 'b']);
@@ -293,6 +297,77 @@ test('200m sectionals and diagnostics account for the complete race', () => {
   assert.ok(Number.isFinite(H.statsSummary.workUsed) && H.statsSummary.workUsed > 0);
   near(H.statsSummary.workUsed, H.cumulativeWork, 1e-8, 'diagnostic work must match the engine accumulator');
   assert.ok(H.statsSummary.peakSpeed > 15 && H.statsSummary.peakSpeed < 25);
+});
+
+test('empty reserves cannot leave unpaid work at official hill joins or the lap boundary', () => {
+  const courses = ['東京芝A', '中山芝内A', '京都芝外A', '阪神芝外A', '新潟芝外A'];
+  let probes = 0;
+  for (const course of courses) for (const wind of [-12, 0, 12]) for (const v of [10, 12, 14, 16, 18]) {
+    const proto = makeRace([horse('a')], { length: 5000, course, wind });
+    const joins = [...proto.race.geo.elevationProfile.slice(1, -1).map(point => point[0]), 0];
+    for (const join of joins) for (const epsilon of [-1e-5, 1e-5]) {
+      const r = makeRace([horse('a')], { length: 5000, course, wind }), H = r.race.horses[0], dt = 1 / 120;
+      const lap = r.race.geo.lap;
+      const boundary = ((join - r.race.geo.startOffset) % lap + lap) % lap + lap;
+      // Straddle the previous old-speed midpoint estimate, including both sides of a sharp slope join.
+      hold(H, { s: boundary - v * S.laneProgressCoef(boundary, 10, r.race.geo) * dt / 2 + epsilon,
+        t: 10, v, targetV: 23 });
+      H.stamina = 0; H.aerobicOutput = H.aerobic; r.race.t = 60;
+      r.step(dt); probes++;
+      assert.ok(H.power <= H.aerobicOutput + 1e-5,
+        course + ': zero reserve must pay actual path work from aerobic supply, including a slope crossing');
+      assert.ok(H.statsSummary.unpaidWork <= 1e-5);
+      near(H.statsSummary.workUsed, H.statsSummary.aerobicUsed + H.statsSummary.energyUsed, 1e-5,
+        'actual work must be covered by recorded supply and reserve draw');
+      assert.ok(Number.isFinite(H.v) && H.v >= 0 && H.stamina >= 0);
+    }
+  }
+  assert.ok(probes >= 690, 'the probe must cover all five official layouts and both sides of their joins');
+});
+
+test('outer lanes pay actual gained gravitational potential rather than charging the longer arc twice', () => {
+  function paired(lane) {
+    const hill = makeRace([horse('a')], { length: 5000, course: '京都芝外A' });
+    const flat = makeRace([horse('a')], { length: 5000, course: '京都芝外A' });
+    flat.race.geo.elevationProfile = null; // Same geometry and resistance, with only height removed.
+    const geo = hill.race.geo, at = ((1420 - geo.startOffset) % geo.lap + geo.lap) % geo.lap;
+    const H = hill.race.horses[0], F = flat.race.horses[0];
+    hold(H, { s: at, t: lane, v: 16 }); hold(F, { s: at, t: lane, v: 16 });
+    H.aerobicOutput = H.aerobic; F.aerobicOutput = F.aerobic; hill.race.t = flat.race.t = 60;
+    const beforeHeight = S.elevationAt(H.s, geo, hill.race.g);
+    advance(hill, 1); advance(flat, 1);
+    near(H.s, F.s, 1e-8, 'removing height must not change this deliberately unpowered-limited constant-speed path');
+    near(H.v, 16, 1e-8); near(F.v, 16, 1e-8);
+    const heightGain = S.elevationAt(H.s, geo, hill.race.g) - beforeHeight;
+    assert.ok(heightGain > 0.1, 'the fixture must climb a genuine official-layout slope');
+    const addedWork = H.statsSummary.workUsed - F.statsSummary.workUsed;
+    near(addedWork, 9.81 * heightGain * H.massRatio, 1e-7,
+      'extra climbing work must equal gained gravitational potential on the actual path');
+    return { addedWork, heightGain };
+  }
+  const inner = paired(3), outer = paired(17);
+  assert.ok(outer.heightGain < inner.heightGain && outer.addedWork < inner.addedWork,
+    'at equal physical speed an outer arc advances less of the shared height profile per second');
+});
+
+test('steering and collision projection keep actual work fully paid with bounded reserves', () => {
+  for (const course of ['标准', '東京芝A', '中山芝内A']) for (const reserve of [0, 1, 1500]) {
+    const r = makeRace([horse('a'), horse('front'), horse('side')], { length: 5000, course, wind: 8 });
+    const [H, F, side] = r.race.horses;
+    hold(H, { s: 700, t: 10, v: 18, targetV: 23 });
+    hold(F, { s: 704, t: 10, v: 12 }); hold(side, { s: 701, t: 13, v: 16 });
+    H.stamina = reserve; H.control.targetT = 17; r.race.t = 60;
+    for (const runner of r.race.horses) runner.aerobicOutput = runner.aerobic;
+    advance(r, 4);
+    assert.ok(H.statsSummary.blockedSeconds > 0, 'the coupled probe must encounter a real forward block');
+    for (const runner of r.race.horses) {
+      const stats = runner.statsSummary;
+      assert.ok(stats.unpaidWork <= 1e-5, 'neither steering nor a collision correction can leave energy debt');
+      near(stats.workUsed, stats.aerobicUsed + stats.energyUsed, 1e-5,
+        'coupled-path work must reconcile with actual supply and reserve draw');
+      assert.ok(runner.stamina >= 0 && runner.stamina <= runner.staminaMax);
+    }
+  }
 });
 
 console.log('\n' + passed + ' continuous race physics checks passed.');
