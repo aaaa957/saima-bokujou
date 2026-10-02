@@ -172,6 +172,8 @@ test('the rider chooses sprint timing from remaining reserve, not a shared phase
     const race = makeRace(), H = race.race.horses[0];
     Object.assign(H, { s: 1400, t: 10, targetT: 10, v: 17, prevV: 17,
       lastObserve: 0, startDelay: 0, stamina: H.staminaMax * reserve });
+    // This fixture is already galloping after 60 seconds, with established oxygen supply.
+    H.aerobicOutput = H.aerobic * H.retention;
     race.race.t = 60;
     race.step(1 / 30);
     return H.sprintAt;

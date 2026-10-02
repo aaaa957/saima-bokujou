@@ -63,9 +63,11 @@ select, input[type=number] {
 #raceLeft { flex: 1 1 640px; min-width: 320px; }
 #raceRight { flex: 0 0 300px; display: flex; flex-direction: column; gap: 12px; }
 #raceCanvas { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); display: block; background: #1e5b34; }
-.phasebar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin-top: 8px; border: 1px solid var(--line); }
-.phasebar .ph { display: flex; align-items: center; justify-content: center; font-size: 11px; color: #9db8a8; background: var(--panel2); border-right: 1px solid var(--line); }
-.phasebar .ph.on { background: var(--gold); color: #1a241d; font-weight: 700; }
+.race-situation { margin-top: 8px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel2); font-size: 12px; }
+.situation-row { display: flex; gap: 4px 12px; flex-wrap: wrap; align-items: baseline; padding: 2px 0; }
+.situation-horse { color: var(--gold); font-weight: 600; }
+.situation-road { color: var(--dim); }
+.situation-remain { margin-left: auto; font-variant-numeric: tabular-nums; }
 .ctrl { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
 .lb-row { display: flex; align-items: center; gap: 8px; padding: 3px 0; font-size: 13px; border-bottom: 1px dashed var(--line); }
 .lb-row .lb-rank { width: 20px; color: var(--dim); }
@@ -77,8 +79,8 @@ select, input[type=number] {
 .feed .ev .t { color: var(--dim); margin-right: 6px; font-variant-numeric: tabular-nums; }
 .bar { height: 8px; background: var(--panel2); border-radius: 4px; overflow: hidden; margin: 4px 0; }
 .bar > div { height: 100%; border-radius: 4px; }
-.stage-badge { font-size: 11px; padding: 1px 8px; border-radius: 8px; }
-.stage-耐力 { background: #2e5a3f; } .stage-毅力 { background: #6a5a2e; } .stage-失速 { background: #7a2f2f; }
+.reserve-badge { font-size: 11px; padding: 1px 8px; border-radius: 8px; }
+.reserve-ready { background: #2e5a3f; } .reserve-low { background: #6a5a2e; } .reserve-empty { background: #7a2f2f; }
 .table-scroll { overflow-x: auto; }
 .diagnostic-grid { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-start; }
 .diagnostic-grid > div { flex: 1 1 400px; min-width: 0; }
@@ -345,13 +347,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
   <div id="raceWrap">
     <div id="raceLeft">
       <canvas id="raceCanvas" width="1100" height="460"></canvas>
-      <div class="phasebar" id="phaseBar">
-        <span class="ph" data-k="break" style="width:5%">出闸</span>
-        <span class="ph" data-k="open" style="width:15%">序盘</span>
-        <span class="ph" data-k="mid" style="width:40%">中盘</span>
-        <span class="ph" data-k="late" style="width:20%">后盘</span>
-        <span class="ph" data-k="final" style="width:20%">终盘</span>
-      </div>
+      <div class="race-situation" id="raceSituation" aria-label="领跑马与关注马的实时情况"></div>
       <div class="ctrl">
         <button id="btnPause">⏸ 暂停</button>
         <button class="speed on" data-v="1">1x</button>
@@ -359,7 +355,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
         <button class="speed" data-v="4">4x</button>
         <button id="btnSkip">⏭ 跳到结果</button>
         <button id="btnDebug">🐞 真实数值</button>
-        <span class="note" id="distRemain">残り 2000m</span>
+        <span class="note" id="distRemain">比赛计时 0:00.0</span>
       </div>
     </div>
     <div id="raceRight">
@@ -372,7 +368,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
         <div id="leaderboard"></div>
       </div>
       <div class="card" style="margin:0" id="playerCard">
-        <h2>我的马</h2>
+        <h2>关注马</h2>
         <div id="playerInfo"></div>
       </div>
       <div class="card" style="margin:0; display:none" id="debugPanel">
@@ -408,7 +404,7 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
   </div>
   <div class="card">
     <details id="raceDiagnosticsBox">
-      <summary>⑦ 分段与骑乘回放：节奏、发动时机和余力</summary>
+      <summary>⑦ 分段与骑乘回放：节奏、全力请求和余力</summary>
       <div id="raceDiagnostics"></div>
     </details>
   </div>
@@ -444,8 +440,8 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.10.02.1"></script>
-<script src="career-save.js?v=v2026.10.02.1"></script>
+<script src="sim.js?v=v2026.10.02.2"></script>
+<script src="career-save.js?v=v2026.10.02.2"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -461,7 +457,7 @@ let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.10.02.1';
+const APP_VER = 'v2026.10.02.2';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -721,7 +717,7 @@ function startRace() {
     wind: singleRaceOptions().wind,
     rng: S.mulberry32(((seed ^ 0x9e3779b9) + raceCount * 7919) >>> 0),
   });
-  paused = false; speedMult = 1; acc = 0; lastTs = 0; cam = null;
+  paused = false; speedMult = 1; acc = 0; lastTs = 0; lastUiTs = 0; cam = null;
   $('btnPause').textContent = '⏸ 暂停';
   document.querySelectorAll('.speed').forEach((b) => b.classList.toggle('on', +b.dataset.v === 1));
   $('debugPanel').style.display = 'none';
@@ -758,16 +754,37 @@ function fmtTime(t) {
 
 /* ---------- 赛中渲染 ---------- */
 function sectionNameAt(s, geo) {
-  if (geo.boundaries) {
-    if (s >= geo.length - geo.finishStraight) return '终直';
-    return S.kAt(s, geo) > 0 ? '弯道' : '直道';
-  }
-  const { B, S: straight } = geo;
-  if (s < straight) return '序盘直线';
-  if (s < straight + B) return '右弯道';
-  if (s < 2 * straight + B) return '对直';
-  if (s < 2 * straight + 2 * B) return '左弯道';
-  return '终直';
+  if (s >= geo.length - geo.finishStraight) return '终直';
+  return S.kAt(s, geo) > 0 ? '弯道' : '直道';
+}
+function roadSituationAt(s, geo, g) {
+  const grade = S.gradientAt(s, geo, g);
+  const slope = grade > 0.001 ? '▲上坡 +' + (grade * 100).toFixed(1) + '%' :
+    grade < -0.001 ? '▼下坡 −' + (Math.abs(grade) * 100).toFixed(1) + '%' : '平坦';
+  return sectionNameAt(s, geo) + ' · ' + slope;
+}
+function tacticLabel(h) {
+  if (h.dnf) return '已中止';
+  if (h.place) return '已冲线';
+  if (h.gateOpen === false) return '等待出闸';
+  if (h.startSettled === false) return '起步加速';
+  const labels = { start:'起步加速', settle:'分配出力', follow:'跟跑', position:'抢位', attack:'全力推进', recover:'收力调整' };
+  return labels[h.strategy && h.strategy.mode] || '准备起步';
+}
+function reserveStatus(h) {
+  const ratio = Math.max(0, Math.min(1, h.stamina / Math.max(1, h.staminaMax)));
+  return { ratio, key:ratio <= 1e-8 ? 'empty' : ratio < 0.12 ? 'low' : 'ready',
+    text:ratio <= 1e-8 ? '储备用尽' : ratio < 0.12 ? '储备偏低' : '尚有储备' };
+}
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
+}
+function situationRow(h, label, snap, geo) {
+  if (!h) return '';
+  return '<div class="situation-row"><span class="situation-horse">' + label + '：' + escapeHtml(h.name) + '</span>' +
+    '<span class="situation-road">' + roadSituationAt(Math.min(snap.length, h.s), geo, snap.g) + '</span>' +
+    '<span title="' + escapeHtml(h.strategy ? h.strategy.reason : '') + '">' + tacticLabel(h) + (h.blocked ? ' · 受阻' : '') + '</span>' +
+    '<span class="situation-remain">剩余 ' + Math.max(0, Math.ceil(snap.length - h.s)) + 'm · ' + (h.v * 3.6).toFixed(0) + 'km/h</span></div>';
 }
 function renderRace(ts) {
   const snap = race.state();
@@ -776,6 +793,13 @@ function renderRace(ts) {
   const W = cv.width, H = cv.height;
   const L = snap.length;
   const leaderH = snap.horses.find((h) => h.id === snap.leader);
+  const raceCard = mode === 'career' && career.watchInfo ? career.watchInfo.race : null;
+  const raceField = raceCard ? raceCard.field : field;
+  const ticket = raceCard ? career.weekBets[raceCard.id] : null;
+  const leading = leaderH || snap.horses.find((h) => h.place === 1);
+  const focus = snap.horses.find((h) => h.id === (raceCard ? ticket?.ids?.[0] : playerId)) ||
+    (raceCard ? snap.horses.find((h) => raceField.some((f) => f.id === h.id && f.player)) || leading : null);
+  const focusId = focus && focus.id;
   const geo = race.race.geo;
   const { R, B, S: St } = geo;
   const trackWidth = S.TRACK_WIDTH, halfWidth = trackWidth / 2;
@@ -1028,7 +1052,7 @@ function renderRace(ts) {
   let offCount = 0;
   sorted.forEach((h) => {
     if (h.dnf) return;
-    const idx = field.findIndex((f) => f.id === h.id);
+    const idx = raceField.findIndex((f) => f.id === h.id);
     if (h.s < cam.s - 4) {                       // 在镜头后方
       const iy = 64 + offCount * 17; offCount++;
       ctx.fillStyle = capColor(idx);
@@ -1047,7 +1071,7 @@ function renderRace(ts) {
     const hs = Math.max(5.5, 8.5 * q.ps);
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
     ctx.beginPath(); ctx.arc(xx + 2 * q.ps, yy + 3 * q.ps, hs, 0, Math.PI * 2); ctx.fill();
-    if (h.id === playerId) {
+    if (h.id === focusId) {
       ctx.strokeStyle = 'rgba(255,215,0,0.95)'; ctx.lineWidth = 2.5;
       ctx.beginPath(); ctx.arc(xx, yy, hs + 4, 0, Math.PI * 2); ctx.stroke();
     }
@@ -1065,8 +1089,11 @@ function renderRace(ts) {
     const ty = Math.max(12, yy - hs - 8 - dy);
     ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(xx - tw / 2 - 3, ty - 11, tw + 6, 13);
     ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.fillText(h.name, xx, ty);
-    if (h.stage === '失速') { ctx.fillStyle = '#ff6b6b'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('乏力', xx, yy + hs + 9); }
-    else if (h.stage === '毅力') { ctx.fillStyle = '#ffb84d'; ctx.font = 'bold 9px sans-serif'; ctx.fillText('储备低', xx, yy + hs + 9); }
+    const reserve = reserveStatus(h);
+    if (reserve.key !== 'ready') {
+      ctx.fillStyle = reserve.key === 'empty' ? '#ff6b6b' : '#ffb84d'; ctx.font = 'bold 9px sans-serif';
+      ctx.fillText(reserve.key === 'empty' ? '储备耗尽' : '储备低', xx, yy + hs + 9);
+    }
   });
 
   // 小地图（右上角全体图）
@@ -1102,37 +1129,29 @@ function renderRace(ts) {
                         clipHalfH: outerR, clipStraight: St / 2, markers: [] };
   snap.horses.forEach((h) => {
     if (h.dnf) return;
-    const dotR = h.id === playerId ? 3.5 : 2.5;
-    const markerR = h.id === playerId ? 5.5 : dotR + 0.5;
+    const dotR = h.id === focusId ? 3.5 : 2.5;
+    const markerR = h.id === focusId ? 5.5 : dotR + 0.5;
     const displayLane = Math.min(h.t, trackWidth - markerR / mmScale);
     const p = S.trackPoint(sClamp(h.s), displayLane, geo, dir);
     const dotX = mmx(p.x), dotY = mmy(p.y);
     cam.lastView.mini.markers.push({ id: h.id, x: dotX, y: dotY, r: dotR, markerR, actualLane: h.t, displayLane });
-    const idx = field.findIndex((f) => f.id === h.id);
+    const idx = raceField.findIndex((f) => f.id === h.id);
     ctx.fillStyle = capColor(idx);
     ctx.beginPath(); ctx.arc(dotX, dotY, dotR, 0, Math.PI * 2); ctx.fill();
-    if (h.id === playerId) {
+    if (h.id === focusId) {
       ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.stroke();
     }
   });
   ctx.restore();                                 // 结束小地图裁剪
 
-  // 阶段条
-  const p = snap.leaderProgress;
-  document.querySelectorAll('#phaseBar .ph').forEach((el) => {
-    const k = el.dataset.k;
-    const pd = S.PHASE_DEFS.find((pp) => pp.key === k);
-    el.classList.toggle('on', p >= pd.from && p < pd.to);
-  });
-
   // 侧栏（节流）
   if (!lastUiTs || ts - lastUiTs > 120 || race.race.finished) {
     lastUiTs = ts;
     const lb = $('leaderboard');
     lb.innerHTML = sorted.map((h, i) => {
-      const idx = field.findIndex((f) => f.id === h.id);
-      return '<div class="lb-row' + (h.id === playerId ? ' pl' : '') + '">' +
+      const idx = raceField.findIndex((f) => f.id === h.id);
+      return '<div class="lb-row' + (h.id === focusId ? ' pl' : '') + '">' +
         '<span class="lb-rank">' + (i + 1) + '</span>' +
         '<span class="cap-mini" style="background:' + capColor(idx) + ';color:' + numColor(idx) + '">' + (idx + 1) + '</span>' +
         '<span class="lb-name">' + h.name + '</span>' +
@@ -1140,42 +1159,41 @@ function renderRace(ts) {
     }).join('') +
     (snap.horses.filter((h) => h.dnf).length ? '<div class="note">已中止：' + snap.horses.filter((h) => h.dnf).map((h) => h.name).join('、') + '</div>' : '');
 
-    const betH = bet.horseId ? field.find((f) => f.id === bet.horseId) : null;
-    $('distRemain').textContent = '残り ' + Math.max(0, Math.ceil(L - (sorted[0] ? sorted[0].s : 0))) + 'm · ' +
-      (leaderH ? (leaderH.v * 3.6).toFixed(0) + 'km/h' : '') +
+    const ph = focus;
+    $('raceSituation').innerHTML = situationRow(leading, snap.finished ? '冠军' : snap.order.length ? '在跑领先' : '领跑', snap, geo) +
+      situationRow(ph, '关注', snap, geo);
+    const betH = !raceCard && bet.horseId ? raceField.find((f) => f.id === bet.horseId) : null;
+    $('distRemain').textContent = '比赛计时 ' + fmtTime(snap.t) +
       (betH ? ' · 🎫 ' + betH.name + ' ' + bet.amount + '万' : '');
 
     const feed = $('feed');
     feed.innerHTML = snap.events.map((e) => '<div class="ev"><span class="t">' + fmtTime(e.t) + '</span>' + e.text + '</div>').join('');
 
-    const ph = snap.horses.find((h) => h.id === playerId);
     if (ph) {
+      const reserve = reserveStatus(ph);
       $('playerInfo').innerHTML =
-        '<div style="font-weight:700">' + ph.name + ' <span class="stage-badge stage-' + ph.stage + '">' +
-        (ph.stage === '耐力' ? '尚有储备' : ph.stage === '毅力' ? '储备偏低' : '储备用尽') + '</span>' +
+        '<div style="font-weight:700">' + ph.name + ' <span class="reserve-badge reserve-' + reserve.key + '">' +
+        reserve.text + '</span>' +
         (ph.action ? ' <span class="chip">' + ph.action + '</span>' : '') + '</div>' +
+        '<div style="font-size:12px;margin-top:4px">骑乘：' + tacticLabel(ph) + (ph.strategy ? ' · ' + escapeHtml(ph.strategy.reason) : '') + '</div>' +
         '<div style="font-size:12px;color:var(--dim);margin-top:4px">当前 ' + ph.v.toFixed(1) + ' m/s · ' + (ph.v * 3.6).toFixed(1) + ' km/h' +
         (ph.blocked ? ' · ⚠ 被马群挡住' : '') + '</div>' +
-        (function () {
-          const g2 = S.gradientAt(ph.s, geo, slopeG);
-          const sec2 = sectionNameAt(ph.s, geo);
-          const slopeTxt = g2 > 0.001 ? '▲上坡+' + (g2 * 100).toFixed(1) + '%' : g2 < -0.001 ? '▼下坡-' + (Math.abs(g2) * 100).toFixed(1) + '%' : '平坦';
-          return '<div style="font-size:12px;color:var(--dim)">路段：' + sec2 + ' · ' + slopeTxt + (dir === '左回' ? ' · 左回' : ' · 右回') + '</div>';
-        })() +
-        '<div style="font-size:12px;color:var(--dim)">可用储备</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.stamina / ph.staminaMax * 100)) + '%;background:#59c98e"></div></div>' +
+        '<div style="font-size:12px;color:var(--dim)">路段：' + roadSituationAt(ph.s, geo, slopeG) + (dir === '左回' ? ' · 左回' : ' · 右回') + '</div>' +
+        '<div style="font-size:12px;color:var(--dim)">可用储备 ' + (reserve.ratio * 100).toFixed(1) + '%</div><div class="bar"><div style="width:' + (reserve.ratio * 100) + '%;background:#59c98e"></div></div>' +
         '<div style="font-size:12px;color:var(--dim)">疲劳余量</div><div class="bar"><div style="width:' + Math.max(0, Math.min(100, ph.guts / ph.gutsMax * 100)) + '%;background:#e8c96a"></div></div>' +
         '<div class="note">两项随实际出力共同耗用，收力可减少消耗；储备用尽后仍可维持较低配速。</div>';
-    }
+    } else $('playerInfo').innerHTML = '<div class="note">当前没有可关注的参赛马。</div>';
 
     if ($('debugPanel').style.display !== 'none') {
-      $('debugTable').innerHTML = '<thead><tr><th>马</th><th>速度</th><th>爆发</th><th>出闸</th><th>耐力</th><th>力量</th><th>毅力</th><th>体格</th><th>斗志</th><th>疲劳</th><th>跑法</th><th>骑手</th><th>实时v</th><th>阶段</th></tr></thead><tbody>' +
-        field.map((f) => {
+      $('debugTable').innerHTML = '<thead><tr><th>马</th><th>速度</th><th>爆发</th><th>出闸</th><th>耐力</th><th>力量</th><th>毅力</th><th>体格</th><th>斗志</th><th>疲劳</th><th>跑法</th><th>骑手</th><th>实时v</th><th>骑乘状态</th><th>储备</th></tr></thead><tbody>' +
+        raceField.map((f) => {
           const hs = snap.horses.find((hh) => hh.id === f.id);
           return '<tr><td>' + f.name + '</td>' +
             ['速度','爆发力','出闸能力','耐力','力量','毅力','体格'].map((k) => '<td>' + f.stats[k] + '</td>').join('') +
             '<td>' + f['斗志'] + '</td><td>' + f['疲劳'] + '</td>' +
             '<td>' + f.style + '</td><td>' + f.jockeyGrade + '</td>' +
-            '<td>' + (hs ? hs.v.toFixed(1) : '-') + '</td><td>' + (hs ? hs.stage : '-') + '</td></tr>';
+            '<td>' + (hs ? hs.v.toFixed(1) : '-') + '</td><td>' + (hs ? tacticLabel(hs) : '-') + '</td>' +
+            '<td>' + (hs ? (reserveStatus(hs).ratio * 100).toFixed(1) + '%' : '-') + '</td></tr>';
         }).join('') + '</tbody>';
     }
   }
@@ -1313,7 +1331,7 @@ function renderRaceDiagnostics(R, fld) {
   const summaryRows = ordered.map((H) => {
     const stats = H.statsSummary || {};
     const sprint = Number.isFinite(H.sprintAt) ? H.sprintAt : stats.sprintAt;
-    const sprintText = Number.isFinite(sprint) ? '残' + Math.round(Math.max(0, R.length - sprint)) + 'm' : '未发动';
+    const sprintText = Number.isFinite(sprint) ? '残' + Math.round(Math.max(0, R.length - sprint)) + 'm' : '未请求全力';
     return '<tr' + (H.id === playerId ? ' class="is-player"' : '') + '><td>' + (H.place || '中止') + '</td><td>' +
       escape(H.name) + '</td><td>' + escape(H.observedStyle || H.style) + '</td><td>' + sprintText + '</td><td>' +
       (stats.launches || 0) + '/' + (stats.withdrawals || 0) + '</td><td>' + (stats.decisions || 0) + '</td><td>' + percent(H.stamina, H.staminaMax) + '</td><td>' +
@@ -1337,9 +1355,9 @@ function renderRaceDiagnostics(R, fld) {
     '<th>通过距离</th><th>本段用时</th><th>累计用时</th></tr></thead><tbody>' + leaderRows + '</tbody></table></div>' +
     '<p class="note">记录各标志点首匹马通过的时间，领头马可能更换。计时按实际通过位置插值，末段不足200米时按实际距离显示。</p></div>' +
     '<div><h3>骑乘与终点余力</h3><div class="table-scroll"><table><thead><tr><th>名次</th><th>马名</th>' +
-    '<th>实际跑法</th><th>首次加力</th><th>加力/收力次数</th><th>判断次数</th><th>可用储备</th><th>疲劳余量</th><th>跟跑省力</th><th>受阻</th><th>最高速度</th>' +
+    '<th>实际跑法</th><th>首次全力推进请求</th><th>全力请求/撤回次数</th><th>判断次数</th><th>可用储备</th><th>疲劳余量</th><th>跟跑省力</th><th>受阻</th><th>最高速度</th>' +
     '</tr></thead><tbody>' + summaryRows + '</tbody></table></div>' +
-    '<p class="note">骑手可多次加力、收力与重新发动，实际提速受马的能力与余力限制。实际跑法按途中相对位置形成；跟跑与受阻为累计时间。</p></div></div>' +
+    '<p class="note">首次全力推进请求记录骑手首次请求最大目标配速的位置；未请求全力的马仍会随预算变化加速。请求/撤回次数仅统计全力请求，实际速度受能力、余力、路段与受阻限制。实际跑法按途中相对位置形成；跟跑与受阻为累计时间。</p></div></div>' +
     '<h3>逐马分段</h3>' + horseSections;
 }
 
@@ -1671,7 +1689,7 @@ function watchAiRace(raceCard) {
     styleCoefs: 'balanced',
     rng: S.mulberry32((raceCard.rngSeed || 0) >>> 0),
   });
-  paused = false; speedMult = 1; acc = 0; lastTs = 0; cam = null;
+  paused = false; speedMult = 1; acc = 0; lastTs = 0; lastUiTs = 0; cam = null;
   $('btnPause').textContent = '⏸ 暂停';
   document.querySelectorAll('.speed').forEach((b) => b.classList.toggle('on', +b.dataset.v === 1));
   $('debugPanel').style.display = 'none';

@@ -1,5 +1,6 @@
 ﻿/* ============================================================
- * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.1
+ * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.2
+ * 本轮路线预测与验收：docs/路线预算与状态验收-v2026.10.02.2.md
  * 模型结构、实赛约束与验证口径：docs/比赛系统-现实拟合-v2026.10.02.1.md
  * 情报误差机制来源：《游戏策划案》4.5 情报系统
  * 运行环境：浏览器(挂载到 window.SaimaSim) / Node(require)
@@ -36,7 +37,7 @@
   /* 历史默认路线接口；当前跑法不绑定横向位置。 */
   const STYLE_BASE_T = { '逃': 3, '先': 3, '差': 3, '追': 3 }; // 历史接口，默认路线不按跑法区分
   const STALL_SPEED = 2;
-  /* 进程标签仅用于播报与显示，不控制速度或资源，也不触发冲刺。 */
+  /* 历史进程标签兼容入口；现版界面、运动与骑乘均不使用这些百分比分段。 */
   const PHASE_DEFS = [
     { key: 'break', name: '出闸', from: 0.00, to: 0.05 },
     { key: 'open',  name: '序盘', from: 0.05, to: 0.32 },
@@ -735,7 +736,28 @@
     const race={length,surface,state,dir,profile,g,geo,wind,course:geo.course,t:0,finished:false,
       events:[],order:[],dnf:[],winnerTime:null,pacePrediction:prediction,
       paceStrength:1,paceLevel:'平均',paceContest:0,avgV:0,avgBase:0,
-      prevLead:null,phaseAnnounced:{},posHistory:[],_lastPct:0,lastEventAt:{},sectionals:[]};
+      prevLead:null,posHistory:[],_lastPct:0,lastEventAt:{},sectionals:[]};
+    // 预算网格随真实路线而定。弯直、高程及圈接点必须保留，细分仅用于积分。
+    const routeKeys=[0,length,...geo.boundaries.map(b=>b.s)];
+    if(geo.elevationProfile) {
+      for(let loop=-1;loop<=Math.ceil(length/geo.lap)+1;loop++) {
+        for(const [at] of geo.elevationProfile) {
+          const s=loop*geo.lap+at-geo.startOffset;
+          if(s>0&&s<length) routeKeys.push(s);
+        }
+      }
+    }
+    routeKeys.sort((a,b)=>a-b);
+    const routeCorners=routeKeys.filter((s,i)=>!i||s-routeKeys[i-1]>1e-7);
+    function planningPoints(maxStep=40) {
+      const points=[0];
+      for(let i=1;i<routeCorners.length;i++) {
+        const a=routeCorners[i-1],b=routeCorners[i],n=Math.ceil((b-a)/maxStep);
+        for(let j=1;j<=n;j++) points.push(a+(b-a)*j/n);
+      }
+      return points;
+    }
+    const routeMesh=planningPoints();
     const gates=field.map((_,i)=>i+1);
     for(let i=gates.length-1;i>0;i--){ const j=Math.floor(rng()*(i+1)); [gates[i],gates[j]]=[gates[j],gates[i]]; }
     const horses=field.map((h,i)=>{
@@ -749,7 +771,7 @@
       const carriedWeight=clamp(Number(h.carriedWeight)||57,40,70), massRatio=(bodyMass+carriedWeight)/(bodyMass+57);
       const H={h,id:h.id,name:h.name,style:h.style||'先',jockey:h.jockeyGrade||'普通',adj,mor,gate,
         behavior,plan,bodyMass,carriedWeight,massRatio,
-        s:0,t,targetT:t,v:0,prevV:0,pot:0,targetV:base,accel:0,power:0,
+        s:0,t,targetT:t,v:0,prevV:0,pot:0,targetV:base,accel:0,power:0,gateOpen:false,startSettled:false,
         stamina:adj['耐力']*RACE_F.staminaPer,staminaMax:adj['耐力']*RACE_F.staminaPer,
         guts:adj['毅力']*RACE_F.gutsPer,gutsMax:adj['毅力']*RACE_F.gutsPer,
         stage:'耐力',retention:1,base,fatMult,fieldCoef:(FIELD_STATE_COEF[state]||1)*surfC,
@@ -766,6 +788,8 @@
       H.powerFor=(v,a,drafting,at=H.s)=>powerCost(H,v,a,drafting,at);
       H.sustainableV=(at=H.s,drafting=false,power=H.aerobic*H.retention)=>speedAtPower(H,power,drafting,at);
       H.kineticCost=(from,to)=>0.5*Math.max(0,to*to-from*from)*H.massRatio;
+      // 验证/诊断入口：不消耗随机数，也不修改马匹或比赛状态。
+      H.finishPlan=(requestedV,draftDistance=0,options={})=>finishPlan(H,requestedV,draftDistance,options);
       H.cruise=H.sustainableV();
       return H;
     }); race.horses=horses;
@@ -822,29 +846,107 @@
         (RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*(geo.R+H.t-TRACK_WIDTH/2)))*bendCoefFor(H.h.special,dir));
       return cap;
     }
-    // 与实际运动使用同一 W/kg 功率函数，积分为 J/kg；遮挡只预测当前近邻的一小段。
-    function reserveToFinish(H,requestedV,draftDistance=0) {
-      const remaining=Math.max(0,length-H.s), samples=8;
-      let required=H.kineticCost(H.v,Math.min(requestedV,projectedCap(H,H.s))), elapsed=0;
-      const maximumSupply=H.aerobic*H.retention;
-      const oxygenDeficit=Math.max(0,maximumSupply-(H.aerobicOutput??maximumSupply));
-      for(let i=0;i<samples;i++) {
-        const distance=remaining*(i+0.5)/samples,at=H.s+distance;
-        const v=Math.max(3,Math.min(requestedV,projectedCap(H,at)));
-        const seconds=remaining/samples/Math.max(1,v*laneProgressCoef(at,H.t,geo));
-        const supply=maximumSupply-oxygenDeficit*Math.exp(-(elapsed+seconds/2)/RACE_F.aerobicTau);
-        required+=Math.max(0,H.powerFor(v,0,distance<draftDistance,at)-supply)*seconds;
-        elapsed+=seconds;
+    // 路线预算预测有限加速与制动，功率与运动执行共用；不会把动能重复收费。
+    // 固定当前疲劳、车道和起始加速余力，未预知未来受阻、横移或恢复。
+    function finishPlan(H,requestedV,draftDistance=0,options={}) {
+      if(!Number.isFinite(requestedV)||requestedV<0) throw new Error('无效预测配速');
+      const reserve=Math.max(0,Number.isFinite(options.reserve)?options.reserve:H.stamina);
+      const maxStep=Number.isFinite(options.maxStep)?clamp(options.maxStep,1,80):40;
+      const mesh=maxStep===40?routeMesh:planningPoints(maxStep);
+      const from=clamp(H.s,0,length),draftEnd=Math.min(length,from+Math.max(0,draftDistance));
+      const points=[from,...mesh.filter(s=>s>from+1e-7)];
+      if(draftEnd>from+1e-7&&draftEnd<length-1e-7&&!points.some(s=>Math.abs(s-draftEnd)<1e-7)) {
+        points.push(draftEnd);points.sort((a,b)=>a-b);
       }
-      return required;
+      const maximumSupply=H.aerobic*H.retention;
+      const initialSupply=H.aerobicOutput??maximumSupply,tau=RACE_F.aerobicTau;
+      const oxygenAt=t=>maximumSupply+(initialSupply-maximumSupply)*Math.exp(-t/tau);
+      const oxygenIntegral=(a,b)=>maximumSupply*(b-a)+(initialSupply-maximumSupply)*tau*(Math.exp(-a/tau)-Math.exp(-b/tau));
+      const response=RACE_F.responseTime*clamp(1+(0.65-H.behavior.tractability)*0.4,0.82,1.26);
+      const accelerationReserve=clamp(reserve/Math.max(1,H.staminaMax)/RACE_F.reserveFade,0,1);
+      const quadrature=[[0.1127016653792583,5/18],[0.5,4/9],[0.8872983346207417,5/18]];
+      let required=0,elapsed=0,previousV=H.v,peakPowerShortfall=0;
+      const segments=options.trace?[]:null;
+      for(let i=1;i<points.length;i++) {
+        const a=points[i-1];let b=points[i],at=(a+b)/2;
+        let target=Math.max(3,Math.min(requestedV,projectedCap(H,at)));
+        // 大幅提速时随当前速度细化到约半秒，避免把低速的加速上限冻结40米。
+        const transientStep=Math.max(1,previousV*0.5)*laneProgressCoef(at,H.t,geo);
+        if(Math.abs(target-previousV)>2&&b-a>transientStep+1e-7) {
+          b=a+transientStep;points.splice(i,0,b);at=(a+b)/2;
+          target=Math.max(3,Math.min(requestedV,projectedCap(H,at)));
+        }
+        const lane=laneProgressCoef(at,H.t,geo),distance=(b-a)/lane;
+        const mix=clamp(previousV/H.base,0,1),sign=target>=previousV?1:-1;
+        const limit=sign>0?(RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230)*(1-mix)+
+          RACE_F.runningAccel*(0.65+H.adj['爆发力']/200)*mix)*(0.65+0.35*accelerationReserve):RACE_F.braking;
+        const boundedTime=Math.max(0,Math.abs(target-previousV)/limit-response);
+        const boundedV=previousV+sign*limit*boundedTime;
+        const boundedDistance=previousV*boundedTime+sign*limit*boundedTime*boundedTime/2;
+        function trajectory(t) {
+          if(boundedTime>0&&t<=boundedTime) return {v:previousV+sign*limit*t,distance:previousV*t+sign*limit*t*t/2,a:sign*limit};
+          const tail=t-boundedTime,decay=Math.exp(-tail/response);
+          return {v:target+(boundedV-target)*decay,
+            distance:boundedDistance+target*tail+(boundedV-target)*response*(1-decay),
+            a:-(boundedV-target)*decay/response};
+        }
+        let high=Math.max(0.01,distance/Math.max(1,(previousV+target)/2));
+        while(trajectory(high).distance<distance) high*=2;
+        let low=0,seconds=high;
+        for(let n=0;n<12;n++) {
+          const point=trajectory(seconds),error=point.distance-distance;
+          if(Math.abs(error)<1e-7) break;
+          if(error>0) high=seconds;else low=seconds;
+          const next=seconds-error/Math.max(0.1,point.v);
+          seconds=next>low&&next<high?next:(low+high)/2;
+        }
+        const end=trajectory(seconds);
+        const grade=(elevationAt(b,geo,g)-elevationAt(a,geo,g))/(b-a);
+        let draw=0,power=0,segmentShortfall=0;
+        for(const [fraction,weight] of quadrature) {
+          const point=trajectory(seconds*fraction),where=a+point.distance*lane;
+          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*lane*point.v);
+          const oxygen=oxygenAt(elapsed+seconds*fraction);
+          draw+=weight*Math.max(0,output-oxygen)*seconds;power+=weight*output;
+          segmentShortfall=Math.max(segmentShortfall,output-oxygen);
+        }
+        // 端点与加速度从上限转为响应控制的接点，也可能是瞬时需求峰值。
+        for(const when of [0,Math.min(seconds,boundedTime),seconds]) {
+          const point=trajectory(when),where=clamp(a+point.distance*lane,a+1e-8,b-1e-8);
+          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*lane*point.v);
+          segmentShortfall=Math.max(segmentShortfall,output-oxygenAt(elapsed+when));
+        }
+        required+=draw;
+        const after=Math.max(0,reserve-required);
+        // 储备只耗用时，格末是本格可用功率的下界；不能拿平均储备放行末段透支。
+        const available=RACE_F.reservePower*clamp(after/Math.max(1,H.staminaMax)/RACE_F.reserveFade,0,1);
+        peakPowerShortfall=Math.max(peakPowerShortfall,segmentShortfall-available);
+        if(segments) segments.push({from:a,to:b,v:distance/seconds,fromV:previousV,toV:end.v,time:seconds,
+          power,oxygen:oxygenIntegral(elapsed,elapsed+seconds),draw,kinetic:H.kineticCost(previousV,end.v)});
+        elapsed+=seconds;previousV=end.v;
+      }
+      return {required,seconds:elapsed,feasible:required<=reserve+1e-7&&peakPowerShortfall<=1e-7,
+        peakPowerShortfall,...(segments?{segments}:{})};
+    }
+    function reserveToFinish(H,requestedV,draftDistance=0) {
+      return finishPlan(H,requestedV,draftDistance).required;
     }
     function budgetSpeed(H,reserve,draftDistance=0) {
-      let low=Math.max(3,H.sustainableV(H.s,!!draftDistance)*0.88),high=H.maxV;
+      let low=3,high=H.maxV;
       for(let i=0;i<9;i++) {
         const mid=(low+high)/2;
-        if(reserveToFinish(H,mid,draftDistance)<=reserve) low=mid;else high=mid;
+        if(finishPlan(H,mid,draftDistance,{reserve}).feasible) low=mid;else high=mid;
       }
       return low;
+    }
+    function updateStartState(H,planned=H.targetV) {
+      H.gateOpen=race.t>=H.startDelay;
+      if(H.startSettled||!H.gateOpen) return;
+      const reference=Math.min(planned,H.sustainableV(),projectedCap(H,H.s));
+      const response=RACE_F.responseTime*clamp(1+(0.65-H.behavior.tractability)*0.4,0.82,1.26);
+      // 起步完成取决于已达到的速度及仍需多少提速，不依赖走了多少米。
+      H.startSettled=H.v>STALL_SPEED&&H.v>=reference*0.95&&
+        Math.max(0,H.accel)*response<=Math.max(0.3,reference*0.08);
     }
     function recordDecision(H,list,mode,reason,reserveEstimate,observedPace) {
       const stats=H.statsSummary;
@@ -873,30 +975,33 @@
       const ahead=near.filter(F=>F.s>H.s+3).sort((a,b)=>a.s-b.s)[0];
       const wake=near.find(F=>F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<2.5);
       const observedPace=(wake?.v??ahead?.v??H.v)+speedError;
-      const sustainable=H.sustainableV(H.s,!!wake);
       // 完整滚动预算只保留很小的判断误差余量；耐心不直接扣减巡航速度。
       const allocation=clamp(0.96+0.025*plan.risk,0.96,0.985);
       const planned=budgetSpeed(H,reserveEstimate*allocation,wake?Math.min(44,remaining):0);
-      const maxDemand=reserveToFinish(H,H.maxV);
+      updateStartState(H,planned);
+      const attackPlan=finishPlan(H,H.maxV,0,{reserve:reserveEstimate*judgement});
+      const maxDemand=attackPlan.required;
       const sr=H.stamina/Math.max(1,H.staminaMax);
       const obstruction=localFront && localFront.s-H.s<4+Math.max(0,H.maxV-localFront.v)*3 && localFront.v<H.maxV-0.35;
       // 用本次预算速度评估通道，不能沿用上一观察的慢速指令把超越机会误判为无收益。
       H.targetV=planned;
       const gap=obstruction||H.blocked?findGap(H,true):null;
       const hasPass=gap && Math.abs(gap.t-H.t)>0.25 && gap.pace>(localFront?.v??H.v)+0.12;
-      const keepAttack=!!H.attacking && maxDemand<=reserveEstimate*judgement*1.12;
-      let attacking=H.s>30 && sr>0.015 && (keepAttack||maxDemand<=reserveEstimate*judgement*(0.92+0.08*plan.risk));
+      const keepAttack=!!H.attacking&&maxDemand<=reserveEstimate*judgement*1.12;
+      let attacking=H.startSettled&&attackPlan.feasible&&
+        (keepAttack||maxDemand<=reserveEstimate*judgement*(0.92+0.08*plan.risk));
       if(obstruction && !hasPass) attacking=false;
       let desired,mode,reason;
       if(attacking) {
         desired=H.maxV;mode='attack';reason='预计余力可支付余程，存在推进机会';
       } else {
-        desired=planned;mode=sr<0.12||H.attacking?'recover':'settle';
-        reason=H.attacking?'撤回发动，重新分配余力':'按自身能力与余程分配出力';
+        desired=planned;mode=!H.startSettled?'start':H.attacking?'recover':'settle';
+        reason=!H.startSettled?'按实际加速建立跑动节奏':H.attacking?'撤回发动，重新分配余力':'按自身能力与余程分配出力';
         // 跟跑节省的能量必须足以偿付之后追回丢失距离的出力；便宜遮挡不能成为慢跑陷阱。
         if(wake && observedPace>3 && observedPace<=planned+0.3 && plan.patience>0.25) {
-          const horizon=Math.min(8,remaining/Math.max(3,planned)*0.20);
           const following=Math.min(planned,observedPace+0.06);
+          // 观察窗口由遮挡能维持多久及余程时间限制，不按全程百分比切段。
+          const horizon=Math.min(8,(wake.s-H.s)/Math.max(0.1,planned-observedPace),remaining/Math.max(3,planned));
           const lostDistance=Math.max(0,planned-following)*horizon;
           const catchWindow=Math.min(8,Math.max(0,remaining/Math.max(3,planned)-horizon));
           const catchV=planned+lostDistance/Math.max(0.1,catchWindow);
@@ -904,14 +1009,14 @@
           const regainCost=Math.max(0,H.powerFor(catchV,0,false)-H.powerFor(planned,0,false))*catchWindow+
             H.kineticCost(following,catchV);
           const benefit=saving-regainCost;
-          const canRegain=catchWindow>0.5&&catchV<=projectedCap(H,H.s+remaining*0.65);
+          const canRegain=catchWindow>0.5&&finishPlan(H,catchV,0,{reserve:reserveEstimate}).feasible;
           H.followOpportunity={saving,regainCost,lostDistance,benefit};
           if(canRegain&&benefit>Math.max(0.1,(1-plan.patience)*0.5)&&plan.position<0.85) {
             desired=following;mode='follow';reason='遮挡收益足以偿付之后追回距离的出力';
           }
         }
         // 前位指令只为可支付的实际超越机会短时出力，不对领先者施加保护或远距追赶。
-        if(ahead&&ahead.s-H.s<12&&plan.position>0.55&&sr>0.06&&mode!=='follow') {
+        if(ahead&&ahead.s-H.s<12&&plan.position>0.55&&mode!=='follow') {
           const horizon=Math.min(8,remaining/Math.max(3,planned));
           const clearance=(horseLen(H)+horseLen(ahead))/2+0.5;
           const requested=Math.min(H.maxV,Math.max(planned,ahead.v+speedError+(ahead.s-H.s+clearance)/Math.max(1,horizon)));
@@ -922,7 +1027,6 @@
             desired=requested;mode='position';reason='支付短时超越成本后仍可完成余程预算';
           }
         }
-        if(sr<0.04) desired=Math.min(desired,sustainable);
       }
       if(attacking&&!H.attacking) {
         H.statsSummary.launches=(H.statsSummary.launches||0)+1;
@@ -1098,6 +1202,7 @@
         H.stamina=clamp(H.stamina-draw+restore,0,H.staminaMax);
         H.guts=Math.max(0,H.guts-(RACE_F.fatigueWork*work+RACE_F.fatigueExcess*excess)*dt);
         H.retention=1-RACE_F.fatigueLoss*(1-H.guts/H.gutsMax);
+        updateStartState(H);
         H.stage=H.stamina>H.staminaMax*0.12?'耐力':H.stamina>H.staminaMax*0.015?'毅力':'失速';
         const stats=H.statsSummary,aerobicUsed=Math.min(work,move.aerobic)*dt;
         H.cumulativeWork+=work*dt;stats.workUsed=H.cumulativeWork;stats.aerobicUsed+=aerobicUsed;
@@ -1167,7 +1272,8 @@
           rank:H.place|| (H.dnf?null:list.indexOf(H)+1),stage:H.stage,stamina:H.stamina,guts:H.guts,
           staminaMax:H.staminaMax,gutsMax:H.gutsMax,retention:H.retention,action:H.action,dnf:H.dnf,
           place:H.place,time:H.time,blocked:H.blocked,style:H.observedStyle||H.style,observedStyle:H.observedStyle,
-          strategy:H.strategy,aerobicOutput:H.aerobicOutput,gapAtWin:H.gapAtWin,final3f:H.final3f,sprintAt:H.sprintAt}))};
+          strategy:H.strategy,gateOpen:H.gateOpen,startSettled:H.startSettled,
+          aerobicOutput:H.aerobicOutput,gapAtWin:H.gapAtWin,final3f:H.final3f,sprintAt:H.sprintAt}))};
     }
     return {race,step,snapshot,state:snapshot};
   }

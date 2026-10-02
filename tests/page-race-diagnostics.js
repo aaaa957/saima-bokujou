@@ -20,6 +20,86 @@ function result(page) {
 }
 
 const single = createPage();
+check('实时情况分别跟随领跑与关注马，路段、余程与战术来自各马实际状态', () => {
+  const page = createPage();
+  page.click('btnModeSingle');
+  page.set('cfgLength', '2000');page.set('cfgCourse', '中山');
+  page.click('btnStart');
+  page.evaluate(`(()=>{
+    const snap = race.state(), focus = snap.horses.find(h=>h.id===playerId);
+    const leader = snap.horses.find(h=>h.id!==playerId), geo = race.race.geo;
+    focus.s = geo.boundaries.find(b=>b.kind==='bendStart').s+1;
+    focus.gateOpen = focus.startSettled = true;
+    focus.strategy = {mode:'follow',reason:'等待前方通道'};
+    focus.stamina = 0;focus.stage = '失速';focus.v = 15;
+    leader.s = snap.length-50;leader.gateOpen = leader.startSettled = true;
+    leader.strategy = {mode:'attack',reason:'预算允许全力推进'};
+    snap.leader = leader.id;snap.leaderProgress = 0.70;
+    race.state = ()=>snap;lastUiTs = 0;
+    document.getElementById('debugPanel').style.display = 'block';renderRace(1000);
+  })()`);
+  const html = page.element('raceSituation').innerHTML;
+  assert.match(html, /领跑：/);assert.match(html, /关注：/);
+  assert.match(html, /终直/);assert.match(html, /弯道/);
+  assert.match(html, /跟跑/);assert.match(html, /全力推进/);assert.match(html, /剩余 50m/);
+  assert.ok(html.includes(page.evaluate('race.state().horses.find(h=>h.id===playerId).name')));
+  assert.match(page.element('playerInfo').innerHTML, /储备用尽/);
+  assert.doesNotMatch(page.element('playerInfo').innerHTML, /乏力|失速|stage-/);
+  assert.match(page.element('debugTable').innerHTML, /骑乘状态/);
+  assert.match(page.element('debugTable').innerHTML, /0\.0%/);
+  assert.doesNotMatch(page.element('debugTable').innerHTML, /阶段|失速/);
+  assert.equal(page.evaluate('document.getElementById("phaseBar")'), null);
+  page.evaluate('race.state().leaderProgress=0.01;lastUiTs=0;renderRace(2000);');
+  assert.equal(page.element('raceSituation').innerHTML, html, '进度标签不改变实际状态');
+});
+check('起步提示、收力与低储备分别显示，未完成起步时不显示统一冲刺阶段', () => {
+  const page = createPage();
+  assert.equal(page.evaluate('tacticLabel({gateOpen:false,startSettled:false,strategy:{mode:"attack"}})'), '等待出闸');
+  assert.equal(page.evaluate('tacticLabel({gateOpen:true,startSettled:false,strategy:{mode:"attack"}})'), '起步加速');
+  assert.equal(page.evaluate('tacticLabel({gateOpen:true,startSettled:true,strategy:{mode:"recover"}})'), '收力调整');
+  assert.equal(page.evaluate('tacticLabel({gateOpen:true,startSettled:true,strategy:{mode:"position"}})'), '抢位');
+  assert.equal(page.evaluate('reserveStatus({stamina:1,staminaMax:100}).text'), '储备偏低');
+  assert.equal(page.evaluate('reserveStatus({stamina:0,staminaMax:100}).text'), '储备用尽');
+  assert.equal(page.evaluate('tacticLabel({place:1,gateOpen:true,startSettled:true})'), '已冲线');
+  assert.equal(page.evaluate('tacticLabel({dnf:true})'), '已中止');
+  assert.equal(page.evaluate('escapeHtml("<&\\\"\\\'马名>")'), '&lt;&amp;&quot;&#39;马名&gt;');
+});
+check('真实引擎出闸状态驱动画面，完成实际加速后切换骑乘状态', () => {
+  const page = createPage();
+  page.click('btnModeSingle');page.click('btnStart');
+  page.evaluate('renderRace(1000);');
+  assert.match(page.element('raceSituation').innerHTML, /等待出闸/);
+  page.evaluate('for(let i=0;i<60;i++)race.step(1/60);lastUiTs=0;renderRace(2000);');
+  assert.match(page.element('raceSituation').innerHTML, /起步加速/);
+  page.evaluate('for(let i=0;i<1200;i++)race.step(1/60);lastUiTs=0;renderRace(3000);');
+  const horse = page.json('race.state().horses.find(h=>h.id===playerId)');
+  assert.equal(horse.gateOpen, true);assert.equal(horse.startSettled, true);
+  assert.doesNotMatch(page.element('playerInfo').innerHTML, /准备起步|等待出闸|起步加速|undefined|NaN|Infinity/);
+});
+check('生涯观看使用真实参赛阵容，优先关注下注马且不残留单场马资料', () => {
+  const page = createPage();
+  page.click('btnModeSingle');
+  const card = page.json('career.aiRaces.find(r=>r.field.length>=4)');
+  const oldName = page.evaluate('field.find(h=>h.id===playerId).name');
+  const focus = card.field[1];
+  page.evaluate(`(()=>{
+    const card = career.aiRaces.find(r=>r.id===${JSON.stringify(card.id)});
+    career.weekBets[card.id] = {type:'単勝',ids:[card.field[1].id],amount:1,odds:2};
+    document.getElementById('playerInfo').innerHTML = '上一场马资料';
+    watchAiRace(card);document.getElementById('debugPanel').style.display = 'block';renderRace(1000);
+  })()`);
+  assert.ok(page.element('raceSituation').innerHTML.includes('关注：' + focus.name));
+  assert.ok(page.element('playerInfo').innerHTML.includes(focus.name));
+  assert.ok(!page.element('playerInfo').innerHTML.includes(oldName));
+  assert.doesNotMatch(page.element('playerInfo').innerHTML, /上一场马资料|undefined|NaN/);
+  assert.deepEqual(page.json('cam.lastView.mini.markers.filter(m=>m.r===3.5).map(m=>m.id)'), [focus.id]);
+  const debug = page.element('debugTable').innerHTML;
+  for (const horse of card.field) assert.ok(debug.includes(horse.name));
+  assert.doesNotMatch(page.element('leaderboard').innerHTML, /undefined/);
+  page.evaluate(`delete career.weekBets[${JSON.stringify(card.id)}];lastUiTs=0;renderRace(2000);`);
+  const lead = page.json('race.state().horses.find(h=>h.id===race.state().leader)');
+  assert.ok(page.element('raceSituation').innerHTML.includes('关注：' + lead.name));
+});
 check('官方场地、风速与骑乘计划编辑传入比赛，标签不被编辑器改写', () => {
   const page=createPage();
   page.click('btnModeSingle');
@@ -56,11 +136,14 @@ check('单场赛道选择传入比赛，画面使用同一赛道和真实终直�
 });
 single.click('btnSkip');
 const completed = result(single);
-check('赛后分段、发动时机与余力表渲染，无缺失或非有限数字', () => {
+check('赛后分段、全力请求位置与余力表渲染，无缺失或非有限数字', () => {
   const html = single.element('raceDiagnostics').innerHTML;
   assert.match(html, /比赛分段/);
   assert.match(html, /骑乘与终点余力/);
   assert.match(html, /逐马分段/);
+  assert.match(html, /首次全力推进请求/);
+  assert.match(html, /骑手首次请求最大目标配速/);
+  assert.doesNotMatch(html, /首次加力|未发动/);
   assert.doesNotMatch(html, /undefined|NaN|Infinity/);
   assert.equal((html.match(/<tbody>/g) || []).length, completed.order.length + 2);
   for (const horse of completed.order) {
