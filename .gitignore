@@ -13,3 +13,6 @@ docs/system-baseline-smoke-native-v2026.10.02.3.json
 docs/system-current-smoke-v2026.10.02.3.json
 # Local intermediate frame traces; the completed performance report is tracked.
 docs/.traffic-optimized-final-v9-checkpoints/
+# Complete v10 causal traces are stored as lossless .json.gz archives.
+docs/causal-controller-start-v10.json
+docs/causal-population-paths-v10.json

@@ -1,0 +1,1483 @@
+{
+  "engineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "startedAt": "2026-10-03T05:15:11.935Z",
+  "protocol": {
+    "identification": "Exploratory constructed local counterexamples after source review; not preregistered real-data calibration, not naturally observed AI decisions.",
+    "noProductionOrParameterMutation": true,
+    "counts": {
+      "compiledProductionModules": 1,
+      "createdRaceInstances": 2,
+      "forecastQueries": 22,
+      "forecastPurityChecks": 22,
+      "engineStepCalls": 0,
+      "fullRaceExecutions": 0
+    },
+    "budgetDraftDistance": 44,
+    "sourceArtifact": "sim.js",
+    "seed": 1,
+    "raceOptions": {
+      "length": 2400,
+      "course": "東京芝A",
+      "surface": "草地",
+      "state": "良",
+      "profile": "平坦",
+      "wind": 0
+    },
+    "constructedStates": [
+      {
+        "s": 2200,
+        "reserve": 800
+      },
+      {
+        "s": 2000,
+        "reserve": 1200
+      }
+    ],
+    "state": "One neutral70 horse per instance, full guts, established aerobic output, prescribed s/v/lane/reserve. Construction is intentional and not sampled from a natural race.",
+    "forecastScope": "Actual production H.finishPlan queried. Nine-step budget reproduction is guarded by its exact production text. Full horse JSON is hashed before and after every forecast query.",
+    "limit": "Natural occurrence frequency, the sign/size of population effects and an actual over-strict rejection counterfactual remain unidentified. No adaptive policy or pack execution is performed."
+  },
+  "developmentAttempts": [
+    {
+      "kind": "earlier-successful-local-witness-invocation",
+      "artifactContentHash": "743ed56b803772aaf25e5e704122d8112d9b2702c6b9a6e7f5881bdedcc9380b",
+      "budgetDraftDistance": 0,
+      "counts": {
+        "compiledProductionModules": 1,
+        "createdRaceInstances": 2,
+        "forecastQueries": 22,
+        "forecastPurityChecks": 22,
+        "engineStepCalls": 0,
+        "fullRaceExecutions": 0
+      },
+      "priorReport": {
+        "engineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+        "startedAt": "2026-10-03T05:09:36.627Z",
+        "protocol": {
+          "identification": "Exploratory constructed local counterexamples after source review; not preregistered real-data calibration, not naturally observed AI decisions.",
+          "noProductionOrParameterMutation": true,
+          "counts": {
+            "compiledProductionModules": 1,
+            "createdRaceInstances": 2,
+            "forecastQueries": 22,
+            "forecastPurityChecks": 22,
+            "engineStepCalls": 0,
+            "fullRaceExecutions": 0
+          },
+          "sourceArtifact": "sim.js",
+          "seed": 1,
+          "raceOptions": {
+            "length": 2400,
+            "course": "東京芝A",
+            "surface": "草地",
+            "state": "良",
+            "profile": "平坦",
+            "wind": 0
+          },
+          "constructedStates": [
+            {
+              "s": 2200,
+              "reserve": 800
+            },
+            {
+              "s": 2000,
+              "reserve": 1200
+            }
+          ],
+          "state": "One neutral70 horse per instance, full guts, established aerobic output, prescribed s/v/lane/reserve. Construction is intentional and not sampled from a natural race.",
+          "forecastScope": "Actual production H.finishPlan queried. Nine-step budget reproduction is guarded by its exact production text. Full horse JSON is hashed before and after every forecast query.",
+          "limit": "Natural occurrence frequency, the sign/size of population effects and an actual over-strict rejection counterfactual remain unidentified. No adaptive policy or pack execution is performed."
+        },
+        "evidence": {
+          "bodyWidth": {
+            "line": 579,
+            "hash": "8cdf9a0718ed4e8af998f4d4a7b293b623f79c5d42cff6c2df94590a7c3f854d",
+            "text": "  function horseWid(H) { return 0.65+0.15*(H.adj['体格']/100); }"
+          },
+          "aiWake": {
+            "line": 1384,
+            "hash": "3306e843dc649caec71f8d9eecc86bd556630aec67a97476718db59107a0cfb1",
+            "text": "      const wake=near.find(F=>F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<2.5);"
+          },
+          "actualWake": {
+            "line": 1575,
+            "hash": "3456d042b8f49d15e7418838a47ef88d858ac422f89af9be5e2a345590a3e541",
+            "text": "        const wake=act.find(F=>F!==H && old.get(F).s>before.s && old.get(F).s-before.s<=RACE_F.draftRange &&\n          Math.abs(old.get(F).t-before.t)<=(horseWid(H)+horseWid(F))/2+0.8);"
+          },
+          "draftBudget": {
+            "line": 1388,
+            "hash": "219718745d0dac9a6209bd147f29fc61469bb93ea4416d8f306802512d1a1ddc",
+            "text": "      const planned=budgetSpeed(H,reserveEstimate*allocation,wake?Math.min(44,remaining):0);"
+          },
+          "horizon": {
+            "line": 1412,
+            "hash": "2f8637dbb72dd72dae42b01d7a891211943160f83e7381018dbff13ba0f167b4",
+            "text": "          const horizon=Math.min(8,(wake.s-H.s)/Math.max(0.1,planned-observedPace),remaining/Math.max(3,planned));"
+          },
+          "lostDistance": {
+            "line": 1413,
+            "hash": "34fcf04d254b13e92d590d01c9c95781b2c64511805e8ac69d60bbb6b3a85ca4",
+            "text": "          const lostDistance=Math.max(0,planned-following)*horizon;"
+          },
+          "catchWindow": {
+            "line": 1414,
+            "hash": "d2d933d64bdfb40a4fc8f1853893dd4f06c0168d1764a0a24025ffaad72bd9fc",
+            "text": "          const catchWindow=Math.min(8,Math.max(0,remaining/Math.max(3,planned)-horizon));"
+          },
+          "catchV": {
+            "line": 1415,
+            "hash": "a6ec7fdb9aaefec0efc0d1db67be734540377398fe0f8e30733ed74472c9892a",
+            "text": "          const catchV=planned+lostDistance/Math.max(0.1,catchWindow);"
+          },
+          "fullRemainingCheck": {
+            "line": 1420,
+            "hash": "8205914b6d2deab36614c399665cb24c69d3b0c444947b587e7c80791e2eb19a",
+            "text": "          const canRegain=catchWindow>0.5&&finishPlan(H,catchV,0,{reserve:reserveEstimate}).feasible;"
+          },
+          "forecastFrom": {
+            "line": 1261,
+            "hash": "134f3ca2b219de3f09bf5250aab4db50555f19bef4397bc6fbfffb6e3466995f",
+            "text": "      const from=clamp(H.s,0,length),draftEnd=Math.min(length,from+Math.max(0,draftDistance));"
+          },
+          "requestClamp": {
+            "line": 1277,
+            "hash": "4f8da74f4a02ae65cd4ef512d814a99275a28caaad90ad6611d1e5ab86cd3f08",
+            "text": "        let target=Math.max(3,Math.min(requestedV,projectedCap(H,at)));"
+          },
+          "budget": {
+            "line": 1342,
+            "hash": "f3f92e9a2702c54f60fedeb7a916fe868c90c2c8907edced7ce37d55160ef908",
+            "text": "    function budgetSpeed(H,reserve,draftDistance=0) {\n      let low=3,high=H.maxV;\n      for(let i=0;i<9;i++) {\n        const mid=(low+high)/2;\n        if(finishPlan(H,mid,draftDistance,{reserve}).feasible) low=mid;else high=mid;\n      }\n      return low;\n    }"
+          }
+        },
+        "witnesses": [
+          {
+            "kind": "constructed-local-counterexample",
+            "requestedState": {
+              "s": 2200,
+              "reserve": 800
+            },
+            "preState": {
+              "h": {
+                "id": "follow-local-witness70",
+                "name": "follow-local-witness70",
+                "stats": {
+                  "速度": 70,
+                  "爆发力": 70,
+                  "出闸能力": 70,
+                  "耐力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "体格": 70,
+                  "智力": 70
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "surface": "草地",
+                "special": "左右皆可",
+                "jockeyGrade": "优秀",
+                "bodyMass": 480,
+                "carriedWeight": 57,
+                "斗志": 50,
+                "疲劳": 0
+              },
+              "id": "follow-local-witness70",
+              "name": "follow-local-witness70",
+              "style": "先",
+              "jockey": "优秀",
+              "adj": {
+                "速度": 70,
+                "爆发力": 70,
+                "出闸能力": 70,
+                "耐力": 70,
+                "力量": 70,
+                "毅力": 70,
+                "体格": 70,
+                "智力": 70
+              },
+              "mor": 0,
+              "gate": 1,
+              "behavior": {
+                "forwardness": 0.5,
+                "settle": 0.5,
+                "tractability": 0.65
+              },
+              "plan": {
+                "position": 0.5,
+                "risk": 0.35,
+                "patience": 0.5
+              },
+              "physiology": {
+                "version": 1,
+                "endurance": 0,
+                "power": 0,
+                "economy": 0,
+                "kinetics": 0,
+                "durability": 0
+              },
+              "bodyMass": 480,
+              "carriedWeight": 57,
+              "massRatio": 1,
+              "s": 2200,
+              "t": 1.4,
+              "targetT": 1.4,
+              "v": 18.6,
+              "prevV": 0,
+              "pot": 0,
+              "targetV": 17.2,
+              "accel": 0,
+              "power": 0,
+              "gateOpen": false,
+              "startSettled": false,
+              "stamina": 800,
+              "staminaMax": 2450,
+              "guts": 4200,
+              "gutsMax": 4200,
+              "stage": "耐力",
+              "retention": 1,
+              "base": 17.2,
+              "fatMult": 1,
+              "fieldCoef": 1,
+              "surfaceCost": 1,
+              "startDelay": 0.3040610910882242,
+              "action": null,
+              "actionT": 0,
+              "lastObserve": 0,
+              "laneIntentT": 0,
+              "laneJitter": 0,
+              "squeezePass": 0,
+              "blocked": false,
+              "blocker": null,
+              "collisionCoef": 1,
+              "collisionIntensity": 0,
+              "stallTimer": 0,
+              "place": null,
+              "time": null,
+              "gapAtWin": null,
+              "dnf": false,
+              "sprintAt": null,
+              "sectionals": [],
+              "cumulativeWork": 0,
+              "statsSummary": {
+                "workUsed": 0,
+                "aerobicUsed": 0,
+                "energyUsed": 0,
+                "unpaidWork": 0,
+                "recovered": 0,
+                "draftSeconds": 0,
+                "blockedSeconds": 0,
+                "peakSpeed": 0,
+                "sprintAt": null
+              },
+              "aggression": 1,
+              "aiBias": -0.05967171345837414,
+              "economy": 1,
+              "aerobic": 50,
+              "aerobicTau": 10,
+              "reservePower": 75,
+              "fatigueLoss": 0.08,
+              "fatigueWork": 0.11,
+              "fatigueExcess": 0.45,
+              "recoveryRate": 0.12,
+              "recoveryMax": 2,
+              "aerobicOutput": 50,
+              "maxV": 18.75,
+              "cruise": 13.66263217203591
+            },
+            "preStateHash": "492ef8ea3199a1f598c8e0061e996244c5f98743e22dff3c3a96f5b2df17fc56",
+            "allocation": 0.96875,
+            "budgetQueries": [
+              {
+                "requested": 10.875,
+                "required": 0,
+                "seconds": 17.291490892947817,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 14.8125,
+                "required": 76.41024693981969,
+                "seconds": 13.144164970517084,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 16.78125,
+                "required": 267.45408209944014,
+                "seconds": 11.76636543585188,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 17.765625,
+                "required": 360.35135119628285,
+                "seconds": 11.191965892207328,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.2578125,
+                "required": 405.9396103312951,
+                "seconds": 10.92798672706924,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.50390625,
+                "required": 428.54536522853414,
+                "seconds": 10.801261421694958,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.626953125,
+                "required": 439.80415285988244,
+                "seconds": 10.739153926016202,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.6884765625,
+                "required": 445.4228807796111,
+                "seconds": 10.708406727960998,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.71923828125,
+                "required": 448.2296217303778,
+                "seconds": 10.69310888410828,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              }
+            ],
+            "planned": 18.71923828125,
+            "observedPace": 18.55923828125,
+            "following": 18.61923828125,
+            "frontGap": 8,
+            "remaining": 200,
+            "horizon": 8,
+            "catchWindow": 2.6841954247854556,
+            "lostDistance": 0.8000000000000114,
+            "catchV": 19.01727917373232,
+            "maxV": 18.75,
+            "saving": 17.409672134795073,
+            "regainCost": 15.593128989894781,
+            "benefit": 1.816543144900292,
+            "catchPlan": {
+              "required": 451.03463034295225,
+              "seconds": 10.677861211961293,
+              "feasible": true,
+              "peakPowerShortfall": 0
+            },
+            "maximumPlan": {
+              "required": 451.03463034295225,
+              "seconds": 10.677861211961293,
+              "feasible": true,
+              "peakPowerShortfall": 0
+            },
+            "forecastFeasible": true,
+            "plansExactlyEqual": true,
+            "maximumGainEvenWithInstantaneousSpeed": 0.08257046472728696,
+            "shortfallAgainstAssumedLostDistance": 0.7174295352727245,
+            "explanation": "Even an instantaneous jump to the absolute maxV cannot regain the model-assumed lost distance inside this catch window. finishPlan instead clips the excessive request and reports full-remainder energy feasibility.",
+            "naturalAiOutcome": "Not tested. The attack branch precedes follow; these states may choose attack and never evaluate the follow branch.",
+            "gainScope": "Relative to the assumed planned-speed baseline over the same window. Not a claim about actual executed lost distance, which would require propagating finite response and the preceding follow state.",
+            "geometry": {
+              "s": 2200,
+              "lane": 1.4,
+              "curvature": 0,
+              "gradient": 0
+            }
+          },
+          {
+            "kind": "constructed-local-counterexample",
+            "requestedState": {
+              "s": 2000,
+              "reserve": 1200
+            },
+            "preState": {
+              "h": {
+                "id": "follow-local-witness70",
+                "name": "follow-local-witness70",
+                "stats": {
+                  "速度": 70,
+                  "爆发力": 70,
+                  "出闸能力": 70,
+                  "耐力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "体格": 70,
+                  "智力": 70
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "surface": "草地",
+                "special": "左右皆可",
+                "jockeyGrade": "优秀",
+                "bodyMass": 480,
+                "carriedWeight": 57,
+                "斗志": 50,
+                "疲劳": 0
+              },
+              "id": "follow-local-witness70",
+              "name": "follow-local-witness70",
+              "style": "先",
+              "jockey": "优秀",
+              "adj": {
+                "速度": 70,
+                "爆发力": 70,
+                "出闸能力": 70,
+                "耐力": 70,
+                "力量": 70,
+                "毅力": 70,
+                "体格": 70,
+                "智力": 70
+              },
+              "mor": 0,
+              "gate": 1,
+              "behavior": {
+                "forwardness": 0.5,
+                "settle": 0.5,
+                "tractability": 0.65
+              },
+              "plan": {
+                "position": 0.5,
+                "risk": 0.35,
+                "patience": 0.5
+              },
+              "physiology": {
+                "version": 1,
+                "endurance": 0,
+                "power": 0,
+                "economy": 0,
+                "kinetics": 0,
+                "durability": 0
+              },
+              "bodyMass": 480,
+              "carriedWeight": 57,
+              "massRatio": 1,
+              "s": 2000,
+              "t": 1.4,
+              "targetT": 1.4,
+              "v": 18.6,
+              "prevV": 0,
+              "pot": 0,
+              "targetV": 17.2,
+              "accel": 0,
+              "power": 0,
+              "gateOpen": false,
+              "startSettled": false,
+              "stamina": 1200,
+              "staminaMax": 2450,
+              "guts": 4200,
+              "gutsMax": 4200,
+              "stage": "耐力",
+              "retention": 1,
+              "base": 17.2,
+              "fatMult": 1,
+              "fieldCoef": 1,
+              "surfaceCost": 1,
+              "startDelay": 0.3040610910882242,
+              "action": null,
+              "actionT": 0,
+              "lastObserve": 0,
+              "laneIntentT": 0,
+              "laneJitter": 0,
+              "squeezePass": 0,
+              "blocked": false,
+              "blocker": null,
+              "collisionCoef": 1,
+              "collisionIntensity": 0,
+              "stallTimer": 0,
+              "place": null,
+              "time": null,
+              "gapAtWin": null,
+              "dnf": false,
+              "sprintAt": null,
+              "sectionals": [],
+              "cumulativeWork": 0,
+              "statsSummary": {
+                "workUsed": 0,
+                "aerobicUsed": 0,
+                "energyUsed": 0,
+                "unpaidWork": 0,
+                "recovered": 0,
+                "draftSeconds": 0,
+                "blockedSeconds": 0,
+                "peakSpeed": 0,
+                "sprintAt": null
+              },
+              "aggression": 1,
+              "aiBias": -0.05967171345837414,
+              "economy": 1,
+              "aerobic": 50,
+              "aerobicTau": 10,
+              "reservePower": 75,
+              "fatigueLoss": 0.08,
+              "fatigueWork": 0.11,
+              "fatigueExcess": 0.45,
+              "recoveryRate": 0.12,
+              "recoveryMax": 2,
+              "aerobicOutput": 50,
+              "maxV": 18.75,
+              "cruise": 13.66263217203591
+            },
+            "preStateHash": "c49cb7764076ff8fb97bccdbcb4b55f45be2d0ccd0f84cee2dac6ebdfa1f0f96",
+            "allocation": 0.96875,
+            "budgetQueries": [
+              {
+                "requested": 10.875,
+                "required": 0,
+                "seconds": 35.68229062469345,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 14.8125,
+                "required": 181.0435195138,
+                "seconds": 26.646244715538373,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 16.78125,
+                "required": 559.4827144418499,
+                "seconds": 23.68439478853838,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 17.765625,
+                "required": 739.0386016436545,
+                "seconds": 22.449639413365638,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.2578125,
+                "required": 826.7161633135656,
+                "seconds": 21.882190850772236,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.50390625,
+                "required": 870.0877123243032,
+                "seconds": 21.60978679114483,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.626953125,
+                "required": 891.6631921485454,
+                "seconds": 21.476283950564152,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.6884765625,
+                "required": 902.4241321617401,
+                "seconds": 21.410191777132358,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              },
+              {
+                "requested": 18.71923828125,
+                "required": 907.7979966074197,
+                "seconds": 21.37730860832037,
+                "feasible": true,
+                "peakPowerShortfall": 0
+              }
+            ],
+            "planned": 18.71923828125,
+            "observedPace": 18.55923828125,
+            "following": 18.61923828125,
+            "frontGap": 8,
+            "remaining": 400,
+            "horizon": 8,
+            "catchWindow": 8,
+            "lostDistance": 0.8000000000000114,
+            "catchV": 18.81923828125,
+            "maxV": 18.75,
+            "saving": 17.50777213479512,
+            "regainCost": 11.899207785577119,
+            "benefit": 5.608564349218,
+            "catchPlan": {
+              "required": 913.1674927648603,
+              "seconds": 21.34453333766888,
+              "feasible": true,
+              "peakPowerShortfall": 0
+            },
+            "maximumPlan": {
+              "required": 913.1674927648603,
+              "seconds": 21.34453333766888,
+              "feasible": true,
+              "peakPowerShortfall": 0
+            },
+            "forecastFeasible": true,
+            "plansExactlyEqual": true,
+            "maximumGainEvenWithInstantaneousSpeed": 0.24609375,
+            "shortfallAgainstAssumedLostDistance": 0.5539062500000114,
+            "explanation": "Even an instantaneous jump to the absolute maxV cannot regain the model-assumed lost distance inside this catch window. finishPlan instead clips the excessive request and reports full-remainder energy feasibility.",
+            "naturalAiOutcome": "Not tested. The attack branch precedes follow; these states may choose attack and never evaluate the follow branch.",
+            "gainScope": "Relative to the assumed planned-speed baseline over the same window. Not a claim about actual executed lost distance, which would require propagating finite response and the preceding follow state.",
+            "geometry": {
+              "s": 2000,
+              "lane": 1.4,
+              "curvature": 0,
+              "gradient": 0.0125
+            }
+          }
+        ],
+        "wakeGeometry": {
+          "rearWidth": 0.755,
+          "frontWidth": 0.755,
+          "actualLateralLimit": 1.5550000000000002,
+          "aiLateralLimit": 2.5,
+          "actualLongitudinalRange": [
+            0,
+            12
+          ],
+          "actualLongitudinalInclusivity": {
+            "minimum": false,
+            "maximum": true
+          },
+          "aiLongitudinalRange": [
+            3,
+            12
+          ],
+          "aiLongitudinalInclusivity": {
+            "minimum": false,
+            "maximum": false
+          },
+          "aiOnlyLateralBand": {
+            "minimum": 1.5550000000000002,
+            "minimumInclusive": false,
+            "maximum": 2.5,
+            "maximumInclusive": false
+          },
+          "geometricCases": [
+            {
+              "gap": 8,
+              "lateral": 1.5,
+              "aiWake": true,
+              "actualWake": true
+            },
+            {
+              "gap": 8,
+              "lateral": 1.56,
+              "aiWake": true,
+              "actualWake": false
+            },
+            {
+              "gap": 8,
+              "lateral": 1.8,
+              "aiWake": true,
+              "actualWake": false
+            },
+            {
+              "gap": 8,
+              "lateral": 2.49,
+              "aiWake": true,
+              "actualWake": false
+            },
+            {
+              "gap": 8,
+              "lateral": 2.5,
+              "aiWake": false,
+              "actualWake": false
+            },
+            {
+              "gap": 2.9,
+              "lateral": 0,
+              "aiWake": false,
+              "actualWake": true
+            },
+            {
+              "gap": 12,
+              "lateral": 0,
+              "aiWake": false,
+              "actualWake": true
+            }
+          ],
+          "caveat": "Geometric eligibility only. No assertion that all such initial two-horse configurations pass the complete traffic safety domain.",
+          "forecastDraftDistance": 44,
+          "forecastDraftDistanceScope": "Nominal own progress; not the physical 12m following-gap range. The current forecast does not propagate gap or lateral alignment."
+        },
+        "structuralRisk": {
+          "checkRequest": "catchV",
+          "checkDuration": "All remaining route from current state",
+          "intendedActionDurations": "follow horizon <=8s, catch window <=8s",
+          "missingPropagation": [
+            "Following changes speed, reserve, guts and aerobic output before catch begins.",
+            "Catch must recover actual executed lost distance inside its feasible action window.",
+            "Both opponent gap and lateral alignment determine actual shielding over time."
+          ],
+          "overlyStrictRejection": "Plausible from code structure; not claimed as demonstrated by an exact executed counterfactual here."
+        },
+        "integrity": {
+          "sourceUnchanged": true,
+          "parametersUnchanged": true,
+          "exactClausesMatched": true,
+          "witnessCount": 2,
+          "allWitnessesPassed": true,
+          "allForecastsPure": true,
+          "allFinite": true,
+          "noEngineStepOrFullRace": true
+        }
+      }
+    },
+    {
+      "kind": "unexported-body-width-helper-development-error",
+      "engineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+      "budgetDraftDistance": 0,
+      "phase": "After both local witnesses and 22 successful forecast/purity checks, before wake geometry and output generation.",
+      "counts": {
+        "compiledProductionModules": 1,
+        "createdRaceInstances": 2,
+        "forecastQueries": 22,
+        "forecastPurityChecks": 22,
+        "engineStepCalls": 0,
+        "fullRaceExecutions": 0
+      },
+      "error": {
+        "name": "TypeError",
+        "message": "S.horseWid is not a function",
+        "sanitizedLog": "<repo>\\tests\\causal-follow-opportunity-v10.js:76\r\nconst body={adj:{'体格':70}},rearWidth=S.horseWid(body),frontWidth=S.horseWid(body),actualLateralLimit=(rearWidth+frontWidth)/2+.8,aiLateralLimit=2.5;\r\n                                       ^\r\n\r\nTypeError: S.horseWid is not a function\r\n    at Object.<anonymous> (<repo>\\tests\\causal-follow-opportunity-v10.js:76:40)\r\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\r\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\r\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\r\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\r\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\r\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\r\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\r\n    at node:internal/main/run_main_module:33:47\r\n\r\nNode.js v24.12.0\r\n"
+      },
+      "correction": "Private horseWid is not exported. Reproduce its formula only after matching its complete exact production declaration."
+    }
+  ],
+  "developmentAccounting": {
+    "scope": "Recorded prior invocations plus current artifact invocation, counted separately from actual stepped race experiments.",
+    "total": {
+      "compiledProductionModules": 3,
+      "createdRaceInstances": 6,
+      "forecastQueries": 66,
+      "forecastPurityChecks": 66,
+      "engineStepCalls": 0,
+      "fullRaceExecutions": 0
+    }
+  },
+  "evidence": {
+    "bodyWidth": {
+      "line": 579,
+      "hash": "8cdf9a0718ed4e8af998f4d4a7b293b623f79c5d42cff6c2df94590a7c3f854d",
+      "text": "  function horseWid(H) { return 0.65+0.15*(H.adj['体格']/100); }"
+    },
+    "aiWake": {
+      "line": 1384,
+      "hash": "3306e843dc649caec71f8d9eecc86bd556630aec67a97476718db59107a0cfb1",
+      "text": "      const wake=near.find(F=>F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<2.5);"
+    },
+    "actualWake": {
+      "line": 1575,
+      "hash": "3456d042b8f49d15e7418838a47ef88d858ac422f89af9be5e2a345590a3e541",
+      "text": "        const wake=act.find(F=>F!==H && old.get(F).s>before.s && old.get(F).s-before.s<=RACE_F.draftRange &&\n          Math.abs(old.get(F).t-before.t)<=(horseWid(H)+horseWid(F))/2+0.8);"
+    },
+    "draftBudget": {
+      "line": 1388,
+      "hash": "219718745d0dac9a6209bd147f29fc61469bb93ea4416d8f306802512d1a1ddc",
+      "text": "      const planned=budgetSpeed(H,reserveEstimate*allocation,wake?Math.min(44,remaining):0);"
+    },
+    "horizon": {
+      "line": 1412,
+      "hash": "2f8637dbb72dd72dae42b01d7a891211943160f83e7381018dbff13ba0f167b4",
+      "text": "          const horizon=Math.min(8,(wake.s-H.s)/Math.max(0.1,planned-observedPace),remaining/Math.max(3,planned));"
+    },
+    "lostDistance": {
+      "line": 1413,
+      "hash": "34fcf04d254b13e92d590d01c9c95781b2c64511805e8ac69d60bbb6b3a85ca4",
+      "text": "          const lostDistance=Math.max(0,planned-following)*horizon;"
+    },
+    "catchWindow": {
+      "line": 1414,
+      "hash": "d2d933d64bdfb40a4fc8f1853893dd4f06c0168d1764a0a24025ffaad72bd9fc",
+      "text": "          const catchWindow=Math.min(8,Math.max(0,remaining/Math.max(3,planned)-horizon));"
+    },
+    "catchV": {
+      "line": 1415,
+      "hash": "a6ec7fdb9aaefec0efc0d1db67be734540377398fe0f8e30733ed74472c9892a",
+      "text": "          const catchV=planned+lostDistance/Math.max(0.1,catchWindow);"
+    },
+    "fullRemainingCheck": {
+      "line": 1420,
+      "hash": "8205914b6d2deab36614c399665cb24c69d3b0c444947b587e7c80791e2eb19a",
+      "text": "          const canRegain=catchWindow>0.5&&finishPlan(H,catchV,0,{reserve:reserveEstimate}).feasible;"
+    },
+    "forecastFrom": {
+      "line": 1261,
+      "hash": "134f3ca2b219de3f09bf5250aab4db50555f19bef4397bc6fbfffb6e3466995f",
+      "text": "      const from=clamp(H.s,0,length),draftEnd=Math.min(length,from+Math.max(0,draftDistance));"
+    },
+    "requestClamp": {
+      "line": 1277,
+      "hash": "4f8da74f4a02ae65cd4ef512d814a99275a28caaad90ad6611d1e5ab86cd3f08",
+      "text": "        let target=Math.max(3,Math.min(requestedV,projectedCap(H,at)));"
+    },
+    "budget": {
+      "line": 1342,
+      "hash": "f3f92e9a2702c54f60fedeb7a916fe868c90c2c8907edced7ce37d55160ef908",
+      "text": "    function budgetSpeed(H,reserve,draftDistance=0) {\n      let low=3,high=H.maxV;\n      for(let i=0;i<9;i++) {\n        const mid=(low+high)/2;\n        if(finishPlan(H,mid,draftDistance,{reserve}).feasible) low=mid;else high=mid;\n      }\n      return low;\n    }"
+    }
+  },
+  "witnesses": [
+    {
+      "kind": "constructed-local-counterexample",
+      "requestedState": {
+        "s": 2200,
+        "reserve": 800
+      },
+      "preState": {
+        "h": {
+          "id": "follow-local-witness70",
+          "name": "follow-local-witness70",
+          "stats": {
+            "速度": 70,
+            "爆发力": 70,
+            "出闸能力": 70,
+            "耐力": 70,
+            "力量": 70,
+            "毅力": 70,
+            "体格": 70,
+            "智力": 70
+          },
+          "physiology": {
+            "version": 1,
+            "endurance": 0,
+            "power": 0,
+            "economy": 0,
+            "kinetics": 0,
+            "durability": 0
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "surface": "草地",
+          "special": "左右皆可",
+          "jockeyGrade": "优秀",
+          "bodyMass": 480,
+          "carriedWeight": 57,
+          "斗志": 50,
+          "疲劳": 0
+        },
+        "id": "follow-local-witness70",
+        "name": "follow-local-witness70",
+        "style": "先",
+        "jockey": "优秀",
+        "adj": {
+          "速度": 70,
+          "爆发力": 70,
+          "出闸能力": 70,
+          "耐力": 70,
+          "力量": 70,
+          "毅力": 70,
+          "体格": 70,
+          "智力": 70
+        },
+        "mor": 0,
+        "gate": 1,
+        "behavior": {
+          "forwardness": 0.5,
+          "settle": 0.5,
+          "tractability": 0.65
+        },
+        "plan": {
+          "position": 0.5,
+          "risk": 0.35,
+          "patience": 0.5
+        },
+        "physiology": {
+          "version": 1,
+          "endurance": 0,
+          "power": 0,
+          "economy": 0,
+          "kinetics": 0,
+          "durability": 0
+        },
+        "bodyMass": 480,
+        "carriedWeight": 57,
+        "massRatio": 1,
+        "s": 2200,
+        "t": 1.4,
+        "targetT": 1.4,
+        "v": 18.6,
+        "prevV": 0,
+        "pot": 0,
+        "targetV": 17.2,
+        "accel": 0,
+        "power": 0,
+        "gateOpen": false,
+        "startSettled": false,
+        "stamina": 800,
+        "staminaMax": 2450,
+        "guts": 4200,
+        "gutsMax": 4200,
+        "stage": "耐力",
+        "retention": 1,
+        "base": 17.2,
+        "fatMult": 1,
+        "fieldCoef": 1,
+        "surfaceCost": 1,
+        "startDelay": 0.3040610910882242,
+        "action": null,
+        "actionT": 0,
+        "lastObserve": 0,
+        "laneIntentT": 0,
+        "laneJitter": 0,
+        "squeezePass": 0,
+        "blocked": false,
+        "blocker": null,
+        "collisionCoef": 1,
+        "collisionIntensity": 0,
+        "stallTimer": 0,
+        "place": null,
+        "time": null,
+        "gapAtWin": null,
+        "dnf": false,
+        "sprintAt": null,
+        "sectionals": [],
+        "cumulativeWork": 0,
+        "statsSummary": {
+          "workUsed": 0,
+          "aerobicUsed": 0,
+          "energyUsed": 0,
+          "unpaidWork": 0,
+          "recovered": 0,
+          "draftSeconds": 0,
+          "blockedSeconds": 0,
+          "peakSpeed": 0,
+          "sprintAt": null
+        },
+        "aggression": 1,
+        "aiBias": -0.05967171345837414,
+        "economy": 1,
+        "aerobic": 50,
+        "aerobicTau": 10,
+        "reservePower": 75,
+        "fatigueLoss": 0.08,
+        "fatigueWork": 0.11,
+        "fatigueExcess": 0.45,
+        "recoveryRate": 0.12,
+        "recoveryMax": 2,
+        "aerobicOutput": 50,
+        "maxV": 18.75,
+        "cruise": 13.66263217203591
+      },
+      "preStateHash": "492ef8ea3199a1f598c8e0061e996244c5f98743e22dff3c3a96f5b2df17fc56",
+      "allocation": 0.96875,
+      "budgetDraftDistance": 44,
+      "budgetQueries": [
+        {
+          "requested": 10.875,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 0,
+          "seconds": 17.291490892931165,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 14.8125,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 75.2201116017111,
+          "seconds": 13.144164970516849,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 16.78125,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 264.9606268507706,
+          "seconds": 11.76636543585188,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 17.765625,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 357.7088229057836,
+          "seconds": 11.191965893030543,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.2578125,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 403.22179067340466,
+          "seconds": 10.927986724470689,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.50390625,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 425.7897196702355,
+          "seconds": 10.801261421637111,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.626953125,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 437.02955016912773,
+          "seconds": 10.739153926016565,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.6884765625,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 442.63878860328873,
+          "seconds": 10.708406727973628,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.71923828125,
+          "reserve": 775,
+          "draftDistance": 44,
+          "required": 445.44078209586576,
+          "seconds": 10.693108884138947,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        }
+      ],
+      "planned": 18.71923828125,
+      "observedPace": 18.55923828125,
+      "following": 18.61923828125,
+      "frontGap": 8,
+      "remaining": 200,
+      "horizon": 8,
+      "catchWindow": 2.6841954247854556,
+      "lostDistance": 0.8000000000000114,
+      "catchV": 19.01727917373232,
+      "maxV": 18.75,
+      "saving": 17.409672134795073,
+      "regainCost": 15.593128989894781,
+      "benefit": 1.816543144900292,
+      "catchPlan": {
+        "required": 451.03463034295225,
+        "seconds": 10.677861211961293,
+        "feasible": true,
+        "peakPowerShortfall": 0
+      },
+      "maximumPlan": {
+        "required": 451.03463034295225,
+        "seconds": 10.677861211961293,
+        "feasible": true,
+        "peakPowerShortfall": 0
+      },
+      "forecastFeasible": true,
+      "plansExactlyEqual": true,
+      "maximumGainEvenWithInstantaneousSpeed": 0.08257046472728696,
+      "shortfallAgainstAssumedLostDistance": 0.7174295352727245,
+      "explanation": "Even an instantaneous jump to the absolute maxV cannot regain the model-assumed lost distance inside this catch window. finishPlan instead clips the excessive request and reports full-remainder energy feasibility.",
+      "naturalAiOutcome": "Not tested. The attack branch precedes follow; these states may choose attack and never evaluate the follow branch.",
+      "gainScope": "Relative to the assumed planned-speed baseline over the same window. Not a claim about actual executed lost distance, which would require propagating finite response and the preceding follow state.",
+      "geometry": {
+        "s": 2200,
+        "lane": 1.4,
+        "curvature": 0,
+        "gradient": 0
+      }
+    },
+    {
+      "kind": "constructed-local-counterexample",
+      "requestedState": {
+        "s": 2000,
+        "reserve": 1200
+      },
+      "preState": {
+        "h": {
+          "id": "follow-local-witness70",
+          "name": "follow-local-witness70",
+          "stats": {
+            "速度": 70,
+            "爆发力": 70,
+            "出闸能力": 70,
+            "耐力": 70,
+            "力量": 70,
+            "毅力": 70,
+            "体格": 70,
+            "智力": 70
+          },
+          "physiology": {
+            "version": 1,
+            "endurance": 0,
+            "power": 0,
+            "economy": 0,
+            "kinetics": 0,
+            "durability": 0
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "surface": "草地",
+          "special": "左右皆可",
+          "jockeyGrade": "优秀",
+          "bodyMass": 480,
+          "carriedWeight": 57,
+          "斗志": 50,
+          "疲劳": 0
+        },
+        "id": "follow-local-witness70",
+        "name": "follow-local-witness70",
+        "style": "先",
+        "jockey": "优秀",
+        "adj": {
+          "速度": 70,
+          "爆发力": 70,
+          "出闸能力": 70,
+          "耐力": 70,
+          "力量": 70,
+          "毅力": 70,
+          "体格": 70,
+          "智力": 70
+        },
+        "mor": 0,
+        "gate": 1,
+        "behavior": {
+          "forwardness": 0.5,
+          "settle": 0.5,
+          "tractability": 0.65
+        },
+        "plan": {
+          "position": 0.5,
+          "risk": 0.35,
+          "patience": 0.5
+        },
+        "physiology": {
+          "version": 1,
+          "endurance": 0,
+          "power": 0,
+          "economy": 0,
+          "kinetics": 0,
+          "durability": 0
+        },
+        "bodyMass": 480,
+        "carriedWeight": 57,
+        "massRatio": 1,
+        "s": 2000,
+        "t": 1.4,
+        "targetT": 1.4,
+        "v": 18.6,
+        "prevV": 0,
+        "pot": 0,
+        "targetV": 17.2,
+        "accel": 0,
+        "power": 0,
+        "gateOpen": false,
+        "startSettled": false,
+        "stamina": 1200,
+        "staminaMax": 2450,
+        "guts": 4200,
+        "gutsMax": 4200,
+        "stage": "耐力",
+        "retention": 1,
+        "base": 17.2,
+        "fatMult": 1,
+        "fieldCoef": 1,
+        "surfaceCost": 1,
+        "startDelay": 0.3040610910882242,
+        "action": null,
+        "actionT": 0,
+        "lastObserve": 0,
+        "laneIntentT": 0,
+        "laneJitter": 0,
+        "squeezePass": 0,
+        "blocked": false,
+        "blocker": null,
+        "collisionCoef": 1,
+        "collisionIntensity": 0,
+        "stallTimer": 0,
+        "place": null,
+        "time": null,
+        "gapAtWin": null,
+        "dnf": false,
+        "sprintAt": null,
+        "sectionals": [],
+        "cumulativeWork": 0,
+        "statsSummary": {
+          "workUsed": 0,
+          "aerobicUsed": 0,
+          "energyUsed": 0,
+          "unpaidWork": 0,
+          "recovered": 0,
+          "draftSeconds": 0,
+          "blockedSeconds": 0,
+          "peakSpeed": 0,
+          "sprintAt": null
+        },
+        "aggression": 1,
+        "aiBias": -0.05967171345837414,
+        "economy": 1,
+        "aerobic": 50,
+        "aerobicTau": 10,
+        "reservePower": 75,
+        "fatigueLoss": 0.08,
+        "fatigueWork": 0.11,
+        "fatigueExcess": 0.45,
+        "recoveryRate": 0.12,
+        "recoveryMax": 2,
+        "aerobicOutput": 50,
+        "maxV": 18.75,
+        "cruise": 13.66263217203591
+      },
+      "preStateHash": "c49cb7764076ff8fb97bccdbcb4b55f45be2d0ccd0f84cee2dac6ebdfa1f0f96",
+      "allocation": 0.96875,
+      "budgetDraftDistance": 44,
+      "budgetQueries": [
+        {
+          "requested": 10.875,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 0,
+          "seconds": 35.682290630993094,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 14.8125,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 179.52378693080385,
+          "seconds": 26.646244715538145,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 16.78125,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 556.9892318108737,
+          "seconds": 23.68439478853838,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 17.765625,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 736.3960667749634,
+          "seconds": 22.449639408447418,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.2578125,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 823.9983418900208,
+          "seconds": 21.88219084697197,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.50390625,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 867.3320663906653,
+          "seconds": 21.60978679106108,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.626953125,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 888.8885895488751,
+          "seconds": 21.47628395056449,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.6884765625,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 899.6400402625995,
+          "seconds": 21.410191777144053,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        },
+        {
+          "requested": 18.71923828125,
+          "reserve": 1162.5,
+          "draftDistance": 44,
+          "required": 905.0091573320136,
+          "seconds": 21.377308608348738,
+          "feasible": true,
+          "peakPowerShortfall": 0
+        }
+      ],
+      "planned": 18.71923828125,
+      "observedPace": 18.55923828125,
+      "following": 18.61923828125,
+      "frontGap": 8,
+      "remaining": 400,
+      "horizon": 8,
+      "catchWindow": 8,
+      "lostDistance": 0.8000000000000114,
+      "catchV": 18.81923828125,
+      "maxV": 18.75,
+      "saving": 17.50777213479512,
+      "regainCost": 11.899207785577119,
+      "benefit": 5.608564349218,
+      "catchPlan": {
+        "required": 913.1674927648603,
+        "seconds": 21.34453333766888,
+        "feasible": true,
+        "peakPowerShortfall": 0
+      },
+      "maximumPlan": {
+        "required": 913.1674927648603,
+        "seconds": 21.34453333766888,
+        "feasible": true,
+        "peakPowerShortfall": 0
+      },
+      "forecastFeasible": true,
+      "plansExactlyEqual": true,
+      "maximumGainEvenWithInstantaneousSpeed": 0.24609375,
+      "shortfallAgainstAssumedLostDistance": 0.5539062500000114,
+      "explanation": "Even an instantaneous jump to the absolute maxV cannot regain the model-assumed lost distance inside this catch window. finishPlan instead clips the excessive request and reports full-remainder energy feasibility.",
+      "naturalAiOutcome": "Not tested. The attack branch precedes follow; these states may choose attack and never evaluate the follow branch.",
+      "gainScope": "Relative to the assumed planned-speed baseline over the same window. Not a claim about actual executed lost distance, which would require propagating finite response and the preceding follow state.",
+      "geometry": {
+        "s": 2000,
+        "lane": 1.4,
+        "curvature": 0,
+        "gradient": 0.0125
+      }
+    }
+  ],
+  "wakeGeometry": {
+    "rearWidth": 0.755,
+    "frontWidth": 0.755,
+    "actualLateralLimit": 1.5550000000000002,
+    "aiLateralLimit": 2.5,
+    "actualLongitudinalRange": [
+      0,
+      12
+    ],
+    "actualLongitudinalInclusivity": {
+      "minimum": false,
+      "maximum": true
+    },
+    "aiLongitudinalRange": [
+      3,
+      12
+    ],
+    "aiLongitudinalInclusivity": {
+      "minimum": false,
+      "maximum": false
+    },
+    "aiOnlyLateralBand": {
+      "minimum": 1.5550000000000002,
+      "minimumInclusive": false,
+      "maximum": 2.5,
+      "maximumInclusive": false
+    },
+    "geometricCases": [
+      {
+        "gap": 8,
+        "lateral": 1.5,
+        "aiWake": true,
+        "actualWake": true
+      },
+      {
+        "gap": 8,
+        "lateral": 1.56,
+        "aiWake": true,
+        "actualWake": false
+      },
+      {
+        "gap": 8,
+        "lateral": 1.8,
+        "aiWake": true,
+        "actualWake": false
+      },
+      {
+        "gap": 8,
+        "lateral": 2.49,
+        "aiWake": true,
+        "actualWake": false
+      },
+      {
+        "gap": 8,
+        "lateral": 2.5,
+        "aiWake": false,
+        "actualWake": false
+      },
+      {
+        "gap": 2.9,
+        "lateral": 0,
+        "aiWake": false,
+        "actualWake": true
+      },
+      {
+        "gap": 12,
+        "lateral": 0,
+        "aiWake": false,
+        "actualWake": true
+      }
+    ],
+    "caveat": "Geometric eligibility only. No assertion that all such initial two-horse configurations pass the complete traffic safety domain.",
+    "forecastDraftDistance": 44,
+    "forecastDraftDistanceScope": "Nominal own progress; not the physical 12m following-gap range. The current forecast does not propagate gap or lateral alignment."
+  },
+  "structuralRisk": {
+    "checkRequest": "catchV",
+    "checkDuration": "All remaining route from current state",
+    "intendedActionDurations": "follow horizon <=8s, catch window <=8s",
+    "missingPropagation": [
+      "Following changes speed, reserve, guts and aerobic output before catch begins.",
+      "Catch must recover actual executed lost distance inside its feasible action window.",
+      "Both opponent gap and lateral alignment determine actual shielding over time."
+    ],
+    "overlyStrictRejection": "Plausible from code structure; not claimed as demonstrated by an exact executed counterfactual here."
+  },
+  "integrity": {
+    "sourceUnchanged": true,
+    "parametersUnchanged": true,
+    "exactClausesMatched": true,
+    "witnessCount": 2,
+    "allWitnessesPassed": true,
+    "allForecastsPure": true,
+    "allFinite": true,
+    "noEngineStepOrFullRace": true
+  }
+}

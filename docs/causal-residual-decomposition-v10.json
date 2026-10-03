@@ -1,0 +1,2287 @@
+{
+  "engineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "numericEngineHash": "3b837b46bf03ed86a19fdbe0ff83a03bb4fd2211ff9a4692b2f1a78e12f221ff",
+  "inputs": [
+    {
+      "name": "current-engine-reality-sources-2026-10-02.json",
+      "hash": "8ea32846bf7bd8a492aae503861718dd5bf587c2cfedbf7814b20acad8f991b9"
+    },
+    {
+      "name": "system-external-reference-2022.json",
+      "hash": "73e4f988080247509ef7167952a3827e7a9ac7f726fea8f0a2657adb8030f6c2"
+    },
+    {
+      "name": "system-current-v2026.10.02.3.json",
+      "hash": "f9f1d74742ded51fead3ffe207975388829b703e4d782258603f51e7d7b9ef40"
+    },
+    {
+      "name": "system-current-external2022-v2026.10.02.3.json",
+      "hash": "85a953a38a013872f29d5088ff99f348b4faa19c5b8da8f266dda220367c6a8f"
+    }
+  ],
+  "protocol": "24 official events; three simulated runs each. Per-run total error = start200 error + remaining200-to-finish error exactly. Medians of components need not add. Remaining leader speed is a leader-envelope time interval, not one horse GPS velocity. A one-decimal rounding diagnostic changes only recorded finish times, never trajectories. Synthetic fields do not reconstruct the real runners.",
+  "events": [
+    {
+      "id": "231001",
+      "length": 1200,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 68,
+        "first200": 11.7
+      },
+      "pairs": [
+        {
+          "seed": 2026100207,
+          "totalError": -2.7722901312336035,
+          "startError": 1.4444137986853818,
+          "remainingError": -4.216703929918978,
+          "remainingLeaderMeanSpeedReal": 17.761989342806395,
+          "remainingLeaderMeanSpeedSim": 19.200013736735162,
+          "within1Raw": 0.25,
+          "within2Raw": 0.6875,
+          "tailRaw": 2.9338143790154874,
+          "within1Rounded": 0.25,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3
+        },
+        {
+          "seed": 2026108126,
+          "totalError": -2.662182284412694,
+          "startError": 1.4301672456849115,
+          "remainingError": -4.0923495300976,
+          "remainingLeaderMeanSpeedReal": 17.761989342806395,
+          "remainingLeaderMeanSpeedSim": 19.154280857295003,
+          "within1Raw": 0.3125,
+          "within2Raw": 0.6875,
+          "tailRaw": 3.1808555687181865,
+          "within1Rounded": 0.3125,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3.200000000000003
+        },
+        {
+          "seed": 2026116045,
+          "totalError": -2.3654298056197547,
+          "startError": 1.4413039224017101,
+          "remainingError": -3.806733728021463,
+          "remainingLeaderMeanSpeedReal": 17.761989342806395,
+          "remainingLeaderMeanSpeedSim": 19.05006243693795,
+          "within1Raw": 0.375,
+          "within2Raw": 0.625,
+          "tailRaw": 3.4326504846491304,
+          "within1Rounded": 0.375,
+          "within2Rounded": 0.625,
+          "tailRounded": 3.5
+        }
+      ],
+      "median": {
+        "totalError": -2.662182284412694,
+        "startError": 1.4413039224017101,
+        "remainingError": -4.0923495300976,
+        "remainingLeaderMeanSpeedReal": 17.761989342806395,
+        "remainingLeaderMeanSpeedSim": 19.154280857295003,
+        "within1Raw": 0.3125,
+        "within2Raw": 0.6875,
+        "tailRaw": 3.1808555687181865,
+        "within1Rounded": 0.3125,
+        "within2Rounded": 0.6875,
+        "tailRounded": 3.200000000000003
+      }
+    },
+    {
+      "id": "230604",
+      "length": 1600,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 91.4,
+        "first200": 12
+      },
+      "pairs": [
+        {
+          "seed": 2026200210,
+          "totalError": -5.280242150502261,
+          "startError": 1.108382720205075,
+          "remainingError": -6.388624870707332,
+          "remainingLeaderMeanSpeedReal": 17.632241813602015,
+          "remainingLeaderMeanSpeedSim": 19.175094257857776,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.2777777777777778,
+          "tailRaw": 5.442146303506263,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.2777777777777778,
+          "tailRounded": 5.5
+        },
+        {
+          "seed": 2026208129,
+          "totalError": -5.481055344303044,
+          "startError": 1.1126403827650737,
+          "remainingError": -6.593695727068123,
+          "remainingLeaderMeanSpeedReal": 17.632241813602015,
+          "remainingLeaderMeanSpeedSim": 19.229104045053084,
+          "within1Raw": 0.1111111111111111,
+          "within2Raw": 0.3888888888888889,
+          "tailRaw": 6.4742777574873145,
+          "within1Rounded": 0.1111111111111111,
+          "within2Rounded": 0.4444444444444444,
+          "tailRounded": 6.5
+        },
+        {
+          "seed": 2026216048,
+          "totalError": -4.551355320642713,
+          "startError": 1.2221913053223794,
+          "remainingError": -5.773546625965096,
+          "remainingLeaderMeanSpeedReal": 17.632241813602015,
+          "remainingLeaderMeanSpeedSim": 19.014904777332703,
+          "within1Raw": 0.2777777777777778,
+          "within2Raw": 0.4444444444444444,
+          "tailRaw": 5.973681067067716,
+          "within1Rounded": 0.2777777777777778,
+          "within2Rounded": 0.4444444444444444,
+          "tailRounded": 6
+        }
+      ],
+      "median": {
+        "totalError": -5.280242150502261,
+        "startError": 1.1126403827650737,
+        "remainingError": -6.388624870707332,
+        "remainingLeaderMeanSpeedReal": 17.632241813602015,
+        "remainingLeaderMeanSpeedSim": 19.175094257857776,
+        "within1Raw": 0.1111111111111111,
+        "within2Raw": 0.3888888888888889,
+        "tailRaw": 5.973681067067716,
+        "within1Rounded": 0.1111111111111111,
+        "within2Rounded": 0.4444444444444444,
+        "tailRounded": 6
+      }
+    },
+    {
+      "id": "231029",
+      "length": 2000,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 115.2,
+        "first200": 12.4
+      },
+      "pairs": [
+        {
+          "seed": 2026300213,
+          "totalError": -3.8784338418386994,
+          "startError": 1.2492590539956065,
+          "remainingError": -5.127692895834301,
+          "remainingLeaderMeanSpeedReal": 17.509727626459146,
+          "remainingLeaderMeanSpeedSim": 18.428969821305987,
+          "within1Raw": 0.09090909090909091,
+          "within2Raw": 0.09090909090909091,
+          "tailRaw": 6.289476891403041,
+          "within1Rounded": 0.09090909090909091,
+          "within2Rounded": 0.09090909090909091,
+          "tailRounded": 6.299999999999997
+        },
+        {
+          "seed": 2026308132,
+          "totalError": -3.270158682173843,
+          "startError": 1.2378259575489778,
+          "remainingError": -4.507984639722821,
+          "remainingLeaderMeanSpeedReal": 17.509727626459146,
+          "remainingLeaderMeanSpeedSim": 18.312779460288034,
+          "within1Raw": 0.18181818181818182,
+          "within2Raw": 0.36363636363636365,
+          "tailRaw": 6.7375635783536865,
+          "within1Rounded": 0.18181818181818182,
+          "within2Rounded": 0.45454545454545453,
+          "tailRounded": 6.799999999999997
+        },
+        {
+          "seed": 2026316051,
+          "totalError": -3.0162385635122035,
+          "startError": 1.3339530693164576,
+          "remainingError": -4.350191632828654,
+          "remainingLeaderMeanSpeedReal": 17.509727626459146,
+          "remainingLeaderMeanSpeedSim": 18.283428173743612,
+          "within1Raw": 0.09090909090909091,
+          "within2Raw": 0.45454545454545453,
+          "tailRaw": 6.2406349429710986,
+          "within1Rounded": 0.09090909090909091,
+          "within2Rounded": 0.45454545454545453,
+          "tailRounded": 6.200000000000003
+        }
+      ],
+      "median": {
+        "totalError": -3.270158682173843,
+        "startError": 1.2492590539956065,
+        "remainingError": -4.507984639722821,
+        "remainingLeaderMeanSpeedReal": 17.509727626459146,
+        "remainingLeaderMeanSpeedSim": 18.312779460288034,
+        "within1Raw": 0.09090909090909091,
+        "within2Raw": 0.36363636363636365,
+        "tailRaw": 6.289476891403041,
+        "within1Rounded": 0.09090909090909091,
+        "within2Rounded": 0.45454545454545453,
+        "tailRounded": 6.299999999999997
+      }
+    },
+    {
+      "id": "231126",
+      "length": 2400,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 141.8,
+        "first200": 12.7
+      },
+      "pairs": [
+        {
+          "seed": 2026400216,
+          "totalError": -4.899231385106276,
+          "startError": 1.2174674987242984,
+          "remainingError": -6.11669888383058,
+          "remainingLeaderMeanSpeedReal": 17.041053446940353,
+          "remainingLeaderMeanSpeedSim": 17.888607477871247,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.16666666666666666,
+          "tailRaw": 10.361811345822957,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.16666666666666666,
+          "tailRounded": 10.400000000000006
+        },
+        {
+          "seed": 2026408135,
+          "totalError": -4.327898000063044,
+          "startError": 1.079428264681006,
+          "remainingError": -5.407326264744057,
+          "remainingLeaderMeanSpeedReal": 17.041053446940353,
+          "remainingLeaderMeanSpeedSim": 17.78601701753769,
+          "within1Raw": 0.16666666666666666,
+          "within2Raw": 0.2222222222222222,
+          "tailRaw": 8.659116991524428,
+          "within1Rounded": 0.16666666666666666,
+          "within2Rounded": 0.2222222222222222,
+          "tailRounded": 8.599999999999994
+        },
+        {
+          "seed": 2026416054,
+          "totalError": -2.313751124826524,
+          "startError": 1.2359863416897365,
+          "remainingError": -3.5497374665162766,
+          "remainingLeaderMeanSpeedReal": 17.041053446940353,
+          "remainingLeaderMeanSpeedSim": 17.522862601846562,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.1111111111111111,
+          "tailRaw": 10.258041966553918,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.1111111111111111,
+          "tailRounded": 10.199999999999989
+        }
+      ],
+      "median": {
+        "totalError": -4.327898000063044,
+        "startError": 1.2174674987242984,
+        "remainingError": -5.407326264744057,
+        "remainingLeaderMeanSpeedReal": 17.041053446940353,
+        "remainingLeaderMeanSpeedSim": 17.78601701753769,
+        "within1Raw": 0.05555555555555555,
+        "within2Raw": 0.16666666666666666,
+        "tailRaw": 10.258041966553918,
+        "within1Rounded": 0.05555555555555555,
+        "within2Rounded": 0.16666666666666666,
+        "tailRounded": 10.199999999999989
+      }
+    },
+    {
+      "id": "231022",
+      "length": 3000,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 183.1,
+        "first200": 12.7
+      },
+      "pairs": [
+        {
+          "seed": 2026500219,
+          "totalError": -3.4514545896846016,
+          "startError": 1.5470231949834439,
+          "remainingError": -4.998477784668069,
+          "remainingLeaderMeanSpeedReal": 16.431924882629108,
+          "remainingLeaderMeanSpeedSim": 16.92850200226545,
+          "within1Raw": 0.17647058823529413,
+          "within2Raw": 0.29411764705882354,
+          "tailRaw": 9.238882140537129,
+          "within1Rounded": 0.17647058823529413,
+          "within2Rounded": 0.29411764705882354,
+          "tailRounded": 9.300000000000011
+        },
+        {
+          "seed": 2026508138,
+          "totalError": -7.602875412567101,
+          "startError": 1.4485060131077567,
+          "remainingError": -9.051381425674862,
+          "remainingLeaderMeanSpeedReal": 16.431924882629108,
+          "remainingLeaderMeanSpeedSim": 17.353727752618976,
+          "within1Raw": 0.11764705882352941,
+          "within2Raw": 0.11764705882352941,
+          "tailRaw": 13.626914484516732,
+          "within1Rounded": 0.11764705882352941,
+          "within2Rounded": 0.11764705882352941,
+          "tailRounded": 13.599999999999994
+        },
+        {
+          "seed": 2026516057,
+          "totalError": -6.315005941119807,
+          "startError": 1.4169757754381518,
+          "remainingError": -7.731981716557982,
+          "remainingLeaderMeanSpeedReal": 16.431924882629108,
+          "remainingLeaderMeanSpeedSim": 17.212971729458957,
+          "within1Raw": 0.17647058823529413,
+          "within2Raw": 0.23529411764705882,
+          "tailRaw": 11.939558442424527,
+          "within1Rounded": 0.17647058823529413,
+          "within2Rounded": 0.23529411764705882,
+          "tailRounded": 11.899999999999977
+        }
+      ],
+      "median": {
+        "totalError": -6.315005941119807,
+        "startError": 1.4485060131077567,
+        "remainingError": -7.731981716557982,
+        "remainingLeaderMeanSpeedReal": 16.431924882629108,
+        "remainingLeaderMeanSpeedSim": 17.212971729458957,
+        "within1Raw": 0.17647058823529413,
+        "within2Raw": 0.23529411764705882,
+        "tailRaw": 11.939558442424527,
+        "within1Rounded": 0.17647058823529413,
+        "within2Rounded": 0.23529411764705882,
+        "tailRounded": 11.899999999999977
+      }
+    },
+    {
+      "id": "230430",
+      "length": 3200,
+      "state": "稍重",
+      "context": "external",
+      "real": {
+        "winnerTime": 196.1,
+        "first200": 12.3
+      },
+      "pairs": [
+        {
+          "seed": 2026600222,
+          "totalError": -1.663848281828848,
+          "startError": 2.1155922688870543,
+          "remainingError": -3.77944055071589,
+          "remainingLeaderMeanSpeedReal": 16.322089227421113,
+          "remainingLeaderMeanSpeedSim": 16.664763231363963,
+          "within1Raw": 0.17647058823529413,
+          "within2Raw": 0.17647058823529413,
+          "tailRaw": 12.875303502072057,
+          "within1Rounded": 0.17647058823529413,
+          "within2Rounded": 0.17647058823529413,
+          "tailRounded": 12.900000000000006
+        },
+        {
+          "seed": 2026608141,
+          "totalError": -1.529601727128295,
+          "startError": 2.0985781580411462,
+          "remainingError": -3.6281798851694305,
+          "remainingLeaderMeanSpeedReal": 16.322089227421113,
+          "remainingLeaderMeanSpeedSim": 16.650772568584713,
+          "within1Raw": 0.058823529411764705,
+          "within2Raw": 0.058823529411764705,
+          "tailRaw": 10.03873722673697,
+          "within1Rounded": 0.058823529411764705,
+          "within2Rounded": 0.058823529411764705,
+          "tailRounded": 10
+        },
+        {
+          "seed": 2026616060,
+          "totalError": -1.6028068662282635,
+          "startError": 2.0860802055810144,
+          "remainingError": -3.688887071809262,
+          "remainingLeaderMeanSpeedReal": 16.322089227421113,
+          "remainingLeaderMeanSpeedSim": 16.656384779522643,
+          "within1Raw": 0.17647058823529413,
+          "within2Raw": 0.29411764705882354,
+          "tailRaw": 8.48908900127185,
+          "within1Rounded": 0.17647058823529413,
+          "within2Rounded": 0.29411764705882354,
+          "tailRounded": 8.5
+        }
+      ],
+      "median": {
+        "totalError": -1.6028068662282635,
+        "startError": 2.0985781580411462,
+        "remainingError": -3.688887071809262,
+        "remainingLeaderMeanSpeedReal": 16.322089227421113,
+        "remainingLeaderMeanSpeedSim": 16.656384779522643,
+        "within1Raw": 0.17647058823529413,
+        "within2Raw": 0.17647058823529413,
+        "tailRaw": 10.03873722673697,
+        "within1Rounded": 0.17647058823529413,
+        "within2Rounded": 0.17647058823529413,
+        "tailRounded": 10
+      }
+    },
+    {
+      "id": "240929",
+      "length": 1200,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 67,
+        "first200": 11.8
+      },
+      "pairs": [
+        {
+          "seed": 2026100207,
+          "totalError": -1.7679819129809005,
+          "startError": 1.3445164604687818,
+          "remainingError": -3.1124983734496823,
+          "remainingLeaderMeanSpeedReal": 18.115942028985508,
+          "remainingLeaderMeanSpeedSim": 19.198463523354604,
+          "within1Raw": 0.25,
+          "within2Raw": 0.625,
+          "tailRaw": 2.9340150134770226,
+          "within1Rounded": 0.25,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3
+        },
+        {
+          "seed": 2026108126,
+          "totalError": -1.6574853867734163,
+          "startError": 1.330259258398355,
+          "remainingError": -2.987744645171773,
+          "remainingLeaderMeanSpeedReal": 18.115942028985508,
+          "remainingLeaderMeanSpeedSim": 19.152591536299663,
+          "within1Raw": 0.3125,
+          "within2Raw": 0.6875,
+          "tailRaw": 3.1810709798113237,
+          "within1Rounded": 0.3125,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3.200000000000003
+        },
+        {
+          "seed": 2026116045,
+          "totalError": -1.3594637120059332,
+          "startError": 1.341447817403706,
+          "remainingError": -2.7009115294096446,
+          "remainingLeaderMeanSpeedReal": 18.115942028985508,
+          "remainingLeaderMeanSpeedSim": 19.047949766979162,
+          "within1Raw": 0.375,
+          "within2Raw": 0.6875,
+          "tailRaw": 3.4607615980222874,
+          "within1Rounded": 0.375,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3.5
+        }
+      ],
+      "median": {
+        "totalError": -1.6574853867734163,
+        "startError": 1.341447817403706,
+        "remainingError": -2.987744645171773,
+        "remainingLeaderMeanSpeedReal": 18.115942028985508,
+        "remainingLeaderMeanSpeedSim": 19.152591536299663,
+        "within1Raw": 0.3125,
+        "within2Raw": 0.6875,
+        "tailRaw": 3.1810709798113237,
+        "within1Rounded": 0.3125,
+        "within2Rounded": 0.6875,
+        "tailRounded": 3.200000000000003
+      }
+    },
+    {
+      "id": "240602",
+      "length": 1600,
+      "state": "稍重",
+      "context": "external",
+      "real": {
+        "winnerTime": 92.3,
+        "first200": 12.1
+      },
+      "pairs": [
+        {
+          "seed": 2026200210,
+          "totalError": -5.749974608954261,
+          "startError": 1.13694533862334,
+          "remainingError": -6.88691994757761,
+          "remainingLeaderMeanSpeedReal": 17.456359102244388,
+          "remainingLeaderMeanSpeedSim": 19.096183095825907,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.05555555555555555,
+          "tailRaw": 6.844357877325351,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.05555555555555555,
+          "tailRounded": 6.800000000000011
+        },
+        {
+          "seed": 2026208129,
+          "totalError": -5.968498588607417,
+          "startError": 1.1306810580435034,
+          "remainingError": -7.099179646650924,
+          "remainingLeaderMeanSpeedReal": 17.456359102244388,
+          "remainingLeaderMeanSpeedSim": 19.151631859024132,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.1111111111111111,
+          "tailRaw": 6.97412694692629,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.1111111111111111,
+          "tailRounded": 7
+        },
+        {
+          "seed": 2026216048,
+          "totalError": -4.787945824739083,
+          "startError": 1.2741824328207585,
+          "remainingError": -6.0621282575598485,
+          "remainingLeaderMeanSpeedReal": 17.456359102244388,
+          "remainingLeaderMeanSpeedSim": 18.88373603255961,
+          "within1Raw": 0.2222222222222222,
+          "within2Raw": 0.3333333333333333,
+          "tailRaw": 6.15847451487781,
+          "within1Rounded": 0.2222222222222222,
+          "within2Rounded": 0.3333333333333333,
+          "tailRounded": 6.200000000000003
+        }
+      ],
+      "median": {
+        "totalError": -5.749974608954261,
+        "startError": 1.13694533862334,
+        "remainingError": -6.88691994757761,
+        "remainingLeaderMeanSpeedReal": 17.456359102244388,
+        "remainingLeaderMeanSpeedSim": 19.096183095825907,
+        "within1Raw": 0.05555555555555555,
+        "within2Raw": 0.1111111111111111,
+        "tailRaw": 6.844357877325351,
+        "within1Rounded": 0.05555555555555555,
+        "within2Rounded": 0.1111111111111111,
+        "tailRounded": 6.800000000000011
+      }
+    },
+    {
+      "id": "241027",
+      "length": 2000,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 117.3,
+        "first200": 12.8
+      },
+      "pairs": [
+        {
+          "seed": 2026300213,
+          "totalError": -4.417290514333246,
+          "startError": 0.8937126244768603,
+          "remainingError": -5.311003138810108,
+          "remainingLeaderMeanSpeedReal": 17.22488038277512,
+          "remainingLeaderMeanSpeedSim": 18.14717415197788,
+          "within1Raw": 0.2,
+          "within2Raw": 0.4,
+          "tailRaw": 6.087081160236551,
+          "within1Rounded": 0.2,
+          "within2Rounded": 0.4,
+          "tailRounded": 6.099999999999994
+        },
+        {
+          "seed": 2026308132,
+          "totalError": -6.104441696396194,
+          "startError": 0.8265030740822059,
+          "remainingError": -6.930944770478405,
+          "remainingLeaderMeanSpeedReal": 17.22488038277512,
+          "remainingLeaderMeanSpeedSim": 18.44847216943607,
+          "within1Raw": 0.06666666666666667,
+          "within2Raw": 0.06666666666666667,
+          "tailRaw": 8.146787281316847,
+          "within1Rounded": 0.06666666666666667,
+          "within2Rounded": 0.06666666666666667,
+          "tailRounded": 8.099999999999994
+        },
+        {
+          "seed": 2026316051,
+          "totalError": -5.253386780520515,
+          "startError": 0.8637797776152123,
+          "remainingError": -6.117166558135736,
+          "remainingLeaderMeanSpeedReal": 17.22488038277512,
+          "remainingLeaderMeanSpeedSim": 18.29587476827087,
+          "within1Raw": 0.2,
+          "within2Raw": 0.2,
+          "tailRaw": 5.676972639879168,
+          "within1Rounded": 0.2,
+          "within2Rounded": 0.2,
+          "tailRounded": 5.700000000000003
+        }
+      ],
+      "median": {
+        "totalError": -5.253386780520515,
+        "startError": 0.8637797776152123,
+        "remainingError": -6.117166558135736,
+        "remainingLeaderMeanSpeedReal": 17.22488038277512,
+        "remainingLeaderMeanSpeedSim": 18.29587476827087,
+        "within1Raw": 0.2,
+        "within2Raw": 0.2,
+        "tailRaw": 6.087081160236551,
+        "within1Rounded": 0.2,
+        "within2Rounded": 0.2,
+        "tailRounded": 6.099999999999994
+      }
+    },
+    {
+      "id": "241124",
+      "length": 2400,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 145.5,
+        "first200": 12.7
+      },
+      "pairs": [
+        {
+          "seed": 2026400216,
+          "totalError": -7.232795337635537,
+          "startError": 1.2043749344665358,
+          "remainingError": -8.43717027210208,
+          "remainingLeaderMeanSpeedReal": 16.566265060240962,
+          "remainingLeaderMeanSpeedSim": 17.69017321987231,
+          "within1Raw": 0.07142857142857142,
+          "within2Raw": 0.14285714285714285,
+          "tailRaw": 6.749467910321613,
+          "within1Rounded": 0.07142857142857142,
+          "within2Rounded": 0.21428571428571427,
+          "tailRounded": 6.699999999999989
+        },
+        {
+          "seed": 2026408135,
+          "totalError": -7.649789948983937,
+          "startError": 1.203734587800433,
+          "remainingError": -8.853524536784377,
+          "remainingLeaderMeanSpeedReal": 16.566265060240962,
+          "remainingLeaderMeanSpeedSim": 17.74959708840537,
+          "within1Raw": 0.14285714285714285,
+          "within2Raw": 0.35714285714285715,
+          "tailRaw": 7.021780477158529,
+          "within1Rounded": 0.21428571428571427,
+          "within2Rounded": 0.35714285714285715,
+          "tailRounded": 7
+        },
+        {
+          "seed": 2026416054,
+          "totalError": -8.341854419838768,
+          "startError": 1.0850049796188799,
+          "remainingError": -9.426859399457655,
+          "remainingLeaderMeanSpeedReal": 16.566265060240962,
+          "remainingLeaderMeanSpeedSim": 17.832082325951006,
+          "within1Raw": 0.07142857142857142,
+          "within2Raw": 0.14285714285714285,
+          "tailRaw": 10.812581644376081,
+          "within1Rounded": 0.07142857142857142,
+          "within2Rounded": 0.21428571428571427,
+          "tailRounded": 10.800000000000011
+        }
+      ],
+      "median": {
+        "totalError": -7.649789948983937,
+        "startError": 1.203734587800433,
+        "remainingError": -8.853524536784377,
+        "remainingLeaderMeanSpeedReal": 16.566265060240962,
+        "remainingLeaderMeanSpeedSim": 17.74959708840537,
+        "within1Raw": 0.07142857142857142,
+        "within2Raw": 0.14285714285714285,
+        "tailRaw": 7.021780477158529,
+        "within1Rounded": 0.07142857142857142,
+        "within2Rounded": 0.21428571428571427,
+        "tailRounded": 7
+      }
+    },
+    {
+      "id": "241020",
+      "length": 3000,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 184.1,
+        "first200": 12.6
+      },
+      "pairs": [
+        {
+          "seed": 2026500219,
+          "totalError": -5.158720147131646,
+          "startError": 1.6759601423304584,
+          "remainingError": -6.8346802894621135,
+          "remainingLeaderMeanSpeedReal": 16.3265306122449,
+          "remainingLeaderMeanSpeedSim": 17.00418767547452,
+          "within1Raw": 0.16666666666666666,
+          "within2Raw": 0.2222222222222222,
+          "tailRaw": 8.564407765125821,
+          "within1Rounded": 0.16666666666666666,
+          "within2Rounded": 0.2222222222222222,
+          "tailRounded": 8.599999999999994
+        },
+        {
+          "seed": 2026508138,
+          "totalError": -9.163364958075846,
+          "startError": 1.477055565275764,
+          "remainingError": -10.640420523351622,
+          "remainingLeaderMeanSpeedReal": 16.3265306122449,
+          "remainingLeaderMeanSpeedSim": 17.40648588731683,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.05555555555555555,
+          "tailRaw": 16.933027589073532,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.05555555555555555,
+          "tailRounded": 17
+        },
+        {
+          "seed": 2026516057,
+          "totalError": -7.652755928800417,
+          "startError": 1.4771276747428725,
+          "remainingError": -9.129883603543306,
+          "remainingLeaderMeanSpeedReal": 16.3265306122449,
+          "remainingLeaderMeanSpeedSim": 17.24455252075623,
+          "within1Raw": 0.1111111111111111,
+          "within2Raw": 0.16666666666666666,
+          "tailRaw": 13.585976301211275,
+          "within1Rounded": 0.1111111111111111,
+          "within2Rounded": 0.16666666666666666,
+          "tailRounded": 13.599999999999994
+        }
+      ],
+      "median": {
+        "totalError": -7.652755928800417,
+        "startError": 1.4771276747428725,
+        "remainingError": -9.129883603543306,
+        "remainingLeaderMeanSpeedReal": 16.3265306122449,
+        "remainingLeaderMeanSpeedSim": 17.24455252075623,
+        "within1Raw": 0.1111111111111111,
+        "within2Raw": 0.16666666666666666,
+        "tailRaw": 13.585976301211275,
+        "within1Rounded": 0.1111111111111111,
+        "within2Rounded": 0.16666666666666666,
+        "tailRounded": 13.599999999999994
+      }
+    },
+    {
+      "id": "240428",
+      "length": 3200,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 194.2,
+        "first200": 12.8
+      },
+      "pairs": [
+        {
+          "seed": 2026600222,
+          "totalError": -2.7812741257050106,
+          "startError": 1.459404160100826,
+          "remainingError": -4.240678285805814,
+          "remainingLeaderMeanSpeedReal": 16.538037486218304,
+          "remainingLeaderMeanSpeedSim": 16.933909945985288,
+          "within1Raw": 0.17647058823529413,
+          "within2Raw": 0.17647058823529413,
+          "tailRaw": 12.28677020932318,
+          "within1Rounded": 0.17647058823529413,
+          "within2Rounded": 0.17647058823529413,
+          "tailRounded": 12.299999999999983
+        },
+        {
+          "seed": 2026608141,
+          "totalError": -1.9902473087302894,
+          "startError": 1.4458112062875834,
+          "remainingError": -3.436058515017862,
+          "remainingLeaderMeanSpeedReal": 16.538037486218304,
+          "remainingLeaderMeanSpeedSim": 16.857347477062717,
+          "within1Raw": 0.058823529411764705,
+          "within2Raw": 0.17647058823529413,
+          "tailRaw": 8.711241346771715,
+          "within1Rounded": 0.058823529411764705,
+          "within2Rounded": 0.23529411764705882,
+          "tailRounded": 8.700000000000017
+        },
+        {
+          "seed": 2026616060,
+          "totalError": -2.7705760168728375,
+          "startError": 1.4306493025903908,
+          "remainingError": -4.201225319463219,
+          "remainingLeaderMeanSpeedReal": 16.538037486218304,
+          "remainingLeaderMeanSpeedSim": 16.930139643508017,
+          "within1Raw": 0.23529411764705882,
+          "within2Raw": 0.35294117647058826,
+          "tailRaw": 7.5634878816377125,
+          "within1Rounded": 0.23529411764705882,
+          "within2Rounded": 0.35294117647058826,
+          "tailRounded": 7.599999999999994
+        }
+      ],
+      "median": {
+        "totalError": -2.7705760168728375,
+        "startError": 1.4458112062875834,
+        "remainingError": -4.201225319463219,
+        "remainingLeaderMeanSpeedReal": 16.538037486218304,
+        "remainingLeaderMeanSpeedSim": 16.930139643508017,
+        "within1Raw": 0.17647058823529413,
+        "within2Raw": 0.17647058823529413,
+        "tailRaw": 8.711241346771715,
+        "within1Rounded": 0.17647058823529413,
+        "within2Rounded": 0.23529411764705882,
+        "tailRounded": 8.700000000000017
+      }
+    },
+    {
+      "id": "250928",
+      "length": 1200,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 66.9,
+        "first200": 12
+      },
+      "pairs": [
+        {
+          "seed": 2026100207,
+          "totalError": -1.6679819129809061,
+          "startError": 1.1445164604687825,
+          "remainingError": -2.812498373449685,
+          "remainingLeaderMeanSpeedReal": 18.21493624772313,
+          "remainingLeaderMeanSpeedSim": 19.198463523354604,
+          "within1Raw": 0.25,
+          "within2Raw": 0.625,
+          "tailRaw": 2.9340150134770226,
+          "within1Rounded": 0.25,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3
+        },
+        {
+          "seed": 2026108126,
+          "totalError": -1.557485386773422,
+          "startError": 1.1302592583983557,
+          "remainingError": -2.687744645171776,
+          "remainingLeaderMeanSpeedReal": 18.21493624772313,
+          "remainingLeaderMeanSpeedSim": 19.152591536299663,
+          "within1Raw": 0.3125,
+          "within2Raw": 0.6875,
+          "tailRaw": 3.1810709798113237,
+          "within1Rounded": 0.3125,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3.200000000000003
+        },
+        {
+          "seed": 2026116045,
+          "totalError": -1.2594637120059389,
+          "startError": 1.1414478174037068,
+          "remainingError": -2.4009115294096475,
+          "remainingLeaderMeanSpeedReal": 18.21493624772313,
+          "remainingLeaderMeanSpeedSim": 19.047949766979162,
+          "within1Raw": 0.375,
+          "within2Raw": 0.6875,
+          "tailRaw": 3.4607615980222874,
+          "within1Rounded": 0.375,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3.5
+        }
+      ],
+      "median": {
+        "totalError": -1.557485386773422,
+        "startError": 1.1414478174037068,
+        "remainingError": -2.687744645171776,
+        "remainingLeaderMeanSpeedReal": 18.21493624772313,
+        "remainingLeaderMeanSpeedSim": 19.152591536299663,
+        "within1Raw": 0.3125,
+        "within2Raw": 0.6875,
+        "tailRaw": 3.1810709798113237,
+        "within1Rounded": 0.3125,
+        "within2Rounded": 0.6875,
+        "tailRounded": 3.200000000000003
+      }
+    },
+    {
+      "id": "250608",
+      "length": 1600,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 92.7,
+        "first200": 12.5
+      },
+      "pairs": [
+        {
+          "seed": 2026200210,
+          "totalError": -6.5609305120779595,
+          "startError": 0.6205027988456813,
+          "remainingError": -7.181433310923637,
+          "remainingLeaderMeanSpeedReal": 17.456359102244388,
+          "remainingLeaderMeanSpeedSim": 19.173205713026427,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.2777777777777778,
+          "tailRaw": 5.2644487508677,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.2777777777777778,
+          "tailRounded": 5.300000000000011
+        },
+        {
+          "seed": 2026208129,
+          "totalError": -6.771403318680143,
+          "startError": 0.6150805754616169,
+          "remainingError": -7.386483894141762,
+          "remainingLeaderMeanSpeedReal": 17.456359102244388,
+          "remainingLeaderMeanSpeedSim": 19.22719949363031,
+          "within1Raw": 0.1111111111111111,
+          "within2Raw": 0.3333333333333333,
+          "tailRaw": 5.9628965915680965,
+          "within1Rounded": 0.1111111111111111,
+          "within2Rounded": 0.3333333333333333,
+          "tailRounded": 6
+        },
+        {
+          "seed": 2026216048,
+          "totalError": -6.073138164859387,
+          "startError": 0.7439104390504809,
+          "remainingError": -6.817048603909868,
+          "remainingLeaderMeanSpeedReal": 17.456359102244388,
+          "remainingLeaderMeanSpeedSim": 19.07800072585514,
+          "within1Raw": 0.2222222222222222,
+          "within2Raw": 0.3888888888888889,
+          "tailRaw": 6.253232917451186,
+          "within1Rounded": 0.2777777777777778,
+          "within2Rounded": 0.3888888888888889,
+          "tailRounded": 6.300000000000011
+        }
+      ],
+      "median": {
+        "totalError": -6.5609305120779595,
+        "startError": 0.6205027988456813,
+        "remainingError": -7.181433310923637,
+        "remainingLeaderMeanSpeedReal": 17.456359102244388,
+        "remainingLeaderMeanSpeedSim": 19.173205713026427,
+        "within1Raw": 0.1111111111111111,
+        "within2Raw": 0.3333333333333333,
+        "tailRaw": 5.9628965915680965,
+        "within1Rounded": 0.1111111111111111,
+        "within2Rounded": 0.3333333333333333,
+        "tailRounded": 6
+      }
+    },
+    {
+      "id": "251102",
+      "length": 2000,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 118.6,
+        "first200": 12.6
+      },
+      "pairs": [
+        {
+          "seed": 2026300213,
+          "totalError": -5.586240988990838,
+          "startError": 1.187636461316238,
+          "remainingError": -6.773877450307083,
+          "remainingLeaderMeanSpeedReal": 16.9811320754717,
+          "remainingLeaderMeanSpeedSim": 18.140384343835983,
+          "within1Raw": 0.21428571428571427,
+          "within2Raw": 0.2857142857142857,
+          "tailRaw": 4.358458734893048,
+          "within1Rounded": 0.21428571428571427,
+          "within2Rounded": 0.2857142857142857,
+          "tailRounded": 4.400000000000006
+        },
+        {
+          "seed": 2026308132,
+          "totalError": -5.8992205217554385,
+          "startError": 1.1363581885055751,
+          "remainingError": -7.035578710261021,
+          "remainingLeaderMeanSpeedReal": 16.9811320754717,
+          "remainingLeaderMeanSpeedSim": 18.188354729323628,
+          "within1Raw": 0.2857142857142857,
+          "within2Raw": 0.5,
+          "tailRaw": 5.69796948302303,
+          "within1Rounded": 0.2857142857142857,
+          "within2Rounded": 0.5,
+          "tailRounded": 5.700000000000003
+        },
+        {
+          "seed": 2026316051,
+          "totalError": -7.022053689991523,
+          "startError": 1.0311115156392976,
+          "remainingError": -8.053165205630819,
+          "remainingLeaderMeanSpeedReal": 16.9811320754717,
+          "remainingLeaderMeanSpeedSim": 18.37731667163051,
+          "within1Raw": 0.07142857142857142,
+          "within2Raw": 0.2857142857142857,
+          "tailRaw": 6.6503446898710905,
+          "within1Rounded": 0.14285714285714285,
+          "within2Rounded": 0.2857142857142857,
+          "tailRounded": 6.6000000000000085
+        }
+      ],
+      "median": {
+        "totalError": -5.8992205217554385,
+        "startError": 1.1363581885055751,
+        "remainingError": -7.035578710261021,
+        "remainingLeaderMeanSpeedReal": 16.9811320754717,
+        "remainingLeaderMeanSpeedSim": 18.188354729323628,
+        "within1Raw": 0.21428571428571427,
+        "within2Raw": 0.2857142857142857,
+        "tailRaw": 5.69796948302303,
+        "within1Rounded": 0.21428571428571427,
+        "within2Rounded": 0.2857142857142857,
+        "tailRounded": 5.700000000000003
+      }
+    },
+    {
+      "id": "251130",
+      "length": 2400,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 140.3,
+        "first200": 12.3
+      },
+      "pairs": [
+        {
+          "seed": 2026400216,
+          "totalError": -1.6265572614363748,
+          "startError": 1.561968575113161,
+          "remainingError": -3.1885258365495304,
+          "remainingLeaderMeanSpeedReal": 17.1875,
+          "remainingLeaderMeanSpeedSim": 17.626584532756393,
+          "within1Raw": 0.29411764705882354,
+          "within2Raw": 0.35294117647058826,
+          "tailRaw": 7.550172255281382,
+          "within1Rounded": 0.29411764705882354,
+          "within2Rounded": 0.35294117647058826,
+          "tailRounded": 7.5
+        },
+        {
+          "seed": 2026408135,
+          "totalError": -2.351103386655467,
+          "startError": 1.5209931632039861,
+          "remainingError": -3.8720965498594353,
+          "remainingLeaderMeanSpeedReal": 17.1875,
+          "remainingLeaderMeanSpeedSim": 17.72365389933208,
+          "within1Raw": 0.11764705882352941,
+          "within2Raw": 0.29411764705882354,
+          "tailRaw": 7.847881693712765,
+          "within1Rounded": 0.11764705882352941,
+          "within2Rounded": 0.29411764705882354,
+          "tailRounded": 7.900000000000006
+        },
+        {
+          "seed": 2026416054,
+          "totalError": -1.7476971411320505,
+          "startError": 1.6507699159712725,
+          "remainingError": -3.3984670571033178,
+          "remainingLeaderMeanSpeedReal": 17.1875,
+          "remainingLeaderMeanSpeedSim": 17.65628357885639,
+          "within1Raw": 0.11764705882352941,
+          "within2Raw": 0.11764705882352941,
+          "tailRaw": 8.920929564055655,
+          "within1Rounded": 0.11764705882352941,
+          "within2Rounded": 0.23529411764705882,
+          "tailRounded": 8.900000000000006
+        }
+      ],
+      "median": {
+        "totalError": -1.7476971411320505,
+        "startError": 1.561968575113161,
+        "remainingError": -3.3984670571033178,
+        "remainingLeaderMeanSpeedReal": 17.1875,
+        "remainingLeaderMeanSpeedSim": 17.65628357885639,
+        "within1Raw": 0.11764705882352941,
+        "within2Raw": 0.29411764705882354,
+        "tailRaw": 7.847881693712765,
+        "within1Rounded": 0.11764705882352941,
+        "within2Rounded": 0.29411764705882354,
+        "tailRounded": 7.900000000000006
+      }
+    },
+    {
+      "id": "251026",
+      "length": 3000,
+      "state": "稍重",
+      "context": "external",
+      "real": {
+        "winnerTime": 184,
+        "first200": 13.1
+      },
+      "pairs": [
+        {
+          "seed": 2026500219,
+          "totalError": -2.0779523546549967,
+          "startError": 1.3318597952297218,
+          "remainingError": -3.409812149884715,
+          "remainingLeaderMeanSpeedReal": 16.383850204798126,
+          "remainingLeaderMeanSpeedSim": 16.717397215565143,
+          "within1Raw": 0.16666666666666666,
+          "within2Raw": 0.2222222222222222,
+          "tailRaw": 7.943570596469101,
+          "within1Rounded": 0.16666666666666666,
+          "within2Rounded": 0.2222222222222222,
+          "tailRounded": 8
+        },
+        {
+          "seed": 2026508138,
+          "totalError": -6.240887329086945,
+          "startError": 1.1290979284191565,
+          "remainingError": -7.369985257506102,
+          "remainingLeaderMeanSpeedReal": 16.383850204798126,
+          "remainingLeaderMeanSpeedSim": 17.12223902388244,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.05555555555555555,
+          "tailRaw": 16.567421069783194,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.05555555555555555,
+          "tailRounded": 16.5
+        },
+        {
+          "seed": 2026516057,
+          "totalError": -4.63878857517048,
+          "startError": 1.1329150404877062,
+          "remainingError": -5.771703615658197,
+          "remainingLeaderMeanSpeedReal": 16.383850204798126,
+          "remainingLeaderMeanSpeedSim": 16.956512368315746,
+          "within1Raw": 0.1111111111111111,
+          "within2Raw": 0.16666666666666666,
+          "tailRaw": 14.123447908792087,
+          "within1Rounded": 0.1111111111111111,
+          "within2Rounded": 0.16666666666666666,
+          "tailRounded": 14.099999999999994
+        }
+      ],
+      "median": {
+        "totalError": -4.63878857517048,
+        "startError": 1.1329150404877062,
+        "remainingError": -5.771703615658197,
+        "remainingLeaderMeanSpeedReal": 16.383850204798126,
+        "remainingLeaderMeanSpeedSim": 16.956512368315746,
+        "within1Raw": 0.1111111111111111,
+        "within2Raw": 0.16666666666666666,
+        "tailRaw": 14.123447908792087,
+        "within1Rounded": 0.1111111111111111,
+        "within2Rounded": 0.16666666666666666,
+        "tailRounded": 14.099999999999994
+      }
+    },
+    {
+      "id": "250504",
+      "length": 3200,
+      "state": "良",
+      "context": "external",
+      "real": {
+        "winnerTime": 194,
+        "first200": 13
+      },
+      "pairs": [
+        {
+          "seed": 2026600222,
+          "totalError": -4.203157477039383,
+          "startError": 1.234624509226439,
+          "remainingError": -5.437781986265833,
+          "remainingLeaderMeanSpeedReal": 16.574585635359117,
+          "remainingLeaderMeanSpeedSim": 17.087959094737066,
+          "within1Raw": 0.06666666666666667,
+          "within2Raw": 0.2,
+          "tailRaw": 12.063713309535302,
+          "within1Rounded": 0.06666666666666667,
+          "within2Rounded": 0.2,
+          "tailRounded": 12.099999999999994
+        },
+        {
+          "seed": 2026608141,
+          "totalError": -2.759047395342577,
+          "startError": 1.2890235694918086,
+          "remainingError": -4.0480709648343804,
+          "remainingLeaderMeanSpeedReal": 16.574585635359117,
+          "remainingLeaderMeanSpeedSim": 16.953756968672607,
+          "within1Raw": 0.13333333333333333,
+          "within2Raw": 0.13333333333333333,
+          "tailRaw": 8.255334280724583,
+          "within1Rounded": 0.13333333333333333,
+          "within2Rounded": 0.13333333333333333,
+          "tailRounded": 8.300000000000011
+        },
+        {
+          "seed": 2026616060,
+          "totalError": -3.842324035305751,
+          "startError": 1.2595398079140576,
+          "remainingError": -5.101863843219803,
+          "remainingLeaderMeanSpeedReal": 16.574585635359117,
+          "remainingLeaderMeanSpeedSim": 17.05532568762447,
+          "within1Raw": 0.13333333333333333,
+          "within2Raw": 0.13333333333333333,
+          "tailRaw": 10.212660370490084,
+          "within1Rounded": 0.13333333333333333,
+          "within2Rounded": 0.13333333333333333,
+          "tailRounded": 10.200000000000017
+        }
+      ],
+      "median": {
+        "totalError": -3.842324035305751,
+        "startError": 1.2595398079140576,
+        "remainingError": -5.101863843219803,
+        "remainingLeaderMeanSpeedReal": 16.574585635359117,
+        "remainingLeaderMeanSpeedSim": 17.05532568762447,
+        "within1Raw": 0.13333333333333333,
+        "within2Raw": 0.13333333333333333,
+        "tailRaw": 10.212660370490084,
+        "within1Rounded": 0.13333333333333333,
+        "within2Rounded": 0.13333333333333333,
+        "tailRounded": 10.200000000000017
+      }
+    },
+    {
+      "id": "221002",
+      "length": 1200,
+      "state": "良",
+      "context": "external2022",
+      "real": {
+        "winnerTime": 67.8,
+        "first200": 11.9
+      },
+      "pairs": [
+        {
+          "seed": 2022100207,
+          "totalError": -2.1600110766476064,
+          "startError": 1.1961985500609114,
+          "remainingError": -3.3562096267085195,
+          "remainingLeaderMeanSpeedReal": 17.88908765652952,
+          "remainingLeaderMeanSpeedSim": 19.031744624733236,
+          "within1Raw": 0.5,
+          "within2Raw": 0.75,
+          "tailRaw": 3.0108166476033915,
+          "within1Rounded": 0.5,
+          "within2Rounded": 0.75,
+          "tailRounded": 3.1000000000000085
+        },
+        {
+          "seed": 2022108126,
+          "totalError": -2.4808078406270795,
+          "startError": 1.1834184372913068,
+          "remainingError": -3.664226277918388,
+          "remainingLeaderMeanSpeedReal": 17.88908765652952,
+          "remainingLeaderMeanSpeedSim": 19.143968371569663,
+          "within1Raw": 0.5,
+          "within2Raw": 0.6875,
+          "tailRaw": 3.557388259841858,
+          "within1Rounded": 0.5,
+          "within2Rounded": 0.6875,
+          "tailRounded": 3.6000000000000085
+        },
+        {
+          "seed": 2022116045,
+          "totalError": -2.215576286305236,
+          "startError": 1.2152077923537075,
+          "remainingError": -3.430784078658945,
+          "remainingLeaderMeanSpeedReal": 17.88908765652952,
+          "remainingLeaderMeanSpeedSim": 19.05879442717697,
+          "within1Raw": 0.375,
+          "within2Raw": 0.8125,
+          "tailRaw": 2.6026244198300503,
+          "within1Rounded": 0.375,
+          "within2Rounded": 0.8125,
+          "tailRounded": 2.6000000000000085
+        }
+      ],
+      "median": {
+        "totalError": -2.215576286305236,
+        "startError": 1.1961985500609114,
+        "remainingError": -3.430784078658945,
+        "remainingLeaderMeanSpeedReal": 17.88908765652952,
+        "remainingLeaderMeanSpeedSim": 19.05879442717697,
+        "within1Raw": 0.5,
+        "within2Raw": 0.75,
+        "tailRaw": 3.0108166476033915,
+        "within1Rounded": 0.5,
+        "within2Rounded": 0.75,
+        "tailRounded": 3.1000000000000085
+      }
+    },
+    {
+      "id": "220605",
+      "length": 1600,
+      "state": "良",
+      "context": "external2022",
+      "real": {
+        "winnerTime": 92.3,
+        "first200": 12.2
+      },
+      "pairs": [
+        {
+          "seed": 2022200210,
+          "totalError": -5.4376840287600885,
+          "startError": 1.0713831186397975,
+          "remainingError": -6.50906714739989,
+          "remainingLeaderMeanSpeedReal": 17.478152309612984,
+          "remainingLeaderMeanSpeedSim": 19.024082801126436,
+          "within1Raw": 0.2222222222222222,
+          "within2Raw": 0.2222222222222222,
+          "tailRaw": 4.781550772788009,
+          "within1Rounded": 0.2222222222222222,
+          "within2Rounded": 0.2222222222222222,
+          "tailRounded": 4.699999999999989
+        },
+        {
+          "seed": 2022208129,
+          "totalError": -4.8530616552923505,
+          "startError": 1.0875636719542783,
+          "remainingError": -5.940625327246622,
+          "remainingLeaderMeanSpeedReal": 17.478152309612984,
+          "remainingLeaderMeanSpeedSim": 18.87826058644436,
+          "within1Raw": 0.4444444444444444,
+          "within2Raw": 0.5555555555555556,
+          "tailRaw": 4.581844375722696,
+          "within1Rounded": 0.4444444444444444,
+          "within2Rounded": 0.5555555555555556,
+          "tailRounded": 4.599999999999994
+        },
+        {
+          "seed": 2022216048,
+          "totalError": -5.164560515760712,
+          "startError": 1.168599194118153,
+          "remainingError": -6.333159709878856,
+          "remainingLeaderMeanSpeedReal": 17.478152309612984,
+          "remainingLeaderMeanSpeedSim": 18.97871719181509,
+          "within1Raw": 0.2222222222222222,
+          "within2Raw": 0.6111111111111112,
+          "tailRaw": 4.769061152671327,
+          "within1Rounded": 0.2222222222222222,
+          "within2Rounded": 0.6111111111111112,
+          "tailRounded": 4.800000000000011
+        }
+      ],
+      "median": {
+        "totalError": -5.164560515760712,
+        "startError": 1.0875636719542783,
+        "remainingError": -6.333159709878856,
+        "remainingLeaderMeanSpeedReal": 17.478152309612984,
+        "remainingLeaderMeanSpeedSim": 18.97871719181509,
+        "within1Raw": 0.2222222222222222,
+        "within2Raw": 0.5555555555555556,
+        "tailRaw": 4.769061152671327,
+        "within1Rounded": 0.2222222222222222,
+        "within2Rounded": 0.5555555555555556,
+        "tailRounded": 4.699999999999989
+      }
+    },
+    {
+      "id": "221030",
+      "length": 2000,
+      "state": "良",
+      "context": "external2022",
+      "real": {
+        "winnerTime": 117.5,
+        "first200": 12.6
+      },
+      "pairs": [
+        {
+          "seed": 2022300213,
+          "totalError": -5.303156210098905,
+          "startError": 1.1259668510663712,
+          "remainingError": -6.429123061165285,
+          "remainingLeaderMeanSpeedReal": 17.15919923736892,
+          "remainingLeaderMeanSpeedSim": 18.27951629920054,
+          "within1Raw": 0.26666666666666666,
+          "within2Raw": 0.3333333333333333,
+          "tailRaw": 8.583542977305825,
+          "within1Rounded": 0.26666666666666666,
+          "within2Rounded": 0.3333333333333333,
+          "tailRounded": 8.599999999999994
+        },
+        {
+          "seed": 2022308132,
+          "totalError": -5.874390655841836,
+          "startError": 1.0544245935984708,
+          "remainingError": -6.928815249440305,
+          "remainingLeaderMeanSpeedReal": 17.15919923736892,
+          "remainingLeaderMeanSpeedSim": 18.37274913621698,
+          "within1Raw": 0.06666666666666667,
+          "within2Raw": 0.26666666666666666,
+          "tailRaw": 6.518494996039408,
+          "within1Rounded": 0.06666666666666667,
+          "within2Rounded": 0.26666666666666666,
+          "tailRounded": 6.5
+        },
+        {
+          "seed": 2022316051,
+          "totalError": -7.189398577541766,
+          "startError": 0.9547017446827262,
+          "remainingError": -8.144100322224503,
+          "remainingLeaderMeanSpeedReal": 17.15919923736892,
+          "remainingLeaderMeanSpeedSim": 18.603516746725614,
+          "within1Raw": 0.06666666666666667,
+          "within2Raw": 0.06666666666666667,
+          "tailRaw": 8.33206529398447,
+          "within1Rounded": 0.06666666666666667,
+          "within2Rounded": 0.06666666666666667,
+          "tailRounded": 8.299999999999997
+        }
+      ],
+      "median": {
+        "totalError": -5.874390655841836,
+        "startError": 1.0544245935984708,
+        "remainingError": -6.928815249440305,
+        "remainingLeaderMeanSpeedReal": 17.15919923736892,
+        "remainingLeaderMeanSpeedSim": 18.37274913621698,
+        "within1Raw": 0.06666666666666667,
+        "within2Raw": 0.26666666666666666,
+        "tailRaw": 8.33206529398447,
+        "within1Rounded": 0.06666666666666667,
+        "within2Rounded": 0.26666666666666666,
+        "tailRounded": 8.299999999999997
+      }
+    },
+    {
+      "id": "221127",
+      "length": 2400,
+      "state": "良",
+      "context": "external2022",
+      "real": {
+        "winnerTime": 143.7,
+        "first200": 12.8
+      },
+      "pairs": [
+        {
+          "seed": 2022400216,
+          "totalError": -5.875349184559951,
+          "startError": 1.0685272822679295,
+          "remainingError": -6.943876466827874,
+          "remainingLeaderMeanSpeedReal": 16.806722689075634,
+          "remainingLeaderMeanSpeedSim": 17.74821555637995,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.1111111111111111,
+          "tailRaw": 10.704352105152225,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.1111111111111111,
+          "tailRounded": 10.699999999999989
+        },
+        {
+          "seed": 2022408135,
+          "totalError": -6.187941549289519,
+          "startError": 1.0388428591211927,
+          "remainingError": -7.226784408410708,
+          "remainingLeaderMeanSpeedReal": 16.806722689075634,
+          "remainingLeaderMeanSpeedSim": 17.788815383155743,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.16666666666666666,
+          "tailRaw": 9.027332755265775,
+          "within1Rounded": 0.1111111111111111,
+          "within2Rounded": 0.16666666666666666,
+          "tailRounded": 9
+        },
+        {
+          "seed": 2022416054,
+          "totalError": -4.0429902947765015,
+          "startError": 1.069545622548814,
+          "remainingError": -5.112535917325303,
+          "remainingLeaderMeanSpeedReal": 16.806722689075634,
+          "remainingLeaderMeanSpeedSim": 17.489819164762196,
+          "within1Raw": 0.2222222222222222,
+          "within2Raw": 0.2777777777777778,
+          "tailRaw": 6.888672123680408,
+          "within1Rounded": 0.2222222222222222,
+          "within2Rounded": 0.2777777777777778,
+          "tailRounded": 6.800000000000011
+        }
+      ],
+      "median": {
+        "totalError": -5.875349184559951,
+        "startError": 1.0685272822679295,
+        "remainingError": -6.943876466827874,
+        "remainingLeaderMeanSpeedReal": 16.806722689075634,
+        "remainingLeaderMeanSpeedSim": 17.74821555637995,
+        "within1Raw": 0.05555555555555555,
+        "within2Raw": 0.16666666666666666,
+        "tailRaw": 9.027332755265775,
+        "within1Rounded": 0.1111111111111111,
+        "within2Rounded": 0.16666666666666666,
+        "tailRounded": 9
+      }
+    },
+    {
+      "id": "221023",
+      "length": 3000,
+      "state": "良",
+      "context": "external2022",
+      "real": {
+        "winnerTime": 182.4,
+        "first200": 12.3
+      },
+      "pairs": [
+        {
+          "seed": 2022500219,
+          "totalError": -4.181484735209523,
+          "startError": 2.1165854562702027,
+          "remainingError": -6.298070191479724,
+          "remainingLeaderMeanSpeedReal": 16.46090534979424,
+          "remainingLeaderMeanSpeedSim": 17.0938157033505,
+          "within1Raw": 0.16666666666666666,
+          "within2Raw": 0.16666666666666666,
+          "tailRaw": 7.632512743307103,
+          "within1Rounded": 0.16666666666666666,
+          "within2Rounded": 0.16666666666666666,
+          "tailRounded": 7.700000000000017
+        },
+        {
+          "seed": 2022508138,
+          "totalError": -5.671381275561913,
+          "startError": 1.8245733335706689,
+          "remainingError": -7.495954609132582,
+          "remainingLeaderMeanSpeedReal": 16.46090534979424,
+          "remainingLeaderMeanSpeedSim": 17.219743784783233,
+          "within1Raw": 0.1111111111111111,
+          "within2Raw": 0.16666666666666666,
+          "tailRaw": 11.26426100619156,
+          "within1Rounded": 0.1111111111111111,
+          "within2Rounded": 0.16666666666666666,
+          "tailRounded": 11.300000000000011
+        },
+        {
+          "seed": 2022516057,
+          "totalError": -4.980556576275717,
+          "startError": 1.994226432074207,
+          "remainingError": -6.9747830083499025,
+          "remainingLeaderMeanSpeedReal": 16.46090534979424,
+          "remainingLeaderMeanSpeedSim": 17.164728125041048,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.05555555555555555,
+          "tailRaw": 11.35519597077979,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.05555555555555555,
+          "tailRounded": 11.400000000000006
+        }
+      ],
+      "median": {
+        "totalError": -4.980556576275717,
+        "startError": 1.994226432074207,
+        "remainingError": -6.9747830083499025,
+        "remainingLeaderMeanSpeedReal": 16.46090534979424,
+        "remainingLeaderMeanSpeedSim": 17.164728125041048,
+        "within1Raw": 0.1111111111111111,
+        "within2Raw": 0.16666666666666666,
+        "tailRaw": 11.26426100619156,
+        "within1Rounded": 0.1111111111111111,
+        "within2Rounded": 0.16666666666666666,
+        "tailRounded": 11.300000000000011
+      }
+    },
+    {
+      "id": "220501",
+      "length": 3200,
+      "state": "稍重",
+      "context": "external2022",
+      "real": {
+        "winnerTime": 196.2,
+        "first200": 12.7
+      },
+      "pairs": [
+        {
+          "seed": 2022600222,
+          "totalError": -1.9762031321260451,
+          "startError": 2.0639146952655345,
+          "remainingError": -4.040117827391583,
+          "remainingLeaderMeanSpeedReal": 16.348773841961854,
+          "remainingLeaderMeanSpeedSim": 16.716828093727013,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.05555555555555555,
+          "tailRaw": 10.460892747924106,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.05555555555555555,
+          "tailRounded": 10.5
+        },
+        {
+          "seed": 2022608141,
+          "totalError": -4.6204907956069405,
+          "startError": 1.715887107765571,
+          "remainingError": -6.336377903372522,
+          "remainingLeaderMeanSpeedReal": 16.348773841961854,
+          "remainingLeaderMeanSpeedSim": 16.933498900602512,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.05555555555555555,
+          "tailRaw": 13.418287601492864,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.05555555555555555,
+          "tailRounded": 13.400000000000006
+        },
+        {
+          "seed": 2022616060,
+          "totalError": -3.6148849050285605,
+          "startError": 1.7668197316012488,
+          "remainingError": -5.38170463662982,
+          "remainingLeaderMeanSpeedReal": 16.348773841961854,
+          "remainingLeaderMeanSpeedSim": 16.84273922496199,
+          "within1Raw": 0.05555555555555555,
+          "within2Raw": 0.05555555555555555,
+          "tailRaw": 15.984798336772315,
+          "within1Rounded": 0.05555555555555555,
+          "within2Rounded": 0.05555555555555555,
+          "tailRounded": 16
+        }
+      ],
+      "median": {
+        "totalError": -3.6148849050285605,
+        "startError": 1.7668197316012488,
+        "remainingError": -5.38170463662982,
+        "remainingLeaderMeanSpeedReal": 16.348773841961854,
+        "remainingLeaderMeanSpeedSim": 16.84273922496199,
+        "within1Raw": 0.05555555555555555,
+        "within2Raw": 0.05555555555555555,
+        "tailRaw": 13.418287601492864,
+        "within1Rounded": 0.05555555555555555,
+        "within2Rounded": 0.05555555555555555,
+        "tailRounded": 13.400000000000006
+      }
+    }
+  ],
+  "byDistance": [
+    {
+      "length": 1200,
+      "events": 4,
+      "totalError": {
+        "n": 4,
+        "median": -1.9365308365393261,
+        "p90": -1.5874853867734202,
+        "min": -2.662182284412694,
+        "max": -1.557485386773422
+      },
+      "startError": {
+        "n": 4,
+        "median": 1.2688231837323087,
+        "p90": 1.411347090902309,
+        "min": 1.1414478174037068,
+        "max": 1.4413039224017101
+      },
+      "remainingError": {
+        "n": 4,
+        "median": -3.209264361915359,
+        "p90": -2.777744645171775,
+        "min": -4.0923495300976,
+        "max": -2.687744645171776
+      },
+      "remainingLeaderMeanSpeedReal": {
+        "n": 4,
+        "median": 18.002514842757513,
+        "p90": 18.185237982101842,
+        "min": 17.761989342806395,
+        "max": 18.21493624772313
+      },
+      "remainingLeaderMeanSpeedSim": {
+        "n": 4,
+        "median": 19.152591536299663,
+        "p90": 19.1537740609964,
+        "min": 19.05879442717697,
+        "max": 19.154280857295003
+      },
+      "within1Raw": {
+        "n": 4,
+        "median": 0.3125,
+        "p90": 0.44375000000000003,
+        "min": 0.3125,
+        "max": 0.5
+      },
+      "within1Rounded": {
+        "n": 4,
+        "median": 0.3125,
+        "p90": 0.44375000000000003,
+        "min": 0.3125,
+        "max": 0.5
+      },
+      "within2Raw": {
+        "n": 4,
+        "median": 0.6875,
+        "p90": 0.73125,
+        "min": 0.6875,
+        "max": 0.75
+      },
+      "within2Rounded": {
+        "n": 4,
+        "median": 0.6875,
+        "p90": 0.73125,
+        "min": 0.6875,
+        "max": 0.75
+      },
+      "tailRaw": {
+        "n": 4,
+        "median": 3.180963274264755,
+        "p90": 3.1810709798113237,
+        "min": 3.0108166476033915,
+        "max": 3.1810709798113237
+      },
+      "tailRounded": {
+        "n": 4,
+        "median": 3.200000000000003,
+        "p90": 3.200000000000003,
+        "min": 3.1000000000000085,
+        "max": 3.200000000000003
+      }
+    },
+    {
+      "length": 1600,
+      "events": 4,
+      "totalError": {
+        "n": 4,
+        "median": -5.515108379728261,
+        "p90": -5.199265006183177,
+        "min": -6.5609305120779595,
+        "max": -5.164560515760712
+      },
+      "startError": {
+        "n": 4,
+        "median": 1.100102027359676,
+        "p90": 1.12965385186586,
+        "min": 0.6205027988456813,
+        "max": 1.13694533862334
+      },
+      "remainingError": {
+        "n": 4,
+        "median": -6.637772409142471,
+        "p90": -6.349799258127399,
+        "min": -7.181433310923637,
+        "max": -6.333159709878856
+      },
+      "remainingLeaderMeanSpeedReal": {
+        "n": 4,
+        "median": 17.467255705928686,
+        "p90": 17.586014962405304,
+        "min": 17.456359102244388,
+        "max": 17.632241813602015
+      },
+      "remainingLeaderMeanSpeedSim": {
+        "n": 4,
+        "median": 19.134694404426167,
+        "p90": 19.174527694408372,
+        "min": 18.97871719181509,
+        "max": 19.175094257857776
+      },
+      "within1Raw": {
+        "n": 4,
+        "median": 0.1111111111111111,
+        "p90": 0.18888888888888888,
+        "min": 0.05555555555555555,
+        "max": 0.2222222222222222
+      },
+      "within1Rounded": {
+        "n": 4,
+        "median": 0.1111111111111111,
+        "p90": 0.18888888888888888,
+        "min": 0.05555555555555555,
+        "max": 0.2222222222222222
+      },
+      "within2Raw": {
+        "n": 4,
+        "median": 0.3611111111111111,
+        "p90": 0.5055555555555556,
+        "min": 0.1111111111111111,
+        "max": 0.5555555555555556
+      },
+      "within2Rounded": {
+        "n": 4,
+        "median": 0.38888888888888884,
+        "p90": 0.5222222222222223,
+        "min": 0.1111111111111111,
+        "max": 0.5555555555555556
+      },
+      "tailRaw": {
+        "n": 4,
+        "median": 5.968288829317906,
+        "p90": 6.58315483424806,
+        "min": 4.769061152671327,
+        "max": 6.844357877325351
+      },
+      "tailRounded": {
+        "n": 4,
+        "median": 6,
+        "p90": 6.560000000000008,
+        "min": 4.699999999999989,
+        "max": 6.800000000000011
+      }
+    },
+    {
+      "length": 2000,
+      "events": 4,
+      "totalError": {
+        "n": 4,
+        "median": -5.563888718181175,
+        "p90": -3.865127111677844,
+        "min": -5.8992205217554385,
+        "max": -3.270158682173843
+      },
+      "startError": {
+        "n": 4,
+        "median": 1.095391391052023,
+        "p90": 1.215388794348597,
+        "min": 0.8637797776152123,
+        "max": 1.2492590539956065
+      },
+      "remainingError": {
+        "n": 4,
+        "median": -6.5229909037880205,
+        "p90": -4.990739215246695,
+        "min": -7.035578710261021,
+        "max": -4.507984639722821
+      },
+      "remainingLeaderMeanSpeedReal": {
+        "n": 4,
+        "median": 17.192039810072018,
+        "p90": 17.424273453353937,
+        "min": 16.9811320754717,
+        "max": 17.509727626459146
+      },
+      "remainingLeaderMeanSpeedSim": {
+        "n": 4,
+        "median": 18.304327114279452,
+        "p90": 18.354758233438297,
+        "min": 18.188354729323628,
+        "max": 18.37274913621698
+      },
+      "within1Raw": {
+        "n": 4,
+        "median": 0.14545454545454545,
+        "p90": 0.21,
+        "min": 0.06666666666666667,
+        "max": 0.21428571428571427
+      },
+      "within1Rounded": {
+        "n": 4,
+        "median": 0.14545454545454545,
+        "p90": 0.21,
+        "min": 0.06666666666666667,
+        "max": 0.21428571428571427
+      },
+      "within2Raw": {
+        "n": 4,
+        "median": 0.2761904761904762,
+        "p90": 0.34025974025974026,
+        "min": 0.2,
+        "max": 0.36363636363636365
+      },
+      "within2Rounded": {
+        "n": 4,
+        "median": 0.2761904761904762,
+        "p90": 0.4038961038961039,
+        "min": 0.2,
+        "max": 0.45454545454545453
+      },
+      "tailRaw": {
+        "n": 4,
+        "median": 6.188279025819796,
+        "p90": 7.719288773210042,
+        "min": 5.69796948302303,
+        "max": 8.33206529398447
+      },
+      "tailRounded": {
+        "n": 4,
+        "median": 6.199999999999996,
+        "p90": 7.6999999999999975,
+        "min": 5.700000000000003,
+        "max": 8.299999999999997
+      }
+    },
+    {
+      "length": 2400,
+      "events": 4,
+      "totalError": {
+        "n": 4,
+        "median": -5.101623592311498,
+        "p90": -2.5217573988113484,
+        "min": -7.649789948983937,
+        "max": -1.7476971411320505
+      },
+      "startError": {
+        "n": 4,
+        "median": 1.2106010432623657,
+        "p90": 1.4586182521965023,
+        "min": 1.0685272822679295,
+        "max": 1.561968575113161
+      },
+      "remainingError": {
+        "n": 4,
+        "median": -6.175601365785965,
+        "p90": -4.001124819395539,
+        "min": -8.853524536784377,
+        "max": -3.3984670571033178
+      },
+      "remainingLeaderMeanSpeedReal": {
+        "n": 4,
+        "median": 16.923888068007994,
+        "p90": 17.143566034082106,
+        "min": 16.566265060240962,
+        "max": 17.1875
+      },
+      "remainingLeaderMeanSpeedSim": {
+        "n": 4,
+        "median": 17.74890632239266,
+        "p90": 17.775091038797996,
+        "min": 17.65628357885639,
+        "max": 17.78601701753769
+      },
+      "within1Raw": {
+        "n": 4,
+        "median": 0.06349206349206349,
+        "p90": 0.10378151260504202,
+        "min": 0.05555555555555555,
+        "max": 0.11764705882352941
+      },
+      "within1Rounded": {
+        "n": 4,
+        "median": 0.09126984126984126,
+        "p90": 0.11568627450980393,
+        "min": 0.05555555555555555,
+        "max": 0.11764705882352941
+      },
+      "within2Raw": {
+        "n": 4,
+        "median": 0.16666666666666666,
+        "p90": 0.2558823529411765,
+        "min": 0.14285714285714285,
+        "max": 0.29411764705882354
+      },
+      "within2Rounded": {
+        "n": 4,
+        "median": 0.19047619047619047,
+        "p90": 0.2701680672268908,
+        "min": 0.16666666666666666,
+        "max": 0.29411764705882354
+      },
+      "tailRaw": {
+        "n": 4,
+        "median": 8.43760722448927,
+        "p90": 9.888829203167475,
+        "min": 7.021780477158529,
+        "max": 10.258041966553918
+      },
+      "tailRounded": {
+        "n": 4,
+        "median": 8.450000000000003,
+        "p90": 9.839999999999993,
+        "min": 7,
+        "max": 10.199999999999989
+      }
+    },
+    {
+      "length": 3000,
+      "events": 4,
+      "totalError": {
+        "n": 4,
+        "median": -5.647781258697762,
+        "p90": -4.741318975502051,
+        "min": -7.652755928800417,
+        "max": -4.63878857517048
+      },
+      "startError": {
+        "n": 4,
+        "median": 1.4628168439253146,
+        "p90": 1.8390968048748066,
+        "min": 1.1329150404877062,
+        "max": 1.994226432074207
+      },
+      "remainingError": {
+        "n": 4,
+        "median": -7.353382362453942,
+        "p90": -6.132627433465708,
+        "min": -9.129883603543306,
+        "max": -5.771703615658197
+      },
+      "remainingLeaderMeanSpeedReal": {
+        "n": 4,
+        "median": 16.407887543713617,
+        "p90": 16.452211209644698,
+        "min": 16.3265306122449,
+        "max": 16.46090534979424
+      },
+      "remainingLeaderMeanSpeedSim": {
+        "n": 4,
+        "median": 17.188849927250004,
+        "p90": 17.23507828336705,
+        "min": 16.956512368315746,
+        "max": 17.24455252075623
+      },
+      "within1Raw": {
+        "n": 4,
+        "median": 0.1111111111111111,
+        "p90": 0.15686274509803924,
+        "min": 0.1111111111111111,
+        "max": 0.17647058823529413
+      },
+      "within1Rounded": {
+        "n": 4,
+        "median": 0.1111111111111111,
+        "p90": 0.15686274509803924,
+        "min": 0.1111111111111111,
+        "max": 0.17647058823529413
+      },
+      "within2Raw": {
+        "n": 4,
+        "median": 0.16666666666666666,
+        "p90": 0.2147058823529412,
+        "min": 0.16666666666666666,
+        "max": 0.23529411764705882
+      },
+      "within2Rounded": {
+        "n": 4,
+        "median": 0.16666666666666666,
+        "p90": 0.2147058823529412,
+        "min": 0.16666666666666666,
+        "max": 0.23529411764705882
+      },
+      "tailRaw": {
+        "n": 4,
+        "median": 12.762767371817901,
+        "p90": 13.962206426517843,
+        "min": 11.26426100619156,
+        "max": 14.123447908792087
+      },
+      "tailRounded": {
+        "n": 4,
+        "median": 12.749999999999986,
+        "p90": 13.949999999999994,
+        "min": 11.300000000000011,
+        "max": 14.099999999999994
+      }
+    },
+    {
+      "length": 3200,
+      "events": 4,
+      "totalError": {
+        "n": 4,
+        "median": -3.192730460950699,
+        "p90": -1.9531376114216354,
+        "min": -3.842324035305751,
+        "max": -1.6028068662282635
+      },
+      "startError": {
+        "n": 4,
+        "median": 1.6063154689444161,
+        "p90": 1.999050630109177,
+        "min": 1.2595398079140576,
+        "max": 2.0985781580411462
+      },
+      "remainingError": {
+        "n": 4,
+        "median": -4.651544581341511,
+        "p90": -3.842588546105449,
+        "min": -5.38170463662982,
+        "max": -3.688887071809262
+      },
+      "remainingLeaderMeanSpeedReal": {
+        "n": 4,
+        "median": 16.44340566409008,
+        "p90": 16.563621190616875,
+        "min": 16.322089227421113,
+        "max": 16.574585635359117
+      },
+      "remainingLeaderMeanSpeedSim": {
+        "n": 4,
+        "median": 16.886439434235,
+        "p90": 17.017769874389536,
+        "min": 16.656384779522643,
+        "max": 17.05532568762447
+      },
+      "within1Raw": {
+        "n": 4,
+        "median": 0.15490196078431373,
+        "p90": 0.17647058823529413,
+        "min": 0.05555555555555555,
+        "max": 0.17647058823529413
+      },
+      "within1Rounded": {
+        "n": 4,
+        "median": 0.15490196078431373,
+        "p90": 0.17647058823529413,
+        "min": 0.05555555555555555,
+        "max": 0.17647058823529413
+      },
+      "within2Raw": {
+        "n": 4,
+        "median": 0.15490196078431373,
+        "p90": 0.17647058823529413,
+        "min": 0.05555555555555555,
+        "max": 0.17647058823529413
+      },
+      "within2Rounded": {
+        "n": 4,
+        "median": 0.15490196078431373,
+        "p90": 0.21764705882352942,
+        "min": 0.05555555555555555,
+        "max": 0.23529411764705882
+      },
+      "tailRaw": {
+        "n": 4,
+        "median": 10.125698798613527,
+        "p90": 12.45659943219203,
+        "min": 8.711241346771715,
+        "max": 13.418287601492864
+      },
+      "tailRounded": {
+        "n": 4,
+        "median": 10.100000000000009,
+        "p90": 12.44000000000001,
+        "min": 8.700000000000017,
+        "max": 13.400000000000006
+      }
+    }
+  ],
+  "primary": {
+    "events": 18,
+    "totalError": {
+      "n": 18,
+      "median": -4.483343287616762,
+      "p90": -1.6410818306098705,
+      "min": -7.652755928800417,
+      "max": -1.557485386773422
+    },
+    "startError": {
+      "n": 18,
+      "median": 1.2333632763599525,
+      "p90": 1.5025799448539592,
+      "min": 0.6205027988456813,
+      "max": 2.0985781580411462
+    },
+    "remainingError": {
+      "n": 18,
+      "median": -5.589514940201127,
+      "p90": -3.275250333523854,
+      "min": -9.129883603543306,
+      "max": -2.687744645171776
+    },
+    "remainingLeaderMeanSpeedReal": {
+      "n": 18,
+      "median": 17.114276723470176,
+      "p90": 17.86817514866013,
+      "min": 16.322089227421113,
+      "max": 18.21493624772313
+    },
+    "remainingLeaderMeanSpeedSim": {
+      "n": 18,
+      "median": 17.98718587343066,
+      "p90": 19.159958314014432,
+      "min": 16.656384779522643,
+      "max": 19.175094257857776
+    },
+    "within1Raw": {
+      "n": 18,
+      "median": 0.12549019607843137,
+      "p90": 0.3125,
+      "min": 0.05555555555555555,
+      "max": 0.3125
+    },
+    "within1Rounded": {
+      "n": 18,
+      "median": 0.12549019607843137,
+      "p90": 0.3125,
+      "min": 0.05555555555555555,
+      "max": 0.3125
+    },
+    "within2Raw": {
+      "n": 18,
+      "median": 0.21764705882352942,
+      "p90": 0.6875,
+      "min": 0.1111111111111111,
+      "max": 0.6875
+    },
+    "within2Rounded": {
+      "n": 18,
+      "median": 0.23529411764705882,
+      "p90": 0.6875,
+      "min": 0.1111111111111111,
+      "max": 0.6875
+    },
+    "tailRaw": {
+      "n": 18,
+      "median": 6.93306917724194,
+      "p90": 12.433483800060552,
+      "min": 3.1808555687181865,
+      "max": 14.123447908792087
+    },
+    "tailRounded": {
+      "n": 18,
+      "median": 6.900000000000006,
+      "p90": 12.409999999999984,
+      "min": 3.200000000000003,
+      "max": 14.099999999999994
+    }
+  },
+  "external2022": {
+    "events": 6,
+    "totalError": {
+      "n": 6,
+      "median": -5.0725585460182145,
+      "p90": -2.9152305956668982,
+      "min": -5.875349184559951,
+      "max": -2.215576286305236
+    },
+    "startError": {
+      "n": 6,
+      "median": 1.1418811110075948,
+      "p90": 1.8805230818377279,
+      "min": 1.0544245935984708,
+      "max": 1.994226432074207
+    },
+    "remainingError": {
+      "n": 6,
+      "median": -6.630987479659581,
+      "p90": -4.406244357644383,
+      "min": -6.9747830083499025,
+      "max": -3.430784078658945
+    },
+    "remainingLeaderMeanSpeedReal": {
+      "n": 6,
+      "median": 16.982960963222276,
+      "p90": 17.683619983071253,
+      "min": 16.348773841961854,
+      "max": 17.88908765652952
+    },
+    "remainingLeaderMeanSpeedSim": {
+      "n": 6,
+      "median": 18.060482346298464,
+      "p90": 19.018755809496028,
+      "min": 16.84273922496199,
+      "max": 19.05879442717697
+    },
+    "within1Raw": {
+      "n": 6,
+      "median": 0.08888888888888888,
+      "p90": 0.3611111111111111,
+      "min": 0.05555555555555555,
+      "max": 0.5
+    },
+    "within1Rounded": {
+      "n": 6,
+      "median": 0.1111111111111111,
+      "p90": 0.3611111111111111,
+      "min": 0.05555555555555555,
+      "max": 0.5
+    },
+    "within2Raw": {
+      "n": 6,
+      "median": 0.21666666666666667,
+      "p90": 0.6527777777777778,
+      "min": 0.05555555555555555,
+      "max": 0.75
+    },
+    "within2Rounded": {
+      "n": 6,
+      "median": 0.21666666666666667,
+      "p90": 0.6527777777777778,
+      "min": 0.05555555555555555,
+      "max": 0.75
+    },
+    "tailRaw": {
+      "n": 6,
+      "median": 8.679699024625123,
+      "p90": 12.341274303842212,
+      "min": 3.0108166476033915,
+      "max": 13.418287601492864
+    },
+    "tailRounded": {
+      "n": 6,
+      "median": 8.649999999999999,
+      "p90": 12.350000000000009,
+      "min": 3.1000000000000085,
+      "max": 13.400000000000006
+    }
+  },
+  "integrity": {
+    "complete": true,
+    "inputUnchanged": true,
+    "sourceUnchanged": true,
+    "allFinite": true
+  }
+}

@@ -1,0 +1,1010 @@
+{
+  "engineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "diagnosticHash": "4e8a17d86c24c1c92434226f0efb2b2cf3b1e54981a55bb409e9d06b75b2194f",
+  "inputs": [
+    {
+      "name": "system-reality-comparison-v2026.10.02.3.json",
+      "hash": "08d559f92c32ec0daab07951e04a0cb7b1c59ae413182bdc208641005828f609"
+    },
+    {
+      "name": "current-engine-reality-sources-2026-10-02.json",
+      "hash": "8ea32846bf7bd8a492aae503861718dd5bf587c2cfedbf7814b20acad8f991b9"
+    },
+    {
+      "name": "system-external-reference-2022.json",
+      "hash": "73e4f988080247509ef7167952a3827e7a9ac7f726fea8f0a2657adb8030f6c2"
+    },
+    {
+      "name": "tempo-system-v9.json",
+      "hash": "a0de7c55f9e631dca7b13d43400a2d7ed03932e1828ff429023f9bbb350ccd7d"
+    }
+  ],
+  "protocol": {
+    "races": 20,
+    "validationExecutions": 4,
+    "instrumentationProofs": [
+      {
+        "length": 1200,
+        "frames": 4220,
+        "allSerializedHorseFramesExact": true,
+        "resultsExact": true,
+        "frameDigest": "8016552ee8d73f5c528b2d9db331c01f6e38e4f05ec45f8bff9248753efaaf6e"
+      },
+      {
+        "length": 2400,
+        "frames": 9479,
+        "allSerializedHorseFramesExact": true,
+        "resultsExact": true,
+        "frameDigest": "884718ce3f83e315ad54ef079f3bcf113e284c949570b7c7a7ae59e51340b036"
+      }
+    ],
+    "distances": [
+      1200,
+      2400
+    ],
+    "requests": [
+      18,
+      30
+    ],
+    "variants": [
+      "original-unshielded",
+      "original-shielded",
+      "zero-air-upper-bound",
+      "reallocated17-unshielded",
+      "reallocated17-shielded"
+    ],
+    "referenceSpeed": 18,
+    "referenceTotal": 84.7908,
+    "reallocation": {
+      "airK": 0.0024716111111111115,
+      "resistanceK": 0.217211
+    },
+    "fixed": "One neutral70 horse, fixed reference lane, same delay/RNG/weight. No opponents, AI, hills or wind. All variants disable turn work and turn speed caps; geometry still supplies arc length.",
+    "scope": "Permanent full shielding is a counterfactual upper-benefit scenario, not an actual pack. Air removal is a numerical bound inside this plant. Reallocation holds total steady straight work only at18m/s; at other speeds total work differs. 17% is a rough study estimate, not measured for these horses or an accepted coefficient.",
+    "sourceMutation": "A single exact in-memory powerTerms marker exposes permanent shielding. Parameters changed only on separately compiled module objects. Production source and old reports are never rewritten."
+  },
+  "steadyShares": [
+    {
+      "speed": 15,
+      "ground": 56.25,
+      "air": 2.1937499999999996,
+      "total": 58.44375,
+      "airFraction": 0.037536092396535124,
+      "totalSavingWithDefaultShield": 0.010510105871029836
+    },
+    {
+      "speed": 17,
+      "ground": 72.25,
+      "air": 3.19345,
+      "total": 75.44345,
+      "airFraction": 0.042329055736448955,
+      "totalSavingWithDefaultShield": 0.011852135606205709
+    },
+    {
+      "speed": 18,
+      "ground": 81,
+      "air": 3.7907999999999995,
+      "total": 84.7908,
+      "airFraction": 0.04470768055024837,
+      "totalSavingWithDefaultShield": 0.012518150554069544
+    },
+    {
+      "speed": 19,
+      "ground": 90.25,
+      "air": 4.45835,
+      "total": 94.70835,
+      "airFraction": 0.04707451877263198,
+      "totalSavingWithDefaultShield": 0.013180865256336957
+    }
+  ],
+  "rows": [
+    {
+      "length": 1200,
+      "request": 18,
+      "variant": "original-unshielded",
+      "time": 70.3300733765191,
+      "final600": 34.1166080795161,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.7832747461481375,
+      "finalReserve": 0.006339323058962232,
+      "work": 5609.962322062822,
+      "frames": 4220,
+      "maxWorkError": 3.0740920919924974e-10,
+      "maxReserveError": 7.212008767965017e-12,
+      "maxUnpaid": 9.372017051312298e-14,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112159,
+        11.894385857260296
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 18,
+      "variant": "original-shielded",
+      "time": 69.9418296349915,
+      "final600": 33.72836433798851,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.39503100462054874,
+      "finalReserve": 0.010899828867542339,
+      "work": 5581.055094272678,
+      "frames": 4197,
+      "maxWorkError": 3.383320290595293e-10,
+      "maxReserveError": 3.183231456205249e-12,
+      "maxUnpaid": 9.710982018518166e-14,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112159,
+        11.506142115732708
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 18,
+      "variant": "zero-air-upper-bound",
+      "time": 69.54679863037097,
+      "final600": 33.333333333367975,
+      "first200": 13.990960728406266,
+      "last200Difference": 1.4210854715202004e-14,
+      "finalReserve": 0.046015664369327434,
+      "work": 5477.859809628657,
+      "frames": 4173,
+      "maxWorkError": 3.4287950256839395e-10,
+      "maxReserveError": 7.759126674500294e-12,
+      "maxUnpaid": 7.2402153716844e-14,
+      "parameters": {
+        "airK": 0,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112159,
+        11.111111111112173
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 18,
+      "variant": "reallocated17-unshielded",
+      "time": 70.25393092257353,
+      "final600": 34.04046562557053,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.7071322922025729,
+      "finalReserve": 0.006460955999904287,
+      "work": 5606.330169197699,
+      "frames": 4216,
+      "maxWorkError": 3.1877789297141135e-10,
+      "maxReserveError": 1.4694023775518872e-11,
+      "maxUnpaid": 1.8294046832956212e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112159,
+        11.818243403314732
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 18,
+      "variant": "reallocated17-shielded",
+      "time": 69.54679863037097,
+      "final600": 33.333333333367975,
+      "first200": 13.990960728406266,
+      "last200Difference": 1.4210854715202004e-14,
+      "finalReserve": 0.05521175856109705,
+      "work": 5455.4335249444575,
+      "frames": 4173,
+      "maxWorkError": 3.483364707790315e-10,
+      "maxReserveError": 8.128608897095546e-12,
+      "maxUnpaid": 1.0991554888484245e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112159,
+        11.111111111112173
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 30,
+      "variant": "original-unshielded",
+      "time": 70.39547595142805,
+      "final600": 35.08854641233586,
+      "first200": 13.700625063982322,
+      "last200Difference": 2.2469664591841862,
+      "finalReserve": 0.0013381028274572643,
+      "work": 5621.499987090933,
+      "frames": 4224,
+      "maxWorkError": 1.4551915228366852e-11,
+      "maxReserveError": 1.2590817277668975e-11,
+      "maxUnpaid": 1.1975663516405888e-13,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.700625063982322,
+        10.770374704021673,
+        10.8359297710882,
+        10.89991647090904,
+        10.970831741121316,
+        13.217798200305502
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 30,
+      "variant": "original-shielded",
+      "time": 69.84427403953096,
+      "final600": 34.54270992828672,
+      "first200": 13.700235205604178,
+      "last200Difference": 1.7332219719763486,
+      "finalReserve": 0.0022869109284360447,
+      "work": 5593.320229212979,
+      "frames": 4191,
+      "maxWorkError": 1.8189894035458565e-11,
+      "maxReserveError": 6.174616373755271e-12,
+      "maxUnpaid": 1.137041849563758e-13,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.700235205604178,
+        10.76861485776397,
+        10.832714047876092,
+        10.895245593159963,
+        10.957121181575204,
+        12.690343153551552
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 30,
+      "variant": "zero-air-upper-bound",
+      "time": 68.58868312010944,
+      "final600": 33.30091338804495,
+      "first200": 13.69923288332066,
+      "last200Difference": 0.5349344222555672,
+      "finalReserve": 0.009349306696609367,
+      "work": 5517.559798298754,
+      "frames": 4116,
+      "maxWorkError": 3.2741809263825417e-11,
+      "maxReserveError": 4.263256414560601e-12,
+      "maxUnpaid": 1.258732701403531e-13,
+      "parameters": {
+        "airK": 0,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.69923288332066,
+        10.764090341745908,
+        10.824446506997923,
+        10.88323678516388,
+        10.94137109031275,
+        11.476305512568317
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 30,
+      "variant": "reallocated17-unshielded",
+      "time": 70.34272503540403,
+      "final600": 35.03613593997111,
+      "first200": 13.700242937474027,
+      "last200Difference": 2.1841806982793415,
+      "finalReserve": 0.0012053327414917158,
+      "work": 5619.068942407128,
+      "frames": 4221,
+      "maxWorkError": 2.1373125491663814e-11,
+      "maxReserveError": 4.447997525858227e-12,
+      "maxUnpaid": 1.1893611095992185e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.700242937474027,
+        10.770188501816573,
+        10.83615765614232,
+        10.900473050926408,
+        10.97574109538268,
+        13.159921793662022
+      ]
+    },
+    {
+      "length": 1200,
+      "request": 30,
+      "variant": "reallocated17-shielded",
+      "time": 68.52834069486674,
+      "final600": 33.24212909783447,
+      "first200": 13.698761245467505,
+      "last200Difference": 0.4777438074941003,
+      "finalReserve": 0.009556454207321334,
+      "work": 5513.665660251064,
+      "frames": 4112,
+      "maxWorkError": 2.1373125491663814e-11,
+      "maxReserveError": 1.1482370609883219e-11,
+      "maxUnpaid": 1.1906101105019218e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.698761245467505,
+        10.763502545240943,
+        10.823947806323822,
+        10.88274923744575,
+        10.94081802644731,
+        11.41856183394141
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 18,
+      "variant": "original-unshielded",
+      "time": 157.96883107933786,
+      "final600": 44.02090650534009,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.011134262018259733,
+      "finalReserve": 0.000003408263852812112,
+      "work": 9850.38207405224,
+      "frames": 9479,
+      "maxWorkError": 3.115019353572279e-10,
+      "maxReserveError": 1.3016726585490801e-11,
+      "maxUnpaid": 1.8756507818509667e-13,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112152,
+        11.89438585726029,
+        14.33758609581686,
+        14.629571894579385,
+        14.65069320708244,
+        14.662452957656058,
+        14.673659642832888,
+        14.684793904851148
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 18,
+      "variant": "original-shielded",
+      "time": 156.95020599843843,
+      "final600": 43.8099233296567,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.011086685611076064,
+      "finalReserve": 0.0000035898254246979965,
+      "work": 9802.694087360147,
+      "frames": 9418,
+      "maxWorkError": 3.433342499192804e-10,
+      "maxReserveError": 1.1381284803491099e-11,
+      "maxUnpaid": 1.915361735708585e-13,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112152,
+        11.506142115732715,
+        14.067276329054408,
+        14.551093127164492,
+        14.58008357757133,
+        14.592150918875433,
+        14.603342862585095,
+        14.61442954819617
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 18,
+      "variant": "zero-air-upper-bound",
+      "time": 154.24496077174064,
+      "final600": 43.25300609508665,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.010984240903340492,
+      "finalReserve": 0.000004092653740347749,
+      "work": 9675.466049117287,
+      "frames": 9255,
+      "maxWorkError": 3.8107828004285693e-10,
+      "maxReserveError": 1.5094333769005708e-11,
+      "maxUnpaid": 1.6854383071490017e-13,
+      "parameters": {
+        "airK": 0,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112152,
+        11.11111111111218,
+        12.766128265788694,
+        14.287598706469211,
+        14.391429074025112,
+        14.406480170771133,
+        14.417770841706087,
+        14.428755082609428
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 18,
+      "variant": "reallocated17-unshielded",
+      "time": 156.6282607831959,
+      "final600": 43.37948152619488,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.0102994921901427,
+      "finalReserve": 0.0000031635297836025623,
+      "work": 9785.540911790547,
+      "frames": 9398,
+      "maxWorkError": 3.2014213502407074e-10,
+      "maxReserveError": 1.4694023775518872e-11,
+      "maxUnpaid": 2.7711315224518186e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112152,
+        11.818243403314739,
+        14.137694897051588,
+        14.418595563367475,
+        14.438557874008438,
+        14.449477582404725,
+        14.459852225800006,
+        14.470151717990149
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 18,
+      "variant": "reallocated17-shielded",
+      "time": 152.8356203796609,
+      "final600": 42.578248756042754,
+      "first200": 13.990960728406266,
+      "last200Difference": 0.010133387722476073,
+      "finalReserve": 0.0000038418266369956684,
+      "work": 9608.531013856697,
+      "frames": 9171,
+      "maxWorkError": 3.942659532185644e-10,
+      "maxReserveError": 2.527187660528174e-11,
+      "maxUnpaid": 2.0299225090107455e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.990960728406266,
+        11.111393361307377,
+        11.111111207289355,
+        11.111111111143643,
+        11.111111111112152,
+        11.11111111111218,
+        12.489126276840906,
+        14.053717493868191,
+        14.167729222538071,
+        14.182391754674782,
+        14.192861806822748,
+        14.202995194545224
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 30,
+      "variant": "original-unshielded",
+      "time": 158.27027110772872,
+      "final600": 44.021483060738106,
+      "first200": 13.700625063982322,
+      "last200Difference": 0.01112050568880818,
+      "finalReserve": 0.0000034069718059036303,
+      "work": 9860.291972217145,
+      "frames": 9497,
+      "maxWorkError": 3.183231456205249e-11,
+      "maxReserveError": 1.691556270055905e-11,
+      "maxUnpaid": 2.1676157426394747e-13,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.700625063982322,
+        10.770374704021673,
+        10.8359297710882,
+        10.89991647090904,
+        10.970831741121316,
+        13.217798200305502,
+        14.564158833686179,
+        14.637790741137039,
+        14.65136252073934,
+        14.662692524679798,
+        14.67383501518475,
+        14.684955520873558
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 30,
+      "variant": "original-shielded",
+      "time": 157.25099585145793,
+      "final600": 43.81052771094393,
+      "first200": 13.700235205604178,
+      "last200Difference": 0.011068233187842225,
+      "finalReserve": 0.000003588016518942015,
+      "work": 9812.42578812492,
+      "frames": 9436,
+      "maxWorkError": 3.001332515850663e-11,
+      "maxReserveError": 1.4197950107264212e-11,
+      "maxUnpaid": 2.122673994817992e-13,
+      "parameters": {
+        "airK": 0.00065,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.700235205604178,
+        10.76861485776397,
+        10.832714047876092,
+        10.895245593159963,
+        10.957121181575204,
+        12.690343153551567,
+        14.449241850581743,
+        14.565914543903688,
+        14.581037706497597,
+        14.592417489941553,
+        14.603520993907267,
+        14.61458922709511
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 30,
+      "variant": "zero-air-upper-bound",
+      "time": 154.54395923483764,
+      "final600": 43.25381009362968,
+      "first200": 13.699232883320654,
+      "last200Difference": 0.010941425994062115,
+      "finalReserve": 0.000004088001337880634,
+      "work": 9684.673799792676,
+      "frames": 9273,
+      "maxWorkError": 6.821210263296962e-11,
+      "maxReserveError": 1.6736542707285196e-11,
+      "maxUnpaid": 2.2031031322409936e-13,
+      "parameters": {
+        "airK": 0,
+        "resistanceK": 0.25,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.699232883320654,
+        10.764090341745913,
+        10.824446506997923,
+        10.88323678516388,
+        10.941371090312757,
+        11.476305512568324,
+        13.939779446897973,
+        14.366689559943055,
+        14.394997014257484,
+        14.406927192112207,
+        14.417970737761706,
+        14.428912163755768
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 30,
+      "variant": "reallocated17-unshielded",
+      "time": 156.95180616946323,
+      "final600": 43.38007142948845,
+      "first200": 13.700242937474027,
+      "last200Difference": 0.010284619268816186,
+      "finalReserve": 0.0000031621141374738176,
+      "work": 9796.78628012927,
+      "frames": 9418,
+      "maxWorkError": 4.1382008930668235e-11,
+      "maxReserveError": 9.164198913613752e-12,
+      "maxUnpaid": 2.1368831277038093e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.700242937474027,
+        10.770188501816573,
+        10.83615765614232,
+        10.900473050926408,
+        10.975741095382666,
+        13.159921793662022,
+        14.362967725301843,
+        14.42679890166626,
+        14.439243077602654,
+        14.449724278031681,
+        14.460031266093978,
+        14.470315885362794
+      ]
+    },
+    {
+      "length": 2400,
+      "request": 30,
+      "variant": "reallocated17-shielded",
+      "time": 153.16053453608035,
+      "final600": 42.57911680697927,
+      "first200": 13.698761245467505,
+      "last200Difference": 0.010084284090439155,
+      "finalReserve": 0.000003836302369071168,
+      "work": 9618.1568650967,
+      "frames": 9190,
+      "maxWorkError": 4.956746124662459e-11,
+      "maxReserveError": 1.5609949097217246e-11,
+      "maxUnpaid": 2.1231613952775072e-13,
+      "parameters": {
+        "airK": 0.0024716111111111115,
+        "resistanceK": 0.217211,
+        "turnCost": 0,
+        "curveLateral": 1000
+      },
+      "sectionals": [
+        13.698761245467505,
+        10.763502545240943,
+        10.823947806323822,
+        10.88274923744575,
+        10.940818026447317,
+        11.418561833941403,
+        13.736232473136496,
+        14.145015679572495,
+        14.171828881525343,
+        14.182885134553672,
+        14.19307369416758,
+        14.20315797825802
+      ]
+    }
+  ],
+  "paired": [
+    {
+      "length": 1200,
+      "request": 18,
+      "originalShieldTimeSaving": 0.3882437415275888,
+      "originalShieldFinal600Saving": 0.3882437415275888,
+      "originalShieldWorkSaving": 28.907227790144134,
+      "zeroAirTimeSavingUpperBound": 0.7832747461481233,
+      "reallocatedShieldTimeSaving": 0.7071322922025587,
+      "reallocatedUnshieldedTimeChange": -0.07614245394556463,
+      "originalFinishReserve": 0.006339323058962232,
+      "shieldFinishReserve": 0.010899828867542339
+    },
+    {
+      "length": 1200,
+      "request": 30,
+      "originalShieldTimeSaving": 0.5512019118970954,
+      "originalShieldFinal600Saving": 0.5458364840491399,
+      "originalShieldWorkSaving": 28.179757877954216,
+      "zeroAirTimeSavingUpperBound": 1.8067928313186172,
+      "reallocatedShieldTimeSaving": 1.8143843405372877,
+      "reallocatedUnshieldedTimeChange": -0.052750916024024264,
+      "originalFinishReserve": 0.0013381028274572643,
+      "shieldFinishReserve": 0.0022869109284360447
+    },
+    {
+      "length": 2400,
+      "request": 18,
+      "originalShieldTimeSaving": 1.018625080899426,
+      "originalShieldFinal600Saving": 0.21098317568339553,
+      "originalShieldWorkSaving": 47.687986692093546,
+      "zeroAirTimeSavingUpperBound": 3.723870307597224,
+      "reallocatedShieldTimeSaving": 3.7926404035350174,
+      "reallocatedUnshieldedTimeChange": -1.340570296141948,
+      "originalFinishReserve": 0.000003408263852812112,
+      "shieldFinishReserve": 0.0000035898254246979965
+    },
+    {
+      "length": 2400,
+      "request": 30,
+      "originalShieldTimeSaving": 1.019275256270788,
+      "originalShieldFinal600Saving": 0.21095534979417607,
+      "originalShieldWorkSaving": 47.86618409222501,
+      "zeroAirTimeSavingUpperBound": 3.726311872891074,
+      "reallocatedShieldTimeSaving": 3.791271633382877,
+      "reallocatedUnshieldedTimeChange": -1.3184649382654925,
+      "originalFinishReserve": 0.0000034069718059036303,
+      "shieldFinishReserve": 0.000003588016518942015
+    }
+  ],
+  "quantization": {
+    "rows": [
+      {
+        "length": 1200,
+        "replicate": 0,
+        "unroundedCv": 0.0034028980026870564,
+        "rounded01Cv": 0.003838771593090197
+      },
+      {
+        "length": 1200,
+        "replicate": 1,
+        "unroundedCv": 0.0027577978747621444,
+        "rounded01Cv": 0.004692509085791513
+      },
+      {
+        "length": 1600,
+        "replicate": 0,
+        "unroundedCv": 0.0023183892585343794,
+        "rounded01Cv": 0
+      },
+      {
+        "length": 1600,
+        "replicate": 1,
+        "unroundedCv": 0.0038255327920659245,
+        "rounded01Cv": 0.004290743093851246
+      },
+      {
+        "length": 2000,
+        "replicate": 0,
+        "unroundedCv": 0.006970559390146151,
+        "rounded01Cv": 0.007422696190252028
+      },
+      {
+        "length": 2000,
+        "replicate": 1,
+        "unroundedCv": 0.011171441073877164,
+        "rounded01Cv": 0.01055139686287879
+      },
+      {
+        "length": 2400,
+        "replicate": 0,
+        "unroundedCv": 0.003955269714164088,
+        "rounded01Cv": 0.004281150988777715
+      },
+      {
+        "length": 2400,
+        "replicate": 1,
+        "unroundedCv": 0.007988962418510569,
+        "rounded01Cv": 0.006948566451569209
+      },
+      {
+        "length": 3000,
+        "replicate": 0,
+        "unroundedCv": 0.015200334606045241,
+        "rounded01Cv": 0.01551594463751655
+      },
+      {
+        "length": 3000,
+        "replicate": 1,
+        "unroundedCv": 0.0033785210682472522,
+        "rounded01Cv": 0.0022408646833213027
+      },
+      {
+        "length": 3200,
+        "replicate": 0,
+        "unroundedCv": 0.005065853677260616,
+        "rounded01Cv": 0.0057648609537510505
+      },
+      {
+        "length": 3200,
+        "replicate": 1,
+        "unroundedCv": 0.0016388318213312555,
+        "rounded01Cv": 1.5053871520341102e-16
+      }
+    ],
+    "unroundedCv": {
+      "n": 12,
+      "median": 0.0038904012531150063,
+      "p90": 0.010853193208340505,
+      "min": 0.0016388318213312555,
+      "max": 0.015200334606045241
+    },
+    "rounded01Cv": {
+      "n": 12,
+      "median": 0.00449162608982138,
+      "p90": 0.010238526795616116,
+      "min": 0,
+      "max": 0.01551594463751655
+    }
+  },
+  "realByDistance": [
+    {
+      "length": 1200,
+      "events": 4,
+      "last200": {
+        "n": 4,
+        "median": 0.8500000000000005,
+        "p90": 1.0400000000000011,
+        "min": 0.7000000000000011,
+        "max": 1.1000000000000014
+      },
+      "positiveLast200": 4,
+      "post200Cv": {
+        "n": 4,
+        "median": 0.0600339604192356,
+        "p90": 0.0737843135680094,
+        "min": 0.027261620304363892,
+        "max": 0.07698742522056441
+      }
+    },
+    {
+      "length": 1600,
+      "events": 4,
+      "last200": {
+        "n": 4,
+        "median": 0.35000000000000053,
+        "p90": 0.47000000000000014,
+        "min": 0.20000000000000107,
+        "max": 0.5
+      },
+      "positiveLast200": 4,
+      "post200Cv": {
+        "n": 4,
+        "median": 0.028436985844325025,
+        "p90": 0.03283285046569018,
+        "min": 0.021306742507026265,
+        "max": 0.034280974326456874
+      }
+    },
+    {
+      "length": 2000,
+      "events": 4,
+      "last200": {
+        "n": 4,
+        "median": 0.29999999999999893,
+        "p90": 0.36999999999999994,
+        "min": 0.1999999999999993,
+        "max": 0.40000000000000036
+      },
+      "positiveLast200": 4,
+      "post200Cv": {
+        "n": 4,
+        "median": 0.03737245930394347,
+        "p90": 0.05161652743121695,
+        "min": 0.015865278628696567,
+        "max": 0.05381494602623268
+      }
+    },
+    {
+      "length": 2400,
+      "events": 4,
+      "last200": {
+        "n": 4,
+        "median": 0,
+        "p90": 0.2699999999999991,
+        "min": -0.7000000000000011,
+        "max": 0.29999999999999893
+      },
+      "positiveLast200": 2,
+      "post200Cv": {
+        "n": 4,
+        "median": 0.039630983255604574,
+        "p90": 0.053478690804683496,
+        "min": 0.035008369535012615,
+        "max": 0.059110246707199894
+      }
+    },
+    {
+      "length": 3000,
+      "events": 4,
+      "last200": {
+        "n": 4,
+        "median": 0.40000000000000036,
+        "p90": 0.6100000000000009,
+        "min": 0.29999999999999893,
+        "max": 0.7000000000000011
+      },
+      "positiveLast200": 4,
+      "post200Cv": {
+        "n": 4,
+        "median": 0.04514517572251959,
+        "p90": 0.04925560224814151,
+        "min": 0.030033400022567717,
+        "max": 0.05078241233047875
+      }
+    },
+    {
+      "length": 3200,
+      "events": 4,
+      "last200": {
+        "n": 4,
+        "median": 0.40000000000000036,
+        "p90": 1.1700000000000004,
+        "min": -0.10000000000000142,
+        "max": 1.5
+      },
+      "positiveLast200": 3,
+      "post200Cv": {
+        "n": 4,
+        "median": 0.042152617495301484,
+        "p90": 0.049690363183033034,
+        "min": 0.028654812110254006,
+        "max": 0.05228732873442421
+      }
+    }
+  ],
+  "integrity": {
+    "complete": true,
+    "instrumentationInverseExact": true,
+    "instrumentationPairedProofsPassed": true,
+    "allFinite": true,
+    "sourceUnchanged": true,
+    "inputsUnchanged": true,
+    "originalParametersUnchanged": true,
+    "maxWorkError": 3.942659532185644e-10,
+    "maxReserveError": 2.527187660528174e-11,
+    "maxUnpaid": 2.7711315224518186e-13
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "protocol": "Gzip lossless byte storage only; original execution source identities retained. Existing raw file is authoritative when present, else restore exact bytes from its archive.",
+  "archives": [
+    {
+      "rawFile": "docs/causal-controller-start-v10.json",
+      "archiveFile": "docs/causal-controller-start-v10.json.gz",
+      "rawBytes": 10531882,
+      "archiveBytes": 2208188,
+      "rawSha256": "1bc2b1890e075d3b790c2237f97894af60c408ad6d36198a75c0bacd32c0b66b",
+      "archiveSha256": "5c32e2be88c22b8d22c7a1225e1e29809ffcda066230c7bf3d74eac1706e71aa",
+      "productionEngineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+      "executionEngineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+      "exactBytesRoundTrip": true
+    },
+    {
+      "rawFile": "docs/causal-population-paths-v10.json",
+      "archiveFile": "docs/causal-population-paths-v10.json.gz",
+      "rawBytes": 3638977,
+      "archiveBytes": 557383,
+      "rawSha256": "06ba80ea55c1ca8600db05bd4c53e010890da733db63175fe070ffac8ba7fa67",
+      "archiveSha256": "45dae037ffacebb766eeff6ab89951b021813b2afd726660be62cbb2116aa823",
+      "productionEngineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+      "executionEngineHash": "3b837b46bf03ed86a19fdbe0ff83a03bb4fd2211ff9a4692b2f1a78e12f221ff",
+      "exactBytesRoundTrip": true
+    }
+  ],
+  "integrity": {
+    "complete": true,
+    "allExact": true
+  }
+}
