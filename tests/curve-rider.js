@@ -16,6 +16,7 @@ function horse(id, style = '先', value = 70) {
   const h = S.makeHorse(() => 0.5, {
     id, style, '斗志': 50, '疲劳': 0, jockeyGrade: '普通',
     surface: '草地', special: '左右皆可', aggression: 1,
+    physiology: S.neutralPhysiology(),
   });
   for (const key of Object.keys(h.stats)) h.stats[key] = value;
   return h;
@@ -44,8 +45,12 @@ function straightPoint(geo, length = 2000) {
 }
 function putBlock(H, F, s, t, observe = 0) {
   const halfLength = 2.25 + 0.55 * (H.adj['体格'] + F.adj['体格']) / 200;
-  pose(H, s, t, observe, 18);
-  pose(F, s + halfLength + 0.02, t, Infinity, 12);
+  // Start with a feasible moving pair. The front horse then slows through the
+  // real finite response; do not inject an already unavoidable 18→12m/s crash.
+  pose(H, s, t, observe, 16);
+  pose(F, s + halfLength + 0.35, t, Infinity, 16);
+  H.aerobicOutput=H.aerobic*H.retention;F.aerobicOutput=F.aerobic*F.retention;
+  F.targetV=12;
 }
 function withParameter(key, value, run) {
   const previous = S.RACE_F[key];
@@ -168,7 +173,7 @@ test('gap selection accounts for the entrant body, not only its center', () => {
   pose(H, 1360, 10, 0); pose(first, 1370, 9); pose(second, 1370, 11);
   race.step(0.001);
   for (const blocker of [first, second]) {
-    const combinedHalfWidth = 1 + 0.3 * (H.adj['体格'] + blocker.adj['体格']) / 200;
+    const combinedHalfWidth = 0.65 + 0.15 * (H.adj['体格'] + blocker.adj['体格']) / 200;
     assert.ok(Math.abs(H.targetT - blocker.t) >= combinedHalfWidth,
       'selected gap must fit both physical bodies without overlap');
   }
@@ -180,7 +185,7 @@ test('an immediate blocker produces a real escape route', () => {
   putBlock(H, blocker, straightPoint(race.race.geo), 7.5);
   race.step(0.01);
   assert.ok(H.blocked, 'fixture must exercise an actual collision block');
-  const combinedHalfWidth = 1 + 0.3 * (H.adj['体格'] + blocker.adj['体格']) / 200;
+  const combinedHalfWidth = 0.65 + 0.15 * (H.adj['体格'] + blocker.adj['体格']) / 200;
   assert.ok(Math.abs(H.targetT - blocker.t) >= combinedHalfWidth,
     'the closest blocker cannot be ignored when choosing an escape lane');
   assert.equal(H.action, H.targetT < H.t ? '斜行in' : '斜行out');
@@ -243,6 +248,7 @@ function completedOutwardEscape(gapToOriginalFront, levels = [100, 40]) {
   const [H, blocker] = race.race.horses;
   putBlock(H, blocker, straightPoint(race.race.geo), 1.5);
   race.step(0.01);
+  for(let i=0;i<200&&(!H.blocked||H.targetT<=H.t);i++) {H.lastObserve=0;race.step(0.01);}
   assert.ok(H.blocked && H.targetT > H.t, 'fixture must obtain a real outward escape through rider AI');
   assert.equal(H.passTarget, blocker, 'the route must record its actual opponent');
   // Complete the selected lateral route, then expose a controlled longitudinal

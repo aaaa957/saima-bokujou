@@ -125,6 +125,13 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
   <span class="seedbox">阵容种子 <input id="seedInput" type="number"> <button id="seedApply">应用</button></span>
 </header>
 
+<div id="raceFailure" class="card" role="alert" style="display:none;border-color:var(--red)">
+  <strong style="color:var(--red)">⚠ 比赛未完成，已停止推进</strong>
+  <p id="raceFailureMessage" style="white-space:pre-wrap;overflow-wrap:anywhere"></p>
+  <p class="note">本场未结算，注单和进度保留。可返回后重新开赛或重新观看。</p>
+  <button id="btnRaceFailureBack">返回赛前 / 赛程</button>
+</div>
+
 <!-- ============ 繁殖模拟 ============ -->
 <section id="breeding" class="screen">
   <div class="row" style="align-items:flex-start">
@@ -440,8 +447,8 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.10.02.2"></script>
-<script src="career-save.js?v=v2026.10.02.2"></script>
+<script src="sim.js?v=v2026.10.02.3"></script>
+<script src="career-save.js?v=v2026.10.02.3"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -453,11 +460,15 @@ const numColor = (i) => (NUM_DARK.includes(i % 8) ? '#111' : '#fff');
 /* ---------- 全局状态 ---------- */
 let seed = 186, field = [], staff = null, report = null, oddsMap = {};
 let playerId = null, race = null, rafId = 0, speedMult = 1, paused = false;
+// Page failures are kept outside the numerical engine. A failed race can never
+// enter settlement, even if a caller later changes its finished flag.
+const raceFailures = new WeakMap();
+let lastRaceFailure = null;
 /* 构建版本号：每次改动上线时手动递增。
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.10.02.2';
+const APP_VER = 'v2026.10.02.3';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -701,6 +712,39 @@ function showSetup() {
   if (rafId) cancelAnimationFrame(rafId);
   show('setup'); renderSetup();
 }
+function raceHasFailed(simulation = race) {
+  return !!(simulation && simulation.race && raceFailures.has(simulation.race));
+}
+function clearRaceFailureNotice() {
+  $('raceFailure').style.display = 'none';
+  $('btnPause').disabled = false;
+  $('btnSkip').disabled = false;
+}
+function handleRaceFailure(error, simulation = race) {
+  const failure = { error, message: error && error.message ? error.message : String(error),
+    race: simulation && simulation.race,
+    diagnostic: simulation && simulation.race && simulation.race.traffic && simulation.race.traffic.lastInfeasible };
+  if (failure.race) raceFailures.set(failure.race, failure);
+  lastRaceFailure = failure;
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = 0; paused = true; acc = 0; lastTs = 0;
+  $('btnPause').disabled = true;
+  $('btnSkip').disabled = true;
+  $('raceFailureMessage').textContent = failure.message;
+  $('raceFailure').style.display = 'block';
+  const banner = $('autotest');
+  if (banner && banner.style.display !== 'none') banner.textContent = '❌ 页面错误: ' + failure.message;
+  console.error(error);
+  return false;
+}
+function returnFromRaceFailure() {
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = 0;
+  if (mode === 'career' && career) {
+    career.watchInfo = null;
+    renderCareer(); show('career');
+  } else showSetup();
+}
 function startRace() {
   mode = 'single';
   const length = parseInt($('cfgLength').value, 10);
@@ -708,7 +752,9 @@ function startRace() {
   const fstate = $('cfgState').value;
   // 每场比赛重摇比赛随机数：同一阵容再赛也能有不同的出闸运气/缠斗
   raceCount++;
-  race = S.createRace(field, {
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = 0; race = null;
+  try { race = S.createRace(field, {
     length, surface, state: fstate,
     styleCoefs: $('cfgCoef').value,
     dir: singleRaceOptions().dir,
@@ -716,7 +762,8 @@ function startRace() {
     course: $('cfgCourse').value || '标准',
     wind: singleRaceOptions().wind,
     rng: S.mulberry32(((seed ^ 0x9e3779b9) + raceCount * 7919) >>> 0),
-  });
+  }); } catch (error) { return handleRaceFailure(error, null); }
+  clearRaceFailureNotice();
   paused = false; speedMult = 1; acc = 0; lastTs = 0; lastUiTs = 0; cam = null;
   $('btnPause').textContent = '⏸ 暂停';
   document.querySelectorAll('.speed').forEach((b) => b.classList.toggle('on', +b.dataset.v === 1));
@@ -726,6 +773,7 @@ function startRace() {
   rafId = requestAnimationFrame(loop);
 }
 function showResult() {
+  if (raceHasFailed() || !race || !race.race.finished) return false;
   if (rafId) cancelAnimationFrame(rafId);
   show('result');
   renderResult();
@@ -733,18 +781,29 @@ function showResult() {
 
 /* ---------- 比赛循环 ---------- */
 function loop(ts) {
-  if (state !== 'race') return;
+  if (state !== 'race' || raceHasFailed()) return;
   if (!paused && race && !race.race.finished) {
     if (!lastTs) lastTs = ts;
     acc += Math.min(0.25, (ts - lastTs) / 1000) * speedMult;
     lastTs = ts;
     const dt = 1 / 30;
     let steps = 0;
-    while (acc >= dt && steps < 300) { race.step(dt); acc -= dt; steps++; }
+    try {
+      while (acc >= dt && steps < 300 && !race.race.finished) { race.step(dt); acc -= dt; steps++; }
+    } catch (error) { handleRaceFailure(error); return; }
     if (race.race.finished) { showResult(); return; }
   } else { lastTs = ts; }
   renderRace(ts);
   rafId = requestAnimationFrame(loop);
+}
+function skipRace() {
+  if (!race || raceHasFailed()) return;
+  try {
+    let guard = 0;
+    while (!race.race.finished && guard++ < 300000) race.step(1 / 30);
+    if (!race.race.finished) throw new Error('比赛未能在模拟步数限制内完成');
+    showResult();
+  } catch (error) { handleRaceFailure(error); }
 }
 
 function fmtTime(t) {
@@ -802,10 +861,27 @@ function renderRace(ts) {
   const focusId = focus && focus.id;
   const geo = race.race.geo;
   const { R, B, S: St } = geo;
-  const trackWidth = S.TRACK_WIDTH, halfWidth = trackWidth / 2;
-  const miniScale = Math.min(150 / (St / 2 + R + halfWidth), 88 / (R + halfWidth));
-  const miniHalfW = (St / 2 + R + halfWidth) * miniScale;
-  const miniHalfH = (R + halfWidth) * miniScale;
+  const trackWidth = geo.width || S.TRACK_WIDTH, halfWidth = trackWidth / 2;
+  // Cache the same route geometry used by motion, including the starting chute.
+  if (geo.route && (!geo.miniOutline || geo.miniOutline.dir !== snap.dir)) {
+    const paths = geo.displaySegments.map((segment) => {
+      const from = segment.closed ? segment.from : segment.from - 40;
+      const count = Math.ceil((segment.to - from) / 5);
+      const lanePoints = (lane) => Array.from({ length: count + 1 }, (_, i) =>
+        S.trackPoint(from + (segment.to - from) * i / count, lane, geo, snap.dir));
+      return { ...segment, inner: lanePoints(0), outer: lanePoints(trackWidth) };
+    });
+    const points = paths.flatMap((p) => [...p.inner, ...p.outer]);
+    const xs = points.map((p) => p.x), ys = points.map((p) => p.y);
+    geo.miniOutline = { dir: snap.dir, paths, minX: Math.min(...xs), maxX: Math.max(...xs),
+      minY: Math.min(...ys), maxY: Math.max(...ys) };
+  }
+  const miniOutline = geo.route ? geo.miniOutline : null;
+  const miniWorldW = miniOutline ? miniOutline.maxX - miniOutline.minX : 2 * (St / 2 + R + halfWidth);
+  const miniWorldH = miniOutline ? miniOutline.maxY - miniOutline.minY : 2 * (R + halfWidth);
+  const miniScale = Math.min(300 / miniWorldW, 176 / miniWorldH);
+  const miniHalfW = miniWorldW / 2 * miniScale;
+  const miniHalfH = miniWorldH / 2 * miniScale;
   const miniPanel = { left: W - 18 - miniHalfW * 2, right: W - 10, top: -2, bottom: 26 + miniHalfH * 2 };
   const dir = snap.dir;
   const slopeG = snap.g;
@@ -831,7 +907,7 @@ function renderRace(ts) {
      马会贴在画布上边缘（曾取 15 → 带高 300px，外栏 y=-116 被裁掉）。
      anchor 是"镜头处跑道中点"落在画面的纵向比例；小地图可能覆盖马匹时，
      跑道会平滑下移，给马匹与标签留出空间。 */
-  const yScale = SNAP_VIEW.yScale;
+  const yScale = SNAP_VIEW.yScale * Math.min(1, S.TRACK_WIDTH / trackWidth);
   const camBehindOf = (b) => 120 + b * 50;             // 170 → 120（1.42 倍）
   const camAheadOf = (b) => 40 + b * 15;               // 55 → 40
   const targetBendF = Math.min(1, Math.max(0, (kSum / kN) * R));
@@ -1101,8 +1177,10 @@ function renderRace(ts) {
   const mmScale = miniScale, mmHalfW = miniHalfW, mmHalfH = miniHalfH;
   const mmCx = W - 14 - mmHalfW;
   const mmCy = 14 + mmHalfH;
-  const mmx = (x) => mmCx + x * mmScale;
-  const mmy = (y) => mmCy - y * mmScale;
+  const mapCenterX = miniOutline ? (miniOutline.minX + miniOutline.maxX) / 2 : 0;
+  const mapCenterY = miniOutline ? (miniOutline.minY + miniOutline.maxY) / 2 : 0;
+  const mmx = (x) => mmCx + (x - mapCenterX) * mmScale;
+  const mmy = (y) => mmCy - (y - mapCenterY) * mmScale;
   const outerR = R + halfWidth, innerR = R - halfWidth;
   // 体育场路径：半条直道长a、半圆半径b，直道接在半圆的顶部/底部。
   const stadiumPath = (a, b) => {
@@ -1114,24 +1192,48 @@ function renderRace(ts) {
     ctx.ellipse(mmx(-a), mmy(0), rx, ry, 0, Math.PI / 2, -Math.PI / 2); // 左端半圆
     ctx.closePath();
   };
+  const appendMiniPolygon = (points) => {
+    ctx.moveTo(mmx(points[0].x), mmy(points[0].y));
+    for (let i = 1; i < points.length; i++) ctx.lineTo(mmx(points[i].x), mmy(points[i].y));
+    ctx.closePath();
+  };
+  const routeOuterPath = () => {
+    ctx.beginPath();
+    miniOutline.paths.forEach((p) => appendMiniPolygon(p.closed ? p.outer : [...p.outer, ...p.inner.slice().reverse()]));
+  };
   ctx.fillStyle = 'rgba(10,26,18,0.9)';
   ctx.beginPath(); ctx.roundRect(mmCx - mmHalfW - 4, mmCy - mmHalfH - 16, mmHalfW * 2 + 8, mmHalfH * 2 + 28, 8); ctx.fill();
-  ctx.fillStyle = '#2f7f4a'; stadiumPath(St / 2, outerR); ctx.fill();
-  ctx.fillStyle = '#1d4a2e'; stadiumPath(St / 2, innerR); ctx.fill();
+  if (miniOutline) {
+    ctx.fillStyle = '#2f7f4a'; routeOuterPath(); ctx.fill();
+    ctx.fillStyle = '#1d4a2e'; ctx.beginPath();
+    miniOutline.paths.filter((p) => p.closed).forEach((p) => appendMiniPolygon(p.inner)); ctx.fill();
+    ctx.fillStyle = '#2f7f4a'; ctx.beginPath();
+    miniOutline.paths.filter((p) => !p.closed).forEach((p) => appendMiniPolygon([...p.outer, ...p.inner.slice().reverse()])); ctx.fill();
+  } else {
+    ctx.fillStyle = '#2f7f4a'; stadiumPath(St / 2, outerR); ctx.fill();
+    ctx.fillStyle = '#1d4a2e'; stadiumPath(St / 2, innerR); ctx.fill();
+  }
   // 代表点有固定像素半径，外沿留足这个半径，避免整块圆点或玩家光圈被裁成半圆。
   // 只对小地图符号位置做像素留边；主视图和比赛中的真实车道保持原坐标。
   ctx.font = '9px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.textAlign = 'center';
-  ctx.fillText('全体图', mmCx, mmy(outerR) - 4);
-  ctx.save(); stadiumPath(St / 2, outerR); ctx.clip();
+  ctx.fillText('全体图', mmCx, mmCy - mmHalfH - 4);
+  ctx.save();
+  if (miniOutline) {
+    // Symbol radii exceed a narrow chute's scale; allow them into the infield
+    // while keeping the complete glyph inside the map panel.
+    ctx.beginPath(); ctx.rect(mmCx - mmHalfW - 4, mmCy - mmHalfH - 4, mmHalfW * 2 + 8, mmHalfH * 2 + 8);
+  } else stadiumPath(St / 2, outerR);
+  ctx.clip();
   // 调试/测试用：暴露小地图真实几何
   cam.lastView.mini = { mmScale, mmCx, mmCy, ao: St / 2 + outerR, bo: outerR, ai: St / 2 + innerR, bi: innerR,
                         straight: St / 2, halfH: outerR, halfHIn: innerR,
-                        clipHalfH: outerR, clipStraight: St / 2, markers: [] };
+                        clipHalfH: outerR, clipStraight: St / 2, routeOutline: miniOutline,
+                        mapCenterX, mapCenterY, markers: [] };
   snap.horses.forEach((h) => {
     if (h.dnf) return;
     const dotR = h.id === focusId ? 3.5 : 2.5;
     const markerR = h.id === focusId ? 5.5 : dotR + 0.5;
-    const displayLane = Math.min(h.t, trackWidth - markerR / mmScale);
+    const displayLane = Math.min(h.t, trackWidth - markerR / mmScale - (miniOutline ? 0.5 : 0));
     const p = S.trackPoint(sClamp(h.s), displayLane, geo, dir);
     const dotX = mmx(p.x), dotY = mmy(p.y);
     cam.lastView.mini.markers.push({ id: h.id, x: dotX, y: dotY, r: dotR, markerR, actualLane: h.t, displayLane });
@@ -1201,6 +1303,7 @@ function renderRace(ts) {
 
 /* ---------- 赛后渲染 ---------- */
 function renderResult() {
+  if (raceHasFailed() || !race || !race.race.finished) return;
   const R = race.race;
   const winner = R.order[0];
   const banner = $('resultBanner');
@@ -1410,26 +1513,36 @@ function drawChart() {
 function runAutotest() {
   const banner = $('autotest');
   banner.style.display = 'block';
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = 0; race = null;
+  let testedRace = null;
   try {
     const out = [];
     for (let s = 1; s <= 3; s++) {
       const f = S.makeField(S.mulberry32(s * 7919), { n: 8 });
+      testedRace = null;
       const r = S.createRace(f, { length: 2000, course: '标准', rng: S.mulberry32(s * 104729) });
+      testedRace = r;
       let guard = 0;
       while (!r.race.finished && guard++ < 300000) r.step(1 / 30);
+      if (!r.race.finished || r.race.order.length !== f.length || r.race.dnf.length) throw new Error('自检比赛未全部完赛');
       out.push({ w: r.race.order[0] && r.race.order[0].name, t: r.race.winnerTime, fin: r.race.order.length, dnf: r.race.dnf.length });
     }
     banner.textContent = '✅ 引擎自检通过：3 场全部完赛 · 冠军用时 ' +
       out.map((o) => (o.t ? o.t.toFixed(1) + 's' : '?' )).join(' / ') +
       ' · 完赛数 ' + out.map((o) => o.fin).join('/') + ' · 中止 ' + out.map((o) => o.dnf).join('/');
     seed = 186; genField(seed);
+    testedRace = null;
     race = S.createRace(field, { length: 2000, course: '标准', styleCoefs: 'balanced', rng: S.mulberry32((seed ^ 0x9e3779b9) >>> 0) });
+    testedRace = race;
+    clearRaceFailureNotice();
     let g = 0;
     while (!race.race.finished && g++ < 300000) race.step(1 / 30);
+    if (!race.race.finished) throw new Error('自检展示比赛未完成');
     showResult();
   } catch (e) {
+    handleRaceFailure(e, testedRace);
     banner.textContent = '❌ 自检失败: ' + (e && e.message);
-    console.error(e);
   }
 }
 
@@ -1633,7 +1746,7 @@ function settleRaceBets(race, orderIds) {
   }
 }
 function completeCareerRace(raceCard, result) {
-  if (!result.finished) return null;
+  if (!result.finished || raceFailures.has(result)) return null;
   if (career.settledIds[raceCard.id]) return career.settledIds[raceCard.id];
   const b = career.weekBets[raceCard.id];
   const retireLines = S.applyRaceForm(career.roster, raceCard.field, result.order, career.weekNum,
@@ -1666,7 +1779,8 @@ function annotateIntel(raceId) {
 }
 function simulateRace(race) {
   const seedVal = race.rngSeed !== undefined ? race.rngSeed : (career.weekNum * 7919 + raceCount);
-  const sim = S.createRace(race.field, {
+  let sim = null;
+  try { sim = S.createRace(race.field, {
     length: race.dist, surface: race.surface, state: race.state, dir: race.dir, profile: race.profile,
     course: race.course || race.venue || '标准',
     styleCoefs: 'balanced',
@@ -1674,7 +1788,9 @@ function simulateRace(race) {
   });
   let g = 0;
   while (!sim.race.finished && g++ < 400000) sim.step(1 / 30);
+  if (!sim.race.finished) throw new Error('比赛未能在模拟步数限制内完成');
   return sim;
+  } catch (error) { handleRaceFailure(error, sim); return null; }
 }
 function watchAiRace(raceCard) {
   if (career.watchedIds[raceCard.id]) return;
@@ -1683,12 +1799,15 @@ function watchAiRace(raceCard) {
   career.watchInfo = { race: raceCard };
   mode = 'career';
   raceCount++;
-  race = S.createRace(raceCard.field, {
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = 0; race = null;
+  try { race = S.createRace(raceCard.field, {
     length: raceCard.dist, surface: raceCard.surface, state: raceCard.state, dir: raceCard.dir, profile: raceCard.profile,
     course: raceCard.course || raceCard.venue || '标准',
     styleCoefs: 'balanced',
     rng: S.mulberry32((raceCard.rngSeed || 0) >>> 0),
-  });
+  }); } catch (error) { return handleRaceFailure(error, null); }
+  clearRaceFailureNotice();
   paused = false; speedMult = 1; acc = 0; lastTs = 0; lastUiTs = 0; cam = null;
   $('btnPause').textContent = '⏸ 暂停';
   document.querySelectorAll('.speed').forEach((b) => b.classList.toggle('on', +b.dataset.v === 1));
@@ -1704,7 +1823,12 @@ function advanceWeek() {
   const intelLines = [];
   const retireLines = [];
   for (const r of career.aiRaces) {
-    const completed = career.settledIds[r.id] || completeCareerRace(r, simulateRace(r).race);
+    let completed = career.settledIds[r.id];
+    if (!completed) {
+      const simulated = simulateRace(r);
+      if (!simulated) return;
+      completed = completeCareerRace(r, simulated.race);
+    }
     if (!completed) return;
     retireLines.push(...completed.retireLines);
     results.push(completed.result);
@@ -2133,6 +2257,7 @@ $('btnApplyEditor').addEventListener('click', applyEditor);
 });
 $('seedApply').addEventListener('click', () => { const v = parseInt($('seedInput').value, 10); if (!isNaN(v)) genField(v); });
 $('btnPause').addEventListener('click', () => {
+  if (raceHasFailed()) return;
   paused = !paused;
   $('btnPause').textContent = paused ? '▶ 继续' : '⏸ 暂停';
   if (!paused) lastTs = 0;
@@ -2143,11 +2268,8 @@ document.querySelectorAll('.speed').forEach((b) => {
     document.querySelectorAll('.speed').forEach((x) => x.classList.toggle('on', x === b));
   });
 });
-$('btnSkip').addEventListener('click', () => {
-  let guard = 0;
-  while (!race.race.finished && guard++ < 300000) race.step(1 / 30);
-  showResult();
-});
+$('btnSkip').addEventListener('click', skipRace);
+$('btnRaceFailureBack').addEventListener('click', returnFromRaceFailure);
 $('btnDebug').addEventListener('click', () => {
   $('debugPanel').style.display = $('debugPanel').style.display === 'none' ? '' : 'none';
 });
@@ -2208,6 +2330,10 @@ $('btnBreed').addEventListener('click', doBreed);
 $('btnBreedMC').addEventListener('click', drawBreedChart);
 $('btnFoalEnter').addEventListener('click', enterFoalToRoster);
 window.addEventListener('error', (e) => {
+  if (state === 'race' && race && !race.race.finished) {
+    handleRaceFailure(e.error || new Error(e.message || '页面错误'));
+    return;
+  }
   const b = $('autotest');
   if (b && b.style.display !== 'none') { b.textContent = '❌ 页面错误: ' + (e.message || ''); b.style.display = 'block'; }
 });

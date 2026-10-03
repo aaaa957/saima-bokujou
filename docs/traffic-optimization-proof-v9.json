@@ -1,0 +1,40 @@
+{
+  "baselineHash": "ac9dc7f3f8d9a6bf001ad6aef979021b3e7d59a9c5d5cdf36dd7884182f99d84",
+  "engineHash": "3b837b46bf03ed86a19fdbe0ff83a03bb4fd2211ff9a4692b2f1a78e12f221ff",
+  "productionFileModified": false,
+  "headingGainRegression": {
+    "move": {
+      "s": 2439.442042261362,
+      "t": 20.743864823458715,
+      "v": 24.594258279073983
+    },
+    "frontMove": {
+      "s": 2445.5443668222056,
+      "t": 4.080691074253991,
+      "v": 24.624965896829963
+    },
+    "fullPhysicalSlack": 3.2879127108434987,
+    "response": 0.3648007523562794,
+    "responseFirst": 2.804661674146638,
+    "physical": 3.169462426502917,
+    "historicalFailedCandidateHash": "21e13ceddf9a041f295201d905ac8019dc85de5329584b21b8567b8892733a04",
+    "historicalFailedResponse": 10.688591442284851,
+    "historicalFailedPhysical": 11.05339219464113,
+    "cause": "Endpoint positive heading gain was used as a lower bound for the entire interval. The left endpoint earns zero heading change; the corrected bound includes zero."
+  },
+  "negativeCurvatureRegression": {
+    "curvature": -0.02,
+    "step": 0.5,
+    "bound": {
+      "minMetric": 0.9999490004166656,
+      "maxMetric": 1.000005166692707,
+      "maxCurvature": 0.020013276347617143,
+      "signedMin": -0.02001306181754792,
+      "signedMax": -0.019989690156392105
+    },
+    "negativeSignedPointChecks": 1001,
+    "negativeLaneChecks": 3003
+  },
+  "passed": true,
+  "scope": "Targeted certificate regressions plus a synthetic clockwise Hermite cell; this does not claim a measured course or exhaustive floating-point proof."
+}

@@ -13,6 +13,7 @@ function test(name, run) {
 function horse(id, extras = {}) {
   const h = S.makeHorse(() => 0.5, { id, name: id, style: '先', '斗志': 50, '疲劳': 0,
     jockeyGrade: '优秀', surface: '草地', special: '左右皆可',
+    physiology: S.neutralPhysiology(),
     behavior: { forwardness: 0.5, settle: 0.7, tractability: 0.8 },
     racePlan: { position: 0.5, risk: 0.5, patience: 0.7 } });
   for (const key of Object.keys(h.stats)) h.stats[key] = 70;
@@ -124,7 +125,7 @@ test('independent race plans influence a nearby positioning opportunity', () => 
 test('drafting does not trap a horse behind an uneconomically slow nearby pace', () => {
   function command(frontPace) {
     const r = race([horse('a'), horse('front')], { length: 3200 }), [H, F] = r.race.horses;
-    setRunner(H, 500, 3, 16); setRunner(F, 508, 3, frontPace);
+    setRunner(H, 500, 3, 16); setRunner(F, 509, 3, frontPace);
     F.control = { targetV: frontPace, targetT: 3 }; r.race.t = 30;
     r.step(1 / 30);
     return H;
@@ -174,8 +175,8 @@ test('an attack can be withdrawn and launched again after the estimated situatio
 test('a closed passing corridor makes the rider wait rather than request a body crossing', () => {
   const r = race([horse('a'), horse('front'), horse('inside'), horse('outside')]);
   const [H, F, I, O] = r.race.horses;
-  setRunner(H, 1820, 10, 17); setRunner(F, 1824, 10, 12);
-  setRunner(I, 1820, 8.5, 17); setRunner(O, 1820, 11.5, 17);
+  setRunner(H, 1820, 10, 12); setRunner(F, 1824, 10, 12);
+  setRunner(I, 1820, 8.5, 12); setRunner(O, 1820, 11.5, 12);
   for (const other of [F, I, O]) other.control = { targetV: other.v, targetT: other.t };
   r.race.t = 95; r.step(1 / 30);
   assert.equal(H.attacking, false);
@@ -186,7 +187,7 @@ test('a closed passing corridor makes the rider wait rather than request a body 
 
 test('a rider can pass a slower nearby horse through an open corridor', () => {
   const r = race([horse('a'), horse('front')]), [H, F] = r.race.horses;
-  setRunner(H, 500, 10, 17); setRunner(F, 505, 10, 12);
+  setRunner(H, 500, 10, 14); setRunner(F, 505, 10, 14);
   F.control = { targetV: 12, targetT: 10 }; r.race.t = 30;
   let passedFront = false;
   for (let i = 0; i < 450 && !r.race.finished; i++) {

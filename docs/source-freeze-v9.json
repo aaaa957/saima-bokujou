@@ -1,0 +1,12 @@
+{
+  "headingOnlyHash": "ac9dc7f3f8d9a6bf001ad6aef979021b3e7d59a9c5d5cdf36dd7884182f99d84",
+  "headingOnlyArtifact": "docs/system-heading-source-ac9dc7-v9.js.gz",
+  "numericEngineHash": "3b837b46bf03ed86a19fdbe0ff83a03bb4fd2211ff9a4692b2f1a78e12f221ff",
+  "numericArtifact": "docs/system-numeric-source-3b837b-v9.js.gz",
+  "currentEngineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "performanceProposalHash": "06abcbd557f868584ee2ce7a27357b4affeacaa9b7c0dccdfb06235c49765e90",
+  "solverPrecision": "Original 28 speed bisections retained",
+  "changes": "Repair continuous atan2 branch selection; adopt independently reviewed conservative traffic certificates and exact caches; retain two lifecycle entry repairs; gate only final telemetry assignments while preserving original query and cache execution.",
+  "lifecycleBeforeTelemetryHash": "96d84a28b585a61e48a05cc3e6dd52d6796245a82b19d99abeeba9b9e1efafdb",
+  "telemetryRepair": "Keep original outer predicate and both followingSlack query calls unchanged. Gate only two min telemetry writes with original axisOverlap boundary convention; full paired query/cache sequence audit. Raw270 retained under3b, separately audited one complete boundary race."
+}

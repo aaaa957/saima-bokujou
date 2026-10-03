@@ -1,0 +1,435 @@
+{
+  "engineHash": "96d84a28b585a61e48a05cc3e6dd52d6796245a82b19d99abeeba9b9e1efafdb",
+  "sourceUnchangedDuringRun": true,
+  "method": "Every public step 1/60s; body and trapezoid observations use un-clipped internal deltaS at finish; generated fields/race streams separate.",
+  "geometryWidth": "JRA A-course lower-width proxies; 20m abstract course. Single-row gate pitch >=0.95m.",
+  "bodyEnvelope": "Width 0.65+0.15*size/100 m is a kinematic proxy bounded by manufacturer 0.95m starting-stall clear width, not measured horse shoulder width. Independent clearance 0.10m lateral and 0.20m longitudinal.",
+  "sources": [
+    "https://www.tekide.com/fr/boites-de-depart/93-boites-de-depart.html",
+    "https://simtrack.com.au/starting-gates/"
+  ],
+  "mechanisms": [
+    {
+      "name": "simultaneous-opposing-lateral",
+      "denied": [
+        "h1",
+        "h2"
+      ],
+      "speeds": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "cut-in-with-insufficient-stopping-reserve",
+      "denied": "h1",
+      "speed": 19.98264563165844
+    },
+    {
+      "name": "safe-cut-in-remains-available",
+      "lateral": -0.013333333333333197
+    },
+    {
+      "name": "front-braking-and-follower-response",
+      "minAcceleration": -3.500000000000014,
+      "minBodyGap": 3.574947206303781
+    },
+    {
+      "name": "invalid-injected-overlap-is-explicit",
+      "diagnostic": {
+        "time": 0,
+        "reason": "步前身体已重叠，不能通过清零速度掩盖",
+        "horse": "h1",
+        "other": "h2",
+        "before": {
+          "s": 100,
+          "t": 3,
+          "v": 18,
+          "stamina": 2273.041078471695,
+          "guts": 4002.327866474166
+        },
+        "otherBefore": {
+          "s": 100,
+          "t": 3,
+          "v": 18,
+          "stamina": 2396.0158261562465,
+          "guts": 4239.511271607131
+        }
+      }
+    },
+    {
+      "name": "invalid-injected-stopping-state-is-explicit",
+      "diagnostic": {
+        "time": 0,
+        "reason": "既有跟车间距不满足有限制动可行域",
+        "horse": "h1",
+        "other": "h2",
+        "before": {
+          "s": 100,
+          "t": 3,
+          "v": 20,
+          "stamina": 2273.041078471695,
+          "guts": 4002.327866474166
+        },
+        "otherBefore": {
+          "s": 104,
+          "t": 3,
+          "v": 10,
+          "stamina": 2396.0158261562465,
+          "guts": 4239.511271607131
+        },
+        "minV": 19.941666666666666,
+        "minimumSlack": -41.70398027750708,
+        "proposal": {
+          "s": 100.33284722222223,
+          "t": 3,
+          "v": 19.941666666666666,
+          "a": -3.500000000000014,
+          "travelV": 19.97083333333333,
+          "lateral": 0,
+          "aerobic": 21.892578103945443,
+          "activeFraction": 1
+        },
+        "frontProposal": {
+          "s": 104.16711291989664,
+          "t": 3,
+          "v": 10.0535503875969,
+          "a": 3.2130232558139937,
+          "travelV": 10.02677519379845,
+          "lateral": 0,
+          "aerobic": 22.363615977263375,
+          "activeFraction": 1
+        }
+      }
+    },
+    {
+      "name": "legal-rail-edge-corrects-by-bounded-steering",
+      "deltaT": 0.013333333333333308
+    },
+    {
+      "name": "invalid-rail-state-is-explicit"
+    },
+    {
+      "name": "small-to-large-and-irregular-public-step",
+      "intervals": [
+        0.01,
+        0.03333333333333333,
+        0.008333333333333333,
+        0.031,
+        0.007,
+        0.05,
+        0.004166666666666667,
+        0.022
+      ],
+      "minimumAcceleration": -0.7090001134162804,
+      "minimumSlack": 0.2893946666461682
+    },
+    {
+      "name": "physically-feasible-short-headway-restores-response-margin",
+      "recoverySteps": 7,
+      "minimumAcceleration": -3.500000000000014,
+      "minimumPhysicalSlack": 0.1649999999999432
+    },
+    {
+      "name": "bend-interior-closest-approach-rejects-coarse-grid-false-safety",
+      "diagnostic": {
+        "time": 0,
+        "reason": "既有跟车间距不满足有限制动可行域",
+        "horse": "h1",
+        "other": "h2",
+        "before": {
+          "s": 457.25867822,
+          "t": 17,
+          "v": 19,
+          "stamina": 2273.041078471695,
+          "guts": 4002.327866474166
+        },
+        "otherBefore": {
+          "s": 460.30315678,
+          "t": 17,
+          "v": 19.5,
+          "stamina": 2396.0158261562465,
+          "guts": 4239.511271607131
+        },
+        "minV": 18.941666666666666,
+        "minimumSlack": -0.34886253858399735,
+        "proposal": {
+          "s": 457.57530142345496,
+          "t": 17,
+          "v": 18.99478441460103,
+          "a": -0.3129351239383027,
+          "travelV": 18.997392207300514,
+          "lateral": 0,
+          "aerobic": 21.892578103945443,
+          "activeFraction": 1
+        },
+        "frontProposal": {
+          "s": 460.58816859667553,
+          "t": 17,
+          "v": 19.490844579306444,
+          "a": -0.5493252416133743,
+          "travelV": 19.49542228965322,
+          "lateral": 0,
+          "aerobic": 22.363615977263375,
+          "activeFraction": 1
+        }
+      }
+    },
+    {
+      "name": "partial-gate-reaction-uses-one-active-vector-duration",
+      "activeDt": 0.008333333333333333,
+      "physicalArc": 0.00016012765627237968,
+      "lateral": 0.000009625000000124118,
+      "vectorError": 5.0358453301466155e-14
+    }
+  ],
+  "races": [
+    {
+      "seed": 3198315393,
+      "raceSeed": 546640440,
+      "n": 16,
+      "length": 1200,
+      "course": "标准",
+      "equal": false,
+      "label": "previous-healthy-pathology",
+      "steps": 4360,
+      "winnerTime": 67.85109948767254,
+      "lastTime": 72.65609938349344,
+      "minAcceleration": -1.2500851494929321,
+      "maxAcceleration": 4.658088789831613,
+      "minBodyGap": 0.4759758637003979,
+      "maxLateralSpeed": 0.8000000000000185,
+      "maxKinematicError": 3.185229857649574e-13,
+      "maxWorkError": 2.5011104298755527e-11,
+      "maxReserveError": 4.547473508864641e-13,
+      "maxUnpaid": 1.3279741889471453e-13,
+      "traffic": {
+        "steps": 4360,
+        "syncLateralDenied": 4297,
+        "brakingSteps": 1782,
+        "marginRecoverySteps": 0,
+        "infeasibleSteps": 0,
+        "minAcceleration": -1.2500851494929321,
+        "minFollowingSlack": 0.27513989907230263,
+        "minResponseSlack": 3.59989815734707e-13,
+        "lastInfeasible": null
+      },
+      "finishTimes": [
+        67.85109948767254,
+        69.87874472198558,
+        69.91156313470535,
+        68.4389269161035,
+        69.95993621533538,
+        70.02373112032863,
+        71.13269469707997,
+        69.53498135971513,
+        70.84440070255205,
+        70.6438312516864,
+        72.65609938349344,
+        71.28052943642523,
+        68.82732116519753,
+        71.31339022992906,
+        69.95952416269168,
+        71.04438006037775
+      ]
+    },
+    {
+      "seed": 3198943767,
+      "raceSeed": 547060654,
+      "n": 16,
+      "length": 1200,
+      "course": "标准",
+      "equal": true,
+      "label": "previous-equal-pathology",
+      "steps": 4505,
+      "winnerTime": 69.92936884508276,
+      "lastTime": 75.08221256824082,
+      "minAcceleration": -1.1497478076048395,
+      "maxAcceleration": 4.619534252093343,
+      "minBodyGap": 0.4539895313964646,
+      "maxLateralSpeed": 0.8000000000000185,
+      "maxKinematicError": 3.211875210240578e-13,
+      "maxWorkError": 3.228706191293895e-11,
+      "maxReserveError": 4.547473508864641e-13,
+      "maxUnpaid": 1.3500832396484697e-13,
+      "traffic": {
+        "steps": 4505,
+        "syncLateralDenied": 4463,
+        "brakingSteps": 2227,
+        "marginRecoverySteps": 0,
+        "infeasibleSteps": 0,
+        "minAcceleration": -1.1497478076048395,
+        "minFollowingSlack": 0.25024171147251995,
+        "minResponseSlack": 1.4134249326502868e-12,
+        "lastInfeasible": null
+      },
+      "finishTimes": [
+        69.92936884508276,
+        74.9128840677883,
+        74.35118507912277,
+        72.59309202465153,
+        71.32642861367404,
+        73.45094756036906,
+        72.3847987879883,
+        70.48530508120697,
+        73.26090425046358,
+        73.32578901272997,
+        70.48507981069201,
+        72.76930657117147,
+        72.54948486590827,
+        71.06953930072252,
+        72.34876358490966,
+        75.08221256824082
+      ]
+    },
+    {
+      "seed": 50289,
+      "raceSeed": 2654453197,
+      "n": 8,
+      "length": 2000,
+      "course": "标准",
+      "native": true,
+      "label": "page-native-temporary-closing-at-bend",
+      "steps": 7826,
+      "winnerTime": 123.03775609967734,
+      "lastTime": 130.41743610256455,
+      "minAcceleration": -1.0754940800322288,
+      "maxAcceleration": 4.582637556798536,
+      "minBodyGap": 0.45950865554992415,
+      "maxLateralSpeed": 0.8000000000000185,
+      "maxKinematicError": 5.800915303666443e-13,
+      "maxWorkError": 6.502887117676437e-11,
+      "maxReserveError": 4.547473508864641e-13,
+      "maxUnpaid": 2.31941202355479e-13,
+      "traffic": {
+        "steps": 7826,
+        "syncLateralDenied": 1368,
+        "brakingSteps": 520,
+        "marginRecoverySteps": 0,
+        "infeasibleSteps": 0,
+        "minAcceleration": -1.0754940800322288,
+        "minFollowingSlack": 0.2602610430772021,
+        "minResponseSlack": 6.394884621840902e-13,
+        "lastInfeasible": null
+      },
+      "finishTimes": [
+        126.18868245360719,
+        123.35104563394445,
+        129.27335985704676,
+        124.9829474366333,
+        128.53992694286606,
+        130.41743610256455,
+        123.03775609967734,
+        123.10615199854597
+      ]
+    },
+    {
+      "seed": 3198001206,
+      "raceSeed": 548067727,
+      "n": 16,
+      "length": 3200,
+      "course": "标准",
+      "equal": false,
+      "label": "matrix-healthy-braking-trajectory",
+      "steps": 12971,
+      "winnerTime": 205.98937608393678,
+      "lastTime": 216.17091592378654,
+      "minAcceleration": -3.500000000000014,
+      "maxAcceleration": 4.6388499310614275,
+      "minBodyGap": 0.43095148477994627,
+      "maxLateralSpeed": 0.8000000000000185,
+      "maxKinematicError": 5.827005544745134e-13,
+      "maxWorkError": 1.1823431123048067e-10,
+      "maxReserveError": 4.547473508864641e-13,
+      "maxUnpaid": 3.8651547240586837e-13,
+      "traffic": {
+        "steps": 12971,
+        "syncLateralDenied": 3155,
+        "brakingSteps": 5030,
+        "marginRecoverySteps": 1,
+        "infeasibleSteps": 0,
+        "minAcceleration": -3.500000000000014,
+        "minFollowingSlack": 0.22836261751818077,
+        "minResponseSlack": 1.759703494030873e-14,
+        "lastInfeasible": null
+      },
+      "finishTimes": [
+        212.74852510140425,
+        209.4383962426325,
+        205.98937608393678,
+        207.8882742550575,
+        209.8842377037778,
+        210.88917096157547,
+        212.2118821078623,
+        216.17091592378654,
+        208.98315692376457,
+        211.95666317194625,
+        210.71116328535388,
+        208.251801948875,
+        208.3094012582124,
+        211.1046872784356,
+        215.4591319531807,
+        210.8223869630173
+      ]
+    },
+    {
+      "seed": 3214042812,
+      "raceSeed": 564469509,
+      "n": 16,
+      "length": 2400,
+      "course": "東京芝A",
+      "nativeOfficial": true,
+      "label": "matrix-native-official-braking-trajectory",
+      "steps": 9485,
+      "winnerTime": 149.00668152832446,
+      "lastTime": 158.07417884011224,
+      "minAcceleration": -1.0790996959767085,
+      "maxAcceleration": 4.6103175637463485,
+      "minBodyGap": 0.467672317937625,
+      "maxLateralSpeed": 0.8000000000000185,
+      "maxKinematicError": 9.815260826329109e-10,
+      "maxWorkError": 6.821210263296962e-11,
+      "maxReserveError": 4.547473508864641e-13,
+      "maxUnpaid": 2.916725021229194e-13,
+      "traffic": {
+        "steps": 9485,
+        "syncLateralDenied": 3599,
+        "brakingSteps": 3547,
+        "marginRecoverySteps": 0,
+        "infeasibleSteps": 0,
+        "minAcceleration": -1.0790996959767085,
+        "minFollowingSlack": 0.24409536085589956,
+        "minResponseSlack": 2.8860247525130944e-13,
+        "lastInfeasible": null
+      },
+      "finishTimes": [
+        154.75603850217814,
+        152.33296752453197,
+        151.93164313293929,
+        153.70782132287576,
+        158.02222088161315,
+        153.35706516127985,
+        149.00668152832446,
+        155.58645960674951,
+        153.63943488553278,
+        151.53055281219275,
+        155.71338517209688,
+        158.07417884011224,
+        156.10815008559962,
+        151.7240445272298,
+        157.74098956552297,
+        157.8094287245557
+      ]
+    }
+  ],
+  "summary": {
+    "raceCount": 5,
+    "internalSteps": 39147,
+    "minimumAcceleration": -3.500000000000014,
+    "maximumKinematicError": 9.815260826329109e-10,
+    "maximumWorkError": 1.1823431123048067e-10,
+    "maximumReserveError": 4.547473508864641e-13,
+    "maximumUnpaid": 3.8651547240586837e-13,
+    "infeasibleSteps": 0
+  }
+}

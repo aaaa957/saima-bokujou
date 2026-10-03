@@ -1,0 +1,41 @@
+{
+  "archivedAt": "2026-10-02T23:05:46.759Z",
+  "status": "incomplete-invalidated-by-confirmed-geometry-defect",
+  "artifact": "docs/tempo-system-v9-incomplete-source44.json.gz",
+  "originalArtifact": "docs/tempo-system-v9.json",
+  "originalBytes": 2630385,
+  "uncompressedContentHash": "400eca95e5201f6385e9b1150b8617e24a5f9c14a682a3dfb251cb47795b8491",
+  "compressedBytes": 790147,
+  "engineHash": "44b09fc4789ccacf6cf812251effc8f3367e9f4996aa7b597886bd83d85ab6f1",
+  "baselineHash": "9b2cd208dd8d2e8415452d973a1bf76549222272accf1372bb616af14a2eeb8e",
+  "completedJobs": 8,
+  "expectedJobs": 12,
+  "counts": {
+    "crowd": 8,
+    "solo": 128,
+    "neutral": 8
+  },
+  "errors": 0,
+  "reusePolicy": "Retained for audit only; do not reuse these 8 rows as validated measurements of the corrected engine. No formal path isolation was run.",
+  "stopReason": "Source44 laneArcDistance has an atan2 heading branch discontinuity at the first-bend/backstraight junction. This is a physical distance defect, not merely a performance/provenance change; fresh measurements must use corrected source.",
+  "confirmedExample": {
+    "course": "中山芝外A",
+    "length": 2000,
+    "loopQ": 899.7,
+    "raceS": 750,
+    "startOffset": 149.70000000000005,
+    "epsilon": 1e-8,
+    "lane": 23.5,
+    "actualLaneArcDistance": 138.85839530866866,
+    "expectedOrderOfMagnitude": 2e-8,
+    "definition": "laneArcDistance(750-1e-8,750+1e-8,23.5,trackGeometry(2000,course,草地))",
+    "independentlyReproduced": true
+  },
+  "interruptedUnsavedJob": {
+    "length": 3000,
+    "replicate": 0,
+    "crowdCompleteAtResumedElapsedSeconds": 2299.1,
+    "completeInterventionRowSaved": false
+  },
+  "sourceArchive": "docs/system-numeric-source-44b09f-v9.js.gz"
+}

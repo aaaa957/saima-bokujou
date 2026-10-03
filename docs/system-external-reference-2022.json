@@ -1,0 +1,6097 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-10-02",
+  "scope": "2022 six preselected JRA turf G1 races, newly added external generalization checks; one race per distance, no exclusion by residual",
+  "frozenBeforeV9Comparison": true,
+  "engineComparedCommit": null,
+  "positionProxyDefinition": {
+    "front": "last-corner reported rank 1",
+    "prominent": "ranks 2..ceil(n*0.375)",
+    "midpack": "up to ceil(n*0.625)",
+    "rear": "remaining ranks",
+    "groups": "use each horse own reported rank; parallel-group bounds are preserved as category ambiguity, without inventing intra-group ordering"
+  },
+  "measurementCaveats": [
+    "JRA times and individual last600 are displayed to 0.1 seconds.",
+    "Leader 200m sectionals may refer to different horses; they are not the winner complete speed path.",
+    "Within1/2-second denominators are finishers; DNF remains in starter counts.",
+    "Six different events/course/populations confound distance; one race per distance cannot set style probability targets.",
+    "2022 Kikuka3000 and TennoSpring3200 are Hanshin, not Kyoto; Spring official outer-to-inner mixed route is still a proxy.",
+    "Photo head/nose/neck margins retained raw, never mapped to invented length values."
+  ],
+  "races": [
+    {
+      "id": "221002",
+      "date": "2022-10-02",
+      "raceName": "Sprinters Stakes",
+      "raceNameJapanese": "スプリンターズステークス",
+      "grade": "G1",
+      "venue": "中山",
+      "length": 1200,
+      "surface": "草地",
+      "state": "良",
+      "direction": "右回",
+      "course": "中山芝外A",
+      "courseDescriptionRaw": "コース：1,200メートル（芝・右 外）",
+      "fieldSize": 16,
+      "entryCount": 16,
+      "finisherCount": 16,
+      "dnfCount": 0,
+      "scratchCount": 0,
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/sprint/result/sprint2022.html",
+        "canonicalUrl": "https://jra.jp/datafile/seiseki/g1/sprint/result/sprint2022.html",
+        "retrievedAt": "2026-10-02",
+        "publisher": "Japan Racing Association",
+        "htmlEncoding": "cp932",
+        "htmlSha256": "c7d7d55fda8c4bb0dc72d829079a5c395027145f1bd14462d5f65f37ef119f60"
+      },
+      "sectionalSource": "https://www.jra.go.jp/datafile/seiseki/g1/sprint/result/sprint2022.html",
+      "raceSectionals200m": [
+        11.9,
+        10.1,
+        10.7,
+        11.4,
+        11.4,
+        12.3
+      ],
+      "first600": 32.7,
+      "raceFinal600": 35.1,
+      "winner": {
+        "horseNumber": 2,
+        "horseName": "ジャンダルム",
+        "finishPosition": 1,
+        "finishStatusRaw": "1",
+        "finishTimeRaw": "1:07.8",
+        "finishTime": 67.8,
+        "final600": 34.6,
+        "cornerRanksReported": [
+          3,
+          2
+        ],
+        "cornerRecords": [
+          {
+            "cornerNumber": 3,
+            "rank": 3,
+            "labelRaw": "3コーナー通過順位"
+          },
+          {
+            "cornerNumber": 4,
+            "rank": 2,
+            "labelRaw": "4コーナー通過順位"
+          }
+        ],
+        "lastCornerRankReported": 2,
+        "isStarter": true,
+        "marginFromPreviousRaw": "",
+        "numericMarginLengths": null,
+        "carriedWeightKg": 57.0,
+        "bodyMassKg": 508,
+        "lastCornerRankRange": [
+          2,
+          3
+        ],
+        "lastCornerReportedProxy": "prominent",
+        "possibleLastCornerProxies": [
+          "prominent"
+        ],
+        "ambiguousLastCornerProxy": false,
+        "averageSpeedMps": 17.699115044247787,
+        "final600AverageSpeedMps": 17.341040462427745,
+        "winnerTimeGap": 0.0,
+        "positionGainLastCornerToFinish": 1
+      },
+      "horses": [
+        {
+          "horseNumber": 2,
+          "horseName": "ジャンダルム",
+          "finishPosition": 1,
+          "finishStatusRaw": "1",
+          "finishTimeRaw": "1:07.8",
+          "finishTime": 67.8,
+          "final600": 34.6,
+          "cornerRanksReported": [
+            3,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 508,
+          "lastCornerRankRange": [
+            2,
+            3
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.699115044247787,
+          "final600AverageSpeedMps": 17.341040462427745,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 7,
+          "horseName": "ウインマーベル",
+          "finishPosition": 2,
+          "finishStatusRaw": "2",
+          "finishTimeRaw": "1:07.8",
+          "finishTime": 67.8,
+          "final600": 34.1,
+          "cornerRanksReported": [
+            8,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 8,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 468,
+          "lastCornerRankRange": [
+            9,
+            10
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.699115044247787,
+          "final600AverageSpeedMps": 17.59530791788856,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 7
+        },
+        {
+          "horseNumber": 6,
+          "horseName": "ナランフレグ",
+          "finishPosition": 3,
+          "finishStatusRaw": "3",
+          "finishTimeRaw": "1:08.0",
+          "finishTime": 68.0,
+          "final600": 33.9,
+          "cornerRanksReported": [
+            13,
+            12
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 13,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 12,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 12,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３／４",
+          "numericMarginLengths": 0.75,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 490,
+          "lastCornerRankRange": [
+            12,
+            13
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.647058823529413,
+          "final600AverageSpeedMps": 17.699115044247787,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": 9
+        },
+        {
+          "horseNumber": 4,
+          "horseName": "ダイアトニック",
+          "finishPosition": 4,
+          "finishStatusRaw": "4",
+          "finishTimeRaw": "1:08.0",
+          "finishTime": 68.0,
+          "final600": 34.6,
+          "cornerRanksReported": [
+            5,
+            6
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 6,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 6,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 478,
+          "lastCornerRankRange": [
+            6,
+            7
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 17.647058823529413,
+          "final600AverageSpeedMps": 17.341040462427745,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": 2
+        },
+        {
+          "horseNumber": 9,
+          "horseName": "ナムラクレア",
+          "finishPosition": 5,
+          "finishStatusRaw": "5",
+          "finishTimeRaw": "1:08.0",
+          "finishTime": 68.0,
+          "final600": 34.5,
+          "cornerRanksReported": [
+            7,
+            6
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 6,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 6,
+          "isStarter": true,
+          "marginFromPreviousRaw": "アタマ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 53.0,
+          "bodyMassKg": 466,
+          "lastCornerRankRange": [
+            6,
+            7
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 17.647058823529413,
+          "final600AverageSpeedMps": 17.391304347826086,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 5,
+          "horseName": "エイティーンガール",
+          "finishPosition": 6,
+          "finishStatusRaw": "6",
+          "finishTimeRaw": "1:08.1",
+          "finishTime": 68.1,
+          "final600": 34.3,
+          "cornerRanksReported": [
+            10,
+            8
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 8,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 8,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 452,
+          "lastCornerRankRange": [
+            8,
+            8
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.62114537444934,
+          "final600AverageSpeedMps": 17.49271137026239,
+          "winnerTimeGap": 0.3,
+          "positionGainLastCornerToFinish": 2
+        },
+        {
+          "horseNumber": 11,
+          "horseName": "トゥラヴェスーラ",
+          "finishPosition": 7,
+          "finishStatusRaw": "7",
+          "finishTimeRaw": "1:08.1",
+          "finishTime": 68.1,
+          "final600": 34.2,
+          "cornerRanksReported": [
+            11,
+            11
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 11,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 11,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 11,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 482,
+          "lastCornerRankRange": [
+            11,
+            11
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.62114537444934,
+          "final600AverageSpeedMps": 17.543859649122805,
+          "winnerTimeGap": 0.3,
+          "positionGainLastCornerToFinish": 4
+        },
+        {
+          "horseNumber": 16,
+          "horseName": "マリアズハート",
+          "finishPosition": 8,
+          "finishStatusRaw": "8",
+          "finishTimeRaw": "1:08.3",
+          "finishTime": 68.3,
+          "final600": 33.9,
+          "cornerRanksReported": [
+            15,
+            15
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 15,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 15,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 15,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３／４",
+          "numericMarginLengths": 0.75,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 502,
+          "lastCornerRankRange": [
+            15,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.569546120058565,
+          "final600AverageSpeedMps": 17.699115044247787,
+          "winnerTimeGap": 0.5,
+          "positionGainLastCornerToFinish": 7
+        },
+        {
+          "horseNumber": 15,
+          "horseName": "シュネルマイスター",
+          "finishPosition": 9,
+          "finishStatusRaw": "9",
+          "finishTimeRaw": "1:08.3",
+          "finishTime": 68.3,
+          "final600": 34.4,
+          "cornerRanksReported": [
+            11,
+            12
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 11,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 12,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 12,
+          "isStarter": true,
+          "marginFromPreviousRaw": "アタマ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 490,
+          "lastCornerRankRange": [
+            12,
+            13
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.569546120058565,
+          "final600AverageSpeedMps": 17.441860465116278,
+          "winnerTimeGap": 0.5,
+          "positionGainLastCornerToFinish": 3
+        },
+        {
+          "horseNumber": 8,
+          "horseName": "ファストフォース",
+          "finishPosition": 10,
+          "finishStatusRaw": "10",
+          "finishTimeRaw": "1:08.3",
+          "finishTime": 68.3,
+          "final600": 35.5,
+          "cornerRanksReported": [
+            2,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 2,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 520,
+          "lastCornerRankRange": [
+            2,
+            3
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.569546120058565,
+          "final600AverageSpeedMps": 16.901408450704224,
+          "winnerTimeGap": 0.5,
+          "positionGainLastCornerToFinish": -8
+        },
+        {
+          "horseNumber": 12,
+          "horseName": "ヴェントヴォーチェ",
+          "finishPosition": 11,
+          "finishStatusRaw": "11",
+          "finishTimeRaw": "1:08.4",
+          "finishTime": 68.4,
+          "final600": 34.7,
+          "cornerRanksReported": [
+            8,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 8,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 518,
+          "lastCornerRankRange": [
+            9,
+            10
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.543859649122805,
+          "final600AverageSpeedMps": 17.291066282420747,
+          "winnerTimeGap": 0.6,
+          "positionGainLastCornerToFinish": -2
+        },
+        {
+          "horseNumber": 3,
+          "horseName": "メイショウミモザ",
+          "finishPosition": 12,
+          "finishStatusRaw": "12",
+          "finishTimeRaw": "1:08.5",
+          "finishTime": 68.5,
+          "final600": 35.1,
+          "cornerRanksReported": [
+            5,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 448,
+          "lastCornerRankRange": [
+            4,
+            5
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.51824817518248,
+          "final600AverageSpeedMps": 17.094017094017094,
+          "winnerTimeGap": 0.7,
+          "positionGainLastCornerToFinish": -8
+        },
+        {
+          "horseNumber": 10,
+          "horseName": "タイセイビジョン",
+          "finishPosition": 13,
+          "finishStatusRaw": "13",
+          "finishTimeRaw": "1:08.5",
+          "finishTime": 68.5,
+          "final600": 34.4,
+          "cornerRanksReported": [
+            13,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 13,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 470,
+          "lastCornerRankRange": [
+            14,
+            14
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.51824817518248,
+          "final600AverageSpeedMps": 17.441860465116278,
+          "winnerTimeGap": 0.7,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 13,
+          "horseName": "メイケイエール",
+          "finishPosition": 14,
+          "finishStatusRaw": "14",
+          "finishTimeRaw": "1:08.7",
+          "finishTime": 68.7,
+          "final600": 35.4,
+          "cornerRanksReported": [
+            4,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 4,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１ 1/4",
+          "numericMarginLengths": 1.25,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 482,
+          "lastCornerRankRange": [
+            4,
+            5
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.46724890829694,
+          "final600AverageSpeedMps": 16.949152542372882,
+          "winnerTimeGap": 0.9,
+          "positionGainLastCornerToFinish": -10
+        },
+        {
+          "horseNumber": 1,
+          "horseName": "テイエムスパーダ",
+          "finishPosition": 15,
+          "finishStatusRaw": "15",
+          "finishTimeRaw": "1:08.8",
+          "finishTime": 68.8,
+          "final600": 36.1,
+          "cornerRanksReported": [
+            1,
+            1
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 1,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 1,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 1,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３／４",
+          "numericMarginLengths": 0.75,
+          "carriedWeightKg": 53.0,
+          "bodyMassKg": 490,
+          "lastCornerRankRange": [
+            1,
+            1
+          ],
+          "lastCornerReportedProxy": "front",
+          "possibleLastCornerProxies": [
+            "front"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.441860465116278,
+          "final600AverageSpeedMps": 16.620498614958446,
+          "winnerTimeGap": 1.0,
+          "positionGainLastCornerToFinish": -14
+        },
+        {
+          "horseNumber": 14,
+          "horseName": "ラヴィングアンサー",
+          "finishPosition": 16,
+          "finishStatusRaw": "16",
+          "finishTimeRaw": "1:08.9",
+          "finishTime": 68.9,
+          "final600": 34.3,
+          "cornerRanksReported": [
+            16,
+            16
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 16,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 16,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 16,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 502,
+          "lastCornerRankRange": [
+            16,
+            16
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.41654571843251,
+          "final600AverageSpeedMps": 17.49271137026239,
+          "winnerTimeGap": 1.1,
+          "positionGainLastCornerToFinish": 0
+        }
+      ],
+      "cornerPassageGroups": [
+        {
+          "labelRaw": "3コーナー",
+          "horseGroupsRaw": "1,8-2,13(3,4)9(7,12)5(11,15)(6,10)16,14"
+        },
+        {
+          "labelRaw": "4コーナー",
+          "horseGroupsRaw": "1(2,8)(3,13)(4,9)5(7,12)11(6,15)10,16,14"
+        }
+      ],
+      "summary": {
+        "winnerFinishTime": 67.8,
+        "winnerFinal600": 34.6,
+        "winnerCarriedWeightKg": 57.0,
+        "winnerSecondTimeGap": 0.0,
+        "fieldFirstLastTimeSpan": 1.1,
+        "fieldFractionWithin1Second": 0.9375,
+        "fieldFractionWithin2Seconds": 1.0,
+        "fieldFinal600Span": 2.2,
+        "first200": 11.9,
+        "post200SplitCv": 0.06631038637871431,
+        "final200MinusPrevious": 0.9
+      },
+      "routeCaveats": [],
+      "leadingMarkerSpeedMetrics": {
+        "first200Time": 11.9,
+        "fastest200Time": 10.1,
+        "last200Time": 12.3,
+        "fastest200MeanSpeedMps": 19.801980198019802,
+        "post200SplitCv": 0.06631038637871431,
+        "final200MinusPrevious": 0.9
+      }
+    },
+    {
+      "id": "220605",
+      "date": "2022-06-05",
+      "raceName": "Yasuda Kinen",
+      "raceNameJapanese": "農林水産省賞典 安田記念",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 1600,
+      "surface": "草地",
+      "state": "良",
+      "direction": "左回",
+      "course": "東京芝A",
+      "courseDescriptionRaw": "コース：1,600メートル（芝・左）",
+      "fieldSize": 18,
+      "entryCount": 18,
+      "finisherCount": 18,
+      "dnfCount": 0,
+      "scratchCount": 0,
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/yasuda/result/yasuda2022.html",
+        "canonicalUrl": "https://jra.jp/datafile/seiseki/g1/yasuda/result/yasuda2022.html",
+        "retrievedAt": "2026-10-02",
+        "publisher": "Japan Racing Association",
+        "htmlEncoding": "cp932",
+        "htmlSha256": "83263c8abd4f57815168be1548f2681076ac8a90dc4f7c6144372a0ba5de02ad"
+      },
+      "sectionalSource": "https://www.jra.go.jp/datafile/seiseki/g1/yasuda/result/yasuda2022.html",
+      "raceSectionals200m": [
+        12.2,
+        11.0,
+        11.5,
+        12.0,
+        12.0,
+        11.2,
+        11.0,
+        11.4
+      ],
+      "first600": 34.7,
+      "raceFinal600": 33.6,
+      "winner": {
+        "horseNumber": 13,
+        "horseName": "ソングライン",
+        "finishPosition": 1,
+        "finishStatusRaw": "1",
+        "finishTimeRaw": "1:32.3",
+        "finishTime": 92.3,
+        "final600": 32.9,
+        "cornerRanksReported": [
+          10,
+          10
+        ],
+        "cornerRecords": [
+          {
+            "cornerNumber": 3,
+            "rank": 10,
+            "labelRaw": "3コーナー通過順位"
+          },
+          {
+            "cornerNumber": 4,
+            "rank": 10,
+            "labelRaw": "4コーナー通過順位"
+          }
+        ],
+        "lastCornerRankReported": 10,
+        "isStarter": true,
+        "marginFromPreviousRaw": "",
+        "numericMarginLengths": null,
+        "carriedWeightKg": 56.0,
+        "bodyMassKg": 482,
+        "lastCornerRankRange": [
+          10,
+          12
+        ],
+        "lastCornerReportedProxy": "midpack",
+        "possibleLastCornerProxies": [
+          "midpack"
+        ],
+        "ambiguousLastCornerProxy": false,
+        "averageSpeedMps": 17.33477789815818,
+        "final600AverageSpeedMps": 18.237082066869302,
+        "winnerTimeGap": 0.0,
+        "positionGainLastCornerToFinish": 9
+      },
+      "horses": [
+        {
+          "horseNumber": 13,
+          "horseName": "ソングライン",
+          "finishPosition": 1,
+          "finishStatusRaw": "1",
+          "finishTimeRaw": "1:32.3",
+          "finishTime": 92.3,
+          "final600": 32.9,
+          "cornerRanksReported": [
+            10,
+            10
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 10,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 10,
+          "isStarter": true,
+          "marginFromPreviousRaw": "",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 482,
+          "lastCornerRankRange": [
+            10,
+            12
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.33477789815818,
+          "final600AverageSpeedMps": 18.237082066869302,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 9
+        },
+        {
+          "horseNumber": 9,
+          "horseName": "シュネルマイスター",
+          "finishPosition": 2,
+          "finishStatusRaw": "2",
+          "finishTimeRaw": "1:32.3",
+          "finishTime": 92.3,
+          "final600": 32.9,
+          "cornerRanksReported": [
+            13,
+            10
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 13,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 10,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 10,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 490,
+          "lastCornerRankRange": [
+            10,
+            12
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.33477789815818,
+          "final600AverageSpeedMps": 18.237082066869302,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 8
+        },
+        {
+          "horseNumber": 17,
+          "horseName": "サリオス",
+          "finishPosition": 3,
+          "finishStatusRaw": "3",
+          "finishTimeRaw": "1:32.3",
+          "finishTime": 92.3,
+          "final600": 33.0,
+          "cornerRanksReported": [
+            7,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "アタマ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 528,
+          "lastCornerRankRange": [
+            9,
+            9
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.33477789815818,
+          "final600AverageSpeedMps": 18.181818181818183,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 6
+        },
+        {
+          "horseNumber": 15,
+          "horseName": "セリフォス",
+          "finishPosition": 4,
+          "finishStatusRaw": "4",
+          "finishTimeRaw": "1:32.4",
+          "finishTime": 92.4,
+          "final600": 32.8,
+          "cornerRanksReported": [
+            10,
+            13
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 13,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 13,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 54.0,
+          "bodyMassKg": 490,
+          "lastCornerRankRange": [
+            13,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.316017316017316,
+          "final600AverageSpeedMps": 18.29268292682927,
+          "winnerTimeGap": 0.1,
+          "positionGainLastCornerToFinish": 9
+        },
+        {
+          "horseNumber": 7,
+          "horseName": "ファインルージュ",
+          "finishPosition": 5,
+          "finishStatusRaw": "5",
+          "finishTimeRaw": "1:32.5",
+          "finishTime": 92.5,
+          "final600": 33.5,
+          "cornerRanksReported": [
+            5,
+            3
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 3,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 3,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 500,
+          "lastCornerRankRange": [
+            3,
+            5
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.2972972972973,
+          "final600AverageSpeedMps": 17.91044776119403,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": -2
+        },
+        {
+          "horseNumber": 4,
+          "horseName": "ダノンザキッド",
+          "finishPosition": 6,
+          "finishStatusRaw": "6",
+          "finishTimeRaw": "1:32.5",
+          "finishTime": 92.5,
+          "final600": 33.7,
+          "cornerRanksReported": [
+            2,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 2,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "ハナ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 526,
+          "lastCornerRankRange": [
+            1,
+            2
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "front",
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 17.2972972972973,
+          "final600AverageSpeedMps": 17.80415430267062,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": -4
+        },
+        {
+          "horseNumber": 10,
+          "horseName": "エアロロノア",
+          "finishPosition": 7,
+          "finishStatusRaw": "7",
+          "finishTimeRaw": "1:32.5",
+          "finishTime": 92.5,
+          "final600": 32.6,
+          "cornerRanksReported": [
+            17,
+            16
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 17,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 16,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 16,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 504,
+          "lastCornerRankRange": [
+            16,
+            18
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.2972972972973,
+          "final600AverageSpeedMps": 18.404907975460123,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": 9
+        },
+        {
+          "horseNumber": 8,
+          "horseName": "イルーシヴパンサー",
+          "finishPosition": 8,
+          "finishStatusRaw": "8",
+          "finishTimeRaw": "1:32.5",
+          "finishTime": 92.5,
+          "final600": 32.6,
+          "cornerRanksReported": [
+            17,
+            16
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 17,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 16,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 16,
+          "isStarter": true,
+          "marginFromPreviousRaw": "ハナ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 476,
+          "lastCornerRankRange": [
+            16,
+            18
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.2972972972973,
+          "final600AverageSpeedMps": 18.404907975460123,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": 8
+        },
+        {
+          "horseNumber": 18,
+          "horseName": "ナランフレグ",
+          "finishPosition": 9,
+          "finishStatusRaw": "9",
+          "finishTimeRaw": "1:32.7",
+          "finishTime": 92.7,
+          "final600": 33.1,
+          "cornerRanksReported": [
+            15,
+            13
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 15,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 13,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 13,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３／４",
+          "numericMarginLengths": 0.75,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 490,
+          "lastCornerRankRange": [
+            13,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.25997842502697,
+          "final600AverageSpeedMps": 18.12688821752266,
+          "winnerTimeGap": 0.4,
+          "positionGainLastCornerToFinish": 4
+        },
+        {
+          "horseNumber": 3,
+          "horseName": "ロータスランド",
+          "finishPosition": 10,
+          "finishStatusRaw": "10",
+          "finishTimeRaw": "1:32.7",
+          "finishTime": 92.7,
+          "final600": 33.5,
+          "cornerRanksReported": [
+            9,
+            6
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 9,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 6,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 6,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 484,
+          "lastCornerRankRange": [
+            6,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 17.25997842502697,
+          "final600AverageSpeedMps": 17.91044776119403,
+          "winnerTimeGap": 0.4,
+          "positionGainLastCornerToFinish": -4
+        },
+        {
+          "horseNumber": 16,
+          "horseName": "レシステンシア",
+          "finishPosition": 11,
+          "finishStatusRaw": "11",
+          "finishTimeRaw": "1:32.7",
+          "finishTime": 92.7,
+          "final600": 33.6,
+          "cornerRanksReported": [
+            5,
+            6
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 6,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 6,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 512,
+          "lastCornerRankRange": [
+            6,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 17.25997842502697,
+          "final600AverageSpeedMps": 17.857142857142858,
+          "winnerTimeGap": 0.4,
+          "positionGainLastCornerToFinish": -5
+        },
+        {
+          "horseNumber": 5,
+          "horseName": "ホウオウアマゾン",
+          "finishPosition": 12,
+          "finishStatusRaw": "12",
+          "finishTimeRaw": "1:32.8",
+          "finishTime": 92.8,
+          "final600": 34.1,
+          "cornerRanksReported": [
+            1,
+            1
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 1,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 1,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 1,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 512,
+          "lastCornerRankRange": [
+            1,
+            2
+          ],
+          "lastCornerReportedProxy": "front",
+          "possibleLastCornerProxies": [
+            "front",
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 17.24137931034483,
+          "final600AverageSpeedMps": 17.59530791788856,
+          "winnerTimeGap": 0.5,
+          "positionGainLastCornerToFinish": -11
+        },
+        {
+          "horseNumber": 14,
+          "horseName": "ソウルラッシュ",
+          "finishPosition": 13,
+          "finishStatusRaw": "13",
+          "finishTimeRaw": "1:32.9",
+          "finishTime": 92.9,
+          "final600": 33.3,
+          "cornerRanksReported": [
+            13,
+            13
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 13,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 13,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 13,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 498,
+          "lastCornerRankRange": [
+            13,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.222820236813778,
+          "final600AverageSpeedMps": 18.01801801801802,
+          "winnerTimeGap": 0.6,
+          "positionGainLastCornerToFinish": 0
+        },
+        {
+          "horseNumber": 12,
+          "horseName": "ダイアトニック",
+          "finishPosition": 14,
+          "finishStatusRaw": "14",
+          "finishTimeRaw": "1:33.0",
+          "finishTime": 93.0,
+          "final600": 34.1,
+          "cornerRanksReported": [
+            3,
+            3
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 3,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 3,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 478,
+          "lastCornerRankRange": [
+            3,
+            5
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.204301075268816,
+          "final600AverageSpeedMps": 17.59530791788856,
+          "winnerTimeGap": 0.7,
+          "positionGainLastCornerToFinish": -11
+        },
+        {
+          "horseNumber": 2,
+          "horseName": "ヴァンドギャルド",
+          "finishPosition": 15,
+          "finishStatusRaw": "15",
+          "finishTimeRaw": "1:33.2",
+          "finishTime": 93.2,
+          "final600": 34.0,
+          "cornerRanksReported": [
+            7,
+            6
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 6,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 6,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１ 1/2",
+          "numericMarginLengths": 1.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 466,
+          "lastCornerRankRange": [
+            6,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 17.167381974248926,
+          "final600AverageSpeedMps": 17.647058823529413,
+          "winnerTimeGap": 0.9,
+          "positionGainLastCornerToFinish": -9
+        },
+        {
+          "horseNumber": 6,
+          "horseName": "カラテ",
+          "finishPosition": 16,
+          "finishStatusRaw": "16",
+          "finishTimeRaw": "1:33.2",
+          "finishTime": 93.2,
+          "final600": 33.8,
+          "cornerRanksReported": [
+            10,
+            10
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 10,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 10,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 540,
+          "lastCornerRankRange": [
+            10,
+            12
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.167381974248926,
+          "final600AverageSpeedMps": 17.75147928994083,
+          "winnerTimeGap": 0.9,
+          "positionGainLastCornerToFinish": -6
+        },
+        {
+          "horseNumber": 1,
+          "horseName": "カフェファラオ",
+          "finishPosition": 17,
+          "finishStatusRaw": "17",
+          "finishTimeRaw": "1:33.3",
+          "finishTime": 93.3,
+          "final600": 34.4,
+          "cornerRanksReported": [
+            3,
+            3
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 3,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 3,
+          "isStarter": true,
+          "marginFromPreviousRaw": "アタマ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 524,
+          "lastCornerRankRange": [
+            3,
+            5
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.14898177920686,
+          "final600AverageSpeedMps": 17.441860465116278,
+          "winnerTimeGap": 1.0,
+          "positionGainLastCornerToFinish": -14
+        },
+        {
+          "horseNumber": 11,
+          "horseName": "カテドラル",
+          "finishPosition": 18,
+          "finishStatusRaw": "18",
+          "finishTimeRaw": "1:34.0",
+          "finishTime": 94.0,
+          "final600": 34.2,
+          "cornerRanksReported": [
+            15,
+            16
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 3,
+              "rank": 15,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 16,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 16,
+          "isStarter": true,
+          "marginFromPreviousRaw": "４",
+          "numericMarginLengths": 4.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 484,
+          "lastCornerRankRange": [
+            16,
+            18
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.02127659574468,
+          "final600AverageSpeedMps": 17.543859649122805,
+          "winnerTimeGap": 1.7,
+          "positionGainLastCornerToFinish": -2
+        }
+      ],
+      "cornerPassageGroups": [
+        {
+          "labelRaw": "3コーナー",
+          "horseGroupsRaw": "(*5,4)(1,12)(7,16)(2,17)3(6,13,15)(14,9)(11,18)(8,10)"
+        },
+        {
+          "labelRaw": "4コーナー",
+          "horseGroupsRaw": "(*5,4)(1,7,12)(2,3,16)17(6,9,13)(14,18,15)(11,8,10)"
+        }
+      ],
+      "summary": {
+        "winnerFinishTime": 92.3,
+        "winnerFinal600": 32.9,
+        "winnerCarriedWeightKg": 56.0,
+        "winnerSecondTimeGap": 0.0,
+        "fieldFirstLastTimeSpan": 1.7,
+        "fieldFractionWithin1Second": 0.9444444444444444,
+        "fieldFractionWithin2Seconds": 1.0,
+        "fieldFinal600Span": 1.8,
+        "first200": 12.2,
+        "post200SplitCv": 0.03428097432645689,
+        "final200MinusPrevious": 0.4
+      },
+      "routeCaveats": [],
+      "leadingMarkerSpeedMetrics": {
+        "first200Time": 12.2,
+        "fastest200Time": 11.0,
+        "last200Time": 11.4,
+        "fastest200MeanSpeedMps": 18.181818181818183,
+        "post200SplitCv": 0.03428097432645689,
+        "final200MinusPrevious": 0.4
+      }
+    },
+    {
+      "id": "221030",
+      "date": "2022-10-30",
+      "raceName": "Tenno Sho Autumn",
+      "raceNameJapanese": "天皇賞(秋)",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2000,
+      "surface": "草地",
+      "state": "良",
+      "direction": "左回",
+      "course": "東京芝A",
+      "courseDescriptionRaw": "コース：2,000メートル（芝・左）",
+      "fieldSize": 15,
+      "entryCount": 15,
+      "finisherCount": 15,
+      "dnfCount": 0,
+      "scratchCount": 0,
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/akiten/result/akiten2022.html",
+        "canonicalUrl": "https://jra.jp/datafile/seiseki/g1/akiten/result/akiten2022.html",
+        "retrievedAt": "2026-10-02",
+        "publisher": "Japan Racing Association",
+        "htmlEncoding": "cp932",
+        "htmlSha256": "9897b910be45157cc6765f32c605c98e99e0ffc2e39387362facc5d956f08e91"
+      },
+      "sectionalSource": "https://www.jra.go.jp/datafile/seiseki/g1/akiten/result/akiten2022.html",
+      "raceSectionals200m": [
+        12.6,
+        10.9,
+        11.2,
+        11.3,
+        11.4,
+        11.6,
+        11.8,
+        11.6,
+        12.4,
+        12.7
+      ],
+      "first600": 34.7,
+      "raceFinal600": 36.7,
+      "winner": {
+        "horseNumber": 7,
+        "horseName": "イクイノックス",
+        "finishPosition": 1,
+        "finishStatusRaw": "1",
+        "finishTimeRaw": "1:57.5",
+        "finishTime": 117.5,
+        "final600": 32.7,
+        "cornerRanksReported": [
+          10,
+          10,
+          9
+        ],
+        "cornerRecords": [
+          {
+            "cornerNumber": 2,
+            "rank": 10,
+            "labelRaw": "2コーナー通過順位"
+          },
+          {
+            "cornerNumber": 3,
+            "rank": 10,
+            "labelRaw": "3コーナー通過順位"
+          },
+          {
+            "cornerNumber": 4,
+            "rank": 9,
+            "labelRaw": "4コーナー通過順位"
+          }
+        ],
+        "lastCornerRankReported": 9,
+        "isStarter": true,
+        "marginFromPreviousRaw": "",
+        "numericMarginLengths": null,
+        "carriedWeightKg": 56.0,
+        "bodyMassKg": 488,
+        "lastCornerRankRange": [
+          9,
+          10
+        ],
+        "lastCornerReportedProxy": "midpack",
+        "possibleLastCornerProxies": [
+          "midpack"
+        ],
+        "ambiguousLastCornerProxy": false,
+        "averageSpeedMps": 17.02127659574468,
+        "final600AverageSpeedMps": 18.34862385321101,
+        "winnerTimeGap": 0.0,
+        "positionGainLastCornerToFinish": 8
+      },
+      "horses": [
+        {
+          "horseNumber": 7,
+          "horseName": "イクイノックス",
+          "finishPosition": 1,
+          "finishStatusRaw": "1",
+          "finishTimeRaw": "1:57.5",
+          "finishTime": 117.5,
+          "final600": 32.7,
+          "cornerRanksReported": [
+            10,
+            10,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 10,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 488,
+          "lastCornerRankRange": [
+            9,
+            10
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.02127659574468,
+          "final600AverageSpeedMps": 18.34862385321101,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 8
+        },
+        {
+          "horseNumber": 3,
+          "horseName": "パンサラッサ",
+          "finishPosition": 2,
+          "finishStatusRaw": "2",
+          "finishTimeRaw": "1:57.6",
+          "finishTime": 117.6,
+          "final600": 36.8,
+          "cornerRanksReported": [
+            1,
+            1,
+            1
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 1,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 1,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 1,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 1,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１",
+          "numericMarginLengths": 1.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 472,
+          "lastCornerRankRange": [
+            1,
+            1
+          ],
+          "lastCornerReportedProxy": "front",
+          "possibleLastCornerProxies": [
+            "front"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 17.006802721088437,
+          "final600AverageSpeedMps": 16.304347826086957,
+          "winnerTimeGap": 0.1,
+          "positionGainLastCornerToFinish": -1
+        },
+        {
+          "horseNumber": 5,
+          "horseName": "ダノンベルーガ",
+          "finishPosition": 3,
+          "finishStatusRaw": "3",
+          "finishTimeRaw": "1:57.7",
+          "finishTime": 117.7,
+          "final600": 32.8,
+          "cornerRanksReported": [
+            11,
+            11,
+            11
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 11,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 11,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 11,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 11,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 500,
+          "lastCornerRankRange": [
+            11,
+            13
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.99235344095157,
+          "final600AverageSpeedMps": 18.29268292682927,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": 8
+        },
+        {
+          "horseNumber": 9,
+          "horseName": "ジャックドール",
+          "finishPosition": 4,
+          "finishStatusRaw": "4",
+          "finishTimeRaw": "1:57.8",
+          "finishTime": 117.8,
+          "final600": 33.5,
+          "cornerRanksReported": [
+            4,
+            4,
+            3
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 4,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 4,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 3,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 3,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 508,
+          "lastCornerRankRange": [
+            3,
+            4
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.977928692699493,
+          "final600AverageSpeedMps": 17.91044776119403,
+          "winnerTimeGap": 0.3,
+          "positionGainLastCornerToFinish": -1
+        },
+        {
+          "horseNumber": 8,
+          "horseName": "シャフリヤール",
+          "finishPosition": 5,
+          "finishStatusRaw": "5",
+          "finishTimeRaw": "1:58.1",
+          "finishTime": 118.1,
+          "final600": 33.6,
+          "cornerRanksReported": [
+            6,
+            5,
+            5
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 5,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 5,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２",
+          "numericMarginLengths": 2.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 456,
+          "lastCornerRankRange": [
+            5,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.934801016088063,
+          "final600AverageSpeedMps": 17.857142857142858,
+          "winnerTimeGap": 0.6,
+          "positionGainLastCornerToFinish": 0
+        },
+        {
+          "horseNumber": 2,
+          "horseName": "カラテ",
+          "finishPosition": 6,
+          "finishStatusRaw": "6",
+          "finishTimeRaw": "1:58.2",
+          "finishTime": 118.2,
+          "final600": 33.4,
+          "cornerRanksReported": [
+            8,
+            7,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 8,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１",
+          "numericMarginLengths": 1.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 528,
+          "lastCornerRankRange": [
+            9,
+            10
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.920473773265652,
+          "final600AverageSpeedMps": 17.964071856287426,
+          "winnerTimeGap": 0.7,
+          "positionGainLastCornerToFinish": 3
+        },
+        {
+          "horseNumber": 1,
+          "horseName": "マリアエレーナ",
+          "finishPosition": 7,
+          "finishStatusRaw": "7",
+          "finishTimeRaw": "1:58.2",
+          "finishTime": 118.2,
+          "final600": 33.5,
+          "cornerRanksReported": [
+            4,
+            5,
+            7
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 4,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 7,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 7,
+          "isStarter": true,
+          "marginFromPreviousRaw": "ハナ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 426,
+          "lastCornerRankRange": [
+            7,
+            8
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.920473773265652,
+          "final600AverageSpeedMps": 17.91044776119403,
+          "winnerTimeGap": 0.7,
+          "positionGainLastCornerToFinish": 0
+        },
+        {
+          "horseNumber": 14,
+          "horseName": "ユーバーレーベン",
+          "finishPosition": 8,
+          "finishStatusRaw": "8",
+          "finishTimeRaw": "1:58.3",
+          "finishTime": 118.3,
+          "final600": 33.3,
+          "cornerRanksReported": [
+            14,
+            13,
+            11
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 14,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 13,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 11,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 11,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 476,
+          "lastCornerRankRange": [
+            11,
+            13
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.9061707523246,
+          "final600AverageSpeedMps": 18.01801801801802,
+          "winnerTimeGap": 0.8,
+          "positionGainLastCornerToFinish": 3
+        },
+        {
+          "horseNumber": 6,
+          "horseName": "ジオグリフ",
+          "finishPosition": 9,
+          "finishStatusRaw": "9",
+          "finishTimeRaw": "1:58.3",
+          "finishTime": 118.3,
+          "final600": 33.6,
+          "cornerRanksReported": [
+            6,
+            7,
+            7
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 7,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 7,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 506,
+          "lastCornerRankRange": [
+            7,
+            8
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.9061707523246,
+          "final600AverageSpeedMps": 17.857142857142858,
+          "winnerTimeGap": 0.8,
+          "positionGainLastCornerToFinish": -2
+        },
+        {
+          "horseNumber": 13,
+          "horseName": "アブレイズ",
+          "finishPosition": 10,
+          "finishStatusRaw": "10",
+          "finishTimeRaw": "1:58.3",
+          "finishTime": 118.3,
+          "final600": 33.7,
+          "cornerRanksReported": [
+            8,
+            7,
+            5
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 8,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 5,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 5,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 494,
+          "lastCornerRankRange": [
+            5,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.9061707523246,
+          "final600AverageSpeedMps": 17.80415430267062,
+          "winnerTimeGap": 0.8,
+          "positionGainLastCornerToFinish": -5
+        },
+        {
+          "horseNumber": 10,
+          "horseName": "ノースブリッジ",
+          "finishPosition": 11,
+          "finishStatusRaw": "11",
+          "finishTimeRaw": "1:58.4",
+          "finishTime": 118.4,
+          "final600": 34.0,
+          "cornerRanksReported": [
+            2,
+            3,
+            3
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 2,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 3,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 3,
+          "isStarter": true,
+          "marginFromPreviousRaw": "アタマ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 492,
+          "lastCornerRankRange": [
+            3,
+            4
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.89189189189189,
+          "final600AverageSpeedMps": 17.647058823529413,
+          "winnerTimeGap": 0.9,
+          "positionGainLastCornerToFinish": -8
+        },
+        {
+          "horseNumber": 15,
+          "horseName": "カデナ",
+          "finishPosition": 12,
+          "finishStatusRaw": "12",
+          "finishTimeRaw": "1:58.4",
+          "finishTime": 118.4,
+          "final600": 33.2,
+          "cornerRanksReported": [
+            15,
+            15,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 15,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 15,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 478,
+          "lastCornerRankRange": [
+            14,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.89189189189189,
+          "final600AverageSpeedMps": 18.072289156626503,
+          "winnerTimeGap": 0.9,
+          "positionGainLastCornerToFinish": 2
+        },
+        {
+          "horseNumber": 4,
+          "horseName": "ポタジェ",
+          "finishPosition": 13,
+          "finishStatusRaw": "13",
+          "finishTimeRaw": "1:58.4",
+          "finishTime": 118.4,
+          "final600": 33.4,
+          "cornerRanksReported": [
+            12,
+            11,
+            11
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 12,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 11,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 11,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 11,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 468,
+          "lastCornerRankRange": [
+            11,
+            13
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.89189189189189,
+          "final600AverageSpeedMps": 17.964071856287426,
+          "winnerTimeGap": 0.9,
+          "positionGainLastCornerToFinish": -2
+        },
+        {
+          "horseNumber": 11,
+          "horseName": "レッドガラン",
+          "finishPosition": 14,
+          "finishStatusRaw": "14",
+          "finishTimeRaw": "1:58.7",
+          "finishTime": 118.7,
+          "final600": 33.4,
+          "cornerRanksReported": [
+            13,
+            13,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 13,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 13,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１ 1/2",
+          "numericMarginLengths": 1.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 520,
+          "lastCornerRankRange": [
+            14,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.849199663016005,
+          "final600AverageSpeedMps": 17.964071856287426,
+          "winnerTimeGap": 1.2,
+          "positionGainLastCornerToFinish": 0
+        },
+        {
+          "horseNumber": 12,
+          "horseName": "バビット",
+          "finishPosition": 15,
+          "finishStatusRaw": "15",
+          "finishTimeRaw": "1:58.7",
+          "finishTime": 118.7,
+          "final600": 34.6,
+          "cornerRanksReported": [
+            2,
+            2,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 2,
+              "rank": 2,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 2,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "アタマ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 462,
+          "lastCornerRankRange": [
+            2,
+            2
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.849199663016005,
+          "final600AverageSpeedMps": 17.341040462427745,
+          "winnerTimeGap": 1.2,
+          "positionGainLastCornerToFinish": -13
+        }
+      ],
+      "cornerPassageGroups": [
+        {
+          "labelRaw": "2コーナー",
+          "horseGroupsRaw": "3(10,12)(1,9)(6,8)(2,13)7,5,4-11-14-15"
+        },
+        {
+          "labelRaw": "3コーナー",
+          "horseGroupsRaw": "3=12-10,9(1,8)(2,6,13)7(4,5)(11,14)15"
+        },
+        {
+          "labelRaw": "4コーナー",
+          "horseGroupsRaw": "3=12(10,9)(8,13)(1,6)(2,7)(4,5,14)(11,15)"
+        }
+      ],
+      "summary": {
+        "winnerFinishTime": 117.5,
+        "winnerFinal600": 32.7,
+        "winnerCarriedWeightKg": 56.0,
+        "winnerSecondTimeGap": 0.1,
+        "fieldFirstLastTimeSpan": 1.2,
+        "fieldFractionWithin1Second": 0.8666666666666667,
+        "fieldFractionWithin2Seconds": 1.0,
+        "fieldFinal600Span": 4.1,
+        "first200": 12.6,
+        "post200SplitCv": 0.04648688404284693,
+        "final200MinusPrevious": 0.3
+      },
+      "routeCaveats": [],
+      "leadingMarkerSpeedMetrics": {
+        "first200Time": 12.6,
+        "fastest200Time": 10.9,
+        "last200Time": 12.7,
+        "fastest200MeanSpeedMps": 18.34862385321101,
+        "post200SplitCv": 0.04648688404284693,
+        "final200MinusPrevious": 0.3
+      }
+    },
+    {
+      "id": "221127",
+      "date": "2022-11-27",
+      "raceName": "Japan Cup",
+      "raceNameJapanese": "ジャパンカップ",
+      "grade": "G1",
+      "venue": "東京",
+      "length": 2400,
+      "surface": "草地",
+      "state": "良",
+      "direction": "左回",
+      "course": "東京芝A",
+      "courseDescriptionRaw": "コース：2,400メートル（芝・左）",
+      "fieldSize": 18,
+      "entryCount": 18,
+      "finisherCount": 18,
+      "dnfCount": 0,
+      "scratchCount": 0,
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/jc/result/jc2022.html",
+        "canonicalUrl": "https://jra.jp/datafile/seiseki/g1/jc/result/jc2022.html",
+        "retrievedAt": "2026-10-02",
+        "publisher": "Japan Racing Association",
+        "htmlEncoding": "cp932",
+        "htmlSha256": "ab4c1243c139256babe3b2d50e7938f765d2160c58bd4e622826f2252629823a"
+      },
+      "sectionalSource": "https://www.jra.go.jp/datafile/seiseki/g1/jc/result/jc2022.html",
+      "raceSectionals200m": [
+        12.8,
+        11.2,
+        12.3,
+        12.5,
+        12.3,
+        12.2,
+        12.4,
+        12.1,
+        11.7,
+        11.4,
+        11.3,
+        11.5
+      ],
+      "first600": 36.3,
+      "raceFinal600": 34.2,
+      "winner": {
+        "horseNumber": 6,
+        "horseName": "ヴェラアズール",
+        "finishPosition": 1,
+        "finishStatusRaw": "1",
+        "finishTimeRaw": "2:23.7",
+        "finishTime": 143.7,
+        "final600": 33.7,
+        "cornerRanksReported": [
+          11,
+          9,
+          10,
+          10
+        ],
+        "cornerRecords": [
+          {
+            "cornerNumber": 1,
+            "rank": 11,
+            "labelRaw": "1コーナー通過順位"
+          },
+          {
+            "cornerNumber": 2,
+            "rank": 9,
+            "labelRaw": "2コーナー通過順位"
+          },
+          {
+            "cornerNumber": 3,
+            "rank": 10,
+            "labelRaw": "3コーナー通過順位"
+          },
+          {
+            "cornerNumber": 4,
+            "rank": 10,
+            "labelRaw": "4コーナー通過順位"
+          }
+        ],
+        "lastCornerRankReported": 10,
+        "isStarter": true,
+        "marginFromPreviousRaw": "",
+        "numericMarginLengths": null,
+        "carriedWeightKg": 57.0,
+        "bodyMassKg": 518,
+        "lastCornerRankRange": [
+          10,
+          11
+        ],
+        "lastCornerReportedProxy": "midpack",
+        "possibleLastCornerProxies": [
+          "midpack"
+        ],
+        "ambiguousLastCornerProxy": false,
+        "averageSpeedMps": 16.701461377870565,
+        "final600AverageSpeedMps": 17.80415430267062,
+        "winnerTimeGap": 0.0,
+        "positionGainLastCornerToFinish": 9
+      },
+      "horses": [
+        {
+          "horseNumber": 6,
+          "horseName": "ヴェラアズール",
+          "finishPosition": 1,
+          "finishStatusRaw": "1",
+          "finishTimeRaw": "2:23.7",
+          "finishTime": 143.7,
+          "final600": 33.7,
+          "cornerRanksReported": [
+            11,
+            9,
+            10,
+            10
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 11,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 9,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 10,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 10,
+          "isStarter": true,
+          "marginFromPreviousRaw": "",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 518,
+          "lastCornerRankRange": [
+            10,
+            11
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.701461377870565,
+          "final600AverageSpeedMps": 17.80415430267062,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 9
+        },
+        {
+          "horseNumber": 15,
+          "horseName": "シャフリヤール",
+          "finishPosition": 2,
+          "finishStatusRaw": "2",
+          "finishTimeRaw": "2:23.8",
+          "finishTime": 143.8,
+          "final600": 33.7,
+          "cornerRanksReported": [
+            12,
+            14,
+            14,
+            12
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 12,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 14,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 14,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 12,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 12,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３／４",
+          "numericMarginLengths": 0.75,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 450,
+          "lastCornerRankRange": [
+            12,
+            13
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack",
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.689847009735743,
+          "final600AverageSpeedMps": 17.80415430267062,
+          "winnerTimeGap": 0.1,
+          "positionGainLastCornerToFinish": 10
+        },
+        {
+          "horseNumber": 3,
+          "horseName": "ヴェルトライゼンデ",
+          "finishPosition": 3,
+          "finishStatusRaw": "3",
+          "finishTimeRaw": "2:23.8",
+          "finishTime": 143.8,
+          "final600": 34.0,
+          "cornerRanksReported": [
+            5,
+            5,
+            5,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 5,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 5,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 494,
+          "lastCornerRankRange": [
+            4,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.689847009735743,
+          "final600AverageSpeedMps": 17.647058823529413,
+          "winnerTimeGap": 0.1,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 8,
+          "horseName": "デアリングタクト",
+          "finishPosition": 4,
+          "finishStatusRaw": "4",
+          "finishTimeRaw": "2:23.9",
+          "finishTime": 143.9,
+          "final600": 33.7,
+          "cornerRanksReported": [
+            12,
+            13,
+            14,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 12,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 13,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 14,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 484,
+          "lastCornerRankRange": [
+            14,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.67824878387769,
+          "final600AverageSpeedMps": 17.80415430267062,
+          "winnerTimeGap": 0.2,
+          "positionGainLastCornerToFinish": 10
+        },
+        {
+          "horseNumber": 14,
+          "horseName": "ダノンベルーガ",
+          "finishPosition": 5,
+          "finishStatusRaw": "5",
+          "finishTimeRaw": "2:24.3",
+          "finishTime": 144.3,
+          "final600": 34.4,
+          "cornerRanksReported": [
+            8,
+            10,
+            10,
+            7
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 8,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 10,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 7,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 7,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 500,
+          "lastCornerRankRange": [
+            7,
+            9
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.63201663201663,
+          "final600AverageSpeedMps": 17.441860465116278,
+          "winnerTimeGap": 0.6,
+          "positionGainLastCornerToFinish": 2
+        },
+        {
+          "horseNumber": 5,
+          "horseName": "グランドグローリー",
+          "finishPosition": 6,
+          "finishStatusRaw": "6",
+          "finishTimeRaw": "2:24.3",
+          "finishTime": 144.3,
+          "final600": 34.2,
+          "cornerRanksReported": [
+            8,
+            10,
+            12,
+            12
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 8,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 10,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 12,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 12,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 12,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 470,
+          "lastCornerRankRange": [
+            12,
+            13
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack",
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.63201663201663,
+          "final600AverageSpeedMps": 17.543859649122805,
+          "winnerTimeGap": 0.6,
+          "positionGainLastCornerToFinish": 6
+        },
+        {
+          "horseNumber": 2,
+          "horseName": "オネスト",
+          "finishPosition": 7,
+          "finishStatusRaw": "7",
+          "finishTimeRaw": "2:24.4",
+          "finishTime": 144.4,
+          "final600": 34.4,
+          "cornerRanksReported": [
+            8,
+            6,
+            7,
+            10
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 8,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 10,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 10,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 454,
+          "lastCornerRankRange": [
+            10,
+            11
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.620498614958446,
+          "final600AverageSpeedMps": 17.441860465116278,
+          "winnerTimeGap": 0.7,
+          "positionGainLastCornerToFinish": 3
+        },
+        {
+          "horseNumber": 11,
+          "horseName": "カラテ",
+          "finishPosition": 8,
+          "finishStatusRaw": "8",
+          "finishTimeRaw": "2:24.4",
+          "finishTime": 144.4,
+          "final600": 34.5,
+          "cornerRanksReported": [
+            5,
+            6,
+            7,
+            7
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 5,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 7,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 7,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 536,
+          "lastCornerRankRange": [
+            7,
+            9
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.620498614958446,
+          "final600AverageSpeedMps": 17.391304347826086,
+          "winnerTimeGap": 0.7,
+          "positionGainLastCornerToFinish": -1
+        },
+        {
+          "horseNumber": 7,
+          "horseName": "テュネス",
+          "finishPosition": 9,
+          "finishStatusRaw": "9",
+          "finishTimeRaw": "2:24.7",
+          "finishTime": 144.7,
+          "final600": 34.4,
+          "cornerRanksReported": [
+            15,
+            15,
+            16,
+            16
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 15,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 15,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 16,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 16,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 16,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１ 3/4",
+          "numericMarginLengths": 1.75,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 442,
+          "lastCornerRankRange": [
+            16,
+            16
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.5860400829302,
+          "final600AverageSpeedMps": 17.441860465116278,
+          "winnerTimeGap": 1.0,
+          "positionGainLastCornerToFinish": 7
+        },
+        {
+          "horseNumber": 17,
+          "horseName": "ユーバーレーベン",
+          "finishPosition": 10,
+          "finishStatusRaw": "10",
+          "finishTimeRaw": "2:24.7",
+          "finishTime": 144.7,
+          "final600": 34.8,
+          "cornerRanksReported": [
+            16,
+            17,
+            7,
+            7
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 16,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 17,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 7,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 7,
+          "isStarter": true,
+          "marginFromPreviousRaw": "ハナ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 476,
+          "lastCornerRankRange": [
+            7,
+            9
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.5860400829302,
+          "final600AverageSpeedMps": 17.24137931034483,
+          "winnerTimeGap": 1.0,
+          "positionGainLastCornerToFinish": -3
+        },
+        {
+          "horseNumber": 10,
+          "horseName": "ハーツイストワール",
+          "finishPosition": 11,
+          "finishStatusRaw": "11",
+          "finishTimeRaw": "2:24.8",
+          "finishTime": 144.8,
+          "final600": 35.2,
+          "cornerRanksReported": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 2,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 2,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 2,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 476,
+          "lastCornerRankRange": [
+            1,
+            2
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "front",
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.574585635359114,
+          "final600AverageSpeedMps": 17.045454545454543,
+          "winnerTimeGap": 1.1,
+          "positionGainLastCornerToFinish": -9
+        },
+        {
+          "horseNumber": 12,
+          "horseName": "シャドウディーヴァ",
+          "finishPosition": 12,
+          "finishStatusRaw": "12",
+          "finishTimeRaw": "2:24.9",
+          "finishTime": 144.9,
+          "final600": 34.5,
+          "cornerRanksReported": [
+            16,
+            15,
+            16,
+            17
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 16,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 15,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 16,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 17,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 17,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 482,
+          "lastCornerRankRange": [
+            17,
+            17
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.563146997929607,
+          "final600AverageSpeedMps": 17.391304347826086,
+          "winnerTimeGap": 1.2,
+          "positionGainLastCornerToFinish": 5
+        },
+        {
+          "horseNumber": 4,
+          "horseName": "トラストケンシン",
+          "finishPosition": 13,
+          "finishStatusRaw": "13",
+          "finishTimeRaw": "2:25.0",
+          "finishTime": 145.0,
+          "final600": 34.8,
+          "cornerRanksReported": [
+            12,
+            10,
+            12,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 12,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 10,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 12,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３／４",
+          "numericMarginLengths": 0.75,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 474,
+          "lastCornerRankRange": [
+            14,
+            15
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.551724137931036,
+          "final600AverageSpeedMps": 17.24137931034483,
+          "winnerTimeGap": 1.3,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 13,
+          "horseName": "テーオーロイヤル",
+          "finishPosition": 14,
+          "finishStatusRaw": "14",
+          "finishTimeRaw": "2:25.3",
+          "finishTime": 145.3,
+          "final600": 35.6,
+          "cornerRanksReported": [
+            2,
+            3,
+            3,
+            3
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 2,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 3,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 3,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 3,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１ 3/4",
+          "numericMarginLengths": 1.75,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 456,
+          "lastCornerRankRange": [
+            3,
+            3
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.517549896765313,
+          "final600AverageSpeedMps": 16.85393258426966,
+          "winnerTimeGap": 1.6,
+          "positionGainLastCornerToFinish": -11
+        },
+        {
+          "horseNumber": 1,
+          "horseName": "シムカミル",
+          "finishPosition": 15,
+          "finishStatusRaw": "15",
+          "finishTimeRaw": "2:25.3",
+          "finishTime": 145.3,
+          "final600": 35.5,
+          "cornerRanksReported": [
+            4,
+            3,
+            3,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 4,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 3,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "ハナ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 55.0,
+          "bodyMassKg": 486,
+          "lastCornerRankRange": [
+            4,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.517549896765313,
+          "final600AverageSpeedMps": 16.901408450704224,
+          "winnerTimeGap": 1.6,
+          "positionGainLastCornerToFinish": -11
+        },
+        {
+          "horseNumber": 9,
+          "horseName": "ユニコーンライオン",
+          "finishPosition": 16,
+          "finishStatusRaw": "16",
+          "finishTimeRaw": "2:25.3",
+          "finishTime": 145.3,
+          "final600": 35.8,
+          "cornerRanksReported": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 1,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 1,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 1,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 1,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 1,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 534,
+          "lastCornerRankRange": [
+            1,
+            2
+          ],
+          "lastCornerReportedProxy": "front",
+          "possibleLastCornerProxies": [
+            "front",
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.517549896765313,
+          "final600AverageSpeedMps": 16.75977653631285,
+          "winnerTimeGap": 1.6,
+          "positionGainLastCornerToFinish": -15
+        },
+        {
+          "horseNumber": 18,
+          "horseName": "ボッケリーニ",
+          "finishPosition": 17,
+          "finishStatusRaw": "17",
+          "finishTimeRaw": "2:25.7",
+          "finishTime": 145.7,
+          "final600": 35.9,
+          "cornerRanksReported": [
+            5,
+            6,
+            5,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 5,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 458,
+          "lastCornerRankRange": [
+            4,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.472203157172274,
+          "final600AverageSpeedMps": 16.71309192200557,
+          "winnerTimeGap": 2.0,
+          "positionGainLastCornerToFinish": -13
+        },
+        {
+          "horseNumber": 16,
+          "horseName": "リッジマン",
+          "finishPosition": 18,
+          "finishStatusRaw": "18",
+          "finishTimeRaw": "2:26.4",
+          "finishTime": 146.4,
+          "final600": 35.6,
+          "cornerRanksReported": [
+            18,
+            18,
+            18,
+            18
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 18,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 18,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 18,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 18,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 18,
+          "isStarter": true,
+          "marginFromPreviousRaw": "４",
+          "numericMarginLengths": 4.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 472,
+          "lastCornerRankRange": [
+            18,
+            18
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.39344262295082,
+          "final600AverageSpeedMps": 16.85393258426966,
+          "winnerTimeGap": 2.7,
+          "positionGainLastCornerToFinish": 0
+        }
+      ],
+      "cornerPassageGroups": [
+        {
+          "labelRaw": "1コーナー",
+          "horseGroupsRaw": "(*9,10,13)1(3,11,18)(2,5,14)6(4,8,15)7(12,17)16"
+        },
+        {
+          "labelRaw": "2コーナー",
+          "horseGroupsRaw": "(*9,10)(1,13)3(2,11,18)6(4,5,14)8,15(12,7)-17,16"
+        },
+        {
+          "labelRaw": "3コーナー",
+          "horseGroupsRaw": "9,10(1,13)(3,18)(2,11,17)(6,14)(4,5)(8,15)(12,7)-16"
+        },
+        {
+          "labelRaw": "4コーナー",
+          "horseGroupsRaw": "(*9,10)13(1,3,18)(11,14,17)(2,6)(5,15)(4,8)7,12-16"
+        }
+      ],
+      "summary": {
+        "winnerFinishTime": 143.7,
+        "winnerFinal600": 33.7,
+        "winnerCarriedWeightKg": 57.0,
+        "winnerSecondTimeGap": 0.1,
+        "fieldFirstLastTimeSpan": 2.7,
+        "fieldFractionWithin1Second": 0.5555555555555556,
+        "fieldFractionWithin2Seconds": 0.9444444444444444,
+        "fieldFinal600Span": 2.2,
+        "first200": 12.8,
+        "post200SplitCv": 0.03892357281239724,
+        "final200MinusPrevious": 0.2
+      },
+      "routeCaveats": [],
+      "leadingMarkerSpeedMetrics": {
+        "first200Time": 12.8,
+        "fastest200Time": 11.2,
+        "last200Time": 11.5,
+        "fastest200MeanSpeedMps": 17.857142857142858,
+        "post200SplitCv": 0.03892357281239724,
+        "final200MinusPrevious": 0.2
+      }
+    },
+    {
+      "id": "221023",
+      "date": "2022-10-23",
+      "raceName": "Kikuka Sho",
+      "raceNameJapanese": "菊花賞",
+      "grade": "G1",
+      "venue": "阪神",
+      "length": 3000,
+      "surface": "草地",
+      "state": "良",
+      "direction": "右回",
+      "course": "阪神芝内A",
+      "courseDescriptionRaw": "コース：3,000メートル（芝・右）",
+      "fieldSize": 18,
+      "entryCount": 18,
+      "finisherCount": 18,
+      "dnfCount": 0,
+      "scratchCount": 0,
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/kikka/result/kikka2022.html",
+        "canonicalUrl": "https://jra.jp/datafile/seiseki/g1/kikka/result/kikka2022.html",
+        "retrievedAt": "2026-10-02",
+        "publisher": "Japan Racing Association",
+        "htmlEncoding": "cp932",
+        "htmlSha256": "c074e91bd850630efadac203d5236ac902e56503e0e5efe1ea099506dc5580ac"
+      },
+      "sectionalSource": "https://www.jra.go.jp/datafile/seiseki/g1/kikka/result/kikka2022.html",
+      "raceSectionals200m": [
+        12.3,
+        10.9,
+        11.7,
+        11.9,
+        11.9,
+        12.1,
+        12.6,
+        13.3,
+        12.6,
+        12.1,
+        12.1,
+        11.9,
+        11.9,
+        12.2,
+        12.9
+      ],
+      "first600": 34.9,
+      "raceFinal600": 37.0,
+      "winner": {
+        "horseNumber": 14,
+        "horseName": "アスクビクターモア",
+        "finishPosition": 1,
+        "finishStatusRaw": "1",
+        "finishTimeRaw": "3:02.4",
+        "finishTime": 182.4,
+        "final600": 36.9,
+        "cornerRanksReported": [
+          2,
+          2,
+          2,
+          1
+        ],
+        "cornerRecords": [
+          {
+            "cornerNumber": 1,
+            "rank": 2,
+            "labelRaw": "1コーナー通過順位"
+          },
+          {
+            "cornerNumber": 2,
+            "rank": 2,
+            "labelRaw": "2コーナー通過順位"
+          },
+          {
+            "cornerNumber": 3,
+            "rank": 2,
+            "labelRaw": "3コーナー通過順位"
+          },
+          {
+            "cornerNumber": 4,
+            "rank": 1,
+            "labelRaw": "4コーナー通過順位"
+          }
+        ],
+        "lastCornerRankReported": 1,
+        "isStarter": true,
+        "marginFromPreviousRaw": "レコード",
+        "numericMarginLengths": null,
+        "carriedWeightKg": 57.0,
+        "bodyMassKg": 476,
+        "lastCornerRankRange": [
+          1,
+          1
+        ],
+        "lastCornerReportedProxy": "front",
+        "possibleLastCornerProxies": [
+          "front"
+        ],
+        "ambiguousLastCornerProxy": false,
+        "averageSpeedMps": 16.44736842105263,
+        "final600AverageSpeedMps": 16.260162601626018,
+        "winnerTimeGap": 0.0,
+        "positionGainLastCornerToFinish": 0
+      },
+      "horses": [
+        {
+          "horseNumber": 14,
+          "horseName": "アスクビクターモア",
+          "finishPosition": 1,
+          "finishStatusRaw": "1",
+          "finishTimeRaw": "3:02.4",
+          "finishTime": 182.4,
+          "final600": 36.9,
+          "cornerRanksReported": [
+            2,
+            2,
+            2,
+            1
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 2,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 2,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 2,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 1,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 1,
+          "isStarter": true,
+          "marginFromPreviousRaw": "レコード",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 476,
+          "lastCornerRankRange": [
+            1,
+            1
+          ],
+          "lastCornerReportedProxy": "front",
+          "possibleLastCornerProxies": [
+            "front"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.44736842105263,
+          "final600AverageSpeedMps": 16.260162601626018,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 0
+        },
+        {
+          "horseNumber": 4,
+          "horseName": "ボルドグフーシュ",
+          "finishPosition": 2,
+          "finishStatusRaw": "2",
+          "finishTimeRaw": "3:02.4",
+          "finishTime": 182.4,
+          "final600": 36.3,
+          "cornerRanksReported": [
+            12,
+            13,
+            10,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 12,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 13,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "ハナ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 496,
+          "lastCornerRankRange": [
+            4,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.44736842105263,
+          "final600AverageSpeedMps": 16.528925619834713,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 2
+        },
+        {
+          "horseNumber": 17,
+          "horseName": "ジャスティンパレス",
+          "finishPosition": 3,
+          "finishStatusRaw": "3",
+          "finishTimeRaw": "3:02.5",
+          "finishTime": 182.5,
+          "final600": 36.5,
+          "cornerRanksReported": [
+            8,
+            6,
+            6,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 8,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 6,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 452,
+          "lastCornerRankRange": [
+            4,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.438356164383563,
+          "final600AverageSpeedMps": 16.438356164383563,
+          "winnerTimeGap": 0.1,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 11,
+          "horseName": "ドゥラドーレス",
+          "finishPosition": 4,
+          "finishStatusRaw": "4",
+          "finishTimeRaw": "3:03.4",
+          "finishTime": 183.4,
+          "final600": 37.2,
+          "cornerRanksReported": [
+            12,
+            12,
+            10,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 12,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 12,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "５",
+          "numericMarginLengths": 5.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 490,
+          "lastCornerRankRange": [
+            9,
+            11
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.357688113413303,
+          "final600AverageSpeedMps": 16.129032258064516,
+          "winnerTimeGap": 1.0,
+          "positionGainLastCornerToFinish": 5
+        },
+        {
+          "horseNumber": 9,
+          "horseName": "シホノスペランツァ",
+          "finishPosition": 5,
+          "finishStatusRaw": "5",
+          "finishTimeRaw": "3:03.4",
+          "finishTime": 183.4,
+          "final600": 36.8,
+          "cornerRanksReported": [
+            16,
+            16,
+            16,
+            13
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 16,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 16,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 16,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 13,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 13,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 478,
+          "lastCornerRankRange": [
+            13,
+            14
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.357688113413303,
+          "final600AverageSpeedMps": 16.304347826086957,
+          "winnerTimeGap": 1.0,
+          "positionGainLastCornerToFinish": 8
+        },
+        {
+          "horseNumber": 5,
+          "horseName": "ヤマニンゼスト",
+          "finishPosition": 6,
+          "finishStatusRaw": "6",
+          "finishTimeRaw": "3:03.6",
+          "finishTime": 183.6,
+          "final600": 37.1,
+          "cornerRanksReported": [
+            14,
+            15,
+            14,
+            13
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 14,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 15,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 14,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 13,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 13,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１ 1/4",
+          "numericMarginLengths": 1.25,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 500,
+          "lastCornerRankRange": [
+            13,
+            14
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.33986928104575,
+          "final600AverageSpeedMps": 16.172506738544474,
+          "winnerTimeGap": 1.2,
+          "positionGainLastCornerToFinish": 7
+        },
+        {
+          "horseNumber": 3,
+          "horseName": "プラダリア",
+          "finishPosition": 7,
+          "finishStatusRaw": "7",
+          "finishTimeRaw": "3:03.6",
+          "finishTime": 183.6,
+          "final600": 37.2,
+          "cornerRanksReported": [
+            9,
+            9,
+            10,
+            12
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 9,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 9,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 12,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 12,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 458,
+          "lastCornerRankRange": [
+            12,
+            12
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.33986928104575,
+          "final600AverageSpeedMps": 16.129032258064516,
+          "winnerTimeGap": 1.2,
+          "positionGainLastCornerToFinish": 5
+        },
+        {
+          "horseNumber": 1,
+          "horseName": "ガイアフォース",
+          "finishPosition": 8,
+          "finishStatusRaw": "8",
+          "finishTimeRaw": "3:04.0",
+          "finishTime": 184.0,
+          "final600": 38.0,
+          "cornerRanksReported": [
+            6,
+            6,
+            7,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 6,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 494,
+          "lastCornerRankRange": [
+            4,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.304347826086957,
+          "final600AverageSpeedMps": 15.789473684210526,
+          "winnerTimeGap": 1.6,
+          "positionGainLastCornerToFinish": -4
+        },
+        {
+          "horseNumber": 7,
+          "horseName": "アスクワイルドモア",
+          "finishPosition": 9,
+          "finishStatusRaw": "9",
+          "finishTimeRaw": "3:04.2",
+          "finishTime": 184.2,
+          "final600": 37.6,
+          "cornerRanksReported": [
+            14,
+            14,
+            14,
+            15
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 14,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 14,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 14,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 15,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 15,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１",
+          "numericMarginLengths": 1.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 472,
+          "lastCornerRankRange": [
+            15,
+            16
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.286644951140065,
+          "final600AverageSpeedMps": 15.957446808510637,
+          "winnerTimeGap": 1.8,
+          "positionGainLastCornerToFinish": 6
+        },
+        {
+          "horseNumber": 2,
+          "horseName": "シェルビーズアイ",
+          "finishPosition": 10,
+          "finishStatusRaw": "10",
+          "finishTimeRaw": "3:04.4",
+          "finishTime": 184.4,
+          "final600": 38.1,
+          "cornerRanksReported": [
+            9,
+            11,
+            10,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 9,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 11,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 10,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１",
+          "numericMarginLengths": 1.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 470,
+          "lastCornerRankRange": [
+            9,
+            11
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.268980477223426,
+          "final600AverageSpeedMps": 15.74803149606299,
+          "winnerTimeGap": 2.0,
+          "positionGainLastCornerToFinish": -1
+        },
+        {
+          "horseNumber": 18,
+          "horseName": "セレシオン",
+          "finishPosition": 11,
+          "finishStatusRaw": "11",
+          "finishTimeRaw": "3:04.8",
+          "finishTime": 184.8,
+          "final600": 38.8,
+          "cornerRanksReported": [
+            6,
+            6,
+            3,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 6,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 464,
+          "lastCornerRankRange": [
+            4,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.233766233766232,
+          "final600AverageSpeedMps": 15.463917525773198,
+          "winnerTimeGap": 2.4,
+          "positionGainLastCornerToFinish": -7
+        },
+        {
+          "horseNumber": 12,
+          "horseName": "ヴェローナシチー",
+          "finishPosition": 12,
+          "finishStatusRaw": "12",
+          "finishTimeRaw": "3:05.2",
+          "finishTime": 185.2,
+          "final600": 38.5,
+          "cornerRanksReported": [
+            17,
+            17,
+            16,
+            15
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 17,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 17,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 16,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 15,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 15,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 498,
+          "lastCornerRankRange": [
+            15,
+            16
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.19870410367171,
+          "final600AverageSpeedMps": 15.584415584415584,
+          "winnerTimeGap": 2.8,
+          "positionGainLastCornerToFinish": 3
+        },
+        {
+          "horseNumber": 6,
+          "horseName": "ビーアストニッシド",
+          "finishPosition": 13,
+          "finishStatusRaw": "13",
+          "finishTimeRaw": "3:05.6",
+          "finishTime": 185.6,
+          "final600": 39.8,
+          "cornerRanksReported": [
+            4,
+            3,
+            3,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 4,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 3,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２",
+          "numericMarginLengths": 2.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 466,
+          "lastCornerRankRange": [
+            2,
+            3
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.163793103448278,
+          "final600AverageSpeedMps": 15.075376884422111,
+          "winnerTimeGap": 3.2,
+          "positionGainLastCornerToFinish": -11
+        },
+        {
+          "horseNumber": 13,
+          "horseName": "ディナースタ",
+          "finishPosition": 14,
+          "finishStatusRaw": "14",
+          "finishTimeRaw": "3:06.1",
+          "finishTime": 186.1,
+          "final600": 40.2,
+          "cornerRanksReported": [
+            3,
+            3,
+            3,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 3,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 3,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 3,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３",
+          "numericMarginLengths": 3.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 462,
+          "lastCornerRankRange": [
+            4,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.12036539494895,
+          "final600AverageSpeedMps": 14.925373134328357,
+          "winnerTimeGap": 3.7,
+          "positionGainLastCornerToFinish": -10
+        },
+        {
+          "horseNumber": 16,
+          "horseName": "フェーングロッテン",
+          "finishPosition": 15,
+          "finishStatusRaw": "15",
+          "finishTimeRaw": "3:06.2",
+          "finishTime": 186.2,
+          "final600": 40.1,
+          "cornerRanksReported": [
+            9,
+            9,
+            7,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 9,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 9,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 472,
+          "lastCornerRankRange": [
+            9,
+            11
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.11170784103115,
+          "final600AverageSpeedMps": 14.962593516209475,
+          "winnerTimeGap": 3.8,
+          "positionGainLastCornerToFinish": -6
+        },
+        {
+          "horseNumber": 15,
+          "horseName": "ポッドボレット",
+          "finishPosition": 16,
+          "finishStatusRaw": "16",
+          "finishTimeRaw": "3:06.8",
+          "finishTime": 186.8,
+          "final600": 40.2,
+          "cornerRanksReported": [
+            4,
+            5,
+            7,
+            17
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 4,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 5,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 17,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 17,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３ 1/2",
+          "numericMarginLengths": 3.5,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 504,
+          "lastCornerRankRange": [
+            17,
+            17
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.059957173447536,
+          "final600AverageSpeedMps": 14.925373134328357,
+          "winnerTimeGap": 4.4,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 10,
+          "horseName": "セイウンハーデス",
+          "finishPosition": 17,
+          "finishStatusRaw": "17",
+          "finishTimeRaw": "3:07.6",
+          "finishTime": 187.6,
+          "final600": 42.2,
+          "cornerRanksReported": [
+            1,
+            1,
+            1,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 1,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 1,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 1,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "５",
+          "numericMarginLengths": 5.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 466,
+          "lastCornerRankRange": [
+            2,
+            3
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.991471215351813,
+          "final600AverageSpeedMps": 14.218009478672984,
+          "winnerTimeGap": 5.2,
+          "positionGainLastCornerToFinish": -15
+        },
+        {
+          "horseNumber": 8,
+          "horseName": "マイネルトルファン",
+          "finishPosition": 18,
+          "finishStatusRaw": "18",
+          "finishTimeRaw": "3:08.9",
+          "finishTime": 188.9,
+          "final600": 41.2,
+          "cornerRanksReported": [
+            18,
+            18,
+            18,
+            18
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 18,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 18,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 18,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 18,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 18,
+          "isStarter": true,
+          "marginFromPreviousRaw": "８",
+          "numericMarginLengths": 8.0,
+          "carriedWeightKg": 57.0,
+          "bodyMassKg": 492,
+          "lastCornerRankRange": [
+            18,
+            18
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.881418740074112,
+          "final600AverageSpeedMps": 14.563106796116504,
+          "winnerTimeGap": 6.5,
+          "positionGainLastCornerToFinish": 0
+        }
+      ],
+      "cornerPassageGroups": [
+        {
+          "labelRaw": "1コーナー",
+          "horseGroupsRaw": "10,14,13(6,15)(1,18)17(2,3,16)(4,11)(5,7)-9,12-8"
+        },
+        {
+          "labelRaw": "2コーナー",
+          "horseGroupsRaw": "10-14(6,13)15(1,17,18)(3,16)2,11,4,7,5,9,12,8"
+        },
+        {
+          "labelRaw": "3コーナー(2周目)",
+          "horseGroupsRaw": "10,14(6,13,18)17(1,15,16)(2,4,3,11)(7,5)(9,12)-8"
+        },
+        {
+          "labelRaw": "4コーナー(2周目)",
+          "horseGroupsRaw": "14-(10,6)(1,17,13,18,4)(2,16,11)3(9,5)(7,12)15=8"
+        }
+      ],
+      "summary": {
+        "winnerFinishTime": 182.4,
+        "winnerFinal600": 36.9,
+        "winnerCarriedWeightKg": 57.0,
+        "winnerSecondTimeGap": 0.0,
+        "fieldFirstLastTimeSpan": 6.5,
+        "fieldFractionWithin1Second": 0.2777777777777778,
+        "fieldFractionWithin2Seconds": 0.5555555555555556,
+        "fieldFinal600Span": 5.9,
+        "first200": 12.3,
+        "post200SplitCv": 0.0456930453893546,
+        "final200MinusPrevious": 0.7
+      },
+      "routeCaveats": [
+        "2022年度京都施工替代阪神；泛化检验不能当作京都相同路线复演。"
+      ],
+      "leadingMarkerSpeedMetrics": {
+        "first200Time": 12.3,
+        "fastest200Time": 10.9,
+        "last200Time": 12.9,
+        "fastest200MeanSpeedMps": 18.34862385321101,
+        "post200SplitCv": 0.0456930453893546,
+        "final200MinusPrevious": 0.7
+      }
+    },
+    {
+      "id": "220501",
+      "date": "2022-05-01",
+      "raceName": "Tenno Sho Spring",
+      "raceNameJapanese": "天皇賞(春)",
+      "grade": "G1",
+      "venue": "阪神",
+      "length": 3200,
+      "surface": "草地",
+      "state": "稍重",
+      "direction": "右回",
+      "course": "阪神芝外A",
+      "courseDescriptionRaw": "コース：3,200メートル（芝・右 外→内）",
+      "fieldSize": 18,
+      "entryCount": 18,
+      "finisherCount": 17,
+      "dnfCount": 1,
+      "scratchCount": 0,
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/haruten/result/haruten2022.html",
+        "canonicalUrl": "https://jra.jp/datafile/seiseki/g1/haruten/result/haruten2022.html",
+        "retrievedAt": "2026-10-02",
+        "publisher": "Japan Racing Association",
+        "htmlEncoding": "cp932",
+        "htmlSha256": "866709b872d41037d4e3e252d7d6d4b87d71da6652c4ec02195f2a87f3df9e27"
+      },
+      "sectionalSource": "https://www.jra.go.jp/datafile/seiseki/g1/haruten/result/haruten2022.html",
+      "raceSectionals200m": [
+        12.7,
+        11.9,
+        11.9,
+        12.0,
+        12.0,
+        11.9,
+        12.2,
+        12.8,
+        13.3,
+        12.9,
+        12.3,
+        12.0,
+        11.9,
+        11.5,
+        11.7,
+        13.2
+      ],
+      "first600": 36.5,
+      "raceFinal600": 36.4,
+      "winner": {
+        "horseNumber": 16,
+        "horseName": "タイトルホルダー",
+        "finishPosition": 1,
+        "finishStatusRaw": "1",
+        "finishTimeRaw": "3:16.2",
+        "finishTime": 196.2,
+        "final600": 36.4,
+        "cornerRanksReported": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "cornerRecords": [
+          {
+            "cornerNumber": 1,
+            "rank": 1,
+            "labelRaw": "1コーナー通過順位"
+          },
+          {
+            "cornerNumber": 2,
+            "rank": 1,
+            "labelRaw": "2コーナー通過順位"
+          },
+          {
+            "cornerNumber": 3,
+            "rank": 1,
+            "labelRaw": "3コーナー通過順位"
+          },
+          {
+            "cornerNumber": 4,
+            "rank": 1,
+            "labelRaw": "4コーナー通過順位"
+          }
+        ],
+        "lastCornerRankReported": 1,
+        "isStarter": true,
+        "marginFromPreviousRaw": "",
+        "numericMarginLengths": null,
+        "carriedWeightKg": 58.0,
+        "bodyMassKg": 474,
+        "lastCornerRankRange": [
+          1,
+          1
+        ],
+        "lastCornerReportedProxy": "front",
+        "possibleLastCornerProxies": [
+          "front"
+        ],
+        "ambiguousLastCornerProxy": false,
+        "averageSpeedMps": 16.3098878695209,
+        "final600AverageSpeedMps": 16.483516483516485,
+        "winnerTimeGap": 0.0,
+        "positionGainLastCornerToFinish": 0
+      },
+      "horses": [
+        {
+          "horseNumber": 16,
+          "horseName": "タイトルホルダー",
+          "finishPosition": 1,
+          "finishStatusRaw": "1",
+          "finishTimeRaw": "3:16.2",
+          "finishTime": 196.2,
+          "final600": 36.4,
+          "cornerRanksReported": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 1,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 1,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 1,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 1,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 1,
+          "isStarter": true,
+          "marginFromPreviousRaw": "",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 474,
+          "lastCornerRankRange": [
+            1,
+            1
+          ],
+          "lastCornerReportedProxy": "front",
+          "possibleLastCornerProxies": [
+            "front"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.3098878695209,
+          "final600AverageSpeedMps": 16.483516483516485,
+          "winnerTimeGap": 0.0,
+          "positionGainLastCornerToFinish": 0
+        },
+        {
+          "horseNumber": 18,
+          "horseName": "ディープボンド",
+          "finishPosition": 2,
+          "finishStatusRaw": "2",
+          "finishTimeRaw": "3:17.3",
+          "finishTime": 197.3,
+          "final600": 37.1,
+          "cornerRanksReported": [
+            4,
+            4,
+            4,
+            3
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 4,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 4,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 4,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 3,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 3,
+          "isStarter": true,
+          "marginFromPreviousRaw": "７",
+          "numericMarginLengths": 7.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 504,
+          "lastCornerRankRange": [
+            3,
+            3
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.21895590471363,
+          "final600AverageSpeedMps": 16.172506738544474,
+          "winnerTimeGap": 1.1,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 7,
+          "horseName": "テーオーロイヤル",
+          "finishPosition": 3,
+          "finishStatusRaw": "3",
+          "finishTimeRaw": "3:17.4",
+          "finishTime": 197.4,
+          "final600": 37.4,
+          "cornerRanksReported": [
+            4,
+            4,
+            2,
+            2
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 4,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 4,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 2,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 2,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 2,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１",
+          "numericMarginLengths": 1.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 460,
+          "lastCornerRankRange": [
+            2,
+            2
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.210739614994935,
+          "final600AverageSpeedMps": 16.0427807486631,
+          "winnerTimeGap": 1.2,
+          "positionGainLastCornerToFinish": -1
+        },
+        {
+          "horseNumber": 9,
+          "horseName": "ヒートオンビート",
+          "finishPosition": 4,
+          "finishStatusRaw": "4",
+          "finishTimeRaw": "3:18.0",
+          "finishTime": 198.0,
+          "final600": 37.0,
+          "cornerRanksReported": [
+            9,
+            11,
+            9,
+            7
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 9,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 11,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 9,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 7,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 7,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３ 1/2",
+          "numericMarginLengths": 3.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 478,
+          "lastCornerRankRange": [
+            7,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.161616161616163,
+          "final600AverageSpeedMps": 16.216216216216218,
+          "winnerTimeGap": 1.8,
+          "positionGainLastCornerToFinish": 3
+        },
+        {
+          "horseNumber": 1,
+          "horseName": "アイアンバローズ",
+          "finishPosition": 5,
+          "finishStatusRaw": "5",
+          "finishTimeRaw": "3:18.3",
+          "finishTime": 198.3,
+          "final600": 37.7,
+          "cornerRanksReported": [
+            6,
+            6,
+            6,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 6,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 6,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２",
+          "numericMarginLengths": 2.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 496,
+          "lastCornerRankRange": [
+            4,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.137165910237012,
+          "final600AverageSpeedMps": 15.915119363395224,
+          "winnerTimeGap": 2.1,
+          "positionGainLastCornerToFinish": -1
+        },
+        {
+          "horseNumber": 11,
+          "horseName": "マイネルファンロン",
+          "finishPosition": 6,
+          "finishStatusRaw": "6",
+          "finishTimeRaw": "3:18.7",
+          "finishTime": 198.7,
+          "final600": 37.9,
+          "cornerRanksReported": [
+            9,
+            9,
+            7,
+            7
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 9,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 9,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 7,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 7,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 478,
+          "lastCornerRankRange": [
+            7,
+            8
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent",
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.10468042274786,
+          "final600AverageSpeedMps": 15.8311345646438,
+          "winnerTimeGap": 2.5,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 13,
+          "horseName": "ロバートソンキー",
+          "finishPosition": 7,
+          "finishStatusRaw": "7",
+          "finishTimeRaw": "3:18.8",
+          "finishTime": 198.8,
+          "final600": 37.5,
+          "cornerRanksReported": [
+            12,
+            12,
+            12,
+            11
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 12,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 12,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 12,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 11,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 11,
+          "isStarter": true,
+          "marginFromPreviousRaw": "３／４",
+          "numericMarginLengths": 0.75,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 470,
+          "lastCornerRankRange": [
+            11,
+            13
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack",
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.096579476861166,
+          "final600AverageSpeedMps": 16.0,
+          "winnerTimeGap": 2.6,
+          "positionGainLastCornerToFinish": 4
+        },
+        {
+          "horseNumber": 14,
+          "horseName": "ヴァルコス",
+          "finishPosition": 8,
+          "finishStatusRaw": "8",
+          "finishTimeRaw": "3:18.9",
+          "finishTime": 198.9,
+          "final600": 37.6,
+          "cornerRanksReported": [
+            9,
+            9,
+            9,
+            11
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 9,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 9,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 9,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 11,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 11,
+          "isStarter": true,
+          "marginFromPreviousRaw": "１／２",
+          "numericMarginLengths": 0.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 518,
+          "lastCornerRankRange": [
+            11,
+            13
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack",
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 16.08848667672197,
+          "final600AverageSpeedMps": 15.957446808510637,
+          "winnerTimeGap": 2.7,
+          "positionGainLastCornerToFinish": 3
+        },
+        {
+          "horseNumber": 6,
+          "horseName": "メロディーレーン",
+          "finishPosition": 9,
+          "finishStatusRaw": "9",
+          "finishTimeRaw": "3:19.0",
+          "finishTime": 199.0,
+          "final600": 38.0,
+          "cornerRanksReported": [
+            7,
+            8,
+            7,
+            10
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 7,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 8,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 7,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 10,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 10,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 56.0,
+          "bodyMassKg": 352,
+          "lastCornerRankRange": [
+            10,
+            10
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.08040201005025,
+          "final600AverageSpeedMps": 15.789473684210526,
+          "winnerTimeGap": 2.8,
+          "positionGainLastCornerToFinish": 1
+        },
+        {
+          "horseNumber": 10,
+          "horseName": "トーセンカンビーナ",
+          "finishPosition": 10,
+          "finishStatusRaw": "10",
+          "finishTimeRaw": "3:19.4",
+          "finishTime": 199.4,
+          "final600": 37.8,
+          "cornerRanksReported": [
+            17,
+            17,
+            17,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 17,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 17,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 17,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 472,
+          "lastCornerRankRange": [
+            14,
+            16
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 16.0481444332999,
+          "final600AverageSpeedMps": 15.873015873015873,
+          "winnerTimeGap": 3.2,
+          "positionGainLastCornerToFinish": 4
+        },
+        {
+          "horseNumber": 5,
+          "horseName": "マカオンドール",
+          "finishPosition": 11,
+          "finishStatusRaw": "11",
+          "finishTimeRaw": "3:20.2",
+          "finishTime": 200.2,
+          "final600": 39.3,
+          "cornerRanksReported": [
+            13,
+            14,
+            9,
+            9
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 13,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 14,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 9,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 9,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 9,
+          "isStarter": true,
+          "marginFromPreviousRaw": "５",
+          "numericMarginLengths": 5.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 488,
+          "lastCornerRankRange": [
+            9,
+            9
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.984015984015985,
+          "final600AverageSpeedMps": 15.267175572519085,
+          "winnerTimeGap": 4.0,
+          "positionGainLastCornerToFinish": -2
+        },
+        {
+          "horseNumber": 3,
+          "horseName": "ディバインフォース",
+          "finishPosition": 12,
+          "finishStatusRaw": "12",
+          "finishTimeRaw": "3:20.2",
+          "finishTime": 200.2,
+          "final600": 38.7,
+          "cornerRanksReported": [
+            16,
+            15,
+            16,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 16,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 15,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 16,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "ハナ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 462,
+          "lastCornerRankRange": [
+            14,
+            16
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.984015984015985,
+          "final600AverageSpeedMps": 15.503875968992247,
+          "winnerTimeGap": 4.0,
+          "positionGainLastCornerToFinish": 2
+        },
+        {
+          "horseNumber": 4,
+          "horseName": "ユーキャンスマイル",
+          "finishPosition": 13,
+          "finishStatusRaw": "13",
+          "finishTimeRaw": "3:20.7",
+          "finishTime": 200.7,
+          "final600": 39.4,
+          "cornerRanksReported": [
+            14,
+            12,
+            12,
+            11
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 14,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 12,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 12,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 11,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 11,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 516,
+          "lastCornerRankRange": [
+            11,
+            13
+          ],
+          "lastCornerReportedProxy": "midpack",
+          "possibleLastCornerProxies": [
+            "midpack",
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": true,
+          "averageSpeedMps": 15.944195316392626,
+          "final600AverageSpeedMps": 15.228426395939087,
+          "winnerTimeGap": 4.5,
+          "positionGainLastCornerToFinish": -2
+        },
+        {
+          "horseNumber": 8,
+          "horseName": "クレッシェンドラヴ",
+          "finishPosition": 14,
+          "finishStatusRaw": "14",
+          "finishTimeRaw": "3:21.1",
+          "finishTime": 201.1,
+          "final600": 40.7,
+          "cornerRanksReported": [
+            2,
+            2,
+            2,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 2,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 2,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 2,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "２ 1/2",
+          "numericMarginLengths": 2.5,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 496,
+          "lastCornerRankRange": [
+            4,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.912481352560915,
+          "final600AverageSpeedMps": 14.74201474201474,
+          "winnerTimeGap": 4.9,
+          "positionGainLastCornerToFinish": -10
+        },
+        {
+          "horseNumber": 12,
+          "horseName": "ハヤヤッコ",
+          "finishPosition": 15,
+          "finishStatusRaw": "15",
+          "finishTimeRaw": "3:21.1",
+          "finishTime": 201.1,
+          "final600": 39.6,
+          "cornerRanksReported": [
+            14,
+            15,
+            12,
+            14
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 14,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 15,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 12,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 14,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 14,
+          "isStarter": true,
+          "marginFromPreviousRaw": "クビ",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 476,
+          "lastCornerRankRange": [
+            14,
+            16
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.912481352560915,
+          "final600AverageSpeedMps": 15.15151515151515,
+          "winnerTimeGap": 4.9,
+          "positionGainLastCornerToFinish": -1
+        },
+        {
+          "horseNumber": 2,
+          "horseName": "ハーツイストワール",
+          "finishPosition": 16,
+          "finishStatusRaw": "16",
+          "finishTimeRaw": "3:22.2",
+          "finishTime": 202.2,
+          "final600": 41.6,
+          "cornerRanksReported": [
+            7,
+            6,
+            5,
+            4
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 7,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 6,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 5,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 4,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 4,
+          "isStarter": true,
+          "marginFromPreviousRaw": "７",
+          "numericMarginLengths": 7.0,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 480,
+          "lastCornerRankRange": [
+            4,
+            6
+          ],
+          "lastCornerReportedProxy": "prominent",
+          "possibleLastCornerProxies": [
+            "prominent"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.825914935707221,
+          "final600AverageSpeedMps": 14.423076923076923,
+          "winnerTimeGap": 6.0,
+          "positionGainLastCornerToFinish": -12
+        },
+        {
+          "horseNumber": 15,
+          "horseName": "タガノディアマンテ",
+          "finishPosition": 17,
+          "finishStatusRaw": "17",
+          "finishTimeRaw": "3:24.1",
+          "finishTime": 204.1,
+          "final600": 41.5,
+          "cornerRanksReported": [
+            3,
+            3,
+            12,
+            17
+          ],
+          "cornerRecords": [
+            {
+              "cornerNumber": 1,
+              "rank": 3,
+              "labelRaw": "1コーナー通過順位"
+            },
+            {
+              "cornerNumber": 2,
+              "rank": 3,
+              "labelRaw": "2コーナー通過順位"
+            },
+            {
+              "cornerNumber": 3,
+              "rank": 12,
+              "labelRaw": "3コーナー通過順位"
+            },
+            {
+              "cornerNumber": 4,
+              "rank": 17,
+              "labelRaw": "4コーナー通過順位"
+            }
+          ],
+          "lastCornerRankReported": 17,
+          "isStarter": true,
+          "marginFromPreviousRaw": "大差",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 484,
+          "lastCornerRankRange": [
+            17,
+            17
+          ],
+          "lastCornerReportedProxy": "rear",
+          "possibleLastCornerProxies": [
+            "rear"
+          ],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": 15.678588926996571,
+          "final600AverageSpeedMps": 14.457831325301205,
+          "winnerTimeGap": 7.9,
+          "positionGainLastCornerToFinish": 0
+        },
+        {
+          "horseNumber": 17,
+          "horseName": "シルヴァーソニック",
+          "finishPosition": null,
+          "finishStatusRaw": "中止",
+          "finishTimeRaw": "",
+          "finishTime": null,
+          "final600": null,
+          "cornerRanksReported": [],
+          "cornerRecords": [],
+          "lastCornerRankReported": null,
+          "isStarter": true,
+          "marginFromPreviousRaw": "",
+          "numericMarginLengths": null,
+          "carriedWeightKg": 58.0,
+          "bodyMassKg": 454,
+          "lastCornerRankRange": null,
+          "lastCornerReportedProxy": null,
+          "possibleLastCornerProxies": [],
+          "ambiguousLastCornerProxy": false,
+          "averageSpeedMps": null,
+          "final600AverageSpeedMps": null,
+          "winnerTimeGap": null,
+          "positionGainLastCornerToFinish": null
+        }
+      ],
+      "cornerPassageGroups": [
+        {
+          "labelRaw": "1コーナー",
+          "horseGroupsRaw": "16-8,15(7,18)-1(2,6)(11,9,14)13,5(4,12)-3-10"
+        },
+        {
+          "labelRaw": "2コーナー",
+          "horseGroupsRaw": "16,8,15(7,18)(2,1)6(11,14)9(4,13)5(3,12)-10"
+        },
+        {
+          "labelRaw": "3コーナー(2周目)",
+          "horseGroupsRaw": "16-(8,7)18,2,1(11,6)(9,14,5)(4,13,12,15)3,10"
+        },
+        {
+          "labelRaw": "4コーナー(2周目)",
+          "horseGroupsRaw": "16,7-18-(8,2,1)(9,11)5,6(4,13,14)(10,3,12)=15"
+        }
+      ],
+      "summary": {
+        "winnerFinishTime": 196.2,
+        "winnerFinal600": 36.4,
+        "winnerCarriedWeightKg": 58.0,
+        "winnerSecondTimeGap": 1.1,
+        "fieldFirstLastTimeSpan": 7.9,
+        "fieldFractionWithin1Second": 0.058823529411764705,
+        "fieldFractionWithin2Seconds": 0.23529411764705882,
+        "fieldFinal600Span": 5.2,
+        "first200": 12.7,
+        "post200SplitCv": 0.043630776896453616,
+        "final200MinusPrevious": 1.5
+      },
+      "routeCaveats": [
+        "2022年度京都施工替代阪神；泛化检验不能当作京都相同路线复演。",
+        "官方路线芝右 外→内；现版混合内外圈仍代理，逐米混合路线未复刻。"
+      ],
+      "leadingMarkerSpeedMetrics": {
+        "first200Time": 12.7,
+        "fastest200Time": 11.5,
+        "last200Time": 13.2,
+        "fastest200MeanSpeedMps": 17.391304347826086,
+        "post200SplitCv": 0.043630776896453616,
+        "final200MinusPrevious": 1.5
+      }
+    }
+  ],
+  "summary": {
+    "raceCount": 6,
+    "entries": 103,
+    "starts": 103,
+    "finishers": 102,
+    "dnf": 1,
+    "scratches": 0
+  }
+}

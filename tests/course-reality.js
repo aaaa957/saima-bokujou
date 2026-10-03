@@ -32,7 +32,8 @@ for(const [venue,length,surface,lap,straight,height] of courses){
   }
   close(integral,0,venue+' zero net ascent per lap');
   for(const direction of ['左回','右回']){
-    const a=S.trackPoint(0,g.referenceLane,g,direction),b=S.trackPoint(lap,g.referenceLane,g,direction);
+    const loopStart=g.route?g.route.loopRaceStart:0;
+    const a=S.trackPoint(loopStart,g.referenceLane,g,direction),b=S.trackPoint(loopStart+lap,g.referenceLane,g,direction);
     close(a.x,b.x,venue+' closed x');close(a.y,b.y,venue+' closed y');
     assert.equal(S.kAt(length-straight+1,g),0,venue+' final straight');
     for(const at of g.boundaries){
@@ -40,8 +41,12 @@ for(const [venue,length,surface,lap,straight,height] of courses){
       assert.ok(Math.hypot(before.x-after.x,before.y-after.y)<1e-4,venue+' continuous path at turn');
     }
   }
-  const onBend=g.S+g.B/2-g.startOffset;
-  close(S.laneProgressCoef(onBend,g.referenceLane,g),1,venue+' reference lane');
+  let onBend=null;
+  for(let s=0;s<length;s+=5)if(S.kAt(s,g)>0.001){onBend=s;break;}
+  assert.ok(onBend!==null,venue+' route contains a bend');
+  // The interpolated reference curve has a near-unit, measured arc parameter;
+  // exact position/arc consistency is checked independently in route-detail-v9.
+  close(S.laneProgressCoef(onBend,g.referenceLane,g),1,venue+' reference lane',0.00025);
   assert.ok(S.laneProgressCoef(onBend,12,g)<S.laneProgressCoef(onBend,3,g),venue+' outside arc longer');
 }
 const tokyo=S.trackGeometry(2400,'東京','草地'),nakayama=S.trackGeometry(2000,'中山','草地');

@@ -1,0 +1,401 @@
+{
+  "measuredAt": "2026-10-02T09:38:17.209Z",
+  "engineHash": "9b2cd208dd8d2e8415452d973a1bf76549222272accf1372bb616af14a2eeb8e",
+  "engineUnchanged": true,
+  "method": "Read-only callback inserted into a VM copy of the frozen source; original outer step1/30s and all original random calls retained; every internal step1/60s observed. Finish times and sampled acceleration exactly equal formal matrix.",
+  "conclusion": "Final traffic settlement can clear forward speed after simultaneous lateral moves pass individual checks against old neighbor positions. This bypasses normal 3.5m/s² braking; no contact/fall state explains the discontinuity. Contribution to population win-rate/gap errors has not been isolated.",
+  "records": [
+    {
+      "context": "healthy-flat",
+      "generationSeed": 3198315393,
+      "raceSeed": 546640440,
+      "length": 1200,
+      "n": 16,
+      "replicate": 3,
+      "identicalFinishTimes": true,
+      "identicalSampledAcceleration": true,
+      "extremeInternalEvents": 3,
+      "first": {
+        "time": 5.466666666666653,
+        "dt": 0.016666666666666666,
+        "id": "h1",
+        "gate": 12,
+        "place": null,
+        "before": {
+          "s": 6.973099002731384,
+          "t": 13.335703124931733,
+          "v": 6.857379614387863,
+          "stamina": 2660,
+          "guts": 4316.411810136928
+        },
+        "proposal": {
+          "s": 7.076081012911709,
+          "t": 13.328850021080047,
+          "v": 6.84882808898244,
+          "a": -0.5130915243253753,
+          "travelV": 6.853103851685152,
+          "lateral": -0.41118623110115493,
+          "aerobic": 35.062214804822744
+        },
+        "after": {
+          "s": 6.973099002731384,
+          "t": 13.328850021080047,
+          "v": 0,
+          "accel": -411.4427768632718
+        },
+        "corrections": [
+          {
+            "frontId": "h13",
+            "frontOld": {
+              "s": 7.502398308379708,
+              "t": 12.033663581401564,
+              "v": 7.620695916133913,
+              "stamina": 2624.0483418538342,
+              "guts": 4195.285972674094
+            },
+            "frontMove": {
+              "s": 7.618572440400184,
+              "t": 12.041313413406616,
+              "v": 7.678968093970478,
+              "a": 3.496330670193881,
+              "travelV": 7.649832005052195,
+              "lateral": 0.45898992030313224,
+              "aerobic": 34.89858144200978
+            },
+            "longitudinalClearance": 2.7965,
+            "lateralClearance": 1.2890000000000001,
+            "moveBefore": {
+              "s": 7.076081012911709,
+              "t": 13.328850021080047,
+              "v": 6.84882808898244,
+              "a": -0.5130915243253753,
+              "travelV": 6.853103851685152,
+              "lateral": -0.41118623110115493,
+              "aerobic": 35.062214804822744
+            }
+          }
+        ]
+      },
+      "worst": {
+        "time": 47.99999999999856,
+        "dt": 0.016666666666666666,
+        "id": "h7",
+        "gate": 13,
+        "place": null,
+        "before": {
+          "s": 768.5213008616686,
+          "t": 4.079583333333268,
+          "v": 17.968557934730768,
+          "stamina": 995.660744815253,
+          "guts": 2998.6916141229212
+        },
+        "proposal": {
+          "s": 768.8133187419452,
+          "t": 4.066249999999934,
+          "v": 17.950038075607026,
+          "a": -1.1111915474245393,
+          "travelV": 17.959298005168897,
+          "lateral": -0.8000000000000185,
+          "aerobic": 50.086329237094986
+        },
+        "after": {
+          "s": 768.5213008616686,
+          "t": 4.066249999999934,
+          "v": 0,
+          "accel": -1078.113476083846
+        },
+        "corrections": [
+          {
+            "frontId": "h11",
+            "frontOld": {
+              "s": 768.9781847093427,
+              "t": 2.759999999999996,
+              "v": 17.919890399234625,
+              "stamina": 963.6918239526909,
+              "guts": 3102.800711018805
+            },
+            "frontMove": {
+              "s": 769.2729353266456,
+              "t": 2.773333333333329,
+              "v": 17.91983975387523,
+              "a": -0.0030387215636551446,
+              "travelV": 17.919865076554927,
+              "lateral": 0.7999999999999918,
+              "aerobic": 49.428906453129855
+            },
+            "longitudinalClearance": 2.8267500000000005,
+            "lateralClearance": 1.3055,
+            "moveBefore": {
+              "s": 768.8133187419452,
+              "t": 4.066249999999934,
+              "v": 17.950038075607026,
+              "a": -1.1111915474245393,
+              "travelV": 17.959298005168897,
+              "lateral": -0.8000000000000185,
+              "aerobic": 50.086329237094986
+            }
+          }
+        ]
+      },
+      "targetWorst": {
+        "time": 47.99999999999856,
+        "dt": 0.016666666666666666,
+        "id": "h7",
+        "gate": 13,
+        "place": null,
+        "before": {
+          "s": 768.5213008616686,
+          "t": 4.079583333333268,
+          "v": 17.968557934730768,
+          "stamina": 995.660744815253,
+          "guts": 2998.6916141229212
+        },
+        "proposal": {
+          "s": 768.8133187419452,
+          "t": 4.066249999999934,
+          "v": 17.950038075607026,
+          "a": -1.1111915474245393,
+          "travelV": 17.959298005168897,
+          "lateral": -0.8000000000000185,
+          "aerobic": 50.086329237094986
+        },
+        "after": {
+          "s": 768.5213008616686,
+          "t": 4.066249999999934,
+          "v": 0,
+          "accel": -1078.113476083846
+        },
+        "corrections": [
+          {
+            "frontId": "h11",
+            "frontOld": {
+              "s": 768.9781847093427,
+              "t": 2.759999999999996,
+              "v": 17.919890399234625,
+              "stamina": 963.6918239526909,
+              "guts": 3102.800711018805
+            },
+            "frontMove": {
+              "s": 769.2729353266456,
+              "t": 2.773333333333329,
+              "v": 17.91983975387523,
+              "a": -0.0030387215636551446,
+              "travelV": 17.919865076554927,
+              "lateral": 0.7999999999999918,
+              "aerobic": 49.428906453129855
+            },
+            "longitudinalClearance": 2.8267500000000005,
+            "lateralClearance": 1.3055,
+            "moveBefore": {
+              "s": 768.8133187419452,
+              "t": 4.066249999999934,
+              "v": 17.950038075607026,
+              "a": -1.1111915474245393,
+              "travelV": 17.959298005168897,
+              "lateral": -0.8000000000000185,
+              "aerobic": 50.086329237094986
+            }
+          }
+        ]
+      },
+      "allEventsAreTrafficCorrections": true,
+      "caveat": "Diagnostic events below -50 m/s², not an empirical safety threshold. Internal 60Hz observation may find worse extrema than the original sampled outer30Hz matrix."
+    },
+    {
+      "context": "equal-ability-flat",
+      "generationSeed": 3198943767,
+      "raceSeed": 547060654,
+      "length": 1200,
+      "n": 16,
+      "replicate": 9,
+      "identicalFinishTimes": true,
+      "identicalSampledAcceleration": true,
+      "extremeInternalEvents": 5,
+      "first": {
+        "time": 27.599999999999714,
+        "dt": 0.016666666666666666,
+        "id": "h14",
+        "gate": 12,
+        "place": null,
+        "before": {
+          "s": 427.24591238357027,
+          "t": 9.59375,
+          "v": 17.05323697883615,
+          "stamina": 1557.2790082542276,
+          "guts": 3579.3963728187405
+        },
+        "proposal": {
+          "s": 427.53012982141405,
+          "t": 9.59375,
+          "v": 17.052855562415893,
+          "a": -0.022884985215441134,
+          "travelV": 17.05304627062602,
+          "lateral": 0,
+          "aerobic": 47.870056428522595
+        },
+        "after": {
+          "s": 427.51066680287386,
+          "t": 9.59375,
+          "v": 15.885265158215134,
+          "accel": -70.07830923726097
+        },
+        "corrections": [
+          {
+            "frontId": "h9",
+            "frontOld": {
+              "s": 430.080918210773,
+              "t": 9.59375,
+              "v": 17.05344786314824,
+              "stamina": 1527.4126381384071,
+              "guts": 3562.6502393872174
+            },
+            "frontMove": {
+              "s": 430.34566680287384,
+              "t": 9.59375,
+              "v": 17.053134115189387,
+              "a": -0.018824877531145034,
+              "travelV": 17.053290989168815,
+              "lateral": 0,
+              "aerobic": 47.85673752964549
+            },
+            "longitudinalClearance": 2.835,
+            "lateralClearance": 1.31,
+            "moveBefore": {
+              "s": 427.53012982141405,
+              "t": 9.59375,
+              "v": 17.052855562415893,
+              "a": -0.022884985215441134,
+              "travelV": 17.05304627062602,
+              "lateral": 0,
+              "aerobic": 47.870056428522595
+            }
+          }
+        ]
+      },
+      "worst": {
+        "time": 70.44999999999729,
+        "dt": 0.016666666666666666,
+        "id": "h16",
+        "gate": 15,
+        "place": null,
+        "before": {
+          "s": 1141.5643221239716,
+          "t": 2.4550000000000014,
+          "v": 17.61673779571001,
+          "stamina": 241.23967223566405,
+          "guts": 2616.216427491637
+        },
+        "proposal": {
+          "s": 1141.8575031085443,
+          "t": 2.4683333333333346,
+          "v": 17.601344092658845,
+          "a": -0.9236221830698099,
+          "travelV": 17.60904094418443,
+          "lateral": 0.7999999999999918,
+          "aerobic": 48.689003914685955
+        },
+        "after": {
+          "s": 1141.5643221239716,
+          "t": 2.4683333333333346,
+          "v": 0,
+          "accel": -1057.0042677426006
+        },
+        "corrections": [
+          {
+            "frontId": "h1",
+            "frontOld": {
+              "s": 1142.6593937789723,
+              "t": 3.7804166666666323,
+              "v": 17.524390441191144,
+              "stamina": 226.13899805088988,
+              "guts": 2604.1449732758597
+            },
+            "frontMove": {
+              "s": 1142.9511532324218,
+              "t": 3.767083333333299,
+              "v": 17.523284702117216,
+              "a": -0.06634434443569148,
+              "travelV": 17.52383757165418,
+              "lateral": -0.7999999999999918,
+              "aerobic": 48.671200191636565
+            },
+            "longitudinalClearance": 2.835,
+            "lateralClearance": 1.31,
+            "moveBefore": {
+              "s": 1141.8575031085443,
+              "t": 2.4683333333333346,
+              "v": 17.601344092658845,
+              "a": -0.9236221830698099,
+              "travelV": 17.60904094418443,
+              "lateral": 0.7999999999999918,
+              "aerobic": 48.689003914685955
+            }
+          }
+        ]
+      },
+      "targetWorst": {
+        "time": 66.0666666666642,
+        "dt": 0.016666666666666666,
+        "id": "h6",
+        "gate": 9,
+        "place": null,
+        "before": {
+          "s": 1063.809575746398,
+          "t": 5.618333333333304,
+          "v": 17.518462475959165,
+          "stamina": 383.82610242673996,
+          "guts": 2719.5598255561736
+        },
+        "proposal": {
+          "s": 1064.101164153047,
+          "t": 5.60499999999997,
+          "v": 17.5087084638326,
+          "a": -0.5852407275938276,
+          "travelV": 17.513585469895883,
+          "lateral": -0.8000000000000185,
+          "aerobic": 48.76848991889483
+        },
+        "after": {
+          "s": 1063.809575746398,
+          "t": 5.60499999999997,
+          "v": 0,
+          "accel": -1051.10774855755
+        },
+        "corrections": [
+          {
+            "frontId": "h1",
+            "frontOld": {
+              "s": 1065.1018303757671,
+              "t": 4.2883333333333296,
+              "v": 17.736442099527533,
+              "stamina": 363.8523318133017,
+              "guts": 2704.7520229371326
+            },
+            "frontMove": {
+              "s": 1065.3971425835887,
+              "t": 4.301666666666663,
+              "v": 17.73712441516907,
+              "a": 0.04093893849223207,
+              "travelV": 17.7367832573483,
+              "lateral": 0.8000000000000185,
+              "aerobic": 48.75259893120724
+            },
+            "longitudinalClearance": 2.835,
+            "lateralClearance": 1.31,
+            "moveBefore": {
+              "s": 1064.101164153047,
+              "t": 5.60499999999997,
+              "v": 17.5087084638326,
+              "a": -0.5852407275938276,
+              "travelV": 17.513585469895883,
+              "lateral": -0.8000000000000185,
+              "aerobic": 48.76848991889483
+            }
+          }
+        ]
+      },
+      "allEventsAreTrafficCorrections": true,
+      "caveat": "Diagnostic events below -50 m/s², not an empirical safety threshold. Internal 60Hz observation may find worse extrema than the original sampled outer30Hz matrix."
+    }
+  ]
+}

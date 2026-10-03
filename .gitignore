@@ -1,0 +1,15 @@
+# Full reproducible audits are committed as lossless .json.gz archives.
+docs/current-engine-population-audit-2026-10-02.json
+docs/current-engine-population-audit-independent-2026-10-02.json
+docs/current-real-timing-audit-2026-10-02.json
+docs/system-baseline-v2026.10.02.3.json
+docs/system-current-v2026.10.02.3.json
+docs/system-baseline-external2022-v2026.10.02.3.json
+docs/system-current-external2022-v2026.10.02.3.json
+# Development probes are excluded from formal counts and release artifacts.
+docs/current-engine-population-audit-probe-2026-10-02.json
+docs/system-baseline-smoke-v2026.10.02.3.json
+docs/system-baseline-smoke-native-v2026.10.02.3.json
+docs/system-current-smoke-v2026.10.02.3.json
+# Local intermediate frame traces; the completed performance report is tracked.
+docs/.traffic-optimized-final-v9-checkpoints/

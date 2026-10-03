@@ -1,0 +1,22 @@
+{
+  "stoppedAt": "2026-10-02T23:05:38.636Z",
+  "reason": "Existing loopHeadingAt atan2 branch discontinuity near bend/straight junction was independently reproduced on source44. These unfinished data are retained as development evidence and excluded from final acceptance.",
+  "archives": [
+    {
+      "archive": "system-current-incomplete-source44-v9.json.gz",
+      "rows": 35,
+      "planned": 270,
+      "engineHash": "44b09fc4789ccacf6cf812251effc8f3367e9f4996aa7b597886bd83d85ab6f1",
+      "complete": false,
+      "errors": 0
+    },
+    {
+      "archive": "system-external2022-incomplete-source44-v9.json.gz",
+      "rows": 12,
+      "planned": 18,
+      "engineHash": "44b09fc4789ccacf6cf812251effc8f3367e9f4996aa7b597886bd83d85ab6f1",
+      "complete": false,
+      "errors": 0
+    }
+  ]
+}

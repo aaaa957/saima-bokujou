@@ -1,6 +1,6 @@
 ﻿/* ============================================================
- * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.2
- * 本轮路线预测与验收：docs/路线预算与状态验收-v2026.10.02.2.md
+ * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.3
+ * 本轮运动、路线与个体分化验收：docs/系统一致性与节奏诊断-v2026.10.02.3.md
  * 模型结构、实赛约束与验证口径：docs/比赛系统-现实拟合-v2026.10.02.1.md
  * 情报误差机制来源：《游戏策划案》4.5 情报系统
  * 运行环境：浏览器(挂载到 window.SaimaSim) / Node(require)
@@ -70,7 +70,7 @@
   }
 
   // 官方 A 栏周长/终点直道/高差约束的代理几何；不冒称测绘复刻。
-  // 未建模起跑引入线、混合内外圈与可变弯道半径，见 geo.simplification。
+  // 官方幅员下界用作可用宽度；没有逐米测绘的部分仍为明确标注的代理。
   const COURSES = {
     '标准': { R:120, S:420 }, '长直道': { R:140, S:540 }, '小回り': { R:95, S:310 },
     '東京芝A': { lap:2083.1, S:525.9, elevation:2.7, hill:'tokyo', venue:'東京', direction:'左回', distances:[1400,1600,1800,2000,2300,2400,2500,2600,3400] },
@@ -88,6 +88,13 @@
     '新潟芝外A': { lap:2223, S:658.7, elevation:2.2, hill:'niigata', venue:'新潟', direction:'左回', distances:[1400,1600,1800,2000,3000,3200] },
     '新潟泥': { lap:1472.5, S:353.9, elevation:0.6, hill:'niigata', venue:'新潟', direction:'左回', distances:[1000,1200,1700,1800,2500] },
   };
+  const COURSE_WIDTHS = {
+    '東京芝A':[31,41], '東京泥':[25,25],
+    '中山芝内A':[20,32], '中山芝外A':[24,32], '中山泥':[20,25],
+    '京都芝内A':[27,38], '京都芝外A':[24,38], '京都泥':[25,25],
+    '阪神芝内A':[24,28], '阪神芝外A':[24,29], '阪神泥':[22,25],
+    '新潟芝内A':[25,25], '新潟芝外A':[25,25], '新潟泥':[20,20],
+  };
   const VENUE_COURSE = { '東京':'東京芝A', '东京':'東京芝A', '中山':'中山芝内A', '京都':'京都芝外A', '阪神':'阪神芝外A', '新潟':'新潟芝外A', '福島':'小回り', '小倉':'小回り' };
   const COURSE_SOURCES = { '東京':'tokyo', '中山':'nakayama', '京都':'kyoto', '阪神':'hanshin', '新潟':'niigata' };
   const mod = (x, n) => ((x % n) + n) % n;
@@ -101,10 +108,125 @@
     if(venue==='新潟') return [1200,2200,2400].includes(length)?'新潟芝内A':'新潟芝外A';
     return VENUE_COURSE[venue] || '标准';
   }
-  function courseElevationProfile(def,S,B,lap) {
+  // Quintic end controls are collinear: both tangent and curvature meet the straight continuously.
+  function bezierPoint(controls,u) {
+    let p=controls.map(a=>({x:a.x,y:a.y}));
+    for(let n=p.length-1;n>0;n--) for(let i=0;i<n;i++) p[i]={x:p[i].x+(p[i+1].x-p[i].x)*u,y:p[i].y+(p[i+1].y-p[i].y)*u};
+    return p[0];
+  }
+  function bendControls(a,b,extent,sign) {
+    return [a,{x:a.x+sign*extent*0.12,y:a.y},{x:a.x+sign*extent,y:a.y},
+      {x:b.x+sign*extent,y:b.y},{x:b.x+sign*extent*0.12,y:b.y},b];
+  }
+  function bendArcTable(controls,n) {
+    const table=[{q:0,u:0}],previous=bezierPoint(controls,0);let before=previous,q=0;
+    for(let i=1;i<=n;i++) {const u=i/n,p=bezierPoint(controls,u);q+=Math.hypot(p.x-before.x,p.y-before.y);table.push({q,u});before=p;}
+    return {table,length:q};
+  }
+  function makeRouteBend(a,b,length,sign) {
+    let lo=0.001,hi=length*2;
+    for(let i=0;i<28;i++) {const mid=(lo+hi)/2,n=bendArcTable(bendControls(a,b,mid,sign),240).length;if(n<length) lo=mid;else hi=mid;}
+    let extent=(lo+hi)/2;
+    // Refine against the same dense arc table used for coordinate lookup.
+    for(let i=0;i<4;i++) {const a0=bendArcTable(bendControls(a,b,extent,sign),4800).length,a1=bendArcTable(bendControls(a,b,extent+0.05,sign),4800).length;extent+=(length-a0)/((a1-a0)/0.05);}
+    const controls=bendControls(a,b,extent,sign),arc=bendArcTable(controls,4800);
+    const first=controls.slice(1).map((p,i)=>({x:5*(p.x-controls[i].x),y:5*(p.y-controls[i].y)}));
+    const second=first.slice(1).map((p,i)=>({x:4*(p.x-first[i].x),y:4*(p.y-first[i].y)}));
+    return {length,controls,arc:arc.table,first,second};
+  }
+  function pointOnBend(at,bend) {
+    const table=bend.arc;let lo=0,hi=table.length-1;
+    while(hi-lo>1) {const m=(lo+hi)>>1;if(table[m].q<=at) lo=m;else hi=m;}
+    const a=table[lo],b=table[hi],u=a.u+(b.u-a.u)*clamp((at-a.q)/(b.q-a.q),0,1);
+    const p=bezierPoint(bend.controls,u),v=bezierPoint(bend.first,u),acc=bezierPoint(bend.second,u),speed=Math.hypot(v.x,v.y);
+    return {x:p.x,y:p.y,tx:v.x/speed,ty:v.y/speed,k:Math.max(0,(v.x*acc.y-v.y*acc.x)/(speed*speed*speed)),metric:speed*(b.u-a.u)/(b.q-a.q)};
+  }
+  const ROUTE_LOOP_CACHE=new Map();
+  function makeCourseLoop(key,def) {
+    if(ROUTE_LOOP_CACHE.has(key)) return ROUTE_LOOP_CACHE.get(key);
+    const F=def.S,lap=def.lap;
+    // Published start-to-turn distances constrain these three layouts; remaining dimensions are proxies.
+    let home=F,back=F,bend2=(lap-home-back)/2;
+    if(key==='東京芝A') {home=559;back=450;bend2=532.1;}
+    if(key==='中山芝外A') {home=310;back=310;bend2=630;}
+    if(key==='京都芝外A') {home=463.7;back=463.7;bend2=502;}
+    const bend1=lap-home-back-bend2,h=Math.min(bend1,bend2)/3.1;
+    const A={x:-home/2,y:-h},B={x:home/2,y:-h},C={x:back/2,y:h},D={x:-back/2,y:h};
+    const first=makeRouteBend(B,C,bend1,1),last=makeRouteBend(D,A,bend2,-1);
+    function at(q) {
+      if(q<=home) return {x:A.x+q,y:A.y,tx:1,ty:0,k:0};
+      if(q<home+bend1) return pointOnBend(q-home,first);
+      if(q<=home+bend1+back) return {x:C.x-(q-home-bend1),y:C.y,tx:-1,ty:0,k:0};
+      return pointOnBend(q-home-bend1-back,last);
+    }
+    const n=Math.ceil(lap/0.5),step=lap/n,turns=[home,home+bend1,home+bend1+back,lap];
+    const nodes=[...Array.from({length:n+1},(_,i)=>i*step),...turns].sort((a,b)=>a-b);
+    const stations=nodes.filter((q,i)=>!i||q-nodes[i-1]>1e-9),samples=stations.map(at);
+    samples[samples.length-1]={...samples[0]};
+    const loop={lap,home,back,bend1,bend2,step,stations,samples,first,last,A,C,turns};
+    ROUTE_LOOP_CACHE.set(key,loop);return loop;
+  }
+  function routeTablePoint(samples,step,at) {
+    let i,f;
+    if(Array.isArray(step)) {
+      const stations=step;let lo=0,hi=stations.length-1;
+      while(hi-lo>1){const mid=(lo+hi)>>1;if(stations[mid]<=at)lo=mid;else hi=mid;}
+      i=lo;step=stations[hi]-stations[lo];f=clamp((at-stations[lo])/step,0,1);
+    } else {
+      const z=clamp(at/step,0,samples.length-1);i=Math.min(Math.floor(z),samples.length-2);f=z-i;
+    }
+    const a=samples[i],b=samples[i+1];
+    // Quintic Hermite positions and their derivatives share the same local curve. Linear position
+    // interpolation with separately interpolated normals creates artificial offset-lane speed errors.
+    function component(p0,p1,v0,v1,acc0,acc1) {
+      const A=p0,B=step*v0,C=0.5*step*step*acc0,p=p1-A-B-C,v=step*v1-B-2*C,acc=step*step*acc1-2*C;
+      const D=10*p-4*v+0.5*acc,E=-15*p+7*v-acc,F=6*p-3*v+0.5*acc;
+      return {p:((((F*f+E)*f+D)*f+C)*f+B)*f+A,
+        v:((((5*F*f+4*E)*f+3*D)*f+2*C)*f+B)/step,
+        a:(((20*F*f+12*E)*f+6*D)*f+2*C)/(step*step)};
+    }
+    const x=component(a.x,b.x,a.tx,b.tx,-a.k*a.ty,-b.k*b.ty),y=component(a.y,b.y,a.ty,b.ty,a.k*a.tx,b.k*b.tx),n=Math.hypot(x.v,y.v);
+    return {x:x.p,y:y.p,tx:x.v/n,ty:y.v/n,k:Math.max(0,(x.v*y.a-y.v*x.a)/(n*n*n)),metric:n};
+  }
+  function loopReferencePoint(q,loop) {
+    const {home,bend1,back}=loop;
+    if(q<=home) return {x:loop.A.x+q,y:loop.A.y,tx:1,ty:0,k:0};
+    if(q>=home+bend1&&q<=home+bend1+back) return {x:loop.C.x-(q-home-bend1),y:loop.C.y,tx:-1,ty:0,k:0};
+    return routeTablePoint(loop.samples,loop.stations,q);
+  }
+  function makeStartChute(loop,startOffset,straight,angle) {
+    // First straight and turn count are sourced; turn shape and the pocket coordinates remain proxies.
+    const merge=loop.home+loop.bend1,length=mod(merge-startOffset,loop.lap),bendLength=length-straight;
+    const n=Math.ceil(length/0.5),step=length/n,samples=[];let x=0,y=0;
+    function thetaAt(s) {if(!angle) return Math.PI;const z=clamp((s-straight)/bendLength,0,1);return Math.PI-angle+angle*(z-Math.sin(2*Math.PI*z)/(2*Math.PI));}
+    function curvatureAt(s) {if(!angle) return 0;const z=(s-straight)/bendLength;return z>0&&z<1?angle/bendLength*(1-Math.cos(2*Math.PI*z)):0;}
+    for(let i=0;i<=n;i++) {const s=i*step;if(i) {const theta=thetaAt(s-step/2);x+=Math.cos(theta)*step;y+=Math.sin(theta)*step;}const theta=thetaAt(s);samples.push({x,y,tx:Math.cos(theta),ty:Math.sin(theta),k:curvatureAt(s)});}
+    const join=loopReferencePoint(merge,loop),dx=join.x-x,dy=join.y-y;
+    samples.forEach(p=>{p.x+=dx;p.y+=dy;});samples[n]={...join};
+    return {length,straight,angle,merge,step,samples};
+  }
+  function routeReferencePoint(s,geo) {
+    const r=geo.route;
+    if(r.chute && s<r.startLength) {
+      if(s<0) {const p=r.chute.samples[0];return {...p,x:p.x+s*p.tx,y:p.y+s*p.ty,k:0};}
+      return routeTablePoint(r.chute.samples,r.chute.step,s);
+    }
+    return loopReferencePoint(mod(s+geo.startOffset,geo.lap),r.loop);
+  }
+  function courseElevationProfile(def,S,B,lap,loop) {
     const h=def.elevation;
     if(!h) return null;
     // 坡段位置是官方文字说明约束的近似值，不是逐米测量数据。
+    if(loop && def.hill==='tokyo' && def.venue==='東京' && def.S===525.9) {
+      const {home,bend1,back,bend2}=loop,backStart=home+bend1;
+      return [[0,0.7],[S-460,0],[S-300,2],[S,2],[home,2.7],
+        [backStart+back*0.5,0.8],[backStart+back,2.3],[lap-bend2*0.75,2.3],[lap-80,0.5],[lap,0.7]];
+    }
+    if(loop && def.hill==='nakayama') {
+      const {home,bend1,back}=loop,peak=home+bend1-40;
+      const descending=def.lap===1839.7?[[mod(S-1200,lap),4.4],[home+bend1+back,3.3]]:[[home+bend1+back,Math.min(3,h)]];
+      return [[0,0],[S-180,0],[S-70,2.2],[S,2.2],...(home>S?[[home,2.2]]:[]),[peak,h],...descending,[lap,0]];
+    }
     if(def.hill==='tokyo') return [[0,0.7],[S-460,0],[S-300,2],[S,2],[S+B,1.2],[2*S+B-180,1.2],[2*S+B,h],[lap,0.7]];
     if(def.hill==='nakayama') return [[0,0],[S-180,0],[S-70,2.2],[S,2.2],[S+B-40,h],[2*S+B,Math.min(3,h)],[lap,0]];
     if(def.hill==='kyoto') return [[0,0],[S,0],[S+lap-1200,0],[S+lap-800,h],[S+lap-450,0],[lap,0]];
@@ -116,25 +238,42 @@
   }
   function trackGeometry(length, course, surface) {
     const key=venueCourseKey(length,course,surface), def=COURSES[key], S=def.S;
+    const widthRange=COURSE_WIDTHS[key]||[TRACK_WIDTH,TRACK_WIDTH],width=widthRange[0];
     const referenceLane=1.4, referenceR=def.lap?(def.lap-2*S)/(2*Math.PI):def.R+referenceLane-TRACK_WIDTH/2;
-    const R=referenceR-referenceLane+TRACK_WIDTH/2, B=Math.PI*referenceR, lap=def.lap || 2*S+2*B;
+    const R=referenceR-referenceLane+width/2, B=Math.PI*referenceR, lap=def.lap || 2*S+2*B;
     const startOffset = mod(S - length, lap), boundaries = [];
+    const loop=def.lap?makeCourseLoop(key,def):null;
+    const straightChute=(key==='東京芝A'&&length===1600)||(key.startsWith('京都芝')&&[1600,1800].includes(length));
+    const chute=key==='東京芝A'&&length===2000?makeStartChute(loop,startOffset,100,Math.PI/2):
+      straightChute?makeStartChute(loop,startOffset,mod(loop.home+loop.bend1-startOffset,lap),0):null;
     for (let loop = -1; loop <= Math.ceil(length / lap) + 1; loop++) {
-      for (const [at, kind, label] of [[S, 'bendStart', '入弯'], [S+B, 'bendEnd', '出弯'], [2*S+B, 'bendStart', '入弯'], [lap, 'bendEnd', '出弯']]) {
+      const turns=def.lap?makeCourseLoop(key,def).turns:[S,S+B,2*S+B,lap];
+      for (const [i,at] of turns.entries()) {
+        const kind=i%2?'bendEnd':'bendStart',label=i%2?'出弯':'入弯';
         const s = loop * lap + at - startOffset;
-        if (s > 0 && s < length) boundaries.push({ s, kind, label });
+        if (s > 0 && s < length && (!chute||s>chute.length+1e-7||(chute.angle&&s>=chute.length-1e-7))) boundaries.push({ s, kind, label });
       }
     }
+    if(chute) boundaries.push(chute.angle?{s:chute.straight,kind:'bendStart',label:'引入线入弯'}:{s:chute.length,kind:'chuteMerge',label:'引入线合流'});
     boundaries.sort((a,b) => a.s-b.s);
     const official=!!def.lap, source=def.venue ? 'https://www.jra.go.jp/facilities/race/'+COURSE_SOURCES[def.venue]+'/course/index.html':null;
     const mixed=length===3200 && (def.venue==='中山'||def.venue==='阪神');
-    return { length,R,referenceR,referenceLane,B,S,lap,startOffset,course:key,boundaries,finishStraight:Math.min(length,S),
+    const startLength=chute?chute.length:0,loopRaceStart=startLength+mod(-startOffset-startLength,lap);
+    const route=loop?{loop,chute,startLength,loopRaceStart}:null;
+    const progressBounds=geometryProgressBounds(route,referenceLane,referenceR,width);
+    const displaySegments=[{kind:'loop',from:loopRaceStart,to:loopRaceStart+lap,closed:true}];
+    if(chute) displaySegments.push({kind:'chute',from:0,to:startLength,closed:false});
+    return { length,R,referenceR,referenceLane,B,S,lap,startOffset,width,widthRange,route,displaySegments,...progressBounds,course:key,boundaries,finishStraight:Math.min(length,S),
       venue:def.venue||null,direction:def.direction||null,surface:surface||'草地',officialLap:official?lap:null,
-      elevationRange:def.elevation||0,elevationProfile:courseElevationProfile(def,S,B,lap),source,
+      elevationRange:def.elevation||0,elevationProfile:courseElevationProfile(def,S,B,lap,loop),source,
       distanceSupported:official?def.distances.includes(length):true,
-      simplification:official?'官方A栏周长、终点直道与高差约束；两直两弯、统一20m可用宽度；引入线与变曲率未复刻'+(mixed?'；本距离混合内外圈暂以单圈代理':''):'抽象机制对照场地' };
+      simplification:official?'官方A栏周长、终直、高差与幅员下界约束；闭合变曲率代理，过渡/宽度空间分布非测绘；东京1600/2400、中山1200、京都3000/3200首弯距有资料约束'+(chute?(length===2000?'；东京2000使用独立100m直引入线及平滑转弯':'；本距离使用直线起跑引入线，口袋位置仍为代理'):'；本距离未验证的起跑引入线仍为单圈代理')+(mixed?'；本距离混合内外圈暂以单圈代理':''):'抽象机制对照场地' };
   }
   function trackPoint(s, t, geo, dir) {
+    if(geo.route) {
+      const p=routeReferencePoint(s,geo),d=t-geo.referenceLane,x=p.x+d*p.ty,y=p.y-d*p.tx;
+      return {x:dir==='右回'?-x:x,y};
+    }
     const { R, B, S } = geo, turnR=geo.referenceR||R, q = mod(s + (geo.startOffset || 0), geo.lap || (2*S+2*B));
     const d = t - TRACK_WIDTH / 2; let x,y;
     if(q < S) { x=-S/2+q; y=-R-d; }
@@ -144,12 +283,226 @@
     if(dir==='右回') x=-x; return {x,y};
   }
   function kAt(s, geo) {
+    if(geo.route) return routeReferencePoint(s,geo).k;
     const {S,B,R}=geo, q=mod(s+(geo.startOffset||0),geo.lap||2*S+2*B);
     return (q>=S && q<S+B) || q>=2*S+B ? 1/R : 0;
   }
   function laneProgressCoef(s,t,geo) {
+    if(geo.route) {
+      const p=routeReferencePoint(s,geo),raw=1/((p.metric??1)*(1+p.k*(t-geo.referenceLane)));
+      return 1+(raw-1)*RACE_F.laneBias;
+    }
     const raw=kAt(s,geo)>0?(geo.referenceR||geo.R)/(geo.R+t-TRACK_WIDTH/2):1;
     return 1+(raw-1)*RACE_F.laneBias;
+  }
+  function trackWidthAt(s,geo) {return geo.width||TRACK_WIDTH;}
+  function laneCurvatureAt(s,t,geo) {
+    const k=kAt(s,geo);
+    if(geo.route) return k/(1+k*(t-geo.referenceLane));
+    return k>0?1/(geo.R+t-TRACK_WIDTH/2):0;
+  }
+  function trackTangent(s,t,geo,dir) {
+    if(geo.route) {const p=routeReferencePoint(s,geo);return {x:dir==='右回'?-p.tx:p.tx,y:p.ty};}
+    const e=0.01,a=trackPoint(s-e,t,geo,dir),b=trackPoint(s+e,t,geo,dir),n=Math.hypot(b.x-a.x,b.y-a.y);
+    return {x:(b.x-a.x)/n,y:(b.y-a.y)/n};
+  }
+  const ROUTE_ARC_CACHE=new WeakMap();
+  const ARC_QUADRATURE=[[0.046910077030668,0.118463442528095],[0.230765344947158,0.239314335249683],
+    [0.5,0.284444444444444],[0.769234655052842,0.239314335249683],[0.953089922969332,0.118463442528095]];
+  function referenceArcIntegral(pointAt,a,b) {
+    if(b<=a) return 0;
+    return (b-a)*ARC_QUADRATURE.reduce((sum,[at,weight])=>sum+weight*(pointAt(a+(b-a)*at).metric??1),0);
+  }
+  function referenceArcTable(owner,length,step,pointAt,extra=[]) {
+    if(ROUTE_ARC_CACHE.has(owner)) return ROUTE_ARC_CACHE.get(owner);
+    const n=Math.round(length/step),nodes=Array.from({length:n+1},(_,i)=>i*step);
+    nodes.push(...extra.filter(x=>x>0&&x<length));nodes.sort((a,b)=>a-b);
+    const q=nodes.filter((x,i)=>!i||x-nodes[i-1]>1e-9),arc=[0];
+    for(let i=1;i<q.length;i++) arc.push(arc[i-1]+referenceArcIntegral(pointAt,q[i-1],q[i]));
+    const result={q,arc,total:arc.at(-1),pointAt};ROUTE_ARC_CACHE.set(owner,result);return result;
+  }
+  function loopArcTable(loop) {
+    if(ROUTE_ARC_CACHE.has(loop)) return ROUTE_ARC_CACHE.get(loop);
+    return referenceArcTable(loop,loop.lap,loop.step,q=>loopReferencePoint(q,loop),loop.stations);
+  }
+  function referenceArcAt(table,q) {
+    if(q<=0) return q;if(q>=table.q.at(-1)) return table.total+q-table.q.at(-1);
+    let lo=0,hi=table.q.length-1;
+    while(hi-lo>1){const mid=(lo+hi)>>1;if(table.q[mid]<=q)lo=mid;else hi=mid;}
+    return table.arc[lo]+referenceArcIntegral(table.pointAt,table.q[lo],q);
+  }
+  function loopHeadingAt(q,loop) {
+    if(q<=loop.home) return 0;
+    if(q>=loop.home+loop.bend1&&q<=loop.home+loop.bend1+loop.back) return Math.PI;
+    const p=loopReferencePoint(q,loop),angle=Math.atan2(p.ty,p.tx);
+    // atan2 has a branch at ±π; rounding of a nearly horizontal tangent can
+    // otherwise add a whole turn at a straight junction. Select the continuous
+    // geometric bend branch, including tiny endpoint overshoots on either side.
+    const lastStart=loop.home+loop.bend1+loop.back;
+    const expected=q<loop.home+loop.bend1?Math.PI*(q-loop.home)/loop.bend1:
+      Math.PI+Math.PI*(q-lastStart)/loop.bend2;
+    return angle+2*Math.PI*Math.round((expected-angle)/(2*Math.PI));
+  }
+  // Exact-number keys: no station rounding or interpolation changes. Geometry
+  // is immutable, as for ROUTE_ARC_CACHE; keep each geometry's cache bounded.
+  const ROUTE_STATE_VALUE_CACHE=new WeakMap();
+  function routeArcState(s,geo) {
+    let cache=ROUTE_STATE_VALUE_CACHE.get(geo);
+    if(!cache){cache=new Map();ROUTE_STATE_VALUE_CACHE.set(geo,cache);}
+    if(cache.has(s))return cache.get(s);
+    const r=geo.route,loop=r.loop,table=loopArcTable(loop),q0=s+geo.startOffset,circuit=Math.floor(q0/geo.lap),q=mod(q0,geo.lap);
+    let arc=circuit*table.total+referenceArcAt(table,q),angle=circuit*2*Math.PI+loopHeadingAt(q,loop);
+    if(r.chute&&s<r.startLength) {
+      const chute=r.chute,ct=referenceArcTable(chute,chute.length,chute.step,q=>routeTablePoint(chute.samples,chute.step,q));
+      const endQ=r.startLength+geo.startOffset,endCircuit=Math.floor(endQ/geo.lap),merge=mod(endQ,geo.lap);
+      const endArc=endCircuit*table.total+referenceArcAt(table,merge),endAngle=endCircuit*2*Math.PI+loopHeadingAt(merge,loop);
+      const p=routeReferencePoint(s,geo);
+      arc=endArc-ct.total+referenceArcAt(ct,s);
+      let chuteAngle=Math.atan2(p.ty,p.tx);if(chuteAngle<0)chuteAngle+=2*Math.PI;
+      angle=endAngle+chuteAngle-Math.PI;
+    }
+    const value={arc,angle};
+    if(cache.size>=4096)cache.clear();
+    cache.set(s,value);return value;
+  }
+  function abstractArcState(s,geo) {
+    const lap=geo.lap,{S,B}=geo,q0=s+(geo.startOffset||0),circuit=Math.floor(q0/lap),q=mod(q0,lap),radius=geo.referenceR||geo.R;
+    const angle=q<S?0:q<S+B?(q-S)/radius:q<2*S+B?Math.PI:Math.PI+(q-2*S-B)/radius;
+    return {arc:q0,angle:circuit*2*Math.PI+angle};
+  }
+  function laneArcDistance(s0,s1,t,geo) {
+    if(!Number.isFinite(s0)||!Number.isFinite(s1)||!Number.isFinite(t)) throw new Error('无效车道弧长参数');
+    if(s0===s1) return 0;
+    const at=geo.route?routeArcState:abstractArcState,a=at(s0,geo),b=at(s1,geo);
+    // Exact parallel-curve relation: L(offset)=L(reference)+offset * signed turning angle.
+    return b.arc-a.arc+(t-(geo.referenceLane??(TRACK_WIDTH/2)))*(b.angle-a.angle);
+  }
+  function laneAdvance(s,physicalDistance,t,geo) {
+    if(!Number.isFinite(s)||!Number.isFinite(physicalDistance)||!Number.isFinite(t)) throw new Error('无效车道推进参数');
+    if(physicalDistance===0)return s;
+    // Every inverse query has one immutable origin. Keep its exact arc/heading
+    // and coefficient, while retaining the same quadrature and Newton steps.
+    const stateAt=geo.route?routeArcState:abstractArcState,origin=stateAt(s,geo),initialCoef=laneProgressCoef(s,t,geo);
+    const distanceTo=to=>{const end=stateAt(to,geo);return end.arc-origin.arc+
+      (t-(geo.referenceLane??(TRACK_WIDTH/2)))*(end.angle-origin.angle);};
+    let span=Math.max(1,Math.abs(physicalDistance*initialCoef)*1.2),lo=s,hi=s;
+    if(physicalDistance>0){hi=s+span;while(distanceTo(hi)<physicalDistance){span*=2;hi=s+span;}}
+    else {lo=s-span;while(distanceTo(lo)>physicalDistance){span*=2;lo=s-span;}}
+    let at=clamp(s+physicalDistance*initialCoef,lo,hi);
+    for(let i=0;i<18;i++) {
+      const residual=distanceTo(at)-physicalDistance;
+      if(Math.abs(residual)<1e-9)return at;
+      if(residual>0)hi=at;else lo=at;
+      const candidate=at-residual*laneProgressCoef(at,t,geo);
+      at=candidate>lo&&candidate<hi?candidate:(lo+hi)/2;
+    }
+    return at;
+  }
+  function laneArcBreakpoints(s0,s1,geo) {
+    if(!Number.isFinite(s0)||!Number.isFinite(s1)) throw new Error('无效车道结点参数');
+    const from=Math.min(s0,s1),to=Math.max(s0,s1),points=[];
+    const nodes=geo.route?loopArcTable(geo.route.loop).q:[geo.S,geo.S+geo.B,2*geo.S+geo.B,geo.lap];
+    for(let loop=Math.floor((from+geo.startOffset)/geo.lap);loop<=Math.floor((to+geo.startOffset)/geo.lap);loop++) {
+      const shift=loop*geo.lap-geo.startOffset;let lo=0,hi=nodes.length;
+      while(lo<hi){const mid=(lo+hi)>>1;if(nodes[mid]<=from-shift+1e-9)lo=mid+1;else hi=mid;}
+      for(let i=lo;i<nodes.length&&nodes[i]<to-shift-1e-9;i++){const s=shift+nodes[i];if(!geo.route?.chute||s>geo.route.startLength)points.push(s);}
+    }
+    if(geo.route?.chute){const chute=geo.route.chute;for(let i=0;i<=Math.round(chute.length/chute.step);i++){const s=i*chute.step;if(s>from+1e-9&&s<to-1e-9)points.push(s);}}
+    points.sort((a,b)=>a-b);return points.filter((x,i)=>!i||x-points[i-1]>1e-8);
+  }
+  const ROUTE_BOUND_CACHE=new WeakMap();
+  function routeMetricBounds(owner,stations) {
+    if(ROUTE_BOUND_CACHE.has(owner))return ROUTE_BOUND_CACHE.get(owner);
+    const samples=owner.samples,cells=[];let minMetric=1,maxMetric=1,maxCurvature=0;
+    for(let i=1;i<samples.length;i++) {
+      const a=samples[i-1],b=samples[i],h=Array.isArray(stations)?stations[i]-stations[i-1]:stations;
+      // Convert the same endpoint position/tangent/curvature quintic to Bezier.
+      // Derivative control polygons enclose every velocity/acceleration vector.
+      const p0={x:a.x,y:a.y},p5={x:b.x,y:b.y},p1={x:a.x+h*a.tx/5,y:a.y+h*a.ty/5},p4={x:b.x-h*b.tx/5,y:b.y-h*b.ty/5};
+      const p2={x:2*p1.x-p0.x-h*h*a.k*a.ty/20,y:2*p1.y-p0.y+h*h*a.k*a.tx/20};
+      const p3={x:2*p4.x-p5.x-h*h*b.k*b.ty/20,y:2*p4.y-p5.y+h*h*b.k*b.tx/20};
+      const p=[p0,p1,p2,p3,p4,p5],v=p.slice(1).map((q,j)=>({x:5*(q.x-p[j].x)/h,y:5*(q.y-p[j].y)/h}));
+      const accelerationVectors=v.slice(1).map((q,j)=>({x:4*(q.x-v[j].x)/h,y:4*(q.y-v[j].y)/h}));
+      const acceleration=accelerationVectors.map(q=>Math.hypot(q.x,q.y));
+      // Bernstein product controls enclose det(r',r'') across the entire cell.
+      const choose4=[1,4,6,4,1],choose3=[1,3,3,1],choose7=[1,7,21,35,35,21,7,1],cross=[];
+      for(let k=0;k<=7;k++) {
+        let value=0;
+        for(let i=Math.max(0,k-3);i<=Math.min(4,k);i++) {const j=k-i;value+=choose4[i]*choose3[j]/choose7[k]*(v[i].x*accelerationVectors[j].y-v[i].y*accelerationVectors[j].x);}
+        cross.push(value);
+      }
+      // A positive projection lower bound also bounds the vector's norm.
+      const lower=Math.min(...v.map(q=>q.x*a.tx+q.y*a.ty))-1e-6;
+      const upper=Math.max(...v.map(q=>Math.hypot(q.x,q.y)))+1e-6,accUpper=Math.max(...acceleration)+1e-5;
+      const crossMin=Math.min(...cross)-1e-5,crossMax=Math.max(...cross)+1e-5;
+      const signedMin=lower>0?(crossMin<0?crossMin/(lower*lower*lower):crossMin/(upper*upper*upper)):-Infinity;
+      const signedMax=lower>0?(crossMax>0?crossMax/(lower*lower*lower):crossMax/(upper*upper*upper)):Infinity;
+      cells.push({minMetric:Math.min(1,lower),maxMetric:Math.max(1,upper),maxCurvature:lower>0?upper*accUpper/(lower*lower*lower):Infinity,signedMin,signedMax});
+      if(!(lower>0)){minMetric=0;maxCurvature=Infinity;break;}
+      maxMetric=Math.max(maxMetric,upper);minMetric=Math.min(minMetric,lower);maxCurvature=Math.max(maxCurvature,upper*accUpper/(lower*lower*lower));
+    }
+    const result={minMetric,maxMetric,maxCurvature,cells};ROUTE_BOUND_CACHE.set(owner,result);return result;
+  }
+  const ROUTE_RANGE_BOUND_CACHE=new WeakMap();
+  function routeCellRangeBounds(owner,stations,from,to) {
+    let table=ROUTE_RANGE_BOUND_CACHE.get(owner);
+    if(!table) {
+      const cells=routeMetricBounds(owner,stations).cells;
+      if(cells.length!==owner.samples.length-1)return null;
+      const min=[Float64Array.from(cells,c=>c.minMetric)],max=[Float64Array.from(cells,c=>c.maxMetric)],curvature=[Float64Array.from(cells,c=>c.maxCurvature)],signedMin=[Float64Array.from(cells,c=>c.signedMin)],signedMax=[Float64Array.from(cells,c=>c.signedMax)];
+      for(let level=1;(1<<level)<=cells.length;level++) {
+        const span=1<<(level-1),n=cells.length-(1<<level)+1;
+        const mn=new Float64Array(n),mx=new Float64Array(n),cv=new Float64Array(n),smn=new Float64Array(n),smx=new Float64Array(n);
+        for(let i=0;i<n;i++) {mn[i]=Math.min(min[level-1][i],min[level-1][i+span]);mx[i]=Math.max(max[level-1][i],max[level-1][i+span]);cv[i]=Math.max(curvature[level-1][i],curvature[level-1][i+span]);smn[i]=Math.min(signedMin[level-1][i],signedMin[level-1][i+span]);smx[i]=Math.max(signedMax[level-1][i],signedMax[level-1][i+span]);}
+        min.push(mn);max.push(mx);curvature.push(cv);signedMin.push(smn);signedMax.push(smx);
+      }
+      table={min,max,curvature,signedMin,signedMax,n:cells.length};ROUTE_RANGE_BOUND_CACHE.set(owner,table);
+    }
+    function cellIndex(at) {
+      if(!Array.isArray(stations))return clamp(Math.floor(at/stations),0,table.n-1);
+      let lo=0,hi=stations.length-1;
+      while(hi-lo>1){const mid=(lo+hi)>>1;if(stations[mid]<=at)lo=mid;else hi=mid;}
+      return Math.min(lo,table.n-1);
+    }
+    // Include adjacent endpoint cells as a conservative floating-point guard.
+    const low=Math.max(0,cellIndex(from)-1),high=Math.min(table.n-1,cellIndex(to)+1),count=high-low+1,level=Math.floor(Math.log2(count)),second=high-(1<<level)+1;
+    return {minMetric:Math.min(table.min[level][low],table.min[level][second]),maxMetric:Math.max(table.max[level][low],table.max[level][second]),maxCurvature:Math.max(table.curvature[level][low],table.curvature[level][second]),signedMin:Math.min(table.signedMin[level][low],table.signedMin[level][second]),signedMax:Math.max(table.signedMax[level][low],table.signedMax[level][second])};
+  }
+  function trafficRouteIntervalBounds(from,to,geo) {
+    if(!geo.route)return {minMetric:1,maxMetric:1,maxCurvature:1/(geo.referenceR||geo.R),signedMin:0,signedMax:1/(geo.referenceR||geo.R)};
+    const route=geo.route,result={minMetric:1,maxMetric:1,maxCurvature:0,signedMin:Infinity,signedMax:-Infinity};
+    function add(bound) {
+      if(!bound)return false;
+      result.minMetric=Math.min(result.minMetric,bound.minMetric);result.maxMetric=Math.max(result.maxMetric,bound.maxMetric);result.maxCurvature=Math.max(result.maxCurvature,bound.maxCurvature);result.signedMin=Math.min(result.signedMin,bound.signedMin);result.signedMax=Math.max(result.signedMax,bound.signedMax);return true;
+    }
+    if(from<0&&route.chute){result.signedMin=Math.min(result.signedMin,0);result.signedMax=Math.max(result.signedMax,0);}
+    if(route.chute&&from<route.startLength) {
+      if(to>0&&!add(routeCellRangeBounds(route.chute,route.chute.step,Math.max(0,from),Math.min(to,route.startLength))))return null;
+      from=Math.max(from,route.startLength);
+    }
+    if(to>=from) {
+      const start=from+geo.startOffset,end=to+geo.startOffset;
+      for(let circuit=Math.floor(start/geo.lap);circuit<=Math.floor(end/geo.lap);circuit++) {
+        if(!add(routeCellRangeBounds(route.loop,route.loop.stations,Math.max(0,start-circuit*geo.lap),Math.min(geo.lap,end-circuit*geo.lap))))return null;
+      }
+    }
+    return result;
+  }
+  function geometryProgressBounds(route,referenceLane,referenceR,width) {
+    const minLane=0.3;
+    let minMetric=1,maxMetric=1,maxCurvature=1/referenceR;
+    if(route) {
+      const bounds=[routeMetricBounds(route.loop,route.loop.stations)];
+      if(route.chute)bounds.push(routeMetricBounds(route.chute,route.chute.step));
+      minMetric=Math.min(...bounds.map(b=>b.minMetric));maxMetric=Math.max(...bounds.map(b=>b.maxMetric));maxCurvature=Math.max(...bounds.map(b=>b.maxCurvature));
+    }
+    const denominator=minMetric*(1-(referenceLane-minLane)*maxCurvature);
+    // Covers every legal t>=0.3 and laneBias in [0,1]. A failed proof disables
+    // distant-pair early exits rather than substituting a sampled estimate.
+    const metricUpper=maxMetric*(1+Math.max(Math.abs(minLane-referenceLane),Math.abs(width-referenceLane))*maxCurvature);
+    return {progressCoefUpperBound:denominator>0?Math.max(1,1/denominator):Infinity,
+      progressCoefLowerBound:Number.isFinite(metricUpper)&&metricUpper>0?Math.min(1,1/metricUpper):0,
+      progressCoefBoundLaneMin:minLane,minReferenceMetric:minMetric,maxReferenceMetric:maxMetric,maxReferenceCurvature:maxCurvature};
   }
   function bendCoefFor(special,dir) {
     return special==='左右皆可' || special===dir ? 1 : 0.97;
@@ -221,7 +574,9 @@
   function drainDistanceCoef() { return 1; }
   function staminaBudget(length) { return length*RACE_F.energyScale/baseSpeed(70); } // 历史接口
   function horseLen(H) { return 2.25+0.55*(H.adj['体格']/100); }
-  function horseWid(H) { return 1+0.3*(H.adj['体格']/100); }
+  // 运动碰撞包络与避让余量分开。95cm净宽发走箱给出包络上界，
+  // 此处0.65–0.825m为运动体宽代理，不宣称是实测肩宽；避让另加0.10m。
+  function horseWid(H) { return 0.65+0.15*(H.adj['体格']/100); }
 
   /* ---------------- 评语表（策划案 4.5 情报系统） ---------------- */
   const TIER_LABELS = ['95-100', '85-94', '75-84', '65-74', '55-64', '45-54', '35-44', '25-34', '0-24'];
@@ -377,6 +732,40 @@
   // 能力先生成，跑法不再选择属性模板。生涯、初始种马和演示马共用此分布。
   const HORSE_STATS = { '速度':[66,90], '耐力':[65,87], '出闸能力':[51,81],
     '爆发力':[61,85], '力量':[50,84], '毅力':[58,86], '智力':[45,85], '体格':[45,85] };
+  const PHYSIOLOGY_KEYS = ['endurance','power','economy','kinetics','durability'];
+  function neutralPhysiology() {
+    return {version:1,endurance:0,power:0,economy:0,kinetics:0,durability:0};
+  }
+  function physiologySeed(h,salt='horse-physiology-v1') {
+    // 与生成/比赛 RNG 独立；初次迁移后持久化，训练不重新抽样。
+    const identity=[salt,h.id||'',h.name||'',h.sire||'',h.dam||'',
+      ...Object.keys(HORSE_STATS).map(k=>(h.stats||{})[k]??70)].join('|');
+    let seed=2166136261;
+    for(const c of identity) seed=Math.imul(seed^c.charCodeAt(0),16777619);
+    return seed>>>0;
+  }
+  function samplePhysiology(rng) {
+    const [a,b,c,d,e]=Array.from({length:5},()=>rng()*2-1);
+    // 供给与短时容量不绑成同一个轴。有限共同因子允许弱协变，
+    // 氧动力学/疲劳耐受与持续供给部分相关；幅度是待实赛标定的模型假设。
+    return {version:1,endurance:0.85*a+0.15*e,power:0.85*b+0.15*e,
+      economy:0.9*c+0.1*e,kinetics:0.6*d+0.2*a+0.2*e,durability:0.65*e+0.35*a};
+  }
+  function horsePhysiology(h) {
+    const supplied=h.physiology||{}, fallback=samplePhysiology(mulberry32(physiologySeed(h)));
+    const profile={version:1};
+    for(const key of PHYSIOLOGY_KEYS) profile[key]=clamp(Number.isFinite(supplied[key])?supplied[key]:fallback[key],-1,1);
+    h.physiology=profile;
+    return profile;
+  }
+  function inheritPhysiology(sire,dam,offspring) {
+    const a=horsePhysiology(sire),b=horsePhysiology(dam);
+    const innovation=samplePhysiology(mulberry32(physiologySeed(offspring,'foal-physiology-v1')));
+    const profile={version:1};
+    // 均值回归与相关创新；不是已测量的遗传率，不额外消耗繁育 RNG。
+    for(const key of PHYSIOLOGY_KEYS) profile[key]=clamp(0.45*(a[key]+b[key])+0.30*innovation[key],-1,1);
+    return profile;
+  }
   function horseBehavior(h,generationRng) {
     // 新马由生成 RNG 取样并持久化；旧档缺少性格时按稳定身份补齐。
     // 两者均不消费比赛 RNG，也不读取跑法标签。
@@ -396,6 +785,7 @@
   }
   function describeHorse(h,historicalStyle,generationRng) {
     h.behavior=horseBehavior(h,generationRng);
+    horsePhysiology(h);
     const forward=racePlanFor(h,h.behavior).position;
     h.style=historicalStyle || (forward>=0.75?'逃':forward>=0.55?'先':forward>=0.30?'差':'追');
     return h;
@@ -438,6 +828,7 @@
       name: o.name || '', sire: o.sire || '', dam: o.dam || '',
       age, sex,
       behavior:o.behavior?{...o.behavior}:undefined, racePlan:o.racePlan?{...o.racePlan}:undefined,
+      physiology:o.physiology?{...o.physiology}:undefined,
       carriedWeight:o.carriedWeight, bodyMass:o.bodyMass,
       coat: o.coat || pick(rng, COATS),
       surface: o.surface || weightedPick(rng, [['草地', 85], ['泥草双刀', 10], ['泥地', 5]]),
@@ -763,17 +1154,23 @@
     const horses=field.map((h,i)=>{
       const adj={}; const mor=((h['斗志']??70)-50)*0.0002;
       for(const k of ['速度','爆发力','出闸能力','耐力','力量','毅力','体格','智力']) adj[k]=clamp((h.stats[k]??70)*(1+mor),1,115);
-      const gate=gates[i], pitch=Math.min(1.6,(TRACK_WIDTH-3)/field.length), t=1.5+pitch*(gate-0.5);
+      const gate=gates[i], width=geo.width||TRACK_WIDTH;
+      // 单排闸位不得靠压缩身体或生成虚构前后闸列容纳超额阵容。
+      const pitch=Math.min(1.6,(width-2)/field.length);
+      if(pitch<0.95) throw new Error('赛道宽度不足以合法布置'+field.length+'匹单排发走闸');
+      const t=1+pitch*(gate-0.5);
       const surfC=(SURFACE_COEF[surface]||{})[h.surface]??1;
       const base=baseSpeed(adj['速度']), fatMult=fatigueMultiplier(h['疲劳']||0);
-      const behavior=horseBehavior(h), plan=racePlanFor(h,behavior);
+      const behavior=horseBehavior(h), plan=racePlanFor(h,behavior), physiology=horsePhysiology(h);
       const bodyMass=clamp(Number(h.bodyMass)||450+(adj['体格']-70)*1.5,320,650);
       const carriedWeight=clamp(Number(h.carriedWeight)||57,40,70), massRatio=(bodyMass+carriedWeight)/(bodyMass+57);
       const H={h,id:h.id,name:h.name,style:h.style||'先',jockey:h.jockeyGrade||'普通',adj,mor,gate,
-        behavior,plan,bodyMass,carriedWeight,massRatio,
+        behavior,plan,physiology,bodyMass,carriedWeight,massRatio,
         s:0,t,targetT:t,v:0,prevV:0,pot:0,targetV:base,accel:0,power:0,gateOpen:false,startSettled:false,
-        stamina:adj['耐力']*RACE_F.staminaPer,staminaMax:adj['耐力']*RACE_F.staminaPer,
-        guts:adj['毅力']*RACE_F.gutsPer,gutsMax:adj['毅力']*RACE_F.gutsPer,
+        stamina:adj['耐力']*RACE_F.staminaPer*(1+0.10*physiology.power),
+        staminaMax:adj['耐力']*RACE_F.staminaPer*(1+0.10*physiology.power),
+        guts:adj['毅力']*RACE_F.gutsPer*(1+0.10*physiology.durability),
+        gutsMax:adj['毅力']*RACE_F.gutsPer*(1+0.10*physiology.durability),
         stage:'耐力',retention:1,base,fatMult,fieldCoef:(FIELD_STATE_COEF[state]||1)*surfC,
         surfaceCost:1+(1-surfC)*0.75,startDelay:0.12+(100-adj['出闸能力'])*0.003+rng()*0.15,
         action:null,actionT:0,lastObserve:0,laneIntentT:0,laneJitter:0,squeezePass:0,
@@ -781,10 +1178,17 @@
         place:null,time:null,gapAtWin:null,dnf:false,sprintAt:null,sectionals:[],
         cumulativeWork:0,statsSummary:{workUsed:0,aerobicUsed:0,energyUsed:0,unpaidWork:0,recovered:0,draftSeconds:0,blockedSeconds:0,peakSpeed:0,sprintAt:null},
         aggression:h.aggression??1,aiBias:(rng()-0.5)*0.12};
-      H.economy=Math.exp((70-adj['速度'])*RACE_F.efficiencyPerPoint);
-      H.aerobic=clamp(RACE_F.aerobicPower+(adj['耐力']-70)*RACE_F.aerobicPerPoint,35,68)*fatMult;
+      H.economy=Math.exp((70-adj['速度'])*RACE_F.efficiencyPerPoint)*(1-0.025*physiology.economy);
+      H.aerobic=clamp(RACE_F.aerobicPower+(adj['耐力']-70)*RACE_F.aerobicPerPoint,35,68)*fatMult*(1+0.05*physiology.endurance);
+      H.aerobicTau=RACE_F.aerobicTau*(1-0.20*physiology.kinetics)*clamp(1-(adj['耐力']-70)*0.002,0.85,1.15);
+      H.reservePower=RACE_F.reservePower*(1+0.12*physiology.power)*clamp(1+(adj['爆发力']-70)*0.005,0.75,1.25);
+      H.fatigueLoss=RACE_F.fatigueLoss*(1-0.20*physiology.durability);
+      H.fatigueWork=RACE_F.fatigueWork*(1-0.08*physiology.endurance);
+      H.fatigueExcess=RACE_F.fatigueExcess*(1-0.10*physiology.durability);
+      H.recoveryRate=RACE_F.recoveryRate*(1+0.15*physiology.endurance);
+      H.recoveryMax=RACE_F.recoveryMax*(1+0.15*physiology.endurance);
       H.aerobicOutput=H.aerobic*0.45;
-      H.maxV=(base+RACE_F.peakExtra+(adj['爆发力']-70)*RACE_F.burstSpeedK)*fatMult;
+      H.maxV=(base+RACE_F.peakExtra+(adj['爆发力']-70)*RACE_F.burstSpeedK)*fatMult*(1+0.006*physiology.power);
       H.powerFor=(v,a,drafting,at=H.s)=>powerCost(H,v,a,drafting,at);
       H.sustainableV=(at=H.s,drafting=false,power=H.aerobic*H.retention)=>speedAtPower(H,power,drafting,at);
       H.kineticCost=(from,to)=>0.5*Math.max(0,to*to-from*from)*H.massRatio;
@@ -801,7 +1205,7 @@
     const ranked=()=>active().sort((a,b)=>b.s-a.s || a.gate-b.gate);
     function setAction(H,type,dur=2) { H.action=type; H.actionT=dur; }
     function setLaneTarget(H,t) {
-      const margin=horseWid(H)/2+0.2; H.targetT=clamp(t,margin,TRACK_WIDTH-margin);
+      const margin=horseWid(H)/2+0.2; H.targetT=clamp(t,margin,trackWidthAt(H.s,geo)-margin);
       H.laneIntentT=Math.abs(H.targetT-H.t)/RACE_F.lateralSpeed+2;
     }
     function frontOf(H,limit=26) {
@@ -813,7 +1217,7 @@
       const others=active().filter(F=>F!==H && F.s>H.s-8 && F.s<H.s+24);
       const margin=horseWid(H)/2+0.25;
       let best=null,bestScore=-Infinity;
-      for(let t=margin;t<=TRACK_WIDTH-margin;t+=0.35) {
+      for(let t=margin;t<=trackWidthAt(H.s,geo)-margin;t+=0.35) {
         const shift=Math.abs(t-H.t);
         if(shift>5.6) continue;
         // 身体并排时不能穿过对手；前方堵塞可先收力再横移。
@@ -842,8 +1246,9 @@
     }
     function projectedCap(H,at) {
       let cap=H.maxV*H.retention;
-      if(kAt(at,geo)>0) cap=Math.min(cap,Math.sqrt(Math.max(1,
-        (RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*(geo.R+H.t-TRACK_WIDTH/2)))*bendCoefFor(H.h.special,dir));
+      const curvature=laneCurvatureAt(at,H.t,geo);
+      if(curvature>0) cap=Math.min(cap,Math.sqrt(Math.max(1,
+        (RACE_F.curveLateral+(H.adj['力量']-70)*0.008)/curvature))*bendCoefFor(H.h.special,dir));
       return cap;
     }
     // 路线预算预测有限加速与制动，功率与运动执行共用；不会把动能重复收费。
@@ -859,7 +1264,7 @@
         points.push(draftEnd);points.sort((a,b)=>a-b);
       }
       const maximumSupply=H.aerobic*H.retention;
-      const initialSupply=H.aerobicOutput??maximumSupply,tau=RACE_F.aerobicTau;
+      const initialSupply=H.aerobicOutput??maximumSupply,tau=H.aerobicTau;
       const oxygenAt=t=>maximumSupply+(initialSupply-maximumSupply)*Math.exp(-t/tau);
       const oxygenIntegral=(a,b)=>maximumSupply*(b-a)+(initialSupply-maximumSupply)*tau*(Math.exp(-a/tau)-Math.exp(-b/tau));
       const response=RACE_F.responseTime*clamp(1+(0.65-H.behavior.tractability)*0.4,0.82,1.26);
@@ -876,7 +1281,7 @@
           b=a+transientStep;points.splice(i,0,b);at=(a+b)/2;
           target=Math.max(3,Math.min(requestedV,projectedCap(H,at)));
         }
-        const lane=laneProgressCoef(at,H.t,geo),distance=(b-a)/lane;
+        const distance=laneArcDistance(a,b,H.t,geo);
         const mix=clamp(previousV/H.base,0,1),sign=target>=previousV?1:-1;
         const limit=sign>0?(RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230)*(1-mix)+
           RACE_F.runningAccel*(0.65+H.adj['爆发力']/200)*mix)*(0.65+0.35*accelerationReserve):RACE_F.braking;
@@ -901,25 +1306,28 @@
           seconds=next>low&&next<high?next:(low+high)/2;
         }
         const end=trajectory(seconds);
-        const grade=(elevationAt(b,geo,g)-elevationAt(a,geo,g))/(b-a);
+        const grade=(elevationAt(b,geo,g)-elevationAt(a,geo,g))/distance;
         let draw=0,power=0,segmentShortfall=0;
         for(const [fraction,weight] of quadrature) {
-          const point=trajectory(seconds*fraction),where=a+point.distance*lane;
-          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*lane*point.v);
+          // The bounded planning cell uses its exact arc length; interior work
+          // quadrature interpolates progress instead of repeated arc inversions.
+          // This is an approximate rider forecast, never the traffic safety path.
+          const point=trajectory(seconds*fraction),where=a+(b-a)*point.distance/distance;
+          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*point.v);
           const oxygen=oxygenAt(elapsed+seconds*fraction);
           draw+=weight*Math.max(0,output-oxygen)*seconds;power+=weight*output;
           segmentShortfall=Math.max(segmentShortfall,output-oxygen);
         }
         // 端点与加速度从上限转为响应控制的接点，也可能是瞬时需求峰值。
         for(const when of [0,Math.min(seconds,boundedTime),seconds]) {
-          const point=trajectory(when),where=clamp(a+point.distance*lane,a+1e-8,b-1e-8);
-          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*lane*point.v);
+          const point=trajectory(when),where=clamp(a+(b-a)*point.distance/distance,a+1e-8,b-1e-8);
+          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*point.v);
           segmentShortfall=Math.max(segmentShortfall,output-oxygenAt(elapsed+when));
         }
         required+=draw;
         const after=Math.max(0,reserve-required);
         // 储备只耗用时，格末是本格可用功率的下界；不能拿平均储备放行末段透支。
-        const available=RACE_F.reservePower*clamp(after/Math.max(1,H.staminaMax)/RACE_F.reserveFade,0,1);
+        const available=H.reservePower*clamp(after/Math.max(1,H.staminaMax)/RACE_F.reserveFade,0,1);
         peakPowerShortfall=Math.max(peakPowerShortfall,segmentShortfall-available);
         if(segments) segments.push({from:a,to:b,v:distance/seconds,fromV:previousV,toV:end.v,time:seconds,
           power,oxygen:oxygenIntegral(elapsed,elapsed+seconds),draw,kinetic:H.kineticCost(previousV,end.v)});
@@ -1060,9 +1468,9 @@
     }
     function headwindAt(at) {
       // 固定风向投影到路线切线；终直道迎风时，对向直道为顺风。
-      const q=mod(at+geo.startOffset,geo.lap),{S,B,referenceR}=geo;
-      return wind*(q<S?1:q<S+B?-Math.sin(-Math.PI/2+(q-S)/referenceR):
-        q<2*S+B?-1:-Math.sin(Math.PI/2+(q-2*S-B)/referenceR));
+      if(!wind) return 0;
+      const here=trackTangent(at,geo.referenceLane,geo,dir),finish=trackTangent(length,geo.referenceLane,geo,dir);
+      return wind*(here.x*finish.x+here.y*finish.y);
     }
     function powerCost(H,v,a,drafting,at=H.s,gravityPower=null,transverse=H.t) {
       const speed=Math.max(0,v), terms=powerTerms(H,drafting,at,transverse);
@@ -1076,7 +1484,7 @@
         {'良':1,'稍重':0.995,'重':1.02,'不良':1.075})[state]||1;
       const ground=1+(condition-1)*clamp(1-(H.adj['力量']-70)*0.006,0.7,1.3);
       const c2=RACE_F.resistanceK*H.economy*ground*H.surfaceCost;
-      const curvature=kAt(at,geo), radius=curvature>0?geo.R+transverse-TRACK_WIDTH/2:Infinity;
+      const curvature=laneCurvatureAt(at,transverse,geo), radius=curvature>0?1/curvature:Infinity;
       return {c2,c6:Number.isFinite(radius)?c2*RACE_F.turnCost/(radius*radius*RACE_F.curveLateral*RACE_F.curveLateral):0,
         air:RACE_F.airK*(drafting?RACE_F.draftSave:1),wind:headwindAt(at),
         gravity:9.81*gradientAt(at,geo,g)*laneProgressCoef(at,transverse,geo)};
@@ -1099,33 +1507,87 @@
       }
       return v;
     }
+    // 两个线性积分路径在整步内进入同一身体矩形的时间区间。
+    // 不能只检查单马新横坐标对另一匹的旧横坐标。
+    function axisOverlap(from,to,clearance) {
+      const delta=to-from;
+      if(Math.abs(delta)<1e-12) return Math.abs(from)<clearance-1e-9?[0,1]:null;
+      const a=(-clearance-from)/delta,b=(clearance-from)/delta;
+      const low=Math.max(0,Math.min(a,b)),high=Math.min(1,Math.max(a,b));
+      return high-low>1e-9?[low,high]:null;
+    }
+    let trafficProgressCache=new Map(),trafficProgressCacheSize=0;
+    function trafficProgressCoef(s,t) {
+      let lane=trafficProgressCache.get(t);
+      if(lane){const value=lane.get(s);if(value!==undefined)return value;}
+      const value=laneProgressCoef(s,t,geo);
+      if(trafficProgressCacheSize>=16384){trafficProgressCache.clear();trafficProgressCacheSize=0;lane=null;}
+      if(!lane){lane=new Map();trafficProgressCache.set(t,lane);}
+      lane.set(s,value);trafficProgressCacheSize++;return value;
+    }
+    function bodyClearance(H,F,hs,fs,ht,ft) {
+      // 纵坐标是路线进度；在内外道把真实体长投影到相同坐标。
+      const scale=Math.max(1,trafficProgressCoef(hs,ht),trafficProgressCoef(fs,ft));
+      return {longitudinal:((horseLen(H)+horseLen(F))/2+0.20)*scale,
+        lateral:(horseWid(H)+horseWid(F))/2+0.10};
+    }
+    function sweptBodies(H,F,before,frontBefore,move,frontMove) {
+      const clear=bodyClearance(H,F,(before.s+move.s)/2,(frontBefore.s+frontMove.s)/2,
+        (before.t+move.t)/2,(frontBefore.t+frontMove.t)/2);
+      const long=axisOverlap(frontBefore.s-before.s,frontMove.s-move.s,clear.longitudinal);
+      if(!long) return false;
+      const lateral=axisOverlap(frontBefore.t-before.t,frontMove.t-move.t,clear.lateral);
+      return !!lateral&&Math.min(long[1],lateral[1])-Math.max(long[0],lateral[0])>1e-9;
+    }
+    function trafficFailure(reason,H,F,detail={}) {
+      race.traffic.infeasibleSteps++;
+      race.traffic.lastInfeasible={time:race.t,reason,horse:H?.id,other:F?.id,...detail};
+      throw new Error('交通运动状态不可行：'+reason+'（'+(H?.id||'')+'/'+(F?.id||'')+'，'+race.t.toFixed(3)+'秒）');
+    }
+    const trafficNegativeWitnessCache=new WeakMap();
     function tick(dt) {
+      trafficProgressCache=new Map();trafficProgressCacheSize=0;
       const act=active();if(!act.length){race.finished=true;return;}
+      race.traffic??={steps:0,syncLateralDenied:0,brakingSteps:0,marginRecoverySteps:0,infeasibleSteps:0,
+        minAcceleration:0,minFollowingSlack:null,minResponseSlack:null,lastInfeasible:null};
+      race.traffic.steps++;
       const old=new Map(act.map(H=>[H,{s:H.s,t:H.t,v:H.v,stamina:H.stamina,guts:H.guts}]));
+      for(const H of act) {
+        const before=old.get(H),halfWidth=horseWid(H)/2,width=trackWidthAt(before.s,geo);
+        if(!Number.isFinite(before.s)||!Number.isFinite(before.t)||!Number.isFinite(before.v)||before.v<0||
+          before.t<halfWidth-1e-7||before.t>width-halfWidth+1e-7)
+          trafficFailure('步前位置或速度超出合法运动范围',H,null,{before,width});
+      }
+      for(let i=0;i<act.length;i++) for(let j=i+1;j<act.length;j++) {
+        const H=act[i],F=act[j],a=old.get(H),b=old.get(F);
+        const clear=bodyClearance(H,F,a.s,b.s,a.t,b.t);
+        if(Math.abs(a.s-b.s)<clear.longitudinal-1e-7&&Math.abs(a.t-b.t)<clear.lateral-1e-7)
+          trafficFailure('步前身体已重叠，不能通过清零速度掩盖',H,F,{before:a,otherBefore:b});
+      }
       for(const H of act) {
         H.lastObserve-=dt;H.actionT=Math.max(0,H.actionT-dt);H.laneIntentT=Math.max(0,H.laneIntentT-dt);
         if(!H.control && H.lastObserve<=0) {runAI(H);H.lastObserve=(JOCKEY_CADENCE[H.jockey]||2)*(0.95+rng()*0.10);}
         if(H.control) {if(Number.isFinite(H.control.targetV)) H.targetV=Math.max(0,H.control.targetV);if(Number.isFinite(H.control.targetT)) H.targetT=H.control.targetT;}
       }
-      const motion=new Map();
+      const motion=new Map(),motionModel=new Map(),denied=new Set(),marginRecovery=new Set();
       for(const H of act) {
         const before=old.get(H);H.blocked=false;H.blocker=null;H.collisionIntensity=0;H.squeezePass=0;
         const wake=act.find(F=>F!==H && old.get(F).s>before.s && old.get(F).s-before.s<=RACE_F.draftRange &&
           Math.abs(old.get(F).t-before.t)<=(horseWid(H)+horseWid(F))/2+0.8);
         H.drafting=!!wake;
-        const fatigue=1-RACE_F.fatigueLoss*(1-H.guts/H.gutsMax);
+        const fatigue=1-H.fatigueLoss*(1-H.guts/H.gutsMax);
         const aerobicTarget=H.aerobic*fatigue;
-        H.aerobicOutput+=(aerobicTarget-H.aerobicOutput)*(1-Math.exp(-dt/RACE_F.aerobicTau));
+        H.aerobicOutput+=(aerobicTarget-H.aerobicOutput)*(1-Math.exp(-dt/H.aerobicTau));
         const aerobic=H.aerobicOutput;
         const stRatio=clamp(H.stamina/H.staminaMax,0,1);
         const reserveFade=clamp(stRatio/RACE_F.reserveFade,0,1);
         // 可用无氧功率同时受剩余容量与本步能量约束，不能先透支再截成零。
-        const reservePower=Math.min(RACE_F.reservePower*reserveFade,H.stamina/dt);
+        const reservePower=Math.min(H.reservePower*reserveFade,H.stamina/dt);
         const maxPower=aerobic+reservePower;
         let cap=Math.min(H.maxV*fatigue,speedAtPower(H,maxPower,!!wake));
-        const curvature=kAt(H.s,geo);
+        const curvature=laneCurvatureAt(H.s,H.t,geo);
         if(curvature>0) {
-          const radius=geo.R+H.t-TRACK_WIDTH/2;
+          const radius=1/curvature;
           cap=Math.min(cap,Math.sqrt(Math.max(1,(RACE_F.curveLateral+(H.adj['力量']-70)*0.008)*radius))*bendCoefFor(H.h.special,dir));
         }
         const grad=gradientAt(H.s,geo,g); H.grad=grad;H.slopeCoef=1;
@@ -1148,60 +1610,384 @@
         const kineticBudget=Math.max(0,maxPower-powerCost(H,H.v,0,!!wake))/(H.massRatio*Math.max(H.v,1));
         let a=clamp((desired-H.v)/response,-RACE_F.braking,Math.min(maxA,kineticBudget));
         let nextV=Math.max(0,H.v+a*dt*startFraction);
-        // 合法横移：同一纵向身体区间内，横移路径不得穿过其他马匹。
-        const margin=horseWid(H)/2+0.2, target=clamp(H.targetT,margin,TRACK_WIDTH-margin);
-        function propose(v) {
+        // 先提案，随后共同验证整步横移与跟车，不在积分后硬夹位置或速度。
+        const bodyMargin=horseWid(H)/2,margin=bodyMargin+0.2,width=trackWidthAt(H.s,geo);
+        const target=clamp(H.targetT,margin,width-margin);
+        // This model exists for one simultaneous tick, whose H state is held
+        // constant until commit. Reuse identical immutable proposals so exact
+        // duplicate budget/safety queries retain their pair/trajectory caches.
+        const proposalCache=new Map();
+        function propose(v,transverse=target) {
+          let lateralCache=proposalCache.get(v);
+          if(!lateralCache){lateralCache=new Map();proposalCache.set(v,lateralCache);}
+          if(lateralCache.has(transverse))return lateralCache.get(transverse);
           const lateralLimit=Math.min(RACE_F.lateralSpeed,(H.v+v)/2*0.06)*dt*startFraction;
-          let t=clamp(H.t+clamp(target-H.t,-lateralLimit,lateralLimit),margin,TRACK_WIDTH-margin);
-          for(const F of act) {
-            if(F===H||Math.abs(old.get(F).s-before.s)>(horseLen(H)+horseLen(F))/2+0.3) continue;
-            const clearance=(horseWid(H)+horseWid(F))/2+0.1;
-            if(Math.abs(t-old.get(F).t)<clearance && Math.abs(t-old.get(F).t)<Math.abs(before.t-old.get(F).t)) t=before.t;
-          }
-          const lateral=(t-before.t)/dt,travelV=(H.v+v)/2;
+          const t=clamp(H.t+clamp(transverse-H.t,-lateralLimit,lateralLimit),bodyMargin,width-bodyMargin);
+          const lateral=startFraction?(t-before.t)/(dt*startFraction):0,travelV=(H.v+v)/2;
           const forwardV=Math.sqrt(Math.max(0,travelV*travelV-lateral*lateral));
-          return {s:H.s+forwardV*laneProgressCoef(H.s,(H.t+t)/2,geo)*dt*startFraction,
-            t,v,a:(v-H.v)/dt,travelV,lateral,aerobic};
+          const proposal={s:advancePhysical(H.s,forwardV*dt*startFraction,(H.t+t)/2),
+            t,v,a:(v-H.v)/dt,travelV,lateral,aerobic,activeFraction:startFraction};
+          lateralCache.set(transverse,proposal);return proposal;
         }
-        // 限制与记账使用相同的实际路径、高差及积分中点。
-        let move=propose(nextV);
-        for(let n=0;n<4;n++) {
-          const paid=motionPower(H,before,move,!!wake,dt);
-          if(paid<=maxPower+1e-7) break;
-          nextV=Math.max(0,nextV-(paid-maxPower)*dt/(H.massRatio*Math.max(1,(H.v+nextV)/2)));
-          move=propose(nextV);
-        }
-        if(motionPower(H,before,move,!!wake,dt)>maxPower+1e-7) {
-          let low=0,high=nextV;
+        const minV=Math.max(0,before.v-RACE_F.braking*dt*startFraction);
+        // 限制与记账使用相同的实际路径、高差及积分中点；预算根求解
+        // 的下界仍是有限制动，不能在缺功率时偷偷从零速重新求根。
+        function paidProposal(v,transverse=target) {
+          let move=propose(v,transverse);
+          if(motionPower(H,before,move,!!wake,dt)<=maxPower+1e-7) return move;
+          let low=minV,high=v;
+          if(motionPower(H,before,propose(low,transverse),!!wake,dt)>maxPower+1e-7)
+            trafficFailure('有限制动下供能约束不可行',H,null,{before,minV,maxPower});
           for(let n=0;n<28;n++) {
             const mid=(low+high)/2;
-            if(motionPower(H,before,propose(mid),!!wake,dt)<=maxPower) low=mid;else high=mid;
+            if(motionPower(H,before,propose(mid,transverse),!!wake,dt)<=maxPower) low=mid;else high=mid;
           }
-          move=propose(low);
+          return propose(low,transverse);
         }
-        motion.set(H,move);H.pot=desired;
+        motionModel.set(H,{propose,paidProposal,minV,target,maxPower,freeV:nextV});
+        motion.set(H,paidProposal(nextV));H.pot=desired;
       }
-      // 按前方先结算，真实身体间距限制推进；不存在强行突破的穿模豁免。
-      for(const H of act.slice().sort((a,b)=>old.get(b).s-old.get(a).s || a.gate-b.gate)) {
-        const move=motion.get(H), before=old.get(H);
-        for(const F of act) {
-          if(F===H||old.get(F).s<=before.s) continue;
-          const fm=motion.get(F), clearance=(horseLen(H)+horseLen(F))/2+0.2;
-          if(Math.abs(move.t-fm.t)<(horseWid(H)+horseWid(F))/2+0.1 && move.s>fm.s-clearance) {
-            move.s=Math.max(before.s,Math.min(move.s,fm.s-clearance));H.blocked=true;
-            if(!H.blocker||old.get(F).s<old.get(H.blocker).s) H.blocker=F;
-            move.v=Math.min(move.v,Math.max(0,(move.s-before.s)/dt/laneProgressCoef(H.s,H.t,geo)));
+      const frontFirst=act.slice().sort((a,b)=>old.get(b).s-old.get(a).s||a.gate-b.gate);
+      const brakingCache=new WeakMap(),stoppingCache=new WeakMap(),followingCache=new WeakMap(),brakingInterval=0.125;
+      const brakingSteps=Math.ceil(Math.max(...[...motionModel.values()].map(m=>m.freeV))/RACE_F.braking/brakingInterval);
+      function advancePhysical(at,distance,transverse) {
+        return laneAdvance(at,distance,transverse,geo);
+      }
+      function stoppingEnd(move) {
+        if(!stoppingCache.has(move)) stoppingCache.set(move,advancePhysical(move.s,move.v*move.v/(2*RACE_F.braking),move.t));
+        return stoppingCache.get(move);
+      }
+      function brakingTrajectory(move) {
+        if(brakingCache.has(move)) return brakingCache.get(move);
+        const points=[{s:move.s,v:move.v}],events=[move.v/RACE_F.braking];let at=move.s,previous=move.v,eventsReady=false;
+        function ensurePoints(until=brakingSteps) {
+          for(let i=points.length;i<=until;i++) {
+            const next=Math.max(0,move.v-RACE_F.braking*brakingInterval*i);
+            const elapsed=previous>0?Math.min(brakingInterval,previous/RACE_F.braking):0;
+            if(elapsed) at=advancePhysical(at,(previous+next)/2*elapsed,move.t);
+            points.push({s:at,v:next});previous=next;
+          }
+          return points;
+        }
+        function ensureEvents() {
+          if(eventsReady)return events;
+          ensurePoints();
+          const breakpoints=laneArcBreakpoints(move.s,at,geo);
+          for(const where of breakpoints) {
+            if(kAt(where-1e-4,geo)===0&&kAt(where+1e-4,geo)===0) continue;
+            const distance=laneArcDistance(move.s,where,move.t,geo);
+            const terminal=Math.sqrt(Math.max(0,move.v*move.v-2*RACE_F.braking*distance));
+            events.push(2*distance/Math.max(1e-12,move.v+terminal));
+          }
+          eventsReady=true;return events;
+        }
+        const queryCache=new Map();
+        const trajectory={get points(){return ensurePoints();},get events(){return ensureEvents();},sampleAt(time){
+          const i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
+          if(regular&&i>=0&&i<=brakingSteps){ensurePoints(i);return points[i];}
+          return this.pointAt(time);
+        },pointAt:time=>{
+          if(queryCache.has(time)) return queryCache.get(time);
+          const atTime=Math.min(Math.max(0,time),move.v/RACE_F.braking),v=Math.max(0,move.v-RACE_F.braking*atTime);
+          const index=Math.min(brakingSteps,Math.floor(atTime/brakingInterval));ensurePoints(index);
+          const base=points[index],elapsed=atTime-index*brakingInterval;
+          const point={s:advancePhysical(base.s,(base.v+v)/2*elapsed,move.t),v};
+          queryCache.set(time,point);return point;
+        }};
+        brakingCache.set(move,trajectory);return trajectory;
+      }
+      function followingSlack(H,F,move,frontMove,withResponse=true) {
+        const ownScale=trafficProgressCoef(move.s,move.t);
+        let paired=followingCache.get(move);
+        if(!paired){paired=new WeakMap();followingCache.set(move,paired);}
+        if(paired.has(frontMove)) return paired.get(frontMove)-(withResponse?(1/60)*move.v*ownScale:0);
+        const response=(1/60)*move.v*ownScale;
+        if(withResponse) {
+          // One negative witness proves rejection, but is only an upper bound
+          // on the full minimum. Never cache it for physical-slack queries.
+          const now=frontMove.s-move.s-bodyClearance(H,F,move.s,frontMove.s,move.t,frontMove.t).longitudinal-response;
+          if(now<-1e-7) return now;
+          const rearEnd=stoppingEnd(move),frontEnd=stoppingEnd(frontMove);
+          const stop=frontEnd-rearEnd-bodyClearance(H,F,rearEnd,frontEnd,move.t,frontMove.t).longitudinal-response;
+          if(stop<-1e-7) return stop;
+        }
+        if(geo.progressCoefUpperBound) {
+          const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,geo.progressCoefUpperBound);
+          // 前马在未来只向前运动。若后马完整停止终点仍在前马
+          // 当前身体之后，则全时域可行；几何界由导数包络保守得出。
+          const lowerBound=frontMove.s-stoppingEnd(move)-bodyUpper;
+          if(lowerBound>=(1/60)*move.v*ownScale+1e-8) {
+            paired.set(frontMove,lowerBound);
+            return lowerBound-(withResponse?(1/60)*move.v*ownScale:0);
           }
         }
+        // Write the future gap as physical arc along the rear horse's lane:
+        // G(t)=G(0)+dFront(t)-dRear(t)+(tRear-tFront)*deltaHeadingFront(t).
+        // Equal finite braking gives dFront-dRear >= -max(0,(vr²-vf²)/(2a)).
+        // The derivative-control curvature bound also covers the absolute
+        // heading variation, so this proof does not assume constant curvature
+        // or a monotone center-gap. If it cannot prove safety, check every cell.
+        const routeBound=trafficRouteIntervalBounds(Math.min(move.s,frontMove.s),Math.max(stoppingEnd(move),stoppingEnd(frontMove)),geo);
+        const curvatureUpper=routeBound?.maxCurvature??geo.maxReferenceCurvature;
+        const frontMetricMargin=1-Math.abs(frontMove.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
+        const rearMetricMargin=1-Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
+        if(geo.progressCoefLowerBound>0&&Number.isFinite(curvatureUpper)&&frontMetricMargin>0&&rearMetricMargin>0) {
+          const initialPhysicalGap=laneArcDistance(move.s,frontMove.s,move.t,geo);
+          const frontDistance=frontMove.v*frontMove.v/(2*RACE_F.braking);
+          const closingDistance=Math.max(0,(move.v*move.v-frontMove.v*frontMove.v)/(2*RACE_F.braking));
+          const headingBound=curvatureUpper*frontDistance/frontMetricMargin;
+          const physicalLower=initialPhysicalGap-closingDistance-Math.abs(move.t-frontMove.t)*headingBound;
+          const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,geo.progressCoefUpperBound);
+          // Convert only along the rear lane, rather than every legal track lane.
+          // |signed curvature| <= curvatureUpper bounds its physical metric.
+          const rearMetricUpper=(routeBound?.maxMetric??geo.maxReferenceMetric)*(1+Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper);
+          const rearProgressLower=Number.isFinite(rearMetricUpper)&&rearMetricUpper>0?Math.min(1,1/rearMetricUpper):0;
+          const lowerBound=physicalLower*rearProgressLower-bodyUpper;
+          if(lowerBound>=response+1e-8) {
+            paired.set(frontMove,lowerBound);return lowerBound-(withResponse?response:0);
+          }
+        }
+        // 同样的有限制动下，后马必须留下相对停止距离。固定使用最大
+        // 内部步1/60秒的响应余量，不能随当前小步缩小，否则下一次
+        // 合法外部step变大时会突然要求更多空间，制造不可行状态。
+        const own=brakingTrajectory(move),front=brakingTrajectory(frontMove);
+        let witnesses=trafficNegativeWitnessCache.get(H);
+        if(!witnesses){witnesses=new WeakMap();trafficNegativeWitnessCache.set(H,witnesses);}
+        // Any exact sampled negative gap rejects a response query. The previous
+        // pair's minimizing time is just a candidate; it never proves acceptance.
+        const witnessTime=witnesses.get(F);
+        if(withResponse&&Number.isFinite(witnessTime)&&witnessTime>=0) {
+          const time=Math.min(witnessTime,brakingSteps*brakingInterval),i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
+          // Match the original regular-grid representation as well as pointAt.
+          const r=regular?own.points[i]:own.pointAt(time),f=regular?front.points[i]:front.pointAt(time);
+          const witness= f.s-r.s-bodyClearance(H,F,r.s,f.s,move.t,frontMove.t).longitudinal-response;
+          if(witness<-1e-7)return witness;
+        }
+        let closest=Infinity;
+        // 最终停止位置不足以定义安全域：前马先入外道弯道时，即使
+        // 后马物理速度较低，进度速度也可暂时更高。检查整个未来
+        // 制动过程的最近接近，提前留下空间而不是临接触才制动。
+        const values=new Map();
+        function gapAt(time) {
+          if(values.has(time)) return values.get(time);
+          const i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
+          const r=regular&&own.points[i]?own.points[i]:own.pointAt(time);
+          const f=regular&&front.points[i]?front.points[i]:front.pointAt(time);
+          const body=bodyClearance(H,F,r.s,f.s,move.t,frontMove.t),gap=f.s-r.s-body.longitudinal;
+          values.set(time,gap);
+          if(gap<closest)witnesses.set(F,time);
+          closest=Math.min(closest,gap);return gap;
+        }
+        const certificates=[];
+        function certifyInterval(left,right,depth) {
+          const r=own.sampleAt(left),f=front.sampleAt(left),rr=own.sampleAt(right),fr=front.sampleAt(right),span=right-left;
+          const bounds=trafficRouteIntervalBounds(Math.min(r.s,f.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
+          let lower=-Infinity;
+          if(bounds&&bounds.minMetric>0&&Number.isFinite(bounds.signedMin)&&Number.isFinite(bounds.signedMax)) {
+            const reference=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-reference,fd=frontMove.t-reference;
+            const rearMetricMax=bounds.maxMetric*Math.max(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
+            const rearOffsetMin=Math.min(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
+            const frontOffsetMin=Math.min(1+fd*bounds.signedMin,1+fd*bounds.signedMax);
+            const rearProjectionMin=bounds.minMetric*Math.min(1+rd*Math.max(0,bounds.signedMin),1+rd*Math.max(0,bounds.signedMax));
+            const frontProjectionMin=bounds.minMetric*Math.min(1+fd*Math.max(0,bounds.signedMin),1+fd*Math.max(0,bounds.signedMax));
+            if(rearMetricMax>0&&rearOffsetMin>0&&frontOffsetMin>0&&rearProjectionMin>0&&frontProjectionMin>0) {
+              const distance=(v,time)=>{const elapsed=Math.min(time,v/RACE_F.braking);return(v+Math.max(0,v-RACE_F.braking*elapsed))/2*elapsed;};
+              const rearDistance=distance(r.v,span),frontDistance=distance(f.v,span),closing=Math.max(0,rearDistance-frontDistance);
+              const headingMin=frontDistance*bounds.signedMin/(1+fd*bounds.signedMin),headingMax=frontDistance*bounds.signedMax/(1+fd*bounds.signedMax);
+              // This is a bound for every intermediate time, including the
+              // zero heading change at the left endpoint. Do not prepay gains.
+              const headingContribution=Math.min(0,(move.t-frontMove.t)*headingMin,(move.t-frontMove.t)*headingMax);
+              const physicalLower=laneArcDistance(r.s,f.s,move.t,geo)-closing+headingContribution-1e-6;
+              const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,1/rearProjectionMin,1/frontProjectionMin);
+              lower=physicalLower>0?physicalLower/rearMetricMax-bodyUpper:-Infinity;
+            }
+          }
+          if(lower>=response+1e-8) {certificates.push({left,right,lower});return true;}
+          if(depth>=6)return false;
+          const middle=(left+right)/2;
+          const a=certifyInterval(left,middle,depth+1),b=certifyInterval(middle,right,depth+1);return a&&b;
+        }
+        const fullyCertified=certifyInterval(0,brakingSteps*brakingInterval,0);
+        certificates.sort((a,b)=>a.left-b.left);
+        for(const certificate of certificates)closest=Math.min(closest,certificate.lower);
+        if(fullyCertified){paired.set(frontMove,closest);return closest-(withResponse?response:0);}
+        function covered(left,right) {
+          let through=left;
+          for(const certificate of certificates) {
+            if(certificate.right<through)continue;
+            if(certificate.left>through+1e-12)return false;
+            through=Math.max(through,certificate.right);
+            if(through>=right-1e-12)return true;
+          }
+          return false;
+        }
+        const times=[...own.points.map((_,i)=>i*brakingInterval),...own.events,...front.events]
+          .filter(t=>t>=0&&t<=brakingSteps*brakingInterval).sort((a,b)=>a-b)
+          .filter((t,i,all)=>!i||t-all[i-1]>1e-10);
+        for(const time of times) {
+          if(covered(time,time))continue;
+          gapAt(time);
+          if(withResponse&&closest-response<-1e-7) return closest-response;
+        }
+        for(let i=1;i<times.length;i++) {
+          const left=times[i-1],right=times[i],span=right-left;
+          if(span<1e-8||covered(left,right)) continue;
+          // Enclose center progress and body projection over this complete time
+          // interval. Only certified intervals skip the original root search.
+          function sampledPoint(trajectory,time) {
+            const j=Math.round(time/brakingInterval),regular=Math.abs(time-j*brakingInterval)<1e-12;
+            return regular&&trajectory.points[j]?trajectory.points[j]:trajectory.pointAt(time);
+          }
+          const rl=sampledPoint(own,left),fl=sampledPoint(front,left),rr=sampledPoint(own,right),fr=sampledPoint(front,right);
+          const interval=trafficRouteIntervalBounds(Math.min(rl.s,fl.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
+          if(interval&&interval.minMetric>0&&Number.isFinite(interval.signedMin)&&Number.isFinite(interval.signedMax)) {
+            const ref=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-ref,fd=frontMove.t-ref;
+            const physicalRearMin=interval.minMetric*Math.min(1+rd*interval.signedMin,1+rd*interval.signedMax);
+            const physicalFrontMax=interval.maxMetric*Math.max(1+fd*interval.signedMin,1+fd*interval.signedMax);
+            const physicalFrontMin=interval.minMetric*Math.min(1+fd*interval.signedMin,1+fd*interval.signedMax);
+            const projectionRearMin=interval.minMetric*Math.min(1+rd*Math.max(0,interval.signedMin),1+rd*Math.max(0,interval.signedMax));
+            const projectionFrontMin=interval.minMetric*Math.min(1+fd*Math.max(0,interval.signedMin),1+fd*Math.max(0,interval.signedMax));
+            if(physicalRearMin>0&&physicalFrontMin>0&&physicalFrontMax>0&&projectionRearMin>0&&projectionFrontMin>0) {
+              const rateUpper=rl.v/physicalRearMin-Math.max(0,fl.v-RACE_F.braking*span)/physicalFrontMax;
+              const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,1/projectionRearMin,1/projectionFrontMin);
+              const intervalLower=fl.s-rl.s-Math.max(0,rateUpper)*span-bodyUpper-1e-6;
+              if(intervalLower>=response+1e-8) {closest=Math.min(closest,intervalLower);continue;}
+            }
+          }
+
+          // 包含完整身体投影的局部极小，而不只找两马中心进度速度
+          // 相等。断点左右极限也保留，覆盖内道身体投影与曲率跳变。
+          const edge=Math.min(1e-8,span/1000),epsilon=Math.min(1e-5,span/1000);
+          gapAt(left+edge);gapAt(right-edge);
+          const middle=(left+right)/2;gapAt(middle);
+          if(withResponse&&closest-response<-1e-7) return closest-response;
+          const slopes=new Map();
+          const slopeAt=time=>{
+            if(slopes.has(time))return slopes.get(time);
+            if(time>=Math.max(move.v,frontMove.v)/RACE_F.braking)return 0;
+            const r=own.pointAt(time),f=front.pointAt(time);
+            const rv=r.v*trafficProgressCoef(r.s,move.t),fv=f.v*trafficProgressCoef(f.s,frontMove.t);
+            // 对完整身体投影做局部导数。中心进度速度直接来自同一
+            // 弧长导数；只在微小局部计算投影变化，避免重复逆解路径。
+            const a=Math.max(left+edge,time-epsilon),b=Math.min(right-edge,time+epsilon);
+            if(b<=a)return 0;
+            const ca=bodyClearance(H,F,r.s+rv*(a-time),f.s+fv*(a-time),move.t,frontMove.t).longitudinal;
+            const cb=bodyClearance(H,F,r.s+rv*(b-time),f.s+fv*(b-time),move.t,frontMove.t).longitudinal;
+            const value=fv-rv-(cb-ca)/(b-a);slopes.set(time,value);return value;
+          };
+          for(const [a,b] of [[left+edge,middle],[middle,right-edge]]) {
+            let low=a,high=b,dl=slopeAt(low),dh=slopeAt(high);
+            if(!(dl<-1e-7&&dh>1e-7)) continue;
+            if(!geo.route) {
+              // 抽象直弯区间中，两马倍率与身体投影为常量，有限
+              // 制动的相对进度速度为线性函数，极小点可以直接求出。
+              gapAt(low-dl*(high-low)/(dh-dl));continue;
+            }
+            for(let n=0;n<18;n++) {
+              const mid=(low+high)/2;
+              if(slopeAt(mid)<0) low=mid;else high=mid;
+            }
+            gapAt((low+high)/2);
+            if(withResponse&&closest-response<-1e-7) return closest-response;
+          }
+        }
+        paired.set(frontMove,closest);
+        return closest-(withResponse?(1/60)*move.v*ownScale:0);
+      }
+      // 横移提案同步审核；两匹相向并道不得分别对照旧位置获得许可。
+      // 否决整步横移后重新积分，不重写已经走出的距离。
+      let changed=true,passes=0;
+      trafficSolve: while(changed&&passes++<act.length+2) {
+        changed=false;
+        for(let i=0;i<act.length;i++) for(let j=i+1;j<act.length;j++) {
+          const H=act[i],F=act[j],a=old.get(H),b=old.get(F),hm=motion.get(H),fm=motion.get(F);
+          const clear=bodyClearance(H,F,a.s,b.s,a.t,b.t);
+          const movingH=Math.abs(hm.t-a.t)>1e-12,movingF=Math.abs(fm.t-b.t)>1e-12;
+          if(!movingH&&!movingF) continue;
+          const merge=Math.abs(a.t-b.t)>=clear.lateral-1e-8&&Math.abs(hm.t-fm.t)<clear.lateral+1e-8;
+          const rear=a.s<b.s?H:F,front=rear===H?F:H;
+          const unsafeMerge=merge&&followingSlack(rear,front,motion.get(rear),motion.get(front))<0;
+          if(!sweptBodies(H,F,a,b,hm,fm)&&!unsafeMerge) continue;
+          for(const [X,moving] of [[H,movingH],[F,movingF]]) if(moving) {
+            const model=motionModel.get(X);model.target=old.get(X).t;
+            motion.set(X,model.paidProposal(motion.get(X).v,model.target));
+            denied.add(X);changed=true;
+          }
+        }
+        // 前马的最终运动提案已知后，求后马的可行末速度；这个速度
+        // 同时用于梯形积分与能量账，没有事后位置钳制或速度清零。
+        for(const H of frontFirst) for(const F of frontFirst) {
+          if(F===H||old.get(F).s<=old.get(H).s) continue;
+          const before=old.get(H),frontBefore=old.get(F),move=motion.get(H),fm=motion.get(F);
+          const clear=bodyClearance(H,F,before.s,frontBefore.s,before.t,frontBefore.t);
+          const transverse=axisOverlap(frontBefore.t-before.t,fm.t-move.t,clear.lateral);
+          if(!transverse||followingSlack(H,F,move,fm)>=-1e-8) continue;
+          const model=motionModel.get(H),lower=model.propose(model.minV,model.target);
+          if(followingSlack(H,F,lower,fm)<-1e-7) {
+            // 只缺额外反应余量时，合法的脱离车道路径仍可继续。
+            // 否决向外避让会把后马永久困在同一走廊，反而妨碍解阻。
+            if(followingSlack(H,F,lower,fm,false)>=-1e-7) {
+              motion.set(H,model.paidProposal(model.minV,model.target));H.blocked=true;
+              if(!H.blocker||frontBefore.s<old.get(H.blocker).s) H.blocker=F;
+              marginRecovery.add(H);if(move.v-model.minV>1e-7) changed=true;
+              continue;
+            }
+            let canceled=false;
+            // 在弯道横移会改变车道弧长及停止距离；即使本步没有碰到
+            // 身体，也不能允许并道吞掉已经需要的制动空间。
+            for(const X of [H,F]) if(Math.abs(motion.get(X).t-old.get(X).t)>1e-12) {
+              const xm=motionModel.get(X);xm.target=old.get(X).t;
+              motion.set(X,xm.paidProposal(xm.freeV,xm.target));denied.add(X);canceled=true;
+            }
+            if(canceled) {changed=true;continue trafficSolve;}
+            trafficFailure('既有跟车间距不满足有限制动可行域',H,F,{before,otherBefore:frontBefore,
+              minV:model.minV,minimumSlack:followingSlack(H,F,lower,fm),proposal:move,frontProposal:fm});
+          }
+          let low=model.minV,high=move.v;
+          for(let n=0;n<28;n++) {
+            const mid=(low+high)/2;
+            if(followingSlack(H,F,model.propose(mid,model.target),fm)>=0) low=mid;else high=mid;
+          }
+          motion.set(H,model.paidProposal(low,model.target));H.blocked=true;
+          if(move.v-low>1e-7) changed=true;
+          if(!H.blocker||frontBefore.s<old.get(H.blocker).s) H.blocker=F;
+        }
+      }
+      for(let i=0;i<act.length;i++) for(let j=i+1;j<act.length;j++) {
+        const H=act[i],F=act[j];
+        if(sweptBodies(H,F,old.get(H),old.get(F),motion.get(H),motion.get(F)))
+          trafficFailure('同步运动求解后整步身体路径仍重叠',H,F);
+        const rear=old.get(H).s<old.get(F).s?H:F,front=rear===H?F:H;
+        const rm=motion.get(rear),fm=motion.get(front);
+        const clear=bodyClearance(rear,front,rm.s,fm.s,rm.t,fm.t);
+        if(Math.abs(rm.t-fm.t)<clear.lateral&&old.get(rear).s<old.get(front).s) {
+          const slack=followingSlack(rear,front,rm,fm,false),response=followingSlack(rear,front,rm,fm);
+          if(axisOverlap(fm.t-rm.t,fm.t-rm.t,clear.lateral)) {
+            race.traffic.minFollowingSlack=race.traffic.minFollowingSlack==null?slack:Math.min(race.traffic.minFollowingSlack,slack);
+            race.traffic.minResponseSlack=race.traffic.minResponseSlack==null?response:Math.min(race.traffic.minResponseSlack,response);
+          }
+        }
+      }
+      for(const H of frontFirst) {
+        const move=motion.get(H), before=old.get(H);
         H.s=move.s;H.t=move.t;H.prevV=before.v;H.v=move.v;H.accel=(H.v-before.v)/dt;
+        H.trafficStep={lateralDenied:denied.has(H),boundedBraking:H.blocked&&H.accel<-1e-8,
+          marginRecovery:marginRecovery.has(H),blocker:H.blocker?.id||null,deltaS:move.s-before.s,deltaT:move.t-before.t};
+        race.traffic.syncLateralDenied+=denied.has(H)?1:0;
+        race.traffic.brakingSteps+=H.trafficStep.boundedBraking?1:0;
+        race.traffic.marginRecoverySteps+=marginRecovery.has(H)?1:0;
+        race.traffic.minAcceleration=Math.min(race.traffic.minAcceleration,H.accel);
+        H.statsSummary.lateralDeniedSteps=(H.statsSummary.lateralDeniedSteps||0)+(denied.has(H)?1:0);
+        H.statsSummary.boundedBrakingSeconds=(H.statsSummary.boundedBrakingSeconds||0)+(H.trafficStep.boundedBraking?dt:0);
+        H.statsSummary.marginRecoverySteps=(H.statsSummary.marginRecoverySteps||0)+(marginRecovery.has(H)?1:0);
         const work=motionPower(H,before,move,H.drafting,dt);
         H.power=work;H.effort=H.targetV/Math.max(1,H.cruise);
         const excess=Math.max(0,work-move.aerobic), draw=Math.min(H.stamina,excess*dt);
         // 只有明显低于供能的做功才允许有限恢复；制动不回充动能。
-        const restore=Math.min(H.staminaMax-H.stamina,Math.max(0,move.aerobic*0.90-work)*RACE_F.recoveryRate*dt,RACE_F.recoveryMax*dt);
+        const restore=Math.min(H.staminaMax-H.stamina,Math.max(0,move.aerobic*0.90-work)*H.recoveryRate*dt,H.recoveryMax*dt);
         H.stamina=clamp(H.stamina-draw+restore,0,H.staminaMax);
-        H.guts=Math.max(0,H.guts-(RACE_F.fatigueWork*work+RACE_F.fatigueExcess*excess)*dt);
-        H.retention=1-RACE_F.fatigueLoss*(1-H.guts/H.gutsMax);
+        H.guts=Math.max(0,H.guts-(H.fatigueWork*work+H.fatigueExcess*excess)*dt);
+        H.retention=1-H.fatigueLoss*(1-H.guts/H.gutsMax);
         updateStartState(H);
         H.stage=H.stamina>H.staminaMax*0.12?'耐力':H.stamina>H.staminaMax*0.015?'毅力':'失速';
         const stats=H.statsSummary,aerobicUsed=Math.min(work,move.aerobic)*dt;
@@ -1212,7 +1998,10 @@
       const crossings=[];const sectionalCrossings=[];
       for(const H of act) {
         const before=old.get(H), delta=H.s-before.s;
-        const crossingTime=at=>race.t+(delta>0?clamp((at-before.s)/delta,0,1)*dt:dt);
+        const move=motion.get(H),meanT=(before.t+move.t)/2;
+        const path=laneArcDistance(before.s,move.s,meanT,geo),fraction=move.activeFraction;
+        const crossingTime=at=>race.t+dt*(1-fraction)+
+          (path>0?clamp(laneArcDistance(before.s,at,meanT,geo)/path,0,1)*dt*fraction:dt*fraction);
         if(H.t600==null && before.s<length-600 && H.s>=length-600) H.t600=crossingTime(length-600);
         let next=(Math.floor(before.s/200)+1)*200;
         while(next<=Math.min(H.s,length)+1e-9) {
@@ -1236,7 +2025,12 @@
           if(length%200) race.sectionals.push({distance:length,time,split:time-(race.sectionals.at(-1)?.time||0)});
           const fraction=clamp((time-race.t)/dt,0,1);
           for(const F of horses) {
-            const before=old.get(F);F.gapAtWin=F===H?0:before?Math.max(0,length-(before.s+(motion.get(F).s-before.s)*fraction)):0;
+            const before=old.get(F),move=motion.get(F);
+            if(F===H||!before){F.gapAtWin=0;continue;}
+            const meanT=(before.t+move.t)/2,activeFraction=move.activeFraction;
+            const progressFraction=activeFraction?clamp((fraction-(1-activeFraction))/activeFraction,0,1):0;
+            const travel=laneArcDistance(before.s,move.s,meanT,geo);
+            F.gapAtWin=Math.max(0,length-laneAdvance(before.s,travel*progressFraction,meanT,geo));
           }
           event('🏆 '+H.name+' 率先冲线！',true);
         } else event('第'+H.place+'位 '+H.name+'（'+(H.gapAtWin/2.4).toFixed(1)+'马身差）');
@@ -1266,10 +2060,12 @@
     }
     function snapshot() {
       const list=ranked();return {t:race.t,finished:race.finished,length,dir,profile,g,course:geo.course,
+        traffic:race.traffic?{...race.traffic}:null,
         paceLevel:race.paceLevel,paceStrength:race.paceStrength,pacePrediction:race.pacePrediction,
         leader:list[0]?.id||null,leaderProgress:list[0]?list[0].s/length:1,events:race.events.slice(-10),order:race.order.map(H=>H.id),
         horses:horses.map(H=>({id:H.id,name:H.name,s:H.s,t:H.t,v:H.v,pot:H.pot,accel:H.accel,power:H.power,
           rank:H.place|| (H.dnf?null:list.indexOf(H)+1),stage:H.stage,stamina:H.stamina,guts:H.guts,
+          trafficStep:H.trafficStep?{...H.trafficStep}:null,
           staminaMax:H.staminaMax,gutsMax:H.gutsMax,retention:H.retention,action:H.action,dnf:H.dnf,
           place:H.place,time:H.time,blocked:H.blocked,style:H.observedStyle||H.style,observedStyle:H.observedStyle,
           strategy:H.strategy,gateOpen:H.gateOpen,startSettled:H.startSettled,
@@ -1354,6 +2150,7 @@
   }
   /* 每周结算：训练疲劳/成长或衰退/斗志/伤病（文档 3.1/3.2/3.6/3.7/3.8） */
   function careerWeeklyTick(h, training, rng) {
+    horsePhysiology(h);
     const events = [];
     const isInjured = h.injury > 0;
     if (isInjured) {
@@ -1391,6 +2188,7 @@
   }
   /* 生涯比赛的对手阵容（7名AI + 玩家马，对手强度按赛事等级） */
   function makeCareerRaceField(h, tierDef, rng) {
+    horsePhysiology(h);
     const horses = [];
     const used = new Set();
     for (let i = 0; i < 7; i++) {
@@ -1409,6 +2207,7 @@
       id: h.id, name: h.name, style: h.style, age: h.age, sex: h.sex, coat: h.coat,
       surface: h.surface, special: h.special,
       behavior:h.behavior?{...h.behavior}:undefined, racePlan:h.racePlan?{...h.racePlan}:undefined,
+      physiology:{...h.physiology},
       carriedWeight:h.carriedWeight, bodyMass:h.bodyMass,
       stats: JSON.parse(JSON.stringify(h.stats)),
       '斗志': h['斗志'], '疲劳': h['疲劳'],
@@ -1483,6 +2282,7 @@
         blQ: 0.2 + rng() * 0.6, stQ: 0.2 + rng() * 0.6, wQ: 0.2 + rng() * 0.6,
       });
     }
+    for(const h of stock) horsePhysiology(h);
     return stock;
   }
   /* 按成绩加权选种（G1冠军权重远高于普通马） */
@@ -1497,6 +2297,7 @@
   }
   /* 退役马转入血统库 */
   function breederFromHorse(rh) {
+    horsePhysiology(rh);
     return {
       id: rh.id, name: rh.name, sex: rh.sex,
       starts: rh.starts, wins: rh.wins, g1: rh.g1 || 0,
@@ -1506,6 +2307,7 @@
       stats: JSON.parse(JSON.stringify(rh.stats)),
       surface: rh.surface, special: rh.special,
       behavior:rh.behavior?{...rh.behavior}:undefined, racePlan:rh.racePlan?{...rh.racePlan}:undefined,
+      physiology:{...rh.physiology},
       carriedWeight:rh.carriedWeight, bodyMass:rh.bodyMass,
       blQ: rh.blQ || 0.5, stQ: rh.stQ || 0.5, wQ: rh.wQ || 0.5,
     };
@@ -1567,10 +2369,12 @@
     return roster;
   }
   function rosterEntry(rh, rng) {
+    horsePhysiology(rh);
     return {
       id: rh.id, name: rh.name, style: rh.style, age: rh.age, sex: rh.sex, coat: rh.coat,
       surface: rh.surface, special: rh.special,
       behavior:rh.behavior?{...rh.behavior}:undefined, racePlan:rh.racePlan?{...rh.racePlan}:undefined,
+      physiology:{...rh.physiology},
       carriedWeight:rh.carriedWeight, bodyMass:rh.bodyMass,
       stats: JSON.parse(JSON.stringify(rh.stats)),
       '斗志': clamp(rh['斗志'] + Math.round((rng() - 0.5) * 20), 30, 100),
@@ -1715,6 +2519,7 @@
   function ageRoster(roster, rng, stock) {
     const events = [];
     for (const h of roster) {
+      horsePhysiology(h);
       h.age++;
       if (h.age >= 6 && !h.retired) {
         h.retired = true;
@@ -1774,6 +2579,7 @@
     'open': [55, 78, 3, 5], 'g3': [60, 82, 3, 5], 'g2': [68, 88, 3, 5], 'g1': [76, 96, 3, 5],
   };
   function raceOptionsForRoster(h, rng, roster, weekNum) {
+    horsePhysiology(h);
     let keys;
     if (h.starts === 0) keys = ['newcomer'];
     else if (h.wins === 0) keys = ['maiden'];
@@ -1794,6 +2600,7 @@
       const playerEntry = {
         id: h.id, name: h.name, style: h.style, age: h.age, sex: h.sex, coat: h.coat,
         surface: h.surface, special: h.special,
+        physiology: { ...h.physiology },
         behavior:h.behavior?{...h.behavior}:undefined, racePlan:h.racePlan?{...h.racePlan}:undefined,
         carriedWeight:h.carriedWeight, bodyMass:h.bodyMass,
         stats: JSON.parse(JSON.stringify(h.stats)),
@@ -1986,8 +2793,10 @@
     const special = inheritSpecial(rng);
     const earlyP = 0.05 + pen.earlyExtra;
     if (!earlyDeath && rng() < earlyP) earlyDeath = true;
+    const physiology=inheritPhysiology(sire,dam,{stats,sire:sire.id||sire.name,dam:dam.id||dam.name,
+      id:[blQ.q,stQ.q,wQ.q].join('|')});
     return {
-      stats, bloodline: Math.round(bloodline),
+      stats, physiology, bloodline: Math.round(bloodline),
       state: Math.round(state), drain: Math.round(drain * 10) / 10,
       surface, special,
       blQ: blQ.q, stQ: stQ.q, wQ: wQ.q,
@@ -2006,6 +2815,7 @@
       sex: rng() < 0.5 ? '牡' : '牝',
       coat: pick(rng, COATS),
       surface: foal.surface, special: foal.special,
+      physiology:foal.physiology?{...foal.physiology}:undefined,
       age: 2, stats: JSON.parse(JSON.stringify(foal.stats)), caps, ability,
       '斗志': 55 + Math.round(rng() * 30), '疲劳': Math.round(rng() * 20),
       jockeyGrade: weightedPick(rng, [['普通', 60], ['优秀', 30], ['新人', 10]]),
@@ -2066,10 +2876,12 @@
     STAMINA_RANGE_PER_POINT, GROUND_RANGE_COEF,
     STYLE_COEF, STYLE_COEF_DOC, JOCKEY_BONUS, JOCKEY_CADENCE, FIELD_STATE_COEF, SURFACE_COEF,
     ACTION_DEF, actionBonus, actionCoef, baseSpeed, fatigueMultiplier,
-    COURSES, trackGeometry, trackPoint, kAt, laneProgressCoef, bendCoefFor, SLOPE_PROFILES, gradientAt, elevationAt,
+    COURSES, COURSE_WIDTHS, trackGeometry, trackPoint, trackTangent, trackWidthAt, kAt, laneCurvatureAt, laneProgressCoef,
+    laneArcDistance, laneAdvance, laneArcBreakpoints, bendCoefFor, SLOPE_PROFILES, gradientAt, elevationAt,
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
     STAFF, CAT_ERROR_POOL, catText, fatigueBand, fatigueText,
-    makeHorse, makeField, horseBehavior, racePlanFor, makeStaff, generateReport, oddsAndPopularity,
+    makeHorse, makeField, horseBehavior, racePlanFor, horsePhysiology, neutralPhysiology, PHYSIOLOGY_KEYS,
+    makeStaff, generateReport, oddsAndPopularity,
     /* 人气/赔率模型（市场）：独立于比赛引擎，只吃公开信息 */
     MARKET, marketEntryScore, marketOddsAndPopularity, marketImpliedProb, expectedValue,
     marketPaceLevel, PACE_MARKET_BELIEF, PACE_TRUE_EFFECT, paceStrengthOf, PACE_WEIGHT,

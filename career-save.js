@@ -46,9 +46,16 @@
       demand(c.recap === null || record(c.recap), '周回顾无效');
       demand(c.watchInfo === null || record(c.watchInfo), '观赛状态无效');
       demand(integer(c.stats.bets, 0, Number.MAX_SAFE_INTEGER) && integer(c.stats.hits, 0, c.stats.bets) && finite(c.stats.profit), '下注统计无效');
+      const validatePhysiology = (h) => {
+        if (h.physiology === undefined) return; // 旧档在引擎首次使用时稳定补齐。
+        const p = h.physiology;
+        demand(record(p) && p.version === 1 && ['endurance', 'power', 'economy', 'kinetics', 'durability'].every(
+          (key) => own(p, key) && finite(p[key]) && p[key] >= -1 && p[key] <= 1), '马匹生理档案无效：' + (h.id || '幼驹'));
+      };
       const validateHorse = (h) => {
         demand(record(h) && typeof h.id === 'string' && h.id.length > 0 && typeof h.name === 'string', '马匹身份无效');
         demand(record(h.stats) && ATTRS.every((key) => own(h.stats, key) && finite(h.stats[key])) && Object.values(h.stats).every(finite), '马匹属性无效：' + h.id);
+        validatePhysiology(h);
       };
       c.roster.forEach(validateHorse);
       c.breedingStock.forEach(validateHorse);
@@ -93,6 +100,7 @@
       demand(b.foal === null || record(b.foal), '幼驹状态无效');
       if (b.foal !== null) {
         demand(record(b.foal.stats) && ATTRS.every((key) => own(b.foal.stats, key) && finite(b.foal.stats[key])) && Object.values(b.foal.stats).every(finite), '幼驹属性无效');
+        validatePhysiology(b.foal);
         demand(typeof b.foal.earlyDeath === 'boolean' && finite(b.foal.state) && finite(b.foal.drain), '幼驹成长状态无效');
         demand(typeof b.foalSireId === 'string' && c.breedingStock.some((h) => h.id === b.foalSireId && h.sex === '牡'), '幼驹父马不在血统库中');
         demand(typeof b.foalDamId === 'string' && c.breedingStock.some((h) => h.id === b.foalDamId && h.sex === '牝'), '幼驹母马不在血统库中');

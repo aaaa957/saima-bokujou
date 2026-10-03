@@ -15,7 +15,8 @@ function near(a, b, tolerance, message) {
 }
 function horse(id, style = '先', value = 70) {
   const h = S.makeHorse(() => 0.5, { id, style, '斗志': 50, '疲劳': 0,
-    jockeyGrade: '普通', surface: '草地', special: '左右皆可', aggression: 1 });
+    jockeyGrade: '普通', surface: '草地', special: '左右皆可', aggression: 1,
+    physiology: S.neutralPhysiology() });
   for (const key of Object.keys(h.stats)) h.stats[key] = value;
   return h;
 }
@@ -201,7 +202,9 @@ test('drafting saves work only behind a nearby horse in the same corridor', () =
 test('a blocked horse must clear the body corridor before passing', () => {
   const race = makeRace([horse('a'), horse('front')]), [H, F] = race.race.horses;
   const s = segment(race.race.geo, false);
-  hold(H, { s, t: 10, v: 18, targetV: 19 }); hold(F, { s: s + 4, t: 10, v: 12 });
+  // Begin inside the feasible following domain. A faster injected rear horse
+  // only 4m behind a 12m/s front horse requires an impossible instantaneous stop.
+  hold(H, { s, t: 10, v: 12, targetV: 19 }); hold(F, { s: s + 4, t: 10, v: 12 });
   let blocked = false;
   for (let i = 0; i < 30; i++) {
     race.step(1 / 30); blocked ||= H.blocked;
@@ -214,7 +217,7 @@ test('a blocked horse must clear the body corridor before passing', () => {
   for (let i = 0; i < 300; i++) {
     race.step(1 / 30);
     if (H.s > F.s) {
-      const width = (1 + 0.3 * H.adj['体格'] / 100 + 1 + 0.3 * F.adj['体格'] / 100) / 2;
+      const width = (0.65 + 0.15 * H.adj['体格'] / 100 + 0.65 + 0.15 * F.adj['体格'] / 100) / 2;
       assert.ok(Math.abs(H.t - F.t) >= width, 'passing requires a physically clear transverse lane');
       passedFront = true; break;
     }
@@ -227,7 +230,7 @@ test('side-by-side horses cannot exchange lanes through one another', () => {
   const s = segment(race.race.geo, false);
   hold(H, { s, t: 8, v: 16 }); hold(F, { s, t: 10.5, v: 16 });
   H.control.targetT = 13; F.control.targetT = 5;
-  const halfWidth = 1 + 0.3 * (H.adj['体格'] + F.adj['体格']) / 200;
+  const halfWidth = 0.65 + 0.15 * (H.adj['体格'] + F.adj['体格']) / 200;
   for (let i = 0; i < 60; i++) {
     race.step(1 / 30);
     assert.ok(Math.abs(H.s - F.s) < 1, 'fixture must keep the longitudinal body intervals overlapping');
@@ -352,12 +355,12 @@ test('outer lanes pay actual gained gravitational potential rather than charging
     'at equal physical speed an outer arc advances less of the shared height profile per second');
 });
 
-test('steering and collision projection keep actual work fully paid with bounded reserves', () => {
+test('synchronous steering and following keep actual work fully paid with bounded reserves', () => {
   for (const course of ['标准', '東京芝A', '中山芝内A']) for (const reserve of [0, 1, 1500]) {
     const r = makeRace([horse('a'), horse('front'), horse('side')], { length: 5000, course, wind: 8 });
     const [H, F, side] = r.race.horses;
-    hold(H, { s: 700, t: 10, v: 18, targetV: 23 });
-    hold(F, { s: 704, t: 10, v: 12 }); hold(side, { s: 701, t: 13, v: 16 });
+    hold(H, { s: 700, t: 10, v: 12, targetV: 23 });
+    hold(F, { s: 704, t: 10, v: 12 }); hold(side, { s: 701, t: 13, v: 12 });
     H.stamina = reserve; H.control.targetT = 17; r.race.t = 60;
     for (const runner of r.race.horses) runner.aerobicOutput = runner.aerobic;
     advance(r, 4);

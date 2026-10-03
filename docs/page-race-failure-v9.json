@@ -1,0 +1,87 @@
+{
+  "version": "v2026.10.02.3",
+  "generatedAt": "2026-10-03T04:16:11.826Z",
+  "test": "tests/page-race-failure-v9.js",
+  "page": "index.html",
+  "pageSha256": "cbfae8d298c527d88f039b10aa6acae41286d6d75d8dd607f3f2df4c833a06fa",
+  "hashNormalization": "UTF-8 source with CRLF normalized to LF",
+  "engineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "numericEngineHash": "3b837b46bf03ed86a19fdbe0ff83a03bb4fd2211ff9a4692b2f1a78e12f221ff",
+  "browser": {
+    "name": "Microsoft Edge",
+    "channel": "msedge",
+    "headless": true,
+    "driver": "Playwright",
+    "profile": "isolated ephemeral browser context"
+  },
+  "protocol": {
+    "pageEntry": "file:// repository index.html #single",
+    "raf": "Native RAF scheduling is held; the real production loop callback is driven with deterministic timestamps. Requested/canceled frames are counted.",
+    "engineFailures": "Inject actual illegal overlapping state into two real engine horses for RAF and skip regressions; assert detailed error, unchanged velocities and retained lastInfeasible.",
+    "constructorHistory": "A genuinely completed 200m single-horse engine race is selected before a new constructor or autotest fails. Programmatic skipRace/showResult/renderResult must not settle that old object.",
+    "businessState": "Check single and career tickets, bankroll, career roster/stats, sealed startedIds and isolated localStorage. The partial-week fixture supplies one complete result and then a failed second solver; repeating the week must preserve the first settlement and pay it only once.",
+    "recovery": "Use the real return button, create a fresh race and drive its real loop; assert positive time, active RAF, enabled controls, hidden old notice and retained prior diagnosis.",
+    "autotest": "Inject solver exception and finished-but-empty result; require a visible red failure banner and no green success claim.",
+    "gameFilesWritten": false
+  },
+  "results": {
+    "passed": 10,
+    "failed": 0,
+    "unhandledPageErrors": 0,
+    "engineUnchanged": true,
+    "visibleFailureNotice": true,
+    "visibleNoticeEvidence": "Playwright waitFor({state:visible}) on #raceFailure after the actual engine exception, plus detailed DOM text and controls assertions.",
+    "oldSuccessfulRaceCannotSettle": true,
+    "pendingBetsPreserved": true,
+    "partialWeekRetryIdempotent": true,
+    "healthyRecreationAdvances": true,
+    "checks": [
+      {
+        "name": "production RAF reports an actual engine failure and preserves the single-race ticket",
+        "passed": true
+      },
+      {
+        "name": "return and recreate resume a healthy race while retaining the previous diagnosis",
+        "passed": true
+      },
+      {
+        "name": "skip-to-result catches a solver failure without settling",
+        "passed": true
+      },
+      {
+        "name": "constructor errors show a failure notice and a later healthy creation clears it",
+        "passed": true
+      },
+      {
+        "name": "career failure keeps sealed pending bets, saved progress and diagnostic; no results are applied",
+        "passed": true
+      },
+      {
+        "name": "automatic career simulation errors do not advance the week or settle the failed race",
+        "passed": true
+      },
+      {
+        "name": "career constructor failure cannot expose a previously completed race for settlement",
+        "passed": true
+      },
+      {
+        "name": "retrying a partially completed week does not settle or pay the first race twice",
+        "passed": true
+      },
+      {
+        "name": "autotest reports failure, stops the active RAF and never claims success",
+        "passed": true
+      },
+      {
+        "name": "autotest rejects an incomplete field instead of showing a green pass",
+        "passed": true
+      }
+    ]
+  },
+  "limitations": [
+    "Failure paths use explicit injected state/errors and business fixtures; this is page failure containment, not a realistic population fit or universal safety proof.",
+    "No screenshot was captured.",
+    "The complete numerical matrix remains a separate run on the frozen numeric engine hash."
+  ],
+  "rerunProvenance": "All ten tests rerun successfully on the final query-order-preserving telemetry correction, with unchanged source and zero unhandled page errors. Earlier pre-telemetry 96d84 record retained in page-race-failure-before-telemetry-v9.json.gz."
+}

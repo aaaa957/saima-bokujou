@@ -17,7 +17,7 @@
 - 每周生活费 -1万，破产可重置；情报与战绩帮助你判断赔率是否有价值
 
 ![赛程与情报](docs/screenshots/01-赛程与情报.png)
-![v2026.10.02.2 实际路段与骑乘状态](docs/screenshots/07-v8-实际路段与骑乘.jpg)
+![v2026.10.02.3 实际路线与比赛画面](docs/screenshots/v9-routes/京都-3200-bend.png)
 ![马匹档案](docs/screenshots/03-马匹档案.png)
 ![繁殖工坊](docs/screenshots/04-繁殖工坊.png)
 ![多场模拟](docs/screenshots/05-多场模拟.png)
@@ -40,7 +40,21 @@
 - **复合马券**：必须选择所需数量的不同马匹；重复马匹、未知马匹、无效赔率不会扣款或替换已有注单。多匹券默认选择不同的马。
 - **市场已接入**：生涯赛程与单场沙盒共用公开信息市场模型；不再用隐藏速度、耐力等能力直接决定赔率。赔率在下单时固定，单场沙盒未结算的下注会在刷新时退还。
 
-## 实际路段、起步状态与路线预算（v2026.10.02.2）
+## 运动交通、路线细节与个体分化（v2026.10.02.3）
+
+横移与跟车共同检查双方完整运动路径，使用有限制动和实际车道弧长；取消事后重写位置、瞬间清零速度的交通结算。闸位、身体包络与官方有效幅员共同约束发走，超额阵容明确拒绝。真实不可行的外部注入状态会报错，正常比赛需通过整体回归。
+
+14个官方尺寸约束布局加入连续变曲率和实际宽度，补充东京、京都发走引入线以及已知首弯、坡段锚点。运动、耗能、骑手预算与小地图共用同一路线。平面曲率、移栏、混合内外圈和空间地面状态仍存在代理，不能称测绘复刻。[路线来源与范围](docs/route-detail-v2026.10.02.3.md)
+
+马匹保存持续供给、短时容量与释放功率、经济性、供能建立和疲劳耐受的个体档案；旧马稳定迁移，训练不重新抽取，繁育与存档传递档案。不增加跑法或逐距离补偿倍率。[个体分化与依据](docs/individual-physiology-v2026.10.02.3.md)
+
+新旧同阵容、同种子的系统配对与额外2022年官方参照见[系统一致性与节奏诊断](docs/系统一致性与节奏诊断-v2026.10.02.3.md)。该报告同时保留首末差、紧密完赛比例、末600分化与200米速度形状的现实残差；工程一致性通过不能解释为整场比赛已经拟合。[上一版现实差距评估](docs/当前比赛引擎-现实差距评估-2026-10-02.md)
+
+270场原始主矩阵保留了最小停止余量−1.954米导致的工程检查失败。单独复查确认，遥测在分道边界使用了与求解器不同的判定，误把已有约10厘米身体侧向间距的两马记作同道。修复只复用求解器已有的边界谓词；同一场4410帧的运动、骑手、供能及完赛结果完全相同，修正停止余量为0.277米。按原门槛单列修正遥测工程检查，原始数据、失败状态和源码哈希均保留。[边界遥测审计](docs/traffic-slack-boundary-v9.json)
+
+这轮代码作为结构修复实验构建保存在`experiment/system-consistency-v9`分支。主参照的冠军总时最大误差7.08%，仍超过原5%门槛；首末差和紧密完赛比例也未拟合。完整证据与失败项一并上传，不以本轮结果宣称正式现实标定完成。
+
+## 实际路段、起步状态与路线预算（v2026.10.02.2，历史版本）
 
 固定百分比的出闸、序盘、中盘、后盘、终盘条已退役。比赛显示领跑马和关注马各自所处的直道、弯道、终点直道、坡度、剩余距离及骑乘状态；跟跑、抢位、加力、收力可以在不同位置发生。低储备不再直接显示成失速，200米和末600米计时继续用于赛后分析。
 
@@ -106,7 +120,7 @@
 
 ## 验证报告（历史实验）
 
-以下保留早期调参过程，数值与部分机制已经被后续版本替换。当前基本验收以 v2026.10.02.2 的路线预算记录为准，既有真实赛事参照仍见 v2026.10.02.1 的拟合记录；历史结果不能用作现版验证结论。
+以下保留早期调参过程，数值与部分机制已经被后续版本替换。当前验收以 v2026.10.02.3 的系统一致性与节奏诊断为准；历史结果不能用作现版验证结论。
 
 ### 在游戏里亲手跑：📈 多场模拟（历史系数比较）
 
@@ -226,6 +240,27 @@
 
 ```powershell
 node tests/race-physics.js                             # 连续运动、局部能耗、路线与碰撞机制
+node tests/traffic-consistency-v9.js                    # 同步横移、有限跟车与病理种子回放
+node tests/traffic-domain-review-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz --reference-source docs/system-heading-source-ac9dc7-v9.js.gz
+node tests/traffic-optimized-final-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz # 参考固定为ac9归档，6前缀+1200/3200整场
+node tests/route-heading-junction-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz
+node tests/route-detail-v9.js                          # 路线曲率、弧长、幅员与锚点一致性
+node tests/individual-physiology.js                    # 独立生理通道、遗传与稳定迁移
+node tests/physiology-save.js                          # 个体档案存档保护与旧档兼容
+node tests/system-reality-v9.js --mode baseline --workers 2 --out docs/system-baseline-v2026.10.02.3.json
+node tests/system-reality-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz --workers 2 --out docs/system-current-v2026.10.02.3.json
+node tests/system-reality-v9.js --scope external2022 --mode baseline --out docs/system-baseline-external2022-v2026.10.02.3.json
+node tests/system-reality-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz --scope external2022 --out docs/system-current-external2022-v2026.10.02.3.json
+node tests/system-reality-report-v9.js                  # 按真实场次聚合，不将三次种子当三场现实赛事
+node tests/tempo-system-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz
+node tests/path-isolation-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz
+node tests/start-system-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz
+node tests/pace-covariance-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz # 只读前段/末段抵消分析
+node tests/effort-history-v9.js --source-archive docs/system-numeric-source-3b837b-v9.js.gz # 出力史诊断，未匹配条件保留为失败
+node tests/source-snapshot-equivalence-v9.js            # 两行入口和一处遥测：整源逆补丁与6距离等价
+node tests/traffic-slack-boundary-v9.js                 # 4410帧边界遥测与运动/账本完全等价审计
+node tests/roster-physiology-entry-v9.js                # 旧连续马群入口的档案迁移与拷贝
+node tests/write-system-report-v9.js                    # 完整数据与哈希检查后生成诊断报告
 node tests/rider-route-planning.js                      # 起步、路线/功率预算与独立密集积分
 node tests/route-planning-calibration.js --json docs/route-planning-v2026.10.02.2.json --markdown docs/路线预算与状态验收-v2026.10.02.2.md
 node tests/race-calibration-v7.js --per-cell 2 --json race-calibration-current.json # 扩展检查；勿覆盖历史验收JSON
@@ -239,6 +274,7 @@ node tests/diag.js [每档场次]                          # 属性模板与强�
 node tests/mc-browser-harness.js [场次]                # 页面MC与CLI一致性
 node tests/page-smoke.js                               # 整页冒烟：启动 + 四模式切换 + MC 跑通
 node tests/page-race-diagnostics.js                    # 实际赛后分段、赛道显示、存档与观赛确定性
+node tests/page-race-failure-v9.js                     # 可选真实Edge回归：异常暂停、保留注单与拒绝失败结算（需要Playwright）
 node tests/market-integration.js                       # 实际赛程接入市场 + 隐藏能力隔离
 node tests/bet-validation.js                           # 六类马券规则 + 重复/非法注单防护
 node tests/career-save.js                              # 完整存档、血统引用、备份与失败恢复
@@ -246,6 +282,10 @@ node tests/career-flow.js                              # 下注/封盘/结算/�
 node tests/curve-rider.js                              # 几何守恒、横移、空档、骑手与余力
 node tests/camera-test.js                              # 实际绘制、完整圆点、地图遮挡、缩放
 ```
+
+v9完整数值矩阵使用修复航向角跳变和安全优化后的独立归档快照`3b837b`。最终生产源码`51caabc1`相对它有两行旧连续马群档案入口修复和一处间距遥测判定修复；精确逆去这三处后整个源文件恢复为数值快照，没有排除运动或求解器区域。入口与遥测另经回归，报告保留数值源、最终代码及原始失败记录，不把旧数据重标为新哈希。[源码一致性证明](docs/source-snapshot-equivalence-v9.json) 带`--source-archive`的命令复现指定快照；主矩阵、节奏、路径和起步脚本省略该参数才测当前`sim.js`，性能与独立域审查则默认使用冻结归档。完整矩阵、节奏和路径数据全部完成后，才能运行方差分析和报告生成。密集马群的制动域计算耗时显著，完整试算可能长时间占用CPU；当前性能限制见报告。
+
+若完整矩阵或节奏试算中断，保留输出文件，在原命令末尾加`--resume`可续跑；另加`--check-resume`只核对检查点。恢复前会检查源码、基线、协议、任务种子及已有结果身份，只执行尚未完成的任务；发现重复、外来或损坏结果则拒绝恢复。记录的耗时是已保存执行段的累计墙钟时间，不包括中断间隔或未保存的计算，不代表CPU用时。
 
 标定脚本按六种距离、左右回向、三种抽象布局、草/泥地、实际生成与同源属性阵容分组，
 使用标定种子组与独立留出种子组，`--per-cell 2` 共跑576场；另有受控机制、8场环境压力与54场官方参照试算。
@@ -255,8 +295,8 @@ JSON记录逐场测量、分组汇总、144对上一版本同输入比较、工�
 
 镜头测试默认 2000m／左回／种子 186，可通过 `CAMERA_DISTANCE`、`CAMERA_DIRECTION`、`CAMERA_SEED` 环境变量选择场景。
 
-这些脚本使用仓库内的引擎、存档模块和页面源码，纯 Node、零外部依赖、无构建。比赛为确定性模拟（同种子同结果），
-所有数字可逐位复现；**页面模式与命令行脚本使用同一套种子推导**，
+核心机制与统计脚本使用仓库内的引擎、存档模块和页面源码，纯 Node、零外部依赖、无构建。真实浏览器截图与异常回归另需可被Node解析的Playwright及Edge，游戏运行不需要它们。比赛为确定性模拟（同种子同结果），
+相同输入的比赛数值可逐位复现，运行耗时受硬件与并发影响；**页面模式与命令行脚本使用同一套种子推导**，
 `tests/compare-page-vs-cli.js` 会逐场比对两者，确认取样完全一致。
 
 ### 繁殖公式蒙特卡洛（100 次，双 90 速度父母）
@@ -291,7 +331,7 @@ JSON记录逐场测量、分组汇总、144对上一版本同输入比较、工�
 | `?horse=1` | 直接打开第 1 匹马的档案（也可传马 id） |
 | `?autotest` | 引擎自检：跑 3 场并输出结果 |
 
-页面底部显示构建版本号（当前 `构建 v2026.10.02.1`）。
+页面底部显示构建版本号（当前代码为 `构建 v2026.10.02.3`）。
 改了却看不到新效果时，先核对版本号，再按 Ctrl+F5 硬刷新。
 
 *全部马名、马主、赛事名为程序虚构。*

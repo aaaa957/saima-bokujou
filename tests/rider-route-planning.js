@@ -18,6 +18,7 @@ function near(a, b, tolerance, message) {
 function horse(id = 'route-a') {
   const h = S.makeHorse(() => 0.5, { id, name: id, style: '先', '斗志': 50, '疲劳': 0,
     jockeyGrade: '优秀', surface: '草地', special: '左右皆可',
+    physiology: S.neutralPhysiology(),
     behavior: { forwardness: 0.5, settle: 0.7, tractability: 0.8 },
     racePlan: { position: 0.5, risk: 0.5, patience: 0.7 } });
   for (const key of Object.keys(h.stats)) h.stats[key] = 70;
@@ -45,9 +46,9 @@ function command(options, state) {
 function capAt(H, s, r) {
   const geo = r.race.geo;
   let cap = H.maxV * H.retention;
-  if (S.kAt(s, geo) > 0) cap = Math.min(cap,
-    Math.sqrt(Math.max(1, (S.RACE_F.curveLateral + (H.adj['力量'] - 70) * 0.008) *
-      (geo.R + H.t - S.TRACK_WIDTH / 2))) * S.bendCoefFor(H.h.special, r.race.dir));
+  const curvature = S.laneCurvatureAt(s, H.t, geo);
+  if (curvature > 0) cap = Math.min(cap,
+    Math.sqrt(Math.max(1, (S.RACE_F.curveLateral + (H.adj['力量'] - 70) * 0.008) / curvature)) * S.bendCoefFor(H.h.special, r.race.dir));
   return cap;
 }
 // This reference deliberately does not call finishPlan or use its mesh. The
@@ -58,7 +59,7 @@ function capAt(H, s, r) {
 // Acceleration is already in power: positive kinetic work is not charged twice.
 function denseReference(r, H, requestedV, draftDistance = 0, step = 0.01) {
   const { geo, g, length } = r.race, maximum = H.aerobic * H.retention;
-  const deficit = maximum - H.aerobicOutput, tau = S.RACE_F.aerobicTau;
+  const deficit = maximum - H.aerobicOutput, tau = H.aerobicTau;
   const fade = S.clamp(H.stamina / H.staminaMax / S.RACE_F.reserveFade, 0, 1);
   const response = S.RACE_F.responseTime * S.clamp(1 + (0.65 - H.behavior.tractability) * 0.4, 0.82, 1.26);
   function acceleration(v, target) {

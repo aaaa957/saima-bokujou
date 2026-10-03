@@ -1,0 +1,5235 @@
+{
+  "engineHash": "3b837b46bf03ed86a19fdbe0ff83a03bb4fd2211ff9a4692b2f1a78e12f221ff",
+  "sourceArtifact": "docs\\system-numeric-source-3b837b-v9.js.gz",
+  "startedAt": "2026-10-02T23:12:10.679Z",
+  "elapsedSeconds": 15.108,
+  "protocol": {
+    "dt": 0.016666666666666666,
+    "distances": [
+      1200,
+      2400
+    ],
+    "baselineMiddleMeans": [
+      14.5,
+      16.5
+    ],
+    "amplitude": 1.2,
+    "maximumRequest": 30,
+    "first200Request": "Maximum request 30 m/s; not an assertion that the horse can run at30 m/s.",
+    "final600Request": "Identical maximum request30 m/s; actual speed is limited by existing execution states and caps.",
+    "middleRequest": "For x=(distance−200)/(length−800) inside200..length−600: constant mean, front-loaded mean+1.2*sin(2*pi*x), back-loaded mean−1.2*sin(2*pi*x).",
+    "diagnosticOnly": "Distance-prescribed controls are a controlled experiment, never production race phases or rider coefficients.",
+    "workMatching": {
+      "relativeTolerance": 0.0001,
+      "meanRadius": 0.6,
+      "gridIntervals": 16,
+      "maximumBisections": 16,
+      "rule": "Probe the declared local mean interval. Use the sign-changing adjacent interval nearest the baseline mean; verify quarter-point and all subsequent sampled monotonicity within the absolute work-matching tolerance. A nominal request already within tolerance needs a sampled monotone neighborhood. Preserve missing/nonmonotone brackets and unmatched outputs as failures.",
+      "limitation": "Finite sampled monotonicity is not a proof for every mean. Multiple brackets are reported; no global monotonicity or unique optimum is assumed."
+    },
+    "horse": "One fixed neutral70 synthetic horse; all attributes70, morale50, fatigue0, body480 kg, carried57 kg, ordinary rider, fixed behavior and neutral five-axis physiology.",
+    "route": "Flat standard course, wind0, left turn; initial and commanded lateral position remain the exact reference lane. Same geometry within each distance, no opponents, drafting or AI.",
+    "seeds": {
+      "field": 2026100301,
+      "race": 2026100302
+    },
+    "accounting": "Match statsSummary.workUsed including the complete final60 Hz tick, as recorded by the engine. Official finish and600 m crossing times are interpolated inside the tick. Endpoint ledger/state therefore extends at most1/60 s beyond the timed finish. Report this excess separately.",
+    "oxygen": "Mechanical-equivalent aerobic supply integral and aerobicUsed are W/kg × s; they are not measured VO2. Supply integral includes the reaction interval because existing engine supply kinetics do.",
+    "stateSampling": "Entry states at200 m and last600 m are linearly interpolated between enclosing60 Hz states at the engine crossing time; physiological interpolation is diagnostic, not an extra execution substep.",
+    "controlTiming": "Requests update at the beginning of each60 Hz tick from the current distance. The tick crossing a request boundary retains its earlier request until the next tick; paired first200 times and the crossing state are checked/reported.",
+    "durations": "Reserve fractions≤0.10 and≤0.01 durations use linear within-step threshold crossings through the ledger endpoint. Recovery seconds count whole ticks with positive recovery. Final-request/actual means weight the part of each tick after last600 m entry.",
+    "causalLimits": "Equal whole-race mechanical work does not equal aerobic availability, anaerobic draw, reserve at last600 m entry, elapsed time, entry velocity or tactical optimum. Adjusting mean changes the request history as well as matching the budget. No measured real horse, field-selection or rider validation is claimed."
+  },
+  "simulations": 157,
+  "integrity": {
+    "complete": true,
+    "sourceUnchanged": true,
+    "coefficientsUnchanged": true,
+    "identicalInitialStates": true,
+    "allFinite": true,
+    "noAIOrDraftOrTraffic": true,
+    "maxLaneDeviation": 0,
+    "first200Difference": 0,
+    "maxWorkError": 5.084075382910669e-10,
+    "maxReserveError": 2.139283195035091e-11,
+    "maxUnpaid": 2.5243002133024106e-13,
+    "minAcceleration": -3.375794428567005,
+    "matchedHistories": 4,
+    "declaredHistories": 8,
+    "allEqualWorkMatchesSucceeded": false,
+    "maximumSuccessfulRelativeWorkResidual": 0.00008721575761069598
+  },
+  "summary": {
+    "matchedCases": [
+      {
+        "length": 1200,
+        "baselineMean": 14.5,
+        "shape": "front-loaded",
+        "adjustedMean": 14.528125000000001,
+        "relativeWorkResidual": -0.00008721575761069598,
+        "time": 0.04448075022617104,
+        "preLast600Time": 0.014347674239104435,
+        "final600": 0.030133075987066604,
+        "last200Difference": -0.0000048485314181334616,
+        "entryReserveFraction": -0.0039084819693208095,
+        "entryRetention": -0.00007900561620877156,
+        "entryAerobicOutput": -0.017391242478510094,
+        "entrySpeed": -0.30900496074778516
+      },
+      {
+        "length": 1200,
+        "baselineMean": 14.5,
+        "shape": "back-loaded",
+        "adjustedMean": 14.471875,
+        "relativeWorkResidual": -0.00004112074394207185,
+        "time": 0.13439177920365353,
+        "preLast600Time": 0.16089762305374933,
+        "final600": -0.0265058438500958,
+        "last200Difference": 0.0000034341582733077303,
+        "entryReserveFraction": 0.0006616442056717187,
+        "entryRetention": 0.00000836906977497165,
+        "entryAerobicOutput": 0.024114042256336177,
+        "entrySpeed": 0.3304175099616824
+      },
+      {
+        "length": 1200,
+        "baselineMean": 16.5,
+        "shape": "front-loaded",
+        "adjustedMean": 16.5,
+        "relativeWorkResidual": -0.00007690338470112353,
+        "time": 0.036259573112630505,
+        "preLast600Time": 0.0302770779758319,
+        "final600": 0.0059824951367986046,
+        "last200Difference": -0.020757953538222296,
+        "entryReserveFraction": 0.003261051780194535,
+        "entryRetention": 0.00008286055173056806,
+        "entryAerobicOutput": -0.012625785922452337,
+        "entrySpeed": -0.3743179073560796
+      },
+      {
+        "length": 2400,
+        "baselineMean": 16.5,
+        "shape": "front-loaded",
+        "adjustedMean": 16.256249999999998,
+        "relativeWorkResidual": 0.00005332010254892869,
+        "time": 0.1021230473835999,
+        "preLast600Time": 0.10764201927882766,
+        "final600": -0.0055189718952277644,
+        "last200Difference": 0.00008009921199914061,
+        "entryReserveFraction": 0.00011867284908000119,
+        "entryRetention": 0.0000012385552990989979,
+        "entryAerobicOutput": 0.0006261938913425524,
+        "entrySpeed": 0.01875682101487719
+      }
+    ],
+    "unsuccessfulCases": [
+      {
+        "length": 1200,
+        "baselineMean": 16.5,
+        "shape": "back-loaded",
+        "status": "sampled-local-bracket-nonmonotone",
+        "closest": {
+          "mean": 16.2,
+          "work": 5619.51778775374,
+          "error": -0.3219684558262088,
+          "relativeError": -0.000057291394380142974,
+          "time": 71.2018026474619,
+          "final600": 33.00332105258555,
+          "reserveAt600": 0.5423163904206738
+        }
+      },
+      {
+        "length": 2400,
+        "baselineMean": 14.5,
+        "shape": "front-loaded",
+        "status": "no-local-bracket-within-declared-mean-range",
+        "closest": {
+          "mean": 14.875,
+          "work": 9871.26465861541,
+          "error": -11.503134690061415,
+          "relativeError": -0.0011639588150450697,
+          "time": 157.52709718859873,
+          "final600": 36.34581474053023,
+          "reserveAt600": 0.3536759485624064
+        }
+      },
+      {
+        "length": 2400,
+        "baselineMean": 14.5,
+        "shape": "back-loaded",
+        "status": "no-local-bracket-within-declared-mean-range",
+        "closest": {
+          "mean": 14.950000000000001,
+          "work": 9881.516179665516,
+          "error": -1.2516136399553943,
+          "relativeError": -0.00012664606374777215,
+          "time": 157.3219078763072,
+          "final600": 36.66357674703846,
+          "reserveAt600": 0.33688094861971696
+        }
+      },
+      {
+        "length": 2400,
+        "baselineMean": 16.5,
+        "shape": "back-loaded",
+        "status": "no-local-bracket-within-declared-mean-range",
+        "closest": {
+          "mean": 15.9,
+          "work": 9859.317792032783,
+          "error": 2.8636960524927417,
+          "relativeError": 0.00029054019068182227,
+          "time": 157.43733088666733,
+          "final600": 43.12712079269157,
+          "reserveAt600": 0.026286920828735506
+        }
+      }
+    ],
+    "nominalSensitivity": [
+      {
+        "length": 1200,
+        "baselineMean": 14.5,
+        "constantFinal600": 32.96992540301024,
+        "constantLast200Difference": 0.06297554209393041,
+        "frontMinusConstant": {
+          "time": 0.09607824325034642,
+          "preLast600Time": 0.06490151303506053,
+          "final600": 0.031176730215285886,
+          "last200Difference": -0.000006071488080294785,
+          "entryReserveFraction": -0.0022083619357662343,
+          "entryRetention": -0.00003638380526704843,
+          "entryAerobicOutput": -0.013756941656126287,
+          "entrySpeed": -0.3365792245539083
+        },
+        "backMinusConstant": {
+          "time": 0.08314119170698575,
+          "preLast600Time": 0.11033938448950664,
+          "final600": -0.02719819278252089,
+          "last200Difference": 0.000004639320778210276,
+          "entryReserveFraction": -0.001261616064578086,
+          "entryRetention": -0.00003901762471136827,
+          "entryAerobicOutput": 0.020553014043407813,
+          "entrySpeed": 0.35909198203444603
+        }
+      },
+      {
+        "length": 1200,
+        "baselineMean": 16.5,
+        "constantFinal600": 33.18917758728354,
+        "constantLast200Difference": 0.31460965270326824,
+        "frontMinusConstant": {
+          "time": 0.036259573112630505,
+          "preLast600Time": 0.0302770779758319,
+          "final600": 0.0059824951367986046,
+          "last200Difference": -0.020757953538222296,
+          "entryReserveFraction": 0.003261051780194535,
+          "entryRetention": 0.00008286055173056806,
+          "entryAerobicOutput": -0.012625785922452337,
+          "entrySpeed": -0.3743179073560796
+        },
+        "backMinusConstant": {
+          "time": 0.06121121560001086,
+          "preLast600Time": 0.08654808139983317,
+          "final600": -0.025336865799822306,
+          "last200Difference": 0.004251284794257515,
+          "entryReserveFraction": -0.001509751876989207,
+          "entryRetention": -0.000049078784406964004,
+          "entryAerobicOutput": 0.021420410596910244,
+          "entrySpeed": 0.3963699704618371
+        }
+      },
+      {
+        "length": 2400,
+        "baselineMean": 14.5,
+        "constantFinal600": 34.02643639616113,
+        "constantLast200Difference": 0.6771571839317971,
+        "frontMinusConstant": {
+          "time": 0.7804494939062465,
+          "preLast600Time": 0.3714145138818026,
+          "final600": 0.40903498002444394,
+          "last200Difference": 0.3850133148513635,
+          "entryReserveFraction": -0.025179447809421385,
+          "entryRetention": -0.0005295986812511311,
+          "entryAerobicOutput": -0.04385612074904088,
+          "entrySpeed": -0.09387367124662305
+        },
+        "backMinusConstant": {
+          "time": 0.6682500423688396,
+          "preLast600Time": 0.3837556981044514,
+          "final600": 0.28449434426438813,
+          "last200Difference": 0.2792032845479753,
+          "entryReserveFraction": -0.019122581046714937,
+          "entryRetention": -0.0004055904858459858,
+          "entryAerobicOutput": 0.0009112257679220193,
+          "entrySpeed": 0.09629131273654501
+        }
+      },
+      {
+        "length": 2400,
+        "baselineMean": 16.5,
+        "constantFinal600": 44.08470735430383,
+        "constantLast200Difference": 0.007796302894860219,
+        "frontMinusConstant": {
+          "time": 0.3653579105510687,
+          "preLast600Time": 0.3609539161117823,
+          "final600": 0.004403994439286407,
+          "last200Difference": -0.0002354030798983331,
+          "entryReserveFraction": -0.0000568852324938042,
+          "entryRetention": -0.000021434904296735446,
+          "entryAerobicOutput": -0.011757698968096975,
+          "entrySpeed": -0.010745371147171667
+        },
+        "backMinusConstant": {
+          "time": -0.045632887158575386,
+          "preLast600Time": -0.035737509675939805,
+          "final600": -0.009895377482635581,
+          "last200Difference": 0.0004176081661171338,
+          "entryReserveFraction": 0.00017554116080453335,
+          "entryRetention": -0.000009868894018882912,
+          "entryAerobicOutput": 0.01660577279891129,
+          "entrySpeed": 0.03014109520137609
+        }
+      }
+    ]
+  },
+  "rows": [
+    {
+      "length": 1200,
+      "baselineMean": 14.5,
+      "reference": {
+        "length": 1200,
+        "shape": "constant",
+        "middleMean": 14.5,
+        "amplitude": 0,
+        "frames": 4428,
+        "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+        "initial": {
+          "horse": {
+            "id": "controlled-neutral70",
+            "name": "受控中性70马",
+            "sire": "",
+            "dam": "",
+            "age": 4,
+            "sex": "牡",
+            "behavior": {
+              "forwardness": 0.5,
+              "settle": 0.5,
+              "tractability": 0.65
+            },
+            "physiology": {
+              "version": 1,
+              "endurance": 0,
+              "power": 0,
+              "economy": 0,
+              "kinetics": 0,
+              "durability": 0
+            },
+            "carriedWeight": 57,
+            "bodyMass": 480,
+            "coat": "芦毛",
+            "surface": "草地",
+            "special": "左右皆可",
+            "stats": {
+              "速度": 70,
+              "耐力": 70,
+              "出闸能力": 70,
+              "爆发力": 70,
+              "力量": 70,
+              "毅力": 70,
+              "智力": 70,
+              "体格": 70,
+              "血统力": 70
+            },
+            "斗志": 50,
+            "疲劳": 0,
+            "jockeyGrade": "普通",
+            "aggression": 1.3,
+            "form": {
+              "出赛": 14,
+              "胜利": 3,
+              "前三": 6
+            },
+            "player": false,
+            "style": "差"
+          },
+          "startDelay": 0.22624636945780366,
+          "aiBias": -0.04534871592186391,
+          "gate": 1,
+          "lane": 1.4,
+          "physiologicalParameters": {
+            "aerobic": 50,
+            "capacity": 2450,
+            "reservePower": 75,
+            "tau": 10,
+            "maxV": 18.75
+          },
+          "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+        },
+        "time": 73.78544839160847,
+        "first200": 13.6269327391338,
+        "preLast600Time": 40.81552298859823,
+        "final600": 32.96992540301024,
+        "last200Difference": 0.06297554209393041,
+        "sectionals": [
+          {
+            "distance": 200,
+            "time": 13.6269327391338,
+            "split": 13.6269327391338
+          },
+          {
+            "distance": 400,
+            "time": 27.022445788259272,
+            "split": 13.395513049125473
+          },
+          {
+            "distance": 600,
+            "time": 40.81552298859823,
+            "split": 13.79307720033896
+          },
+          {
+            "distance": 800,
+            "time": 51.944802150062294,
+            "split": 11.129279161464062
+          },
+          {
+            "distance": 1000,
+            "time": 62.833637499788416,
+            "split": 10.888835349726122
+          },
+          {
+            "distance": 1200,
+            "time": 73.78544839160847,
+            "split": 10.951810891820053
+          }
+        ],
+        "totalWork": 5467.978225368588,
+        "totalAerobicUsed": 3357.2025793635116,
+        "totalEnergyUsed": 2110.775646005074,
+        "totalRecovered": 0.027831975230145117,
+        "oxygenSupply": 3377.8702764711848,
+        "reserveFadeSeconds": 0,
+        "reserveAlmostEmptySeconds": 0,
+        "recoverySeconds": 0.16666666666666666,
+        "entry200": {
+          "time": 13.6269327391338,
+          "distance": 200,
+          "speed": 18.62391330311241,
+          "reserve": 1856.6520448423228,
+          "reserveFraction": 0.7578171611601318,
+          "guts": 3817.422250138831,
+          "retention": 0.9927128047645492,
+          "aerobicOutput": 42.81333980369377,
+          "aerobicFraction": 0.8562667960738755,
+          "work": 1050.64700036565,
+          "aerobicUsed": 457.29904520796936,
+          "energyUsed": 593.3479551576818,
+          "recovered": 0
+        },
+        "entry600": {
+          "time": 40.81552298859823,
+          "distance": 600,
+          "speed": 14.500000013568021,
+          "reserve": 1669.4381178079432,
+          "reserveFraction": 0.6814033133909972,
+          "guts": 3571.4852862354496,
+          "retention": 0.9880282911663895,
+          "aerobicOutput": 49.03179587344656,
+          "aerobicFraction": 0.9806359174689312,
+          "work": 2520.4485671752336,
+          "aerobicUsed": 1739.8588530079535,
+          "energyUsed": 780.5897141672914,
+          "recovered": 0.027831975230145117
+        },
+        "ledgerEndpoint": {
+          "time": 73.7999999999971,
+          "distance": 1200,
+          "speed": 18.209282538451813,
+          "reserve": 339.2521859701563,
+          "reserveFraction": 0.13847027998781888,
+          "guts": 2648.6733545071697,
+          "retention": 0.9704509210382318,
+          "aerobicOutput": 48.75760987727651,
+          "aerobicFraction": 0.9751521975455302,
+          "work": 5467.978225368588,
+          "aerobicUsed": 3357.2025793635116,
+          "energyUsed": 2110.775646005074,
+          "recovered": 0.027831975230145117
+        },
+        "ledgerAfterTimedFinishSeconds": 0.014551608388629234,
+        "final600RequestAndExecution": {
+          "ledgerSeconds": 32.984477011398866,
+          "meanRequested": 29.999462565072747,
+          "meanActual": 18.19840815710866,
+          "meanFeasibleDesired": 18.35626959659476,
+          "meanFatiguedMaxVelocity": 18.35624264569932,
+          "requestedMinusActual": 11.80105440796409,
+          "feasibleDesiredMinusActual": 0.15786143948610354
+        },
+        "workBalanceError": 2.2737367544323206e-12,
+        "reserveBalanceError": 2.8421709430404007e-13,
+        "unpaidWork": 1.1059729521090134e-13
+      },
+      "histories": [
+        {
+          "shape": "front-loaded",
+          "nominal": {
+            "length": 1200,
+            "shape": "front-loaded",
+            "middleMean": 14.5,
+            "amplitude": 1.2,
+            "frames": 4433,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 73.88152663485882,
+            "first200": 13.6269327391338,
+            "preLast600Time": 40.88042450163329,
+            "final600": 33.00110213322552,
+            "last200Difference": 0.06296947060585012,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.6269327391338,
+                "split": 13.6269327391338
+              },
+              {
+                "distance": 400,
+                "time": 26.38123130215781,
+                "split": 12.754298563024012
+              },
+              {
+                "distance": 600,
+                "time": 40.88042450163329,
+                "split": 14.499193199475481
+              },
+              {
+                "distance": 800,
+                "time": 52.03975902550552,
+                "split": 11.159334523872225
+              },
+              {
+                "distance": 1000,
+                "time": 62.92915809487924,
+                "split": 10.889399069373724
+              },
+              {
+                "distance": 1200,
+                "time": 73.88152663485882,
+                "split": 10.952368539979574
+              }
+            ],
+            "totalWork": 5464.377017340045,
+            "totalAerobicUsed": 3347.7807366061465,
+            "totalEnergyUsed": 2116.5962807338865,
+            "totalRecovered": 0.02189871754566202,
+            "oxygenSupply": 3381.356099507331,
+            "reserveFadeSeconds": 0,
+            "reserveAlmostEmptySeconds": 0,
+            "recoverySeconds": 0.13333333333333333,
+            "entry200": {
+              "time": 13.6269327391338,
+              "distance": 200,
+              "speed": 18.62391330311241,
+              "reserve": 1856.6520448423228,
+              "reserveFraction": 0.7578171611601318,
+              "guts": 3817.422250138831,
+              "retention": 0.9927128047645492,
+              "aerobicOutput": 42.81333980369377,
+              "aerobicFraction": 0.8562667960738755,
+              "work": 1050.64700036565,
+              "aerobicUsed": 457.29904520796936,
+              "energyUsed": 593.3479551576818,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 40.88042450163329,
+              "distance": 600,
+              "speed": 14.163420789014113,
+              "reserve": 1664.027631065316,
+              "reserveFraction": 0.679194951455231,
+              "guts": 3569.5751364589305,
+              "retention": 0.9879919073611224,
+              "aerobicOutput": 49.018038931790436,
+              "aerobicFraction": 0.9803607786358087,
+              "work": 2515.7040281597588,
+              "aerobicUsed": 1729.7097605075328,
+              "energyUsed": 785.9942676522297,
+              "recovered": 0.02189871754566202
+            },
+            "ledgerEndpoint": {
+              "time": 73.88333333333043,
+              "distance": 1200,
+              "speed": 18.20847845392789,
+              "reserve": 333.425617983662,
+              "reserveFraction": 0.13609208897292327,
+              "guts": 2646.450201762356,
+              "retention": 0.9704085752716639,
+              "aerobicOutput": 48.75504549972169,
+              "aerobicFraction": 0.9751009099944338,
+              "work": 5464.377017340045,
+              "aerobicUsed": 3347.7807366061465,
+              "energyUsed": 2116.5962807338865,
+              "recovered": 0.02189871754566202
+            },
+            "ledgerAfterTimedFinishSeconds": 0.001806698471611412,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 33.002908831697134,
+              "meanRequested": 29.998633527286213,
+              "meanActual": 18.181212463220508,
+              "meanFeasibleDesired": 18.355336402625696,
+              "meanFatiguedMaxVelocity": 18.355524980870047,
+              "requestedMinusActual": 11.817421064065703,
+              "feasibleDesiredMinusActual": 0.17412393940518947
+            },
+            "workBalanceError": 1.2278178473934531e-11,
+            "reserveBalanceError": 2.8421709430404007e-12,
+            "unpaidWork": 1.05620210927998e-13
+          },
+          "nominalMinusConstant": {
+            "time": 0.09607824325034642,
+            "preLast600Time": 0.06490151303506053,
+            "final600": 0.031176730215285886,
+            "last200Difference": -0.000006071488080294785,
+            "entryReserveFraction": -0.0022083619357662343,
+            "entryRetention": -0.00003638380526704843,
+            "entryAerobicOutput": -0.013756941656126287,
+            "entrySpeed": -0.3365792245539083
+          },
+          "matching": {
+            "targetWork": 5467.978225368588,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.5467978225368588,
+            "searchMeanInterval": [
+              13.9,
+              15.1
+            ],
+            "probes": [
+              {
+                "mean": 13.9,
+                "work": 5400.624435809004,
+                "error": -67.35378955958367,
+                "relativeError": -0.012317859871331776,
+                "time": 75.04190458517266,
+                "final600": 33.033622089907354,
+                "reserveAt600": 0.710319468601842
+              },
+              {
+                "mean": 13.975,
+                "work": 5408.957775296774,
+                "error": -59.020450071813684,
+                "relativeError": -0.01079383414476476,
+                "time": 74.89015083998555,
+                "final600": 33.028216900015536,
+                "reserveAt600": 0.7068469046897466
+              },
+              {
+                "mean": 14.05,
+                "work": 5416.468860080061,
+                "error": -51.50936528852708,
+                "relativeError": -0.009420184785950737,
+                "time": 74.74360737793867,
+                "final600": 33.02643851880134,
+                "reserveAt600": 0.7032663452543929
+              },
+              {
+                "mean": 14.125,
+                "work": 5424.539413061954,
+                "error": -43.438812306633736,
+                "relativeError": -0.007944218231356543,
+                "time": 74.59463263525258,
+                "final600": 33.020672245432635,
+                "reserveAt600": 0.6995815012681317
+              },
+              {
+                "mean": 14.200000000000001,
+                "work": 5432.497697600815,
+                "error": -35.48052776777331,
+                "relativeError": -0.0064887836610544695,
+                "time": 74.44707697429077,
+                "final600": 33.01479164430008,
+                "reserveAt600": 0.6958075055323794
+              },
+              {
+                "mean": 14.275,
+                "work": 5441.242465857613,
+                "error": -26.735759510975186,
+                "relativeError": -0.004889514626619232,
+                "time": 74.3045574348605,
+                "final600": 33.01244014961951,
+                "reserveAt600": 0.6919312840586533
+              },
+              {
+                "mean": 14.35,
+                "work": 5448.342748296857,
+                "error": -19.635477071730747,
+                "relativeError": -0.0035909940132227117,
+                "time": 74.16337241209705,
+                "final600": 33.00993863457256,
+                "reserveAt600": 0.6878535533778595
+              },
+              {
+                "mean": 14.425,
+                "work": 5457.490822670931,
+                "error": -10.487402697656762,
+                "relativeError": -0.0019179671654507772,
+                "time": 74.0200285058686,
+                "final600": 33.00381774348361,
+                "reserveAt600": 0.6836097363628189
+              },
+              {
+                "mean": 14.5,
+                "work": 5464.377017340045,
+                "error": -3.6012080285427146,
+                "relativeError": -0.0006585995554691447,
+                "time": 73.88152663485882,
+                "final600": 33.00110213322552,
+                "reserveAt600": 0.679194951455231
+              },
+              {
+                "mean": 14.575000000000001,
+                "work": 5472.68711038891,
+                "error": 4.708885020321759,
+                "relativeError": 0.0008611747937244831,
+                "time": 73.74435313904216,
+                "final600": 32.99829988760801,
+                "reserveAt600": 0.6745958181672623
+              },
+              {
+                "mean": 14.65,
+                "work": 5480.885949540008,
+                "error": 12.907724171420341,
+                "relativeError": 0.0023606027016594877,
+                "time": 73.60851643141514,
+                "final600": 32.99544156069185,
+                "reserveAt600": 0.6697936459145611
+              },
+              {
+                "mean": 14.725,
+                "work": 5488.95860610117,
+                "error": 20.98038073258158,
+                "relativeError": 0.003836953965040218,
+                "time": 73.47401318670046,
+                "final600": 32.992545411068306,
+                "reserveAt600": 0.6647640219748078
+              },
+              {
+                "mean": 14.8,
+                "work": 5496.344861946261,
+                "error": 28.36663657767258,
+                "relativeError": 0.005187774239126643,
+                "time": 73.34407690889604,
+                "final600": 32.9928663278658,
+                "reserveAt600": 0.659442670164274
+              },
+              {
+                "mean": 14.875,
+                "work": 5504.167336009215,
+                "error": 36.189110640627405,
+                "relativeError": 0.006618371388665863,
+                "time": 73.21241533042854,
+                "final600": 32.99013312163803,
+                "reserveAt600": 0.6536467703536417
+              },
+              {
+                "mean": 14.950000000000001,
+                "work": 5511.850917098039,
+                "error": 43.87269172945071,
+                "relativeError": 0.008023567381066759,
+                "time": 73.08220943112124,
+                "final600": 32.98754625296277,
+                "reserveAt600": 0.6474588796691695
+              },
+              {
+                "mean": 15.025,
+                "work": 5520.423660410149,
+                "error": 52.44543504156081,
+                "relativeError": 0.009591375985778645,
+                "time": 72.95617832317767,
+                "final600": 32.98784481825438,
+                "reserveAt600": 0.6412722913104748
+              },
+              {
+                "mean": 15.1,
+                "work": 5527.926312564488,
+                "error": 59.94808719590037,
+                "relativeError": 0.010963483160516676,
+                "time": 72.82829442724484,
+                "final600": 32.98502166218589,
+                "reserveAt600": 0.6351004047220671
+              }
+            ],
+            "signChangingBrackets": [
+              [
+                14.5,
+                14.575000000000001
+              ]
+            ],
+            "globalSampledMonotonicIncreasing": true,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": -0.0006585995554691447,
+            "matched": true,
+            "closest": {
+              "mean": 14.528125000000001,
+              "work": 5467.501331505064,
+              "error": -0.4768938635243103,
+              "relativeError": -0.00008721575761069598,
+              "time": 73.82992914183464,
+              "final600": 33.0000584789973,
+              "reserveAt600": 0.6774948314216764
+            },
+            "selectedMeanBracket": [
+              14.5,
+              14.575000000000001
+            ],
+            "monotonicDirection": 1,
+            "localProbes": [
+              {
+                "mean": 14.5,
+                "work": 5464.377017340045,
+                "error": -3.6012080285427146,
+                "relativeError": -0.0006585995554691447,
+                "time": 73.88152663485882,
+                "final600": 33.00110213322552,
+                "reserveAt600": 0.679194951455231
+              },
+              {
+                "mean": 14.575000000000001,
+                "work": 5472.68711038891,
+                "error": 4.708885020321759,
+                "relativeError": 0.0008611747937244831,
+                "time": 73.74435313904216,
+                "final600": 32.99829988760801,
+                "reserveAt600": 0.6745958181672623
+              },
+              {
+                "mean": 14.51875,
+                "work": 5466.464492583799,
+                "error": -1.5137327847887718,
+                "relativeError": -0.00027683592040762627,
+                "time": 73.84711023994136,
+                "final600": 33.00041033352322,
+                "reserveAt600": 0.6780629745012211
+              },
+              {
+                "mean": 14.537500000000001,
+                "work": 5468.545563591067,
+                "error": 0.567338222478611,
+                "relativeError": 0.0001037564889791359,
+                "time": 73.81277460709443,
+                "final600": 32.99971120979698,
+                "reserveAt600": 0.6769192796249233
+              },
+              {
+                "mean": 14.55625,
+                "work": 5470.619273344077,
+                "error": 2.6410479754886182,
+                "relativeError": 0.0004830026504559808,
+                "time": 73.77852516993528,
+                "final600": 32.999010542693064,
+                "reserveAt600": 0.6757636921474103
+              },
+              {
+                "mean": 14.537500000000001,
+                "work": 5468.545563591067,
+                "error": 0.567338222478611,
+                "relativeError": 0.0001037564889791359,
+                "time": 73.81277460709443,
+                "final600": 32.99971120979698,
+                "reserveAt600": 0.6769192796249233
+              },
+              {
+                "mean": 14.51875,
+                "work": 5466.464492583799,
+                "error": -1.5137327847887718,
+                "relativeError": -0.00027683592040762627,
+                "time": 73.84711023994136,
+                "final600": 33.00041033352322,
+                "reserveAt600": 0.6780629745012211
+              },
+              {
+                "mean": 14.528125000000001,
+                "work": 5467.501331505064,
+                "error": -0.4768938635243103,
+                "relativeError": -0.00008721575761069598,
+                "time": 73.82992914183464,
+                "final600": 33.0000584789973,
+                "reserveAt600": 0.6774948314216764
+              }
+            ],
+            "sampledBracketMonotonicWithinTolerance": true,
+            "sampledBracketStrictMonotonic": true,
+            "bisections": 3,
+            "status": "matched-with-sampled-local-monotonicity",
+            "adjustedMean": 14.528125000000001,
+            "relativeResidual": -0.00008721575761069598,
+            "result": {
+              "length": 1200,
+              "shape": "front-loaded",
+              "middleMean": 14.528125000000001,
+              "amplitude": 1.2,
+              "frames": 4430,
+              "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+              "initial": {
+                "horse": {
+                  "id": "controlled-neutral70",
+                  "name": "受控中性70马",
+                  "sire": "",
+                  "dam": "",
+                  "age": 4,
+                  "sex": "牡",
+                  "behavior": {
+                    "forwardness": 0.5,
+                    "settle": 0.5,
+                    "tractability": 0.65
+                  },
+                  "physiology": {
+                    "version": 1,
+                    "endurance": 0,
+                    "power": 0,
+                    "economy": 0,
+                    "kinetics": 0,
+                    "durability": 0
+                  },
+                  "carriedWeight": 57,
+                  "bodyMass": 480,
+                  "coat": "芦毛",
+                  "surface": "草地",
+                  "special": "左右皆可",
+                  "stats": {
+                    "速度": 70,
+                    "耐力": 70,
+                    "出闸能力": 70,
+                    "爆发力": 70,
+                    "力量": 70,
+                    "毅力": 70,
+                    "智力": 70,
+                    "体格": 70,
+                    "血统力": 70
+                  },
+                  "斗志": 50,
+                  "疲劳": 0,
+                  "jockeyGrade": "普通",
+                  "aggression": 1.3,
+                  "form": {
+                    "出赛": 14,
+                    "胜利": 3,
+                    "前三": 6
+                  },
+                  "player": false,
+                  "style": "差"
+                },
+                "startDelay": 0.22624636945780366,
+                "aiBias": -0.04534871592186391,
+                "gate": 1,
+                "lane": 1.4,
+                "physiologicalParameters": {
+                  "aerobic": 50,
+                  "capacity": 2450,
+                  "reservePower": 75,
+                  "tau": 10,
+                  "maxV": 18.75
+                },
+                "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+              },
+              "time": 73.82992914183464,
+              "first200": 13.6269327391338,
+              "preLast600Time": 40.82987066283734,
+              "final600": 33.0000584789973,
+              "last200Difference": 0.06297069356251228,
+              "sectionals": [
+                {
+                  "distance": 200,
+                  "time": 13.6269327391338,
+                  "split": 13.6269327391338
+                },
+                {
+                  "distance": 400,
+                  "time": 26.36045831760219,
+                  "split": 12.733525578468392
+                },
+                {
+                  "distance": 600,
+                  "time": 40.82987066283734,
+                  "split": 14.469412345235146
+                },
+                {
+                  "distance": 800,
+                  "time": 51.987252584333966,
+                  "split": 11.15738192149663
+                },
+                {
+                  "distance": 1000,
+                  "time": 62.87710551630305,
+                  "split": 10.88985293196908
+                },
+                {
+                  "distance": 1200,
+                  "time": 73.82992914183464,
+                  "split": 10.952823625531593
+                }
+              ],
+              "totalWork": 5467.501331505064,
+              "totalAerobicUsed": 3346.8883812059044,
+              "totalEnergyUsed": 2120.612950299156,
+              "totalRecovered": 0.016484884712860148,
+              "oxygenSupply": 3378.8003084008246,
+              "reserveFadeSeconds": 0,
+              "reserveAlmostEmptySeconds": 0,
+              "recoverySeconds": 0.11666666666666665,
+              "entry200": {
+                "time": 13.6269327391338,
+                "distance": 200,
+                "speed": 18.62391330311241,
+                "reserve": 1856.6520448423228,
+                "reserveFraction": 0.7578171611601318,
+                "guts": 3817.422250138831,
+                "retention": 0.9927128047645492,
+                "aerobicOutput": 42.81333980369377,
+                "aerobicFraction": 0.8562667960738755,
+                "work": 1050.64700036565,
+                "aerobicUsed": 457.29904520796936,
+                "energyUsed": 593.3479551576818,
+                "recovered": 0
+              },
+              "entry600": {
+                "time": 40.82987066283734,
+                "distance": 600,
+                "speed": 14.190995052820236,
+                "reserve": 1659.8623369831073,
+                "reserveFraction": 0.6774948314216764,
+                "guts": 3567.337491384486,
+                "retention": 0.9879492855501807,
+                "aerobicOutput": 49.01440463096805,
+                "aerobicFraction": 0.9802880926193611,
+                "work": 2519.028564180009,
+                "aerobicUsed": 1728.8744162783973,
+                "energyUsed": 790.1541479016073,
+                "recovered": 0.016484884712860148
+              },
+              "ledgerEndpoint": {
+                "time": 73.83333333333043,
+                "distance": 1200,
+                "speed": 18.20770855959158,
+                "reserve": 329.40353458556086,
+                "reserveFraction": 0.13445042227982076,
+                "guts": 2644.299025899839,
+                "retention": 0.9703676004933303,
+                "aerobicOutput": 48.752912724459826,
+                "aerobicFraction": 0.9750582544891965,
+                "work": 5467.501331505064,
+                "aerobicUsed": 3346.8883812059044,
+                "energyUsed": 2120.612950299156,
+                "recovered": 0.016484884712860148
+              },
+              "ledgerAfterTimedFinishSeconds": 0.0034041914957896324,
+              "final600RequestAndExecution": {
+                "ledgerSeconds": 33.00346267049309,
+                "meanRequested": 29.998376345093096,
+                "meanActual": 18.181788644041976,
+                "meanFeasibleDesired": 18.35448650435218,
+                "meanFatiguedMaxVelocity": 18.354739649746083,
+                "requestedMinusActual": 11.816587701051121,
+                "feasibleDesiredMinusActual": 0.17269786031020606
+              },
+              "workBalanceError": 3.183231456205249e-12,
+              "reserveBalanceError": 4.206412995699793e-12,
+              "unpaidWork": 1.0786080958512939e-13
+            }
+          },
+          "equalWorkMinusConstant": {
+            "time": 0.04448075022617104,
+            "preLast600Time": 0.014347674239104435,
+            "final600": 0.030133075987066604,
+            "last200Difference": -0.0000048485314181334616,
+            "entryReserveFraction": -0.0039084819693208095,
+            "entryRetention": -0.00007900561620877156,
+            "entryAerobicOutput": -0.017391242478510094,
+            "entrySpeed": -0.30900496074778516
+          }
+        },
+        {
+          "shape": "back-loaded",
+          "nominal": {
+            "length": 1200,
+            "shape": "back-loaded",
+            "middleMean": 14.5,
+            "amplitude": 1.2,
+            "frames": 4433,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 73.86858958331545,
+            "first200": 13.6269327391338,
+            "preLast600Time": 40.92586237308774,
+            "final600": 32.942727210227716,
+            "last200Difference": 0.06298018141470862,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.6269327391338,
+                "split": 13.6269327391338
+              },
+              {
+                "distance": 400,
+                "time": 27.752658800071156,
+                "split": 14.125726060937357
+              },
+              {
+                "distance": 600,
+                "time": 40.92586237308774,
+                "split": 13.173203573016583
+              },
+              {
+                "distance": 800,
+                "time": 52.027579645119566,
+                "split": 11.101717272031827
+              },
+              {
+                "distance": 1000,
+                "time": 62.916594523510156,
+                "split": 10.88901487839059
+              },
+              {
+                "distance": 1200,
+                "time": 73.86858958331545,
+                "split": 10.951995059805299
+              }
+            ],
+            "totalWork": 5470.850394230797,
+            "totalAerobicUsed": 3358.8774013249317,
+            "totalEnergyUsed": 2111.972992905894,
+            "totalRecovered": 0.03856572812817537,
+            "oxygenSupply": 3382.5542221223795,
+            "reserveFadeSeconds": 0,
+            "reserveAlmostEmptySeconds": 0,
+            "recoverySeconds": 0.2333333333333333,
+            "entry200": {
+              "time": 13.6269327391338,
+              "distance": 200,
+              "speed": 18.62391330311241,
+              "reserve": 1856.6520448423228,
+              "reserveFraction": 0.7578171611601318,
+              "guts": 3817.422250138831,
+              "retention": 0.9927128047645492,
+              "aerobicOutput": 42.81333980369377,
+              "aerobicFraction": 0.8562667960738755,
+              "work": 1050.64700036565,
+              "aerobicUsed": 457.29904520796936,
+              "energyUsed": 593.3479551576818,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 40.92586237308774,
+              "distance": 600,
+              "speed": 14.859091995602467,
+              "reserve": 1666.347158449727,
+              "reserveFraction": 0.6801416973264192,
+              "guts": 3569.4368609380986,
+              "retention": 0.9879892735416781,
+              "aerobicOutput": 49.05234888748997,
+              "aerobicFraction": 0.9810469777497993,
+              "work": 2526.3818707875566,
+              "aerobicUsed": 1742.6904635091535,
+              "energyUsed": 783.6914072784081,
+              "recovered": 0.03856572812817537
+            },
+            "ledgerEndpoint": {
+              "time": 73.88333333333043,
+              "distance": 1200,
+              "speed": 18.208976428265192,
+              "reserve": 338.0655728222405,
+              "reserveFraction": 0.1379859480907104,
+              "guts": 2647.8186098269666,
+              "retention": 0.9704346401871803,
+              "aerobicOutput": 48.75752976329024,
+              "aerobicFraction": 0.9751505952658048,
+              "work": 5470.850394230797,
+              "aerobicUsed": 3358.8774013249317,
+              "energyUsed": 2111.972992905894,
+              "recovered": 0.03856572812817537
+            },
+            "ledgerAfterTimedFinishSeconds": 0.014743750014972079,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 32.95747096024269,
+              "meanRequested": 29.996486968268634,
+              "meanActual": 18.21342634237411,
+              "meanFeasibleDesired": 18.35503099356789,
+              "meanFatiguedMaxVelocity": 18.355776325368645,
+              "requestedMinusActual": 11.783060625894523,
+              "feasibleDesiredMinusActual": 0.14160465119377819
+            },
+            "workBalanceError": 2.864908310584724e-11,
+            "reserveBalanceError": 6.30961949354969e-12,
+            "unpaidWork": 1.1059469312568737e-13
+          },
+          "nominalMinusConstant": {
+            "time": 0.08314119170698575,
+            "preLast600Time": 0.11033938448950664,
+            "final600": -0.02719819278252089,
+            "last200Difference": 0.000004639320778210276,
+            "entryReserveFraction": -0.001261616064578086,
+            "entryRetention": -0.00003901762471136827,
+            "entryAerobicOutput": 0.020553014043407813,
+            "entrySpeed": 0.35909198203444603
+          },
+          "matching": {
+            "targetWork": 5467.978225368588,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.5467978225368588,
+            "searchMeanInterval": [
+              13.9,
+              15.1
+            ],
+            "probes": [
+              {
+                "mean": 13.9,
+                "work": 5405.320820929579,
+                "error": -62.65740443900904,
+                "relativeError": -0.01145897109617429,
+                "time": 75.01600955701501,
+                "final600": 32.966755885955926,
+                "reserveAt600": 0.7132048567136056
+              },
+              {
+                "mean": 13.975,
+                "work": 5414.407404750826,
+                "error": -53.570820617762365,
+                "relativeError": -0.009797189822231094,
+                "time": 74.86939230265598,
+                "final600": 32.9658905783401,
+                "reserveAt600": 0.7095302951024672
+              },
+              {
+                "mean": 14.05,
+                "work": 5422.486306545715,
+                "error": -45.49191882287323,
+                "relativeError": -0.008319696412069507,
+                "time": 74.72007152183743,
+                "final600": 32.96075002447483,
+                "reserveAt600": 0.705823945301153
+              },
+              {
+                "mean": 14.125,
+                "work": 5429.862415778697,
+                "error": -38.11580958989089,
+                "relativeError": -0.00697073178035956,
+                "time": 74.57599031665326,
+                "final600": 32.95930340652778,
+                "reserveAt600": 0.7020535814055722
+              },
+              {
+                "mean": 14.200000000000001,
+                "work": 5437.7901783660545,
+                "error": -30.188047002533494,
+                "relativeError": -0.005520879154652918,
+                "time": 74.42937318662109,
+                "final600": 32.95379810403156,
+                "reserveAt600": 0.6982153960706166
+              },
+              {
+                "mean": 14.275,
+                "work": 5446.467599498056,
+                "error": -21.51062587053184,
+                "relativeError": -0.003933926761217459,
+                "time": 74.287873503133,
+                "final600": 32.95191387168279,
+                "reserveAt600": 0.694257260081018
+              },
+              {
+                "mean": 14.35,
+                "work": 5454.098800389405,
+                "error": -13.879424979182659,
+                "relativeError": -0.0025383102139634192,
+                "time": 74.14422648040099,
+                "final600": 32.9464086181064,
+                "reserveAt600": 0.6898743973023446
+              },
+              {
+                "mean": 14.425,
+                "work": 5462.556578977816,
+                "error": -5.421646390772366,
+                "relativeError": -0.0009915266973117658,
+                "time": 74.00570278659211,
+                "final600": 32.94457623943348,
+                "reserveAt600": 0.685165492200363
+              },
+              {
+                "mean": 14.5,
+                "work": 5470.850394230797,
+                "error": 2.872168862209037,
+                "relativeError": 0.0005252707205167095,
+                "time": 73.86858958331545,
+                "final600": 32.942727210227716,
+                "reserveAt600": 0.6801416973264192
+              },
+              {
+                "mean": 14.575000000000001,
+                "work": 5477.484186976078,
+                "error": 9.505961607489553,
+                "relativeError": 0.001738478321546127,
+                "time": 73.73291620403621,
+                "final600": 32.94091305237127,
+                "reserveAt600": 0.674746402947092
+              },
+              {
+                "mean": 14.65,
+                "work": 5485.487088555711,
+                "error": 17.508863187123097,
+                "relativeError": 0.003202072587979783,
+                "time": 73.59885761075286,
+                "final600": 32.93933055560653,
+                "reserveAt600": 0.6687520105240912
+              },
+              {
+                "mean": 14.725,
+                "work": 5493.376102337327,
+                "error": 25.397876968739183,
+                "relativeError": 0.004644838717701213,
+                "time": 73.46608318605095,
+                "final600": 32.937670575900725,
+                "reserveAt600": 0.6626018766487514
+              },
+              {
+                "mean": 14.8,
+                "work": 5502.690390565314,
+                "error": 34.712165196726346,
+                "relativeError": 0.006348263245760539,
+                "time": 73.33442707029116,
+                "final600": 32.93578837871327,
+                "reserveAt600": 0.6564272381317641
+              },
+              {
+                "mean": 14.875,
+                "work": 5509.892150865108,
+                "error": 41.91392549652028,
+                "relativeError": 0.007665342429869483,
+                "time": 73.20701230219805,
+                "final600": 32.93682677956388,
+                "reserveAt600": 0.650238186748161
+              },
+              {
+                "mean": 14.950000000000001,
+                "work": 5517.5436483163,
+                "error": 49.56542294771225,
+                "relativeError": 0.009064670871905515,
+                "time": 73.0775137867434,
+                "final600": 32.93448137899057,
+                "reserveAt600": 0.6440240948235585
+              },
+              {
+                "mean": 15.025,
+                "work": 5526.1243731830655,
+                "error": 58.146147814477445,
+                "relativeError": 0.010633939166895257,
+                "time": 72.95212720908212,
+                "final600": 32.934968234294516,
+                "reserveAt600": 0.6377898590131685
+              },
+              {
+                "mean": 15.1,
+                "work": 5533.667142658194,
+                "error": 65.68891728960625,
+                "relativeError": 0.012013383115690491,
+                "time": 72.82476851090526,
+                "final600": 32.93222088143087,
+                "reserveAt600": 0.6315592642914287
+              }
+            ],
+            "signChangingBrackets": [
+              [
+                14.425,
+                14.5
+              ]
+            ],
+            "globalSampledMonotonicIncreasing": true,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": 0.0005252707205167095,
+            "matched": true,
+            "closest": {
+              "mean": 14.471875,
+              "work": 5467.753378036102,
+              "error": -0.22484733248620614,
+              "relativeError": -0.00004112074394207185,
+              "time": 73.91984017081212,
+              "final600": 32.94341955916014,
+              "reserveAt600": 0.682064957596669
+            },
+            "selectedMeanBracket": [
+              14.425,
+              14.5
+            ],
+            "monotonicDirection": 1,
+            "localProbes": [
+              {
+                "mean": 14.425,
+                "work": 5462.556578977816,
+                "error": -5.421646390772366,
+                "relativeError": -0.0009915266973117658,
+                "time": 74.00570278659211,
+                "final600": 32.94457623943348,
+                "reserveAt600": 0.685165492200363
+              },
+              {
+                "mean": 14.5,
+                "work": 5470.850394230797,
+                "error": 2.872168862209037,
+                "relativeError": 0.0005252707205167095,
+                "time": 73.86858958331545,
+                "final600": 32.942727210227716,
+                "reserveAt600": 0.6801416973264192
+              },
+              {
+                "mean": 14.443750000000001,
+                "work": 5464.639271231039,
+                "error": -3.3389541375490808,
+                "relativeError": -0.0006106377896784706,
+                "time": 73.9712885431931,
+                "final600": 32.94411096106733,
+                "reserveAt600": 0.683941148134868
+              },
+              {
+                "mean": 14.4625,
+                "work": 5466.724367752426,
+                "error": -1.2538576161623496,
+                "relativeError": -0.00022930918238574897,
+                "time": 73.93697056066779,
+                "final600": 32.94365309787277,
+                "reserveAt600": 0.6826922835782889
+              },
+              {
+                "mean": 14.48125,
+                "work": 5468.791509862573,
+                "error": 0.8132844939846109,
+                "relativeError": 0.000148735869175812,
+                "time": 73.90273440759174,
+                "final600": 32.943188565818566,
+                "reserveAt600": 0.6814276536905024
+              },
+              {
+                "mean": 14.4625,
+                "work": 5466.724367752426,
+                "error": -1.2538576161623496,
+                "relativeError": -0.00022930918238574897,
+                "time": 73.93697056066779,
+                "final600": 32.94365309787277,
+                "reserveAt600": 0.6826922835782889
+              },
+              {
+                "mean": 14.48125,
+                "work": 5468.791509862573,
+                "error": 0.8132844939846109,
+                "relativeError": 0.000148735869175812,
+                "time": 73.90273440759174,
+                "final600": 32.943188565818566,
+                "reserveAt600": 0.6814276536905024
+              },
+              {
+                "mean": 14.471875,
+                "work": 5467.753378036102,
+                "error": -0.22484733248620614,
+                "relativeError": -0.00004112074394207185,
+                "time": 73.91984017081212,
+                "final600": 32.94341955916014,
+                "reserveAt600": 0.682064957596669
+              }
+            ],
+            "sampledBracketMonotonicWithinTolerance": true,
+            "sampledBracketStrictMonotonic": true,
+            "bisections": 3,
+            "status": "matched-with-sampled-local-monotonicity",
+            "adjustedMean": 14.471875,
+            "relativeResidual": -0.00004112074394207185,
+            "result": {
+              "length": 1200,
+              "shape": "back-loaded",
+              "middleMean": 14.471875,
+              "amplitude": 1.2,
+              "frames": 4436,
+              "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+              "initial": {
+                "horse": {
+                  "id": "controlled-neutral70",
+                  "name": "受控中性70马",
+                  "sire": "",
+                  "dam": "",
+                  "age": 4,
+                  "sex": "牡",
+                  "behavior": {
+                    "forwardness": 0.5,
+                    "settle": 0.5,
+                    "tractability": 0.65
+                  },
+                  "physiology": {
+                    "version": 1,
+                    "endurance": 0,
+                    "power": 0,
+                    "economy": 0,
+                    "kinetics": 0,
+                    "durability": 0
+                  },
+                  "carriedWeight": 57,
+                  "bodyMass": 480,
+                  "coat": "芦毛",
+                  "surface": "草地",
+                  "special": "左右皆可",
+                  "stats": {
+                    "速度": 70,
+                    "耐力": 70,
+                    "出闸能力": 70,
+                    "爆发力": 70,
+                    "力量": 70,
+                    "毅力": 70,
+                    "智力": 70,
+                    "体格": 70,
+                    "血统力": 70
+                  },
+                  "斗志": 50,
+                  "疲劳": 0,
+                  "jockeyGrade": "普通",
+                  "aggression": 1.3,
+                  "form": {
+                    "出赛": 14,
+                    "胜利": 3,
+                    "前三": 6
+                  },
+                  "player": false,
+                  "style": "差"
+                },
+                "startDelay": 0.22624636945780366,
+                "aiBias": -0.04534871592186391,
+                "gate": 1,
+                "lane": 1.4,
+                "physiologicalParameters": {
+                  "aerobic": 50,
+                  "capacity": 2450,
+                  "reservePower": 75,
+                  "tau": 10,
+                  "maxV": 18.75
+                },
+                "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+              },
+              "time": 73.91984017081212,
+              "first200": 13.6269327391338,
+              "preLast600Time": 40.97642061165198,
+              "final600": 32.94341955916014,
+              "last200Difference": 0.06297897625220372,
+              "sectionals": [
+                {
+                  "distance": 200,
+                  "time": 13.6269327391338,
+                  "split": 13.6269327391338
+                },
+                {
+                  "distance": 400,
+                  "time": 27.77897132768344,
+                  "split": 14.15203858854964
+                },
+                {
+                  "distance": 600,
+                  "time": 40.97642061165198,
+                  "split": 13.197449283968542
+                },
+                {
+                  "distance": 800,
+                  "time": 52.07983052594705,
+                  "split": 11.10340991429507
+                },
+                {
+                  "distance": 1000,
+                  "time": 62.968345860253486,
+                  "split": 10.888515334306433
+                },
+                {
+                  "distance": 1200,
+                  "time": 73.91984017081212,
+                  "split": 10.951494310558637
+                }
+              ],
+              "totalWork": 5467.753378036102,
+              "totalAerobicUsed": 3360.2539582094837,
+              "totalEnergyUsed": 2107.499419826619,
+              "totalRecovered": 0.049567241558311693,
+              "oxygenSupply": 3385.112411553942,
+              "reserveFadeSeconds": 0,
+              "reserveAlmostEmptySeconds": 0,
+              "recoverySeconds": 0.2833333333333333,
+              "entry200": {
+                "time": 13.6269327391338,
+                "distance": 200,
+                "speed": 18.62391330311241,
+                "reserve": 1856.6520448423228,
+                "reserveFraction": 0.7578171611601318,
+                "guts": 3817.422250138831,
+                "retention": 0.9927128047645492,
+                "aerobicOutput": 42.81333980369377,
+                "aerobicFraction": 0.8562667960738755,
+                "work": 1050.64700036565,
+                "aerobicUsed": 457.29904520796936,
+                "energyUsed": 593.3479551576818,
+                "recovered": 0
+              },
+              "entry600": {
+                "time": 40.97642061165198,
+                "distance": 600,
+                "speed": 14.830417523529704,
+                "reserve": 1671.059146111839,
+                "reserveFraction": 0.682064957596669,
+                "guts": 3571.9246623986346,
+                "retention": 0.9880366602361644,
+                "aerobicOutput": 49.0559099157029,
+                "aerobicFraction": 0.981118198314058,
+                "work": 2522.996800845448,
+                "aerobicUsed": 1744.0063797157243,
+                "energyUsed": 778.9904211297222,
+                "recovered": 0.049567241558311693
+              },
+              "ledgerEndpoint": {
+                "time": 73.93333333333042,
+                "distance": 1200,
+                "speed": 18.20981883984166,
+                "reserve": 342.5501474149392,
+                "reserveFraction": 0.13981638669997518,
+                "guts": 2650.1723894940583,
+                "retention": 0.9704794740856011,
+                "aerobicOutput": 48.7598485792328,
+                "aerobicFraction": 0.975196971584656,
+                "work": 5467.753378036102,
+                "aerobicUsed": 3360.2539582094837,
+                "energyUsed": 2107.499419826619,
+                "recovered": 0.049567241558311693
+              },
+              "ledgerAfterTimedFinishSeconds": 0.01349316251830146,
+              "final600RequestAndExecution": {
+                "ledgerSeconds": 32.95691272167844,
+                "meanRequested": 29.99674354336665,
+                "meanActual": 18.21304423093087,
+                "meanFeasibleDesired": 18.35595274782097,
+                "meanFatiguedMaxVelocity": 18.3566359915571,
+                "requestedMinusActual": 11.78369931243578,
+                "feasibleDesiredMinusActual": 0.14290851689010292
+              },
+              "workBalanceError": 9.094947017729282e-13,
+              "reserveBalanceError": 5.684341886080802e-14,
+              "unpaidWork": 1.148525854499996e-13
+            }
+          },
+          "equalWorkMinusConstant": {
+            "time": 0.13439177920365353,
+            "preLast600Time": 0.16089762305374933,
+            "final600": -0.0265058438500958,
+            "last200Difference": 0.0000034341582733077303,
+            "entryReserveFraction": 0.0006616442056717187,
+            "entryRetention": 0.00000836906977497165,
+            "entryAerobicOutput": 0.024114042256336177,
+            "entrySpeed": 0.3304175099616824
+          }
+        }
+      ]
+    },
+    {
+      "length": 1200,
+      "baselineMean": 16.5,
+      "reference": {
+        "length": 1200,
+        "shape": "constant",
+        "middleMean": 16.5,
+        "amplitude": 0,
+        "frames": 4253,
+        "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+        "initial": {
+          "horse": {
+            "id": "controlled-neutral70",
+            "name": "受控中性70马",
+            "sire": "",
+            "dam": "",
+            "age": 4,
+            "sex": "牡",
+            "behavior": {
+              "forwardness": 0.5,
+              "settle": 0.5,
+              "tractability": 0.65
+            },
+            "physiology": {
+              "version": 1,
+              "endurance": 0,
+              "power": 0,
+              "economy": 0,
+              "kinetics": 0,
+              "durability": 0
+            },
+            "carriedWeight": 57,
+            "bodyMass": 480,
+            "coat": "芦毛",
+            "surface": "草地",
+            "special": "左右皆可",
+            "stats": {
+              "速度": 70,
+              "耐力": 70,
+              "出闸能力": 70,
+              "爆发力": 70,
+              "力量": 70,
+              "毅力": 70,
+              "智力": 70,
+              "体格": 70,
+              "血统力": 70
+            },
+            "斗志": 50,
+            "疲劳": 0,
+            "jockeyGrade": "普通",
+            "aggression": 1.3,
+            "form": {
+              "出赛": 14,
+              "胜利": 3,
+              "前三": 6
+            },
+            "player": false,
+            "style": "差"
+          },
+          "startDelay": 0.22624636945780366,
+          "aiBias": -0.04534871592186391,
+          "gate": 1,
+          "lane": 1.4,
+          "physiologicalParameters": {
+            "aerobic": 50,
+            "capacity": 2450,
+            "reservePower": 75,
+            "tau": 10,
+            "maxV": 18.75
+          },
+          "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+        },
+        "time": 70.87857658169094,
+        "first200": 13.6269327391338,
+        "preLast600Time": 37.6893989944074,
+        "final600": 33.18917758728354,
+        "last200Difference": 0.31460965270326824,
+        "sectionals": [
+          {
+            "distance": 200,
+            "time": 13.6269327391338,
+            "split": 13.6269327391338
+          },
+          {
+            "distance": 400,
+            "time": 25.568220646192476,
+            "split": 11.941287907058676
+          },
+          {
+            "distance": 600,
+            "time": 37.6893989944074,
+            "split": 12.121178348214922
+          },
+          {
+            "distance": 800,
+            "time": 48.70359989612322,
+            "split": 11.014200901715824
+          },
+          {
+            "distance": 1000,
+            "time": 59.633783412555445,
+            "split": 10.930183516432223
+          },
+          {
+            "distance": 1200,
+            "time": 70.87857658169094,
+            "split": 11.244793169135491
+          }
+        ],
+        "totalWork": 5619.839756209566,
+        "totalAerobicUsed": 3207.582339267932,
+        "totalEnergyUsed": 2412.257416941629,
+        "totalRecovered": 0,
+        "oxygenSupply": 3226.588968404675,
+        "reserveFadeSeconds": 7.64896574540102,
+        "reserveAlmostEmptySeconds": 0,
+        "recoverySeconds": 0,
+        "entry200": {
+          "time": 13.6269327391338,
+          "distance": 200,
+          "speed": 18.62391330311241,
+          "reserve": 1856.6520448423228,
+          "reserveFraction": 0.7578171611601318,
+          "guts": 3817.422250138831,
+          "retention": 0.9927128047645492,
+          "aerobicOutput": 42.81333980369377,
+          "aerobicFraction": 0.8562667960738755,
+          "work": 1050.64700036565,
+          "aerobicUsed": 457.29904520796936,
+          "energyUsed": 593.3479551576818,
+          "recovered": 0
+        },
+        "entry600": {
+          "time": 37.6893989944074,
+          "distance": 600,
+          "speed": 16.50000006605698,
+          "reserve": 1274.2674002893448,
+          "reserveFraction": 0.5201091429752428,
+          "guts": 3367.004071899249,
+          "retention": 0.984133410893319,
+          "aerobicOutput": 48.75387212570159,
+          "aerobicFraction": 0.9750774425140318,
+          "work": 2762.875074826947,
+          "aerobicUsed": 1587.1424751162817,
+          "energyUsed": 1175.7325997106607,
+          "recovered": 0
+        },
+        "ledgerEndpoint": {
+          "time": 70.8833333333306,
+          "distance": 1200,
+          "speed": 15.884675635177082,
+          "reserve": 37.74258305838297,
+          "reserveFraction": 0.01540513594219713,
+          "guts": 2496.3017891932277,
+          "retention": 0.9675486055084425,
+          "aerobicOutput": 48.57039871958787,
+          "aerobicFraction": 0.9714079743917574,
+          "work": 5619.839756209566,
+          "aerobicUsed": 3207.582339267932,
+          "energyUsed": 2412.257416941629,
+          "recovered": 0
+        },
+        "ledgerAfterTimedFinishSeconds": 0.004756751639661161,
+        "final600RequestAndExecution": {
+          "ledgerSeconds": 33.1939343389232,
+          "meanRequested": 29.995688562434772,
+          "meanActual": 18.077868458954118,
+          "meanFeasibleDesired": 18.052070778844886,
+          "meanFatiguedMaxVelocity": 18.28563941923617,
+          "requestedMinusActual": 11.917820103480656,
+          "feasibleDesiredMinusActual": -0.025797680109231155
+        },
+        "workBalanceError": 5.002220859751105e-12,
+        "reserveBalanceError": 1.1858958259836072e-11,
+        "unpaidWork": 1.2899425451406987e-13
+      },
+      "histories": [
+        {
+          "shape": "front-loaded",
+          "nominal": {
+            "length": 1200,
+            "shape": "front-loaded",
+            "middleMean": 16.5,
+            "amplitude": 1.2,
+            "frames": 4255,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 70.91483615480357,
+            "first200": 13.6269327391338,
+            "preLast600Time": 37.71967607238323,
+            "final600": 33.19516008242034,
+            "last200Difference": 0.29385169916504594,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.6269327391338,
+                "split": 13.6269327391338
+              },
+              {
+                "distance": 400,
+                "time": 25.07207608418807,
+                "split": 11.44514334505427
+              },
+              {
+                "distance": 600,
+                "time": 37.71967607238323,
+                "split": 12.64759998819516
+              },
+              {
+                "distance": 800,
+                "time": 48.76185002911468,
+                "split": 11.042173956731453
+              },
+              {
+                "distance": 1000,
+                "time": 59.6914172423766,
+                "split": 10.929567213261919
+              },
+              {
+                "distance": 1200,
+                "time": 70.91483615480357,
+                "split": 11.223418912426965
+              }
+            ],
+            "totalWork": 5619.407571510836,
+            "totalAerobicUsed": 3208.819403496731,
+            "totalEnergyUsed": 2410.5881680141024,
+            "totalRecovered": 0,
+            "oxygenSupply": 3227.8260326334726,
+            "reserveFadeSeconds": 7.476415771453375,
+            "reserveAlmostEmptySeconds": 0,
+            "recoverySeconds": 0,
+            "entry200": {
+              "time": 13.6269327391338,
+              "distance": 200,
+              "speed": 18.62391330311241,
+              "reserve": 1856.6520448423228,
+              "reserveFraction": 0.7578171611601318,
+              "guts": 3817.422250138831,
+              "retention": 0.9927128047645492,
+              "aerobicOutput": 42.81333980369377,
+              "aerobicFraction": 0.8562667960738755,
+              "work": 1050.64700036565,
+              "aerobicUsed": 457.29904520796936,
+              "energyUsed": 593.3479551576818,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 37.71967607238323,
+              "distance": 600,
+              "speed": 16.1256821587009,
+              "reserve": 1282.2569771508215,
+              "reserveFraction": 0.5233701947554373,
+              "guts": 3371.3542508651017,
+              "retention": 0.9842162714450495,
+              "aerobicOutput": 48.74124633977914,
+              "aerobicFraction": 0.9748249267955827,
+              "work": 2756.01262593437,
+              "aerobicUsed": 1588.269603085192,
+              "energyUsed": 1167.7430228491778,
+              "recovered": 0
+            },
+            "ledgerEndpoint": {
+              "time": 70.91666666666393,
+              "distance": 1200,
+              "speed": 15.969165302025832,
+              "reserve": 39.41183198588981,
+              "reserveFraction": 0.016086462035057068,
+              "guts": 2497.100491527471,
+              "retention": 0.9675638188862375,
+              "aerobicOutput": 48.5725877865385,
+              "aerobicFraction": 0.97145175573077,
+              "work": 5619.407571510836,
+              "aerobicUsed": 3208.819403496731,
+              "energyUsed": 2410.5881680141024,
+              "recovered": 0
+            },
+            "ledgerAfterTimedFinishSeconds": 0.001830511860362094,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 33.1969905942807,
+              "meanRequested": 29.994445715907318,
+              "meanActual": 18.074808246326715,
+              "meanFeasibleDesired": 18.068246829514294,
+              "meanFatiguedMaxVelocity": 18.286869313520807,
+              "requestedMinusActual": 11.919637469580604,
+              "feasibleDesiredMinusActual": -0.006561416812420605
+            },
+            "workBalanceError": 2.2737367544323206e-12,
+            "reserveBalanceError": 7.794653811288299e-12,
+            "unpaidWork": 1.2491418489857242e-13
+          },
+          "nominalMinusConstant": {
+            "time": 0.036259573112630505,
+            "preLast600Time": 0.0302770779758319,
+            "final600": 0.0059824951367986046,
+            "last200Difference": -0.020757953538222296,
+            "entryReserveFraction": 0.003261051780194535,
+            "entryRetention": 0.00008286055173056806,
+            "entryAerobicOutput": -0.012625785922452337,
+            "entrySpeed": -0.3743179073560796
+          },
+          "matching": {
+            "targetWork": 5619.839756209566,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.5619839756209566,
+            "searchMeanInterval": [
+              15.9,
+              17.1
+            ],
+            "probes": [
+              {
+                "mean": 15.9,
+                "work": 5604.3525117458385,
+                "error": -15.48724446372762,
+                "relativeError": -0.002755816026002378,
+                "time": 71.566114216536,
+                "final600": 32.98260601053114,
+                "reserveAt600": 0.5704867161822295
+              },
+              {
+                "mean": 15.975,
+                "work": 5607.956771028647,
+                "error": -11.882985180918695,
+                "relativeError": -0.002114470464711872,
+                "time": 71.4624780303128,
+                "final600": 32.99053512222442,
+                "reserveAt600": 0.5645408580447195
+              },
+              {
+                "mean": 16.05,
+                "work": 5610.489763279453,
+                "error": -9.34999293011333,
+                "relativeError": -0.0016637472482702344,
+                "time": 71.36463206677608,
+                "final600": 33.00320035758911,
+                "reserveAt600": 0.5586121148051295
+              },
+              {
+                "mean": 16.125,
+                "work": 5613.113273151055,
+                "error": -6.726483058510894,
+                "relativeError": -0.0011969172343532673,
+                "time": 71.27461114290189,
+                "final600": 33.02265164751136,
+                "reserveAt600": 0.5527001259069794
+              },
+              {
+                "mean": 16.2,
+                "work": 5615.0565571971,
+                "error": -4.783199012465957,
+                "relativeError": -0.0008511272954323699,
+                "time": 71.1892602805472,
+                "final600": 33.045749446850174,
+                "reserveAt600": 0.5467963240441602
+              },
+              {
+                "mean": 16.275,
+                "work": 5616.152992148621,
+                "error": -3.686764060945279,
+                "relativeError": -0.0006560265453960033,
+                "time": 71.11160951141709,
+                "final600": 33.07553701484805,
+                "reserveAt600": 0.5409165536267375
+              },
+              {
+                "mean": 16.35,
+                "work": 5617.847412268189,
+                "error": -1.9923439413769302,
+                "relativeError": -0.00035451970657624475,
+                "time": 71.03906793635791,
+                "final600": 33.10943837604375,
+                "reserveAt600": 0.535052482741517
+              },
+              {
+                "mean": 16.425,
+                "work": 5618.87763450836,
+                "error": -0.9621217012063425,
+                "relativeError": -0.00017120091371702531,
+                "time": 70.97402568311655,
+                "final600": 33.1498572435954,
+                "reserveAt600": 0.5292037949321968
+              },
+              {
+                "mean": 16.5,
+                "work": 5619.407571510836,
+                "error": -0.4321846987304525,
+                "relativeError": -0.00007690338470112353,
+                "time": 70.91483615480357,
+                "final600": 33.19516008242034,
+                "reserveAt600": 0.5233701947554373
+              },
+              {
+                "mean": 16.575,
+                "work": 5620.579512672059,
+                "error": 0.7397564624925508,
+                "relativeError": 0.0001316330170580339,
+                "time": 70.86096295953284,
+                "final600": 33.244824165813924,
+                "reserveAt600": 0.5175513400083854
+              },
+              {
+                "mean": 16.65,
+                "work": 5621.2753325980375,
+                "error": 1.4355763884714179,
+                "relativeError": 0.00025544792213785046,
+                "time": 70.81343172403434,
+                "final600": 33.299888771650515,
+                "reserveAt600": 0.5117371874033054
+              },
+              {
+                "mean": 16.725,
+                "work": 5622.570360374528,
+                "error": 2.7306041649617327,
+                "relativeError": 0.00048588648136178414,
+                "time": 70.77138065467273,
+                "final600": 33.359504221561856,
+                "reserveAt600": 0.5059465756343624
+              },
+              {
+                "mean": 16.8,
+                "work": 5623.5130091195015,
+                "error": 3.6732529099353997,
+                "relativeError": 0.0006536223574483042,
+                "time": 70.73446835186,
+                "final600": 33.423341784833134,
+                "reserveAt600": 0.5001697664034023
+              },
+              {
+                "mean": 16.875,
+                "work": 5624.151443010016,
+                "error": 4.311686800449934,
+                "relativeError": 0.0007672259330323064,
+                "time": 70.70218763167148,
+                "final600": 33.490906676531935,
+                "reserveAt600": 0.4944064522823111
+              },
+              {
+                "mean": 16.95,
+                "work": 5624.531772948087,
+                "error": 4.692016738520579,
+                "relativeError": 0.0008349022289000675,
+                "time": 70.6747372475053,
+                "final600": 33.56240978632439,
+                "reserveAt600": 0.48865633193857577
+              },
+              {
+                "mean": 17.025,
+                "work": 5625.559996579455,
+                "error": 5.720240369889325,
+                "relativeError": 0.00101786538727707,
+                "time": 70.6514509654026,
+                "final600": 33.637196760758606,
+                "reserveAt600": 0.48293023210479236
+              },
+              {
+                "mean": 17.1,
+                "work": 5625.452568932316,
+                "error": 5.612812722750277,
+                "relativeError": 0.000998749602521758,
+                "time": 70.6324836056254,
+                "final600": 33.71543415651623,
+                "reserveAt600": 0.47720592021300384
+              }
+            ],
+            "signChangingBrackets": [
+              [
+                16.5,
+                16.575
+              ]
+            ],
+            "globalSampledMonotonicIncreasing": true,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": -0.00007690338470112353,
+            "matched": true,
+            "closest": {
+              "mean": 16.5,
+              "work": 5619.407571510836,
+              "error": -0.4321846987304525,
+              "relativeError": -0.00007690338470112353,
+              "time": 70.91483615480357,
+              "final600": 33.19516008242034,
+              "reserveAt600": 0.5233701947554373
+            },
+            "selectedMeanBracket": [
+              16.5,
+              16.575
+            ],
+            "monotonicDirection": 1,
+            "localProbes": [
+              {
+                "mean": 16.5,
+                "work": 5619.407571510836,
+                "error": -0.4321846987304525,
+                "relativeError": -0.00007690338470112353,
+                "time": 70.91483615480357,
+                "final600": 33.19516008242034,
+                "reserveAt600": 0.5233701947554373
+              },
+              {
+                "mean": 16.575,
+                "work": 5620.579512672059,
+                "error": 0.7397564624925508,
+                "relativeError": 0.0001316330170580339,
+                "time": 70.86096295953284,
+                "final600": 33.244824165813924,
+                "reserveAt600": 0.5175513400083854
+              },
+              {
+                "mean": 16.51875,
+                "work": 5620.513472749958,
+                "error": 0.6737165403919789,
+                "relativeError": 0.00011988180617562359,
+                "time": 70.90071879424647,
+                "final600": 33.2070163306098,
+                "reserveAt600": 0.521911789271294
+              },
+              {
+                "mean": 16.5375,
+                "work": 5620.517242335306,
+                "error": 0.6774861257399607,
+                "relativeError": 0.00012055257002504058,
+                "time": 70.88756887220241,
+                "final600": 33.21977993715851,
+                "reserveAt600": 0.5204543030901807
+              },
+              {
+                "mean": 16.55625,
+                "work": 5620.567672853123,
+                "error": 0.7279166435573643,
+                "relativeError": 0.0001295262276389754,
+                "time": 70.87403107045685,
+                "final600": 33.23209721065381,
+                "reserveAt600": 0.518997644533915
+              }
+            ],
+            "sampledBracketMonotonicWithinTolerance": true,
+            "sampledBracketStrictMonotonic": true,
+            "bisections": 0,
+            "status": "matched-with-sampled-local-monotonicity",
+            "adjustedMean": 16.5,
+            "relativeResidual": -0.00007690338470112353,
+            "result": {
+              "length": 1200,
+              "shape": "front-loaded",
+              "middleMean": 16.5,
+              "amplitude": 1.2,
+              "frames": 4255,
+              "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+              "initial": {
+                "horse": {
+                  "id": "controlled-neutral70",
+                  "name": "受控中性70马",
+                  "sire": "",
+                  "dam": "",
+                  "age": 4,
+                  "sex": "牡",
+                  "behavior": {
+                    "forwardness": 0.5,
+                    "settle": 0.5,
+                    "tractability": 0.65
+                  },
+                  "physiology": {
+                    "version": 1,
+                    "endurance": 0,
+                    "power": 0,
+                    "economy": 0,
+                    "kinetics": 0,
+                    "durability": 0
+                  },
+                  "carriedWeight": 57,
+                  "bodyMass": 480,
+                  "coat": "芦毛",
+                  "surface": "草地",
+                  "special": "左右皆可",
+                  "stats": {
+                    "速度": 70,
+                    "耐力": 70,
+                    "出闸能力": 70,
+                    "爆发力": 70,
+                    "力量": 70,
+                    "毅力": 70,
+                    "智力": 70,
+                    "体格": 70,
+                    "血统力": 70
+                  },
+                  "斗志": 50,
+                  "疲劳": 0,
+                  "jockeyGrade": "普通",
+                  "aggression": 1.3,
+                  "form": {
+                    "出赛": 14,
+                    "胜利": 3,
+                    "前三": 6
+                  },
+                  "player": false,
+                  "style": "差"
+                },
+                "startDelay": 0.22624636945780366,
+                "aiBias": -0.04534871592186391,
+                "gate": 1,
+                "lane": 1.4,
+                "physiologicalParameters": {
+                  "aerobic": 50,
+                  "capacity": 2450,
+                  "reservePower": 75,
+                  "tau": 10,
+                  "maxV": 18.75
+                },
+                "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+              },
+              "time": 70.91483615480357,
+              "first200": 13.6269327391338,
+              "preLast600Time": 37.71967607238323,
+              "final600": 33.19516008242034,
+              "last200Difference": 0.29385169916504594,
+              "sectionals": [
+                {
+                  "distance": 200,
+                  "time": 13.6269327391338,
+                  "split": 13.6269327391338
+                },
+                {
+                  "distance": 400,
+                  "time": 25.07207608418807,
+                  "split": 11.44514334505427
+                },
+                {
+                  "distance": 600,
+                  "time": 37.71967607238323,
+                  "split": 12.64759998819516
+                },
+                {
+                  "distance": 800,
+                  "time": 48.76185002911468,
+                  "split": 11.042173956731453
+                },
+                {
+                  "distance": 1000,
+                  "time": 59.6914172423766,
+                  "split": 10.929567213261919
+                },
+                {
+                  "distance": 1200,
+                  "time": 70.91483615480357,
+                  "split": 11.223418912426965
+                }
+              ],
+              "totalWork": 5619.407571510836,
+              "totalAerobicUsed": 3208.819403496731,
+              "totalEnergyUsed": 2410.5881680141024,
+              "totalRecovered": 0,
+              "oxygenSupply": 3227.8260326334726,
+              "reserveFadeSeconds": 7.476415771453375,
+              "reserveAlmostEmptySeconds": 0,
+              "recoverySeconds": 0,
+              "entry200": {
+                "time": 13.6269327391338,
+                "distance": 200,
+                "speed": 18.62391330311241,
+                "reserve": 1856.6520448423228,
+                "reserveFraction": 0.7578171611601318,
+                "guts": 3817.422250138831,
+                "retention": 0.9927128047645492,
+                "aerobicOutput": 42.81333980369377,
+                "aerobicFraction": 0.8562667960738755,
+                "work": 1050.64700036565,
+                "aerobicUsed": 457.29904520796936,
+                "energyUsed": 593.3479551576818,
+                "recovered": 0
+              },
+              "entry600": {
+                "time": 37.71967607238323,
+                "distance": 600,
+                "speed": 16.1256821587009,
+                "reserve": 1282.2569771508215,
+                "reserveFraction": 0.5233701947554373,
+                "guts": 3371.3542508651017,
+                "retention": 0.9842162714450495,
+                "aerobicOutput": 48.74124633977914,
+                "aerobicFraction": 0.9748249267955827,
+                "work": 2756.01262593437,
+                "aerobicUsed": 1588.269603085192,
+                "energyUsed": 1167.7430228491778,
+                "recovered": 0
+              },
+              "ledgerEndpoint": {
+                "time": 70.91666666666393,
+                "distance": 1200,
+                "speed": 15.969165302025832,
+                "reserve": 39.41183198588981,
+                "reserveFraction": 0.016086462035057068,
+                "guts": 2497.100491527471,
+                "retention": 0.9675638188862375,
+                "aerobicOutput": 48.5725877865385,
+                "aerobicFraction": 0.97145175573077,
+                "work": 5619.407571510836,
+                "aerobicUsed": 3208.819403496731,
+                "energyUsed": 2410.5881680141024,
+                "recovered": 0
+              },
+              "ledgerAfterTimedFinishSeconds": 0.001830511860362094,
+              "final600RequestAndExecution": {
+                "ledgerSeconds": 33.1969905942807,
+                "meanRequested": 29.994445715907318,
+                "meanActual": 18.074808246326715,
+                "meanFeasibleDesired": 18.068246829514294,
+                "meanFatiguedMaxVelocity": 18.286869313520807,
+                "requestedMinusActual": 11.919637469580604,
+                "feasibleDesiredMinusActual": -0.006561416812420605
+              },
+              "workBalanceError": 2.2737367544323206e-12,
+              "reserveBalanceError": 7.794653811288299e-12,
+              "unpaidWork": 1.2491418489857242e-13
+            }
+          },
+          "equalWorkMinusConstant": {
+            "time": 0.036259573112630505,
+            "preLast600Time": 0.0302770779758319,
+            "final600": 0.0059824951367986046,
+            "last200Difference": -0.020757953538222296,
+            "entryReserveFraction": 0.003261051780194535,
+            "entryRetention": 0.00008286055173056806,
+            "entryAerobicOutput": -0.012625785922452337,
+            "entrySpeed": -0.3743179073560796
+          }
+        },
+        {
+          "shape": "back-loaded",
+          "nominal": {
+            "length": 1200,
+            "shape": "back-loaded",
+            "middleMean": 16.5,
+            "amplitude": 1.2,
+            "frames": 4257,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 70.93978779729095,
+            "first200": 13.6269327391338,
+            "preLast600Time": 37.77594707580723,
+            "final600": 33.163840721483716,
+            "last200Difference": 0.31886093749752575,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.6269327391338,
+                "split": 13.6269327391338
+              },
+              {
+                "distance": 400,
+                "time": 26.124277590382363,
+                "split": 12.497344851248563
+              },
+              {
+                "distance": 600,
+                "time": 37.77594707580723,
+                "split": 11.651669485424868
+              },
+              {
+                "distance": 800,
+                "time": 48.76014149898385,
+                "split": 10.984194423176618
+              },
+              {
+                "distance": 1000,
+                "time": 59.690534179388635,
+                "split": 10.930392680404786
+              },
+              {
+                "distance": 1200,
+                "time": 70.93978779729095,
+                "split": 11.249253617902312
+              }
+            ],
+            "totalWork": 5624.022886244076,
+            "totalAerobicUsed": 3211.3736118113775,
+            "totalEnergyUsed": 2412.6492744326893,
+            "totalRecovered": 0,
+            "oxygenSupply": 3230.3802409481186,
+            "reserveFadeSeconds": 7.68879242765809,
+            "reserveAlmostEmptySeconds": 0,
+            "recoverySeconds": 0,
+            "entry200": {
+              "time": 13.6269327391338,
+              "distance": 200,
+              "speed": 18.62391330311241,
+              "reserve": 1856.6520448423228,
+              "reserveFraction": 0.7578171611601318,
+              "guts": 3817.422250138831,
+              "retention": 0.9927128047645492,
+              "aerobicOutput": 42.81333980369377,
+              "aerobicFraction": 0.8562667960738755,
+              "work": 1050.64700036565,
+              "aerobicUsed": 457.29904520796936,
+              "energyUsed": 593.3479551576818,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 37.77594707580723,
+              "distance": 600,
+              "speed": 16.896370036518817,
+              "reserve": 1270.5685081907213,
+              "reserveFraction": 0.5185993910982536,
+              "guts": 3364.4274357178792,
+              "retention": 0.984084332108912,
+              "aerobicOutput": 48.7752925362985,
+              "aerobicFraction": 0.9755058507259701,
+              "work": 2771.1672087996367,
+              "aerobicUsed": 1591.7357169903526,
+              "energyUsed": 1179.4314918092832,
+              "recovered": 0
+            },
+            "ledgerEndpoint": {
+              "time": 70.94999999999726,
+              "distance": 1200,
+              "speed": 15.865650295537078,
+              "reserve": 37.35072556731532,
+              "reserveFraction": 0.015245194109108295,
+              "guts": 2495.665309018452,
+              "retention": 0.967536482076542,
+              "aerobicOutput": 48.5701168987272,
+              "aerobicFraction": 0.971402337974544,
+              "work": 5624.022886244076,
+              "aerobicUsed": 3211.3736118113775,
+              "energyUsed": 2412.6492744326893,
+              "recovered": 0
+            },
+            "ledgerAfterTimedFinishSeconds": 0.010212202706313178,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 33.17405292419003,
+              "meanRequested": 29.99699486086836,
+              "meanActual": 18.091309658337746,
+              "meanFeasibleDesired": 18.048070494601,
+              "meanFatiguedMaxVelocity": 18.285081810648222,
+              "requestedMinusActual": 11.905685202530613,
+              "feasibleDesiredMinusActual": -0.04323916373674634
+            },
+            "workBalanceError": 9.549694368615746e-12,
+            "reserveBalanceError": 4.575895218295045e-12,
+            "unpaidWork": 1.2696809749412896e-13
+          },
+          "nominalMinusConstant": {
+            "time": 0.06121121560001086,
+            "preLast600Time": 0.08654808139983317,
+            "final600": -0.025336865799822306,
+            "last200Difference": 0.004251284794257515,
+            "entryReserveFraction": -0.001509751876989207,
+            "entryRetention": -0.000049078784406964004,
+            "entryAerobicOutput": 0.021420410596910244,
+            "entrySpeed": 0.3963699704618371
+          },
+          "matching": {
+            "targetWork": 5619.839756209566,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.5619839756209566,
+            "searchMeanInterval": [
+              15.9,
+              17.1
+            ],
+            "probes": [
+              {
+                "mean": 15.9,
+                "work": 5610.222386474679,
+                "error": -9.617369734886779,
+                "relativeError": -0.0017113245487578531,
+                "time": 71.56832862337272,
+                "final600": 32.93125148173907,
+                "reserveAt600": 0.5662831827669575
+              },
+              {
+                "mean": 15.975,
+                "work": 5613.402516652587,
+                "error": -6.437239556978966,
+                "relativeError": -0.001145448951612228,
+                "time": 71.46691555157503,
+                "final600": 32.94104275841228,
+                "reserveAt600": 0.5602677962405646
+              },
+              {
+                "mean": 16.05,
+                "work": 5615.5781600629525,
+                "error": -4.261596146613556,
+                "relativeError": -0.0007583127511607004,
+                "time": 71.3715948670314,
+                "final600": 32.955880123773134,
+                "reserveAt600": 0.5542684123302147
+              },
+              {
+                "mean": 16.125,
+                "work": 5617.8374132216495,
+                "error": -2.0023429879165633,
+                "relativeError": -0.00035629894708369604,
+                "time": 71.28417462750652,
+                "final600": 32.97758489175799,
+                "reserveAt600": 0.5482847647874108
+              },
+              {
+                "mean": 16.2,
+                "work": 5619.51778775374,
+                "error": -0.3219684558262088,
+                "relativeError": -0.000057291394380142974,
+                "time": 71.2018026474619,
+                "final600": 33.00332105258555,
+                "reserveAt600": 0.5423163904206738
+              },
+              {
+                "mean": 16.275,
+                "work": 5620.372670252658,
+                "error": 0.5329140430922052,
+                "relativeError": 0.00009482726664997327,
+                "time": 71.12707099109065,
+                "final600": 33.03569333556285,
+                "reserveAt600": 0.5363723882104867
+              },
+              {
+                "mean": 16.35,
+                "work": 5621.724180929909,
+                "error": 1.8844247203433042,
+                "relativeError": 0.00033531645066234045,
+                "time": 71.05868289770126,
+                "final600": 33.073420423403526,
+                "reserveAt600": 0.5304338606290744
+              },
+              {
+                "mean": 16.425,
+                "work": 5622.661525263407,
+                "error": 2.821769053841308,
+                "relativeError": 0.0005021084543778019,
+                "time": 70.99579046775037,
+                "final600": 33.115666912402276,
+                "reserveAt600": 0.5245096494297681
+              },
+              {
+                "mean": 16.5,
+                "work": 5624.022886244076,
+                "error": 4.183130034510214,
+                "relativeError": 0.000744350411395293,
+                "time": 70.93978779729095,
+                "final600": 33.163840721483716,
+                "reserveAt600": 0.5185993910982536
+              },
+              {
+                "mean": 16.575,
+                "work": 5624.941825261212,
+                "error": 5.10206905164614,
+                "relativeError": 0.0009078673544043097,
+                "time": 70.88970469922695,
+                "final600": 33.216985198357555,
+                "reserveAt600": 0.5127131254927811
+              },
+              {
+                "mean": 16.65,
+                "work": 5625.462576037995,
+                "error": 5.622819828428874,
+                "relativeError": 0.0010005302770805902,
+                "time": 70.84515763820201,
+                "final600": 33.274729611177506,
+                "reserveAt600": 0.5068300065472483
+              },
+              {
+                "mean": 16.725,
+                "work": 5626.606823884849,
+                "error": 6.767067675283215,
+                "relativeError": 0.0012041389023247566,
+                "time": 70.80606224759661,
+                "final600": 33.33700220822774,
+                "reserveAt600": 0.5009708076185451
+              },
+              {
+                "mean": 16.8,
+                "work": 5627.41714749177,
+                "error": 7.577391282204189,
+                "relativeError": 0.0013483287088091175,
+                "time": 70.77221714173459,
+                "final600": 33.40361403329575,
+                "reserveAt600": 0.4951135677231089
+              },
+              {
+                "mean": 16.875,
+                "work": 5627.921779532906,
+                "error": 8.082023323339854,
+                "relativeError": 0.0014381234472761845,
+                "time": 70.7429746886366,
+                "final600": 33.47392970149116,
+                "reserveAt600": 0.489268653775097
+              },
+              {
+                "mean": 16.95,
+                "work": 5629.092948546006,
+                "error": 9.253192336439497,
+                "relativeError": 0.001646522452213216,
+                "time": 70.71836796085682,
+                "final600": 33.54799435305405,
+                "reserveAt600": 0.4834475869414918
+              },
+              {
+                "mean": 17.025,
+                "work": 5629.115752656637,
+                "error": 9.27599644707061,
+                "relativeError": 0.0016505802388442168,
+                "time": 70.69821279173438,
+                "final600": 33.62563571248183,
+                "reserveAt600": 0.4776266682292845
+              },
+              {
+                "mean": 17.1,
+                "work": 5629.8220226722015,
+                "error": 9.98226646263538,
+                "relativeError": 0.0017762546434897204,
+                "time": 70.68187904754579,
+                "final600": 33.706235363469595,
+                "reserveAt600": 0.47182958831551525
+              }
+            ],
+            "signChangingBrackets": [
+              [
+                16.2,
+                16.275
+              ]
+            ],
+            "globalSampledMonotonicIncreasing": true,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": 0.000744350411395293,
+            "matched": false,
+            "closest": {
+              "mean": 16.2,
+              "work": 5619.51778775374,
+              "error": -0.3219684558262088,
+              "relativeError": -0.000057291394380142974,
+              "time": 71.2018026474619,
+              "final600": 33.00332105258555,
+              "reserveAt600": 0.5423163904206738
+            },
+            "selectedMeanBracket": [
+              16.2,
+              16.275
+            ],
+            "monotonicDirection": 1,
+            "localProbes": [
+              {
+                "mean": 16.2,
+                "work": 5619.51778775374,
+                "error": -0.3219684558262088,
+                "relativeError": -0.000057291394380142974,
+                "time": 71.2018026474619,
+                "final600": 33.00332105258555,
+                "reserveAt600": 0.5423163904206738
+              },
+              {
+                "mean": 16.275,
+                "work": 5620.372670252658,
+                "error": 0.5329140430922052,
+                "relativeError": 0.00009482726664997327,
+                "time": 71.12707099109065,
+                "final600": 33.03569333556285,
+                "reserveAt600": 0.5363723882104867
+              },
+              {
+                "mean": 16.21875,
+                "work": 5618.909805832775,
+                "error": -0.9299503767906572,
+                "relativeError": -0.0001654763155414033,
+                "time": 71.18309296289337,
+                "final600": 33.01148067957161,
+                "reserveAt600": 0.5408358423658888
+              },
+              {
+                "mean": 16.237499999999997,
+                "work": 5619.474242084874,
+                "error": -0.3655141246917992,
+                "relativeError": -0.00006503995497165721,
+                "time": 71.16356151743001,
+                "final600": 33.01875633191495,
+                "reserveAt600": 0.5393470998188186
+              },
+              {
+                "mean": 16.256249999999998,
+                "work": 5619.890143552849,
+                "error": 0.05038734328263672,
+                "relativeError": 0.000008965975093322172,
+                "time": 71.14577398526271,
+                "final600": 33.02771395685248,
+                "reserveAt600": 0.5378592606986534
+              }
+            ],
+            "sampledBracketMonotonicWithinTolerance": false,
+            "sampledBracketStrictMonotonic": false,
+            "status": "sampled-local-bracket-nonmonotone"
+          }
+        }
+      ]
+    },
+    {
+      "length": 2400,
+      "baselineMean": 14.5,
+      "reference": {
+        "length": 2400,
+        "shape": "constant",
+        "middleMean": 14.5,
+        "amplitude": 0,
+        "frames": 9457,
+        "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+        "initial": {
+          "horse": {
+            "id": "controlled-neutral70",
+            "name": "受控中性70马",
+            "sire": "",
+            "dam": "",
+            "age": 4,
+            "sex": "牡",
+            "behavior": {
+              "forwardness": 0.5,
+              "settle": 0.5,
+              "tractability": 0.65
+            },
+            "physiology": {
+              "version": 1,
+              "endurance": 0,
+              "power": 0,
+              "economy": 0,
+              "kinetics": 0,
+              "durability": 0
+            },
+            "carriedWeight": 57,
+            "bodyMass": 480,
+            "coat": "芦毛",
+            "surface": "草地",
+            "special": "左右皆可",
+            "stats": {
+              "速度": 70,
+              "耐力": 70,
+              "出闸能力": 70,
+              "爆发力": 70,
+              "力量": 70,
+              "毅力": 70,
+              "智力": 70,
+              "体格": 70,
+              "血统力": 70
+            },
+            "斗志": 50,
+            "疲劳": 0,
+            "jockeyGrade": "普通",
+            "aggression": 1.3,
+            "form": {
+              "出赛": 14,
+              "胜利": 3,
+              "前三": 6
+            },
+            "player": false,
+            "style": "差"
+          },
+          "startDelay": 0.22624636945780366,
+          "aiBias": -0.04534871592186391,
+          "gate": 1,
+          "lane": 1.4,
+          "physiologicalParameters": {
+            "aerobic": 50,
+            "capacity": 2450,
+            "reservePower": 75,
+            "tau": 10,
+            "maxV": 18.75
+          },
+          "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+        },
+        "time": 157.60125899331345,
+        "first200": 13.627267777938982,
+        "preLast600Time": 123.57482259715232,
+        "final600": 34.02643639616113,
+        "last200Difference": 0.6771571839317971,
+        "sectionals": [
+          {
+            "distance": 200,
+            "time": 13.627267777938982,
+            "split": 13.627267777938982
+          },
+          {
+            "distance": 400,
+            "time": 27.023124679253016,
+            "split": 13.395856901314033
+          },
+          {
+            "distance": 600,
+            "time": 40.81620190877949,
+            "split": 13.793077229526475
+          },
+          {
+            "distance": 800,
+            "time": 54.60930535575392,
+            "split": 13.793103446974428
+          },
+          {
+            "distance": 1000,
+            "time": 68.40240880402858,
+            "split": 13.793103448274664
+          },
+          {
+            "distance": 1200,
+            "time": 82.1955122523089,
+            "split": 13.79310344828032
+          },
+          {
+            "distance": 1400,
+            "time": 95.98861570059005,
+            "split": 13.793103448281144
+          },
+          {
+            "distance": 1600,
+            "time": 109.78171914887119,
+            "split": 13.793103448281144
+          },
+          {
+            "distance": 1800,
+            "time": 123.57482259715232,
+            "split": 13.79310344828113
+          },
+          {
+            "distance": 2000,
+            "time": 134.8410304793559,
+            "split": 11.266207882203588
+          },
+          {
+            "distance": 2200,
+            "time": 145.88256614436878,
+            "split": 11.041535665012873
+          },
+          {
+            "distance": 2400,
+            "time": 157.60125899331345,
+            "split": 11.71869284894467
+          }
+        ],
+        "totalWork": 9882.767793305471,
+        "totalAerobicUsed": 7452.618104935272,
+        "totalEnergyUsed": 2430.149688370482,
+        "totalRecovered": 0,
+        "oxygenSupply": 7472.255713505018,
+        "reserveFadeSeconds": 10.309991733599832,
+        "reserveAlmostEmptySeconds": 0.8456669391471509,
+        "recoverySeconds": 0,
+        "entry200": {
+          "time": 13.627267777938982,
+          "distance": 200,
+          "speed": 18.621335324375963,
+          "reserve": 1839.77407020551,
+          "reserveFraction": 0.7509281919206163,
+          "guts": 3807.969516614202,
+          "retention": 0.9925327526974134,
+          "aerobicOutput": 42.81139265046,
+          "aerobicFraction": 0.8562278530091999,
+          "work": 1067.5346816207466,
+          "aerobicUsed": 457.30875182625897,
+          "energyUsed": 610.2259297944884,
+          "recovered": 0
+        },
+        "entry600": {
+          "time": 123.57482259715232,
+          "distance": 1800,
+          "speed": 14.500000000000075,
+          "reserve": 1172.6016998103935,
+          "reserveFraction": 0.47861293869811977,
+          "guts": 2846.390564622221,
+          "retention": 0.9742169631356613,
+          "aerobicOutput": 48.794683640207495,
+          "aerobicFraction": 0.97589367280415,
+          "work": 7079.820002658314,
+          "aerobicUsed": 5802.421702469009,
+          "energyUsed": 1277.3983001896001,
+          "recovered": 0
+        },
+        "ledgerEndpoint": {
+          "time": 157.61666666668424,
+          "distance": 2400,
+          "speed": 14.853735469687404,
+          "reserve": 19.8503116295162,
+          "reserveFraction": 0.008102168012047429,
+          "guts": 2019.3281829696418,
+          "retention": 0.9584633939613265,
+          "aerobicOutput": 48.10317343603153,
+          "aerobicFraction": 0.9620634687206306,
+          "work": 9882.767793305471,
+          "aerobicUsed": 7452.618104935272,
+          "energyUsed": 2430.149688370482,
+          "recovered": 0
+        },
+        "ledgerAfterTimedFinishSeconds": 0.015407673370788189,
+        "final600RequestAndExecution": {
+          "ledgerSeconds": 34.04184406953192,
+          "meanRequested": 29.99612487471626,
+          "meanActual": 17.632091175229338,
+          "meanFeasibleDesired": 17.646761431595323,
+          "meanFatiguedMaxVelocity": 18.102066497328607,
+          "requestedMinusActual": 12.36403369948692,
+          "feasibleDesiredMinusActual": 0.014670256365984837
+        },
+        "workBalanceError": 2.828528522513807e-10,
+        "reserveBalanceError": 1.6200374375330284e-12,
+        "unpaidWork": 2.5243002133024106e-13
+      },
+      "histories": [
+        {
+          "shape": "front-loaded",
+          "nominal": {
+            "length": 2400,
+            "shape": "front-loaded",
+            "middleMean": 14.5,
+            "amplitude": 1.2,
+            "frames": 9503,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 158.3817084872197,
+            "first200": 13.627267777938982,
+            "preLast600Time": 123.94623711103412,
+            "final600": 34.435471376185575,
+            "last200Difference": 1.0621704987831606,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.627267777938982,
+                "split": 13.627267777938982
+              },
+              {
+                "distance": 400,
+                "time": 26.689067905432857,
+                "split": 13.061800127493875
+              },
+              {
+                "distance": 600,
+                "time": 39.56400201315659,
+                "split": 12.874934107723732
+              },
+              {
+                "distance": 800,
+                "time": 52.37619268716877,
+                "split": 12.812190674012179
+              },
+              {
+                "distance": 1000,
+                "time": 65.6832471411162,
+                "split": 13.30705445394743
+              },
+              {
+                "distance": 1200,
+                "time": 79.83284656879685,
+                "split": 14.149599427680656
+              },
+              {
+                "distance": 1400,
+                "time": 94.69431768135387,
+                "split": 14.861471112557012
+              },
+              {
+                "distance": 1600,
+                "time": 109.62860408213685,
+                "split": 14.93428640078298
+              },
+              {
+                "distance": 1800,
+                "time": 123.94623711103412,
+                "split": 14.317633028897276
+              },
+              {
+                "distance": 2000,
+                "time": 135.22438839179307,
+                "split": 11.278151280758948
+              },
+              {
+                "distance": 2200,
+                "time": 146.2719631901148,
+                "split": 11.047574798321733
+              },
+              {
+                "distance": 2400,
+                "time": 158.3817084872197,
+                "split": 12.109745297104894
+              }
+            ],
+            "totalWork": 9847.330924246602,
+            "totalAerobicUsed": 7409.310457854082,
+            "totalEnergyUsed": 2438.020466392512,
+            "totalRecovered": 0,
+            "oxygenSupply": 7498.654035598611,
+            "reserveFadeSeconds": 12.348914150173998,
+            "reserveAlmostEmptySeconds": 2.8877183157471644,
+            "recoverySeconds": 0,
+            "entry200": {
+              "time": 13.627267777938982,
+              "distance": 200,
+              "speed": 18.621335324375963,
+              "reserve": 1839.77407020551,
+              "reserveFraction": 0.7509281919206163,
+              "guts": 3807.969516614202,
+              "retention": 0.9925327526974134,
+              "aerobicOutput": 42.81139265046,
+              "aerobicFraction": 0.8562278530091999,
+              "work": 1067.5346816207466,
+              "aerobicUsed": 457.30875182625897,
+              "energyUsed": 610.2259297944884,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 123.94623711103412,
+              "distance": 1800,
+              "speed": 14.406126328753452,
+              "reserve": 1110.912052677311,
+              "reserveFraction": 0.4534334908886984,
+              "guts": 2818.58663385653,
+              "retention": 0.9736873644544102,
+              "aerobicOutput": 48.750827519458454,
+              "aerobicFraction": 0.9750165503891691,
+              "work": 7080.216271347924,
+              "aerobicUsed": 5741.128324025223,
+              "energyUsed": 1339.087947322683,
+              "recovered": 0
+            },
+            "ledgerEndpoint": {
+              "time": 158.38333333335152,
+              "distance": 2400,
+              "speed": 14.38419025742241,
+              "reserve": 11.97953360748377,
+              "reserveFraction": 0.004889605554075008,
+              "guts": 2019.6843884562536,
+              "retention": 0.9584701788277381,
+              "aerobicOutput": 48.08220502728544,
+              "aerobicFraction": 0.9616441005457088,
+              "work": 9847.330924246602,
+              "aerobicUsed": 7409.310457854082,
+              "energyUsed": 2438.020466392512,
+              "recovered": 0
+            },
+            "ledgerAfterTimedFinishSeconds": 0.0016248461318184582,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 34.43709622231739,
+              "meanRequested": 29.99830624293422,
+              "meanActual": 17.423750559251754,
+              "meanFeasibleDesired": 17.423256140335525,
+              "meanFatiguedMaxVelocity": 18.0926491395403,
+              "requestedMinusActual": 12.574555683682465,
+              "feasibleDesiredMinusActual": -0.0004944189162322555
+            },
+            "workBalanceError": 7.73070496506989e-12,
+            "reserveBalanceError": 4.295230837669806e-12,
+            "unpaidWork": 1.9426433660492404e-13
+          },
+          "nominalMinusConstant": {
+            "time": 0.7804494939062465,
+            "preLast600Time": 0.3714145138818026,
+            "final600": 0.40903498002444394,
+            "last200Difference": 0.3850133148513635,
+            "entryReserveFraction": -0.025179447809421385,
+            "entryRetention": -0.0005295986812511311,
+            "entryAerobicOutput": -0.04385612074904088,
+            "entrySpeed": -0.09387367124662305
+          },
+          "matching": {
+            "targetWork": 9882.767793305471,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.9882767793305471,
+            "searchMeanInterval": [
+              13.9,
+              15.1
+            ],
+            "probes": [
+              {
+                "mean": 13.9,
+                "work": 9726.051538764314,
+                "error": -156.71625454115747,
+                "relativeError": -0.01585752673935293,
+                "time": 162.0710090630155,
+                "final600": 33.387085405294414,
+                "reserveAt600": 0.5834621180751591
+              },
+              {
+                "mean": 13.975,
+                "work": 9756.063753441678,
+                "error": -126.70403986379279,
+                "relativeError": -0.01282070392766097,
+                "time": 161.46114441194462,
+                "final600": 33.391930168564954,
+                "reserveAt600": 0.5687240702159617
+              },
+              {
+                "mean": 14.05,
+                "work": 9778.880484682162,
+                "error": -103.88730862330885,
+                "relativeError": -0.010511964947074999,
+                "time": 160.87179636792303,
+                "final600": 33.41065442569162,
+                "reserveAt600": 0.5535285534226937
+              },
+              {
+                "mean": 14.125,
+                "work": 9795.184482873141,
+                "error": -87.58331043233011,
+                "relativeError": -0.008862224860899649,
+                "time": 160.32640247827854,
+                "final600": 33.46680298367208,
+                "reserveAt600": 0.5379023500169529
+              },
+              {
+                "mean": 14.200000000000001,
+                "work": 9808.39927720956,
+                "error": -74.36851609591031,
+                "relativeError": -0.007525069661789191,
+                "time": 159.83148724668817,
+                "final600": 33.56700528600213,
+                "reserveAt600": 0.5218607762364987
+              },
+              {
+                "mean": 14.275,
+                "work": 9820.414898651148,
+                "error": -62.35289465432288,
+                "relativeError": -0.006309254245208551,
+                "time": 159.39182678964687,
+                "final600": 33.71614046627606,
+                "reserveAt600": 0.5054841264979056
+              },
+              {
+                "mean": 14.35,
+                "work": 9830.892156773021,
+                "error": -51.87563653244979,
+                "relativeError": -0.005249100010989841,
+                "time": 159.00493663328413,
+                "final600": 33.91182434904442,
+                "reserveAt600": 0.4886728106140064
+              },
+              {
+                "mean": 14.425,
+                "work": 9839.910664696765,
+                "error": -42.85712860870626,
+                "relativeError": -0.0043365512076219605,
+                "time": 158.67019205369738,
+                "final600": 34.153530579846674,
+                "reserveAt600": 0.47127439985975733
+              },
+              {
+                "mean": 14.5,
+                "work": 9847.330924246602,
+                "error": -35.43686905886898,
+                "relativeError": -0.0035857231293923253,
+                "time": 158.3817084872197,
+                "final600": 34.435471376185575,
+                "reserveAt600": 0.4534334908886984
+              },
+              {
+                "mean": 14.575000000000001,
+                "work": 9854.79813886417,
+                "error": -27.969654441301827,
+                "relativeError": -0.0028301438449508352,
+                "time": 158.13770000268036,
+                "final600": 34.7559547084885,
+                "reserveAt600": 0.4349215308047327
+              },
+              {
+                "mean": 14.65,
+                "work": 9860.152208712107,
+                "error": -22.615584593364474,
+                "relativeError": -0.0022883857099915005,
+                "time": 157.93266374542327,
+                "final600": 35.109570422499004,
+                "reserveAt600": 0.4157879807494769
+              },
+              {
+                "mean": 14.725,
+                "work": 9865.475681777516,
+                "error": -17.292111527955058,
+                "relativeError": -0.0017497235480599506,
+                "time": 157.76052913767822,
+                "final600": 35.49033810441178,
+                "reserveAt600": 0.39608537002606636
+              },
+              {
+                "mean": 14.8,
+                "work": 9869.315470273097,
+                "error": -13.452323032373897,
+                "relativeError": -0.001361189832011071,
+                "time": 157.6247780005675,
+                "final600": 35.90182840412386,
+                "reserveAt600": 0.3754532870952231
+              },
+              {
+                "mean": 14.875,
+                "work": 9871.26465861541,
+                "error": -11.503134690061415,
+                "relativeError": -0.0011639588150450697,
+                "time": 157.52709718859873,
+                "final600": 36.34581474053023,
+                "reserveAt600": 0.3536759485624064
+              },
+              {
+                "mean": 14.950000000000001,
+                "work": 9870.975740003274,
+                "error": -11.792053302197019,
+                "relativeError": -0.001193193399746262,
+                "time": 157.48347974626756,
+                "final600": 36.83837544005341,
+                "reserveAt600": 0.32989009333168645
+              },
+              {
+                "mean": 15.025,
+                "work": 9867.928564895607,
+                "error": -14.839228409864518,
+                "relativeError": -0.001501525556425248,
+                "time": 157.4765178638773,
+                "final600": 37.36218571028759,
+                "reserveAt600": 0.30484350256851944
+              },
+              {
+                "mean": 15.1,
+                "work": 9865.596637148828,
+                "error": -17.17115615664261,
+                "relativeError": -0.001737484530221812,
+                "time": 157.47504259259907,
+                "final600": 37.886158447468844,
+                "reserveAt600": 0.2799006646874547
+              }
+            ],
+            "signChangingBrackets": [],
+            "globalSampledMonotonicIncreasing": false,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": -0.0035857231293923253,
+            "matched": false,
+            "closest": {
+              "mean": 14.875,
+              "work": 9871.26465861541,
+              "error": -11.503134690061415,
+              "relativeError": -0.0011639588150450697,
+              "time": 157.52709718859873,
+              "final600": 36.34581474053023,
+              "reserveAt600": 0.3536759485624064
+            },
+            "status": "no-local-bracket-within-declared-mean-range"
+          }
+        },
+        {
+          "shape": "back-loaded",
+          "nominal": {
+            "length": 2400,
+            "shape": "back-loaded",
+            "middleMean": 14.5,
+            "amplitude": 1.2,
+            "frames": 9497,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 158.2695090356823,
+            "first200": 13.627267777938982,
+            "preLast600Time": 123.95857829525677,
+            "final600": 34.31093074042552,
+            "last200Difference": 0.9563604684797724,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.627267777938982,
+                "split": 13.627267777938982
+              },
+              {
+                "distance": 400,
+                "time": 27.385921615332876,
+                "split": 13.758653837393894
+              },
+              {
+                "distance": 600,
+                "time": 42.24737031233318,
+                "split": 14.861448697000306
+              },
+              {
+                "distance": 800,
+                "time": 57.18165676482116,
+                "split": 14.934286452487981
+              },
+              {
+                "distance": 1000,
+                "time": 71.49928983247396,
+                "split": 14.3176330676528
+              },
+              {
+                "distance": 1200,
+                "time": 84.96436865374422,
+                "split": 13.465078821270254
+              },
+              {
+                "distance": 1400,
+                "time": 97.83933299908051,
+                "split": 12.874964345336295
+              },
+              {
+                "distance": 1600,
+                "time": 110.65152361295517,
+                "split": 12.812190613874662
+              },
+              {
+                "distance": 1800,
+                "time": 123.95857829525677,
+                "split": 13.307054682301597
+              },
+              {
+                "distance": 2000,
+                "time": 135.22110985021772,
+                "split": 11.262531554960944
+              },
+              {
+                "distance": 2200,
+                "time": 146.26712920871012,
+                "split": 11.046019358492401
+              },
+              {
+                "distance": 2400,
+                "time": 158.2695090356823,
+                "split": 12.002379826972174
+              }
+            ],
+            "totalWork": 9857.212073601313,
+            "totalAerobicUsed": 7420.845430642563,
+            "totalEnergyUsed": 2436.366642958794,
+            "totalRecovered": 0,
+            "oxygenSupply": 7512.037717260617,
+            "reserveFadeSeconds": 11.824212806107498,
+            "reserveAlmostEmptySeconds": 2.3619352660546094,
+            "recoverySeconds": 0,
+            "entry200": {
+              "time": 13.627267777938982,
+              "distance": 200,
+              "speed": 18.621335324375963,
+              "reserve": 1839.77407020551,
+              "reserveFraction": 0.7509281919206163,
+              "guts": 3807.969516614202,
+              "retention": 0.9925327526974134,
+              "aerobicOutput": 42.81139265046,
+              "aerobicFraction": 0.8562278530091999,
+              "work": 1067.5346816207466,
+              "aerobicUsed": 457.30875182625897,
+              "energyUsed": 610.2259297944884,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 123.95857829525677,
+              "distance": 1800,
+              "speed": 14.59629131273662,
+              "reserve": 1125.7513762459419,
+              "reserveFraction": 0.45949035765140483,
+              "guts": 2825.0970641153062,
+              "retention": 0.9738113726498153,
+              "aerobicOutput": 48.79559486597542,
+              "aerobicFraction": 0.9759118973195083,
+              "work": 7081.736865412681,
+              "aerobicUsed": 5757.488241658629,
+              "energyUsed": 1324.248623754058,
+              "recovered": 0
+            },
+            "ledgerEndpoint": {
+              "time": 158.28333333335144,
+              "distance": 2400,
+              "speed": 14.485436702447013,
+              "reserve": 13.633357041206049,
+              "reserveFraction": 0.005564635527022877,
+              "guts": 2019.3416825724164,
+              "retention": 0.9584636510966175,
+              "aerobicOutput": 48.088234267798974,
+              "aerobicFraction": 0.9617646853559795,
+              "work": 9857.212073601313,
+              "aerobicUsed": 7420.845430642563,
+              "energyUsed": 2436.366642958794,
+              "recovered": 0
+            },
+            "ledgerAfterTimedFinishSeconds": 0.013824297669145835,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 34.324755038094665,
+              "meanRequested": 29.996347680149118,
+              "meanActual": 17.485930313857253,
+              "meanFeasibleDesired": 17.481487844637506,
+              "meanFatiguedMaxVelocity": 18.094921774730306,
+              "requestedMinusActual": 12.510417366291867,
+              "feasibleDesiredMinusActual": -0.004442469219743694
+            },
+            "workBalanceError": 4.3655745685100555e-11,
+            "reserveBalanceError": 1.3322676295501878e-13,
+            "unpaidWork": 1.9603234508759615e-13
+          },
+          "nominalMinusConstant": {
+            "time": 0.6682500423688396,
+            "preLast600Time": 0.3837556981044514,
+            "final600": 0.28449434426438813,
+            "last200Difference": 0.2792032845479753,
+            "entryReserveFraction": -0.019122581046714937,
+            "entryRetention": -0.0004055904858459858,
+            "entryAerobicOutput": 0.0009112257679220193,
+            "entrySpeed": 0.09629131273654501
+          },
+          "matching": {
+            "targetWork": 9882.767793305471,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.9882767793305471,
+            "searchMeanInterval": [
+              13.9,
+              15.1
+            ],
+            "probes": [
+              {
+                "mean": 13.9,
+                "work": 9727.064351359282,
+                "error": -155.70344194618883,
+                "relativeError": -0.015755044052705704,
+                "time": 162.05536235295423,
+                "final600": 33.36041712429562,
+                "reserveAt600": 0.5945903497441624
+              },
+              {
+                "mean": 13.975,
+                "work": 9758.233839814691,
+                "error": -124.53395349077982,
+                "relativeError": -0.01260112107208857,
+                "time": 161.44589740556142,
+                "final600": 33.36548715805861,
+                "reserveAt600": 0.5789133235755783
+              },
+              {
+                "mean": 14.05,
+                "work": 9785.823185174,
+                "error": -96.94460813147089,
+                "relativeError": -0.00980945926880328,
+                "time": 160.8488068665551,
+                "final600": 33.376297214620124,
+                "reserveAt600": 0.5628596735812558
+              },
+              {
+                "mean": 14.125,
+                "work": 9804.61516809533,
+                "error": -78.1526252101412,
+                "relativeError": -0.007907969391234844,
+                "time": 160.28311788075814,
+                "final600": 33.4119818546143,
+                "reserveAt600": 0.5464568761198859
+              },
+              {
+                "mean": 14.200000000000001,
+                "work": 9819.62067581653,
+                "error": -63.14711748894115,
+                "relativeError": -0.006389618658420431,
+                "time": 159.76769564442893,
+                "final600": 33.49151108256984,
+                "reserveAt600": 0.5297067488963246
+              },
+              {
+                "mean": 14.275,
+                "work": 9830.338432650246,
+                "error": -52.42936065522554,
+                "relativeError": -0.005305129266594818,
+                "time": 159.3114439006864,
+                "final600": 33.62389145296396,
+                "reserveAt600": 0.5126426476376803
+              },
+              {
+                "mean": 14.35,
+                "work": 9840.244664885146,
+                "error": -42.52312842032552,
+                "relativeError": -0.0043027549882463535,
+                "time": 158.9114342895157,
+                "final600": 33.8062949900326,
+                "reserveAt600": 0.49531579571192785
+              },
+              {
+                "mean": 14.425,
+                "work": 9848.823308138075,
+                "error": -33.944485167396124,
+                "relativeError": -0.0034347144319620583,
+                "time": 158.5650376410193,
+                "final600": 34.03619098084795,
+                "reserveAt600": 0.47763482183507994
+              },
+              {
+                "mean": 14.5,
+                "work": 9857.212073601313,
+                "error": -25.555719704158037,
+                "relativeError": -0.0025858868930897405,
+                "time": 158.2695090356823,
+                "final600": 34.31093074042552,
+                "reserveAt600": 0.45949035765140483
+              },
+              {
+                "mean": 14.575000000000001,
+                "work": 9863.842400798758,
+                "error": -18.92539250671325,
+                "relativeError": -0.0019149890903571772,
+                "time": 158.0201930986982,
+                "final600": 34.625953279728165,
+                "reserveAt600": 0.440754093962182
+              },
+              {
+                "mean": 14.65,
+                "work": 9869.295177599042,
+                "error": -13.472615706428769,
+                "relativeError": -0.0013632431711645637,
+                "time": 157.81039828066383,
+                "final600": 34.97465937689982,
+                "reserveAt600": 0.4215123740255539
+              },
+              {
+                "mean": 14.725,
+                "work": 9874.703548715359,
+                "error": -8.06424459011214,
+                "relativeError": -0.000815990495655965,
+                "time": 157.63504828744175,
+                "final600": 35.35206309934401,
+                "reserveAt600": 0.40171797538221865
+              },
+              {
+                "mean": 14.8,
+                "work": 9878.059596880597,
+                "error": -4.708196424873677,
+                "relativeError": -0.0004764046392006682,
+                "time": 157.49466506534975,
+                "final600": 35.75877480357454,
+                "reserveAt600": 0.38114927153001676
+              },
+              {
+                "mean": 14.875,
+                "work": 9880.851182896713,
+                "error": -1.9166104087580607,
+                "relativeError": -0.00019393457873778653,
+                "time": 157.38856097852184,
+                "final600": 36.194193736788236,
+                "reserveAt600": 0.3596591760938315
+              },
+              {
+                "mean": 14.950000000000001,
+                "work": 9881.516179665516,
+                "error": -1.2516136399553943,
+                "relativeError": -0.00012664606374777215,
+                "time": 157.3219078763072,
+                "final600": 36.66357674703846,
+                "reserveAt600": 0.33688094861971696
+              },
+              {
+                "mean": 15.025,
+                "work": 9878.965702522893,
+                "error": -3.8020907825775794,
+                "relativeError": -0.00038471922664752817,
+                "time": 157.30986646130424,
+                "final600": 37.18216776750495,
+                "reserveAt600": 0.31201204387521553
+              },
+              {
+                "mean": 15.1,
+                "work": 9876.573925030685,
+                "error": -6.1938682747859275,
+                "relativeError": -0.0006267341704599816,
+                "time": 157.30860927185378,
+                "final600": 37.70622091109446,
+                "reserveAt600": 0.28702122440419275
+              }
+            ],
+            "signChangingBrackets": [],
+            "globalSampledMonotonicIncreasing": false,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": -0.0025858868930897405,
+            "matched": false,
+            "closest": {
+              "mean": 14.950000000000001,
+              "work": 9881.516179665516,
+              "error": -1.2516136399553943,
+              "relativeError": -0.00012664606374777215,
+              "time": 157.3219078763072,
+              "final600": 36.66357674703846,
+              "reserveAt600": 0.33688094861971696
+            },
+            "status": "no-local-bracket-within-declared-mean-range"
+          }
+        }
+      ]
+    },
+    {
+      "length": 2400,
+      "baselineMean": 16.5,
+      "reference": {
+        "length": 2400,
+        "shape": "constant",
+        "middleMean": 16.5,
+        "amplitude": 0,
+        "frames": 9470,
+        "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+        "initial": {
+          "horse": {
+            "id": "controlled-neutral70",
+            "name": "受控中性70马",
+            "sire": "",
+            "dam": "",
+            "age": 4,
+            "sex": "牡",
+            "behavior": {
+              "forwardness": 0.5,
+              "settle": 0.5,
+              "tractability": 0.65
+            },
+            "physiology": {
+              "version": 1,
+              "endurance": 0,
+              "power": 0,
+              "economy": 0,
+              "kinetics": 0,
+              "durability": 0
+            },
+            "carriedWeight": 57,
+            "bodyMass": 480,
+            "coat": "芦毛",
+            "surface": "草地",
+            "special": "左右皆可",
+            "stats": {
+              "速度": 70,
+              "耐力": 70,
+              "出闸能力": 70,
+              "爆发力": 70,
+              "力量": 70,
+              "毅力": 70,
+              "智力": 70,
+              "体格": 70,
+              "血统力": 70
+            },
+            "斗志": 50,
+            "疲劳": 0,
+            "jockeyGrade": "普通",
+            "aggression": 1.3,
+            "form": {
+              "出赛": 14,
+              "胜利": 3,
+              "前三": 6
+            },
+            "player": false,
+            "style": "差"
+          },
+          "startDelay": 0.22624636945780366,
+          "aiBias": -0.04534871592186391,
+          "gate": 1,
+          "lane": 1.4,
+          "physiologicalParameters": {
+            "aerobic": 50,
+            "capacity": 2450,
+            "reservePower": 75,
+            "tau": 10,
+            "maxV": 18.75
+          },
+          "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+        },
+        "time": 157.81668640391499,
+        "first200": 13.627267777938982,
+        "preLast600Time": 113.73197904961116,
+        "final600": 44.08470735430383,
+        "last200Difference": 0.007796302894860219,
+        "sectionals": [
+          {
+            "distance": 200,
+            "time": 13.627267777938982,
+            "split": 13.627267777938982
+          },
+          {
+            "distance": 400,
+            "time": 25.568817217611542,
+            "split": 11.94154943967256
+          },
+          {
+            "distance": 600,
+            "time": 37.68999562122544,
+            "split": 12.1211784036139
+          },
+          {
+            "distance": 800,
+            "time": 49.811207736875474,
+            "split": 12.121212115650032
+          },
+          {
+            "distance": 1000,
+            "time": 61.93241985808683,
+            "split": 12.121212121211357
+          },
+          {
+            "distance": 1200,
+            "time": 74.05363197929486,
+            "split": 12.121212121208032
+          },
+          {
+            "distance": 1400,
+            "time": 86.1748441005023,
+            "split": 12.121212121207435
+          },
+          {
+            "distance": 1600,
+            "time": 99.14743697255993,
+            "split": 12.972592872057632
+          },
+          {
+            "distance": 1800,
+            "time": 113.73197904961116,
+            "split": 14.584542077051225
+          },
+          {
+            "distance": 2000,
+            "time": 128.45422098648132,
+            "split": 14.722241936870162
+          },
+          {
+            "distance": 2200,
+            "time": 143.13155554375072,
+            "split": 14.677334557269404
+          },
+          {
+            "distance": 2400,
+            "time": 157.81668640391499,
+            "split": 14.685130860164264
+          }
+        ],
+        "totalWork": 9856.45409598029,
+        "totalAerobicUsed": 7406.455672270801,
+        "totalEnergyUsed": 2449.9984237090953,
+        "totalRecovered": 0,
+        "oxygenSupply": 7425.509180353473,
+        "reserveFadeSeconds": 76.11223792828218,
+        "reserveAlmostEmptySeconds": 64.38634170703952,
+        "recoverySeconds": 0,
+        "entry200": {
+          "time": 13.627267777938982,
+          "distance": 200,
+          "speed": 18.621335324375963,
+          "reserve": 1839.77407020551,
+          "reserveFraction": 0.7509281919206163,
+          "guts": 3807.969516614202,
+          "retention": 0.9925327526974134,
+          "aerobicOutput": 42.81139265046,
+          "aerobicFraction": 0.8562278530091999,
+          "work": 1067.5346816207466,
+          "aerobicUsed": 457.30875182625897,
+          "energyUsed": 610.2259297944884,
+          "recovered": 0
+        },
+        "entry600": {
+          "time": 113.73197904961116,
+          "distance": 1800,
+          "speed": 13.597047723526241,
+          "reserve": 0.17387855930139678,
+          "reserveFraction": 0.00007097084053118237,
+          "guts": 2246.636909607404,
+          "retention": 0.962793083992522,
+          "aerobicOutput": 48.20600023777384,
+          "aerobicFraction": 0.964120004755477,
+          "work": 7735.830324948458,
+          "aerobicUsed": 5286.004203507407,
+          "energyUsed": 2449.8261214406925,
+          "recovered": 0
+        },
+        "ledgerEndpoint": {
+          "time": 157.83333333335108,
+          "distance": 2400,
+          "speed": 13.613472136220665,
+          "reserve": 0.0015762908978868779,
+          "reserveFraction": 6.433840399538277e-7,
+          "guts": 2013.2907587731208,
+          "retention": 0.9583483954052023,
+          "aerobicOutput": 47.967958869633314,
+          "aerobicFraction": 0.9593591773926663,
+          "work": 9856.45409598029,
+          "aerobicUsed": 7406.455672270801,
+          "energyUsed": 2449.9984237090953,
+          "recovered": 0
+        },
+        "ledgerAfterTimedFinishSeconds": 0.01664692943609225,
+        "final600RequestAndExecution": {
+          "ledgerSeconds": 44.10135428373992,
+          "meanRequested": 29.999585436085248,
+          "meanActual": 13.610163153677071,
+          "meanFeasibleDesired": 13.61131837017053,
+          "meanFatiguedMaxVelocity": 18.010637528582535,
+          "requestedMinusActual": 16.389422282408177,
+          "feasibleDesiredMinusActual": 0.0011552164934576607
+        },
+        "workBalanceError": 3.942659532185644e-10,
+        "reserveBalanceError": 6.83567698972487e-12,
+        "unpaidWork": 2.4530426804064215e-13
+      },
+      "histories": [
+        {
+          "shape": "front-loaded",
+          "nominal": {
+            "length": 2400,
+            "shape": "front-loaded",
+            "middleMean": 16.5,
+            "amplitude": 1.2,
+            "frames": 9491,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 158.18204431446605,
+            "first200": 13.627267777938982,
+            "preLast600Time": 114.09293296572294,
+            "final600": 44.08911134874312,
+            "last200Difference": 0.007560899814961886,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.627267777938982,
+                "split": 13.627267777938982
+              },
+              {
+                "distance": 400,
+                "time": 25.315382880745236,
+                "split": 11.688115102806254
+              },
+              {
+                "distance": 600,
+                "time": 36.72614153117739,
+                "split": 11.410758650432154
+              },
+              {
+                "distance": 800,
+                "time": 48.08145515144762,
+                "split": 11.35531362027023
+              },
+              {
+                "distance": 1000,
+                "time": 59.81787736269522,
+                "split": 11.7364222112476
+              },
+              {
+                "distance": 1200,
+                "time": 72.20344773720925,
+                "split": 12.385570374514025
+              },
+              {
+                "distance": 1400,
+                "time": 85.15810052399141,
+                "split": 12.954652786782162
+              },
+              {
+                "distance": 1600,
+                "time": 99.40686122242681,
+                "split": 14.248760698435404
+              },
+              {
+                "distance": 1800,
+                "time": 114.09293296572294,
+                "split": 14.686071743296125
+              },
+              {
+                "distance": 2000,
+                "time": 128.8188780138786,
+                "split": 14.725945048155651
+              },
+              {
+                "distance": 2200,
+                "time": 143.49668071426484,
+                "split": 14.677802700386252
+              },
+              {
+                "distance": 2400,
+                "time": 158.18204431446605,
+                "split": 14.685363600201214
+              }
+            ],
+            "totalWork": 9865.296269561746,
+            "totalAerobicUsed": 7415.297222237133,
+            "totalEnergyUsed": 2449.999047324599,
+            "totalRecovered": 0,
+            "oxygenSupply": 7434.369691262696,
+            "reserveFadeSeconds": 89.54617478042307,
+            "reserveAlmostEmptySeconds": 73.41153531047365,
+            "recoverySeconds": 0,
+            "entry200": {
+              "time": 13.627267777938982,
+              "distance": 200,
+              "speed": 18.621335324375963,
+              "reserve": 1839.77407020551,
+              "reserveFraction": 0.7509281919206163,
+              "guts": 3807.969516614202,
+              "retention": 0.9925327526974134,
+              "aerobicOutput": 42.81139265046,
+              "aerobicFraction": 0.8562278530091999,
+              "work": 1067.5346816207466,
+              "aerobicUsed": 457.30875182625897,
+              "energyUsed": 610.2259297944884,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 114.09293296572294,
+              "distance": 1800,
+              "speed": 13.58630235237907,
+              "reserve": 0.03450973969157651,
+              "reserveFraction": 0.000014085608037378168,
+              "guts": 2245.5115771318247,
+              "retention": 0.9627716490882252,
+              "aerobicOutput": 48.194242538805746,
+              "aerobicFraction": 0.963884850776115,
+              "work": 7745.490475009461,
+              "aerobicUsed": 5295.524984749185,
+              "energyUsed": 2449.9654902603074,
+              "recovered": 0
+            },
+            "ledgerEndpoint": {
+              "time": 158.18333333335136,
+              "distance": 2400,
+              "speed": 13.613834009025213,
+              "reserve": 0.0009526753941228307,
+              "reserveFraction": 3.888470996419717e-7,
+              "guts": 2012.3178390521402,
+              "retention": 0.9583298636009931,
+              "aerobicOutput": 47.966899282831854,
+              "aerobicFraction": 0.9593379856566371,
+              "work": 9865.296269561746,
+              "aerobicUsed": 7415.297222237133,
+              "energyUsed": 2449.999047324599,
+              "recovered": 0
+            },
+            "ledgerAfterTimedFinishSeconds": 0.0012890188853020845,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 44.09040036762842,
+              "meanRequested": 29.99783605262784,
+              "meanActual": 13.60880244892341,
+              "meanFeasibleDesired": 13.610297138672827,
+              "meanFatiguedMaxVelocity": 18.010275414699322,
+              "requestedMinusActual": 16.38903360370443,
+              "feasibleDesiredMinusActual": 0.00149468974941822
+            },
+            "workBalanceError": 1.4551915228366852e-11,
+            "reserveBalanceError": 6.97206279254986e-12,
+            "unpaidWork": 2.060901536931531e-13
+          },
+          "nominalMinusConstant": {
+            "time": 0.3653579105510687,
+            "preLast600Time": 0.3609539161117823,
+            "final600": 0.004403994439286407,
+            "last200Difference": -0.0002354030798983331,
+            "entryReserveFraction": -0.0000568852324938042,
+            "entryRetention": -0.000021434904296735446,
+            "entryAerobicOutput": -0.011757698968096975,
+            "entrySpeed": -0.010745371147171667
+          },
+          "matching": {
+            "targetWork": 9856.45409598029,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.9856454095980292,
+            "searchMeanInterval": [
+              15.9,
+              17.1
+            ],
+            "probes": [
+              {
+                "mean": 15.9,
+                "work": 9849.288125620602,
+                "error": -7.165970359688799,
+                "relativeError": -0.0007270333012164346,
+                "time": 157.60660628677857,
+                "final600": 43.31011409172456,
+                "reserveAt600": 0.02013614209378797
+              },
+              {
+                "mean": 15.975,
+                "work": 9849.906139691484,
+                "error": -6.547956288806745,
+                "relativeError": -0.000664331840339739,
+                "time": 157.66597313026386,
+                "final600": 43.725442422223296,
+                "reserveAt600": 0.008098835470990941
+              },
+              {
+                "mean": 16.05,
+                "work": 9851.431180446441,
+                "error": -5.0229155338493,
+                "relativeError": -0.0005096067495406661,
+                "time": 157.7280347328171,
+                "final600": 43.93932047583591,
+                "reserveAt600": 0.0031733731671139192
+              },
+              {
+                "mean": 16.125,
+                "work": 9853.079414243748,
+                "error": -3.3746817365426978,
+                "relativeError": -0.00034238294052614494,
+                "time": 157.7931094306034,
+                "final600": 44.03100525105107,
+                "reserveAt600": 0.001184191430712785
+              },
+              {
+                "mean": 16.2,
+                "work": 9854.811360143185,
+                "error": -1.642735837105647,
+                "relativeError": -0.00016666600596005373,
+                "time": 157.86183467719556,
+                "final600": 44.06773005027428,
+                "reserveAt600": 0.0004178483387885267
+              },
+              {
+                "mean": 16.275,
+                "work": 9857.45500262816,
+                "error": 1.00090664786876,
+                "relativeError": 0.0001015483497535848,
+                "time": 157.93830515930392,
+                "final600": 44.08140329052274,
+                "reserveAt600": 0.0001465695815249487
+              },
+              {
+                "mean": 16.35,
+                "work": 9860.229438262648,
+                "error": 3.7753422823570872,
+                "relativeError": 0.00038303250292585103,
+                "time": 158.01900373978847,
+                "final600": 44.0863822347461,
+                "reserveAt600": 0.000055223836825122045
+              },
+              {
+                "mean": 16.425,
+                "work": 9863.115048894577,
+                "error": 6.660952914286099,
+                "relativeError": 0.0006757960671680704,
+                "time": 158.101108557575,
+                "final600": 44.08831009757134,
+                "reserveAt600": 0.00002475202685559641
+              },
+              {
+                "mean": 16.5,
+                "work": 9865.296269561746,
+                "error": 8.842173581455427,
+                "relativeError": 0.0008970947863554184,
+                "time": 158.18204431446605,
+                "final600": 44.08911134874312,
+                "reserveAt600": 0.000014085608037378168
+              },
+              {
+                "mean": 16.575,
+                "work": 9868.320101044224,
+                "error": 11.866005063933699,
+                "relativeError": 0.0012038817356003265,
+                "time": 158.26180922331267,
+                "final600": 44.08963193093368,
+                "reserveAt600": 0.000009393497248441429
+              },
+              {
+                "mean": 16.65,
+                "work": 9871.423819554679,
+                "error": 14.9697235743879,
+                "relativeError": 0.0015187737322789265,
+                "time": 158.33909530705407,
+                "final600": 44.09000298203212,
+                "reserveAt600": 0.000007047710927454613
+              },
+              {
+                "mean": 16.725,
+                "work": 9873.82958819071,
+                "error": 17.375492210419907,
+                "relativeError": 0.001762854272055715,
+                "time": 158.41365033316225,
+                "final600": 44.0902304790103,
+                "reserveAt600": 0.000005743296929887228
+              },
+              {
+                "mean": 16.8,
+                "work": 9877.09657170094,
+                "error": 20.6424757206496,
+                "relativeError": 0.0020943105420709175,
+                "time": 158.48444623675016,
+                "final600": 44.09042302687976,
+                "reserveAt600": 0.000005006242757250783
+              },
+              {
+                "mean": 16.875,
+                "work": 9878.824001136609,
+                "error": 22.369905156318055,
+                "relativeError": 0.0022695692526423943,
+                "time": 158.54938643520805,
+                "final600": 44.090606536461664,
+                "reserveAt600": 0.000004530044520561236
+              },
+              {
+                "mean": 16.95,
+                "work": 9881.385876510927,
+                "error": 24.931780530636388,
+                "relativeError": 0.0025294878145685467,
+                "time": 158.60979980540975,
+                "final600": 44.09078589567211,
+                "reserveAt600": 0.0000042173926821045255
+              },
+              {
+                "mean": 17.025,
+                "work": 9883.20132424245,
+                "error": 26.747228262158387,
+                "relativeError": 0.0027136765414518165,
+                "time": 158.66638790340818,
+                "final600": 44.09089078584036,
+                "reserveAt600": 0.000003999807918925986
+              },
+              {
+                "mean": 17.1,
+                "work": 9885.833163931766,
+                "error": 29.379067951475008,
+                "relativeError": 0.0029806934284264085,
+                "time": 158.72018785627765,
+                "final600": 44.09107008182322,
+                "reserveAt600": 0.000003849500327696255
+              }
+            ],
+            "signChangingBrackets": [
+              [
+                16.2,
+                16.275
+              ]
+            ],
+            "globalSampledMonotonicIncreasing": true,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": 0.0008970947863554184,
+            "matched": true,
+            "closest": {
+              "mean": 16.256249999999998,
+              "work": 9856.979643123457,
+              "error": 0.5255471431664773,
+              "relativeError": 0.00005332010254892869,
+              "time": 157.91880945129859,
+              "final600": 44.0791883824086,
+              "reserveAt600": 0.00018964368961118356
+            },
+            "selectedMeanBracket": [
+              16.2,
+              16.275
+            ],
+            "monotonicDirection": 1,
+            "localProbes": [
+              {
+                "mean": 16.2,
+                "work": 9854.811360143185,
+                "error": -1.642735837105647,
+                "relativeError": -0.00016666600596005373,
+                "time": 157.86183467719556,
+                "final600": 44.06773005027428,
+                "reserveAt600": 0.0004178483387885267
+              },
+              {
+                "mean": 16.275,
+                "work": 9857.45500262816,
+                "error": 1.00090664786876,
+                "relativeError": 0.0001015483497535848,
+                "time": 157.93830515930392,
+                "final600": 44.08140329052274,
+                "reserveAt600": 0.0001465695815249487
+              },
+              {
+                "mean": 16.21875,
+                "work": 9855.262403399314,
+                "error": -1.1916925809764507,
+                "relativeError": -0.00012090479693528455,
+                "time": 157.88016429517583,
+                "final600": 44.07251902791633,
+                "reserveAt600": 0.000320903213886067
+              },
+              {
+                "mean": 16.237499999999997,
+                "work": 9855.721023759186,
+                "error": -0.7330722211045213,
+                "relativeError": -0.0000743748425109073,
+                "time": 157.89924426105216,
+                "final600": 44.07624010967389,
+                "reserveAt600": 0.00024642544333960427
+              },
+              {
+                "mean": 16.256249999999998,
+                "work": 9856.979643123457,
+                "error": 0.5255471431664773,
+                "relativeError": 0.00005332010254892869,
+                "time": 157.91880945129859,
+                "final600": 44.0791883824086,
+                "reserveAt600": 0.00018964368961118356
+              }
+            ],
+            "sampledBracketMonotonicWithinTolerance": true,
+            "sampledBracketStrictMonotonic": true,
+            "bisections": 0,
+            "status": "matched-with-sampled-local-monotonicity",
+            "adjustedMean": 16.256249999999998,
+            "relativeResidual": 0.00005332010254892869,
+            "result": {
+              "length": 2400,
+              "shape": "front-loaded",
+              "middleMean": 16.256249999999998,
+              "amplitude": 1.2,
+              "frames": 9476,
+              "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+              "initial": {
+                "horse": {
+                  "id": "controlled-neutral70",
+                  "name": "受控中性70马",
+                  "sire": "",
+                  "dam": "",
+                  "age": 4,
+                  "sex": "牡",
+                  "behavior": {
+                    "forwardness": 0.5,
+                    "settle": 0.5,
+                    "tractability": 0.65
+                  },
+                  "physiology": {
+                    "version": 1,
+                    "endurance": 0,
+                    "power": 0,
+                    "economy": 0,
+                    "kinetics": 0,
+                    "durability": 0
+                  },
+                  "carriedWeight": 57,
+                  "bodyMass": 480,
+                  "coat": "芦毛",
+                  "surface": "草地",
+                  "special": "左右皆可",
+                  "stats": {
+                    "速度": 70,
+                    "耐力": 70,
+                    "出闸能力": 70,
+                    "爆发力": 70,
+                    "力量": 70,
+                    "毅力": 70,
+                    "智力": 70,
+                    "体格": 70,
+                    "血统力": 70
+                  },
+                  "斗志": 50,
+                  "疲劳": 0,
+                  "jockeyGrade": "普通",
+                  "aggression": 1.3,
+                  "form": {
+                    "出赛": 14,
+                    "胜利": 3,
+                    "前三": 6
+                  },
+                  "player": false,
+                  "style": "差"
+                },
+                "startDelay": 0.22624636945780366,
+                "aiBias": -0.04534871592186391,
+                "gate": 1,
+                "lane": 1.4,
+                "physiologicalParameters": {
+                  "aerobic": 50,
+                  "capacity": 2450,
+                  "reservePower": 75,
+                  "tau": 10,
+                  "maxV": 18.75
+                },
+                "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+              },
+              "time": 157.91880945129859,
+              "first200": 13.627267777938982,
+              "preLast600Time": 113.83962106888998,
+              "final600": 44.0791883824086,
+              "last200Difference": 0.00787640210685936,
+              "sectionals": [
+                {
+                  "distance": 200,
+                  "time": 13.627267777938982,
+                  "split": 13.627267777938982
+                },
+                {
+                  "distance": 400,
+                  "time": 25.465251425639945,
+                  "split": 11.837983647700963
+                },
+                {
+                  "distance": 600,
+                  "time": 37.03637645472458,
+                  "split": 11.571125029084637
+                },
+                {
+                  "distance": 800,
+                  "time": 48.55125791820347,
+                  "split": 11.514881463478886
+                },
+                {
+                  "distance": 1000,
+                  "time": 60.45896048910119,
+                  "split": 11.907702570897719
+                },
+                {
+                  "distance": 1200,
+                  "time": 73.03561814900387,
+                  "split": 12.57665765990268
+                },
+                {
+                  "distance": 1400,
+                  "time": 86.17632917752432,
+                  "split": 13.140711028520457
+                },
+                {
+                  "distance": 1600,
+                  "time": 99.44106020439263,
+                  "split": 13.264731026868304
+                },
+                {
+                  "distance": 1800,
+                  "time": 113.83962106888998,
+                  "split": 14.398560864497355
+                },
+                {
+                  "distance": 2000,
+                  "time": 128.55651558096247,
+                  "split": 14.716894512072486
+                },
+                {
+                  "distance": 2200,
+                  "time": 143.2337243150771,
+                  "split": 14.677208734114629
+                },
+                {
+                  "distance": 2400,
+                  "time": 157.91880945129859,
+                  "split": 14.685085136221488
+                }
+              ],
+              "totalWork": 9856.979643123457,
+              "totalAerobicUsed": 7406.982333668714,
+              "totalEnergyUsed": 2449.997309454732,
+              "totalRecovered": 0,
+              "oxygenSupply": 7426.035252645818,
+              "reserveFadeSeconds": 80.44728514037874,
+              "reserveAlmostEmptySeconds": 59.94498279021126,
+              "recoverySeconds": 0,
+              "entry200": {
+                "time": 13.627267777938982,
+                "distance": 200,
+                "speed": 18.621335324375963,
+                "reserve": 1839.77407020551,
+                "reserveFraction": 0.7509281919206163,
+                "guts": 3807.969516614202,
+                "retention": 0.9925327526974134,
+                "aerobicOutput": 42.81139265046,
+                "aerobicFraction": 0.8562278530091999,
+                "work": 1067.5346816207466,
+                "aerobicUsed": 457.30875182625897,
+                "energyUsed": 610.2259297944884,
+                "recovered": 0
+              },
+              "entry600": {
+                "time": 113.83962106888998,
+                "distance": 1800,
+                "speed": 13.615804544541119,
+                "reserve": 0.4646270395473997,
+                "reserveFraction": 0.00018964368961118356,
+                "guts": 2246.701933760605,
+                "retention": 0.962794322547821,
+                "aerobicOutput": 48.206626431665185,
+                "aerobicFraction": 0.9641325286333038,
+                "work": 7736.428621883603,
+                "aerobicUsed": 5286.893248923145,
+                "energyUsed": 2449.535372960451,
+                "recovered": 0
+              },
+              "ledgerEndpoint": {
+                "time": 157.93333333335116,
+                "distance": 2400,
+                "speed": 13.613514007736681,
+                "reserve": 0.002690545268745276,
+                "reserveFraction": 0.0000010981817423450107,
+                "guts": 2013.2334500017973,
+                "retention": 0.958347303809558,
+                "aerobicOutput": 47.96791458295156,
+                "aerobicFraction": 0.9593582916590312,
+                "work": 9856.979643123457,
+                "aerobicUsed": 7406.982333668714,
+                "energyUsed": 2449.997309454732,
+                "recovered": 0
+              },
+              "ledgerAfterTimedFinishSeconds": 0.014523882052571935,
+              "final600RequestAndExecution": {
+                "ledgerSeconds": 44.093712264461175,
+                "meanRequested": 29.996764853440254,
+                "meanActual": 13.61186650551228,
+                "meanFeasibleDesired": 13.612424788404635,
+                "meanFatiguedMaxVelocity": 18.01061507146426,
+                "requestedMinusActual": 16.384898347927976,
+                "feasibleDesiredMinusActual": 0.000558282892353706
+              },
+              "workBalanceError": 1.0913936421275139e-11,
+              "reserveBalanceError": 9.487246058204057e-13,
+              "unpaidWork": 2.1121711452684244e-13
+            }
+          },
+          "equalWorkMinusConstant": {
+            "time": 0.1021230473835999,
+            "preLast600Time": 0.10764201927882766,
+            "final600": -0.0055189718952277644,
+            "last200Difference": 0.00008009921199914061,
+            "entryReserveFraction": 0.00011867284908000119,
+            "entryRetention": 0.0000012385552990989979,
+            "entryAerobicOutput": 0.0006261938913425524,
+            "entrySpeed": 0.01875682101487719
+          }
+        },
+        {
+          "shape": "back-loaded",
+          "nominal": {
+            "length": 2400,
+            "shape": "back-loaded",
+            "middleMean": 16.5,
+            "amplitude": 1.2,
+            "frames": 9467,
+            "initialHash": "905dfe938bb33e4745115a4b5f347ac1008efec0ead6f714f8ae67680c9d9c0b",
+            "initial": {
+              "horse": {
+                "id": "controlled-neutral70",
+                "name": "受控中性70马",
+                "sire": "",
+                "dam": "",
+                "age": 4,
+                "sex": "牡",
+                "behavior": {
+                  "forwardness": 0.5,
+                  "settle": 0.5,
+                  "tractability": 0.65
+                },
+                "physiology": {
+                  "version": 1,
+                  "endurance": 0,
+                  "power": 0,
+                  "economy": 0,
+                  "kinetics": 0,
+                  "durability": 0
+                },
+                "carriedWeight": 57,
+                "bodyMass": 480,
+                "coat": "芦毛",
+                "surface": "草地",
+                "special": "左右皆可",
+                "stats": {
+                  "速度": 70,
+                  "耐力": 70,
+                  "出闸能力": 70,
+                  "爆发力": 70,
+                  "力量": 70,
+                  "毅力": 70,
+                  "智力": 70,
+                  "体格": 70,
+                  "血统力": 70
+                },
+                "斗志": 50,
+                "疲劳": 0,
+                "jockeyGrade": "普通",
+                "aggression": 1.3,
+                "form": {
+                  "出赛": 14,
+                  "胜利": 3,
+                  "前三": 6
+                },
+                "player": false,
+                "style": "差"
+              },
+              "startDelay": 0.22624636945780366,
+              "aiBias": -0.04534871592186391,
+              "gate": 1,
+              "lane": 1.4,
+              "physiologicalParameters": {
+                "aerobic": 50,
+                "capacity": 2450,
+                "reservePower": 75,
+                "tau": 10,
+                "maxV": 18.75
+              },
+              "coefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968"
+            },
+            "time": 157.7710535167564,
+            "first200": 13.627267777938982,
+            "preLast600Time": 113.69624153993522,
+            "final600": 44.074811976821195,
+            "last200Difference": 0.008213911060977352,
+            "sectionals": [
+              {
+                "distance": 200,
+                "time": 13.627267777938982,
+                "split": 13.627267777938982
+              },
+              {
+                "distance": 400,
+                "time": 25.841195129816427,
+                "split": 12.213927351877444
+              },
+              {
+                "distance": 600,
+                "time": 38.77403458555307,
+                "split": 12.93283945573664
+              },
+              {
+                "distance": 800,
+                "time": 51.770219380103015,
+                "split": 12.996184794549947
+              },
+              {
+                "distance": 1000,
+                "time": 64.30266361689199,
+                "split": 12.532444236788976
+              },
+              {
+                "distance": 1200,
+                "time": 76.17814615594473,
+                "split": 11.87548253905274
+              },
+              {
+                "distance": 1400,
+                "time": 87.5889431070653,
+                "split": 11.410796951120574
+              },
+              {
+                "distance": 1600,
+                "time": 99.38571499589538,
+                "split": 11.79677188883008
+              },
+              {
+                "distance": 1800,
+                "time": 113.69624153993522,
+                "split": 14.310526544039831
+              },
+              {
+                "distance": 2000,
+                "time": 128.40913962580066,
+                "split": 14.712898085865447
+              },
+              {
+                "distance": 2200,
+                "time": 143.08598961574805,
+                "split": 14.676849989947385
+              },
+              {
+                "distance": 2400,
+                "time": 157.7710535167564,
+                "split": 14.685063901008363
+              }
+            ],
+            "totalWork": 9862.812039857048,
+            "totalAerobicUsed": 7412.815464102778,
+            "totalEnergyUsed": 2449.9965757542323,
+            "totalRecovered": 0,
+            "oxygenSupply": 7431.864351306689,
+            "reserveFadeSeconds": 68.77442492370241,
+            "reserveAlmostEmptySeconds": 58.9904151666161,
+            "recoverySeconds": 0,
+            "entry200": {
+              "time": 13.627267777938982,
+              "distance": 200,
+              "speed": 18.621335324375963,
+              "reserve": 1839.77407020551,
+              "reserveFraction": 0.7509281919206163,
+              "guts": 3807.969516614202,
+              "retention": 0.9925327526974134,
+              "aerobicOutput": 42.81139265046,
+              "aerobicFraction": 0.8562278530091999,
+              "work": 1067.5346816207466,
+              "aerobicUsed": 457.30875182625897,
+              "energyUsed": 610.2259297944884,
+              "recovered": 0
+            },
+            "entry600": {
+              "time": 113.69624153993522,
+              "distance": 1800,
+              "speed": 13.627188818727618,
+              "reserve": 0.6039544032725035,
+              "reserveFraction": 0.0002465120013357157,
+              "guts": 2246.1187926714106,
+              "retention": 0.9627832150985031,
+              "aerobicOutput": 48.222606010572754,
+              "aerobicFraction": 0.964452120211455,
+              "work": 7742.299880091398,
+              "aerobicUsed": 5292.903834494682,
+              "energyUsed": 2449.396045596717,
+              "recovered": 0
+            },
+            "ledgerEndpoint": {
+              "time": 157.78333333335104,
+              "distance": 2400,
+              "speed": 13.613493249680493,
+              "reserve": 0.003424245754376176,
+              "reserveFraction": 0.0000013976513283168064,
+              "guts": 2012.592216526311,
+              "retention": 0.9583350898385964,
+              "aerobicOutput": 47.96750721613316,
+              "aerobicFraction": 0.9593501443226632,
+              "work": 9862.812039857048,
+              "aerobicUsed": 7412.815464102778,
+              "energyUsed": 2449.9965757542323,
+              "recovered": 0
+            },
+            "ledgerAfterTimedFinishSeconds": 0.012279816594627846,
+            "final600RequestAndExecution": {
+              "ledgerSeconds": 44.08709179341582,
+              "meanRequested": 29.998849184803074,
+              "meanActual": 13.613217614776723,
+              "meanFeasibleDesired": 13.61340882214004,
+              "meanFatiguedMaxVelocity": 18.010383279509266,
+              "requestedMinusActual": 16.38563157002635,
+              "feasibleDesiredMinusActual": 0.0001912073633177909
+            },
+            "workBalanceError": 3.8198777474462986e-11,
+            "reserveBalanceError": 1.3370294021236573e-11,
+            "unpaidWork": 2.1908658386701475e-13
+          },
+          "nominalMinusConstant": {
+            "time": -0.045632887158575386,
+            "preLast600Time": -0.035737509675939805,
+            "final600": -0.009895377482635581,
+            "last200Difference": 0.0004176081661171338,
+            "entryReserveFraction": 0.00017554116080453335,
+            "entryRetention": -0.000009868894018882912,
+            "entryAerobicOutput": 0.01660577279891129,
+            "entrySpeed": 0.03014109520137609
+          },
+          "matching": {
+            "targetWork": 9856.45409598029,
+            "relativeTolerance": 0.0001,
+            "absoluteTolerance": 0.9856454095980292,
+            "searchMeanInterval": [
+              15.9,
+              17.1
+            ],
+            "probes": [
+              {
+                "mean": 15.9,
+                "work": 9859.317792032783,
+                "error": 2.8636960524927417,
+                "relativeError": 0.00029054019068182227,
+                "time": 157.43733088666733,
+                "final600": 43.12712079269157,
+                "reserveAt600": 0.026286920828735506
+              },
+              {
+                "mean": 15.975,
+                "work": 9859.842112575992,
+                "error": 3.388016595701629,
+                "relativeError": 0.0003437358468582882,
+                "time": 157.49019312232383,
+                "final600": 43.573346438542146,
+                "reserveAt600": 0.011586105317958303
+              },
+              {
+                "mean": 16.05,
+                "work": 9860.48327876965,
+                "error": 4.029182789359766,
+                "relativeError": 0.00040878623794361984,
+                "time": 157.5360390801928,
+                "final600": 43.81431427195517,
+                "reserveAt600": 0.0058635245720079845
+              },
+              {
+                "mean": 16.125,
+                "work": 9860.41765662389,
+                "error": 3.963560643598612,
+                "relativeError": 0.00040212845360027103,
+                "time": 157.57663320744007,
+                "final600": 43.93627291008326,
+                "reserveAt600": 0.003155042264409742
+              },
+              {
+                "mean": 16.2,
+                "work": 9860.442835523796,
+                "error": 3.9887395435052895,
+                "relativeError": 0.0004046830132483443,
+                "time": 157.61322308201,
+                "final600": 44.00026346268942,
+                "reserveAt600": 0.0017760520749423433
+              },
+              {
+                "mean": 16.275,
+                "work": 9860.542359950527,
+                "error": 4.088263970235857,
+                "relativeError": 0.000414780399769036,
+                "time": 157.64969631542294,
+                "final600": 44.03580882589581,
+                "reserveAt600": 0.0010274899957754974
+              },
+              {
+                "mean": 16.35,
+                "work": 9861.502670976053,
+                "error": 5.048574995762465,
+                "relativeError": 0.0005122100652628617,
+                "time": 157.68895190419093,
+                "final600": 44.05578276523265,
+                "reserveAt600": 0.0006184669868016889
+              },
+              {
+                "mean": 16.425,
+                "work": 9861.733029882034,
+                "error": 5.278933901743585,
+                "relativeError": 0.0005355814424070079,
+                "time": 157.72960970094675,
+                "final600": 44.06755702783484,
+                "reserveAt600": 0.00038477547215441926
+              },
+              {
+                "mean": 16.5,
+                "work": 9862.812039857048,
+                "error": 6.3579438767574175,
+                "relativeError": 0.0006450538717925289,
+                "time": 157.7710535167564,
+                "final600": 44.074811976821195,
+                "reserveAt600": 0.0002465120013357157
+              },
+              {
+                "mean": 16.575,
+                "work": 9863.163678993675,
+                "error": 6.709583013383963,
+                "relativeError": 0.0006807299002305808,
+                "time": 157.812134339764,
+                "final600": 44.07934643901203,
+                "reserveAt600": 0.00016232884700768035
+              },
+              {
+                "mean": 16.65,
+                "work": 9864.353036771789,
+                "error": 7.898940791497807,
+                "relativeError": 0.0008013978165554683,
+                "time": 157.8530155686008,
+                "final600": 44.08236576415803,
+                "reserveAt600": 0.00010996286303014896
+              },
+              {
+                "mean": 16.725,
+                "work": 9864.804662960527,
+                "error": 8.35056698023618,
+                "relativeError": 0.0008472181678035463,
+                "time": 157.8939655406912,
+                "final600": 44.08434847296668,
+                "reserveAt600": 0.00007645017763309637
+              },
+              {
+                "mean": 16.8,
+                "work": 9866.0873265687,
+                "error": 9.633230588409788,
+                "relativeError": 0.00097735255443826,
+                "time": 157.93437381104692,
+                "final600": 44.08579070090451,
+                "reserveAt600": 0.00005467390589700757
+              },
+              {
+                "mean": 16.875,
+                "work": 9866.619852503507,
+                "error": 10.16575652321626,
+                "relativeError": 0.0010313806998159824,
+                "time": 157.97455661756277,
+                "final600": 44.0867641184833,
+                "reserveAt600": 0.00004020810470542675
+              },
+              {
+                "mean": 16.95,
+                "work": 9867.19838497188,
+                "error": 10.744288991589201,
+                "relativeError": 0.0010900765008352235,
+                "time": 158.01507157266263,
+                "final600": 44.08747117793153,
+                "reserveAt600": 0.000030501277894020412
+              },
+              {
+                "mean": 17.025,
+                "work": 9868.60099336737,
+                "error": 12.146897387079662,
+                "relativeError": 0.0012323800495386541,
+                "time": 158.05482860598806,
+                "final600": 44.088071997267534,
+                "reserveAt600": 0.000023916319438108217
+              },
+              {
+                "mean": 17.1,
+                "work": 9869.254226487976,
+                "error": 12.800130507685026,
+                "relativeError": 0.001298654707163425,
+                "time": 158.0947090912717,
+                "final600": 44.088473931640806,
+                "reserveAt600": 0.000019367281718731076
+              }
+            ],
+            "signChangingBrackets": [],
+            "globalSampledMonotonicIncreasing": true,
+            "globalSampledMonotonicDecreasing": false,
+            "nominalRelativeError": 0.0006450538717925289,
+            "matched": false,
+            "closest": {
+              "mean": 15.9,
+              "work": 9859.317792032783,
+              "error": 2.8636960524927417,
+              "relativeError": 0.00029054019068182227,
+              "time": 157.43733088666733,
+              "final600": 43.12712079269157,
+              "reserveAt600": 0.026286920828735506
+            },
+            "status": "no-local-bracket-within-declared-mean-range"
+          }
+        }
+      ]
+    }
+  ]
+}
