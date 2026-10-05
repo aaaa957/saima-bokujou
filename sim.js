@@ -579,6 +579,14 @@
     resistanceK:0.250215, airK:0.001365, recoveryRate:0.12, recoveryMax:2.0,
     fatigueLoss:0.08, fatigueWork:0.11, fatigueExcess:0.45,
     reservePower:75, reserveFade:0.10, efficiencyPerPoint:0.0025,
+    // 终盘有氧衰减：剩余无氧储备降到 anaerobicGate 以下后，可持续有氧功率逐级下降，
+    // 最多下降 endgameFade。**阈值是这匹马自己的储备比例，不是某个固定距离**——
+    // 因此每匹马各自在自己的储备临界处开始衰减；由于每米耗能相近，这些点自然聚集在
+    // 相近的剩余距离上，从而涌现出 Spence et al. (2012) 的集体「分崩」
+    // （剩余 478±220 m、分崩后减速度约中段 8.6 倍、92% 的马减速）。
+    // 结构参考 Mercier & Aftalion (2020)：剩余无氧降到初值约 1/3 时 V̇O₂ 开始下降。
+    // 注意：本项目储备比例与 M&A 的无氧储备不是同一量纲，阈值按本项目储备轨迹标定。
+    anaerobicGate:0.5, endgameFade:0.40,
     peakExtra:1.55, burstSpeedK:0.010,
     maxAccel:5.75, runningAccel:2.75, braking:3.5,
     responseTime:1.12, lateralSpeed:0.8, laneBias:1,
@@ -1385,11 +1393,18 @@
     // 余程预算是需求可支付检查；动作预测是受限制的执行轨迹，两者不混淆。
     function raceSupplyState(H,dt) {
       const fatigue=1-H.fatigueLoss*(1-H.guts/H.gutsMax);
-      const aerobicTarget=H.aerobic*fatigue;
+      // 终盘有氧衰减（机制，非拟合）：阈值是【该马自己的剩余无氧储备比例】，
+      // 而不是某个固定距离。因此每匹马各自在自己的储备耗到 1/3 处开始衰减；
+      // 由于每米耗能相近，这些点会自然聚集在相近的剩余距离上，从而涌现出
+      // Spence et al. (2012) 观测到的集体「分崩」（剩余 478±220 m，92% 的马减速，
+      // 分崩后减速度约为中段的 8.6 倍）。储备更深的马衰减更晚，这正是"赢家掉速最少"。
+      const reserveRatio=clamp(H.stamina/H.staminaMax,0,1);
+      const endgame=clamp(reserveRatio/RACE_F.anaerobicGate,0,1);
+      const aerobicTarget=H.aerobic*fatigue*(1-(1-endgame)*RACE_F.endgameFade);
       const aerobic=(H.aerobicOutput??H.aerobic*0.45)+(aerobicTarget-(H.aerobicOutput??H.aerobic*0.45))*(1-Math.exp(-dt/H.aerobicTau));
-      const reserveFade=clamp(clamp(H.stamina/H.staminaMax,0,1)/RACE_F.reserveFade,0,1);
+      const reserveFade=clamp(reserveRatio/RACE_F.reserveFade,0,1);
       const reservePower=Math.min(H.reservePower*reserveFade,Math.max(0,H.stamina)/dt);
-      return {fatigue,aerobicTarget,aerobic,reserveFade,reservePower,maxPower:aerobic+reservePower};
+      return {fatigue,aerobicTarget,aerobic,reserveFade,reservePower,endgame,maxPower:aerobic+reservePower};
     }
     function raceEnergyState(H,work,aerobic,dt) {
       const excess=Math.max(0,work-aerobic),draw=Math.min(H.stamina,excess*dt);
