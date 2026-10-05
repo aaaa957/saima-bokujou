@@ -572,10 +572,17 @@
   // 机械等价的比功率 W/kg、储备 J/kg。不是马的直接代谢测量值。
   // 结构参考 Mercier & Aftalion (2020)，映射/尾流/恢复参数再用公开赛时约束。
   const RACE_F = {
-    baseSpeed:{a:0.020,b:15.80,min:1,max:115}, // 70点=17.2m/s参考速度
-    staminaPer:35, gutsPer:60, energyScale:1,
+    // 距离专精再平衡（2026-10-05，见 docs/距离专精诊断-2026-10-05.md）：
+    // 原配置下「耐力」双重计入（既给有氧供给又给无氧储备）且无氧储备在每个距离都成为
+    // 紧约束，导致【速度/爆发力】几乎无效、任何距离都由耐力单轴支配，不存在距离专精。
+    // 现实的能量结构是：有氧=可持续基线（无时限），无氧=有限加成（有总量）。
+    // 短距离时加成够用 ⇒ 由功率上限（速度）决定；长距离时加成不够 ⇒ 由氧气供给决定。
+    // 因此这里抬高有氧基线、参数化其上限、并同步下调速度上限与储备容量以保住绝对用时。
+    baseSpeed:{a:0.020,b:15.30,min:1,max:115}, // 70点=16.70m/s参考速度
+    staminaPer:30, gutsPer:60, energyScale:1,
     aerobicBase:0.86, aerobicStaminaK:0.0020, // 旧展示兼容；物理用下列有单位参数
-    aerobicPower:50, aerobicPerPoint:0.24, aerobicTau:10,
+    // aerobicCeiling 原为代码里写死的 68，会把"抬高有氧基线"静默截断（隐藏陷阱）。
+    aerobicPower:58, aerobicPerPoint:0.24, aerobicTau:10, aerobicCeiling:76,
     resistanceK:0.250215, airK:0.001365, recoveryRate:0.12, recoveryMax:2.0,
     fatigueLoss:0.08, fatigueWork:0.11, fatigueExcess:0.45,
     reservePower:75, reserveFade:0.10, efficiencyPerPoint:0.0025,
@@ -1308,7 +1315,7 @@
         cumulativeWork:0,statsSummary:{workUsed:0,aerobicUsed:0,energyUsed:0,unpaidWork:0,recovered:0,draftSeconds:0,blockedSeconds:0,peakSpeed:0,sprintAt:null},
         aggression:h.aggression??1,aiBias:(rng()-0.5)*0.12};
       H.economy=Math.exp((70-adj['速度'])*RACE_F.efficiencyPerPoint)*(1-0.025*physiology.economy);
-      H.aerobic=clamp(RACE_F.aerobicPower+(adj['耐力']-70)*RACE_F.aerobicPerPoint,35,68)*fatMult*(1+0.05*physiology.endurance);
+      H.aerobic=clamp(RACE_F.aerobicPower+(adj['耐力']-70)*RACE_F.aerobicPerPoint,35,RACE_F.aerobicCeiling)*fatMult*(1+0.05*physiology.endurance);
       H.aerobicTau=RACE_F.aerobicTau*(1-0.20*physiology.kinetics)*clamp(1-(adj['耐力']-70)*0.002,0.85,1.15);
       H.reservePower=RACE_F.reservePower*(1+0.12*physiology.power)*clamp(1+(adj['爆发力']-70)*0.005,0.75,1.25);
       H.fatigueLoss=RACE_F.fatigueLoss*(1-0.20*physiology.durability);
