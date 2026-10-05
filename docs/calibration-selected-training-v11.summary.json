@@ -1,0 +1,4339 @@
+{
+  "input": "docs/calibration-selected-training-v11.json",
+  "inputNormalizedSha256": "830b99859789f77079c89209e6074ea4433f718d3be49ae7cbc7fac7c7787cdb",
+  "source": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "parameters": {
+    "maxAccel": 5.75,
+    "runningAccel": 2.75,
+    "responseTime": 1.12,
+    "peakExtra": 1.55,
+    "resistanceK": 0.250215,
+    "airK": 0.001365
+  },
+  "cohort": "selected",
+  "proof": {
+    "file": "docs/calibration-selected-training-v11.json",
+    "sourceProof": "archived immutable source verified",
+    "source": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+    "declared": 12,
+    "covered": 12,
+    "complete": true,
+    "metadataRows": 12,
+    "retainedErrors": 0,
+    "retainedEngineeringFailures": [],
+    "forecastCoverage": {
+      "queries": 0,
+      "feasible": 0,
+      "infeasible": 0,
+      "maxFeasibleTimeError": null
+    },
+    "consistent": true
+  },
+  "metrics": {
+    "winnerTime": {
+      "realMedian": 129.55,
+      "simMedian": 126.9670909990031,
+      "medianError": -2.1511907960438847,
+      "meanAbsoluteError": 2.56949383933913
+    },
+    "winnerFinal600": {
+      "realMedian": 34.2,
+      "simMedian": 33.21786110450001,
+      "medianError": -0.24229057436959067,
+      "meanAbsoluteError": 1.2954910993335702
+    },
+    "first200": {
+      "realMedian": 12.5,
+      "simMedian": 13.410159714296196,
+      "medianError": 0.9647472926162255,
+      "meanAbsoluteError": 1.0480548619424122
+    },
+    "first400": {
+      "realMedian": 23.7,
+      "simMedian": 24.95060040281961,
+      "medianError": 1.3728699348504527,
+      "meanAbsoluteError": 1.4188760235070472
+    },
+    "first600": {
+      "realMedian": 35.25,
+      "simMedian": 36.372493171223184,
+      "medianError": 1.139684743720501,
+      "meanAbsoluteError": 1.3414318568212706
+    },
+    "remainingSpeed": {
+      "realMedian": 17.132966914857736,
+      "simMedian": 17.62713303309453,
+      "medianError": 0.5514855232452689,
+      "meanAbsoluteError": 0.6027037644026733
+    },
+    "tailSeconds": {
+      "realMedian": 3.049999999999997,
+      "simMedian": 5.663012245355617,
+      "medianError": 1.6294985643869921,
+      "meanAbsoluteError": 3.069332899130876
+    },
+    "within1": {
+      "realMedian": 0.5883838383838383,
+      "simMedian": 0.17424242424242425,
+      "medianError": -0.3952205882352941,
+      "meanAbsoluteError": 0.4076965382112441
+    },
+    "within2": {
+      "realMedian": 0.8760504201680672,
+      "simMedian": 0.3176470588235294,
+      "medianError": -0.4481209150326797,
+      "meanAbsoluteError": 0.4504991264182441
+    },
+    "final600Span": {
+      "realMedian": 3.75,
+      "simMedian": 2.5633175222614426,
+      "medianError": -0.9541906961721267,
+      "meanAbsoluteError": 2.477949939496554
+    },
+    "post200Cv": {
+      "realMedian": 0.04050642589648062,
+      "simMedian": 0.007934331384636183,
+      "medianError": -0.02823923576448441,
+      "meanAbsoluteError": 0.03006318118917457
+    },
+    "last200Difference": {
+      "realMedian": 0.35000000000000053,
+      "simMedian": -0.03106789167674151,
+      "medianError": -0.43106789167674187,
+      "meanAbsoluteError": 0.5467138720787679
+    }
+  },
+  "eventResiduals": [
+    {
+      "id": "231001",
+      "length": 1200,
+      "metrics": {
+        "winnerTime": {
+          "error": -3.235709351976098,
+          "relativeError": -0.04758396105847207
+        },
+        "winnerFinal600": {
+          "error": -3.1218164023363215,
+          "relativeError": -0.09048743195177744
+        },
+        "first200": {
+          "error": 0.9216656791748221,
+          "relativeError": 0.07877484437391646
+        },
+        "first400": {
+          "error": 0.9239946016584071,
+          "relativeError": 0.04180971048228077
+        },
+        "first600": {
+          "error": 0.08610705036022637,
+          "relativeError": 0.0025857973081149233
+        },
+        "remainingSpeed": {
+          "error": 1.4161782426847012,
+          "relativeError": 0.07973083506314871
+        },
+        "tailSeconds": {
+          "error": 1.6561849112996185,
+          "relativeError": 1.1041232741997455
+        },
+        "within1": {
+          "error": -0.4375,
+          "relativeError": -0.5833333333333333
+        },
+        "within2": {
+          "error": -0.375,
+          "relativeError": -0.375
+        },
+        "final600Span": {
+          "error": -1.0298426938447918,
+          "relativeError": -0.447757692975997
+        },
+        "post200Cv": {
+          "error": -0.04906502537396537,
+          "relativeError": -0.9127097413795205
+        },
+        "last200Difference": {
+          "error": -1.0474953990284064,
+          "relativeError": -0.9522685445712773
+        }
+      }
+    },
+    {
+      "id": "230604",
+      "length": 1600,
+      "metrics": {
+        "winnerTime": {
+          "error": -3.914517800300146,
+          "relativeError": -0.04282842232275874
+        },
+        "winnerFinal600": {
+          "error": -1.2650872675888536,
+          "relativeError": -0.03822015914165722
+        },
+        "first200": {
+          "error": 0.8963764614533769,
+          "relativeError": 0.074698038454448
+        },
+        "first400": {
+          "error": 0.8932462805573103,
+          "relativeError": 0.039177468445495967
+        },
+        "first600": {
+          "error": 0.1847981091858273,
+          "relativeError": 0.005403453484965626
+        },
+        "remainingSpeed": {
+          "error": 1.137255234840712,
+          "relativeError": 0.0644986183188232
+        },
+        "tailSeconds": {
+          "error": 1.251872602459457,
+          "relativeError": 0.43168020774464155
+        },
+        "within1": {
+          "error": -0.5555555555555556,
+          "relativeError": -0.7692307692307693
+        },
+        "within2": {
+          "error": -0.7222222222222222,
+          "relativeError": -0.7647058823529411
+        },
+        "final600Span": {
+          "error": -0.8424894696566625,
+          "relativeError": -0.2552998392898974
+        },
+        "post200Cv": {
+          "error": -0.020584930097019435,
+          "relativeError": -0.7507247398879175
+        },
+        "last200Difference": {
+          "error": -0.30430100305125407,
+          "relativeError": -1.0143366768375113
+        }
+      }
+    },
+    {
+      "id": "231029",
+      "length": 2000,
+      "metrics": {
+        "winnerTime": {
+          "error": -1.0945067227273029,
+          "relativeError": -0.009500926412563393
+        },
+        "winnerFinal600": {
+          "error": -1.3946486315664686,
+          "relativeError": -0.04077919975340549
+        },
+        "first200": {
+          "error": 1.0078289060576289,
+          "relativeError": 0.08127652468206681
+        },
+        "first400": {
+          "error": 1.5999631667956216,
+          "relativeError": 0.0683744943075053
+        },
+        "first600": {
+          "error": 1.4207069407780963,
+          "relativeError": 0.04070793526584793
+        },
+        "remainingSpeed": {
+          "error": 0.365562840700278,
+          "relativeError": 0.020877700013326894
+        },
+        "tailSeconds": {
+          "error": 1.340301076626659,
+          "relativeError": 0.4188440864458305
+        },
+        "within1": {
+          "error": -0.2727272727272727,
+          "relativeError": -0.6
+        },
+        "within2": {
+          "error": 0.18181818181818188,
+          "relativeError": 0.2857142857142858
+        },
+        "final600Span": {
+          "error": -2.0358434923413924,
+          "relativeError": -0.4847246410336653
+        },
+        "post200Cv": {
+          "error": 0.006005165503296085,
+          "relativeError": 0.37850993000741573
+        },
+        "last200Difference": {
+          "error": -0.3721919736847372,
+          "relativeError": -1.2406399122824618
+        }
+      }
+    },
+    {
+      "id": "231126",
+      "length": 2400,
+      "metrics": {
+        "winnerTime": {
+          "error": 0.1131609401687399,
+          "relativeError": 0.0007980320181151246
+        },
+        "winnerFinal600": {
+          "error": 1.3706240275685673,
+          "relativeError": 0.04091415007667365
+        },
+        "first200": {
+          "error": 1.0689388280888235,
+          "relativeError": 0.08416841166053723
+        },
+        "first400": {
+          "error": 1.458661383394535,
+          "relativeError": 0.060777557641438884
+        },
+        "first600": {
+          "error": 1.6178324623377662,
+          "relativeError": 0.0455727454179653
+        },
+        "remainingSpeed": {
+          "error": 0.12710258646858463,
+          "relativeError": 0.007458610869588211
+        },
+        "tailSeconds": {
+          "error": -0.3265913387695605,
+          "relativeError": -0.053539563732714845
+        },
+        "within1": {
+          "error": 0.1111111111111111,
+          "relativeError": 0.5
+        },
+        "within2": {
+          "error": -0.11111111111111116,
+          "relativeError": -0.18181818181818188
+        },
+        "final600Span": {
+          "error": -2.4879573829720982,
+          "relativeError": -0.47845334287924934
+        },
+        "post200Cv": {
+          "error": -0.03606265164178485,
+          "relativeError": -0.8940031650999286
+        },
+        "last200Difference": {
+          "error": 0.6780830630779047,
+          "relativeError": -0.9686900901112909
+        }
+      }
+    },
+    {
+      "id": "231022",
+      "length": 3000,
+      "metrics": {
+        "winnerTime": {
+          "error": -2.2067617248887927,
+          "relativeError": -0.012052221326536272
+        },
+        "winnerFinal600": {
+          "error": 0.918808141679925,
+          "relativeError": 0.026555148603466083
+        },
+        "first200": {
+          "error": 1.1952225669781935,
+          "relativeError": 0.0941120131478892
+        },
+        "first400": {
+          "error": 1.8103095181368722,
+          "relativeError": 0.07419301303839632
+        },
+        "first600": {
+          "error": 2.6933914976234874,
+          "relativeError": 0.0758701830316475
+        },
+        "remainingSpeed": {
+          "error": 0.33474140455382795,
+          "relativeError": 0.020371405477132898
+        },
+        "tailSeconds": {
+          "error": 2.319434737084407,
+          "relativeError": 0.49349675257114867
+        },
+        "within1": {
+          "error": -0.3529411764705882,
+          "relativeError": -0.8571428571428572
+        },
+        "within2": {
+          "error": -0.7058823529411764,
+          "relativeError": -0.8571428571428572
+        },
+        "final600Span": {
+          "error": 1.223618086377293,
+          "relativeError": 0.2497179768116926
+        },
+        "post200Cv": {
+          "error": -0.04082243167949785,
+          "relativeError": -0.8038694856368002
+        },
+        "last200Difference": {
+          "error": -0.4363993256490293,
+          "relativeError": -1.0909983141225723
+        }
+      }
+    },
+    {
+      "id": "230430",
+      "length": 3200,
+      "metrics": {
+        "winnerTime": {
+          "error": 3.477346541510144,
+          "relativeError": 0.017732516784855434
+        },
+        "winnerFinal600": {
+          "error": -1.6873427085418982,
+          "relativeError": -0.04834792861151571
+        },
+        "first200": {
+          "error": 1.9817302269148271,
+          "relativeError": 0.16111627861096145
+        },
+        "first400": {
+          "error": 3.484426068007558,
+          "relativeError": 0.15084095532500252
+        },
+        "first600": {
+          "error": 3.943404950954424,
+          "relativeError": 0.11266871288441216
+        },
+        "remainingSpeed": {
+          "error": -0.1317439852185487,
+          "relativeError": -0.008071514827723059
+        },
+        "tailSeconds": {
+          "error": -5.047384170519194,
+          "relativeError": -0.4761683179735091
+        },
+        "within1": {
+          "error": -0.2156862745098039,
+          "relativeError": -0.6470588235294117
+        },
+        "within2": {
+          "error": -0.5647058823529412,
+          "relativeError": -0.7058823529411765
+        },
+        "final600Span": {
+          "error": -4.308130220146062,
+          "relativeError": -0.4351646687016224
+        },
+        "post200Cv": {
+          "error": -0.0016492997202555496,
+          "relativeError": -0.03154300975352187
+        },
+        "last200Difference": {
+          "error": -0.7384104146993256,
+          "relativeError": -1.8460260367483121
+        }
+      }
+    },
+    {
+      "id": "240929",
+      "length": 1200,
+      "metrics": {
+        "winnerTime": {
+          "error": -1.9607878500286233,
+          "relativeError": -0.02926549029893466
+        },
+        "winnerFinal600": {
+          "error": -2.6747228026691445,
+          "relativeError": -0.07820826908389311
+        },
+        "first200": {
+          "error": 0.7911618277393853,
+          "relativeError": 0.06704761252028679
+        },
+        "first400": {
+          "error": 1.4052128753504505,
+          "relativeError": 0.06475635370278576
+        },
+        "first600": {
+          "error": 1.413934952640517,
+          "relativeError": 0.04404781783926848
+        },
+        "remainingSpeed": {
+          "error": 0.950543643144691,
+          "relativeError": 0.052470009101586834
+        },
+        "tailSeconds": {
+          "error": 1.6028122174743658,
+          "relativeError": 1.1448658696245424
+        },
+        "within1": {
+          "error": -0.5,
+          "relativeError": -0.5333333333333333
+        },
+        "within2": {
+          "error": -0.3125,
+          "relativeError": -0.3125
+        },
+        "final600Span": {
+          "error": -0.9726363694616325,
+          "relativeError": -0.44210744066437924
+        },
+        "post200Cv": {
+          "error": -0.0698468576885531,
+          "relativeError": -0.907250209867988
+        },
+        "last200Difference": {
+          "error": -0.6426052398002522,
+          "relativeError": -0.9180074854289303
+        }
+      }
+    },
+    {
+      "id": "240602",
+      "length": 1600,
+      "metrics": {
+        "winnerTime": {
+          "error": -2.0956198671989767,
+          "relativeError": -0.022704440598038778
+        },
+        "winnerFinal600": {
+          "error": -0.448477342973824,
+          "relativeError": -0.013427465358497703
+        },
+        "first200": {
+          "error": 0.9096972236842955,
+          "relativeError": 0.0751815887342393
+        },
+        "first400": {
+          "error": 1.0741355095316116,
+          "relativeError": 0.04649937270699622
+        },
+        "first600": {
+          "error": 0.7435540559208249,
+          "relativeError": 0.021552291475966046
+        },
+        "remainingSpeed": {
+          "error": 0.6796050243037577,
+          "relativeError": 0.038931659249400896
+        },
+        "tailSeconds": {
+          "error": 2.9957457641832974,
+          "relativeError": 1.997163842788865
+        },
+        "within1": {
+          "error": -0.6111111111111112,
+          "relativeError": -0.7857142857142857
+        },
+        "within2": {
+          "error": -0.38888888888888884,
+          "relativeError": -0.38888888888888884
+        },
+        "final600Span": {
+          "error": -0.935745022882621,
+          "relativeError": -0.37429800915304834
+        },
+        "post200Cv": {
+          "error": -0.022857491797563002,
+          "relativeError": -0.7760430992264812
+        },
+        "last200Difference": {
+          "error": -0.2257314704782214,
+          "relativeError": -1.128657352391101
+        }
+      }
+    },
+    {
+      "id": "241027",
+      "length": 2000,
+      "metrics": {
+        "winnerTime": {
+          "error": -3.1058043199496836,
+          "relativeError": -0.02647744518286177
+        },
+        "winnerFinal600": {
+          "error": 0.7230649175419188,
+          "relativeError": 0.022248151308982056
+        },
+        "first200": {
+          "error": 0.6124905225347632,
+          "relativeError": 0.047850822073028265
+        },
+        "first400": {
+          "error": 0.6012376388435996,
+          "relativeError": 0.024742289664345662
+        },
+        "first600": {
+          "error": 0.48255002058431984,
+          "relativeError": 0.013441504751652289
+        },
+        "remainingSpeed": {
+          "error": 0.6355040707991861,
+          "relativeError": 0.03689454188806396
+        },
+        "tailSeconds": {
+          "error": 4.828913873581783,
+          "relativeError": 4.389921703256133
+        },
+        "within1": {
+          "error": -0.6666666666666667,
+          "relativeError": -0.7142857142857143
+        },
+        "within2": {
+          "error": -0.6,
+          "relativeError": -0.6
+        },
+        "final600Span": {
+          "error": -0.27095687762604115,
+          "relativeError": -0.12902708458382905
+        },
+        "post200Cv": {
+          "error": -0.012840443696750569,
+          "relativeError": -0.45439974486535495
+        },
+        "last200Difference": {
+          "error": -0.4521839796669074,
+          "relativeError": -1.1304599491672676
+        }
+      }
+    },
+    {
+      "id": "241124",
+      "length": 2400,
+      "metrics": {
+        "winnerTime": {
+          "error": -5.760013682044104,
+          "relativeError": -0.039587722900646716
+        },
+        "winnerFinal600": {
+          "error": 1.2557768470670823,
+          "relativeError": 0.038402961684008696
+        },
+        "first200": {
+          "error": 0.5587299200469982,
+          "relativeError": 0.04399448189346433
+        },
+        "first400": {
+          "error": 0.7286279009820227,
+          "relativeError": 0.030233522862324502
+        },
+        "first600": {
+          "error": -0.7375636781379598,
+          "relativeError": -0.019880422591319724
+        },
+        "remainingSpeed": {
+          "error": 0.8276165523737937,
+          "relativeError": 0.0499579446160181
+        },
+        "tailSeconds": {
+          "error": 4.7092829602337645,
+          "relativeError": 2.1405831637426314
+        },
+        "within1": {
+          "error": -0.5714285714285714,
+          "relativeError": -0.7272727272727273
+        },
+        "within2": {
+          "error": -0.7142857142857143,
+          "relativeError": -0.7692307692307693
+        },
+        "final600Span": {
+          "error": 3.1606688920889354,
+          "relativeError": 1.2642675568355743
+        },
+        "post200Cv": {
+          "error": -0.04454540554244021,
+          "relativeError": -0.7535987079041302
+        },
+        "last200Difference": {
+          "error": -0.8770488021551035,
+          "relativeError": -2.9234960071836884
+        }
+      }
+    },
+    {
+      "id": "241020",
+      "length": 3000,
+      "metrics": {
+        "winnerTime": {
+          "error": -3.4603452130808705,
+          "relativeError": -0.018796008761981953
+        },
+        "winnerFinal600": {
+          "error": -0.03610380576535732,
+          "relativeError": -0.001014151847341549
+        },
+        "first200": {
+          "error": 1.3134190983214324,
+          "relativeError": 0.10423961097789136
+        },
+        "first400": {
+          "error": 1.340526994350455,
+          "relativeError": 0.05449296725001851
+        },
+        "first600": {
+          "error": 0.8654345348004853,
+          "relativeError": 0.02339012256217532
+        },
+        "remainingSpeed": {
+          "error": 0.46746697569135165,
+          "relativeError": 0.028632352261095395
+        },
+        "tailSeconds": {
+          "error": -7.16792169643665,
+          "relativeError": -0.4594821600279906
+        },
+        "within1": {
+          "error": -0.2777777777777778,
+          "relativeError": -0.8333333333333334
+        },
+        "within2": {
+          "error": -0.22222222222222224,
+          "relativeError": -0.5714285714285714
+        },
+        "final600Span": {
+          "error": -12.430875485820458,
+          "relativeError": -0.8232367871404276
+        },
+        "post200Cv": {
+          "error": -0.024532108672080534,
+          "relativeError": -0.8168275537783468
+        },
+        "last200Difference": {
+          "error": -0.36037933594961835,
+          "relativeError": -1.2012644531653986
+        }
+      }
+    },
+    {
+      "id": "240428",
+      "length": 3200,
+      "metrics": {
+        "winnerTime": {
+          "error": -0.40935205819607745,
+          "relativeError": -0.002107889074130176
+        },
+        "winnerFinal600": {
+          "error": 0.6494202967034823,
+          "relativeError": 0.01855486562009956
+        },
+        "first200": {
+          "error": 1.3193970823143992,
+          "relativeError": 0.10307789705581238
+        },
+        "first400": {
+          "error": 1.7061703444761243,
+          "relativeError": 0.06963960589698459
+        },
+        "first600": {
+          "error": 1.9079040285313127,
+          "relativeError": 0.05212852536970791
+        },
+        "remainingSpeed": {
+          "error": 0.15912461205264705,
+          "relativeError": 0.00962173487545015
+        },
+        "tailSeconds": {
+          "error": 3.585549440901758,
+          "relativeError": 0.6181981794658191
+        },
+        "within1": {
+          "error": -0.31985294117647056,
+          "relativeError": -0.73109243697479
+        },
+        "within2": {
+          "error": -0.5073529411764706,
+          "relativeError": -0.8117647058823529
+        },
+        "final600Span": {
+          "error": 0.03663528074066136,
+          "relativeError": 0.006209369617061311
+        },
+        "post200Cv": {
+          "error": -0.03194636285688829,
+          "relativeError": -0.7854158199954848
+        },
+        "last200Difference": {
+          "error": -0.42573645770445445,
+          "relativeError": -1.0643411442611352
+        }
+      }
+    }
+  ],
+  "gateFailures": [
+    {
+      "id": "230430",
+      "gate": "leading600Within10pct"
+    },
+    {
+      "id": "230430",
+      "gate": "leading200Within10pct"
+    },
+    {
+      "id": "241020",
+      "gate": "leading200Within10pct"
+    },
+    {
+      "id": "240428",
+      "gate": "leading200Within10pct"
+    }
+  ],
+  "physical": {
+    "medianPost200ActualV": 17.22272377327967,
+    "medianPost200RequestedV": 17.310258354483953,
+    "medianPeakV": 18.58382863748177,
+    "medianMeanActualPower": 75.7704596926828,
+    "medianMeanOxygenOutput": 52.38781446034092,
+    "medianFinishReserve": 0.05854824322687504,
+    "medianRunCpuSeconds": 154.055,
+    "medianRunWallSeconds": 420.6899164
+  },
+  "cohortDiagnostics": [
+    {
+      "id": "240428",
+      "inputHash": "7c7c2f303c9dafa26494e3b05f0ab23776666d017e6d9d1ffe540f554687a5a9",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 3200,
+          "course": "京都芝外A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "右回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 198.07495398177412,
+          "slowSeconds": 201.61032145341863
+        },
+        "candidates": 68,
+        "requested": 17,
+        "selected": 17,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 48,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h40",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 193.79828092153898,
+              "requestedV": 16.684147475233964,
+              "required": 3413.6938104565984,
+              "capacity": 3527.6493449488653,
+              "aerobic": 57.22278976072725,
+              "maxV": 19.5242535549995,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h51",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 199.75308630584254,
+              "requestedV": 16.18251594105297,
+              "required": 3242.777119107775,
+              "capacity": 3335.1626171077833,
+              "aerobic": 55.32712110143136,
+              "maxV": 19.422014992260635,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h8",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 200.6996495893336,
+              "requestedV": 16.100823568350314,
+              "required": 2948.711465989588,
+              "capacity": 3027.618490347825,
+              "aerobic": 54.097529414318224,
+              "maxV": 19.280635114066406,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h52",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 200.64592727098534,
+              "requestedV": 16.106761608272326,
+              "required": 2916.7525050256495,
+              "capacity": 3014.1611535297593,
+              "aerobic": 53.774309071214496,
+              "maxV": 19.367468154720562,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h64",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 195.66885388425803,
+              "requestedV": 16.52364979393068,
+              "required": 3083.7037296112344,
+              "capacity": 3179.613396836852,
+              "aerobic": 57.32568779394962,
+              "maxV": 19.369051287216333,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h22",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 199.60697116914054,
+              "requestedV": 16.190733905694106,
+              "required": 3221.0097478369817,
+              "capacity": 3304.039516867546,
+              "aerobic": 54.55957384207286,
+              "maxV": 19.35267738429875,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 197.62636446607561,
+              "requestedV": 16.355198709682533,
+              "required": 2939.2171696928963,
+              "capacity": 3016.9508157900887,
+              "aerobic": 56.548153457514935,
+              "maxV": 19.358520907553725,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h30",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 196.65103102043562,
+              "requestedV": 16.439373555625153,
+              "required": 3255.023641552692,
+              "capacity": 3367.8022047024688,
+              "aerobic": 55.92949273938453,
+              "maxV": 19.383236334476376,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h31",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 200.59479122332075,
+              "requestedV": 16.105652879861925,
+              "required": 3164.4200045039347,
+              "capacity": 3222.0812566682,
+              "aerobic": 52.91283302186243,
+              "maxV": 19.486718119138345,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h1",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 201.52971381578627,
+              "requestedV": 16.033783571349254,
+              "required": 3158.7216757098363,
+              "capacity": 3229.2467976531248,
+              "aerobic": 53.55846109500229,
+              "maxV": 19.356120560124552,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h18",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 193.9943460492174,
+              "requestedV": 16.668265218263926,
+              "required": 3143.3252172130487,
+              "capacity": 3233.0959767107506,
+              "aerobic": 57.17250480798036,
+              "maxV": 19.42758636561298,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h62",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 197.0594186216577,
+              "requestedV": 16.404283291580107,
+              "required": 3205.640555729428,
+              "capacity": 3314.4183455823454,
+              "aerobic": 55.24031294615259,
+              "maxV": 19.41864364901678,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h61",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 200.73161050817941,
+              "requestedV": 16.10142742429477,
+              "required": 2861.966329640157,
+              "capacity": 2923.7210270533337,
+              "aerobic": 54.72803419696297,
+              "maxV": 19.320999613720005,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h13",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 197.27752046947938,
+              "requestedV": 16.38846535942355,
+              "required": 3236.309384648698,
+              "capacity": 3350.3821107892554,
+              "aerobic": 56.090018168525404,
+              "maxV": 19.360129508412545,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h44",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 200.23185971421174,
+              "requestedV": 16.13862823525276,
+              "required": 3261.2358172951253,
+              "capacity": 3332.5259024369298,
+              "aerobic": 53.88928525524959,
+              "maxV": 19.447378133128147,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h35",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 200.30196938732183,
+              "requestedV": 16.13385086842768,
+              "required": 3090.15984742404,
+              "capacity": 3153.210363607877,
+              "aerobic": 53.98606576021007,
+              "maxV": 19.321678749114007,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h17",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 197.97565359336087,
+              "requestedV": 16.32522394502287,
+              "required": 3225.3020802898795,
+              "capacity": 3293.887491466256,
+              "aerobic": 56.12758383046835,
+              "maxV": 19.439794361088456,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "241124",
+      "inputHash": "ea9434426a5b90801250aad7e227fcde09fa1754074cc5206890c627bf063342",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 2400,
+          "course": "東京芝A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "左回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 143.54972735652706,
+          "slowSeconds": 146.3176530710442
+        },
+        "candidates": 56,
+        "requested": 14,
+        "selected": 14,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 35,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h36",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 141.16617054889068,
+              "requestedV": 17.25521118936209,
+              "required": 3046.5269148022903,
+              "capacity": 3158.412298289826,
+              "aerobic": 58.30861067309975,
+              "maxV": 19.40150141337841,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h9",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 140.43598922566565,
+              "requestedV": 17.343882278204173,
+              "required": 3240.882790947049,
+              "capacity": 3336.5718699001477,
+              "aerobic": 57.2679345567042,
+              "maxV": 19.46651956601017,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h48",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.69524648827718,
+              "requestedV": 16.82779281224964,
+              "required": 2928.4062297044366,
+              "capacity": 3002.2859493777037,
+              "aerobic": 56.809312374957656,
+              "maxV": 19.23814201805462,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h51",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 143.61280047501893,
+              "requestedV": 16.952918179554075,
+              "required": 3056.417770058244,
+              "capacity": 3140.184564580303,
+              "aerobic": 54.75290918754181,
+              "maxV": 19.422745075705024,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h22",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 146.23565123527592,
+              "requestedV": 16.64215465214187,
+              "required": 2787.5839370200893,
+              "capacity": 2883.1659460292312,
+              "aerobic": 55.3694067003958,
+              "maxV": 19.243681818364273,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h2",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.5013579261369,
+              "requestedV": 16.84456073672112,
+              "required": 3072.547597332894,
+              "capacity": 3180.537500925979,
+              "aerobic": 54.57840106344223,
+              "maxV": 19.408368280558367,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h44",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 142.80222188804504,
+              "requestedV": 17.05643624659703,
+              "required": 3151.0679715545484,
+              "capacity": 3270.557038496411,
+              "aerobic": 56.15209531259983,
+              "maxV": 19.431267941227578,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h38",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 146.0100237020696,
+              "requestedV": 16.664989961476323,
+              "required": 3069.9895087365303,
+              "capacity": 3167.6513578671843,
+              "aerobic": 54.089078401251136,
+              "maxV": 19.423649906750885,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h3",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 142.07873167991502,
+              "requestedV": 17.1433234221858,
+              "required": 3355.9671890856025,
+              "capacity": 3466.9612349083645,
+              "aerobic": 55.46232456983234,
+              "maxV": 19.532834685294816,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h35",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 141.88754271028046,
+              "requestedV": 17.167068194106072,
+              "required": 3281.7842157800965,
+              "capacity": 3369.238500814768,
+              "aerobic": 55.649278072414454,
+              "maxV": 19.410721528014275,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h6",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 143.40203962573423,
+              "requestedV": 16.97977276607637,
+              "required": 3081.9568598185997,
+              "capacity": 3175.605624021648,
+              "aerobic": 56.91667960121463,
+              "maxV": 19.341652183176027,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h53",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.60651901444726,
+              "requestedV": 16.836059676609196,
+              "required": 3103.308488312415,
+              "capacity": 3192.4865627974505,
+              "aerobic": 55.889941644890605,
+              "maxV": 19.322724779778593,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h1",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.79976001036138,
+              "requestedV": 16.812402215558556,
+              "required": 3200.8498349379697,
+              "capacity": 3287.7672361448404,
+              "aerobic": 54.9536287171281,
+              "maxV": 19.408236506649608,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h17",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 142.2412892005456,
+              "requestedV": 17.120607962557685,
+              "required": 3143.425939925511,
+              "capacity": 3244.6601166948794,
+              "aerobic": 56.715521932825446,
+              "maxV": 19.506281453948706,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "231126",
+      "inputHash": "0f7c613d4d1d2d84d413cf47e0dd70fcf08e7f93a989234a00d7fec272d08c32",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 2400,
+          "course": "東京芝A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "左回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 143.54972735652706,
+          "slowSeconds": 146.3176530710442
+        },
+        "candidates": 72,
+        "requested": 18,
+        "selected": 18,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 48,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h40",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 145.84039292403043,
+              "requestedV": 16.685300566343365,
+              "required": 3148.0312908019787,
+              "capacity": 3265.1033960768023,
+              "aerobic": 54.02876588947671,
+              "maxV": 19.37120067749487,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h34",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.93043695446102,
+              "requestedV": 16.800215959437416,
+              "required": 2961.4780738765194,
+              "capacity": 3055.697936464369,
+              "aerobic": 55.752300431983166,
+              "maxV": 19.243012807429785,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h9",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 140.43598922566565,
+              "requestedV": 17.343882278204173,
+              "required": 3240.882790947049,
+              "capacity": 3336.5718699001477,
+              "aerobic": 57.2679345567042,
+              "maxV": 19.46651956601017,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h15",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.235789781142,
+              "requestedV": 16.881304365499695,
+              "required": 3015.1068912553005,
+              "capacity": 3104.5550594706087,
+              "aerobic": 55.680274871789294,
+              "maxV": 19.376101002617155,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h2",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.5013579261369,
+              "requestedV": 16.84456073672112,
+              "required": 3072.547597332894,
+              "capacity": 3180.537500925979,
+              "aerobic": 54.57840106344223,
+              "maxV": 19.408368280558367,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h38",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 146.0100237020696,
+              "requestedV": 16.664989961476323,
+              "required": 3069.9895087365303,
+              "capacity": 3167.6513578671843,
+              "aerobic": 54.089078401251136,
+              "maxV": 19.423649906750885,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h17",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 142.2412892005456,
+              "requestedV": 17.120607962557685,
+              "required": 3143.425939925511,
+              "capacity": 3244.6601166948794,
+              "aerobic": 56.715521932825446,
+              "maxV": 19.506281453948706,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h31",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 143.23628226314392,
+              "requestedV": 17.001931486590436,
+              "required": 3310.735737103625,
+              "capacity": 3422.074346055393,
+              "aerobic": 55.84801294667553,
+              "maxV": 19.480434301458168,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h65",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 145.24166954816042,
+              "requestedV": 16.75455198108996,
+              "required": 3221.238893093085,
+              "capacity": 3314.0783061272004,
+              "aerobic": 54.67651545593459,
+              "maxV": 19.454043491397336,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h35",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 141.88754271028046,
+              "requestedV": 17.167068194106072,
+              "required": 3281.7842157800965,
+              "capacity": 3369.238500814768,
+              "aerobic": 55.649278072414454,
+              "maxV": 19.410721528014275,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h71",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 146.00874264558882,
+              "requestedV": 16.668740267435997,
+              "required": 2928.2137078899614,
+              "capacity": 3030.681378001813,
+              "aerobic": 54.54010285471892,
+              "maxV": 19.35139022646549,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h53",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.60651901444726,
+              "requestedV": 16.836059676609196,
+              "required": 3103.308488312415,
+              "capacity": 3192.4865627974505,
+              "aerobic": 55.889941644890605,
+              "maxV": 19.322724779778593,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h57",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 143.39407444091174,
+              "requestedV": 16.97613254395805,
+              "required": 3284.2499127137826,
+              "capacity": 3401.66312137231,
+              "aerobic": 54.6135931233963,
+              "maxV": 19.412339134189274,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h58",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.59533285517318,
+              "requestedV": 16.83883099522948,
+              "required": 3138.80660261923,
+              "capacity": 3228.9680906413473,
+              "aerobic": 54.49267589403093,
+              "maxV": 19.32599416948731,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h51",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 143.61280047501893,
+              "requestedV": 16.952918179554075,
+              "required": 3056.417770058244,
+              "capacity": 3140.184564580303,
+              "aerobic": 54.75290918754181,
+              "maxV": 19.422745075705024,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h1",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.79976001036138,
+              "requestedV": 16.812402215558556,
+              "required": 3200.8498349379697,
+              "capacity": 3287.7672361448404,
+              "aerobic": 54.9536287171281,
+              "maxV": 19.408236506649608,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h6",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 143.40203962573423,
+              "requestedV": 16.97977276607637,
+              "required": 3081.9568598185997,
+              "capacity": 3175.605624021648,
+              "aerobic": 56.91667960121463,
+              "maxV": 19.341652183176027,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h41",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 144.10143259535465,
+              "requestedV": 16.897088092443838,
+              "required": 2993.049855840124,
+              "capacity": 3101.3732904053177,
+              "aerobic": 56.608486651997275,
+              "maxV": 19.31951629204414,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "241027",
+      "inputHash": "fffe4a3472c9f01c584dfba387d9d17de2870ca4fb9930827ec6b0e2c204d190",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 2000,
+          "course": "東京芝A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "左回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 116.55495757259443,
+          "slowSeconds": 118.7527226671803
+        },
+        "candidates": 60,
+        "requested": 15,
+        "selected": 15,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 44,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h4",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.10985168085818,
+              "requestedV": 17.699572474979774,
+              "required": 3263.0408621400543,
+              "capacity": 3390.9536025075354,
+              "aerobic": 57.332676438986134,
+              "maxV": 19.468667630611915,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h56",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 113.64171871613459,
+              "requestedV": 17.93317955797471,
+              "required": 3391.9778966132994,
+              "capacity": 3513.4015661369076,
+              "aerobic": 55.96069896916319,
+              "maxV": 19.549324531781497,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h45",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 118.4864341020061,
+              "requestedV": 17.177579862587244,
+              "required": 2874.7522099314865,
+              "capacity": 2986.060391141009,
+              "aerobic": 54.79566761026122,
+              "maxV": 19.27560737588491,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h41",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.9700281143542,
+              "requestedV": 17.56946742898793,
+              "required": 3273.529557155936,
+              "capacity": 3379.0311817347306,
+              "aerobic": 56.312457153549786,
+              "maxV": 19.43076503004806,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h32",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 117.23449649552437,
+              "requestedV": 17.369687676060337,
+              "required": 3243.722327760921,
+              "capacity": 3374.992038398236,
+              "aerobic": 55.09389678586647,
+              "maxV": 19.496143699871958,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h11",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 118.68185397858728,
+              "requestedV": 17.150418195683542,
+              "required": 2904.4827775391327,
+              "capacity": 3028.438007010054,
+              "aerobic": 54.96767204071432,
+              "maxV": 19.280930598179715,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h53",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 118.30824238070076,
+              "requestedV": 17.207295133780946,
+              "required": 2765.038188544848,
+              "capacity": 2883.5140127889,
+              "aerobic": 54.88582799344528,
+              "maxV": 19.383187181296947,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h8",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 116.28107009517024,
+              "requestedV": 17.517054081194544,
+              "required": 2983.861513268263,
+              "capacity": 3080.134309572866,
+              "aerobic": 56.86243648827672,
+              "maxV": 19.371655703902217,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h15",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 116.95287321972246,
+              "requestedV": 17.409221139196,
+              "required": 3098.8899806936706,
+              "capacity": 3224.6936439049314,
+              "aerobic": 55.905516000226136,
+              "maxV": 19.394491607263003,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h31",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 116.47490129722286,
+              "requestedV": 17.488147546525365,
+              "required": 3206.6675725301643,
+              "capacity": 3322.7213945744675,
+              "aerobic": 55.546627590876064,
+              "maxV": 19.484292319602194,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h51",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 118.6549202048638,
+              "requestedV": 17.155436511433678,
+              "required": 3157.556560563528,
+              "capacity": 3270.2969980478515,
+              "aerobic": 53.536771003902885,
+              "maxV": 19.434429691279007,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h43",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 116.06763501745942,
+              "requestedV": 17.553807252463685,
+              "required": 3344.3750280796753,
+              "capacity": 3457.5115418457895,
+              "aerobic": 55.376096328708535,
+              "maxV": 19.449336232365138,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h42",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.68022234329341,
+              "requestedV": 17.608062174278043,
+              "required": 3257.5609513009204,
+              "capacity": 3376.2962622894906,
+              "aerobic": 54.948133093748886,
+              "maxV": 19.510657468499684,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h7",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 118.1711593965236,
+              "requestedV": 17.22783255713449,
+              "required": 2809.7305876478267,
+              "capacity": 2902.5002259629896,
+              "aerobic": 56.89683907620162,
+              "maxV": 19.29675675448067,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.83330164334167,
+              "requestedV": 17.590034877851288,
+              "required": 2932.8309772307634,
+              "capacity": 3043.952082912228,
+              "aerobic": 57.68913337343129,
+              "maxV": 19.274723001001874,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "230430",
+      "inputHash": "3b0f4a735a6cece0e3342dabb9885665cb26bdaa578c1f205100af0f5500af0e",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 3200,
+          "course": "京都芝外A",
+          "surface": "草地",
+          "state": "稍重",
+          "dir": "右回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 200.78887397413925,
+          "slowSeconds": 204.40283100441954
+        },
+        "candidates": 68,
+        "requested": 17,
+        "selected": 17,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 46,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h40",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 196.40724154911408,
+              "requestedV": 16.4582299461617,
+              "required": 3459.4150822470224,
+              "capacity": 3527.6493449488653,
+              "aerobic": 57.22278976072725,
+              "maxV": 19.5242535549995,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h51",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 202.91104165552264,
+              "requestedV": 15.925921956798895,
+              "required": 3223.4870011281723,
+              "capacity": 3335.1626171077833,
+              "aerobic": 55.32712110143136,
+              "maxV": 19.422014992260635,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h8",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 203.8634293309897,
+              "requestedV": 15.846438644693025,
+              "required": 2919.931135160096,
+              "capacity": 3027.618490347825,
+              "aerobic": 54.097529414318224,
+              "maxV": 19.280635114066406,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h49",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 198.9833542223469,
+              "requestedV": 16.24000115340527,
+              "required": 3038.14741630633,
+              "capacity": 3098.2809073603944,
+              "aerobic": 57.37830020878109,
+              "maxV": 19.413754456521787,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h65",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 201.8128486486319,
+              "requestedV": 16.01030281429113,
+              "required": 3075.055244274524,
+              "capacity": 3168.0829131837236,
+              "aerobic": 55.67447239864291,
+              "maxV": 19.326654512051615,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h25",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 201.65644638541445,
+              "requestedV": 16.02229235191287,
+              "required": 3181.197965180701,
+              "capacity": 3281.2080478674497,
+              "aerobic": 55.7552431969529,
+              "maxV": 19.381851803880565,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 200.70475834942272,
+              "requestedV": 16.099596820502008,
+              "required": 2922.6673469387188,
+              "capacity": 3016.9508157900887,
+              "aerobic": 56.548153457514935,
+              "maxV": 19.358520907553725,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h30",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 199.31601415599735,
+              "requestedV": 16.215383996364736,
+              "required": 3295.735773733787,
+              "capacity": 3367.8022047024688,
+              "aerobic": 55.92949273938453,
+              "maxV": 19.383236334476376,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h35",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 203.46013719676768,
+              "requestedV": 15.878824637972771,
+              "required": 3062.9730548897373,
+              "capacity": 3153.210363607877,
+              "aerobic": 53.98606576021007,
+              "maxV": 19.321678749114007,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h2",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 201.07930169747772,
+              "requestedV": 16.0690083831815,
+              "required": 2819.799641551796,
+              "capacity": 2875.3709596807603,
+              "aerobic": 56.19403003802021,
+              "maxV": 19.36022565327366,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h18",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 196.96895843561884,
+              "requestedV": 16.411584181301222,
+              "required": 3139.594196895899,
+              "capacity": 3233.0959767107506,
+              "aerobic": 57.17250480798036,
+              "maxV": 19.42758636561298,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h62",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 199.7422262985003,
+              "requestedV": 16.179809647941205,
+              "required": 3242.931842764805,
+              "capacity": 3314.4183455823454,
+              "aerobic": 55.24031294615259,
+              "maxV": 19.41864364901678,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h61",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 203.90258355834044,
+              "requestedV": 15.846411805330394,
+              "required": 2851.469282523651,
+              "capacity": 2923.7210270533337,
+              "aerobic": 54.72803419696297,
+              "maxV": 19.320999613720005,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h13",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 199.95464896166385,
+              "requestedV": 16.164791713800717,
+              "required": 3283.9890586523543,
+              "capacity": 3350.3821107892554,
+              "aerobic": 56.090018168525404,
+              "maxV": 19.360129508412545,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h44",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 203.4136934722948,
+              "requestedV": 15.88163795192263,
+              "required": 3235.6517771809117,
+              "capacity": 3332.5259024369298,
+              "aerobic": 53.88928525524959,
+              "maxV": 19.447378133128147,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h31",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 203.79773810341916,
+              "requestedV": 15.84804790925039,
+              "required": 3141.1163348627365,
+              "capacity": 3222.0812566682,
+              "aerobic": 52.91283302186243,
+              "maxV": 19.486718119138345,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h17",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 201.0826309786183,
+              "requestedV": 16.068352158130864,
+              "required": 3219.354612067643,
+              "capacity": 3293.887491466256,
+              "aerobic": 56.12758383046835,
+              "maxV": 19.439794361088456,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "231022",
+      "inputHash": "5fbfa1e312c70a89cacbef141edb02a9f5b19adddfeeb12f70e29e58092e782a",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 3000,
+          "course": "京都芝外A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "右回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 184.0448269617871,
+          "slowSeconds": 187.30794669917958
+        },
+        "candidates": 68,
+        "requested": 17,
+        "selected": 17,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 46,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h13",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.68465801271697,
+              "requestedV": 16.239320699221814,
+              "required": 3311.174555347868,
+              "capacity": 3411.3878926193574,
+              "aerobic": 53.535140854519604,
+              "maxV": 19.492779070563422,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h48",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.19445468249907,
+              "requestedV": 16.285615513285805,
+              "required": 2808.4025898585537,
+              "capacity": 2867.753375902155,
+              "aerobic": 55.524304555132986,
+              "maxV": 19.31231449113269,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h65",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 184.38188432549626,
+              "requestedV": 16.447378851803645,
+              "required": 2877.4324240579945,
+              "capacity": 2980.5052913491036,
+              "aerobic": 56.46330604541153,
+              "maxV": 19.31530325147741,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h7",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 185.93009561537585,
+              "requestedV": 16.311250253708153,
+              "required": 3316.443594883336,
+              "capacity": 3428.6807877067477,
+              "aerobic": 54.16067545950739,
+              "maxV": 19.422554529876088,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h31",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.89732504640506,
+              "requestedV": 16.49118775789505,
+              "required": 3165.201280082666,
+              "capacity": 3248.4552552953833,
+              "aerobic": 55.501902088297996,
+              "maxV": 19.44640031438635,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h9",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 184.678597566642,
+              "requestedV": 16.41974569194162,
+              "required": 3404.3661373269956,
+              "capacity": 3479.280668534361,
+              "aerobic": 53.53027234758017,
+              "maxV": 19.477001904734077,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h56",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 184.2335705075381,
+              "requestedV": 16.462240546374133,
+              "required": 3146.6435684269,
+              "capacity": 3223.075354657322,
+              "aerobic": 56.6888571670347,
+              "maxV": 19.4111122851037,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h41",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 187.04793633476038,
+              "requestedV": 16.21198008959591,
+              "required": 3254.1280168184144,
+              "capacity": 3342.436016488541,
+              "aerobic": 53.56091527084327,
+              "maxV": 19.418771373478418,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h55",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 184.13042960692223,
+              "requestedV": 16.47192232745087,
+              "required": 3283.641954321502,
+              "capacity": 3354.949679363961,
+              "aerobic": 54.591078726740186,
+              "maxV": 19.46211033807839,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h43",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.29936643942906,
+              "requestedV": 16.27361293131707,
+              "required": 2910.884161445756,
+              "capacity": 2974.3487832968126,
+              "aerobic": 55.60590286255851,
+              "maxV": 19.29757750799602,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h22",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 187.14313580094947,
+              "requestedV": 16.201158162654053,
+              "required": 2780.7067425930163,
+              "capacity": 2838.495074581343,
+              "aerobic": 55.02772331448757,
+              "maxV": 19.286730070551506,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h8",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.31133922733528,
+              "requestedV": 16.276524583186266,
+              "required": 3128.052793594712,
+              "capacity": 3219.2031880342865,
+              "aerobic": 53.58091376593374,
+              "maxV": 19.37971225684667,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h12",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.0017493855801,
+              "requestedV": 16.303003318412458,
+              "required": 2898.137753134139,
+              "capacity": 2978.333447375358,
+              "aerobic": 56.45180798428356,
+              "maxV": 19.294587796715742,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h11",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.85697418097448,
+              "requestedV": 16.494026984062742,
+              "required": 3264.2349298255454,
+              "capacity": 3376.3560114559136,
+              "aerobic": 56.4690606773153,
+              "maxV": 19.449861466286013,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 180.85493905986294,
+              "requestedV": 16.775117131883583,
+              "required": 3275.415500739955,
+              "capacity": 3367.507324057189,
+              "aerobic": 55.99604706394709,
+              "maxV": 19.440233033856398,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h49",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.98243422589974,
+              "requestedV": 16.485903658480794,
+              "required": 3263.0143914932924,
+              "capacity": 3358.273303039884,
+              "aerobic": 56.48634698235225,
+              "maxV": 19.439958745576586,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h54",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 182.86052481910673,
+              "requestedV": 16.584578843752517,
+              "required": 2830.126391181571,
+              "capacity": 2894.8436394495657,
+              "aerobic": 56.55409286242351,
+              "maxV": 19.365422042355974,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "231029",
+      "inputHash": "50a9190157d18d1656c8887f67e384e0bbff6defed539397b5e41e6ae4186c19",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 2000,
+          "course": "東京芝A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "左回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 116.55495757259443,
+          "slowSeconds": 118.7527226671803
+        },
+        "candidates": 44,
+        "requested": 11,
+        "selected": 11,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 34,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.83330164334167,
+              "requestedV": 17.590034877851288,
+              "required": 2932.8309772307634,
+              "capacity": 3043.952082912228,
+              "aerobic": 57.68913337343129,
+              "maxV": 19.274723001001874,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h13",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.03298283705352,
+              "requestedV": 17.711699665159436,
+              "required": 3132.314866337295,
+              "capacity": 3237.30052827131,
+              "aerobic": 57.377393736398226,
+              "maxV": 19.446266874588716,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h27",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 114.29632013254125,
+              "requestedV": 17.83235991627059,
+              "required": 3231.412551665579,
+              "capacity": 3357.979080750514,
+              "aerobic": 56.88172613302917,
+              "maxV": 19.473250058851505,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h29",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 113.90993217310911,
+              "requestedV": 17.894795316939874,
+              "required": 3365.4429447262896,
+              "capacity": 3482.000426988804,
+              "aerobic": 56.93152702093813,
+              "maxV": 19.47113434616245,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h7",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 118.1711593965236,
+              "requestedV": 17.22783255713449,
+              "required": 2809.7305876478267,
+              "capacity": 2902.5002259629896,
+              "aerobic": 56.89683907620162,
+              "maxV": 19.29675675448067,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h17",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.60395420621944,
+              "requestedV": 17.622334919547285,
+              "required": 2966.086937147204,
+              "capacity": 3060.2547811411787,
+              "aerobic": 56.9451797073042,
+              "maxV": 19.38213452693263,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h18",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 114.31899850918947,
+              "requestedV": 17.833127894934393,
+              "required": 3226.2497390335025,
+              "capacity": 3337.93391696373,
+              "aerobic": 57.44886086982852,
+              "maxV": 19.332390284314855,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h38",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 117.04389871163212,
+              "requestedV": 17.399636337001965,
+              "required": 3003.5247485290565,
+              "capacity": 3130.8768041325034,
+              "aerobic": 55.78950362765491,
+              "maxV": 19.383586232322237,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h10",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 115.6154908708716,
+              "requestedV": 17.623802708736598,
+              "required": 3307.2606014068606,
+              "capacity": 3428.225363143394,
+              "aerobic": 54.546953590348735,
+              "maxV": 19.492041821306472,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h6",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 114.81805321579932,
+              "requestedV": 17.748752511779347,
+              "required": 3362.8572122991604,
+              "capacity": 3490.377032646956,
+              "aerobic": 54.96490387530951,
+              "maxV": 19.48768839744766,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h40",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 118.05500861147739,
+              "requestedV": 17.24685400286229,
+              "required": 3084.865586284085,
+              "capacity": 3191.118637272622,
+              "aerobic": 54.665386986271855,
+              "maxV": 19.391885953855038,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "231001",
+      "inputHash": "82053827f67bd0d976cc5cd392be3a3222e2aea5cf41e1c0e96dad320e043690",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 1200,
+          "course": "中山芝外A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "右回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 65.00607569265757,
+          "slowSeconds": 65.47989301914214
+        },
+        "candidates": 64,
+        "requested": 16,
+        "selected": 16,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 41,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h5",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.12264095014106,
+              "requestedV": 19.307293221127434,
+              "required": 2812.032354180846,
+              "capacity": 3016.6894529928336,
+              "aerobic": 56.113709088007354,
+              "maxV": 19.33920573232338,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h24",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.12562571225243,
+              "requestedV": 19.424989906607045,
+              "required": 2814.249973709682,
+              "capacity": 3151.6836948986165,
+              "aerobic": 54.3902202494828,
+              "maxV": 19.457132743997665,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h16",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.44320584438248,
+              "requestedV": 19.33991851818658,
+              "required": 2920.5773125052606,
+              "capacity": 3308.3959730242264,
+              "aerobic": 53.76619907143377,
+              "maxV": 19.371894875365026,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h11",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.9850631208904,
+              "requestedV": 19.165687593979385,
+              "required": 2733.892319315612,
+              "capacity": 2934.6257032602675,
+              "aerobic": 56.829463334652786,
+              "maxV": 19.422285809756836,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h21",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.11178600963768,
+              "requestedV": 19.35520369148849,
+              "required": 2793.2711051090278,
+              "capacity": 3232.1637632119355,
+              "aerobic": 55.72680840830952,
+              "maxV": 19.38720996094346,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h18",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.82593023812925,
+              "requestedV": 19.43922516307506,
+              "required": 2877.7986019523532,
+              "capacity": 3482.732093991281,
+              "aerobic": 57.13014545232187,
+              "maxV": 19.471395858110434,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h30",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.3349805607053,
+              "requestedV": 19.40644339407828,
+              "required": 2987.880310674077,
+              "capacity": 3227.2216222824063,
+              "aerobic": 54.060777940907045,
+              "maxV": 19.438549936923838,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h61",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.32698724226009,
+              "requestedV": 19.353171955030604,
+              "required": 2909.234074306752,
+              "capacity": 3213.541390736774,
+              "aerobic": 53.79378118051402,
+              "maxV": 19.385174248484674,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.97660836019784,
+              "requestedV": 19.41893776739682,
+              "required": 2785.633787833143,
+              "capacity": 3222.9489380016457,
+              "aerobic": 55.686458354435494,
+              "maxV": 19.451068761070783,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h32",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.98899104226163,
+              "requestedV": 19.346576773226623,
+              "required": 2747.2204225014466,
+              "capacity": 3456.380723048863,
+              "aerobic": 57.39296917888373,
+              "maxV": 19.378566160258377,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h58",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.8796106711013,
+              "requestedV": 19.378727754389985,
+              "required": 2799.7450186500546,
+              "capacity": 3296.7574329117315,
+              "aerobic": 57.464907347592714,
+              "maxV": 19.410780059193097,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h47",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.2330375921858,
+              "requestedV": 19.331265485358987,
+              "required": 2719.9751646776467,
+              "capacity": 3221.280219806137,
+              "aerobic": 56.89114567045271,
+              "maxV": 19.363224909009396,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h2",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.28434859728922,
+              "requestedV": 19.369483515289,
+              "required": 2840.902523246615,
+              "capacity": 3418.5575869347435,
+              "aerobic": 53.83369676655699,
+              "maxV": 19.401517729604635,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h14",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.89641877310095,
+              "requestedV": 19.246099643740436,
+              "required": 2708.591032900718,
+              "capacity": 3071.9549815029372,
+              "aerobic": 56.24844214166878,
+              "maxV": 19.40631758894498,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h1",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.7758998478887,
+              "requestedV": 19.385207488466314,
+              "required": 2694.3827955405222,
+              "capacity": 3095.6793735619053,
+              "aerobic": 57.174262985424704,
+              "maxV": 19.417272473766637,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h51",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.94915203636675,
+              "requestedV": 19.421822352719577,
+              "required": 2896.6918002092625,
+              "capacity": 3470.8707938993116,
+              "aerobic": 56.306116262918245,
+              "maxV": 19.453958991374606,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "230604",
+      "inputHash": "d740de0a74deaf17979c1a20b213e93b39044c3f0fe886b00c942102cac4df21",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 1600,
+          "course": "東京芝A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "左回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 89.88394013071725,
+          "slowSeconds": 91.67996599604687
+        },
+        "candidates": 72,
+        "requested": 18,
+        "selected": 18,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 54,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h27",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.11714643712327,
+              "requestedV": 17.990476350663144,
+              "required": 2997.3737130804657,
+              "capacity": 3129.8867487504376,
+              "aerobic": 54.02100840553343,
+              "maxV": 19.399837375084463,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h54",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.13854739449846,
+              "requestedV": 18.18999683678578,
+              "required": 3258.0046789642247,
+              "capacity": 3385.7935506332437,
+              "aerobic": 54.50573244276689,
+              "maxV": 19.547400809434723,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h36",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.45273936817627,
+              "requestedV": 18.131655722983815,
+              "required": 3147.3142186630994,
+              "capacity": 3274.344199383003,
+              "aerobic": 55.07939604569636,
+              "maxV": 19.379297526781635,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h59",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.04096493136316,
+              "requestedV": 18.00010435002575,
+              "required": 2883.9945023812184,
+              "capacity": 3023.523072748701,
+              "aerobic": 57.463471663533895,
+              "maxV": 19.375380441819157,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h65",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 88.74248932559836,
+              "requestedV": 18.484999957642373,
+              "required": 3306.660599912607,
+              "capacity": 3462.8789375297606,
+              "aerobic": 56.64877408887148,
+              "maxV": 19.55181623864905,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h71",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 88.59912911219514,
+              "requestedV": 18.522973528820135,
+              "required": 3280.521089422614,
+              "capacity": 3429.5710163007025,
+              "aerobic": 57.19714065095269,
+              "maxV": 19.523414650220186,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h19",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 89.80822626678052,
+              "requestedV": 18.257943037351225,
+              "required": 2927.4082323787175,
+              "capacity": 3077.4596272112103,
+              "aerobic": 56.43069502589246,
+              "maxV": 19.343236056744406,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h32",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.91706608842442,
+              "requestedV": 18.034353707858447,
+              "required": 3115.3321661408554,
+              "capacity": 3256.5102791629033,
+              "aerobic": 55.686632476816136,
+              "maxV": 19.41276993267276,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h53",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 87.45968963754183,
+              "requestedV": 18.778287183432347,
+              "required": 3277.1412499760927,
+              "capacity": 3440.1480160905285,
+              "aerobic": 56.68204951243475,
+              "maxV": 19.45312227681744,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h61",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 88.6557157749357,
+              "requestedV": 18.518753570003323,
+              "required": 3105.141771661899,
+              "capacity": 3237.10832021524,
+              "aerobic": 56.96586878992171,
+              "maxV": 19.348974954406795,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h69",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.81163855683526,
+              "requestedV": 18.057922368051578,
+              "required": 3244.4867996653456,
+              "capacity": 3381.9954423381946,
+              "aerobic": 52.742780079809485,
+              "maxV": 19.438499472158654,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h6",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 88.63972777441766,
+              "requestedV": 18.50815468602706,
+              "required": 3266.7910116649364,
+              "capacity": 3408.7674317653755,
+              "aerobic": 54.922632180084285,
+              "maxV": 19.54203166509553,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h41",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 89.51509736121709,
+              "requestedV": 18.33138469236499,
+              "required": 3000.3096183280177,
+              "capacity": 3145.4494899874435,
+              "aerobic": 57.07996188597679,
+              "maxV": 19.285620254130446,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h49",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 88.63773387646242,
+              "requestedV": 18.510531584950556,
+              "required": 3204.9668323209094,
+              "capacity": 3343.6603636978775,
+              "aerobic": 57.178910658900435,
+              "maxV": 19.407835065071662,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h30",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.35004994484156,
+              "requestedV": 17.9343565111877,
+              "required": 2855.515591599823,
+              "capacity": 2989.2981081578996,
+              "aerobic": 55.122495131579036,
+              "maxV": 19.338441311384834,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h7",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.39863714571148,
+              "requestedV": 18.137164621957822,
+              "required": 3226.832895701448,
+              "capacity": 3371.697204793011,
+              "aerobic": 55.12571117728316,
+              "maxV": 19.45483712620468,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h70",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.32459236109143,
+              "requestedV": 18.148497040629344,
+              "required": 3213.8988891620684,
+              "capacity": 3367.113679799717,
+              "aerobic": 55.7430163907758,
+              "maxV": 19.362933512240982,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h24",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 87.38371653728181,
+              "requestedV": 18.799300093276038,
+              "required": 3298.9934900148987,
+              "capacity": 3455.386293324607,
+              "aerobic": 57.38463241434227,
+              "maxV": 19.441548064547423,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "240602",
+      "inputHash": "6bbfc75bb2908d27092f3e585803e7449f9c7d3b48e1ac41677d5da1174f63ea",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 1600,
+          "course": "東京芝A",
+          "surface": "草地",
+          "state": "稍重",
+          "dir": "左回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 91.4171588017861,
+          "slowSeconds": 93.26659991167276
+        },
+        "candidates": 72,
+        "requested": 18,
+        "selected": 18,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 52,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h27",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 92.6916936937248,
+              "requestedV": 17.670167026931026,
+              "required": 3002.875312138137,
+              "capacity": 3129.8867487504376,
+              "aerobic": 54.02100840553343,
+              "maxV": 19.399837375084463,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h53",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 89.05152657130644,
+              "requestedV": 18.424802134516348,
+              "required": 3268.6482976665475,
+              "capacity": 3440.1480160905285,
+              "aerobic": 56.68204951243475,
+              "maxV": 19.45312227681744,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h35",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.74101783468497,
+              "requestedV": 17.859875100983615,
+              "required": 3277.8892364574594,
+              "capacity": 3417.349461151671,
+              "aerobic": 53.58822901391517,
+              "maxV": 19.468086691999154,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h59",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 92.612031936523,
+              "requestedV": 17.680272700771475,
+              "required": 2888.5323394114093,
+              "capacity": 3023.523072748701,
+              "aerobic": 57.463471663533895,
+              "maxV": 19.375380441819157,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h65",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.24530998459326,
+              "requestedV": 18.16172229673126,
+              "required": 3323.758500749347,
+              "capacity": 3462.8789375297606,
+              "aerobic": 56.64877408887148,
+              "maxV": 19.55181623864905,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h71",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.09269404380342,
+              "requestedV": 18.20025058643302,
+              "required": 3293.90422485188,
+              "capacity": 3429.5710163007025,
+              "aerobic": 57.19714065095269,
+              "maxV": 19.523414650220186,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h19",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.17513350882092,
+              "requestedV": 17.97065959104126,
+              "required": 2954.313070087999,
+              "capacity": 3077.4596272112103,
+              "aerobic": 56.43069502589246,
+              "maxV": 19.343236056744406,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h32",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 92.48510958824278,
+              "requestedV": 17.713791795110932,
+              "required": 3119.9890963269154,
+              "capacity": 3256.5102791629033,
+              "aerobic": 55.686632476816136,
+              "maxV": 19.41276993267276,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h52",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 92.14900563322672,
+              "requestedV": 17.778047936696716,
+              "required": 3185.42559641214,
+              "capacity": 3313.051802421687,
+              "aerobic": 52.562943913628345,
+              "maxV": 19.520437868097638,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h62",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 93.2016976052046,
+              "requestedV": 17.568485328714203,
+              "required": 2947.8136873576414,
+              "capacity": 3080.270454773051,
+              "aerobic": 55.576473015364996,
+              "maxV": 19.321804131951144,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h69",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 92.5377056472537,
+              "requestedV": 17.70475148095442,
+              "required": 3234.2884285159657,
+              "capacity": 3381.9954423381946,
+              "aerobic": 52.742780079809485,
+              "maxV": 19.438499472158654,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h6",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 90.13803565780326,
+              "requestedV": 18.18506813006816,
+              "required": 3273.692836712906,
+              "capacity": 3408.7674317653755,
+              "aerobic": 54.922632180084285,
+              "maxV": 19.54203166509553,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h41",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.01820395496996,
+              "requestedV": 18.013306171776502,
+              "required": 3011.989498135199,
+              "capacity": 3145.4494899874435,
+              "aerobic": 57.07996188597679,
+              "maxV": 19.285620254130446,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h48",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 92.96169968887192,
+              "requestedV": 17.608705073239488,
+              "required": 2983.782437761672,
+              "capacity": 3105.837876519316,
+              "aerobic": 55.333385271814464,
+              "maxV": 19.331128815499167,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h30",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 92.92973443754119,
+              "requestedV": 17.615246329324716,
+              "required": 2853.492811280418,
+              "capacity": 2989.2981081578996,
+              "aerobic": 55.122495131579036,
+              "maxV": 19.338441311384834,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h7",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.95238517316118,
+              "requestedV": 17.81578108433664,
+              "required": 3237.913911657544,
+              "capacity": 3371.697204793011,
+              "aerobic": 55.12571117728316,
+              "maxV": 19.45483712620468,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h70",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 91.86740277477286,
+              "requestedV": 17.82890849546839,
+              "required": 3227.7903776830817,
+              "capacity": 3367.113679799717,
+              "aerobic": 55.7430163907758,
+              "maxV": 19.362933512240982,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h24",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 88.97101562523778,
+              "requestedV": 18.446063709076775,
+              "required": 3294.878799047943,
+              "capacity": 3455.386293324607,
+              "aerobic": 57.38463241434227,
+              "maxV": 19.441548064547423,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "241020",
+      "inputHash": "963a58b6432392807cc08e4a2d04c2e4f10403312f7e9c536264b4432177f519",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 3000,
+          "course": "京都芝外A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "右回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 184.0448269617871,
+          "slowSeconds": 187.30794669917958
+        },
+        "candidates": 72,
+        "requested": 18,
+        "selected": 18,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 49,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 180.85493905986294,
+              "requestedV": 16.775117131883583,
+              "required": 3275.415500739955,
+              "capacity": 3367.507324057189,
+              "aerobic": 55.99604706394709,
+              "maxV": 19.440233033856398,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h49",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.98243422589974,
+              "requestedV": 16.485903658480794,
+              "required": 3263.0143914932924,
+              "capacity": 3358.273303039884,
+              "aerobic": 56.48634698235225,
+              "maxV": 19.439958745576586,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h67",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.38951738278124,
+              "requestedV": 16.266484214923576,
+              "required": 3129.597483426086,
+              "capacity": 3212.5889123693573,
+              "aerobic": 55.44779529850315,
+              "maxV": 19.36732510371294,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h7",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 185.93009561537585,
+              "requestedV": 16.311250253708153,
+              "required": 3316.443594883336,
+              "capacity": 3428.6807877067477,
+              "aerobic": 54.16067545950739,
+              "maxV": 19.422554529876088,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h57",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.28916566293515,
+              "requestedV": 16.544387628672148,
+              "required": 2982.732298402332,
+              "capacity": 3073.1673603491395,
+              "aerobic": 56.01881806355817,
+              "maxV": 19.317003449129743,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h62",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 184.98703680281227,
+              "requestedV": 16.392333541823525,
+              "required": 2940.955604181076,
+              "capacity": 3040.069618150592,
+              "aerobic": 55.77300717487038,
+              "maxV": 19.36485626113042,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h50",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 181.0492310082529,
+              "requestedV": 16.759323984573236,
+              "required": 3255.6252826687632,
+              "capacity": 3324.322773620311,
+              "aerobic": 56.195073120803386,
+              "maxV": 19.498299485015213,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h12",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.0017493855801,
+              "requestedV": 16.303003318412458,
+              "required": 2898.137753134139,
+              "capacity": 2978.333447375358,
+              "aerobic": 56.45180798428356,
+              "maxV": 19.294587796715742,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h33",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 184.16971047527977,
+              "requestedV": 16.466362692918267,
+              "required": 3084.9483376574476,
+              "capacity": 3163.1695845124545,
+              "aerobic": 55.809161944220584,
+              "maxV": 19.377144177610816,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h6",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.66658966718884,
+              "requestedV": 16.516001387419507,
+              "required": 3319.0751240136083,
+              "capacity": 3415.9931066094196,
+              "aerobic": 56.68489918087609,
+              "maxV": 19.437512376149137,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h34",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 179.8186088934457,
+              "requestedV": 16.875844936003723,
+              "required": 3411.175341671233,
+              "capacity": 3525.3102602229924,
+              "aerobic": 57.718588281366976,
+              "maxV": 19.560448967911206,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h43",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 186.29936643942906,
+              "requestedV": 16.27361293131707,
+              "required": 2910.884161445756,
+              "capacity": 2974.3487832968126,
+              "aerobic": 55.60590286255851,
+              "maxV": 19.29757750799602,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h11",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.85697418097448,
+              "requestedV": 16.494026984062742,
+              "required": 3264.2349298255454,
+              "capacity": 3376.3560114559136,
+              "aerobic": 56.4690606773153,
+              "maxV": 19.449861466286013,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h5",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 182.12714523960062,
+              "requestedV": 16.653459933269865,
+              "required": 3272.0664464614592,
+              "capacity": 3341.9364403023847,
+              "aerobic": 55.04592763191108,
+              "maxV": 19.448403496080402,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h18",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.82647701246026,
+              "requestedV": 16.500687488247827,
+              "required": 3110.065585015644,
+              "capacity": 3201.1153713668464,
+              "aerobic": 55.16388935979688,
+              "maxV": 19.418888346752702,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h63",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 183.74869681165663,
+              "requestedV": 16.50534990763316,
+              "required": 3055.0075905793337,
+              "capacity": 3149.0839434308,
+              "aerobic": 56.75172408170401,
+              "maxV": 19.346901070232096,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h55",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 184.13042960692223,
+              "requestedV": 16.47192232745087,
+              "required": 3283.641954321502,
+              "capacity": 3354.949679363961,
+              "aerobic": 54.591078726740186,
+              "maxV": 19.46211033807839,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h41",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 187.04793633476038,
+              "requestedV": 16.21198008959591,
+              "required": 3254.1280168184144,
+              "capacity": 3342.436016488541,
+              "aerobic": 53.56091527084327,
+              "maxV": 19.418771373478418,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    },
+    {
+      "id": "240929",
+      "inputHash": "a9c86c7d62d26d41f1aaf66d311854eed3189946aa3f183ec55863564e2678d5",
+      "diagnostics": {
+        "version": 1,
+        "race": {
+          "length": 1200,
+          "course": "中山芝外A",
+          "surface": "草地",
+          "state": "良",
+          "dir": "右回",
+          "profile": "平坦",
+          "wind": 0
+        },
+        "levelBand": [
+          84,
+          88
+        ],
+        "predictionWindow": {
+          "fastSeconds": 65.01187635019213,
+          "slowSeconds": 65.48601557473611
+        },
+        "candidates": 64,
+        "requested": 16,
+        "selected": 16,
+        "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+        "fastIsNotAdmissionCeiling": true,
+        "eligible": 40,
+        "fallback": 0,
+        "shortage": 0,
+        "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+        "entries": [
+          {
+            "id": "h2",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.29109259405104,
+              "requestedV": 19.369483515289,
+              "required": 2862.4713015778757,
+              "capacity": 3418.5575869347435,
+              "aerobic": 53.83369676655699,
+              "maxV": 19.401517729604635,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h24",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.13232958229744,
+              "requestedV": 19.424989906607045,
+              "required": 2837.692422151644,
+              "capacity": 3151.6836948986165,
+              "aerobic": 54.3902202494828,
+              "maxV": 19.457132743997665,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h16",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.45031477225014,
+              "requestedV": 19.33991851818658,
+              "required": 2942.2456262320566,
+              "capacity": 3308.3959730242264,
+              "aerobic": 53.76619907143377,
+              "maxV": 19.371894875365026,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h12",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.9050139936407,
+              "requestedV": 19.32498521637806,
+              "required": 2724.863256300702,
+              "capacity": 2919.0185775821096,
+              "aerobic": 56.082027593447265,
+              "maxV": 19.38900476624621,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h21",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.11711031552107,
+              "requestedV": 19.35520369148849,
+              "required": 2815.354029653891,
+              "capacity": 3232.1637632119355,
+              "aerobic": 55.72680840830952,
+              "maxV": 19.38720996094346,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h19",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.13807813107117,
+              "requestedV": 19.12965169767444,
+              "required": 2719.6201579505287,
+              "capacity": 3010.1808660859824,
+              "aerobic": 57.1524790379066,
+              "maxV": 19.32091238974173,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h31",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.08763335104567,
+              "requestedV": 19.218774725244124,
+              "required": 2809.3427237254314,
+              "capacity": 3084.806385686097,
+              "aerobic": 56.65159136620052,
+              "maxV": 19.378723193934896,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h61",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.33367621286158,
+              "requestedV": 19.353171955030604,
+              "required": 2931.1210481205317,
+              "capacity": 3213.541390736774,
+              "aerobic": 53.79378118051402,
+              "maxV": 19.385174248484674,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h26",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.98248211280261,
+              "requestedV": 19.41893776739682,
+              "required": 2807.414133930267,
+              "capacity": 3222.9489380016457,
+              "aerobic": 55.686458354435494,
+              "maxV": 19.451068761070783,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h34",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.1489991074694,
+              "requestedV": 19.34510225675089,
+              "required": 2845.018999163316,
+              "capacity": 3332.4008186002034,
+              "aerobic": 55.284429341807964,
+              "maxV": 19.37708875823181,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h58",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.88413007735005,
+              "requestedV": 19.378727754389985,
+              "required": 2822.196819175734,
+              "capacity": 3296.7574329117315,
+              "aerobic": 57.464907347592714,
+              "maxV": 19.410780059193097,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h47",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.2390969450883,
+              "requestedV": 19.331265485358987,
+              "required": 2741.936302918823,
+              "capacity": 3221.280219806137,
+              "aerobic": 56.89114567045271,
+              "maxV": 19.363224909009396,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h5",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.1273286093096,
+              "requestedV": 19.307293221127434,
+              "required": 2834.268749387584,
+              "capacity": 3016.6894529928336,
+              "aerobic": 56.113709088007354,
+              "maxV": 19.33920573232338,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h17",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.10551704708197,
+              "requestedV": 19.32644635634492,
+              "required": 2759.8938299257775,
+              "capacity": 3172.7807924423832,
+              "aerobic": 56.652751416571434,
+              "maxV": 19.35839634921448,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h1",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 64.77990990220451,
+              "requestedV": 19.385207488466314,
+              "required": 2716.5271278957935,
+              "capacity": 3095.6793735619053,
+              "aerobic": 57.174262985424704,
+              "maxV": 19.417272473766637,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          },
+          {
+            "id": "h52",
+            "eligible": true,
+            "forecast": {
+              "version": 1,
+              "seconds": 65.10957790682741,
+              "requestedV": 19.452929310181975,
+              "required": 2886.464270501494,
+              "capacity": 3390.4601862241284,
+              "aerobic": 53.56185325551033,
+              "maxV": 19.48512682350914,
+              "peakPowerShortfall": 0,
+              "feasible": true,
+              "referenceLane": 1.4
+            }
+          }
+        ],
+        "playerReserved": null
+      }
+    }
+  ],
+  "interpretation": "Training events with one predeclared seed per event are a basic calibration screen. All 12 residuals, failure gates, input hashes and power/reserve diagnostics remain separate. Generated entrants are distance/class proxies, not reconstructed real horses; changes in readiness selection prevent attributing outcomes to a single physical parameter."
+}

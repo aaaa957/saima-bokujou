@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "productionInputHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "testedSourceHash": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "generatedAt": "2026-10-03T23:20:12.092Z",
+  "changes": [
+    {
+      "file": "sim.js",
+      "description": "Honor an explicit zero ability maximum in caller qualification",
+      "old": "      h.ability >= (o.abilityMin || 0) && h.ability <= (o.abilityMax || 100) &&",
+      "new": "      h.ability >= (o.abilityMin || 0) && h.ability <= (o.abilityMax !== undefined ? o.abilityMax : 100) &&"
+    },
+    {
+      "file": "sim.js",
+      "description": "Disclose qualified-roster shortage against the requested field size",
+      "old": "      const selected=selectRaceCohort(pool,rng,{...o,n});",
+      "new": "      const selected=selectRaceCohort(pool,rng,{...o,n:o.n||8});"
+    },
+    {
+      "file": "sim.js",
+      "description": "Separate player race qualifications from representative ability bands",
+      "old": "  function raceOptionsForRoster(h, rng, roster, weekNum) {",
+      "new": "  // Same sporting qualification as the weekly schedule. Ability bands are\n  // representative readiness references; stronger entrants are never barred.\n  const PLAYER_RACE_QUALIFICATION = {\n    newcomer:{winsMin:0,winsMax:0,startsMax:0},maiden:{winsMin:0,winsMax:0},\n    cond1:{winsMin:1,winsMax:1},cond2:{winsMin:2,winsMax:2},cond3:{winsMin:3,winsMax:3},\n    open:{winsMin:4,winsMax:99},g3:{winsMin:2,winsMax:99},g2:{winsMin:3,winsMax:99},g1:{winsMin:4,winsMax:99},\n  };\n  function raceOptionsForRoster(h, rng, roster, weekNum) {"
+    },
+    {
+      "file": "sim.js",
+      "description": "Exclude the persisted player identity and apply real win/start qualification before matching",
+      "old": "      const rivals = pickRosterField(roster,rng,weekNum,{ageMin:band[2],ageMax:band[3],abilityMin:band[0],abilityMax:band[1],n:7,tierKey:key,race:{length:dist,surface,state,dir,profile}});",
+      "new": "      const rivals = pickRosterField(roster.filter(rh=>rh.id!==h.id),rng,weekNum,{...PLAYER_RACE_QUALIFICATION[key],ageMin:band[2],ageMax:band[3],abilityMin:band[0],abilityMax:Infinity,n:7,tierKey:key,race:{length:dist,surface,state,dir,profile}});"
+    }
+  ],
+  "notes": [
+    "Sporting wins/start qualification follows the existing weekly schedule; no ability ceiling.",
+    "Exclude all roster entries with the persisted player id before matching. Other duplicated rival ids raise the existing clear selection error.",
+    "No horse identity, supplied biology, behavior, or generation RNG is replaced."
+  ]
+}

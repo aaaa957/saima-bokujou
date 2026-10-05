@@ -1,0 +1,106 @@
+{
+  "reason": "Root explicitly stopped the obsolete exploratory six-arm source after a newer coarse-first/rank controller was adopted. The stop changes the exploration plan because of strategy replacement and measured compute cost, not because unfavorable numerical rows should be dropped.",
+  "pidVerifiedBeforeStop": 15172,
+  "commandVerified": "node --max-old-space-size=192 tests/calibrate-validation-v11.js --source docs/race-validation-v11-mechanism-screen-source.js.gz --expected-source e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f --workers 2 --out docs/calibration-screen-v11-headway.json",
+  "before": {
+    "at": "2026-10-03T23:59:40.138Z",
+    "files": [
+      {
+        "file": "docs/calibration-screen-v11-headway.json",
+        "byteSha256": "0c604f960e9b7a63d68c0e4cee1fc3a656ebce7e756a1a075772e55ddc3de67b",
+        "bytes": 2743553
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.source.js.gz",
+        "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+        "bytes": 70063
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.driver.js.gz",
+        "byteSha256": "355630f7f2628f914cbab12cbcfdb4ff6577cfb4db52dee9952b41e46552058a",
+        "bytes": 11275
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.orchestrator.js.gz",
+        "byteSha256": "b0817595af2a64b93d77614deef833526056b45ccb1c65d6aa6e1a16c002b76c",
+        "bytes": 3977
+      }
+    ],
+    "completeRows": 14,
+    "unfinishedDeclaredJobs": 10,
+    "retainedErrors": 0,
+    "passedEngineeringRows": 14
+  },
+  "knownProgress": "Completed rows are retained verbatim. At stopping, exact physical progress of the uncompleted running job is unknown; it is not counted as zero executions or as a completed full race. Remaining declared jobs are not claimed covered.",
+  "afterTermination": {
+    "at": "2026-10-03T23:59:59.563Z",
+    "files": [
+      {
+        "file": "docs/calibration-screen-v11-headway.json",
+        "byteSha256": "0c604f960e9b7a63d68c0e4cee1fc3a656ebce7e756a1a075772e55ddc3de67b",
+        "bytes": 2743553
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.source.js.gz",
+        "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+        "bytes": 70063
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.driver.js.gz",
+        "byteSha256": "355630f7f2628f914cbab12cbcfdb4ff6577cfb4db52dee9952b41e46552058a",
+        "bytes": 11275
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.orchestrator.js.gz",
+        "byteSha256": "b0817595af2a64b93d77614deef833526056b45ccb1c65d6aa6e1a16c002b76c",
+        "bytes": 3977
+      }
+    ],
+    "completeRows": 14,
+    "unfinishedDeclaredJobs": 10,
+    "retainedErrors": 0,
+    "passedEngineeringRows": 14
+  },
+  "annotatedReportByteSha256": "2964aac79cfd375c8c66aaa9a0bf7a9db26416519f8e28d039e3c765565f1329",
+  "archiveMappings": [
+    {
+      "file": "docs/calibration-screen-v11-headway.json",
+      "gzipFile": "docs/calibration-screen-v11-headway.json.gz",
+      "uncompressedBytes": 2745208,
+      "uncompressedByteSha256": "2964aac79cfd375c8c66aaa9a0bf7a9db26416519f8e28d039e3c765565f1329",
+      "compressedBytes": 768759,
+      "compressedByteSha256": "0cb0d34d4f6fe8b0abcc89d8e9f2666d83225b09e4462469c92c782a7f908b0e",
+      "decodedByteSha256": "2964aac79cfd375c8c66aaa9a0bf7a9db26416519f8e28d039e3c765565f1329",
+      "ratio": 0.2800367039583157,
+      "verifiedLossless": true,
+      "inputUnchanged": true,
+      "reused": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.before-stop-checkpoint",
+      "gzipFile": "docs/calibration-screen-v11-headway.json.before-stop-checkpoint.gz",
+      "uncompressedBytes": 2743553,
+      "uncompressedByteSha256": "0c604f960e9b7a63d68c0e4cee1fc3a656ebce7e756a1a075772e55ddc3de67b",
+      "compressedBytes": 767703,
+      "compressedByteSha256": "9bb554588768e9aa44ac9886f47a40374f4bb282715a0c65b603f22bec81db46",
+      "decodedByteSha256": "0c604f960e9b7a63d68c0e4cee1fc3a656ebce7e756a1a075772e55ddc3de67b",
+      "ratio": 0.2798207288140597,
+      "verifiedLossless": true,
+      "inputUnchanged": true,
+      "reused": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.after-stop-checkpoint",
+      "gzipFile": "docs/calibration-screen-v11-headway.json.after-stop-checkpoint.gz",
+      "uncompressedBytes": 2743553,
+      "uncompressedByteSha256": "0c604f960e9b7a63d68c0e4cee1fc3a656ebce7e756a1a075772e55ddc3de67b",
+      "compressedBytes": 767703,
+      "compressedByteSha256": "9bb554588768e9aa44ac9886f47a40374f4bb282715a0c65b603f22bec81db46",
+      "decodedByteSha256": "0c604f960e9b7a63d68c0e4cee1fc3a656ebce7e756a1a075772e55ddc3de67b",
+      "ratio": 0.2798207288140597,
+      "verifiedLossless": true,
+      "inputUnchanged": true,
+      "reused": false
+    }
+  ]
+}

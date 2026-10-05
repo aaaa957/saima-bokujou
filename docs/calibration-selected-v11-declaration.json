@@ -1,0 +1,335 @@
+{
+  "predeclaredAt": "2026-10-04T04:34:17.606Z",
+  "screen": "docs/calibration-mechanical-v11.json",
+  "screenByteSha256": "dbc302bb9e7fdf892c71d53024222be2b6bcad549086e12a486c0cdd3fed91af",
+  "screenProof": {
+    "file": "docs/calibration-mechanical-v11.json",
+    "sourceProof": "archived immutable source verified",
+    "source": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+    "declared": 12,
+    "covered": 12,
+    "complete": true,
+    "metadataRows": 0,
+    "retainedErrors": 0,
+    "retainedEngineeringFailures": [],
+    "forecastCoverage": {
+      "queries": 0,
+      "feasible": 0,
+      "infeasible": 0,
+      "maxFeasibleTimeError": null
+    },
+    "consistent": true
+  },
+  "sourceNormalizedSha256": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "sourceArtifact": "docs/race-validation-v11-coarse-rank-screen-source.js.gz",
+  "driverNormalizedSha256": "5ddc9740c256ca1fd54eba1522bba69d3f855a90c397be5ca401053942152d9e",
+  "arms": [
+    {
+      "name": "selected-nopeak-cost105",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.12,
+        "peakExtra": 1.55,
+        "resistanceK": 0.250215,
+        "airK": 0.001365
+      },
+      "output": "docs/calibration-selected-nopeak-v11.json",
+      "file": "tests/fixtures/race-validation-v11-parameters/selected-nopeak-cost105.json",
+      "byteSha256": "3092001a76d035922ae23192be9380833adced74593de7b58fdb9f66bfa6abaf"
+    },
+    {
+      "name": "selected-peak-cost105",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.12,
+        "peakExtra": 2.75,
+        "resistanceK": 0.250215,
+        "airK": 0.001365
+      },
+      "output": "docs/calibration-selected-peak-v11.json",
+      "file": "tests/fixtures/race-validation-v11-parameters/selected-peak-cost105.json",
+      "byteSha256": "8d8c2bed60f35c0fb085f151e72634ea438dabf0b658282c921b6dfe00b6ee45"
+    }
+  ],
+  "selectionReason": "All three four-event arms are non-dominated across the 12 separate mean absolute residuals. Choose cost105 as a conservative joint candidate: its four broad speed gates pass, while cost110 improves total/remaining speed but both 2400 starts exceed the 10% gate and endpoint reserve is lower. Cost105 is not claimed to uniquely fit reality: pack and tempo residuals remain large, and no scalar weighting hides them.",
+  "previousScreenMetrics": [
+    {
+      "name": "fast80-nopeak",
+      "completed": 4,
+      "metrics": {
+        "winnerTime": {
+          "medianError": -4.4245174884393705,
+          "meanAbsoluteError": 4.741020083425369
+        },
+        "winnerFinal600": {
+          "medianError": -2.1559710834009245,
+          "meanAbsoluteError": 2.1628381923210345
+        },
+        "first200": {
+          "medianError": 0.8302839562025612,
+          "meanAbsoluteError": 0.8458782599156578
+        },
+        "first400": {
+          "medianError": 0.8845261417069263,
+          "meanAbsoluteError": 0.9650674825595695
+        },
+        "first600": {
+          "medianError": 0.3726794848372208,
+          "meanAbsoluteError": 0.7269444560386269
+        },
+        "remainingSpeed": {
+          "medianError": 1.1288635675886738,
+          "meanAbsoluteError": 1.1519109085692039
+        },
+        "tailSeconds": {
+          "medianError": 2.980345197428022,
+          "meanAbsoluteError": 3.056210963402595
+        },
+        "within1": {
+          "medianError": -0.59375,
+          "meanAbsoluteError": 0.5171130952380952
+        },
+        "within2": {
+          "medianError": -0.4652777777777778,
+          "meanAbsoluteError": 0.5406746031746033
+        },
+        "final600Span": {
+          "medianError": -0.777980372472534,
+          "meanAbsoluteError": 0.8428132310068754
+        },
+        "post200Cv": {
+          "medianError": -0.05150650698401564,
+          "meanAbsoluteError": 0.04672690049220108
+        },
+        "last200Difference": {
+          "medianError": -0.48071229947420946,
+          "meanAbsoluteError": 0.6735324456070564
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231001",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "241124",
+          "gate": "winnerWithin5pct"
+        }
+      ]
+    },
+    {
+      "name": "air2-fast80-nopeak-cost105",
+      "completed": 4,
+      "metrics": {
+        "winnerTime": {
+          "medianError": -2.8462091322444536,
+          "meanAbsoluteError": 2.8827404823264615
+        },
+        "winnerFinal600": {
+          "medianError": -1.7980162093959073,
+          "meanAbsoluteError": 2.2124189686028704
+        },
+        "first200": {
+          "medianError": 0.9925130227565981,
+          "meanAbsoluteError": 0.977679088027863
+        },
+        "first400": {
+          "medianError": 1.3380097096171202,
+          "meanAbsoluteError": 1.2710539248425192
+        },
+        "first600": {
+          "medianError": 0.656756755205933,
+          "meanAbsoluteError": 0.740176644016195
+        },
+        "remainingSpeed": {
+          "medianError": 0.8771096806241623,
+          "meanAbsoluteError": 0.9028328802945609
+        },
+        "tailSeconds": {
+          "medianError": 2.7157420616120476,
+          "meanAbsoluteError": 2.818242673517961
+        },
+        "within1": {
+          "medianError": -0.5714285714285714,
+          "meanAbsoluteError": 0.49925595238095233
+        },
+        "within2": {
+          "medianError": -0.4965277777777778,
+          "meanAbsoluteError": 0.5384424603174603
+        },
+        "final600Span": {
+          "medianError": -0.8384600236197954,
+          "meanAbsoluteError": 0.892481218599837
+        },
+        "post200Cv": {
+          "medianError": -0.0517333639139548,
+          "meanAbsoluteError": 0.046458484379530735
+        },
+        "last200Difference": {
+          "medianError": -0.48197717925469874,
+          "meanAbsoluteError": 0.6813373160358167
+        }
+      },
+      "gateFailures": []
+    },
+    {
+      "name": "air2-fast80-nopeak-cost110",
+      "completed": 4,
+      "metrics": {
+        "winnerTime": {
+          "medianError": -1.368860980962559,
+          "meanAbsoluteError": 2.151445697054694
+        },
+        "winnerFinal600": {
+          "medianError": -0.664456780107674,
+          "meanAbsoluteError": 2.6195869490959414
+        },
+        "first200": {
+          "medianError": 1.1349500612588583,
+          "meanAbsoluteError": 1.1290073165381251
+        },
+        "first400": {
+          "medianError": 1.6178766789861463,
+          "meanAbsoluteError": 1.5471468802943456
+        },
+        "first600": {
+          "medianError": 1.0448756604192653,
+          "meanAbsoluteError": 1.1611597411744157
+        },
+        "remainingSpeed": {
+          "medianError": 0.6611895399207501,
+          "meanAbsoluteError": 0.7322297073456152
+        },
+        "tailSeconds": {
+          "medianError": 3.190865403530367,
+          "meanAbsoluteError": 3.2276271994902963
+        },
+        "within1": {
+          "medianError": -0.625,
+          "meanAbsoluteError": 0.5049603174603174
+        },
+        "within2": {
+          "medianError": -0.44097222222222227,
+          "meanAbsoluteError": 0.5106646825396826
+        },
+        "final600Span": {
+          "medianError": -0.3184528859760931,
+          "meanAbsoluteError": 0.483223425510964
+        },
+        "post200Cv": {
+          "medianError": -0.05160163632871215,
+          "meanAbsoluteError": 0.050875767621504794
+        },
+        "last200Difference": {
+          "medianError": -0.48914598733435,
+          "meanAbsoluteError": 0.6712411305171133
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231126",
+          "gate": "leading200Within10pct"
+        },
+        {
+          "id": "241124",
+          "gate": "leading200Within10pct"
+        }
+      ]
+    }
+  ],
+  "parameterContrast": "Exact same global running cost and acceleration/response parameters; only peakExtra changes1.55 to2.75. The previous six-arm peak105 file used responseTime1.1199999999999999; this new immutable selected peak file explicitly uses1.12, identical to selected nopeak. Old parameter files remain unchanged. The conceptual axis was already declared; conservatively count this normalized exact literal as a tenth global configuration, still within the8-12 screen budget.",
+  "jobs": [
+    {
+      "kind": "race",
+      "context": "external-selected",
+      "external": true,
+      "cohort": "selected",
+      "id": "231001",
+      "partition": "calibration",
+      "n": 16,
+      "length": 1200,
+      "course": "中山芝外A",
+      "dir": "右回",
+      "state": "良",
+      "weight": 56,
+      "seed": 2026100207,
+      "raceSeed": 3874794582,
+      "replicate": 0
+    },
+    {
+      "kind": "race",
+      "context": "external-selected",
+      "external": true,
+      "cohort": "selected",
+      "id": "231126",
+      "partition": "calibration",
+      "n": 18,
+      "length": 2400,
+      "course": "東京芝A",
+      "dir": "左回",
+      "state": "良",
+      "weight": 58,
+      "seed": 2026400216,
+      "raceSeed": 3875475553,
+      "replicate": 0
+    },
+    {
+      "kind": "race",
+      "context": "external-selected",
+      "external": true,
+      "cohort": "selected",
+      "id": "240929",
+      "partition": "calibration",
+      "n": 16,
+      "length": 1200,
+      "course": "中山芝外A",
+      "dir": "右回",
+      "state": "良",
+      "weight": 58,
+      "seed": 2026100207,
+      "raceSeed": 3874794582,
+      "replicate": 0
+    },
+    {
+      "kind": "race",
+      "context": "external-selected",
+      "external": true,
+      "cohort": "selected",
+      "id": "241124",
+      "partition": "calibration",
+      "n": 14,
+      "length": 2400,
+      "course": "東京芝A",
+      "dir": "左回",
+      "state": "良",
+      "weight": 58,
+      "seed": 2026400216,
+      "raceSeed": 3875475553,
+      "replicate": 0
+    }
+  ],
+  "referenceHashes": [
+    {
+      "file": "docs/current-engine-reality-sources-2026-10-02.json",
+      "sha256": "09e71e099857c00d384d9a263060bb9b7bded820e9009c2d76875c4737eaabff"
+    },
+    {
+      "file": "docs/system-external-reference-2022.json",
+      "sha256": "c372c799818dcb55ae18b90a2cb47fae799dd509ce7236f401ad3ee786b6d95d"
+    },
+    {
+      "file": "tests/fixtures/race-validation-reference-2020-v11.json",
+      "sha256": "528ae6bd3f431252591c761c06dccac51f9614d2357ef549f7fee0a09b6879b2"
+    }
+  ],
+  "execution": {
+    "workers": 4,
+    "workerOldGenerationLimitMb": 192,
+    "parentOldGenerationLimitMb": 192,
+    "dispatch": "Two sequential candidate batches, one job per worker within each four-event batch; no simultaneous high-worker batches.",
+    "schedulingProof": "docs/validation-scheduling-v11.json"
+  },
+  "interpretation": "The new distance/class readiness cohort is the final generation path. Changing peak can change eligibility and the serialized entrant field; every matched event/seed compares inputHash. Such cases are joint parameter/population effects, not an isolated peak mechanism effect. The earlier fixed-v8 source630 screen remains separate. After all eight selected rows, compare all12 residuals, guards, sustained speed, power and reserve, then test the chosen global candidate on all12 2023/2024 training events. No internal or reserved2020 output is used for this selection."
+}

@@ -1,0 +1,296 @@
+{
+  "generatedAt": "2026-10-04T05:50:25.191Z",
+  "engineHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "pageHash": "cdfec010a58f7a68df17ff03eb59fc482f12629b78c8e7b4e24f96703da1be37",
+  "productionSourceUnchanged": true,
+  "pageSourceUnchanged": true,
+  "scope": "Five actual Microsoft Edge headless UI/generation checks; no actual race steps and no numerical-fit claim.",
+  "cases": [
+    {
+      "name": "Single race generator matches the complete visible race conditions and preserves one player",
+      "passed": true,
+      "result": {
+        "options": {
+          "length": 2000,
+          "surface": "草地",
+          "state": "良",
+          "dir": "左回",
+          "profile": "缓坂",
+          "course": "标准",
+          "wind": 0
+        },
+        "cohort": {
+          "version": 1,
+          "race": {
+            "length": 2000,
+            "course": "标准",
+            "surface": "草地",
+            "state": "良",
+            "dir": "左回",
+            "profile": "缓坂",
+            "wind": 0
+          },
+          "levelBand": [
+            67,
+            71
+          ],
+          "predictionWindow": {
+            "fastSeconds": 127.11605024322928,
+            "slowSeconds": 129.87132900832066
+          },
+          "candidates": 31,
+          "requested": 7,
+          "selected": 7,
+          "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+          "fastIsNotAdmissionCeiling": true,
+          "eligible": 22,
+          "fallback": 0,
+          "shortage": 0,
+          "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+          "entries": [
+            {
+              "id": "h4",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 125.27750147737913,
+                "requestedV": 16.24285953638127,
+                "required": 2684.1396671585608,
+                "capacity": 2769.821573438088,
+                "aerobic": 53.01897676304206,
+                "maxV": 18.95375078265226,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            },
+            {
+              "id": "h31",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 126.6386197186958,
+                "requestedV": 16.059113154531687,
+                "required": 2468.634263019881,
+                "capacity": 2565.6470015247332,
+                "aerobic": 52.04866764517695,
+                "maxV": 18.919680797905293,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            },
+            {
+              "id": "h28",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 127.5550591932599,
+                "requestedV": 15.939952024642606,
+                "required": 2443.3184128926387,
+                "capacity": 2524.775944794887,
+                "aerobic": 51.051413986881855,
+                "maxV": 18.84989338903592,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            },
+            {
+              "id": "h2",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 128.54605681726824,
+                "requestedV": 15.815448728968246,
+                "required": 2548.4687581902053,
+                "capacity": 2620.766966983559,
+                "aerobic": 51.743145617724124,
+                "maxV": 18.849057365294062,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            },
+            {
+              "id": "h6",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 128.10442323266855,
+                "requestedV": 15.870759833019392,
+                "required": 2543.0829837172632,
+                "capacity": 2612.830016948726,
+                "aerobic": 50.089188976037015,
+                "maxV": 18.802947324954264,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            },
+            {
+              "id": "h24",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 127.1969293888083,
+                "requestedV": 15.993242507272312,
+                "required": 2786.0225818843587,
+                "capacity": 2859.818605338162,
+                "aerobic": 50.312088364983964,
+                "maxV": 18.953333725955453,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            },
+            {
+              "id": "h8",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 126.60816646525238,
+                "requestedV": 16.066276327923077,
+                "required": 2630.2791562173343,
+                "capacity": 2723.035609849588,
+                "aerobic": 52.67092125630661,
+                "maxV": 18.928413047372892,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            }
+          ],
+          "playerReserved": "h5"
+        },
+        "ids": [
+          "h4",
+          "h31",
+          "h28",
+          "h2",
+          "h5",
+          "h6",
+          "h24",
+          "h8"
+        ],
+        "players": [
+          "h5"
+        ]
+      }
+    },
+    {
+      "name": "Changing an existing race distance preserves all edited horse identities, abilities and profiles",
+      "passed": true,
+      "result": {
+        "oldLength": 2000,
+        "newLength": 1200,
+        "preserved": true,
+        "size": 8
+      }
+    },
+    {
+      "name": "Reusing a generation seed at another distance preserves the chosen player phenotype",
+      "passed": true,
+      "result": {
+        "short": {
+          "id": "h8",
+          "stats": {
+            "速度": 82,
+            "耐力": 75,
+            "出闸能力": 70,
+            "爆发力": 75,
+            "力量": 68,
+            "毅力": 75,
+            "智力": 69,
+            "体格": 66,
+            "血统力": 78
+          },
+          "physiology": {
+            "version": 1,
+            "endurance": 0.05570933576673269,
+            "power": -0.5252246618969365,
+            "economy": 0.14647080544382335,
+            "kinetics": -0.3511357046663761,
+            "durability": 0.21789499539881946
+          },
+          "behavior": {
+            "forwardness": 0.26308744036700626,
+            "settle": 0.5771084499582648,
+            "tractability": 0.6403824891690165
+          }
+        },
+        "long": {
+          "id": "h8",
+          "stats": {
+            "速度": 82,
+            "耐力": 75,
+            "出闸能力": 70,
+            "爆发力": 75,
+            "力量": 68,
+            "毅力": 75,
+            "智力": 69,
+            "体格": 66,
+            "血统力": 78
+          },
+          "physiology": {
+            "version": 1,
+            "endurance": 0.05570933576673269,
+            "power": -0.5252246618969365,
+            "economy": 0.14647080544382335,
+            "kinetics": -0.3511357046663761,
+            "durability": 0.21789499539881946
+          },
+          "behavior": {
+            "forwardness": 0.26308744036700626,
+            "settle": 0.5771084499582648,
+            "tractability": 0.6403824891690165
+          }
+        },
+        "shortLength": 1200,
+        "longLength": 2400
+      }
+    },
+    {
+      "name": "Monte Carlo field uses its actual distance and surface and contains only AI entrants",
+      "passed": true,
+      "result": {
+        "length": 8,
+        "players": 0,
+        "options": {
+          "length": 2400,
+          "course": "标准",
+          "surface": "泥地",
+          "state": "良",
+          "dir": "左回",
+          "profile": "缓坂",
+          "wind": 0
+        },
+        "forecastsAgree": true,
+        "unchanged": true,
+        "ids": [
+          "h14",
+          "h21",
+          "h12",
+          "h6",
+          "h4",
+          "h17",
+          "h18",
+          "h2"
+        ]
+      }
+    },
+    {
+      "name": "New position and route planning modes have visible rider strategy labels",
+      "passed": true,
+      "result": {
+        "start-position": "起步抢位",
+        "route": "选择路线",
+        "wait-route": "留隙换道",
+        "wait": "等待通道"
+      }
+    }
+  ],
+  "pageErrors": [],
+  "passed": 5,
+  "failed": 0
+}

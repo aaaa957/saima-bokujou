@@ -1,0 +1,5292 @@
+{
+  "generatedAt": "2026-10-04T05:43:53.698Z",
+  "scope": "Current Git-tracked and unignored docs/tests inventory; active files are size-only snapshots without content hashes. Existing unchanged artifacts are separated from pending additions/changes. Stage/commit/push untouched.",
+  "total": {
+    "files": 503,
+    "fileBytes": 76896702,
+    "hashedUniqueContents": 444,
+    "uniqueContentBytes": 65853907,
+    "activeUnhashedBytes": 968900
+  },
+  "pending": {
+    "files": 332,
+    "fileBytes": 35958689,
+    "large": [
+      {
+        "file": "docs/race-validation-v11-baseline-external.json.gz",
+        "bytes": 6376663,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "817e3767f73dcf7e28aeb44655fa028d8ff146b727303d1bd1c75607707efb61",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/route-station-lookup-prefix-v11.json.candidate.forecasts.json.gz",
+        "bytes": 3904067,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "1bbb906d84dec7ffa3fdea61d696ae5e825742565e18aa595799df93f59d98ab",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/route-station-lookup-prefix-v11.json.original.forecasts.json.gz",
+        "bytes": 3904067,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "1bbb906d84dec7ffa3fdea61d696ae5e825742565e18aa595799df93f59d98ab",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/route-station-lookup-prefix-v11.json.candidate.frames.json.gz",
+        "bytes": 1839948,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "967e6f74ecd7766c93073064ff1ef7d575c0088c16c24b36bdc28cf6bff6a7bd",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/route-station-lookup-prefix-v11.json.original.frames.json.gz",
+        "bytes": 1839948,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "967e6f74ecd7766c93073064ff1ef7d575c0088c16c24b36bdc28cf6bff6a7bd",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/calibration-selected-training-v11.json.gz",
+        "bytes": 1122006,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "a71549ba9a806cbf185bae260ca2b0ea352f17a1e9845d6a62c67912c4aa1cfc",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/system-report-v11-summary.json",
+        "bytes": 968900,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": true,
+        "byteSha256": null,
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.gz",
+        "bytes": 870547,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "46480546b2d936a7ff99d278d2228b57fd4ab1c923aa72f20e11f2bc35319a34",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/calibration-selected-training-rest-v11.json.gz",
+        "bytes": 826059,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "e644670224588144906a5c3f8cf72ac5375c4f9934e47212cb4b83eef1e34067",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.gz",
+        "bytes": 768759,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "0cb0d34d4f6fe8b0abcc89d8e9f2666d83225b09e4462469c92c782a7f908b0e",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.after-stop-checkpoint.gz",
+        "bytes": 767703,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "9bb554588768e9aa44ac9886f47a40374f4bb282715a0c65b603f22bec81db46",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/calibration-screen-v11-headway.json.before-stop-checkpoint.gz",
+        "bytes": 767703,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "9bb554588768e9aa44ac9886f47a40374f4bb282715a0c65b603f22bec81db46",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.missing-process-checkpoint.gz",
+        "bytes": 760531,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "63a319c0f232cc9390df247649832bd3a5a694f38a4b7ca690b5f353169df59a",
+        "rawGzipSibling": false
+      },
+      {
+        "file": "docs/race-validation-v11-baseline-smoke.json.gz",
+        "bytes": 559312,
+        "tracked": false,
+        "pendingAddition": true,
+        "changed": false,
+        "active": false,
+        "byteSha256": "b6298c48717eb7b2d16d139dc844be7032e953e5f623544e04b7a1481360248f",
+        "rawGzipSibling": false
+      }
+    ]
+  },
+  "existingUnchangedLargeRaw": [
+    {
+      "file": "docs/tempo-system-v9.json",
+      "bytes": 4932681,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a0de7c55f9e631dca7b13d43400a2d7ed03932e1828ff429023f9bbb350ccd7d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-calibration-v2026.10.02.1.json",
+      "bytes": 2833096,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1ced0d4556f994bfe9a6452556eadaf0f72a1c9e93bbe4b1d6233e334d3201f3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/path-isolation-v9.json",
+      "bytes": 1350214,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0201da55523e6e03c9981fb39f7fcba7c9ff8ce564f4b1d5f7c282461621b32a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/pace-covariance-v9.json",
+      "bytes": 1240054,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6a3b348b177cd05c352549ca366810fe35aae682fe582b36510ada3b51435dc3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-planning-v2026.10.02.2.json",
+      "bytes": 686987,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d26599d1044a6b3b4d3e1eee7f9dea5bfa0a8559fc13323a239a66e2c28089ce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-prediction-physiology-v10.json",
+      "bytes": 650445,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f7c2eff9e0bbde67fa0219a097477ea93bf50623e00fccd8eee3cd38d4cfa6c3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/系统数值设计文档.pdf",
+      "bytes": 642823,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1db82fe80155837e539c70167ff9fb76069fc6a383a4c9518118e7e7a39b129f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/赛马风云游戏策划案.pdf",
+      "bytes": 511295,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "11b8ba4bdba0f742cf03fa1165c61addeb2f9c73fdce792aa964704b134a09b9",
+      "rawGzipSibling": false
+    }
+  ],
+  "over50MiB": [],
+  "rawAndGzipBothTrackedOrUnignored": [],
+  "activeSkipped": [
+    "docs/system-report-v11-summary.json"
+  ],
+  "archive": {
+    "proofs": 20,
+    "rawBytes": 58729118,
+    "gzipBytes": 15766702,
+    "allLossless": true,
+    "localOnlyExactDuplicates": [
+      {
+        "file": "docs/wait-route-continuation-partial-v11-history/83142f24ac5b8fb2049ddf06edb29ac149b04ca3fdeacd2ac1ef94bd647599cc.json",
+        "byteSha256": "83142f24ac5b8fb2049ddf06edb29ac149b04ca3fdeacd2ac1ef94bd647599cc",
+        "canonicalArchive": "docs/wait-route-continuation-partial-v11.json.gz",
+        "canonicalUncompressedByteSha256": "83142f24ac5b8fb2049ddf06edb29ac149b04ca3fdeacd2ac1ef94bd647599cc",
+        "reason": "Exact duplicate bytes; canonical lossless archive retains all evidence, local original preserved."
+      }
+    ]
+  },
+  "recommendation": "Do not migrate unchanged pre-v11 tracked raw reports merely to add another gzip copy: exact ignore patterns do not untrack existing Git paths, so a separate root-reviewed cached removal/link migration would be needed. Active training and changing formal-summary inputs must finish before archival.",
+  "entries": [
+    {
+      "file": "docs/race-validation-v11-baseline-external.json.gz",
+      "bytes": 6376663,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "817e3767f73dcf7e28aeb44655fa028d8ff146b727303d1bd1c75607707efb61",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/tempo-system-v9.json",
+      "bytes": 4932681,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a0de7c55f9e631dca7b13d43400a2d7ed03932e1828ff429023f9bbb350ccd7d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-population-audit-independent-2026-10-02.json.gz",
+      "bytes": 4832455,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b70b905ff40c20282b6e8140c4b1fa00901464e600ea1d809238966510d30d18",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-population-audit-2026-10-02.json.gz",
+      "bytes": 4814919,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0ac488892b39452d27b1e48c5cb28507c05ad4f319db8fb86cf10267818eb5f4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.candidate.forecasts.json.gz",
+      "bytes": 3904067,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1bbb906d84dec7ffa3fdea61d696ae5e825742565e18aa595799df93f59d98ab",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.original.forecasts.json.gz",
+      "bytes": 3904067,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1bbb906d84dec7ffa3fdea61d696ae5e825742565e18aa595799df93f59d98ab",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-calibration-v2026.10.02.1.json",
+      "bytes": 2833096,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1ced0d4556f994bfe9a6452556eadaf0f72a1c9e93bbe4b1d6233e334d3201f3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-real-timing-audit-2026-10-02.json.gz",
+      "bytes": 2571042,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0710aeae2adf71d12e90bb6a6e2b6debbf50054334ffb1b45885e645e5353784",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-controller-start-v10.json.gz",
+      "bytes": 2208188,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5c32e2be88c22b8d22c7a1225e1e29809ffcda066230c7bf3d74eac1706e71aa",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-current-v2026.10.02.3.json.gz",
+      "bytes": 2172202,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "05b7a4b2f3f994b2c561a64081a1d6b6fbe66eb5bb16200af4727f58e5fdf4ee",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.candidate.frames.json.gz",
+      "bytes": 1839948,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "967e6f74ecd7766c93073064ff1ef7d575c0088c16c24b36bdc28cf6bff6a7bd",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.original.frames.json.gz",
+      "bytes": 1839948,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "967e6f74ecd7766c93073064ff1ef7d575c0088c16c24b36bdc28cf6bff6a7bd",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-baseline-v2026.10.02.3.json.gz",
+      "bytes": 1715761,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1f3367aac66f2d78eba0db922c7de70be03574c64e610b83bf939e6059e557ce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/path-isolation-v9.json",
+      "bytes": 1350214,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0201da55523e6e03c9981fb39f7fcba7c9ff8ce564f4b1d5f7c282461621b32a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/pace-covariance-v9.json",
+      "bytes": 1240054,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6a3b348b177cd05c352549ca366810fe35aae682fe582b36510ada3b51435dc3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-training-v11.json.gz",
+      "bytes": 1122006,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a71549ba9a806cbf185bae260ca2b0ea352f17a1e9845d6a62c67912c4aa1cfc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-report-v11-summary.json",
+      "bytes": 968900,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": true,
+      "byteSha256": null,
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.gz",
+      "bytes": 870547,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "46480546b2d936a7ff99d278d2228b57fd4ab1c923aa72f20e11f2bc35319a34",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-training-rest-v11.json.gz",
+      "bytes": 826059,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e644670224588144906a5c3f8cf72ac5375c4f9934e47212cb4b83eef1e34067",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/tempo-system-v9-incomplete-source44.json.gz",
+      "bytes": 790147,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f4a1d3f0476a111df1730127b12885a7bed207ec4e16a6eb59d4ea18bd2bc78e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.gz",
+      "bytes": 768759,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0cb0d34d4f6fe8b0abcc89d8e9f2666d83225b09e4462469c92c782a7f908b0e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.after-stop-checkpoint.gz",
+      "bytes": 767703,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9bb554588768e9aa44ac9886f47a40374f4bb282715a0c65b603f22bec81db46",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.before-stop-checkpoint.gz",
+      "bytes": 767703,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9bb554588768e9aa44ac9886f47a40374f4bb282715a0c65b603f22bec81db46",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.missing-process-checkpoint.gz",
+      "bytes": 760531,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "63a319c0f232cc9390df247649832bd3a5a694f38a4b7ca690b5f353169df59a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-planning-v2026.10.02.2.json",
+      "bytes": 686987,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d26599d1044a6b3b4d3e1eee7f9dea5bfa0a8559fc13323a239a66e2c28089ce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-prediction-physiology-v10.json",
+      "bytes": 650445,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f7c2eff9e0bbde67fa0219a097477ea93bf50623e00fccd8eee3cd38d4cfa6c3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/系统数值设计文档.pdf",
+      "bytes": 642823,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1db82fe80155837e539c70167ff9fb76069fc6a383a4c9518118e7e7a39b129f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-baseline-smoke.json.gz",
+      "bytes": 559312,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b6298c48717eb7b2d16d139dc844be7032e953e5f623544e04b7a1481360248f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-population-paths-v10.json.gz",
+      "bytes": 557383,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "45dae037ffacebb766eeff6ab89951b021813b2afd726660be62cbb2116aa823",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/赛马风云游戏策划案.pdf",
+      "bytes": 511295,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "11b8ba4bdba0f742cf03fa1165c61addeb2f9c73fdce792aa964704b134a09b9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.after-resume-checkpoint.gz",
+      "bytes": 482411,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "eb69a55312fb7625eacf542131b2fa2d31b19830f5aa62150b8d3458a4635d5a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.before-resume-checkpoint.gz",
+      "bytes": 482411,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "eb69a55312fb7625eacf542131b2fa2d31b19830f5aa62150b8d3458a4635d5a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-calibration-v2026.10.01.6.json",
+      "bytes": 471892,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "027b6c08e4b96a39d4e0f51fec57086e59069e0a6f98f01468a02dc8fdd6660a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-reality-sources-2026-10-02.json",
+      "bytes": 439427,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "09e71e099857c00d384d9a263060bb9b7bded820e9009c2d76875c4737eaabff",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-reality-assessment-2026-10-02.json",
+      "bytes": 406765,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6e191b89bc97332d6485fbbbbf79880267857b2b109e706d851a494186730d42",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-reality-assessment-2026-10-02.png",
+      "bytes": 362750,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ff676896a98c0c0ec74109f0a3b4d063c30647d305228f787cb81db218fdeddd",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/controlled-grid-v11.json.gz",
+      "bytes": 355430,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2fb84177b76d6eb17ef7b0d839072c7127bc3119a3eb3fb8070d1a84d3728989",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-current-incomplete-source44-v9.json.gz",
+      "bytes": 344733,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b67b784d1cf53e1d061d7c8714582b9b8aec33c30cbf003acffdd1227e8c4801",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-performance-v9.json",
+      "bytes": 334869,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bd9a115d941cdd452cb1fc3294cf97f7e4b44a6403c959ecad172168288ed7a3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-heading-junction-v9.json",
+      "bytes": 326831,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4abbc03c04961420693c68eb28e547404410b1fc126c6aadd8783bfc80aeb7ba",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-domain-review-v9.json",
+      "bytes": 307892,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8ecfb6db3108180386485e1e37db1ccf2c5ad28d43a4cca92923016026fe6517",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json",
+      "bytes": 307586,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "352ac8935d9c8013662cecdb41c5399a6b3f0bc366195ca896501695e48d7fa1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-peak-v11.json.gz",
+      "bytes": 300170,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9996bdfa84c060cc31237db07ad9336066b7709a55e2f698c79f76e68c8cc13d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-nopeak-v11.json.gz",
+      "bytes": 298680,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "70bff3fa25c06234a8140fe9764a7dd766378472d97e49ef87e77752d1fe7d67",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-cohort-initial-training.json.gz",
+      "bytes": 292103,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "7b77623689af1b17f98d7e3314853fcecb20def8299073f3bc029dd3ac6f7dca",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-optimized-final-v9.json",
+      "bytes": 286926,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c068d453bfad56f17ba781c5b6156ca1b143a7760ba240e173df6f6180bf4be7",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-reality-comparison-v2026.10.02.3.json",
+      "bytes": 269290,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "08d559f92c32ec0daab07951e04a0cb7b1c59ae413182bdc208641005828f609",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-realism-diagnosis-v10.png",
+      "bytes": 260015,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "671e87227762503e4a22af523516c935f521bb310fad41a551df3f4ada7844f8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-physiology-fit-v2026.10.02.1.json",
+      "bytes": 237724,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "04e6ae99c29c0f577ba36fe83b586b64b19b86d2cc4bb1206258927b3fa90c22",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-reality-comparison-v2026.10.02.3.png",
+      "bytes": 233005,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9660c020affabafd81cd94c666e47e4c2170de61fbab787c04e0748040d318c5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-kyoto-prefix-profile-630-v11.json",
+      "bytes": 197870,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8e910e3be19004c18bed252a7cbcbe0ced8c730c377dceecdd12108205267eb4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/effort-history-v9.json",
+      "bytes": 195372,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c33624d4b2e44f23a67aee5aeee995f38d172d7a5151f915fec6970ed5ee1d35",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-candidate-initial-smoke.json.gz",
+      "bytes": 192461,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "72102ad29faebd58e763549485edf5bb1a2b4e0177ca9baadbcf7ffe9705515c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-external-reference-2022.json",
+      "bytes": 185289,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c372c799818dcb55ae18b90a2cb47fae799dd509ce7236f401ad3ee786b6d95d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-current-external2022-v2026.10.02.3.json.gz",
+      "bytes": 180831,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2c7ec732be5064668a4831fff1aef530f2c8785e8ca8656534c4620dd8749196",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/01-赛程与情报.png",
+      "bytes": 173413,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4b4ccc74b0d1de89013f5407596d974e4531373a5fa1057352484676785183d1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/03-马匹档案.png",
+      "bytes": 153966,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "860e2e1775476c136d0d554245d6862015b309b8e2e395b0ecbd5aea42a1f020",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-baseline-external2022-v2026.10.02.3.json.gz",
+      "bytes": 142951,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "79789bb0afe11d55ecdb6ccca48491e9ebd6e0010655e36600c0149b8f3d2ef1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-training-v11.summary.json",
+      "bytes": 140025,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3b173a8a9af08f4678a5328ec26271fa23b3f3866cd97f55fc7a8ce715f00c3d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-partial-v11.json.gz",
+      "bytes": 138159,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9d6ed93d73e67072a7095ce87f12c579ad0266c5ccd2b68bd96112418c292672",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11.json.gz",
+      "bytes": 135706,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e890aada87f9867d903123989c43ed6c64768abb4d592bb75d752e468d7f39d1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11-history/e929c14c596b36e407b70d431551c865f551f72c2ad8b17fb4e808640c7046b3.json.gz",
+      "bytes": 135414,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a7fea9f95c9e94807df80915f74daf11c521c9fd2a0369305b82bc40006751a8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11-history/15ba1cf8366ddc0d8e3685ab06ac0e77f2aacaa3bbc7bad825cf4208311a3103.json.gz",
+      "bytes": 134474,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4817f596b824f6a5e718391fd52d1ef33cf7b56cb70d31e9bc58c3307df0c88f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-slack-boundary-v9.json",
+      "bytes": 129937,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "928317c2a0401045170b7b3835e55e46f9c8aa3905be63734c49e6975e087782",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/start-system-v9.json",
+      "bytes": 125489,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "be863fbaf1e6a7c87020d392b256226471950cc020167c015b4739a5ab588390",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-external2022-incomplete-source44-v9.json.gz",
+      "bytes": 113898,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9287c56b446e5a7bde40ba6ddcdfd060b30013d143434e63c770f8cc391b8ecc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-consistency-v11.json",
+      "bytes": 109067,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "114a3a027839348d44252afe36e512c930d4936835962e1024dfedc0b8e547bd",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-consistency-v11-development-01.json",
+      "bytes": 106223,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "25beff45b533ca388d451aac8d25b74d01b9bdb3409547eaca3e784354cfd5be",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-consistency-v11-history/f4c766dd59e2a21608e0fedafbf22d81bf0b303338fe672d69477f6f73622fe3.json",
+      "bytes": 105991,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f4c766dd59e2a21608e0fedafbf22d81bf0b303338fe672d69477f6f73622fe3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-consistency-v11-history/a3913712911b65094287b98bfa40a03cc806b2420ddcf1055fc7fb1d7c57bdd6.json",
+      "bytes": 104746,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a3913712911b65094287b98bfa40a03cc806b2420ddcf1055fc7fb1d7c57bdd6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-consistency-v11-history/c2b1cb6de24112cb721d332fe257d21f11917f051124423fa02e31c9339b5134.json",
+      "bytes": 104575,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c2b1cb6de24112cb721d332fe257d21f11917f051124423fa02e31c9339b5134",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/02-比赛实况.png",
+      "bytes": 103435,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "866b7f1bb6e939c27c4b761900ef87be7a7f858d05c9be7e5da17b344076b921",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/05-多场模拟.png",
+      "bytes": 97178,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15e31f8e03105854f1d8c2eca0ec735f7360e825c957745bfae9b1c90083359f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-realism-diagnosis-v10.json",
+      "bytes": 94945,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a459d1eccaba766d90dda6f80f210424deefd4edbeb0aa3a90d2bce1ddbac5bc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-v11.json",
+      "bytes": 87982,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1265a26b574e24fa25c7028ddbe6203388d54341e8dbf8d40169e18a7643adce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-candidate-inner-observer-proof.json",
+      "bytes": 81305,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3ac6272246799994a1c3041badb12eb344bb431319071d3b46e946fae3d9c698",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/比赛系统-现实差距评估.md",
+      "bytes": 78023,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3ba938d618e017cc260eb75654317797c79a696ccc68e037786d10272696446e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/06-v7-比赛验收.jpg",
+      "bytes": 76899,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "7108f6244af85966fe87f4ef427061bb389ffc6548d3427e7d4d4af8365f9020",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/07-v8-实际路段与骑乘.jpg",
+      "bytes": 76698,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "90ddb1b8b0fb23be84ae385e4396fb1ced93814112b24ba505684e860babd9e8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-observer-proof.json",
+      "bytes": 76647,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6437b50aa51861e06fbfc2b4dd29b515d8287471ff8031409f8a32060377ae74",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-residual-decomposition-v10.json",
+      "bytes": 76114,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5684b64da1b4b5b244b6432fc8584075c372f02534430df7db98ac2ed98592d9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/04-繁殖工坊.png",
+      "bytes": 73327,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "90120d616d575db939c5159f16dab345418d9ddbbc6ea64851d96685719df7fb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-pre-release-mechanism-source-f2809633.js.gz",
+      "bytes": 71971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15319773ef0025fcf83ec52ab509022543fc6fd458d943ba391261421ab25510",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.candidate.js.gz",
+      "bytes": 71971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15319773ef0025fcf83ec52ab509022543fc6fd458d943ba391261421ab25510",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/200k-component-query/route-station-lookup-v11.json.candidate.js.gz",
+      "bytes": 71971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15319773ef0025fcf83ec52ab509022543fc6fd458d943ba391261421ab25510",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/accepted-1m-component-query/route-station-lookup-v11.json.candidate.js.gz",
+      "bytes": 71971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15319773ef0025fcf83ec52ab509022543fc6fd458d943ba391261421ab25510",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/initial-nonfinite-fixture/route-station-lookup-v11.json.candidate.js.gz",
+      "bytes": 71971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15319773ef0025fcf83ec52ab509022543fc6fd458d943ba391261421ab25510",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11.json.candidate.js.gz",
+      "bytes": 71971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15319773ef0025fcf83ec52ab509022543fc6fd458d943ba391261421ab25510",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11.json.source.js.gz",
+      "bytes": 71971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "15319773ef0025fcf83ec52ab509022543fc6fd458d943ba391261421ab25510",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-pre-release-mechanism-source-2ab0d646.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.source.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/200k-component-query/route-station-lookup-v11.json.source.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/accepted-1m-component-query/route-station-lookup-v11.json.source.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/initial-nonfinite-fixture/route-station-lookup-v11.json.source.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11.json.baseline.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11.json.candidate.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11.json.source.js.gz",
+      "bytes": 71552,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-pre-release-mechanism-source-2f4cf190.js.gz",
+      "bytes": 71431,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c25dd62b1d16c4d335bb9d865db99c1144e81a58229bbe5ff0777a241ab48a5c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-focused-v11.json.candidate.js.gz",
+      "bytes": 70907,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4b003d03339c070e95ebdc9bb7d77fdf5da982c785035aab24e69d1bcb18073d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-partial-v11.json.candidate.js.gz",
+      "bytes": 70907,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4b003d03339c070e95ebdc9bb7d77fdf5da982c785035aab24e69d1bcb18073d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-nopeak-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-peak-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-training-rest-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-focused-v11.json.candidate.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-focused-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-coarse-rank-screen-source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-rank-clock-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-route-reserve-fixture-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-v11.json.source.js.gz",
+      "bytes": 70805,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11.json.candidate.js.gz",
+      "bytes": 70778,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "372004d5a2fd24bc05aca8d5fd9e1667bfc3776eaa4e541276fbd9a3871af7be",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-focused-v11.json.source.js.gz",
+      "bytes": 70778,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "372004d5a2fd24bc05aca8d5fd9e1667bfc3776eaa4e541276fbd9a3871af7be",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-partial-v11.json.source.js.gz",
+      "bytes": 70778,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "372004d5a2fd24bc05aca8d5fd9e1667bfc3776eaa4e541276fbd9a3871af7be",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/following-witness-cpu-v11.json.candidate.js.gz",
+      "bytes": 70236,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1cc28c6a4864470ea2b448d40e1c7aeda7ca66f737663a1d515c54f52a4dcdba",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11.json.source.js.gz",
+      "bytes": 70125,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "96c0571fc01b3f0070876536f3c9a277149f69aa8aede6cdcb0ea300be0514f5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-peer-pair-cpu-v11.json.candidate.js.gz",
+      "bytes": 70125,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "96c0571fc01b3f0070876536f3c9a277149f69aa8aede6cdcb0ea300be0514f5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-mechanical-screen-source.js.gz",
+      "bytes": 70125,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "96c0571fc01b3f0070876536f3c9a277149f69aa8aede6cdcb0ea300be0514f5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-cpu-full-replay-v11.json.source.js.gz",
+      "bytes": 70125,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "96c0571fc01b3f0070876536f3c9a277149f69aa8aede6cdcb0ea300be0514f5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/following-witness-cpu-v11.json.source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-peer-pair-cpu-v11.json.source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-public-prior-v11.json.candidate.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-public-prior-v11.json.source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-visible-traffic-v11.json.candidate.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-visible-traffic-v11.json.source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/profile-visible-traffic-v11.json.source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-mechanism-screen-source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f.source.js.gz",
+      "bytes": 70063,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "935532f132fe3ad2ea950e01ef4bb5d3137120a852081e1585229c65340d3de2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf.source.js.gz",
+      "bytes": 69809,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9608b2b46a93a829bd3ee991c6dcca25cfc97c4dc73739a293deee57ba88c555",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-v11-history/a39b22bcae712ef0008759f37d9670737405a2dd9b887137ec186e452631db3d.json",
+      "bytes": 68110,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a39b22bcae712ef0008759f37d9670737405a2dd9b887137ec186e452631db3d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-oom.json.source.js.gz",
+      "bytes": 67577,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3d8344b2b6cb42c916fd8e3a39537d910a12bd9b030cb242c67178dbb1e97742",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11.json.source.js.gz",
+      "bytes": 67577,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3d8344b2b6cb42c916fd8e3a39537d910a12bd9b030cb242c67178dbb1e97742",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-cohort-initial-training.json.source.js.gz",
+      "bytes": 67577,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3d8344b2b6cb42c916fd8e3a39537d910a12bd9b030cb242c67178dbb1e97742",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/40b00648956b99cc6f750a3e5aecf8a3c7a813f01fb51266ead851a161f6adc1.source.js.gz",
+      "bytes": 67532,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b575da6d9d0a6455c7b641307dd8c25c6654070c5645c9c1261a6a9df505e52d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-execution-review-v11-source.js.gz",
+      "bytes": 67145,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a57ea2ee139e3ebd617e8f37e4d67518ec0c95bdbebf85451d9a69183d71056f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-admission-v11.json",
+      "bytes": 66617,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "21e271d3a1e0b13c7335fbc54e80bf1062870773318ebcdf06ec57f9dc3307bf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/controlled-grid-v11.json.source.js.gz",
+      "bytes": 66569,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "eb2e4953f656a326337d8619955bf2aed456d331539ecf1068dcc13992186058",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-candidate-initial-smoke.json.source.js.gz",
+      "bytes": 66569,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "eb2e4953f656a326337d8619955bf2aed456d331539ecf1068dcc13992186058",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-planning-v11.json",
+      "bytes": 63765,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1339518cc78414dbe0acaf58faf29f97c035c8ea3b221307afed751f1f6aa900",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-domain-review-v9-pre-heading-44b09f.json.gz",
+      "bytes": 63399,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "cd512d837791647c7063132651c8d3d8a7fe41e1f8d8b2ae24d7580fd68de236",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-baseline-external.json.source.js.gz",
+      "bytes": 59441,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2bda789cd5ab832250c7b93f8d0b77d0e4aad93935829631fafe6795c3d9cf93",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-numeric-source-3b837b-v9.js.gz",
+      "bytes": 59406,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6173412685cd417e1f8e7bd171491888b81131cc482db018b9f770fa5b1f116b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-policy-ab-v7-development.json",
+      "bytes": 57384,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f3ddf509992bafd0a713382442b0ba59e675aa45778a4d8cc0b8cb431a2fa7ce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-numeric-source-44b09f-v9.js.gz",
+      "bytes": 56237,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b6984f85806d2fc95270069652f514a35bfbd6d2578cf1111c30e59e74ef2871",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-heading-source-ac9dc7-v9.js.gz",
+      "bytes": 56148,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4e3ff07159dfbe93c10c74fe0f3853054fc2c8666f374d2b022acbbed15a5afa",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-performance-source-2b711a-v9.js.gz",
+      "bytes": 55836,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "321cedffd3e3a6514c86d8dc2bdc4a3621ac34043902cce8b77df97fc9415d2e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-performance-source-18c9cf-v9.js.gz",
+      "bytes": 54874,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "daeed9e3919173463115f0df247f5b2d9b4f2fc8ee9ce7181b7f1f9f107eb903",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/report-system-v11.js",
+      "bytes": 53159,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "acaaf02d287d44188d084cde47a7bb553a98f7ba5551c9abc9f0fb6d06a05be4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11-history/bed0376274ed3b035ce457d06a937d7707ec6949489f52d8ca1dca0bb305d5b3.json",
+      "bytes": 52559,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bed0376274ed3b035ce457d06a937d7707ec6949489f52d8ca1dca0bb305d5b3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11.json",
+      "bytes": 52559,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4c4ddb85ef64dfc52bfc99920477510f8ec8c0a1c3ab83ae8e701553f02c7c56",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-follow-opportunity-v10.json",
+      "bytes": 51359,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "643f3a101f2e320b5ad4779b28166d4025620824d5db777bc87d654a13d7d3fe",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-peak-v11.summary.json",
+      "bytes": 48937,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "16be932eb206c5b6547feb3d2193963bc17ad077ca7e3044e6cd3bad6b4a50e2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-nopeak-v11.summary.json",
+      "bytes": 48650,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c2ec79863acfe786e03593c211e6d40212c0ad5b701a2254990425512293de5a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-cpu-full-replay-v11.json.replay-row.json.gz",
+      "bytes": 48131,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "66c8116f59fd274bdf25510bb7ef4d231e8ec2e1a32b692eaa2ba1a1898e6740",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11-history/3f09d5ad6f01eb79915052f1be9a902f76e4c4bdb26eba94791bea716e869a86.json",
+      "bytes": 46425,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3f09d5ad6f01eb79915052f1be9a902f76e4c4bdb26eba94791bea716e869a86",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11-history/6ab549889c32fa11996ebc168c43339315482716a984b511bdbdbd7aa94fb06f.json",
+      "bytes": 46425,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6ab549889c32fa11996ebc168c43339315482716a984b511bdbdbd7aa94fb06f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-upper-window-review-v11.json",
+      "bytes": 43971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d04d0c4742dadc04815a4c36ea7c051ad1c534898ae700ffba44fdccecc27d50",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/京都-3200-bend.png",
+      "bytes": 40578,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "14a8b665bd7ef16cb3cb0882325b0f4e79a44967339058c1c6815a5f654b513f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/中山-1200-bend.png",
+      "bytes": 39762,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a48a458dd09f7a4477b2b996536f7747b63be6b24219561a49a0380fdae90dbd",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/京都-3200-start.png",
+      "bytes": 38921,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "95fdf72f71ed29812a1fe29970841ac73d2ac8a160e82f12f98d54d4a7010340",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/race-calibration-v7.js",
+      "bytes": 38390,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e4be7cdb703faacdebc83b9641e982e126b803e0a13d8090d91c6efcfc979dcb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/東京-2000-bend.png",
+      "bytes": 38030,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "099e906c6339fa36f3b0d118710d6950cdc715adc820242f4556f706c87a4fb8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8-1f004d3d13fe5c45d5851ae6366f0e23a140f6e3a97233ad4736b88b7c02a10e.json",
+      "bytes": 37186,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "75820417cc5149bd38758bdf9ce86c8e84e3a6ac21ed10f76142894af329729a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11.json",
+      "bytes": 37186,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "75820417cc5149bd38758bdf9ce86c8e84e3a6ac21ed10f76142894af329729a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-consistency-v9-2026-10-02.json",
+      "bytes": 37101,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1cd2c6ff94359cd18d217697238b62184451f1b2580b78a5161a5f037ea20b2b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/write-system-report-v9.js",
+      "bytes": 36928,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8bfa1b580f09f9519469b41cd1a9751eac611a7c3c7c40276d5344309886b188",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/東京-1600-bend.png",
+      "bytes": 36487,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bda7f1f10d6638e0dac11b515746617afa5f240a14b9a8e822249e3e25edc621",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/中山-1200-start.png",
+      "bytes": 36299,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c325cc3a03af19e8279b970206150e155839aad56cd01732a5ceb376726d6d01",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/東京-2000-start.png",
+      "bytes": 35831,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "19a5aef957846cc7dd8fa8eea8783389f03927643631830412c095a1d63c681a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/write-causal-realism-report-v10.js",
+      "bytes": 35789,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "cc45de8b7b27e75fb3bcb9b84b6d40055c1a334a05137432d87405585a318264",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/screenshots/v9-routes/東京-1600-start.png",
+      "bytes": 34792,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1f41db1dbdc57da553a67ed1e813514340e2ee3aed71a2ad8a3eb6aab952cf38",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/current-real-timing-audit.js",
+      "bytes": 34434,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "71dccd68d8632fb11223d6ad0325accafc5c90d2eed8e6246b14c1a2b534b2a1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-system-audit-2026-10-02.md",
+      "bytes": 34319,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b4dafd8e3ae45609b0c8f85fb4e8e18a9c0f264c5316b47b9c6dd161a8d47195",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/race-validation-v11.js",
+      "bytes": 34304,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c01f5097d94ff49e635adb1c78b3f3c413a616615e6a3aafd29e12c5a8a6ae85",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-reference-2020-v11.json",
+      "bytes": 31486,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "528ae6bd3f431252591c761c06dccac51f9614d2357ef549f7fee0a09b6879b2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/effort-history-source44-v9.json.gz",
+      "bytes": 30771,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "304f2ee410d90b042d2f0d703dc64732efaf975f8e15496f471dfc88b504b1f8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-selection-v11.json",
+      "bytes": 30747,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "153c7b3f337fa47c56af15c6e4ceee76196a721373a2c57dce545d260ce22c5c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/causal-population-paths-v10.js",
+      "bytes": 30745,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1e45e0587c724f91fbed40dcdfa9f981b7ccc16b73f9fd8a89c5d270f4bbbafc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-selection-v11-history/1ca77ab4eacdd18ec98ed8bcc6b5e3cfa74525dd16dfca3f2fbe6d151304f818-2026-10-03T10-22-18-050Z.json",
+      "bytes": 30215,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6858332977da7f054eb6db5f032e549cda873e81b7c498563a86c9e0038fe17a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-selection-v11-history/1ca77ab4eacdd18ec98ed8bcc6b5e3cfa74525dd16dfca3f2fbe6d151304f818-step-anchor-failure.json",
+      "bytes": 30215,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6858332977da7f054eb6db5f032e549cda873e81b7c498563a86c9e0038fe17a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/40b00648956b99cc6f750a3e5aecf8a3c7a813f01fb51266ead851a161f6adc1-1f004d3d13fe5c45d5851ae6366f0e23a140f6e3a97233ad4736b88b7c02a10e.json",
+      "bytes": 29094,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "71e2f26696fe594b20767291b015e11bb691a4dcd0d3ef1799cffd3deff85893",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-aero-metrics-v10.json",
+      "bytes": 29091,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "75b1dd3650261c3e86af751c3da685c1f66efc49e7b2cfe10636917043a5a912",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f-1f004d3d13fe5c45d5851ae6366f0e23a140f6e3a97233ad4736b88b7c02a10e.json",
+      "bytes": 28977,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "82deffb551450bdd1dd86fb382e36c78357c9561c96afcf2c671120293b49856",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11-history/875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf-1f004d3d13fe5c45d5851ae6366f0e23a140f6e3a97233ad4736b88b7c02a10e.json",
+      "bytes": 28973,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1d7612c5f91413828f0d0db3af1f0db88e0d0185133e76c14f946930d2049e50",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/系统一致性与节奏诊断-v2026.10.02.3.md",
+      "bytes": 28864,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ee4d99bda33f84ba2e2e1760117432221d9cf5e86a9b6f9d929927b35ba58abe",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/validation-scheduling-final-v11.json",
+      "bytes": 28031,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "abacd6bf1cb852fe890f59188fa046040322f39e376044ad018e4ad47ea6d006",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/validation-scheduling-v11.json",
+      "bytes": 28025,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "062fae95717c38099cf5f617d0805f310341872f1cd65d5b922acd92b1b588af",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/current-engine-reality-assessment.js",
+      "bytes": 27713,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6251baf48e5d1a02bd0e5c59a210aaa6f49c4a0b8716bb41434a3ae7439c59b9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/cohort-selection-v11.js",
+      "bytes": 26553,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b070c16e2f933bc4f6bceacae9e0e93e91964a504a133e015bd6ae954f08d4ab",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/effort-history-v9.js",
+      "bytes": 25125,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "339032ba057c07bfb8902b34664fd479870a666bdf8fbc4c32a0db9cd4a64ad0",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.summary.json",
+      "bytes": 24621,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "234d85a5c5e13d86b759dce773f5ee07fbcb0f380506179b1a7df09cee4a4ab5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/rider-controller-v11.js",
+      "bytes": 24117,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3d95da3659c30f105b5fde468616d3c6bf75841a50362fb90594dd286a522b74",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/traffic-optimization-v9.patch",
+      "bytes": 23952,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "12d59e9ed00d4e498e358bbdad41ee3fee1e4191b66b62ecb12b53572769dc31",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/causal-prediction-physiology-v10.js",
+      "bytes": 23939,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d15ba2d94c52d6a2135aa1a939cf8c08a28a9723d752a799215a10575d1d5ab9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11-history/808e76eaa5120d4f3b538208592531d1ffe1eb5c450758c48b4c360a01d9cc80.json",
+      "bytes": 23881,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "808e76eaa5120d4f3b538208592531d1ffe1eb5c450758c48b4c360a01d9cc80",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/比赛系统重构与联合校准-v11.md",
+      "bytes": 23350,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4eeee794277f7669425ca1d4ef67bb8e5a575107be72523edccd25cdd900b9f9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/tempo-system-v9.js",
+      "bytes": 23198,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c2764fdb1e7c7cb4a8c1c4a3cb8a6ac7cfa73b8ec102642dac36b170524e1eb8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-prediction-v11-core.txt",
+      "bytes": 22799,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8dcd5d5421e7fd0cb14d27c90797e56bc24617bde503f189a7fff71d156b7a06",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/prediction-execution-review-v11.js",
+      "bytes": 22739,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e24ebcde340531de447c8640582ea5aa08172dc494acf6790601f89b08d64602",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/career-flow.js",
+      "bytes": 22530,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4778e727a7c7c151401c6a8e65baa31551112bddc20a68545fc9292e0f94283e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/route-planning-calibration.js",
+      "bytes": 22481,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "744d081bc29ad40c89e8f872832cc6efd1ac7744b65bb17ced9faa1314b1440c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-protocol.md",
+      "bytes": 22277,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e4dc1900d78b9819f80fb47b281b1b80ef631756110054f8cfa20bf0a767733b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/race-calibration.js",
+      "bytes": 22146,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9991e9dd54d2ae035852d37e16dac2354e3d50dd5f34f740cff04aec2b06c5c4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/camera-test.js",
+      "bytes": 22016,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "16d84db4a7c7f830a4de93ed3e0d90b465c14308e37cafb2e3ebdba822703c81",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/race-physics.js",
+      "bytes": 21542,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c84d4f77ce3974f4f1748cd3703f6d9f2936510a6aa6bd3768f73c83f906c174",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-optimized-final-v9.js",
+      "bytes": 20874,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c5b7970de37f60fb621788dd074b66c52db1ac90b69b5a009816a82e18b29f50",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/system-reality-v9.js",
+      "bytes": 20849,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "50347af3c29fd83c680546d64e0255801aa37757344fc445b948774d7493dc11",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/比赛系统-现实拟合-v2026.10.02.1.md",
+      "bytes": 20728,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9021eb705ab4bc598d3d083f422944379f7ec5b8f9e717d064561a7837603577",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/现实偏差根因诊断-v10.md",
+      "bytes": 20702,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e73557c4a24f4954fb2f237c2f4b3246d7ed538fee276777964c3af6e621af13",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-real-timing-audit-2026-10-02.md",
+      "bytes": 20202,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "de8d1060bbee7b899eea1c56db2540c708cc400387cca8678c89230446290221",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.candidate.final-state.json.gz",
+      "bytes": 20136,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "37c40620b848fd7006fd74414599b701e9699761d13fd4c01da1fa39e07e007b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.original.final-state.json.gz",
+      "bytes": 20136,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "37c40620b848fd7006fd74414599b701e9699761d13fd4c01da1fa39e07e007b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/final-engine-regressions-v11.js",
+      "bytes": 18844,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a40eb436a202e242bef50ac5ad1e3cf67b7d8f7814b84b84772a028ae3bdc07e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/causal-controller-start-v10.js",
+      "bytes": 18510,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "70e1c0bf551f76e34edff245a9f1c8321b9baa84cf08a625a7e79bd837728e6b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-v11-paired.json",
+      "bytes": 18456,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f1dd608ac9d66ccef613c52e74ec4dc16be6805a2a9638f4ada87989397aefca",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-reality-reference.json",
+      "bytes": 18067,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8e852b180b8e775803738c628a405fd4c3ea6f47f6b8b7a33f150247c51016e8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/career-save.js",
+      "bytes": 17857,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5a1d2501659b7e287ec1c245883d20a77faef0b8d9c501a2b84587f5e235cdab",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/current-engine-population-audit.js",
+      "bytes": 17764,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "85acad3f52b8209900199a010a6ed01df29dcf4ed9c69626b330eeb13f421537",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-kyoto-prefix-profile-630-v11.json.actual-prefix.cpuprofile.gz",
+      "bytes": 17627,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "afb89050d4648c2a3153224898e869eea8440c6c2039fc6d33c0ec3dd4f1e166",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/curve-rider.js",
+      "bytes": 17548,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e2e2c976ad6b710b91217f4f37d10cc9908fa7a74f5d0280af2ba6f0863f949d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/prediction-consistency-v11.js",
+      "bytes": 17497,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9ee0c4abcbce526191ed86cd8efaf7f2536a3aa37ccdc677f37e07862018377c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/rider-route-planning.js",
+      "bytes": 17367,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": true,
+      "active": false,
+      "byteSha256": "7462fa4b1bea255caa1d126eec09a1712785189e8e61f12499e6656eb7604412",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-cohort-v11.patch",
+      "bytes": 17175,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fb8f3f20703114e4843fad2ad90a39d35615d4919a4a20054f6e1c07db012589",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-slack-boundary-v9.js",
+      "bytes": 17036,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "71d8b4e4f2dbb7e1c55998bad22ecd75c228a0195621976f748475afae126a39",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-execution-review-v11.json",
+      "bytes": 16636,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ff9e3d295c1666cbd9889b19ad5d52eddbc613f169095d68bcf7da73e388cf30",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-focused-v11-history/439d77e71291b184f88880cb1f521b71087d8eb7a374314475f6870ebf456106.json",
+      "bytes": 16410,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "439d77e71291b184f88880cb1f521b71087d8eb7a374314475f6870ebf456106",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-focused-v11.json",
+      "bytes": 16410,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "86394dfe37bcbe312b257e269a6881506484a3e2b1dc33910a90fa698dda0094",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-execution-review-v11-history/8fbfa30af9e23aef65a7b05ff409c0bb97447da63653c0fa381645409a3893d9.json",
+      "bytes": 16163,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8fbfa30af9e23aef65a7b05ff409c0bb97447da63653c0fa381645409a3893d9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/pace-covariance-v9.js",
+      "bytes": 15865,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb36b5cb0120a03a34c3cf4a8492beafb3fa9b49099d75043a44ca9e3e189199",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-execution-review-v11-history/faf9c70159019c982d958338a30d8a5e1b46e63ce4116505df8274d5ce378912.json",
+      "bytes": 15804,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "faf9c70159019c982d958338a30d8a5e1b46e63ce4116505df8274d5ce378912",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-execution-review-v11-history/83607864bed32496dd72a1fe8a06409d429b2eb36306fed3f94b238415d268be.json",
+      "bytes": 15437,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "83607864bed32496dd72a1fe8a06409d429b2eb36306fed3f94b238415d268be",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/page-race-failure-v9.js",
+      "bytes": 15374,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3db4d706feaba42ae414aa7a664673a03e3e9bf8047fe38e9dcd1ef6e3e7dc9c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-domain-review-v9.js",
+      "bytes": 15085,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bf7c8d251f9acd648cba0cabd40747f2b41bb7736bf9c969a48d4b153080ac90",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-population-paths-v10.md",
+      "bytes": 14746,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f80536f748c7c144cc61f669a8c3fc8098c23556d42dff2076639444ce9ac8ab",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-optimized-final-v9-original7.json.gz",
+      "bytes": 14522,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "dec5fcbc163bd6910a82ce7e6371a52d64e300f9079084eb252b2b6f0b510bab",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/当前比赛引擎-现实差距评估-2026-10-02.md",
+      "bytes": 14133,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2ee314cd3e4aae077be8a550fccfd852abc77af1abd9299f9c758f545eeb1277",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/prediction-visible-traffic-v11.js",
+      "bytes": 13945,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c647d068d3d5fbc003e745a391d658e50b4f71ad99bd4a4b5258546a62eda759",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/validation-archives-v11.json",
+      "bytes": 13719,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bf1988788a4f8b0bc962e852be91b4b549e15b1c49c51aaba28bb1e2ec7dd1b8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/causal-follow-opportunity-v10.js",
+      "bytes": 13678,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "68dda7721b60c61032403dc16a373a203067bee0a11ee9afc5bc9eb230a077fe",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/page-race-diagnostics.js",
+      "bytes": 13636,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "536e85c64b105a99f587f309f502093af260b472c647f60bf985dcb1c4f48f23",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-visible-traffic-v11.json",
+      "bytes": 13624,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bf5b3442feea8d96c6dd305965b8e92dfb2fa0b2c84b6adc01993a262e1c5a61",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-visible-traffic-v11-history/4f1a54ff794c5a75559f3d480cfbe17d4ee592dd96f8d1eedaccc5dc047551f1.json",
+      "bytes": 13282,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4f1a54ff794c5a75559f3d480cfbe17d4ee592dd96f8d1eedaccc5dc047551f1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-visible-traffic-v11-history/241d0f233f458fd7c09b2b75bfe9e5425664e521a1059f91700691bbcf3d8c01.json",
+      "bytes": 13276,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "241d0f233f458fd7c09b2b75bfe9e5425664e521a1059f91700691bbcf3d8c01",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-visible-traffic-v11-history/55759754659820d12dfd3c14342c3b8ebb466f571d18a21cf282cb1eda5dd629.json",
+      "bytes": 13276,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "55759754659820d12dfd3c14342c3b8ebb466f571d18a21cf282cb1eda5dd629",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/rider-controller-review-v11.js",
+      "bytes": 13268,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1f004d3d13fe5c45d5851ae6366f0e23a140f6e3a97233ad4736b88b7c02a10e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-consistency-v9.js",
+      "bytes": 13218,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e8ea0387c283f5cf179fb1dabe59ea81dba05cc61cc4785e12d6a803c51ffa26",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-kyoto-prefix-profile-630-v11.json.cohort.cpuprofile.gz",
+      "bytes": 13201,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "43b90623f5a771881f1c47e8b7865f715d0645b7352452335c88b9c45778d5eb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/rider-strategy.js",
+      "bytes": 13171,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "982779eef60516c1ca5c0233f0f30d0fbf824c77c49814ba2bfc8d9e071876a2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-traffic-braking-audit-2026-10-02.json",
+      "bytes": 13084,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2fca7d98e61718331850fa05553199c453a291e218bb51276b0f55b6dfcb79a6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-consistency-v9-smoke-2026-10-02.json",
+      "bytes": 12989,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6a5f17bfd81f45177198edeafc7883264717c245868a5b2ffdc852106a3c7fb6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/mc.js",
+      "bytes": 12647,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "05ec6fc4ac8804ad3f35446b215f0981a69195f50706c3dc2c2f8b2c9d9ce35f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-oom.json",
+      "bytes": 12375,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ec4acc366eca342ef5234568ceab0bac5ce9701142398290ef0aa9b6a1aa10a5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/system-reality-report-v9.js",
+      "bytes": 11994,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "44cd71f89089471593e7e92173601aa5835540582850740a16318e1af2aa99a6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-final-driver.js.gz",
+      "bytes": 11963,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a46fead296a43922f01af04f59ac69963da8c9b000761ef9252b7f3ce940b9cc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-nopeak-v11.json.driver.js.gz",
+      "bytes": 11800,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ac9eff8bbdf45257c5d1b343ba6a61c12b81110ff823a9c2b0dfce403145b4d9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-peak-v11.json.driver.js.gz",
+      "bytes": 11800,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ac9eff8bbdf45257c5d1b343ba6a61c12b81110ff823a9c2b0dfce403145b4d9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-training-rest-v11.json.driver.js.gz",
+      "bytes": 11800,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ac9eff8bbdf45257c5d1b343ba6a61c12b81110ff823a9c2b0dfce403145b4d9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-balanced-screen-driver.js.gz",
+      "bytes": 11800,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ac9eff8bbdf45257c5d1b343ba6a61c12b81110ff823a9c2b0dfce403145b4d9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-v11-declaration.json",
+      "bytes": 11377,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c2d5e9a0e4b1cd76b00401b2b09c6c098b38e3e0b2b31a63d5569c67245451c6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/calibrate-mechanical-v11.js",
+      "bytes": 11367,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "11f40a707c3195533174cda92a30e9bc2f7208eec4ae463f92a7bc5c653077cf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.driver.js.gz",
+      "bytes": 11275,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "355630f7f2628f914cbab12cbcfdb4ff6577cfb4db52dee9952b41e46552058a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.driver.js.gz",
+      "bytes": 11275,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "355630f7f2628f914cbab12cbcfdb4ff6577cfb4db52dee9952b41e46552058a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-controller-start-v10.md",
+      "bytes": 11226,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "66982e033c44e2557559e758b90113497c957a05a97eceb7cab4674837464bdb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-detail-v2026.10.02.3.md",
+      "bytes": 11223,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6872ff47798e4b6eb0b873ec13d39ed1a15ce53aaf47bb348343213b338e156f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.summary.json",
+      "bytes": 11144,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "87e6218f1bfe0f6de6236f7a1cbbc9f36c62765d6ff605cb3e8b033bf722c300",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-consistency-v9-2026-10-02.md",
+      "bytes": 10961,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fb87eca8672e01dc6a45cf2c4df350bbdbc831b0e4230e2bb65062397dbb32fb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-selected-v11-decision.json",
+      "bytes": 10925,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "51df45095e9fa64074a5d543cea0f1cca5d765e811700ba80c9ae98f5e610f9f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-oom.json.driver.js.gz",
+      "bytes": 10857,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0d4a5a6179f86344a7d2b2f1ea26dc193286a493422b38daa3db7011ea5cc1af",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11.json.driver.js.gz",
+      "bytes": 10857,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0d4a5a6179f86344a7d2b2f1ea26dc193286a493422b38daa3db7011ea5cc1af",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-cohort-initial-training.json.driver.js.gz",
+      "bytes": 10857,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0d4a5a6179f86344a7d2b2f1ea26dc193286a493422b38daa3db7011ea5cc1af",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/market.js",
+      "bytes": 10734,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "66d251a82839d230d5fc14e1a7ecb3d52f98b40e807bd49b703d798b8491babb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/calibrate-validation-v11.js",
+      "bytes": 10677,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4961066160c404886eab70129f6d3174a027f3fc2392be28e31d52ef9212792d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-baseline-external.json.driver.js.gz",
+      "bytes": 10591,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6cddbdc30a047932f3bf95f14b7d4a7b93e1d2f4e0287311df757b5531dc19b6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-driver-before-inner-observer.js.gz",
+      "bytes": 10591,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6cddbdc30a047932f3bf95f14b7d4a7b93e1d2f4e0287311df757b5531dc19b6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/helpers/page-runtime.js",
+      "bytes": 10008,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ea2b1d1918db7f456df12cdc97de7001fcb5f0bd8d0cd4488afd22204131429e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/sequence-safety-override-focused-v11.js",
+      "bytes": 9934,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "cd845218e279e2c60454a168b2283ea643eb5b76065d4fb4d9afa9c3fbbbebc4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/following-witness-cpu-v11-history/54d0fe211fcf1cdd39809a576dc2339bfac6371ba84f54739c4c58253de12b76.json",
+      "bytes": 9920,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "54d0fe211fcf1cdd39809a576dc2339bfac6371ba84f54739c4c58253de12b76",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-kyoto-prefix-profile-630-v11.executed.cjs",
+      "bytes": 9676,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b3fccf87ba47d4c313911bf871f4eb7855138e04aa4eb3c7e962f8c74543f988",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/controlled-grid-v11.js",
+      "bytes": 9644,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c151bf9bdb94b5cc96bdf0f1db601b50991dcb28b5830367f74a4ad7f3e287e8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-selection-v11.md",
+      "bytes": 9219,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a6719e9eb577dbe94e01aa5467a98b9ff15e476a5a9eb3d6ba9d4d52995cb44e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/page-cohort-v11-history/e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f-2026-10-03T23-24-29-205Z.json",
+      "bytes": 9170,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "639f79d6fc611a749e892d74bb58d2f607fd358825371eb7764e78be1334883e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/page-cohort-v11.json",
+      "bytes": 9170,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "639f79d6fc611a749e892d74bb58d2f607fd358825371eb7764e78be1334883e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/route-detail-v9.js",
+      "bytes": 9168,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "49a3fd05e5c716af62f74d7897c185d07513f9d11994a1311256ccd59c25c232",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/path-isolation-v9.js",
+      "bytes": 9090,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d91cf743fa15d8fd4c6a843684a92edba8cf3589ace026f8f30de8d44f1d37dc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/sequence-safety-override-v11.js",
+      "bytes": 8821,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ca41c3dbe4b57b70935aec8703efb46c253d57a592a20d24a7b7554fcfc50383",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/current-engine-reality-sources-2026-10-02.md",
+      "bytes": 8800,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d009a8a2d81cd416fdbd2d76368041d8b077cdba1cf7f9e791fdefabc0e9903a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/causal-aero-metrics-v10.js",
+      "bytes": 8622,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ca68a7f891098889c0cc82f058a548a5649809cff310d0cbe6899b02eb8e13fe",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/wait-route-continuation-partial-v11.js",
+      "bytes": 8598,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2e8410850600f71014d042066d4868895c28266ff613375f4cf0c75b1589d7a3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/follow-coarse-screen-partial-v11.js",
+      "bytes": 8425,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a5ad2dbb11629974d693a48d53947a90304163e8e2a3fdf26bc99fabf219a089",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/page-smoke.js",
+      "bytes": 8413,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ef05f0167a11293ac5ac9a9c5fb45928f2f9b90aef264135e198ffde43470e5b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/sequence-safety-override-v11.js",
+      "bytes": 8340,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c210ce24f6462c1782a5586af62aa45359dc61c5f0bcc509ca6ede320c09b237",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/mc-browser-harness.js",
+      "bytes": 8240,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8488ec063608ccde48e5d6884c6b2267d1280c07f9fc0c4281476431731312f2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/individual-physiology.js",
+      "bytes": 8226,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b687a073a44c7edbc7820bfd5391983940790e33546014bad55abddcf8f435ea",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fit-race-physiology.js",
+      "bytes": 8118,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "19807202f1163c461836dae61814180c21ef62677215a9a216c685508a102298",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/route-station-lookup-prefix-v11.js",
+      "bytes": 8093,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "720045cf916b0ff1c2905493795f58004ac8a4bf2ee4485b49976fc1be643a27",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/rider-rank-clock-v11.js",
+      "bytes": 8083,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "86d217281c3bc6159bdb5538c8010221dd8900cf67795e223790e4093be63adc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/individual-physiology-v2026.10.02.3.md",
+      "bytes": 8030,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a4cd0c1e432166fa34a943fe77541a10e985a7068dcc4da8c6e457f12bc65342",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/route-heading-junction-v9.js",
+      "bytes": 8025,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ebd4b8cc48a7ffc9cb7689a8077751537f0e1c30bbc2ce4aeab58d0fed14c17f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/route-station-lookup-v11.js",
+      "bytes": 7772,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4ae787fc3d9fee24ab296f70a93d3cbb2cb5c2b9389bfeccd9b0e8953a31b022",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/following-witness-cpu-v11.json",
+      "bytes": 7611,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1b948f7620ce36d0422bcfcf0caae4d456280daa2349eb39d2fbff87cd7a806f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/behavior-intent-review-v11.json",
+      "bytes": 7507,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "55f38ccb91ef157c889e1c5bb92387f63f8e3e491613c4abd2a08814407c1cb1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-prediction-physiology-v10.md",
+      "bytes": 7127,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8394941b2ad498c33075819716eb4045c585f3a1b4ae3d2723544506e8ef9986",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/cohort-player-entry-v11.js",
+      "bytes": 7099,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "accbd3bbb2062fd58450ca94e5ddad0ce0057c4f27bdb2205145166d4ddf4527",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-follow-opportunity-v10.md",
+      "bytes": 6955,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "71083611f4de3ed8a2a823f8f7fdcbe2ef757a95238b4decf13412d146b699ed",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/cohort-admission-v11.js",
+      "bytes": 6884,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0aa3b27d7092da538c6e2796588a5e45b799cda695db9169d1454aa09e9e3408",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-prediction-v11-install.js",
+      "bytes": 6840,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "57c0a396546b177a0db050ea2bbc5de2df5539e33dad29be0bbb113c04d6afcb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-route-reserve-fixture-v11.json",
+      "bytes": 6741,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3d8b4aa7c6b160e077b49227f4318cb6d27034b61f83a4f59cc401d622ddfd08",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/effort-history-v9.md",
+      "bytes": 6730,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "7f75e3d74b0f4527ee16c6e1794fbcff646b91427d81ab98c4c833bc11b2d663",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-performance-v9.js",
+      "bytes": 6727,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "7306d848551b97808fc306a8d6c45b8b155c736fbd9cbe8d54af166487f424d0",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-player-entry-v11-history/875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf-production-2026-10-03T23-20-47-400Z.json",
+      "bytes": 6556,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "646cc8ac550dda051337ca80fd31565547d42eb2478f4ae1bbb6cdddb3c5f9d5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/v11-gzip-reproduction.md",
+      "bytes": 6535,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c5de34cd76447e95fc97e754a2f66fed2ea20f7d437645bb85b68038047ea17a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/rider-planning-v11.js",
+      "bytes": 6519,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a0c6c882d73a2bb79e6cf519c78fd75439a3642fe798e05c31179f7683bd101c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/follow-coarse-screen-focused-v11.js",
+      "bytes": 6497,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8358190b0a7d7194bc8123016ff5a6a76f4110c1ad8165916bb5155d5f56b2c6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-player-entry-v11-history/875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf-production.json",
+      "bytes": 6451,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1d950d782703fb4080a6d2624282f4cd08cebaef6d8dbebdc0e40ad023bd1830",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/路线预算与状态验收-v2026.10.02.2.md",
+      "bytes": 6245,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "31dcc5af3ac019055e5c2f05ab78345fb6dfc956f6b3a271f8dc68a9ab98ae0d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/write-traffic-optimized-final-v9.js",
+      "bytes": 6155,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "603c56b0e06f307c65567ff0e75b78e1b13cb3e0a33270e42cfc46b726922d00",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-optimization-proof-v9.js",
+      "bytes": 6134,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fdb321ecf446a054a7225d87f856cb7ce56b51bc853b81e01fb8976b0509b6e5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/individual-physiology-v2026.10.02.3.json",
+      "bytes": 6131,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "73e05d9cdf4fc3df2aaff35082a0608cc030f4fcea12379798222eabab9e2903",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/profile-visible-traffic-v11.js",
+      "bytes": 6077,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "63e02220c6f9d0ff9c053d464bba79bec1ede6351bea040716797d9fb3147096",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-route-reserve-fixture-v11.json.route-test.js.gz",
+      "bytes": 6049,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2ffc1da40a286dbc542e0e7d8a57337b1fda52525656c1c273ad36d6cfdacf42",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/current-engine-traffic-braking-audit.js",
+      "bytes": 5928,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "621d0888fdb713997f85a5e754a2df9b2e763a7e7fc6e768f7abc2ea6b3a344a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/check-validation-v11.js",
+      "bytes": 5878,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "7b8e635714b25523493e0bce30d994dc09811abccc13968c21f20c3e6581f76d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/race-drama.js",
+      "bytes": 5844,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "abdc43dfaaf07d6b28488e63c1ed16f510275d15981daa5d8aeb554442d13363",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/resume-checkpoints-v9.js",
+      "bytes": 5803,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6a9136e7b696e65c77fcc87a22a2747e92c2963be546a6b3939db3b26a016470",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/prediction-public-prior-v11.js",
+      "bytes": 5768,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "512609b04de5dfc9c639b01ddd79901f85b6d02eac51e14c2f0ea18671cbc875",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/follow-coarse-screen-v11.js",
+      "bytes": 5746,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "7d8a296af14da49d3848029389e478a9301b234986148a96c5ee772028727301",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-peer-pair-cpu-v11.json",
+      "bytes": 5679,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e82bae9d1f518eeaa17455f1d7d1103b2def9e64388b3c410f04a7ba1228cf27",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/report-system-v11-checks.js",
+      "bytes": 5662,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f6e90aa373f4a71a549ae16d44fea1b3452f583e2117bb9ef4d624be258379d6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-performance-v9.md",
+      "bytes": 5636,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ebd0e488973af611481dafcf04d4b5ed7610ef16f7f7cffc59e4030d7fcfd442",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-optimized-final-v9.md",
+      "bytes": 5600,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d6fcceb2c0737c7a0e78b42cf6eede6ac7c2bbc720de5ba90cb81848aa46e423",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/accepted-1m-component-query/route-station-lookup-v11.json",
+      "bytes": 5597,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "42abe1b667dc7a4b2b451ab3146d7e0b6a5838132c586bede3772c8242ae9fc6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/200k-component-query/route-station-lookup-v11.json",
+      "bytes": 5582,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "718aaa82722b54a4875a9ade43f734d5cb13ba5dbd8e576e9f7bc3d60809f7cc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/helpers/regression-audit-v11.js",
+      "bytes": 5457,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "51692709b6c177f3bacc1020d97603abb8e0460482508f670bf4d0218026bb74",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/page-cohort-v11.js",
+      "bytes": 5400,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0f215ce0b599ac47afc1a80c36d62924ac404d5107c40dd5952c77689358ffd7",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/final-report-v11-inputs.md",
+      "bytes": 5389,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "214f46fc56f455ba0a72cc857d3078c7074e18a7c8ac7e97781de2599c7538ff",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/freeze-validation-reference-v11.js",
+      "bytes": 5370,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c07f648a8b7abcbfa8b4cbb1e9089e64d97ff4a79a6a3a859afc18e5091dbd74",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/可见交通预测审查-v11.md",
+      "bytes": 5344,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "05cce0d60fb7cae2492894bb59398ca6c2497433edc583a14f299d499a252c7b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/merge-training-v11.js",
+      "bytes": 5290,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5b5165081b82910581126884b137f2cc51b5e2246759bdbfb55abc9ad5f53ccd",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/rider-route-reserve-fixture-v11.js",
+      "bytes": 5255,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e6e484670cfd77f12306d01b6bb449d064a7c9ee186d5c69a747bb45a6c21bc1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-player-entry-v11-history/e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f-production-2026-10-03T23-21-06-360Z.json",
+      "bytes": 5237,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6e6404f28716ece1754b5374696252d607a2c708a790cccec905c725ed39954f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-player-entry-v11-history/e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f-production-2026-10-03T23-21-16-018Z.json",
+      "bytes": 5237,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c645f3b7ad27e60d2a25157090cac8cb94d1dbd306e55dddd503491ed7ba3afc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-player-entry-v11.json",
+      "bytes": 5237,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c645f3b7ad27e60d2a25157090cac8cb94d1dbd306e55dddd503491ed7ba3afc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-player-entry-v11-history/e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f-fixture-2026-10-03T23-20-48-372Z.json",
+      "bytes": 5236,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "dd75c9a3c3a6a202574d5d615c03a5250572d553d32b4e4639e42564e4e6fba4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-player-entry-v11-history/e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f-fixture.json",
+      "bytes": 5148,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5aa57929e967162cfb0629a892796793630a93d4b858953fcac60c77c17ee1ce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/following-witness-cpu-v11.js",
+      "bytes": 5123,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d04b44c07d28d23f552545da8eaf15dfdf4f5ad3443a9022ba3b65b99587d4b9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/rider-policy-before-v7.txt",
+      "bytes": 5080,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "43fce00422d09db73750d61fe1eea091ae97d3e7afef1a05a5c8cc3e1b5399f1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/compare-page-vs-cli.js",
+      "bytes": 5003,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5814ca7e34b8db81ece3f9977d564c18feee555f16362b5df0b1da53afeaaef6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/archive-readers-v11-checks.js",
+      "bytes": 4971,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e53bb854ea66d58b8260d5e3f89502f22ece7f4d328165c1dca0e8b1d439f7ae",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/system-external-reference-2022.md",
+      "bytes": 4964,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5555675e5d40872504124bd757b468a635d1d1adfa40270bf5ddf93266d80fce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-stop.json",
+      "bytes": 4951,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3f1edbfcea84062f197a100c189f365cfeb8d6a5160e78f1ae371b618921a15d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/initial-nonfinite-fixture/route-station-lookup-v11.json",
+      "bytes": 4948,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4ac770c9c5064881ecc2aa92ac93a5fab97b5f051a77046f1003fe0867c35181",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/stamina-range.js",
+      "bytes": 4826,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e8c84ff7e60fa564bddeae147b5a77c49c75251205be530174e767d3277f4fea",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/market-integration.js",
+      "bytes": 4779,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c664a5ec74e95f918b8f2d85ebdaa70c5db82e2d01936064593a42ef4a2686b2",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/predeclare-selected-v11.js",
+      "bytes": 4778,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "309687bae2c4f3068fc199581ba9784c30b02ce9298b80eb16c90a49522a928d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/follow-coarse-screen-summary-v11.js",
+      "bytes": 4777,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a61b745ebd8df2c983c896a97b37ae72993a5f22f561013c42174a6e0a7270ca",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/start-system-v9.js",
+      "bytes": 4738,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ee582db9dee6b17df016f2f15c1f881715eba33c70892c14a4458760a79cfd8f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/course-reality.js",
+      "bytes": 4689,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "81865a81fa97750ebec044e97c85c25eb38e574f39defbc63cc4277516859dff",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/record-selected-choice-v11.js",
+      "bytes": 4615,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8d3e3ea3e66875531bebab6139c24bce208c5ae23aa491da605f7645647b630f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/京都长距CPU只读诊断-v11.md",
+      "bytes": 4587,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c9db60cf6ca227982c47f2e38c654ed3524191b1bb5634aa822893ae7343992e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/rider-policy-ab.js",
+      "bytes": 4566,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1ec015757970a3fe20e4057fa04f0e3013dca9b1bc51ce311969804f88107018",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/attribute-impact.js",
+      "bytes": 4549,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4e5a28dc5a6fbc77b7ba5a7bc9b93433913f6fe3587140db67fbab5e02b4b56a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/wait-route-continuation-focused-v11.js",
+      "bytes": 4518,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "da16031148cc8849e4392f47cb54cccba7c4dcfe8ab60b46b707eb26f4fb2474",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-upper-window-review-v11.md",
+      "bytes": 4483,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "63a62ef1eac9e1038f2a1805edad1f10cc89ef3a1a3b24ad29fe1d0e6ef2af54",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-cohort-player-entry-v11.js",
+      "bytes": 4421,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c11a85a61dec5da43a37a04e15a0b2ad72bbe0b619c5533ed58d106dfcab7435",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/page-race-failure-v9.json",
+      "bytes": 4412,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "571fd8fdc76474d8887fc2ad60a96f928844ad0e7e76bf28a2c10100c2ea14ad",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/最终机制回归入口-v11.md",
+      "bytes": 4409,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "399b7885fb39656b07a9f119bb5009eae7b1120ebd77222ae51e15b93740dced",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/helpers/v9-numeric-snapshot.js",
+      "bytes": 4386,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "cf0496a581ce0bc36dad7fd271d4346c597228f22e8a9a72c4673e06d7dcdcb0",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-cohort-admission-v11.js",
+      "bytes": 4371,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4124b5479b3366bc8d1b504ef91add5113ac434ab582a07558c30f55bab9ba62",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/bet-validation.js",
+      "bytes": 4364,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4722b7bf45057b404b79431d30c85202c260acc4da4e0da672a54e29e122f577",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11-checkpoint-resume.json",
+      "bytes": 4358,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b65b2a17800f6d9b75d30e32e40968d50b9a6353acb10a76313a057785d04fde",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.orchestrator.js.gz",
+      "bytes": 4274,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f50ee83a0ed767aa24e8807f8db0cb8b734f782c2b5ab38061639541735966cb",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-v11.md",
+      "bytes": 4263,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "91cf68a4e3ed49b5527d4433edada95837ceab2c88afc135dcac5f54831f68b4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11.json",
+      "bytes": 4164,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8ce41b9e9b91c4518740363219f217f12a8204d43d46b264ed6793d7e0f08217",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/cohort-forecast-cost-v11.js",
+      "bytes": 4135,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0017b5286b314c9e54b3a4c233978cb0d3627b786faf052c582f0ca7736b4836",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/diag.js",
+      "bytes": 4128,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "286cbc0199c42d83c82036f8d7b84e374316a361cad082f2326c7c95a01b617b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/plot-causal-realism-v10.py",
+      "bytes": 4100,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c5608a1e416354fb42abf9e2e431c23921c3b44be8448c6e440db7e30f2387a4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/plot-current-engine-reality.py",
+      "bytes": 4097,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fdbb3543df188f718ee45b4c78e2435c06751831ea3e644b09e5f8f1fc2d7e6b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-performance-resume-v9.js",
+      "bytes": 4084,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5a7b722586e2a38e88ed7412987ef6bb7497220221346b5eccfeda21ea3b5b3f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/traffic-cpu-full-replay-v11.js",
+      "bytes": 4030,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bd373a3f4b5a1eb9c2f1472097fe3a55c366f331e348ab11b18f2bf71e9f1164",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-headway.json.orchestrator.js.gz",
+      "bytes": 3977,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b0817595af2a64b93d77614deef833526056b45ccb1c65d6aa6e1a16c002b76c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/validation-resume-v11.js",
+      "bytes": 3960,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "77baa2453cc5f82f20784b44615a3d72e9fd34e984a6e1243f7d1de4e0b3c66d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/causal-residual-decomposition-v10.js",
+      "bytes": 3935,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "aee5c0d75e99a108c359a3eba1f2fd95a098533c18eab499462eebab700a02f7",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/report-regressions-v11-checks.js",
+      "bytes": 3890,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c766891ab5f07cca996329bdc596939c996072706f1c9e522793bce658772d4c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-kyoto-prefix-profile-630-v11.json.script.js.gz",
+      "bytes": 3879,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bd865e1dbdf9da124872ac9d53de7ba5e3148e9edd3632390839ea511d33e3af",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/behavior-intent-review-v11.js",
+      "bytes": 3877,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "db54dc1d7b342c7b6e2ec22a431546c4a404211f5e83a4f88199176e5045203c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/debug-minimap.js",
+      "bytes": 3824,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5dd4e64efbc231c0c97a00f5070af68e467f1b7e26d9c51a59d7a44152583bf0",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/source-snapshot-equivalence-v9.json",
+      "bytes": 3818,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a451d0d574d085b9c68f89045853504ad89510d06c30cde180a3770dbab83505",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/prediction-visible-prior-v11.js",
+      "bytes": 3778,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2752efa00c3c30f0da21bdb71770236af41799c399de2e6d3e09ab143d37d94a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-rank-clock-v11.json",
+      "bytes": 3768,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6005ff23c7ecf4e71ae331af84bcb2cc84ae54361447541300ef8d136c542460",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/prediction-peer-pair-cpu-v11.js",
+      "bytes": 3760,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e3c7e9bef733f2c056bbdbfa654ece3d4f8a3caa38146bfdd6ba183204b0b12e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-rank-clock-v11-history/cd78a5fb1525c8a5cfdef6a4cfea41d7b05fccb6468a7f44da1d48c1b3e9585c.json",
+      "bytes": 3687,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "cd78a5fb1525c8a5cfdef6a4cfea41d7b05fccb6468a7f44da1d48c1b3e9585c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/summarize-calibration-v11.js",
+      "bytes": 3681,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ca89dc12bef0c9a849009c153299245f25e2c08837fd6ff37358bd4d5fbb87b1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-rank-clock-v11-history/f2a4138cdbf4256320cf306865ad97f99eae8b08aae0a24f9566ef6229480fff.json",
+      "bytes": 3614,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f2a4138cdbf4256320cf306865ad97f99eae8b08aae0a24f9566ef6229480fff",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/physiology-save.js",
+      "bytes": 3549,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "07e249c0f185801be2d8f9533613b2ac3855d37223735a9417826c7a637b7148",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/audit-artifact-volume-v11.js",
+      "bytes": 3513,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ab34809e58acec34c93ae92eecfea8ef5b0a52bc9ae579f87fbafa990a6003db",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/record-exploratory-stop-v11.js",
+      "bytes": 3423,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "09df24194814c0df18213035cf66b911fd080f03ba84150c92b02ba9d9d6ef8b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-execution-review-v11.md",
+      "bytes": 3410,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3368dfbec3cacc607ca01d7f2daf6af9d544061bf80b6770f30cf36113b6a1a3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/race-validation-observer-v11.js",
+      "bytes": 3368,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a0d54f3ee0993c06655e25b947051a9d8491928b4397b8a0574220820ee29d6a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-release-v11.js",
+      "bytes": 3349,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2a80143d6387c432188a7727f195993f5f5f2ec1cf877c9c8e07b17bd3449e92",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-partial-v11.json.driver.js.gz",
+      "bytes": 3313,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8c05554332473ea103de679e018670e4a828c8e9263312629ffbbd36e15d5813",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/路线区间查找等价优化-v11.md",
+      "bytes": 3285,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e228c4eaef5926f0fbfadbf6955d523e3849072f39788e585a09e8eedde84441",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/controlled-grid-v11.md",
+      "bytes": 3261,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "73a55687cec19615a8a8f4aec692ae59a3069824c515ae75696e9cee7298f13e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-controller-review-v11.md",
+      "bytes": 3259,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "785524513f961e4a1ad70ae70c6ae67746e18dfb94d478d4d3ea4a99f8c49a9a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11.json.driver.js.gz",
+      "bytes": 3181,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e142dd7ca9ddf7d0333b3d813f4b98abaf0f36394c77ea786b423c2251d89167",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/summarize-selected-v11.js",
+      "bytes": 3176,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fc82a521b59becf0057dbe6cd8ef5badbe09949a2ea39230be939bd7e2c96fe8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/四主题收尾审查-v11.md",
+      "bytes": 3172,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "78f57d30af0cbb58216f81b617629cd501fcbe45259082aca1821cfe5cb5f356",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/validation-scheduling-v11.js",
+      "bytes": 3164,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c3b0a642a04cd60568f1b1e3050526c295f32534ce60bf7cef93ea9d8518ec94",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/archive-validation-v11.js",
+      "bytes": 3128,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2c13d2777a50565d34649c0c47e104de5b8d912379a5a5efe7ba6f87f12c1de6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/compare-validations-v11.js",
+      "bytes": 3104,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2e648ad22a32db203ed6325f94ecc241851d2071e2b7b4097f9b7881578df598",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-prefix-v11.json.script.js.gz",
+      "bytes": 3055,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4ec1231da721d67d4b92ce5afed58fffedfe695ac40f4ab34e2eeb0848623d5a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-development.json",
+      "bytes": 3012,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "98c048a1b88cbcc391c43b4b65176353eca1d4902c3e016c7915caa06d98f359",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/record-checkpoint-resume-v11.js",
+      "bytes": 2996,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "edf290145f2bf3c9a63c9ff1fa4e5f638a5e9b819fa7f2bb4a50654fc8967e82",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11.json.script.js.gz",
+      "bytes": 2989,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2e087f216a631ce8c61104b185c5fbb38ae28a0b3197324ea717e7705fdb5d60",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11-oom.json.orchestrator.js.gz",
+      "bytes": 2974,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ce0a3ff8eeb885408d61b886f9b15bdebe387b5e77f93589341a0611e81c5c54",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-screen-v11.json.orchestrator.js.gz",
+      "bytes": 2974,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ce0a3ff8eeb885408d61b886f9b15bdebe387b5e77f93589341a0611e81c5c54",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/cohort-upper-window-review-v11.js",
+      "bytes": 2968,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "884776d3f25afb48eef3d1ef0461518d883dd0052b51fc9cf3ff4d84c4933a2a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/roster-physiology-entry-v9.js",
+      "bytes": 2922,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "5e86e1247fac09dc402d8fee7f8c2c31a9d977da93413e74b434637c702e75e8",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/entry-regressions-v11.js",
+      "bytes": 2917,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "70f6fffda11c833c817e60e131dd0d8ffe79805c244b41a03d5476e9f3e5cf58",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/plot-system-reality-v9.py",
+      "bytes": 2900,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "56382be176b3f46cecc1843746a4de45e7a1e9db75135aa82ca695eb8064de4c",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-focused-v11.json.script.js.gz",
+      "bytes": 2886,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "34dbb54b67cd1411f0f9c50d3097290ad16869422f9551df20fe443910271e58",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/accepted-1m-component-query/route-station-lookup-v11.json.script.js.gz",
+      "bytes": 2866,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "dd04026c4b914665243a2f187242c243e01d19d1df87490dc4efeee48b4a565e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/200k-component-query/route-station-lookup-v11.json.script.js.gz",
+      "bytes": 2863,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "522b2f342c057b1546f6db2a10acfb1c80830d88e56487cdabe4f1645d82e328",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/sequence-safety-override-v11.json.script.js.gz",
+      "bytes": 2861,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9f693ba155097b4615455d5b96fbe0871929e7ee66552bec00cd413974fb8a8a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/helpers/v9-traffic-optimized-source.js",
+      "bytes": 2846,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ef09e9d2b116e1e13519c7371617338e666192fac788bfc88f0a8352545b076e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/动作承诺与安全指令一致性-v11.md",
+      "bytes": 2845,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e41f79961b93a163a9976ffa21996b6f260c9548b0116e229891603e36b6f5ac",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-public-prior-v11-history/33b4c374383dee98d656cec4d860d526870d561d0288e6b4e5f87b89db50d0aa.json",
+      "bytes": 2843,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "33b4c374383dee98d656cec4d860d526870d561d0288e6b4e5f87b89db50d0aa",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-public-prior-v11.json",
+      "bytes": 2843,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1a5fe5f515cf33608d60e634cf4d5d0a2e312d96947b0f8f3fd946aaba91b2ae",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-public-prior-v11-history/3ef99121dd419632586b4422a8b5727e2cdd1b58427ae8629d8a7e8677a9d8ef.json",
+      "bytes": 2842,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3ef99121dd419632586b4422a8b5727e2cdd1b58427ae8629d8a7e8677a9d8ef",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11-missing-process-resume.json",
+      "bytes": 2806,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "91a1fb1612f4c1685582c4269275ce989063747f8c7d37b20d9b8e4a0ffa1fa5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-cohort-admission-v11.patch",
+      "bytes": 2806,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e3992f26a34298328533246845141a2d11957bfdd6379430d0063f6dd65095f9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/route-station-lookup-v11-history/initial-nonfinite-fixture/route-station-lookup-v11.json.script.js.gz",
+      "bytes": 2782,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "805a6e3526059dbdde348a4250f24dea3e3cd8c25a90c3bed72c21e71659d062",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-forecast-cost-v11.json",
+      "bytes": 2773,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "220c27e38af00f70f2672ad277cfd564572e95ba57c3b679ec80ee5057e27c85",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/style-by-distance.js",
+      "bytes": 2743,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0eb2c956b76c100bc15693da4d9f792ad623c296b1148b8039c7a2c88c794bca",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/cohort-fixture-proof-v11.js",
+      "bytes": 2689,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d4b47b4a68c129a2a655489f5055241fcc5b7fe64604cf5deffea00a7bf5e566",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-consistency-v11.md",
+      "bytes": 2645,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e43c222d6877696870b8a59bbbf8e690a36fbf8bbeabc0d473d2c5dfcd519561",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-cohort-player-entry-v11.patch",
+      "bytes": 2625,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "120731ce2f119a2c3a5b6f6eeb5397eb66b6cfccc9b96e1d78c6a9cf40f3999f",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/record-missing-process-v11.js",
+      "bytes": 2557,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "670ed387dad0d59e32719de4adec6735a67b8820ca18579eb557bc281793167d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/route-station-lookup-v11.js",
+      "bytes": 2492,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3a14d161ea156777ba02ff6c0459371de65b8a78573b5e0767305ad4af495670",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/source-snapshot-equivalence-v9.js",
+      "bytes": 2448,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "52c8f8884d4d8ba7e9f167c310b791cb9694b25f1ecec3501225e6590b0af050",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/manifest.json",
+      "bytes": 2405,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "107f52a388ee9c08cf083338ee787d38a0e9f4c77161c02d2a590be66c91a80d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-fixture-proof-v11.json",
+      "bytes": 2382,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d53d198d5e9334a9aff625556861a6fe72da8b55e55db85151c33728a67788e1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/prediction-visible-traffic-v11.md",
+      "bytes": 2349,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2187bef4895ca660c42f7950e8a3b99546495b1aef4cb387276fbbe5a042a355",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/race-validation-loader-v11.js",
+      "bytes": 2322,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d13294bacb94eaa686f09bbc1ff6de3142612143186b306c3fdd7ad39aeeb89a",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/archive-readers-v11-checks.json",
+      "bytes": 2309,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ce2483b7af09f544ff0918b2bd806b047c10e78bb63e240251fc1da1b2f545d3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/README-v11-release-draft.md",
+      "bytes": 2267,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "d7d5f8744122f272aa5b4ec59fe91106f6d530a6417d4eace04e0e8e83c97493",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-fixture-proof-v11-history/pre-lookup-2ab0d646.json",
+      "bytes": 2261,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3c38ab8c2213c166071a3f072e4eed8c4a56e0f76b525b80ed91a562055a6c64",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-focused-v11.json",
+      "bytes": 2155,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "538a1d7655e124364350b5a155dc8dade84fb7b00a2babe85d0bcd381770885b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/wait-route-continuation-summary-v11.js",
+      "bytes": 2144,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "399fb8f2d759047cdc76e44b3a25d79c43295a2b6145da90139ed9e16e5c3131",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/wait-route-continuation-v11.md",
+      "bytes": 2075,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "cf659e6f0446b4ea056fbe2f583dd56498139d15c9296c34cc608ba1a2a8b6f6",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-cpu-full-replay-v11.json",
+      "bytes": 2055,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9e7ce2ca17efae6723ee96ebad0b8e28b3d796ab367ef30c8a95b89a3dc76d99",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/manifest-mechanical.json",
+      "bytes": 1998,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e6c2075af09dc6700fcc19336a590d3e5efe5007593b31744ab41d8e4cf67351",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/validation-resume-v11.json",
+      "bytes": 1915,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "c702c258f4762b7e4740efda118db6febc732406221b7dac31d49d9d5a826dc3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/route-browser-v9.js",
+      "bytes": 1901,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fbb6902c5a15a70b39612dfc8bd9c3caf316f1bbc116ee056cd023bfbd60e727",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/prediction-peer-pair-cpu-v11.js",
+      "bytes": 1883,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "075cfc24435cf8a40c285c8c953f709dee9a4efa2fd62c8790f998203e724888",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/page-race-failure-before-telemetry-v9.json.gz",
+      "bytes": 1822,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a1a73caf36890bdfd78e87d73f714b96962544b7442fe3ca475e66772bb212df",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/profile-visible-traffic-v11.json",
+      "bytes": 1817,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fc4a74f676c7a8e59a46158838d934a5a54fefc7ed4574012ab85c4a6f494606",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/route-reserve-power-v11.js",
+      "bytes": 1799,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3a65d8017b736577a1d5af7c15b51e9fcf10c0cc6f72034d37d6af571a2dee99",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/tempo-system-v9-incomplete-source44.metadata.json",
+      "bytes": 1739,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "2722bc07b734b1c1fe96e7d7e0559f908372b8f097c5e4a3f3c86986dcdc9f84",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/archive-causal-realism-v10.js",
+      "bytes": 1702,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6adc7d3d0883d555337fe028d3a6bbb2015791cc9047d7ef94016d332cc7548b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/helpers/race-cohort-v11.js",
+      "bytes": 1683,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "11396c75c53ab96f40ff433e4ace91f3baff378ebc469ad7764df34dff899e70",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/validation-merge-v11.js",
+      "bytes": 1659,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ddc9b9e28da9f40a4b0e4b3dfd2f856980624ce15506ed9e648df2a3ee30caa9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/install-system-v11.js",
+      "bytes": 1641,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "a9ac5a0a3091178cadc5bc2b419a797f2f4899b9f38155db69f69b23deb9f6df",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/following-witness-cpu-v11.js",
+      "bytes": 1573,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e4b059db767f25d646e4db7feb0c441a79fcb4f8819fcdf3e3316ed2753a847b",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-optimization-proof-v9.json",
+      "bytes": 1568,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "115766e73634accc07a5321296de6546b83b7f5fcc293d18ed3488e5706ddb85",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/route-render-v9.js",
+      "bytes": 1560,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "982cd7a519931e477109a0c5a3d3334507e2691f66b6be2797269247a48c97cf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/sync-rider-controller-v11.js",
+      "bytes": 1559,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "43893c85886f6bf027df7e68322285cda5474174f11d49cff9ad1b8fe4dd72c3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/wait-route-continuation-v11.js",
+      "bytes": 1531,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e73507af3a74d94d3a3b4ae7bc3b7840f4a289c5de4e74ebd5196f21de841a33",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/causal-realism-archives-v10.json",
+      "bytes": 1479,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "b868f3ddf66ea0851c4a4490d281f78ad09dc2ab96f459c4f361f8fb9ae0ff70",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-baseline-repeatability.json",
+      "bytes": 1417,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "899fa9e593db0f8ac919a9ed58c84d0b54c36d1b79139e198a8503ca1b283ae3",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/behavior-intent-review-v11.md",
+      "bytes": 1412,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "391632b9f18201c8708a44939d3ab1e757d1f9f3fc1dfeeb1e13de19b19ff948",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/release-fixture-v11-checks.js",
+      "bytes": 1314,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9dcded3e5c7c05c7c62f39329d69456ba3c583502c2bb671be114a2e0dd8e651",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/cohort-forecast-cost-v11.md",
+      "bytes": 1244,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "59b48cff57c3748dab2c497705033415d77d240b4943f0cd8a8e92817873ed24",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/source-freeze-v9.json",
+      "bytes": 1234,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e9aac2302b59ce190780dfe1be0206ccc6d64adf08d98a94f07a701082043efe",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/freeze-candidate-v11.js",
+      "bytes": 1153,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "639d96c7fdd8d3809c50139936120fca8a5bf30fca707147b268419dd479a562",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/realism.js",
+      "bytes": 1148,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "11241c55ca8ff7a2e5364b99a0ad4b579406bb25bb5ee7affa1d829e27364e37",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/helpers/frozen-v8.js",
+      "bytes": 1139,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "fbf01e9ac513239f279e78bc8942babdd02b0d55639b39929111ec61dec41bf9",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/integrate-rank-coarse-v11.js",
+      "bytes": 1047,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "28e28e3f78a1209b4349f80c39cafc46b83150d0dca95bc6466ac0fc77fbc4f4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/race-validation-v11-loader-proof.json",
+      "bytes": 939,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0daadd7a76f1572f6c587951964216db344934f2fb127e5736ad55f897d63e7e",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/rider-route-reserve-fixture-v11.json.fixture.js.gz",
+      "bytes": 810,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9ae394c645b677601ebf7cbd05c5d9ab0619ec924d49886118395969d3735933",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/interrupted-source44-v9.json",
+      "bytes": 800,
+      "tracked": true,
+      "pendingAddition": false,
+      "changed": false,
+      "active": false,
+      "byteSha256": "45b2ad50fedbdd335dd965e342fc7e5b90da1eefead594dca26a9d87ceae8e0d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/helpers/read-archive-v11.js",
+      "bytes": 778,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f6aca3ad23333fed723a36e56a7cf87693103d1c27143a4fd36d39a6ac372321",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/integrate-traffic-admission-v11.js",
+      "bytes": 701,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "0816d9034f420f3d0301b9edc878c1f39ccde26f83a8bdc3458748be209fd6ce",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/traffic-kyoto-prefix-profile-630-v11.json.create.cpuprofile.gz",
+      "bytes": 556,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "1ef3e9cbc624928510d210d08c11b27d668b5f1dd043619ab536ac2a7eb9c1a5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/integrate-visible-prior-v11.js",
+      "bytes": 455,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ea4bb90e4bbc06499fc3aca042e98c4321a8e0f160af909d4ed1c9763c18b2a5",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/integrate-player-entry-v11.js",
+      "bytes": 383,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "e6098b2dc6d1ea433648909bd5dbea07c20c687f38b524dc2d5f35e8845c82dc",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "docs/validation-merge-v11.json",
+      "bytes": 382,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "84f5c97f862d7d28cb734939b2521196b3aea0b5a97d7cc8e6691142459ecbb1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/integrate-traffic-cpu-v11.js",
+      "bytes": 382,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3926aff39cf2a5ca61529c7860c8e1d75ade3d02540c6f41a48a4e81140dc490",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air2-fast80-peak12-cost105.json",
+      "bytes": 153,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "9e5ac1224b6b23ffd81164b7bb892d7a99766ec1b1b0ece9228fc8b31e32e100",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air2-fast80-peak08.json",
+      "bytes": 149,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "dc4ca41ee6939d5abe4ca11fe35b69f550ef1f5fa68c97fc4df9fab2a83c893d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air4-fast80-peak12.json",
+      "bytes": 149,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "6ec1141a71a5603754b468b366a587bb0868b82f5cc6b6fa69637fd3b2e6baf1",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/selected-nopeak-cost105.json",
+      "bytes": 139,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3092001a76d035922ae23192be9380833adced74593de7b58fdb9f66bfa6abaf",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/selected-peak-cost105.json",
+      "bytes": 139,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "8d8c2bed60f35c0fb085f151e72634ea438dabf0b658282c921b6dfe00b6ee45",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air4-fast85-peak08-cost105.json",
+      "bytes": 138,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bb6d89dd922f49f8af7ccd1e5c58e4be925ca0c76d8082a1cc23b92b1d054582",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air2-fast80-nopeak-cost105.json",
+      "bytes": 114,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "089ca6a1887d425b3879530be3131b2848b0ab3ca93b4aa3a4f382c3fc5cef32",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air2-fast80-nopeak-cost110.json",
+      "bytes": 112,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "3d4bb19b30bbe4523c130027c04064ba9c6903b5ac41fcd120ae271a85f86d61",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/fast80-peak08.json",
+      "bytes": 106,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "53af269345add41278ddc0ea834173b15bb54bb09de1e77f6c89fdc52764f5fd",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/fast80-peak12.json",
+      "bytes": 106,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "61aa9f78b17786dead304e82d0a783fe5e3bf28ecab9c6449d40131b57127e63",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/fast85.json",
+      "bytes": 92,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "4abccdee5e7fcfac79acf09a8b0ee154f840745ddbfa8bfcfef46f22e7456629",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/fast80-nopeak.json",
+      "bytes": 75,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "f54e4069a580ccb7ab20065e1bd2b24ea472de9e059073d04137e5b2c3e545fe",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air2-anchor18.json",
+      "bytes": 46,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "bf9faca41752a20d6a551e6003d4d292a4eb1ded4f1ccd75598762c39bd0654d",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/air4-anchor18.json",
+      "bytes": 46,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "799fe9857cf8a794d2690a59a158300673e2648430434334e4058bb1ad1e5ad4",
+      "rawGzipSibling": false
+    },
+    {
+      "file": "tests/fixtures/race-validation-v11-parameters/current.json",
+      "bytes": 3,
+      "tracked": false,
+      "pendingAddition": true,
+      "changed": false,
+      "active": false,
+      "byteSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "rawGzipSibling": false
+    }
+  ]
+}

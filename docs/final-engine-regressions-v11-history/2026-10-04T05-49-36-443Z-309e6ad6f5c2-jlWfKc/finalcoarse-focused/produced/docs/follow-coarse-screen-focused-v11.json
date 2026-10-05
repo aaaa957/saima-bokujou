@@ -1,0 +1,654 @@
+{
+  "sourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "candidateHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "checks": [
+    {
+      "name": "Coarse energy refusal performs no fine forecast",
+      "pass": true,
+      "reason": "energy",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": 161.69108772154297,
+        "savingResolution": "coarse",
+        "regainedDistance": -0.08298918043828962,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "pathConflict": false,
+        "accepted": false,
+        "fineChecked": false,
+        "rejectedReason": "coarse-energy",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": false,
+          "pathConflict": false,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": null
+      }
+    },
+    {
+      "name": "Coarse goal refusal performs no fine forecast",
+      "pass": true,
+      "reason": "goal",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": 161.69108772154297,
+        "savingResolution": "coarse",
+        "regainedDistance": -0.08298918043828962,
+        "goalReached": false,
+        "targetShortfall": 0,
+        "pathConflict": false,
+        "accepted": false,
+        "fineChecked": false,
+        "rejectedReason": "coarse-goal",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": false,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": null
+      }
+    },
+    {
+      "name": "Coarse path refusal performs no fine forecast",
+      "pass": true,
+      "reason": "path",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": 161.69108772154297,
+        "savingResolution": "coarse",
+        "regainedDistance": -0.08298918043828962,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "pathConflict": true,
+        "accepted": false,
+        "fineChecked": false,
+        "rejectedReason": "coarse-path",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": true,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": null
+      }
+    },
+    {
+      "name": "Coarse no-saving refusal performs no fine forecast",
+      "pass": true,
+      "reason": "no-saving",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": -1,
+        "savingResolution": "coarse",
+        "regainedDistance": -0.08298918043828962,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "pathConflict": false,
+        "accepted": false,
+        "fineChecked": false,
+        "rejectedReason": "coarse-no-saving",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": -1,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": null
+      }
+    },
+    {
+      "name": "Coarse pass but fine energy refusal cannot commit",
+      "pass": true,
+      "reason": "energy",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        },
+        {
+          "goal": true,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": 162.22746363830495,
+        "savingResolution": "fine",
+        "regainedDistance": -0.09711054971148769,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "pathConflict": false,
+        "accepted": false,
+        "fineChecked": true,
+        "rejectedReason": "fine-energy",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": {
+          "maxDt": 0.016666666666666666,
+          "goalS": 627.9233945469846,
+          "goalReached": true,
+          "energyFeasible": false,
+          "pathConflict": false,
+          "saving": 162.22746363830495,
+          "regainedDistance": -0.09711054971148769,
+          "steps": 615
+        }
+      }
+    },
+    {
+      "name": "Coarse pass but fine goal refusal cannot commit",
+      "pass": true,
+      "reason": "goal",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        },
+        {
+          "goal": true,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": 162.22746363830495,
+        "savingResolution": "fine",
+        "regainedDistance": -0.09711054971148769,
+        "goalReached": false,
+        "targetShortfall": 0,
+        "pathConflict": false,
+        "accepted": false,
+        "fineChecked": true,
+        "rejectedReason": "fine-goal",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": {
+          "maxDt": 0.016666666666666666,
+          "goalS": 627.9233945469846,
+          "goalReached": false,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 162.22746363830495,
+          "regainedDistance": -0.09711054971148769,
+          "steps": 615
+        }
+      }
+    },
+    {
+      "name": "Coarse pass but fine path refusal cannot commit",
+      "pass": true,
+      "reason": "path",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        },
+        {
+          "goal": true,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": 162.22746363830495,
+        "savingResolution": "fine",
+        "regainedDistance": -0.09711054971148769,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "pathConflict": true,
+        "accepted": false,
+        "fineChecked": true,
+        "rejectedReason": "fine-path",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": {
+          "maxDt": 0.016666666666666666,
+          "goalS": 627.9233945469846,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": true,
+          "saving": 162.22746363830495,
+          "regainedDistance": -0.09711054971148769,
+          "steps": 615
+        }
+      }
+    },
+    {
+      "name": "Coarse pass but fine no-saving refusal cannot commit",
+      "pass": true,
+      "reason": "no-saving",
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        },
+        {
+          "goal": true,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": -1,
+        "savingResolution": "fine",
+        "regainedDistance": -0.09711054971148769,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "pathConflict": false,
+        "accepted": false,
+        "fineChecked": true,
+        "rejectedReason": "fine-no-saving",
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": {
+          "maxDt": 0.016666666666666666,
+          "goalS": 627.9233945469846,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": -1,
+          "regainedDistance": -0.09711054971148769,
+          "steps": 615
+        }
+      }
+    },
+    {
+      "name": "Only an energy-positive fine reachable catch may become a committed follow sequence",
+      "pass": true,
+      "calls": [
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": true,
+          "fine": false,
+          "maxDt": 0.12
+        },
+        {
+          "goal": false,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        },
+        {
+          "goal": true,
+          "fine": true,
+          "maxDt": 0.016666666666666666
+        }
+      ],
+      "opportunity": {
+        "following": 15.36763671875,
+        "catchV": 16.28763671875,
+        "followTime": 4,
+        "catchTime": 4,
+        "saving": 162.22746363830495,
+        "savingResolution": "fine",
+        "regainedDistance": 1,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "pathConflict": false,
+        "accepted": true,
+        "fineChecked": true,
+        "rejectedReason": null,
+        "coarse": {
+          "maxDt": 0.12,
+          "goalS": 627.8631484542167,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 161.69108772154297,
+          "regainedDistance": -0.08298918043828962,
+          "steps": 88
+        },
+        "fine": {
+          "maxDt": 0.016666666666666666,
+          "goalS": 627.9233945469846,
+          "goalReached": true,
+          "energyFeasible": true,
+          "pathConflict": false,
+          "saving": 162.22746363830495,
+          "regainedDistance": 1,
+          "steps": 615
+        }
+      },
+      "actions": [
+        {
+          "duration": 4,
+          "targetV": 15.36763671875,
+          "targetT": 4,
+          "leader": {
+            "id": "front",
+            "s": 512,
+            "t": 4,
+            "v": 15.32763671875,
+            "accel": 0,
+            "lateralV": 0,
+            "bodyLength": 2.635,
+            "bodyWidth": 0.755
+          }
+        },
+        {
+          "duration": 4,
+          "targetV": 16.28763671875,
+          "targetT": 4
+        }
+      ]
+    },
+    {
+      "name": "Direct projected movement and actual fixed controls are unchanged by planning-only screening",
+      "pass": true,
+      "framesEach": 300,
+      "exactDataHash": "f7f84a2870438a58c9b14ebcf6f266ed7e8ac5334da06a1f29b6f38db0284243"
+    }
+  ],
+  "failures": [],
+  "scope": "Scheduling gates use deliberately stubbed forecast outcomes. Actual movement and default projection equivalence are separately checked; stubs are not numerical realism evidence.",
+  "pass": true,
+  "productionUnchanged": true
+}

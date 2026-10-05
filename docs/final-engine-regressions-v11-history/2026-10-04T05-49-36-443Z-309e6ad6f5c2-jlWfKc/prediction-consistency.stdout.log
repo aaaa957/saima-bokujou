@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "rows": 12,
+    "allFineWithin1e7": true,
+    "fineMaxAbsSeconds": 1.5774048733874224e-11,
+    "fineMaxAbsState": 0,
+    "coarseMaxAbsSeconds": 0.020989871797169712,
+    "coarseMaxAbsEnergy": 5.6241227258865365,
+    "coarseMaxAbsDistance": 0.07141275695626348,
+    "failures": 0,
+    "productionUnchanged": true
+  },
+  "performance": {
+    "newBudget": {
+      "runs": 40,
+      "meanMilliseconds": 1.5427525000000002,
+      "meanSteps": 574
+    },
+    "oldBudget": {
+      "runs": 40,
+      "meanMilliseconds": 0.31840750000000073,
+      "meanSteps": 0
+    },
+    "newEightSeconds": {
+      "runs": 40,
+      "meanMilliseconds": 0.11267750000000092,
+      "meanSteps": 68
+    },
+    "caveat": "Warmed single-process wall-time microbenchmark; not whole-race wall time or isolated CPU throughput. Other concurrent team workloads may increase the timings. Nine budget bisections and multiple finite candidates increase controller CPU."
+  },
+  "failures": []
+}

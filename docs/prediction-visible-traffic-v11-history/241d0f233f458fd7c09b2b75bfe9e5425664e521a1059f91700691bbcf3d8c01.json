@@ -1,0 +1,451 @@
+{
+  "startedAt": "2026-10-03T23:20:56.672Z",
+  "engineHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "candidateHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "testSourceHash": "5ea46d841e1835ff04c2597ac552f45b49930abed88469231df1d15b793b53d2",
+  "fixtureHash": "faa2693b562e3a94f3b01e2f1114f2e3f7104434229b7cb19556414dea29c92b",
+  "installerHash": "4d27a198d6fe6807c522089a104daae6bcb42241efd31a4f744dfb27580c8ca9",
+  "protocol": {
+    "dt": 0.016666666666666666,
+    "frames": 180,
+    "rng": "constant .5",
+    "race": {
+      "length": 2400,
+      "course": "标准",
+      "surface": "草地",
+      "state": "良",
+      "profile": "平坦",
+      "wind": 0
+    },
+    "horse": "All stats70; neutral physiology; morale50 fatigue0; tractability.65;480kg+57kg; warm oxygen/full reserve/full guts",
+    "scope": "Constructed fixed controls. Observed opponents follow their bounded visible motion, with no hidden control or physiology. Pairwise own headway constraint shared with actual; no simultaneous traffic certificate."
+  },
+  "checks": [
+    {
+      "name": "Actual pure following extraction preserves every tick: headway",
+      "status": "passed",
+      "inputStateHash": "d3871dc847b2b0050fc56558732922979ff761071658d28e2b0ea272172fbfb5",
+      "frames": 180,
+      "exactStateAndLedger": true,
+      "trajectoryHash": "e487bb421c7e0376f5b60e4a9f42f836f85963c73fd1619c2153361d0d88240b"
+    },
+    {
+      "name": "Actual pure following extraction preserves every tick: twoFronts",
+      "status": "passed",
+      "inputStateHash": "44e3d5c9075758bdfe2456d91ffdc296d07e4dc3619c3f1f6dfaf402a879c3cb",
+      "frames": 180,
+      "exactStateAndLedger": true,
+      "trajectoryHash": "d49b30afeb297de26554a84929941682bfc6c594725043c11eef4a5be464e78c"
+    },
+    {
+      "name": "Actual pure following extraction preserves every tick: lateral",
+      "status": "passed",
+      "inputStateHash": "055ef3e53b4cd63d38d19fb60bdfc1cae822b19f9d44812d3d09fd242ef89624",
+      "frames": 180,
+      "exactStateAndLedger": true,
+      "trajectoryHash": "67d5a1c058513b9ac24edbb266a898525746c1322678bef5e28df2a105bb16de"
+    },
+    {
+      "name": "Prediction matches 180 actual ticks with visible constant-motion peers: headway",
+      "status": "passed",
+      "inputStateHash": "fd793cbee2fe17825d145d8f860e83d1f239789de54b21531a12aa6ba34d2ef7",
+      "actions": [
+        {
+          "duration": 3,
+          "targetV": 18,
+          "targetT": 10
+        }
+      ],
+      "opponents": [
+        {
+          "id": "front-1",
+          "s": 208,
+          "t": 10,
+          "v": 16,
+          "accel": 0,
+          "lateralV": 0,
+          "bodyWidth": 0.755,
+          "bodyLength": 2.635
+        }
+      ],
+      "endpoint": {
+        "s": 246.6105777915032,
+        "t": 10,
+        "v": 16.65954261830364,
+        "stamina": 2368.536494184667,
+        "guts": 4137.881504417262,
+        "retention": 0.9988167905603288,
+        "aerobicOutput": 49.991172275701935
+      },
+      "actualEndpoint": {
+        "s": 246.6105777915032,
+        "t": 10,
+        "v": 16.65954261830364,
+        "stamina": 2368.536494184667,
+        "guts": 4137.881504417262,
+        "retention": 0.9988167905603288,
+        "aerobicOutput": 49.991172275701935
+      },
+      "delta": {
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0
+      },
+      "energyDelta": 0,
+      "workDelta": 0,
+      "draftDelta": 0,
+      "headwaySeconds": 2.033333333333331,
+      "traceHash": "54c06a64efe9da1f84ce307024d893112820c94219418520e31904ccf9f51aa1",
+      "actualHash": "e487bb421c7e0376f5b60e4a9f42f836f85963c73fd1619c2153361d0d88240b"
+    },
+    {
+      "name": "Prediction matches 180 actual ticks with visible constant-motion peers: twoFronts",
+      "status": "passed",
+      "inputStateHash": "e051781f379c0d8ee86d6253520d1b58c53d47832e612bd325efa8c2225ef111",
+      "actions": [
+        {
+          "duration": 3,
+          "targetV": 18,
+          "targetT": 10
+        }
+      ],
+      "opponents": [
+        {
+          "id": "front-1",
+          "s": 208,
+          "t": 10,
+          "v": 16,
+          "accel": 0,
+          "lateralV": 0,
+          "bodyWidth": 0.755,
+          "bodyLength": 2.635
+        },
+        {
+          "id": "front-2",
+          "s": 224,
+          "t": 10,
+          "v": 15,
+          "accel": 0,
+          "lateralV": 0,
+          "bodyWidth": 0.755,
+          "bodyLength": 2.635
+        }
+      ],
+      "endpoint": {
+        "s": 246.6105777915032,
+        "t": 10,
+        "v": 16.65954261830364,
+        "stamina": 2368.536494184667,
+        "guts": 4137.881504417262,
+        "retention": 0.9988167905603288,
+        "aerobicOutput": 49.991172275701935
+      },
+      "actualEndpoint": {
+        "s": 246.6105777915032,
+        "t": 10,
+        "v": 16.65954261830364,
+        "stamina": 2368.536494184667,
+        "guts": 4137.881504417262,
+        "retention": 0.9988167905603288,
+        "aerobicOutput": 49.991172275701935
+      },
+      "delta": {
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0
+      },
+      "energyDelta": 0,
+      "workDelta": 0,
+      "draftDelta": 0,
+      "headwaySeconds": 2.033333333333331,
+      "traceHash": "72ca5f1e3d245b3e1927c8e75d452e4de5d0ee2a55768db931929a10e7c2344e",
+      "actualHash": "d49b30afeb297de26554a84929941682bfc6c594725043c11eef4a5be464e78c"
+    },
+    {
+      "name": "Prediction matches 180 actual ticks with visible constant-motion peers: leavingWake",
+      "status": "passed",
+      "inputStateHash": "fd793cbee2fe17825d145d8f860e83d1f239789de54b21531a12aa6ba34d2ef7",
+      "actions": [
+        {
+          "duration": 3,
+          "targetV": 18,
+          "targetT": 7.5
+        }
+      ],
+      "opponents": [
+        {
+          "id": "front-1",
+          "s": 208,
+          "t": 10,
+          "v": 16,
+          "accel": 0,
+          "lateralV": 0,
+          "bodyWidth": 0.755,
+          "bodyLength": 2.635
+        }
+      ],
+      "endpoint": {
+        "s": 248.10611791525602,
+        "t": 7.599999999999945,
+        "v": 17.72571193145537,
+        "stamina": 2338.2117045206855,
+        "guts": 4120.899713544123,
+        "retention": 0.9984933278770309,
+        "aerobicOutput": 49.98981533654233
+      },
+      "actualEndpoint": {
+        "s": 248.10611791525602,
+        "t": 7.599999999999945,
+        "v": 17.72571193145537,
+        "stamina": 2338.2117045206855,
+        "guts": 4120.899713544123,
+        "retention": 0.9984933278770309,
+        "aerobicOutput": 49.98981533654233
+      },
+      "delta": {
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0
+      },
+      "energyDelta": 0,
+      "workDelta": 0,
+      "draftDelta": 0,
+      "headwaySeconds": 0.18333333333333332,
+      "traceHash": "a31b268473fd4e36982cca274f65fe3bc9b02caddca34f78635aeb59e09ead16",
+      "actualHash": "fae5d42e6acf473bda5040c125f49f6e6ee60734e47e5cd01d43904f88046efc"
+    },
+    {
+      "name": "Closest wake/front is selected each step and an explicit leader is not counted twice",
+      "status": "passed",
+      "opponents": [
+        {
+          "id": "front-2",
+          "s": 224,
+          "t": 10,
+          "v": 15,
+          "accel": 0,
+          "lateralV": 0,
+          "bodyWidth": 0.755,
+          "bodyLength": 2.635
+        },
+        {
+          "id": "front-1",
+          "s": 208,
+          "t": 10,
+          "v": 16,
+          "accel": 0,
+          "lateralV": 0,
+          "bodyWidth": 0.755,
+          "bodyLength": 2.635
+        }
+      ],
+      "uniqueCount": 2,
+      "exactDuplicateResult": true,
+      "frontId": "front-1",
+      "wakeId": "front-1"
+    },
+    {
+      "name": "Visible opponent API does not read hidden physiology, intentions or performance",
+      "status": "passed",
+      "guardedHiddenKeys": [
+        "h",
+        "adj",
+        "bodySize",
+        "control",
+        "targetV",
+        "targetT",
+        "physiology",
+        "stamina",
+        "staminaMax",
+        "guts",
+        "maxV",
+        "behavior"
+      ],
+      "complete": true
+    },
+    {
+      "name": "Opponent arrays are authoritative; omitted arrays retain legacy single-leader compatibility",
+      "status": "passed",
+      "legacyEqualsExplicit": true,
+      "emptyIgnoresLeader": true,
+      "emptyDraft": 0
+    },
+    {
+      "name": "Observed lateral motion enters and leaves corridors rather than staying frozen",
+      "status": "passed",
+      "initialLane": 13,
+      "endpointLane": 10.599999999999945,
+      "wakeEnteredAt": 1.8333333333333321,
+      "trafficFeasible": true,
+      "pathConflict": false,
+      "meaning": "Visible lateral velocity is an observation extrapolation; no claim that the actual rider retains that order."
+    },
+    {
+      "name": "A peer crossing the finish remains in this step and is excluded next step",
+      "status": "passed",
+      "crossingStep": 11,
+      "at": 30.2,
+      "frontThisStep": "front-1",
+      "frontNextStep": null
+    },
+    {
+      "name": "Non-overlapping but physically infeasible following is reported, with finite braking and no hard relocation",
+      "status": "passed",
+      "initial": {
+        "own": {
+          "s": 200,
+          "t": 10,
+          "v": 20,
+          "stamina": 2450,
+          "guts": 4200,
+          "retention": 1,
+          "aerobicOutput": 50
+        },
+        "peer": {
+          "id": "front-1",
+          "s": 203,
+          "t": 10,
+          "v": 8,
+          "accel": 0,
+          "lateralV": 0,
+          "bodyWidth": 0.755,
+          "bodyLength": 2.635
+        }
+      },
+      "predicted": {
+        "s": 200.3089931712963,
+        "t": 10,
+        "v": 19.941666666666666,
+        "stamina": 2450,
+        "guts": 4199.93150178445,
+        "retention": 0.9999986952720847,
+        "aerobicOutput": 50
+      },
+      "trafficFeasible": false,
+      "pathConflict": true,
+      "goalReached": false,
+      "complete": false,
+      "trace": [
+        {
+          "time": 30.016666666666666,
+          "s": 200.3089931712963,
+          "t": 10,
+          "v": 19.941666666666666,
+          "stamina": 2450,
+          "guts": 4199.93150178445,
+          "retention": 0.9999986952720847,
+          "aerobicOutput": 50,
+          "work": 37.36266302742966,
+          "supply": 50,
+          "drafting": true,
+          "requestedV": 20,
+          "followingCap": 8.07475,
+          "headwayLimited": true,
+          "trafficFeasible": false,
+          "frontId": "front-1",
+          "wakeId": "front-1",
+          "observedLeader": {
+            "s": 203.12377777777778,
+            "t": 10,
+            "v": 8
+          },
+          "opponents": [
+            {
+              "id": "front-1",
+              "s": 203.12377777777778,
+              "t": 10,
+              "v": 8,
+              "finished": false
+            }
+          ]
+        }
+      ],
+      "meaning": "The minimum finite-braking path is retained as failed-state evidence. No teleport, zero-speed fallback or complete traffic certification."
+    }
+  ],
+  "failures": [],
+  "microbenchmarks": [
+    {
+      "name": "Binding same-lane headway",
+      "opponents": 1,
+      "maxDt": 0.016666666666666666,
+      "runs": 8,
+      "medianMs": 736.0125999999991,
+      "p90Ms": 1057.5985,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "endpoint": {
+        "s": 364.8008398968245,
+        "t": 10,
+        "v": 16.124562516714818,
+        "stamina": 2222.6698751085596,
+        "guts": 4013.328272433459,
+        "retention": 0.9964443480463516,
+        "aerobicOutput": 49.927221219562355
+      },
+      "energy": 227.3301248914422
+    },
+    {
+      "name": "Two visible fronts",
+      "opponents": 2,
+      "maxDt": 0.016666666666666666,
+      "runs": 8,
+      "medianMs": 659.6324999999997,
+      "p90Ms": 770.8296000000009,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "endpoint": {
+        "s": 364.8008398968245,
+        "t": 10,
+        "v": 16.124562516714818,
+        "stamina": 2222.6698751085596,
+        "guts": 4013.328272433459,
+        "retention": 0.9964443480463516,
+        "aerobicOutput": 49.927221219562355
+      },
+      "energy": 227.3301248914422
+    },
+    {
+      "name": "Far visible front",
+      "opponents": 1,
+      "maxDt": 0.016666666666666666,
+      "runs": 8,
+      "medianMs": 7.731200000000172,
+      "p90Ms": 11.318999999999505,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "endpoint": {
+        "s": 377.88524016357405,
+        "t": 10,
+        "v": 17.999147574393493,
+        "stamina": 2045.3806943648678,
+        "guts": 3914.0592069019876,
+        "retention": 0.994553508702895,
+        "aerobicOutput": 49.89364747953805
+      },
+      "energy": 404.6193056351358
+    }
+  ],
+  "forecasts": 46,
+  "executions": 9,
+  "actualTicks": 1620,
+  "inputHash": "a27d7386d27fbcfecfd30794fd315b8b924a2405c76d1bd7869d6865d7e62484",
+  "finishedAt": "2026-10-03T23:21:15.475Z",
+  "wallSeconds": 18.7952108,
+  "pass": true
+}

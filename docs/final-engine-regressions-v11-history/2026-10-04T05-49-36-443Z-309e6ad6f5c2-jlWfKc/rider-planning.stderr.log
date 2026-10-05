@@ -1,0 +1,24 @@
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: an affordable sprint launch should respond to position intention
+    at D:\work4\saima-bokujou\tests\rider-planning-v11.js:37:20
+    at Array.map (<anonymous>)
+    at D:\work4\saima-bokujou\tests\rider-planning-v11.js:31:32
+    at test (D:\work4\saima-bokujou\tests\rider-planning-v11.js:29:64)
+    at Object.<anonymous> (D:\work4\saima-bokujou\tests\rider-planning-v11.js:30:1)
+    at Module._compile (node:internal/modules/cjs/loader:1761:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1481:32)
+    at Module._load (node:internal/modules/cjs/loader:1300:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.12.0

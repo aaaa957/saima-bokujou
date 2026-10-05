@@ -1,0 +1,1829 @@
+{
+  "sourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "actualStepCalls": 0,
+  "fullRaceExecutions": 0,
+  "scope": "Exact first-tick observation stage only, using same rider RNG/cadence consumption; no motion or energy commit. Four fixture cases, no parameter changes.",
+  "cases": [
+    {
+      "length": 1200,
+      "intent": 0.1,
+      "meanRequest": 16.7427978515625,
+      "plans": [
+        {
+          "id": "launch-0",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.8427734375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3189.763048848432,
+            "peakPowerShortfall": 42.750013241056344,
+            "unpaid": 739.7630488484327,
+            "seconds": 69.04740700661092
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.8427734375,
+              "targetT": 8.2,
+              "score": 0,
+              "predictedS": 134.30814179276126,
+              "predictedReserve": 2067.9234585876234,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 8.2,
+              "score": -4.844488468714195,
+              "predictedS": 141.91204239579653,
+              "predictedReserve": 1989.5848109522753,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1582109719340714,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.8427734375,
+              "targetT": 7.627499999999997,
+              "score": 2.3957365386560796,
+              "predictedS": 134.31947478603124,
+              "predictedReserve": 2080.089725714645,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 7.627499999999997,
+              "score": -2.040720988534869,
+              "predictedS": 142.02298229720938,
+              "predictedReserve": 2003.692013692248,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1582109719340714,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-1",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.904296875,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3150.2454350317894,
+            "peakPowerShortfall": 43.08992579763135,
+            "unpaid": 700.2454350317889,
+            "seconds": 67.7832096884186
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.904296875,
+              "targetT": 1.8,
+              "score": 0,
+              "predictedS": 137.24236193024717,
+              "predictedReserve": 2057.227539387315,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 1.8,
+              "score": -4.073409674152068,
+              "predictedS": 144.7598051673823,
+              "predictedReserve": 1979.6096010056644,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.18420702214672247,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.904296875,
+              "targetT": 0.6275,
+              "score": 1.0736699921121822,
+              "predictedS": 137.23496873063377,
+              "predictedReserve": 2057.227146127277,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 0.6275,
+              "score": -2.975647046168331,
+              "predictedS": 144.75242393659104,
+              "predictedReserve": 1979.6090846013183,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.18420702214672247,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-2",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 16.78125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3214.3859928909665,
+            "peakPowerShortfall": 42.58993931258608,
+            "unpaid": 764.3859928909733,
+            "seconds": 69.51334968439437
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.78125,
+              "targetT": 11.4,
+              "score": 0,
+              "predictedS": 135.48847587749077,
+              "predictedReserve": 2066.747722188549,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 11.4,
+              "score": -5.152712323800182,
+              "predictedS": 143.56681638377646,
+              "predictedReserve": 1983.7460148472328,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.14660354607352133,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-3",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.78125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3160.569718100004,
+            "peakPowerShortfall": 43.0004528540578,
+            "unpaid": 710.5697181000035,
+            "seconds": 68.09751796245968
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.78125,
+              "targetT": 3.4000000000000004,
+              "score": 0,
+              "predictedS": 135.88668961283244,
+              "predictedReserve": 2067.7839963819592,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 3.4000000000000004,
+              "score": -4.596054335391105,
+              "predictedS": 143.93257878619872,
+              "predictedReserve": 1985.1155176783582,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17733100080150876,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.78125,
+              "targetT": 3.0775,
+              "score": 1.9721010933920584,
+              "predictedS": 135.89836819423098,
+              "predictedReserve": 2078.9538723918995,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 3.0775,
+              "score": -2.134658289780422,
+              "predictedS": 144.01060940385895,
+              "predictedReserve": 1998.0406890821787,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17733100080150876,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-4",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.658203125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3181.02706753837,
+            "peakPowerShortfall": 42.829363896191595,
+            "unpaid": 731.0270675383687,
+            "seconds": 68.66198597136497
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.658203125,
+              "targetT": 6.6000000000000005,
+              "score": 0,
+              "predictedS": 135.0042695075538,
+              "predictedReserve": 2076.3449644826233,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 6.6000000000000005,
+              "score": -5.418780792998129,
+              "predictedS": 143.65135721681372,
+              "predictedReserve": 1987.9467946594216,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.16434524813310603,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.658203125,
+              "targetT": 6.227499999999998,
+              "score": 1.9596736887266806,
+              "predictedS": 135.01678760098665,
+              "predictedReserve": 2086.985925002087,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 6.227499999999998,
+              "score": -3.1467667438387377,
+              "predictedS": 143.66687445115778,
+              "predictedReserve": 2000.426680111876,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.16434524813310603,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-5",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.7197265625,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3168.232900502934,
+            "peakPowerShortfall": 42.91617689547408,
+            "unpaid": 718.2329005029299,
+            "seconds": 68.45220605949459
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.7197265625,
+              "targetT": 5,
+              "score": 0,
+              "predictedS": 134.21370964643864,
+              "predictedReserve": 2075.8054814708976,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 5,
+              "score": -5.213381601935973,
+              "predictedS": 142.42845604109783,
+              "predictedReserve": 1991.607846271727,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17071462452651076,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.7197265625,
+              "targetT": 4.4775,
+              "score": 1.4357430213060614,
+              "predictedS": 134.2254211095681,
+              "predictedReserve": 2082.235030499482,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 4.4775,
+              "score": -2.4543803616751747,
+              "predictedS": 142.539024384561,
+              "predictedReserve": 2005.7146901006558,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17071462452651076,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-6",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.658203125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3200.6939696008544,
+            "peakPowerShortfall": 42.67046757563289,
+            "unpaid": 750.6939696008621,
+            "seconds": 69.3397557232821
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.658203125,
+              "targetT": 9.8,
+              "score": 0,
+              "predictedS": 132.96678483810834,
+              "predictedReserve": 2081.6330671565206,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 9.8,
+              "score": -5.447624190994713,
+              "predictedS": 141.41797085764037,
+              "predictedReserve": 1995.2226909923022,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1523005906146757,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.658203125,
+              "targetT": 9.377499999999996,
+              "score": 2.072112711575629,
+              "predictedS": 132.97990412852872,
+              "predictedReserve": 2092.6085497359513,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 9.377499999999996,
+              "score": -2.787939741154781,
+              "predictedS": 141.530862196613,
+              "predictedReserve": 2009.2308759428242,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1523005906146757,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-7",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.5966796875,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3223.5794742526996,
+            "peakPowerShortfall": 42.51702324960711,
+            "unpaid": 773.579474252698,
+            "seconds": 69.8804699470144
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.5966796875,
+              "targetT": 13,
+              "score": 0,
+              "predictedS": 132.8706204269359,
+              "predictedReserve": 2084.3641440116944,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 13,
+              "score": -5.730301530561563,
+              "predictedS": 141.67234660038508,
+              "predictedReserve": 1994.5953967504822,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.14110988389100498,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.5966796875,
+              "targetT": 12.527499999999993,
+              "score": 2.1631065786052117,
+              "predictedS": 132.88380185686165,
+              "predictedReserve": 2095.5067651898717,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 12.527499999999993,
+              "score": -2.9944762185670317,
+              "predictedS": 141.78405392422533,
+              "predictedReserve": 2008.66725106989,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.14110988389100498,
+              "pathConflict": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "length": 1200,
+      "intent": 0.9,
+      "meanRequest": 16.7427978515625,
+      "plans": [
+        {
+          "id": "launch-0",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.8427734375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3189.763048848432,
+            "peakPowerShortfall": 42.750013241056344,
+            "unpaid": 739.7630488484327,
+            "seconds": 69.04740700661092
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.8427734375,
+              "targetT": 8.2,
+              "score": 0,
+              "predictedS": 134.30814179276126,
+              "predictedReserve": 2067.9234585876234,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 8.2,
+              "score": -4.844488468714195,
+              "predictedS": 141.91204239579653,
+              "predictedReserve": 1989.5848109522753,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1582109719340714,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.8427734375,
+              "targetT": 7.627499999999997,
+              "score": 2.3957365386560796,
+              "predictedS": 134.31947478603124,
+              "predictedReserve": 2080.089725714645,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 7.627499999999997,
+              "score": -2.040720988534869,
+              "predictedS": 142.02298229720938,
+              "predictedReserve": 2003.692013692248,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1582109719340714,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-1",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.904296875,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3150.2454350317894,
+            "peakPowerShortfall": 43.08992579763135,
+            "unpaid": 700.2454350317889,
+            "seconds": 67.7832096884186
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.904296875,
+              "targetT": 1.8,
+              "score": 0,
+              "predictedS": 137.24236193024717,
+              "predictedReserve": 2057.227539387315,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 1.8,
+              "score": -1.8776413425633307,
+              "predictedS": 144.7598051673823,
+              "predictedReserve": 1979.6096010056644,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.18420702214672247,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.904296875,
+              "targetT": 0.6275,
+              "score": 1.0736699921121822,
+              "predictedS": 137.23496873063377,
+              "predictedReserve": 2057.227146127277,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 0.6275,
+              "score": -0.8280787576048191,
+              "predictedS": 144.75242393659104,
+              "predictedReserve": 1979.6090846013183,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.18420702214672247,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-2",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 16.78125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3214.3859928909665,
+            "peakPowerShortfall": 42.58993931258608,
+            "unpaid": 764.3859928909733,
+            "seconds": 69.51334968439437
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.78125,
+              "targetT": 11.4,
+              "score": 0,
+              "predictedS": 135.48847587749077,
+              "predictedReserve": 2066.747722188549,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 11.4,
+              "score": -5.152712323800182,
+              "predictedS": 143.56681638377646,
+              "predictedReserve": 1983.7460148472328,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.14660354607352133,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-3",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.78125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3160.569718100004,
+            "peakPowerShortfall": 43.0004528540578,
+            "unpaid": 710.5697181000035,
+            "seconds": 68.09751796245968
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.78125,
+              "targetT": 3.4000000000000004,
+              "score": 0,
+              "predictedS": 135.88668961283244,
+              "predictedReserve": 2067.7839963819592,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 3.4000000000000004,
+              "score": -4.596054335391105,
+              "predictedS": 143.93257878619872,
+              "predictedReserve": 1985.1155176783582,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17733100080150876,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.78125,
+              "targetT": 3.0775,
+              "score": 1.9721010933920584,
+              "predictedS": 135.89836819423098,
+              "predictedReserve": 2078.9538723918995,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 3.0775,
+              "score": -2.134658289780422,
+              "predictedS": 144.01060940385895,
+              "predictedReserve": 1998.0406890821787,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17733100080150876,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-4",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.658203125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3181.02706753837,
+            "peakPowerShortfall": 42.829363896191595,
+            "unpaid": 731.0270675383687,
+            "seconds": 68.66198597136497
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.658203125,
+              "targetT": 6.6000000000000005,
+              "score": 0,
+              "predictedS": 135.0042695075538,
+              "predictedReserve": 2076.3449644826233,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 6.6000000000000005,
+              "score": -5.418780792998129,
+              "predictedS": 143.65135721681372,
+              "predictedReserve": 1987.9467946594216,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.16434524813310603,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.658203125,
+              "targetT": 6.227499999999998,
+              "score": 1.9596736887266806,
+              "predictedS": 135.01678760098665,
+              "predictedReserve": 2086.985925002087,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 6.227499999999998,
+              "score": -3.1467667438387377,
+              "predictedS": 143.66687445115778,
+              "predictedReserve": 2000.426680111876,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.16434524813310603,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-5",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.7197265625,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3168.232900502934,
+            "peakPowerShortfall": 42.91617689547408,
+            "unpaid": 718.2329005029299,
+            "seconds": 68.45220605949459
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.7197265625,
+              "targetT": 5,
+              "score": 0,
+              "predictedS": 134.21370964643864,
+              "predictedReserve": 2075.8054814708976,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 5,
+              "score": -5.213381601935973,
+              "predictedS": 142.42845604109783,
+              "predictedReserve": 1991.607846271727,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17071462452651076,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.7197265625,
+              "targetT": 4.4775,
+              "score": 1.4357430213060614,
+              "predictedS": 134.2254211095681,
+              "predictedReserve": 2082.235030499482,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 4.4775,
+              "score": -2.4543803616751747,
+              "predictedS": 142.539024384561,
+              "predictedReserve": 2005.7146901006558,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.17071462452651076,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-6",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.658203125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3200.6939696008544,
+            "peakPowerShortfall": 42.67046757563289,
+            "unpaid": 750.6939696008621,
+            "seconds": 69.3397557232821
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.658203125,
+              "targetT": 9.8,
+              "score": 0,
+              "predictedS": 132.96678483810834,
+              "predictedReserve": 2081.6330671565206,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 9.8,
+              "score": -5.447624190994713,
+              "predictedS": 141.41797085764037,
+              "predictedReserve": 1995.2226909923022,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1523005906146757,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.658203125,
+              "targetT": 9.377499999999996,
+              "score": 2.072112711575629,
+              "predictedS": 132.97990412852872,
+              "predictedReserve": 2092.6085497359513,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 9.377499999999996,
+              "score": -2.787939741154781,
+              "predictedS": 141.530862196613,
+              "predictedReserve": 2009.2308759428242,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.1523005906146757,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-7",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 16.5966796875,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 3223.5794742526996,
+            "peakPowerShortfall": 42.51702324960711,
+            "unpaid": 773.579474252698,
+            "seconds": 69.8804699470144
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 16.5966796875,
+              "targetT": 13,
+              "score": 0,
+              "predictedS": 132.8706204269359,
+              "predictedReserve": 2084.3641440116944,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 13,
+              "score": -5.730301530561563,
+              "predictedS": 141.67234660038508,
+              "predictedReserve": 1994.5953967504822,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.14110988389100498,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 16.5966796875,
+              "targetT": 12.527499999999993,
+              "score": 2.1631065786052117,
+              "predictedS": 132.88380185686165,
+              "predictedReserve": 2095.5067651898717,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 12.527499999999993,
+              "score": -2.9944762185670317,
+              "predictedS": 141.78405392422533,
+              "predictedReserve": 2008.66725106989,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.14110988389100498,
+              "pathConflict": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "length": 2400,
+      "intent": 0.1,
+      "meanRequest": 15.043212890625,
+      "plans": [
+        {
+          "id": "launch-0",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.08935546875,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5948.234516420601,
+            "peakPowerShortfall": 44.401714814895385,
+            "unpaid": 3498.234516420602,
+            "seconds": 139.44487842817034
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.08935546875,
+              "targetT": 8.2,
+              "score": 0,
+              "predictedS": 122.0318996301031,
+              "predictedReserve": 2191.0906902105285,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 8.2,
+              "score": -13.622746344652597,
+              "predictedS": 137.2795364320839,
+              "predictedReserve": 2032.5106817923481,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08571756865309865,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-1",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 15.15087890625,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5833.966658731508,
+            "peakPowerShortfall": 44.67552217618396,
+            "unpaid": 3383.966658731525,
+            "seconds": 135.85848935001758
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.15087890625,
+              "targetT": 1.8,
+              "score": 0,
+              "predictedS": 126.04249924042966,
+              "predictedReserve": 2182.114026518902,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 1.8,
+              "score": -13.642603002607355,
+              "predictedS": 142.24667415854745,
+              "predictedReserve": 2021.9500934293578,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08759212715887443,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.15087890625,
+              "targetT": 0.6275,
+              "score": 3.7794365286558604,
+              "predictedS": 126.38880761381196,
+              "predictedReserve": 2182.0733879025715,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 0.6275,
+              "score": -11.34620898995855,
+              "predictedS": 142.76472609237197,
+              "predictedReserve": 2021.843464203604,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08760017090742878,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-2",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.05859375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 6010.666735133708,
+            "peakPowerShortfall": 44.28876463487496,
+            "unpaid": 3560.6667351337082,
+            "seconds": 141.0762021082419
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.05859375,
+              "targetT": 11.4,
+              "score": 0,
+              "predictedS": 122.51475073562781,
+              "predictedReserve": 2189.3149274720035,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 11.4,
+              "score": -14.49936371087232,
+              "predictedS": 137.8554964047729,
+              "predictedReserve": 2025.608320764229,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.0873880214683318,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-3",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.05859375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5864.152328695958,
+            "peakPowerShortfall": 44.60508568276187,
+            "unpaid": 3414.152328695966,
+            "seconds": 136.75285697483963
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.05859375,
+              "targetT": 3.4000000000000004,
+              "score": 0,
+              "predictedS": 124.52082923773226,
+              "predictedReserve": 2189.8231962749883,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 3.4000000000000004,
+              "score": -11.4417501066744,
+              "predictedS": 140.88025293442422,
+              "predictedReserve": 2026.3637455991966,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08714255046916008,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-4",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 14.9970703125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5921.187477534552,
+            "peakPowerShortfall": 44.473222939550595,
+            "unpaid": 3471.1874775345746,
+            "seconds": 138.47952090338197
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 14.9970703125,
+              "targetT": 6.6000000000000005,
+              "score": 0,
+              "predictedS": 123.3202328726037,
+              "predictedReserve": 2193.9079936162198,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 6.6000000000000005,
+              "score": -13.89943439409222,
+              "predictedS": 139.5698119306738,
+              "predictedReserve": 2027.401492746164,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08726413663469046,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-5",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.02783203125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5890.292020571493,
+            "peakPowerShortfall": 44.533300729830486,
+            "unpaid": 3440.292020571501,
+            "seconds": 137.68741255681775
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.02783203125,
+              "targetT": 5,
+              "score": 0,
+              "predictedS": 122.84233969132322,
+              "predictedReserve": 2194.5173843366933,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 5,
+              "score": -13.573997663033307,
+              "predictedS": 138.89636991042323,
+              "predictedReserve": 2032.1723147722169,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08607014193251672,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-6",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 14.9970703125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5977.224759217811,
+            "peakPowerShortfall": 44.34233750196736,
+            "unpaid": 3527.224759217833,
+            "seconds": 140.31916709158
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 14.9970703125,
+              "targetT": 9.8,
+              "score": 0,
+              "predictedS": 120.96847577203395,
+              "predictedReserve": 2197.7826596768136,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 9.8,
+              "score": -14.239096477541715,
+              "predictedS": 136.43660017730522,
+              "predictedReserve": 2035.201726341622,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08562131967978459,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-7",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 14.96630859375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 6036.6277891781465,
+            "peakPowerShortfall": 44.235103444478504,
+            "unpaid": 3586.6277891781356,
+            "seconds": 142.02481943651568
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 14.96630859375,
+              "targetT": 13,
+              "score": 0,
+              "predictedS": 120.43449636607481,
+              "predictedReserve": 2198.8140995695794,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 13,
+              "score": -14.89429822990596,
+              "predictedS": 135.76007378528206,
+              "predictedReserve": 2033.628508327224,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.0861314495046912,
+              "pathConflict": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "length": 2400,
+      "intent": 0.9,
+      "meanRequest": 15.043212890625,
+      "plans": [
+        {
+          "id": "launch-0",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.08935546875,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5948.234516420601,
+            "peakPowerShortfall": 44.401714814895385,
+            "unpaid": 3498.234516420602,
+            "seconds": 139.44487842817034
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.08935546875,
+              "targetT": 8.2,
+              "score": 0,
+              "predictedS": 122.0318996301031,
+              "predictedReserve": 2191.0906902105285,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 8.2,
+              "score": -13.622746344652597,
+              "predictedS": 137.2795364320839,
+              "predictedReserve": 2032.5106817923481,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08571756865309865,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-1",
+          "mode": "route",
+          "candidateMode": "route",
+          "request": 15.15087890625,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5833.966658731508,
+            "peakPowerShortfall": 44.67552217618396,
+            "unpaid": 3383.966658731525,
+            "seconds": 135.85848935001758
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.15087890625,
+              "targetT": 1.8,
+              "score": 0,
+              "predictedS": 126.04249924042966,
+              "predictedReserve": 2182.114026518902,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 1.8,
+              "score": -7.5174512725634735,
+              "predictedS": 142.24667415854745,
+              "predictedReserve": 2021.9500934293578,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08759212715887443,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.15087890625,
+              "targetT": 0.6275,
+              "score": 3.7794365286558604,
+              "predictedS": 126.38880761381196,
+              "predictedReserve": 2182.0733879025715,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 0.6275,
+              "score": -1.935454339399333,
+              "predictedS": 142.76472609237197,
+              "predictedReserve": 2021.843464203604,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08760017090742878,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-2",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.05859375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 6010.666735133708,
+            "peakPowerShortfall": 44.28876463487496,
+            "unpaid": 3560.6667351337082,
+            "seconds": 141.0762021082419
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.05859375,
+              "targetT": 11.4,
+              "score": 0,
+              "predictedS": 122.51475073562781,
+              "predictedReserve": 2189.3149274720035,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 11.4,
+              "score": -14.49936371087232,
+              "predictedS": 137.8554964047729,
+              "predictedReserve": 2025.608320764229,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.0873880214683318,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-3",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.05859375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5864.152328695958,
+            "peakPowerShortfall": 44.60508568276187,
+            "unpaid": 3414.152328695966,
+            "seconds": 136.75285697483963
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.05859375,
+              "targetT": 3.4000000000000004,
+              "score": 0,
+              "predictedS": 124.52082923773226,
+              "predictedReserve": 2189.8231962749883,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 3.4000000000000004,
+              "score": -11.4417501066744,
+              "predictedS": 140.88025293442422,
+              "predictedReserve": 2026.3637455991966,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08714255046916008,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-4",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 14.9970703125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5921.187477534552,
+            "peakPowerShortfall": 44.473222939550595,
+            "unpaid": 3471.1874775345746,
+            "seconds": 138.47952090338197
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 14.9970703125,
+              "targetT": 6.6000000000000005,
+              "score": 0,
+              "predictedS": 123.3202328726037,
+              "predictedReserve": 2193.9079936162198,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 6.6000000000000005,
+              "score": -13.89943439409222,
+              "predictedS": 139.5698119306738,
+              "predictedReserve": 2027.401492746164,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08726413663469046,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-5",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 15.02783203125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5890.292020571493,
+            "peakPowerShortfall": 44.533300729830486,
+            "unpaid": 3440.292020571501,
+            "seconds": 137.68741255681775
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 15.02783203125,
+              "targetT": 5,
+              "score": 0,
+              "predictedS": 122.84233969132322,
+              "predictedReserve": 2194.5173843366933,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 5,
+              "score": -13.573997663033307,
+              "predictedS": 138.89636991042323,
+              "predictedReserve": 2032.1723147722169,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08607014193251672,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-6",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 14.9970703125,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 5977.224759217811,
+            "peakPowerShortfall": 44.34233750196736,
+            "unpaid": 3527.224759217833,
+            "seconds": 140.31916709158
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 14.9970703125,
+              "targetT": 9.8,
+              "score": 0,
+              "predictedS": 120.96847577203395,
+              "predictedReserve": 2197.7826596768136,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 9.8,
+              "score": -14.239096477541715,
+              "predictedS": 136.43660017730522,
+              "predictedReserve": 2035.201726341622,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08562131967978459,
+              "pathConflict": false
+            }
+          ]
+        },
+        {
+          "id": "launch-7",
+          "mode": "start",
+          "candidateMode": "start",
+          "request": 14.96630859375,
+          "aerobic": 50,
+          "reserve": 2450,
+          "capacity": 2450,
+          "reservePower": 75,
+          "maxV": 18.75,
+          "maxPaceDemand": {
+            "feasible": false,
+            "required": 6036.6277891781465,
+            "peakPowerShortfall": 44.235103444478504,
+            "unpaid": 3586.6277891781356,
+            "seconds": 142.02481943651568
+          },
+          "candidates": [
+            {
+              "mode": "start",
+              "targetV": 14.96630859375,
+              "targetT": 13,
+              "score": 0,
+              "predictedS": 120.43449636607481,
+              "predictedReserve": 2198.8140995695794,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "start-position",
+              "targetV": 18.75,
+              "targetT": 13,
+              "score": -14.89429822990596,
+              "predictedS": 135.76007378528206,
+              "predictedReserve": 2033.628508327224,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.0861314495046912,
+              "pathConflict": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "productionUnchanged": true
+}

@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-04T04:50:27.346Z",
+  "engineSteps": 0,
+  "newFullRaceExecutions": 0,
+  "input": "docs/calibration-selected-nopeak-v11.json",
+  "inputByteSha256": "4bb7a37cd657c0108a93f2d8902dd085c9b136461a41b7178dfc70ff9d362b9d",
+  "passed": true,
+  "rejection": "Duplicate jobKey/event identity must not be counted twice",
+  "inputUnchanged": true,
+  "noRejectedOutput": true
+}

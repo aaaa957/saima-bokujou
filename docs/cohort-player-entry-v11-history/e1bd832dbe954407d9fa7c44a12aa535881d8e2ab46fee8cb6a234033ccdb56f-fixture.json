@@ -1,0 +1,192 @@
+{
+  "generatedAt": "2026-10-03T23:20:13.773Z",
+  "productionInputHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "testedSourceHash": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "inMemoryPatch": true,
+  "productionSourceUnchanged": true,
+  "scope": "Six focused public player entry qualification/identity checks. No actual race steps and no race-fit claim.",
+  "cases": [
+    {
+      "name": "Newcomer sporting qualification accepts a gifted unstarted horse and excludes started/winning peers",
+      "passed": true,
+      "result": {
+        "key": "newcomer",
+        "ids": [
+          "gifted-new",
+          "player-new"
+        ],
+        "rosterUnchanged": true
+      }
+    },
+    {
+      "name": "Maiden and one/two/three-win races enforce exact wins before physical readiness matching",
+      "passed": true,
+      "result": [
+        {
+          "key": "maiden",
+          "ids": [
+            "eligible-maiden",
+            "player-maiden"
+          ],
+          "wins": [
+            0,
+            0
+          ]
+        },
+        {
+          "key": "cond1",
+          "ids": [
+            "eligible-cond1",
+            "player-cond1"
+          ],
+          "wins": [
+            1,
+            1
+          ]
+        },
+        {
+          "key": "cond2",
+          "ids": [
+            "eligible-cond2",
+            "player-cond2"
+          ],
+          "wins": [
+            2,
+            2
+          ]
+        },
+        {
+          "key": "cond3",
+          "ids": [
+            "eligible-cond3",
+            "player-cond3"
+          ],
+          "wins": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Public graded/open player entry accepts a superior saved horse above the former ability ceiling",
+      "passed": true,
+      "result": {
+        "inputAbility": 110,
+        "results": [
+          {
+            "key": "open",
+            "ids": [
+              "superior-110",
+              "player-open"
+            ]
+          },
+          {
+            "key": "g3",
+            "ids": [
+              "only-two-wins",
+              "superior-110",
+              "player-open"
+            ]
+          },
+          {
+            "key": "g2",
+            "ids": [
+              "superior-110",
+              "player-open"
+            ]
+          },
+          {
+            "key": "g1",
+            "ids": [
+              "superior-110",
+              "player-open"
+            ]
+          }
+        ],
+        "rosterUnchanged": true
+      }
+    },
+    {
+      "name": "Multiple aliases of the player are excluded while duplicate rival ids fail clearly without rerolling traits",
+      "passed": true,
+      "result": {
+        "duplicateRivalRejected": true,
+        "uniqueIds": [
+          "duplicate-rival",
+          "same-player"
+        ],
+        "rosterUnchanged": true
+      }
+    },
+    {
+      "name": "Explicit zero ability maximum is respected independently of zero-win qualification",
+      "passed": true,
+      "result": {
+        "ids": [
+          "zero-ability"
+        ],
+        "rosterUnchanged": true
+      }
+    },
+    {
+      "name": "Qualified-roster scarcity reports the original request and never fabricates ineligible fillers",
+      "passed": true,
+      "result": {
+        "ids": [
+          "scarce-qualified"
+        ],
+        "diagnostics": {
+          "version": 1,
+          "race": {
+            "length": 1600,
+            "course": "标准",
+            "surface": "草地",
+            "state": "良",
+            "dir": "左回",
+            "profile": "平坦",
+            "wind": 0
+          },
+          "levelBand": [
+            68,
+            72
+          ],
+          "predictionWindow": {
+            "fastSeconds": 95.87530351135591,
+            "slowSeconds": 98.00536619584977
+          },
+          "candidates": 1,
+          "requested": 8,
+          "selected": 1,
+          "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+          "fastIsNotAdmissionCeiling": true,
+          "eligible": 1,
+          "fallback": 0,
+          "shortage": 7,
+          "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+          "entries": [
+            {
+              "id": "scarce-qualified",
+              "eligible": true,
+              "forecast": {
+                "version": 1,
+                "seconds": 91.82992153031508,
+                "requestedV": 17.95677734375,
+                "required": 2852.85538552209,
+                "capacity": 2975,
+                "aerobic": 53.6,
+                "maxV": 19.19,
+                "peakPowerShortfall": 0,
+                "feasible": true,
+                "referenceLane": 1.4
+              }
+            }
+          ]
+        },
+        "rosterUnchanged": true
+      }
+    }
+  ],
+  "passed": 6,
+  "failed": 0
+}

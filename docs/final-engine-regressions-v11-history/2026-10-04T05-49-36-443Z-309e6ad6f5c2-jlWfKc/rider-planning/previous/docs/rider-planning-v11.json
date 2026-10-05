@@ -1,0 +1,1615 @@
+{
+  "sourceHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "builtAt": "2026-10-03T23:24:02.733Z",
+  "passed": 5,
+  "cases": [
+    {
+      "name": "position intention values attainable positions and pays for a useful launch",
+      "passed": true,
+      "seconds": 1.5240109000000002,
+      "result": [
+        {
+          "length": 1200,
+          "runs": [
+            {
+              "intent": 0.1,
+              "meanRequest": 17.24267578125,
+              "plans": [
+                {
+                  "mode": "route",
+                  "request": 17.3349609375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.3349609375,
+                      "targetT": 8.2,
+                      "score": 0,
+                      "predictedS": 138.38287224063663,
+                      "predictedReserve": 2085.5955297782293,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 8.2,
+                      "score": -6.533438611037944,
+                      "predictedS": 142.88269394721925,
+                      "predictedReserve": 2041.5772092561563,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0687984889781923,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.3349609375,
+                      "targetT": 7.627499999999997,
+                      "score": 1.463522074918234,
+                      "predictedS": 138.3943940385838,
+                      "predictedReserve": 2091.737139535482,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 7.627499999999997,
+                      "score": -4.950386611974767,
+                      "predictedS": 142.8955570947184,
+                      "predictedReserve": 2048.4439444798595,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06801673212141779,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 17.42724609375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.42724609375,
+                      "targetT": 1.8,
+                      "score": 0,
+                      "predictedS": 141.5003962031466,
+                      "predictedReserve": 2073.3469279402016,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 1.8,
+                      "score": -7.571446820034209,
+                      "predictedS": 145.81905575797526,
+                      "predictedReserve": 2030.9708831843443,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07048754364768683,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.42724609375,
+                      "targetT": 0.6275,
+                      "score": 1.083982472802332,
+                      "predictedS": 141.49277220028523,
+                      "predictedReserve": 2073.346331704137,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 0.6275,
+                      "score": -6.4910129769878075,
+                      "predictedS": 145.8114467262636,
+                      "predictedReserve": 2030.9701413117402,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07048770210097643,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 17.30419921875,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.30419921875,
+                      "targetT": 11.4,
+                      "score": 0,
+                      "predictedS": 139.82247968792768,
+                      "predictedReserve": 2081.909094968113,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 11.4,
+                      "score": -8.908753784655307,
+                      "predictedS": 144.58361195804733,
+                      "predictedReserve": 2035.4093877039247,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0703631032030465,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 17.2734375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.2734375,
+                      "targetT": 3.4000000000000004,
+                      "score": 0,
+                      "predictedS": 140.04623192718998,
+                      "predictedReserve": 2084.9297895078294,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 3.4000000000000004,
+                      "score": -8.020818572946473,
+                      "predictedS": 144.89597018383785,
+                      "predictedReserve": 2037.6185599620167,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07009011391847864,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.2734375,
+                      "targetT": 3.0775,
+                      "score": 1.092740588614026,
+                      "predictedS": 140.0581928158479,
+                      "predictedReserve": 2090.4636316327656,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 3.0775,
+                      "score": -6.787776724678097,
+                      "predictedS": 144.90896472946332,
+                      "predictedReserve": 2043.9360110954892,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06941554504294345,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 17.150390625,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.150390625,
+                      "targetT": 6.6000000000000005,
+                      "score": 0,
+                      "predictedS": 139.24384140055685,
+                      "predictedReserve": 2092.5978979840006,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 6.6000000000000005,
+                      "score": -7.666958514892144,
+                      "predictedS": 144.57353996114344,
+                      "predictedReserve": 2040.862658079817,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07022176024563365,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.150390625,
+                      "targetT": 6.227499999999998,
+                      "score": 1.1097142326595106,
+                      "predictedS": 139.256431157598,
+                      "predictedReserve": 2097.8229386298426,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 6.227499999999998,
+                      "score": -6.443507676109297,
+                      "predictedS": 144.5869187431898,
+                      "predictedReserve": 2046.7722750071277,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06962173571569252,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 17.2119140625,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.2119140625,
+                      "targetT": 5,
+                      "score": 0,
+                      "predictedS": 138.3806075049166,
+                      "predictedReserve": 2092.5528897338663,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 5,
+                      "score": -8.187748275270758,
+                      "predictedS": 143.36361756863636,
+                      "predictedReserve": 2044.0531572513098,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06910219122689298,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.2119140625,
+                      "targetT": 4.4775,
+                      "score": 1.0840827919516207,
+                      "predictedS": 138.39261728750122,
+                      "predictedReserve": 2096.731669200603,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 4.4775,
+                      "score": -6.655995830704914,
+                      "predictedS": 143.3770116534142,
+                      "predictedReserve": 2050.908413702064,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06831591920749958,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 17.150390625,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.150390625,
+                      "targetT": 9.8,
+                      "score": 0,
+                      "predictedS": 137.15654876356598,
+                      "predictedReserve": 2097.900244286713,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 9.8,
+                      "score": -8.421461029435715,
+                      "predictedS": 142.3263181327063,
+                      "predictedReserve": 2047.7008186934252,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0687213798584061,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.150390625,
+                      "targetT": 9.377499999999996,
+                      "score": 1.2921233796517113,
+                      "predictedS": 137.16943745104618,
+                      "predictedReserve": 2103.8842375455806,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 9.377499999999996,
+                      "score": -6.9983200043434985,
+                      "predictedS": 142.34052938926098,
+                      "predictedReserve": 2054.509593906532,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06794069728553254,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 17.0888671875,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.0888671875,
+                      "targetT": 13,
+                      "score": 0,
+                      "predictedS": 137.1147383154673,
+                      "predictedReserve": 2100.231788299929,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 13,
+                      "score": -10.510526868995377,
+                      "predictedS": 142.5650736419132,
+                      "predictedReserve": 2047.440995513745,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06920020497086554,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.0888671875,
+                      "targetT": 12.527499999999993,
+                      "score": 1.3480388320096202,
+                      "predictedS": 137.12810995417288,
+                      "predictedReserve": 2106.1949461780127,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 12.527499999999993,
+                      "score": -9.016843149012786,
+                      "predictedS": 142.57978281500112,
+                      "predictedReserve": 2054.2712687516587,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06841202904919896,
+                      "pathConflict": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "intent": 0.9,
+              "meanRequest": 18.75,
+              "plans": [
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.3349609375,
+                      "targetT": 8.2,
+                      "score": 0,
+                      "predictedS": 138.38287224063663,
+                      "predictedReserve": 2085.5955297782293,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 8.2,
+                      "score": 1.033306579447546,
+                      "predictedS": 142.88269394721925,
+                      "predictedReserve": 2041.5772092561563,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0687984889781923,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.3349609375,
+                      "targetT": 7.627499999999997,
+                      "score": 1.48483740112052,
+                      "predictedS": 138.3943940385838,
+                      "predictedReserve": 2091.737139535482,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 7.627499999999997,
+                      "score": 2.640155401384171,
+                      "predictedS": 142.8955570947184,
+                      "predictedReserve": 2048.4439444798595,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06801673212141779,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.42724609375,
+                      "targetT": 1.8,
+                      "score": 0,
+                      "predictedS": 141.5003962031466,
+                      "predictedReserve": 2073.3469279402016,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 1.8,
+                      "score": 1.8163868679926543,
+                      "predictedS": 145.81905575797526,
+                      "predictedReserve": 2030.9708831843443,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07048754364768683,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.42724609375,
+                      "targetT": 0.6275,
+                      "score": 1.0628258648620121,
+                      "predictedS": 141.49277220028523,
+                      "predictedReserve": 2073.346331704137,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 0.6275,
+                      "score": 2.8968207110390587,
+                      "predictedS": 145.8114467262636,
+                      "predictedReserve": 2030.9701413117402,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07048770210097643,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.30419921875,
+                      "targetT": 11.4,
+                      "score": 0,
+                      "predictedS": 139.82247968792768,
+                      "predictedReserve": 2081.909094968113,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 11.4,
+                      "score": 3.028323317920763,
+                      "predictedS": 144.58361195804733,
+                      "predictedReserve": 2035.4093877039247,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0703631032030465,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.2734375,
+                      "targetT": 3.4000000000000004,
+                      "score": 0,
+                      "predictedS": 140.04623192718998,
+                      "predictedReserve": 2084.9297895078294,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 3.4000000000000004,
+                      "score": 2.181687600378594,
+                      "predictedS": 144.89597018383785,
+                      "predictedReserve": 2037.6185599620167,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07009011391847864,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.2734375,
+                      "targetT": 3.0775,
+                      "score": 1.1259320546397305,
+                      "predictedS": 140.0581928158479,
+                      "predictedReserve": 2090.4636316327656,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 3.0775,
+                      "score": 3.426749403350532,
+                      "predictedS": 144.90896472946332,
+                      "predictedReserve": 2043.9360110954892,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06941554504294345,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.150390625,
+                      "targetT": 6.6000000000000005,
+                      "score": 0,
+                      "predictedS": 139.24384140055685,
+                      "predictedReserve": 2092.5978979840006,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 6.6000000000000005,
+                      "score": 1.1445477555895254,
+                      "predictedS": 144.57353996114344,
+                      "predictedReserve": 2040.862658079817,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07022176024563365,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.150390625,
+                      "targetT": 6.227499999999998,
+                      "score": 1.1330052831856487,
+                      "predictedS": 139.256431157598,
+                      "predictedReserve": 2097.8229386298426,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 6.227499999999998,
+                      "score": 2.3927493411581655,
+                      "predictedS": 144.5869187431898,
+                      "predictedReserve": 2046.7722750071277,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06962173571569252,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.2119140625,
+                      "targetT": 5,
+                      "score": 0,
+                      "predictedS": 138.3806075049166,
+                      "predictedReserve": 2092.5528897338663,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 5,
+                      "score": 2.1346281677984704,
+                      "predictedS": 143.36361756863636,
+                      "predictedReserve": 2044.0531572513098,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06910219122689298,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.2119140625,
+                      "targetT": 4.4775,
+                      "score": 1.1174099386239247,
+                      "predictedS": 138.39261728750122,
+                      "predictedReserve": 2096.731669200603,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 4.4775,
+                      "score": 3.6911596692033273,
+                      "predictedS": 143.3770116534142,
+                      "predictedReserve": 2050.908413702064,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06831591920749958,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.150390625,
+                      "targetT": 9.8,
+                      "score": 0,
+                      "predictedS": 137.15654876356598,
+                      "predictedReserve": 2097.900244286713,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 9.8,
+                      "score": 2.024510405192009,
+                      "predictedS": 142.3263181327063,
+                      "predictedReserve": 2047.7008186934252,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0687213798584061,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.150390625,
+                      "targetT": 9.377499999999996,
+                      "score": 1.3159674514900808,
+                      "predictedS": 137.16943745104618,
+                      "predictedReserve": 2103.8842375455806,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 9.377499999999996,
+                      "score": 3.4870876672234843,
+                      "predictedS": 142.34052938926098,
+                      "predictedReserve": 2054.509593906532,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06794069728553254,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start-position",
+                  "request": 18.75,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 17.0888671875,
+                      "targetT": 13,
+                      "score": 0,
+                      "predictedS": 137.1147383154673,
+                      "predictedReserve": 2100.231788299929,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 13,
+                      "score": 3.6894185182371633,
+                      "predictedS": 142.5650736419132,
+                      "predictedReserve": 2047.440995513745,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06920020497086554,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 17.0888671875,
+                      "targetT": 12.527499999999993,
+                      "score": 1.3727763636149635,
+                      "predictedS": 137.12810995417288,
+                      "predictedReserve": 2106.1949461780127,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 12.527499999999993,
+                      "score": 5.210314208432437,
+                      "predictedS": 142.57978281500112,
+                      "predictedReserve": 2054.2712687516587,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06841202904919896,
+                      "pathConflict": false
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "length": 2400,
+          "runs": [
+            {
+              "intent": 0.1,
+              "meanRequest": 15.40081787109375,
+              "plans": [
+                {
+                  "mode": "start",
+                  "request": 15.427734375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.427734375,
+                      "targetT": 8.2,
+                      "score": 0,
+                      "predictedS": 125.9238806398572,
+                      "predictedReserve": 2207.0319140149027,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 8.2,
+                      "score": -9.953934120261756,
+                      "predictedS": 137.40954950101232,
+                      "predictedReserve": 2094.5384992609906,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06885872816940974,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 15.4892578125,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.4892578125,
+                      "targetT": 1.8,
+                      "score": 0,
+                      "predictedS": 130.17043672510047,
+                      "predictedReserve": 2198.4217880532365,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 1.8,
+                      "score": -9.475123843755181,
+                      "predictedS": 142.4180247887582,
+                      "predictedReserve": 2084.1985066377897,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07061832247715927,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 15.4892578125,
+                      "targetT": 0.6275,
+                      "score": 3.8206757653239936,
+                      "predictedS": 130.5601955483584,
+                      "predictedReserve": 2198.3713529377933,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 0.6275,
+                      "score": -5.5316957525602035,
+                      "predictedS": 142.93759738605232,
+                      "predictedReserve": 2084.110940717298,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07061652247579531,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.427734375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.427734375,
+                      "targetT": 11.4,
+                      "score": 0,
+                      "predictedS": 126.52384085209167,
+                      "predictedReserve": 2203.171397760498,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 11.4,
+                      "score": -10.556738165413833,
+                      "predictedS": 138.03170810048297,
+                      "predictedReserve": 2087.3986005520806,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07046606321543436,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.427734375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.427734375,
+                      "targetT": 3.4000000000000004,
+                      "score": 0,
+                      "predictedS": 128.80724820757243,
+                      "predictedReserve": 2203.569746121351,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 3.4000000000000004,
+                      "score": -9.757068694047291,
+                      "predictedS": 141.06808277425125,
+                      "predictedReserve": 2088.0419947134915,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07020231006294608,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.3662109375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.3662109375,
+                      "targetT": 6.6000000000000005,
+                      "score": 0,
+                      "predictedS": 127.51636655316466,
+                      "predictedReserve": 2207.394783523397,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 6.6000000000000005,
+                      "score": -10.300858950036972,
+                      "predictedS": 139.73353763256733,
+                      "predictedReserve": 2089.4950345477782,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07033145807046282,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.39697265625,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.39697265625,
+                      "targetT": 5,
+                      "score": 0,
+                      "predictedS": 127.05843898198941,
+                      "predictedReserve": 2208.157052582709,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 5,
+                      "score": -9.818558890498668,
+                      "predictedS": 139.06274298463637,
+                      "predictedReserve": 2093.7750094448575,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06917472529134017,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.3662109375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.3662109375,
+                      "targetT": 9.8,
+                      "score": 0,
+                      "predictedS": 125.01694609348783,
+                      "predictedReserve": 2211.2628325065584,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 9.8,
+                      "score": -10.287640818794927,
+                      "predictedS": 136.58393352838266,
+                      "predictedReserve": 2096.8365180511273,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06877343380244838,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.3046875,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.3046875,
+                      "targetT": 13,
+                      "score": 0,
+                      "predictedS": 124.22974991923165,
+                      "predictedReserve": 2214.213936118102,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 13,
+                      "score": -10.891694436913316,
+                      "predictedS": 135.85107783490722,
+                      "predictedReserve": 2096.5913209733408,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0692645696682952,
+                      "pathConflict": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "intent": 0.9,
+              "meanRequest": 15.40081787109375,
+              "plans": [
+                {
+                  "mode": "start",
+                  "request": 15.427734375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.427734375,
+                      "targetT": 8.2,
+                      "score": 0,
+                      "predictedS": 125.9238806398572,
+                      "predictedReserve": 2207.0319140149027,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 8.2,
+                      "score": -9.953934120261756,
+                      "predictedS": 137.40954950101232,
+                      "predictedReserve": 2094.5384992609906,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06885872816940974,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "route",
+                  "request": 15.4892578125,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.4892578125,
+                      "targetT": 1.8,
+                      "score": 0,
+                      "predictedS": 130.17043672510047,
+                      "predictedReserve": 2198.4217880532365,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 1.8,
+                      "score": -9.475123843755181,
+                      "predictedS": 142.4180247887582,
+                      "predictedReserve": 2084.1985066377897,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07061832247715927,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "route",
+                      "targetV": 15.4892578125,
+                      "targetT": 0.6275,
+                      "score": 3.8206757653239936,
+                      "predictedS": 130.5601955483584,
+                      "predictedReserve": 2198.3713529377933,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 0.6275,
+                      "score": -5.5316957525602035,
+                      "predictedS": 142.93759738605232,
+                      "predictedReserve": 2084.110940717298,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07061652247579531,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.427734375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.427734375,
+                      "targetT": 11.4,
+                      "score": 0,
+                      "predictedS": 126.52384085209167,
+                      "predictedReserve": 2203.171397760498,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 11.4,
+                      "score": -10.556738165413833,
+                      "predictedS": 138.03170810048297,
+                      "predictedReserve": 2087.3986005520806,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07046606321543436,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.427734375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.427734375,
+                      "targetT": 3.4000000000000004,
+                      "score": 0,
+                      "predictedS": 128.80724820757243,
+                      "predictedReserve": 2203.569746121351,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 3.4000000000000004,
+                      "score": -9.757068694047291,
+                      "predictedS": 141.06808277425125,
+                      "predictedReserve": 2088.0419947134915,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07020231006294608,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.3662109375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.3662109375,
+                      "targetT": 6.6000000000000005,
+                      "score": 0,
+                      "predictedS": 127.51636655316466,
+                      "predictedReserve": 2207.394783523397,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 6.6000000000000005,
+                      "score": -10.300858950036972,
+                      "predictedS": 139.73353763256733,
+                      "predictedReserve": 2089.4950345477782,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.07033145807046282,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.39697265625,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.39697265625,
+                      "targetT": 5,
+                      "score": 0,
+                      "predictedS": 127.05843898198941,
+                      "predictedReserve": 2208.157052582709,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 5,
+                      "score": -9.818558890498668,
+                      "predictedS": 139.06274298463637,
+                      "predictedReserve": 2093.7750094448575,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06917472529134017,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.3662109375,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.3662109375,
+                      "targetT": 9.8,
+                      "score": 0,
+                      "predictedS": 125.01694609348783,
+                      "predictedReserve": 2211.2628325065584,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 9.8,
+                      "score": -10.287640818794927,
+                      "predictedS": 136.58393352838266,
+                      "predictedReserve": 2096.8365180511273,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.06877343380244838,
+                      "pathConflict": false
+                    }
+                  ]
+                },
+                {
+                  "mode": "start",
+                  "request": 15.3046875,
+                  "capacity": 2450,
+                  "aerobic": 50,
+                  "maxV": 18.75,
+                  "candidates": [
+                    {
+                      "mode": "start",
+                      "targetV": 15.3046875,
+                      "targetT": 13,
+                      "score": 0,
+                      "predictedS": 124.22974991923165,
+                      "predictedReserve": 2214.213936118102,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0,
+                      "pathConflict": false
+                    },
+                    {
+                      "mode": "start-position",
+                      "targetV": 18.75,
+                      "targetT": 13,
+                      "score": -10.891694436913316,
+                      "predictedS": 135.85107783490722,
+                      "predictedReserve": 2096.5913209733408,
+                      "energyFeasible": true,
+                      "goalReached": true,
+                      "targetShortfall": 0.0692645696682952,
+                      "pathConflict": false
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "above-cap catch request cannot certify a lost-distance goal",
+      "passed": true,
+      "seconds": 0.19735090000000013,
+      "result": {
+        "catchV": 19.017278665722095,
+        "maxV": 18.75,
+        "targetShortfall": 0.3758917106372408,
+        "regainedDistance": -0.6573767738527749,
+        "goalReached": false
+      }
+    },
+    {
+      "name": "parallel bodies exclude an immediate inward crossing",
+      "passed": true,
+      "seconds": 0.3097850999999998,
+      "result": {
+        "plan": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 3.1407189301926146,
+          "reservePrice": 0.14388902804224496,
+          "selected": "settle",
+          "selectedScore": 0,
+          "baseline": {
+            "s": 470.1009917427618,
+            "energy": 173.28309808973572,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 3.8,
+              "score": 0,
+              "predictedS": 470.1009917427618,
+              "predictedReserve": 2276.7169019102644,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "position",
+              "targetV": 18.75,
+              "targetT": 3.8,
+              "score": -9.936433501061124,
+              "predictedS": 491.636006291027,
+              "predictedReserve": 2057.996625058531,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0.08695746609664923,
+              "pathConflict": false
+            },
+            {
+              "mode": "wait-route",
+              "targetV": 15.569921875,
+              "targetT": 1.7999999999999998,
+              "score": null,
+              "predictedS": 339.69994128484416,
+              "predictedReserve": 2416.4754272739187,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "finalLane": 3.8,
+        "blockedSeconds": 0
+      }
+    },
+    {
+      "name": "a finite rider sequence executes its transition at the predicted time",
+      "passed": true,
+      "seconds": 0.0037222999999999046,
+      "result": {
+        "duration": 0.2,
+        "targetV": 18,
+        "errors": {
+          "s": 5.684341886080802e-14,
+          "v": -7.105427357601002e-15,
+          "stamina": 0,
+          "guts": 0
+        }
+      }
+    },
+    {
+      "name": "running style labels leave physical trajectories unchanged",
+      "passed": true,
+      "seconds": 254.1054423,
+      "result": [
+        {
+          "id": "labels-0",
+          "time": 72.06427077145187,
+          "place": 4,
+          "energy": 2212.672265883645,
+          "peak": 17.622322632576086,
+          "observedStyle": "追"
+        },
+        {
+          "id": "labels-1",
+          "time": 71.84212829726906,
+          "place": 2,
+          "energy": 2246.3164777571506,
+          "peak": 17.569650624940447,
+          "observedStyle": "先"
+        },
+        {
+          "id": "labels-2",
+          "time": 71.93010773206493,
+          "place": 3,
+          "energy": 2256.6857925421427,
+          "peak": 18.21842477404369,
+          "observedStyle": "差"
+        },
+        {
+          "id": "labels-3",
+          "time": 71.60596379762964,
+          "place": 1,
+          "energy": 2345.3164658194187,
+          "peak": 18.418661374913107,
+          "observedStyle": "逃"
+        }
+      ]
+    }
+  ]
+}

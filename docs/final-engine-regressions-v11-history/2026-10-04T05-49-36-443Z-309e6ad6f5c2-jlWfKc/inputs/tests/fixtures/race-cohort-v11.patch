@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "baseEngineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "basePageHash": "cbfae8d298c527d88f039b10aa6acae41286d6d75d8dd607f3f2df4c833a06fa",
+  "generatedAt": "2026-10-03T09:47:38.277Z",
+  "changes": [
+    {
+      "file": "sim.js",
+      "old": "    const boost = o.tier === 'strong' ? 2 : (o.tier === 'weak' ? -2 : 0);",
+      "new": "    const boost = 0; // 历史 tier 兼容，不为指定马制造能力优势。",
+      "description": "Remove artificial strong/weak stat advantage"
+    },
+    {
+      "file": "sim.js",
+      "old": "  function makeField(rng, opts) {\n    const o = opts || {};\n    const n = o.n || 8;\n    const used = new Set();\n    const strongIdx = o.strongIndex !== undefined ? o.strongIndex : Math.floor(rng() * n);\n    const playerIdx = o.playerIndex !== undefined ? o.playerIndex : strongIdx;\n    /* 场次水平（整场统一），档差由 tier 提供（见 RACE_F / makeHorse） */\n    const level = o.level !== undefined ? o.level : 62 + Math.floor(rng() * 17);\n    const horses = [];\n    for (let i = 0; i < n; i++) {\n      const h = makeHorse(rng, {\n        tier: i === strongIdx ? 'strong' : 'normal',\n        level,\n        id: 'h' + (i + 1),\n        player: i === playerIdx,\n      });\n      h.name = makeName(rng, used);\n      h.sire = makeName(rng, used);\n      h.dam = makeName(rng, used);\n      horses.push(h);\n    }\n    return horses;\n  }\n",
+      "new": "  /* ---------------- 赛前候选与条件阵容 ---------------- */\n  // 报名分布的模型假设；不会乘进速度、成本或距离适性。\n  const COHORT_VERSION = 1;\n  const COHORT_POOL_MULTIPLIER = 4;\n  const cohortForecastCache = new Map();\n  function applyCohortEntryOverrides(h, overrides) {\n    const o=overrides||{};\n    // 状态规范在完整生成和档案物化之后、报名评估之前；不改生成 RNG。\n    for(const key of ['surface','special','斗志','疲劳','jockeyGrade','bodyMass','carriedWeight'])\n      if(Object.prototype.hasOwnProperty.call(o,key))h[key]=o[key];\n    return h;\n  }\n  function cohortRaceOptions(options) {\n    const o=options||{}, race=o.race||o;\n    return {length:Number(race.length||race.dist)||2000,course:race.course||race.venue||'标准',\n      surface:race.surface||'草地',state:race.state||'良',dir:race.dir||'左回',\n      profile:race.profile||'平坦',wind:Number(race.wind)||0};\n  }\n  function cohortLevelBand(options) {\n    const o=options||{}, tier=typeof o.tierKey==='string'?TIER_BY_KEY[o.tierKey]:o.tierDef;\n    const explicit=o.levelBand||tier?.level;\n    const requestedCenter=Number.isFinite(o.level)?o.level:explicit?(explicit[0]+explicit[1])/2:70;\n    const lower=explicit?Number(explicit[0]):20,upper=explicit?Number(explicit[1]):97;\n    if(!Number.isFinite(lower)||!Number.isFinite(upper)||lower>upper)throw new Error('无效赛级能力区间');\n    const center=clamp(requestedCenter,lower,upper);\n    return [clamp(Math.max(lower,center-FIELD_LEVEL_SPAN),20,97),clamp(Math.min(upper,center+FIELD_LEVEL_SPAN),20,97)];\n  }\n  function raceEntryForecast(h, options) {\n    if(!h||!h.stats)throw new Error('无效赛前候选马');\n    const raceOptions=cohortRaceOptions(options);\n    if(!Number.isFinite(raceOptions.length)||raceOptions.length<200)throw new Error('无效报名比赛距离');\n    // 仅克隆并构造同物理的赛前状态，不 step、不读取赛后名次/总时。\n    // 输入档案不因评估距离而改变，现有马只由选择入口显式补齐旧档。\n    const entry=JSON.parse(JSON.stringify(h));horsePhysiology(entry);entry.behavior=horseBehavior(entry);\n    const key=JSON.stringify([raceOptions,entry.stats,entry.physiology,entry['疲劳']||0,entry['斗志']??70,\n      entry.behavior,entry.surface,entry.special,entry.bodyMass,entry.carriedWeight,RACE_F]);\n    if(cohortForecastCache.has(key))return {...cohortForecastCache.get(key)};\n    const r=createRace([entry],{...raceOptions,rng:()=>0.5}),H=r.race.horses[0];\n    H.t=r.race.geo.referenceLane;H.targetT=H.t;\n    let low=3,high=H.maxV,best=null;\n    for(let i=0;i<9;i++){\n      const requested=(low+high)/2,forecast=H.finishPlan(requested,0,{earlyExit:true});\n      if(forecast.feasible){low=requested;best=forecast;}else high=requested;\n    }\n    if(!best)best=H.finishPlan(low,0);\n    const result={version:COHORT_VERSION,seconds:best.seconds,requestedV:low,\n      required:best.required,capacity:H.staminaMax,aerobic:H.aerobic,maxV:H.maxV,\n      peakPowerShortfall:best.peakPowerShortfall,feasible:best.feasible,referenceLane:H.t};\n    if(![result.seconds,result.requestedV,result.required,result.capacity,result.aerobic,result.maxV].every(Number.isFinite)||result.seconds<=0)\n      throw new Error('赛前候选预测未产生有限结果');\n    if(cohortForecastCache.size>=512)cohortForecastCache.delete(cohortForecastCache.keys().next().value);\n    cohortForecastCache.set(key,result);return {...result};\n  }\n  function cohortReference(level, race, entryOverrides) {\n    const reference=makeHorse(()=>0.5,{id:'cohort-reference',level,physiology:neutralPhysiology(),\n      behavior:{forwardness:0.5,settle:0.5,tractability:0.65},surface:race.surface,\n      special:'左右皆可','斗志':50,'疲劳':0,bodyMass:480,carriedWeight:57});\n    applyCohortEntryOverrides(reference,entryOverrides);return raceEntryForecast(reference,race);\n  }\n  function selectRaceCohort(candidates, rng, options) {\n    if(!Array.isArray(candidates)||typeof rng!=='function')throw new Error('无效候选池');\n    const o=options||{},race=cohortRaceOptions(o),band=cohortLevelBand(o);\n    const requested=Number.isInteger(o.n)?Math.max(0,o.n):8,n=Math.min(requested,candidates.length);\n    const ids=new Set();\n    for(const h of candidates){if(!h||!h.id||ids.has(h.id))throw new Error('候选身份重复或缺失');ids.add(h.id);horsePhysiology(h);}\n    const references=band.map(level=>cohortReference(level,race,o.entryOverrides));\n    const fast=Math.min(...references.map(r=>r.seconds)),slow=Math.max(...references.map(r=>r.seconds));\n    const assessed=candidates.map((h,index)=>{\n      const forecast=raceEntryForecast(h,race),inside=forecast.feasible&&forecast.seconds<=slow+1e-7;\n      const distance=forecast.seconds>slow?forecast.seconds-slow:0;\n      return {h,index,forecast,inside,distance};\n    });\n    const eligible=assessed.filter(x=>x.inside),selected=[];\n    const available=eligible.slice();\n    // 合格候选无放回报名；没有“八匹最接近”或指定冠军。\n    while(selected.length<n&&available.length){const i=Math.min(available.length-1,Math.floor(rng()*available.length));selected.push(available.splice(i,1)[0]);}\n    const fallback=n-selected.length;\n    if(fallback){\n      const rest=assessed.filter(x=>!x.inside).map(x=>({...x,tie:rng()})).sort((a,b)=>a.distance-b.distance||a.tie-b.tie||a.index-b.index);\n      selected.push(...rest.slice(0,fallback));\n    }\n    return {horses:selected.map(x=>x.h),diagnostics:{version:COHORT_VERSION,race,levelBand:band,\n      predictionWindow:{fastSeconds:fast,slowSeconds:slow},candidates:candidates.length,requested,selected:selected.length,\n      eligibilityScope:'Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.',\n      fastIsNotAdmissionCeiling:true,\n      eligible:eligible.length,fallback,shortage:Math.max(0,requested-candidates.length),\n      selection:'Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.',\n      entries:selected.map(x=>({id:x.h.id,eligible:x.inside,forecast:{...x.forecast}}))}};\n  }\n  function makeRaceCandidatePool(rng, options) {\n    const o=options||{},n=Number.isInteger(o.n)?o.n:32,band=cohortLevelBand(o),used=new Set(),horses=[];\n    if(n<1||n>256)throw new Error('无效候选池规模');\n    // 生成不读取比赛距离/赛道；相同 RNG、赛级和池规模对应相同个体。\n    for(let i=0;i<n;i++){\n      const level=band[0]+rng()*(band[1]-band[0]);\n      const h=makeHorse(rng,{level,id:(o.idPrefix||'h')+(i+1),player:false});\n      h.name=makeName(rng,used);h.sire=makeName(rng,used);h.dam=makeName(rng,used);\n      applyCohortEntryOverrides(h,o.entryOverrides);horses.push(h);\n    }\n    return horses;\n  }\n  function makeField(rng, opts) {\n    const o=opts||{},n=o.n||8;\n    if(!Number.isInteger(n)||n<1||n>64)throw new Error('无效阵容规模');\n    // strongIndex 保留为玩家身份兼容选项，不再给能力或生理加点。\n    const identityIndex=o.strongIndex!==undefined?o.strongIndex:Math.floor(rng()*n);\n    const playerIndex=o.playerIndex!==undefined?o.playerIndex:identityIndex;\n    const level=o.level!==undefined?o.level:62+Math.floor(rng()*17);\n    const race=o.race||(Number.isFinite(o.length)||Number.isFinite(o.dist)?o:null);\n    if(!race){\n      const used=new Set(),horses=[];\n      for(let i=0;i<n;i++){\n        const h=makeHorse(rng,{level,id:(o.idPrefix||'h')+(i+1),player:i===playerIndex});\n        h.name=makeName(rng,used);h.sire=makeName(rng,used);h.dam=makeName(rng,used);horses.push(h);\n      }\n      return horses;\n    }\n    const poolSize=Math.min(256,Math.max(n,n*COHORT_POOL_MULTIPLIER));\n    const pool=makeRaceCandidatePool(rng,{n:poolSize,level,levelBand:o.levelBand,tierKey:o.tierKey,tierDef:o.tierDef,idPrefix:o.idPrefix,entryOverrides:o.entryOverrides});\n    const player=Number.isInteger(playerIndex)&&playerIndex>=0&&playerIndex<pool.length?pool[playerIndex]:null;\n    const result=selectRaceCohort(pool.filter(h=>h!==player),rng,{...o,level,race,n:n-(player?1:0)});\n    const horses=result.horses;\n    if(player){player.player=true;horses.splice(Math.min(playerIndex,horses.length),0,player);}\n    Object.defineProperty(horses,'cohort',{value:{...result.diagnostics,playerReserved:player?.id||null},enumerable:false});\n    return horses;\n  }\n",
+      "description": "Stable candidate pool, entry forecast and conditioned cohort"
+    },
+    {
+      "file": "sim.js",
+      "old": "  function makeCareerRaceField(h, tierDef, rng) {\n    horsePhysiology(h);\n    const horses = [];\n    const used = new Set();\n    for (let i = 0; i < 7; i++) {\n      /* 场次档次取区间中点，同场马之间只差 ±FIELD_LEVEL_SPAN */\n      const base = (tierDef.level[0] + tierDef.level[1]) / 2;\n      const level = base + (rng() * 2 - 1) * FIELD_LEVEL_SPAN;\n      const rh = makeHorse(rng, { level, id: 'r' + (i + 1) });\n      rh.name = makeName(rng, used);\n      rh.sire = makeName(rng, used);\n      rh.dam = makeName(rng, used);\n      rh.age = h.age;\n      rh.player = false;\n      horses.push(rh);\n    }\n",
+      "new": "  function makeCareerRaceField(h, tierDef, rng, race) {\n    horsePhysiology(h);\n    const base=(tierDef.level[0]+tierDef.level[1])/2;\n    const horses=makeField(rng,{n:7,level:base,tierDef,race,playerIndex:-1,idPrefix:'r'});\n    for(const rh of horses){rh.age=h.age;rh.player=false;}\n",
+      "description": "Career opponents share distance and grade selection; preserve player migration"
+    },
+    {
+      "file": "sim.js",
+      "old": "      const field = makeCareerRaceField(h, t, rng);",
+      "new": "      const field = makeCareerRaceField(h, t, rng, {length:dist,surface,state,dir,profile});",
+      "description": "Career race passes actual conditions"
+    },
+    {
+      "file": "sim.js",
+      "old": "    const field = makeField(rng, { n: 8, level: t.level[0] + rng() * (t.level[1] - t.level[0]) });",
+      "new": "    const field = makeField(rng, {n:8,level:t.level[0]+rng()*(t.level[1]-t.level[0]),tierDef:t,playerIndex:-1,race:{length:dist,surface,state,dir,profile}});",
+      "description": "Featured race uses conditioned all-AI cohort"
+    },
+    {
+      "file": "sim.js",
+      "old": "    const n = Math.min(o.n || 8, pool.length);",
+      "new": "    const n = Math.min(o.n || 8, pool.length);\n    if(o.race){\n      const selected=selectRaceCohort(pool,rng,{...o,n:o.n||8});\n      Object.defineProperty(selected.horses,'cohort',{value:selected.diagnostics,enumerable:false});\n      return selected.horses;\n    }",
+      "description": "Existing roster filter plus stable physical entry selection"
+    },
+    {
+      "file": "sim.js",
+      "old": "      startsMax: spec.startsMax, abilityMin: spec.abilityMin, n: 8, cooldown: spec.cooldown,",
+      "new": "      startsMax:spec.startsMax,abilityMin:spec.abilityMin,n:8,cooldown:spec.cooldown,\n      tierKey:spec.key==='listed'?'open':spec.key,race:{length:dist,course:venue,surface,state,dir,profile},",
+      "description": "Scheduled race selects at actual venue and distance"
+    },
+    {
+      "file": "sim.js",
+      "old": "    const chosen = pickRosterField(roster, rng, weekNum, { ageMin: spec.ageMin, ageMax: spec.ageMax, winsMax: spec.winsMax, abilityMin, n: 8 });",
+      "new": "    const chosen = pickRosterField(roster,rng,weekNum,{ageMin:spec.ageMin,ageMax:spec.ageMax,winsMax:spec.winsMax,abilityMin,n:8,tierKey:tierName==='G1'?'g1':tierName==='G2'?'g2':tierName==='G3'?'g3':key==='maiden'?'maiden':'cond2',race:{length:dist,surface,state,dir,profile}});",
+      "description": "Weekly AI race selects from persistent roster by its conditions"
+    },
+    {
+      "file": "sim.js",
+      "old": "      const rivals = pickRosterField(roster, rng, weekNum, { ageMin: band[2], ageMax: band[3], abilityMin: band[0], abilityMax: band[1], n: 7 });",
+      "new": "      const rivals = pickRosterField(roster.filter(rh=>rh.id!==h.id),rng,weekNum,{...PLAYER_RACE_QUALIFICATION[key],ageMin:band[2],ageMax:band[3],abilityMin:band[0],abilityMax:Infinity,n:7,tierKey:key,race:{length:dist,surface,state,dir,profile}});",
+      "description": "Player roster race shares grade and actual distance"
+    },
+    {
+      "file": "sim.js",
+      "old": "    makeHorse, makeField, horseBehavior, racePlanFor, horsePhysiology, neutralPhysiology, PHYSIOLOGY_KEYS,",
+      "new": "    makeHorse,makeField,makeRaceCandidatePool,raceEntryForecast,selectRaceCohort,COHORT_VERSION,COHORT_POOL_MULTIPLIER,horseBehavior,racePlanFor,horsePhysiology,neutralPhysiology,PHYSIOLOGY_KEYS,",
+      "description": "Export cohort APIs"
+    },
+    {
+      "file": "index.html",
+      "old": "  field = S.makeField(rng, { n: 8 });",
+      "new": "  field = S.makeField(rng, {n:8,race:singleRaceOptions()});",
+      "description": "Only new single-race fields use current conditions; editing existing field does not regenerate"
+    },
+    {
+      "file": "sim.js",
+      "old": "    const values={forwardness:0.5+((s['出闸能力']??70)-(s['爆发力']??70))*0.006+(r()-0.5)*0.5,",
+      "new": "    // Mild full-support temperament prior; gate execution does not dictate intent.\n    const values={forwardness:0.5-Math.sin(Math.asin(1-2*r())/3),",
+      "description": "Independent full-support forward intention for newly generated or missing behavior; saved values remain authoritative"
+    },
+    {
+      "file": "sim.js",
+      "description": "Honor an explicit zero wins maximum in maiden qualification",
+      "old": "      h.wins >= (o.winsMin || 0) && h.wins <= (o.winsMax || 99) &&",
+      "new": "      h.wins >= (o.winsMin || 0) && h.wins <= (o.winsMax !== undefined ? o.winsMax : 99) &&"
+    },
+    {
+      "file": "sim.js",
+      "description": "Honor an explicit zero ability maximum in caller qualification",
+      "old": "      h.ability >= (o.abilityMin || 0) && h.ability <= (o.abilityMax || 100) &&",
+      "new": "      h.ability >= (o.abilityMin || 0) && h.ability <= (o.abilityMax !== undefined ? o.abilityMax : 100) &&"
+    },
+    {
+      "file": "sim.js",
+      "description": "Separate player race qualifications from representative ability bands",
+      "old": "  function raceOptionsForRoster(h, rng, roster, weekNum) {",
+      "new": "  // Same sporting qualification as the weekly schedule. Ability bands are\n  // representative readiness references; stronger entrants are never barred.\n  const PLAYER_RACE_QUALIFICATION = {\n    newcomer:{winsMin:0,winsMax:0,startsMax:0},maiden:{winsMin:0,winsMax:0},\n    cond1:{winsMin:1,winsMax:1},cond2:{winsMin:2,winsMax:2},cond3:{winsMin:3,winsMax:3},\n    open:{winsMin:4,winsMax:99},g3:{winsMin:2,winsMax:99},g2:{winsMin:3,winsMax:99},g1:{winsMin:4,winsMax:99},\n  };\n  function raceOptionsForRoster(h, rng, roster, weekNum) {"
+    }
+  ],
+  "notes": [
+    "Exact unique before/after replacements; root agent integrates production sequentially.",
+    "No legacy v9 helper changes. Use tests/helpers/race-cohort-v11.js for new formal generation.",
+    "Candidate generation ignores distance; selection never advances a race or reads realized outcomes.",
+    "Joint entry window is uncalibrated grade/distance population assumption; fallback is explicitly reported."
+  ],
+  "lastAdmissionUpdateAt": "2026-10-03T10:45:52.228Z",
+  "lastPlayerEntryUpdateAt": "2026-10-03T23:20:12.092Z"
+}

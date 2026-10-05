@@ -1,0 +1,109 @@
+{
+  "engineHash": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "candidateHash": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "checks": [
+    {
+      "name": "Default measured-motion forecast keeps the same paid endpoint and ledger",
+      "pass": true,
+      "endpoint": {
+        "s": 247.37002992530168,
+        "t": 8,
+        "v": 16.646661652381624,
+        "stamina": 2382.3767726924657,
+        "guts": 4161.520458655074,
+        "retention": 0.9988256328115899,
+        "aerobicOutput": 49.8348725787734
+      },
+      "defaultUnchanged": true
+    },
+    {
+      "name": "A zero-speed observer remains frozen by default but starts under an explicit public prior",
+      "pass": true,
+      "measured": [
+        {
+          "s": 0,
+          "t": 12,
+          "v": 0,
+          "finished": false
+        }
+      ],
+      "publicHypothesis": [
+        {
+          "s": 92.73246373240636,
+          "t": 12,
+          "v": 17.741224199591954,
+          "finished": false
+        }
+      ],
+      "trafficCertified": false
+    },
+    {
+      "name": "An assumed release delay does not advance a stalled peer or produce NaN",
+      "pass": true,
+      "endpoint": {
+        "s": 0,
+        "t": 12,
+        "v": 0,
+        "finished": false
+      }
+    },
+    {
+      "name": "The public prior is inactive for settled measured motion",
+      "pass": true,
+      "endpoint": [
+        {
+          "s": 266.5688524590172,
+          "t": 12,
+          "v": 17,
+          "finished": false
+        }
+      ]
+    },
+    {
+      "name": "Unrelated extrapolated peer collision becomes uncertainty without vetoing a clear own route",
+      "pass": true,
+      "beforeOwnVeto": false,
+      "afterOwnVeto": false,
+      "opponentPathConflict": true
+    },
+    {
+      "name": "Own finite-braking impossibility is still a route veto",
+      "pass": true,
+      "endpoint": {
+        "s": 200.3089931712963,
+        "t": 10,
+        "v": 19.941666666666666,
+        "stamina": 2463.7200000000003,
+        "guts": 4223.4516877075075,
+        "retention": 0.9999987060595429,
+        "aerobicOutput": 49.84360960000001
+      },
+      "complete": false,
+      "trafficFeasible": false
+    },
+    {
+      "name": "Public prior uses visible records without hidden opponent attributes",
+      "pass": true,
+      "hiddenKeys": [
+        "adj",
+        "control",
+        "physiology",
+        "startDelay",
+        "maxV",
+        "stamina",
+        "guts",
+        "behavior"
+      ],
+      "endpoint": {
+        "s": 1.098395259654067,
+        "t": 12,
+        "v": 3.089788567096676,
+        "finished": false
+      }
+    }
+  ],
+  "failures": [],
+  "scope": "Constructed public observation hypotheses, without realized opponent controls or physiology.",
+  "pass": true,
+  "productionUnchanged": true
+}

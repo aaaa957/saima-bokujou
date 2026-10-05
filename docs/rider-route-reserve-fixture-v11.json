@@ -1,0 +1,201 @@
+{
+  "sourceHash": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "scriptHash": "e6e484670cfd77f12306d01b6bb449d064a7c9ee186d5c69a747bb45a6c21bc1",
+  "routeTestHash": "b6e7515b2cd559ec7fcbff7d03dcb2806762ec550e5fa064c69b9d96a8b2f3d8",
+  "fixtureHash": "3a65d8017b736577a1d5af7c15b51e9fcf10c0cc6f72034d37d6af571a2dee99",
+  "declaredManifestHash": "e6c2075af09dc6700fcc19336a590d3e5efe5007593b31744ab41d8e4cf67351",
+  "builtAt": "2026-10-04T04:24:52.990Z",
+  "scope": "Only the terminal-release fixture at fixed v16, final100m. Current and predeclared cost105/110 parameters; no full race or actual physical steps. The old fixed-reserve premise failure is retained, not treated as an engine failure.",
+  "finishPlanQueries": 9,
+  "actualStepCalls": 0,
+  "rows": [
+    {
+      "variant": "current",
+      "parameters": {},
+      "effectiveCoefficientHash": "72ded2c7f688b86c00ad4954e27a50b7f6347e6b3ad63fb120d76bc8ef11a968",
+      "oldFixedReserve": {
+        "reserve": 140,
+        "required": 105.07433741517157,
+        "peakPowerShortfall": 6.734166420799525,
+        "feasible": false,
+        "totalEnergySufficient": true,
+        "terminalPowerLimited": true,
+        "intendedPremisesHold": true
+      },
+      "pass": true,
+      "derived": {
+        "fixture": {
+          "requestedV": 16,
+          "need": 104.18900357433246,
+          "requiredExcess": 16.683428420657023,
+          "terminalReleaseThreshold": 54.49919950747962,
+          "margin": 27.24959975373981,
+          "reserve": 131.43860332807228,
+          "capacity": 2450,
+          "reservePower": 75,
+          "reserveFade": 0.1,
+          "fullReference": {
+            "seconds": 6.25,
+            "required": 104.18900357433246,
+            "peakPowerShortfall": 0,
+            "endpoint": {
+              "s": 800,
+              "t": 10,
+              "v": 16,
+              "stamina": 2345.8109964256682,
+              "guts": 4107.28454839155,
+              "retention": 0.9982339913979343,
+              "aerobicOutput": 49.97897157934298
+            },
+            "terminalWork": 66.6624,
+            "terminalAerobicSupply": 49.97897157934298
+          }
+        },
+        "required": 105.07433741517157,
+        "peakPowerShortfall": 9.35500213669576,
+        "feasible": false,
+        "endpoint": {
+          "s": 800,
+          "t": 10,
+          "v": 16,
+          "stamina": 26.364265912900763,
+          "guts": 4106.51394249404,
+          "retention": 0.9982193131903626,
+          "aerobicOutput": 49.97719650362186
+        },
+        "energyHeadroom": 26.364265912900706
+      }
+    },
+    {
+      "variant": "air2-fast80-nopeak-cost105",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.12,
+        "peakExtra": 1.55,
+        "resistanceK": 0.250215,
+        "airK": 0.001365
+      },
+      "effectiveCoefficientHash": "f2e32942de8cd14203306f4539b6f65561eab547fcd6cfebe54e5788eb58b471",
+      "oldFixedReserve": {
+        "reserve": 140,
+        "required": 123.87727110051372,
+        "peakPowerShortfall": 15.431564142154734,
+        "feasible": false,
+        "totalEnergySufficient": true,
+        "terminalPowerLimited": true,
+        "intendedPremisesHold": true
+      },
+      "pass": true,
+      "derived": {
+        "fixture": {
+          "requestedV": 16,
+          "need": 122.84252433898591,
+          "requiredExcess": 19.66947749195564,
+          "terminalReleaseThreshold": 64.25362647372175,
+          "margin": 32.126813236860876,
+          "reserve": 154.9693375758468,
+          "capacity": 2450,
+          "reservePower": 75,
+          "reserveFade": 0.1,
+          "fullReference": {
+            "seconds": 6.25,
+            "required": 122.84252433898591,
+            "peakPowerShortfall": 0,
+            "endpoint": {
+              "s": 800,
+              "t": 10,
+              "v": 16,
+              "stamina": 2327.157475661014,
+              "guts": 4096.839184047456,
+              "retention": 0.9980350320770944,
+              "aerobicOutput": 49.97660250804437
+            },
+            "terminalWork": 69.64608000000001,
+            "terminalAerobicSupply": 49.97660250804437
+          }
+        },
+        "required": 123.87727110051372,
+        "peakPowerShortfall": 10.849113863834297,
+        "feasible": false,
+        "endpoint": {
+          "s": 800,
+          "t": 10,
+          "v": 16,
+          "stamina": 31.092066475333024,
+          "guts": 4095.9849273119057,
+          "retention": 0.9980187605202268,
+          "aerobicOutput": 49.97462745149674
+        },
+        "energyHeadroom": 31.09206647533307
+      }
+    },
+    {
+      "variant": "air2-fast80-nopeak-cost110",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.12,
+        "peakExtra": 1.55,
+        "resistanceK": 0.26213,
+        "airK": 0.00143
+      },
+      "effectiveCoefficientHash": "23c25e233f84e9a8cb39a8d104c18a619ca6f554cf543166a958655b5079b597",
+      "oldFixedReserve": {
+        "reserve": 140,
+        "required": 144.77984783347773,
+        "peakPowerShortfall": 24.05121726903839,
+        "feasible": false,
+        "totalEnergySufficient": false,
+        "terminalPowerLimited": true,
+        "intendedPremisesHold": false
+      },
+      "pass": true,
+      "derived": {
+        "fixture": {
+          "requestedV": 16,
+          "need": 143.5766608903445,
+          "requiredExcess": 22.988590809731136,
+          "terminalReleaseThreshold": 75.09606331178838,
+          "margin": 37.54803165589419,
+          "reserve": 181.1246925462387,
+          "capacity": 2450,
+          "reservePower": 75,
+          "reserveFade": 0.1,
+          "fullReference": {
+            "seconds": 6.25,
+            "required": 143.5766608903445,
+            "peakPowerShortfall": 0,
+            "endpoint": {
+              "s": 800,
+              "t": 10,
+              "v": 16,
+              "stamina": 2306.4233391096554,
+              "guts": 4085.228742599346,
+              "retention": 0.9978138808114161,
+              "aerobicOutput": 49.97396919026886
+            },
+            "terminalWork": 72.96256,
+            "terminalAerobicSupply": 49.97396919026886
+          }
+        },
+        "required": 144.77984783347773,
+        "peakPowerShortfall": 12.557113521218099,
+        "feasible": false,
+        "endpoint": {
+          "s": 800,
+          "t": 10,
+          "v": 16,
+          "stamina": 36.344844712761024,
+          "guts": 4084.2801820347977,
+          "retention": 0.997795812991139,
+          "aerobicOutput": 49.971771847010984
+        },
+        "energyHeadroom": 36.34484471276096
+      }
+    }
+  ],
+  "failures": [],
+  "productionUnchanged": true,
+  "pass": true
+}

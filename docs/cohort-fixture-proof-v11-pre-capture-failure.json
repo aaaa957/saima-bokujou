@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-10-04T05:45:53.883Z",
+  "baselineArchive": "docs/race-validation-v11-baseline-external.json.source.js.gz",
+  "baselineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "cohortFixtureHash": "fb8f3f20703114e4843fad2ad90a39d35615d4919a4a20054f6e1c07db012589",
+  "lookupFixtureHash": "3a14d161ea156777ba02ff6c0459371de65b8a78573b5e0767305ad4af495670",
+  "lookupPatchApplied": true,
+  "releaseFixtureHash": null,
+  "releasePatchApplied": false,
+  "declaredFinalEngineHash": null,
+  "rebuiltHash": "f2809633e1d04d266629a477ab4bd256a1ff9a34dd127d3de504a0265304495f",
+  "productionHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "exactEquality": false,
+  "counts": [
+    {
+      "description": "Remove artificial strong/weak stat advantage",
+      "matches": 1
+    },
+    {
+      "description": "Stable candidate pool, entry forecast and conditioned cohort",
+      "matches": 1
+    },
+    {
+      "description": "Career opponents share distance and grade selection; preserve player migration",
+      "matches": 1
+    },
+    {
+      "description": "Career race passes actual conditions",
+      "matches": 1
+    },
+    {
+      "description": "Featured race uses conditioned all-AI cohort",
+      "matches": 1
+    },
+    {
+      "description": "Existing roster filter plus stable physical entry selection",
+      "matches": 1
+    },
+    {
+      "description": "Scheduled race selects at actual venue and distance",
+      "matches": 1
+    },
+    {
+      "description": "Weekly AI race selects from persistent roster by its conditions",
+      "matches": 1
+    },
+    {
+      "description": "Player roster race shares grade and actual distance",
+      "matches": 1
+    },
+    {
+      "description": "Export cohort APIs",
+      "matches": 1
+    },
+    {
+      "description": "Independent full-support forward intention for newly generated or missing behavior; saved values remain authoritative",
+      "matches": 1
+    },
+    {
+      "description": "Honor an explicit zero wins maximum in maiden qualification",
+      "matches": 1
+    },
+    {
+      "description": "Honor an explicit zero ability maximum in caller qualification",
+      "matches": 1
+    },
+    {
+      "description": "Separate player race qualifications from representative ability bands",
+      "matches": 1
+    }
+  ],
+  "firstDifferentLines": [
+    {
+      "line": 2,
+      "fixture": " * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.3",
+      "production": " * 赛马风云 · 连续比赛模拟引擎 v2026.10.04.1"
+    },
+    {
+      "line": 3,
+      "fixture": " * 本轮运动、路线与个体分化验收：docs/系统一致性与节奏诊断-v2026.10.02.3.md",
+      "production": " * 本轮预测、骑手、阵容与联合校准：docs/比赛系统重构与联合校准-v11.md"
+    },
+    {
+      "line": 579,
+      "fixture": "    resistanceK:0.250, airK:0.00065, recoveryRate:0.12, recoveryMax:2.0,",
+      "production": "    resistanceK:0.250215, airK:0.001365, recoveryRate:0.12, recoveryMax:2.0,"
+    },
+    {
+      "line": 583,
+      "fixture": "    maxAccel:4.6, runningAccel:2.2, braking:3.5,",
+      "production": "    maxAccel:5.75, runningAccel:2.75, braking:3.5,"
+    },
+    {
+      "line": 584,
+      "fixture": "    responseTime:1.4, lateralSpeed:0.8, laneBias:1,",
+      "production": "    responseTime:1.12, lateralSpeed:0.8, laneBias:1,"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "observedAt": "2026-10-04T04:25:38.053Z",
+  "reason": "At continuation, the persisted screen contains 11 of 12 complete rows. Win32_Process inspection found no calibration or race-validation Node process, and polling former session 35133 returned Unknown process id. The disappearance time and cause were not observed. Resume the exact declared source/protocol/driver/orchestrator to complete the pending job; retain all existing rows.",
+  "formerSession": 35133,
+  "completed": 11,
+  "pending": 1,
+  "checkpointWallSeconds": 1617.4299999999998,
+  "uncompletedAttemptProgress": "Unknown. The interrupted attempt may have advanced before its process disappeared. It is neither zero execution nor a completed full race.",
+  "files": [
+    {
+      "file": "docs/calibration-mechanical-v11.json",
+      "byteSha256": "99c23bbee7e582c892fd871299358c43ec8a2009c18b2989bad05b64726c7231"
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.source.js.gz",
+      "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8"
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.driver.js.gz",
+      "byteSha256": "355630f7f2628f914cbab12cbcfdb4ff6577cfb4db52dee9952b41e46552058a"
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.orchestrator.js.gz",
+      "byteSha256": "f50ee83a0ed767aa24e8807f8db0cb8b734f782c2b5ab38061639541735966cb"
+    }
+  ],
+  "annotatedCheckpointByteSha256": "2a4b28f2cd0de86ddca3d886f57fb73511d5133fcf91c33e2cfd24664a67d132",
+  "archiveMappings": [
+    {
+      "file": "docs/calibration-mechanical-v11.json",
+      "gzipFile": "docs/calibration-mechanical-v11.json.gz",
+      "uncompressedBytes": 3092607,
+      "uncompressedByteSha256": "dbc302bb9e7fdf892c71d53024222be2b6bcad549086e12a486c0cdd3fed91af",
+      "compressedBytes": 870547,
+      "compressedByteSha256": "46480546b2d936a7ff99d278d2228b57fd4ab1c923aa72f20e11f2bc35319a34",
+      "decodedByteSha256": "dbc302bb9e7fdf892c71d53024222be2b6bcad549086e12a486c0cdd3fed91af",
+      "ratio": 0.28149292813474197,
+      "verifiedLossless": true,
+      "inputUnchanged": true,
+      "reused": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.missing-process-checkpoint",
+      "gzipFile": "docs/calibration-mechanical-v11.json.missing-process-checkpoint.gz",
+      "uncompressedBytes": 2707463,
+      "uncompressedByteSha256": "99c23bbee7e582c892fd871299358c43ec8a2009c18b2989bad05b64726c7231",
+      "compressedBytes": 760531,
+      "compressedByteSha256": "63a319c0f232cc9390df247649832bd3a5a694f38a4b7ca690b5f353169df59a",
+      "decodedByteSha256": "99c23bbee7e582c892fd871299358c43ec8a2009c18b2989bad05b64726c7231",
+      "ratio": 0.2809017150003527,
+      "verifiedLossless": true,
+      "inputUnchanged": true,
+      "reused": false
+    }
+  ]
+}

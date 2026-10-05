@@ -1,0 +1,333 @@
+diff --git a/frozen-v9-44.js b/optimized-v9-06.js
+index eca7ae2..07107d1 100644
+--- a/frozen-v9-44.js
++++ b/optimized-v9-06.js
+@@ -408,7 +408,7 @@
+   const ROUTE_BOUND_CACHE=new WeakMap();
+   function routeMetricBounds(owner,stations) {
+     if(ROUTE_BOUND_CACHE.has(owner))return ROUTE_BOUND_CACHE.get(owner);
+-    const samples=owner.samples;let minMetric=1,maxMetric=1,maxCurvature=0;
++    const samples=owner.samples,cells=[];let minMetric=1,maxMetric=1,maxCurvature=0;
+     for(let i=1;i<samples.length;i++) {
+       const a=samples[i-1],b=samples[i],h=Array.isArray(stations)?stations[i]-stations[i-1]:stations;
+       // Convert the same endpoint position/tangent/curvature quintic to Bezier.
+@@ -417,14 +417,71 @@
+       const p2={x:2*p1.x-p0.x-h*h*a.k*a.ty/20,y:2*p1.y-p0.y+h*h*a.k*a.tx/20};
+       const p3={x:2*p4.x-p5.x-h*h*b.k*b.ty/20,y:2*p4.y-p5.y+h*h*b.k*b.tx/20};
+       const p=[p0,p1,p2,p3,p4,p5],v=p.slice(1).map((q,j)=>({x:5*(q.x-p[j].x)/h,y:5*(q.y-p[j].y)/h}));
+-      const acceleration=v.slice(1).map((q,j)=>Math.hypot(4*(q.x-v[j].x)/h,4*(q.y-v[j].y)/h));
++      const accelerationVectors=v.slice(1).map((q,j)=>({x:4*(q.x-v[j].x)/h,y:4*(q.y-v[j].y)/h}));
++      const acceleration=accelerationVectors.map(q=>Math.hypot(q.x,q.y));
++      // Bernstein product controls enclose det(r',r'') across the entire cell.
++      const choose4=[1,4,6,4,1],choose3=[1,3,3,1],choose7=[1,7,21,35,35,21,7,1],cross=[];
++      for(let k=0;k<=7;k++) {
++        let value=0;
++        for(let i=Math.max(0,k-3);i<=Math.min(4,k);i++) {const j=k-i;value+=choose4[i]*choose3[j]/choose7[k]*(v[i].x*accelerationVectors[j].y-v[i].y*accelerationVectors[j].x);}
++        cross.push(value);
++      }
+       // A positive projection lower bound also bounds the vector's norm.
+       const lower=Math.min(...v.map(q=>q.x*a.tx+q.y*a.ty))-1e-6;
+       const upper=Math.max(...v.map(q=>Math.hypot(q.x,q.y)))+1e-6,accUpper=Math.max(...acceleration)+1e-5;
++      const crossMin=Math.min(...cross)-1e-5,crossMax=Math.max(...cross)+1e-5;
++      const signedMin=lower>0?(crossMin<0?crossMin/(lower*lower*lower):crossMin/(upper*upper*upper)):-Infinity;
++      const signedMax=lower>0?(crossMax>0?crossMax/(lower*lower*lower):crossMax/(upper*upper*upper)):Infinity;
++      cells.push({minMetric:Math.min(1,lower),maxMetric:Math.max(1,upper),maxCurvature:lower>0?upper*accUpper/(lower*lower*lower):Infinity,signedMin,signedMax});
+       if(!(lower>0)){minMetric=0;maxCurvature=Infinity;break;}
+       maxMetric=Math.max(maxMetric,upper);minMetric=Math.min(minMetric,lower);maxCurvature=Math.max(maxCurvature,upper*accUpper/(lower*lower*lower));
+     }
+-    const result={minMetric,maxMetric,maxCurvature};ROUTE_BOUND_CACHE.set(owner,result);return result;
++    const result={minMetric,maxMetric,maxCurvature,cells};ROUTE_BOUND_CACHE.set(owner,result);return result;
++  }
++  const ROUTE_RANGE_BOUND_CACHE=new WeakMap();
++  function routeCellRangeBounds(owner,stations,from,to) {
++    let table=ROUTE_RANGE_BOUND_CACHE.get(owner);
++    if(!table) {
++      const cells=routeMetricBounds(owner,stations).cells;
++      if(cells.length!==owner.samples.length-1)return null;
++      const min=[Float64Array.from(cells,c=>c.minMetric)],max=[Float64Array.from(cells,c=>c.maxMetric)],curvature=[Float64Array.from(cells,c=>c.maxCurvature)],signedMin=[Float64Array.from(cells,c=>c.signedMin)],signedMax=[Float64Array.from(cells,c=>c.signedMax)];
++      for(let level=1;(1<<level)<=cells.length;level++) {
++        const span=1<<(level-1),n=cells.length-(1<<level)+1;
++        const mn=new Float64Array(n),mx=new Float64Array(n),cv=new Float64Array(n),smn=new Float64Array(n),smx=new Float64Array(n);
++        for(let i=0;i<n;i++) {mn[i]=Math.min(min[level-1][i],min[level-1][i+span]);mx[i]=Math.max(max[level-1][i],max[level-1][i+span]);cv[i]=Math.max(curvature[level-1][i],curvature[level-1][i+span]);smn[i]=Math.min(signedMin[level-1][i],signedMin[level-1][i+span]);smx[i]=Math.max(signedMax[level-1][i],signedMax[level-1][i+span]);}
++        min.push(mn);max.push(mx);curvature.push(cv);signedMin.push(smn);signedMax.push(smx);
++      }
++      table={min,max,curvature,signedMin,signedMax,n:cells.length};ROUTE_RANGE_BOUND_CACHE.set(owner,table);
++    }
++    function cellIndex(at) {
++      if(!Array.isArray(stations))return clamp(Math.floor(at/stations),0,table.n-1);
++      let lo=0,hi=stations.length-1;
++      while(hi-lo>1){const mid=(lo+hi)>>1;if(stations[mid]<=at)lo=mid;else hi=mid;}
++      return Math.min(lo,table.n-1);
++    }
++    // Include adjacent endpoint cells as a conservative floating-point guard.
++    const low=Math.max(0,cellIndex(from)-1),high=Math.min(table.n-1,cellIndex(to)+1),count=high-low+1,level=Math.floor(Math.log2(count)),second=high-(1<<level)+1;
++    return {minMetric:Math.min(table.min[level][low],table.min[level][second]),maxMetric:Math.max(table.max[level][low],table.max[level][second]),maxCurvature:Math.max(table.curvature[level][low],table.curvature[level][second]),signedMin:Math.min(table.signedMin[level][low],table.signedMin[level][second]),signedMax:Math.max(table.signedMax[level][low],table.signedMax[level][second])};
++  }
++  function trafficRouteIntervalBounds(from,to,geo) {
++    if(!geo.route)return {minMetric:1,maxMetric:1,maxCurvature:1/(geo.referenceR||geo.R),signedMin:0,signedMax:1/(geo.referenceR||geo.R)};
++    const route=geo.route,result={minMetric:1,maxMetric:1,maxCurvature:0,signedMin:Infinity,signedMax:-Infinity};
++    function add(bound) {
++      if(!bound)return false;
++      result.minMetric=Math.min(result.minMetric,bound.minMetric);result.maxMetric=Math.max(result.maxMetric,bound.maxMetric);result.maxCurvature=Math.max(result.maxCurvature,bound.maxCurvature);result.signedMin=Math.min(result.signedMin,bound.signedMin);result.signedMax=Math.max(result.signedMax,bound.signedMax);return true;
++    }
++    if(from<0&&route.chute){result.signedMin=Math.min(result.signedMin,0);result.signedMax=Math.max(result.signedMax,0);}
++    if(route.chute&&from<route.startLength) {
++      if(to>0&&!add(routeCellRangeBounds(route.chute,route.chute.step,Math.max(0,from),Math.min(to,route.startLength))))return null;
++      from=Math.max(from,route.startLength);
++    }
++    if(to>=from) {
++      const start=from+geo.startOffset,end=to+geo.startOffset;
++      for(let circuit=Math.floor(start/geo.lap);circuit<=Math.floor(end/geo.lap);circuit++) {
++        if(!add(routeCellRangeBounds(route.loop,route.loop.stations,Math.max(0,start-circuit*geo.lap),Math.min(geo.lap,end-circuit*geo.lap))))return null;
++      }
++    }
++    return result;
+   }
+   function geometryProgressBounds(route,referenceLane,referenceR,width) {
+     const minLane=0.3;
+@@ -1454,9 +1511,18 @@
+       const low=Math.max(0,Math.min(a,b)),high=Math.min(1,Math.max(a,b));
+       return high-low>1e-9?[low,high]:null;
+     }
++    let trafficProgressCache=new Map(),trafficProgressCacheSize=0;
++    function trafficProgressCoef(s,t) {
++      let lane=trafficProgressCache.get(t);
++      if(lane){const value=lane.get(s);if(value!==undefined)return value;}
++      const value=laneProgressCoef(s,t,geo);
++      if(trafficProgressCacheSize>=16384){trafficProgressCache.clear();trafficProgressCacheSize=0;lane=null;}
++      if(!lane){lane=new Map();trafficProgressCache.set(t,lane);}
++      lane.set(s,value);trafficProgressCacheSize++;return value;
++    }
+     function bodyClearance(H,F,hs,fs,ht,ft) {
+       // 纵坐标是路线进度；在内外道把真实体长投影到相同坐标。
+-      const scale=Math.max(1,laneProgressCoef(hs,ht,geo),laneProgressCoef(fs,ft,geo));
++      const scale=Math.max(1,trafficProgressCoef(hs,ht),trafficProgressCoef(fs,ft));
+       return {longitudinal:((horseLen(H)+horseLen(F))/2+0.20)*scale,
+         lateral:(horseWid(H)+horseWid(F))/2+0.10};
+     }
+@@ -1473,7 +1539,9 @@
+       race.traffic.lastInfeasible={time:race.t,reason,horse:H?.id,other:F?.id,...detail};
+       throw new Error('交通运动状态不可行：'+reason+'（'+(H?.id||'')+'/'+(F?.id||'')+'，'+race.t.toFixed(3)+'秒）');
+     }
++    const trafficNegativeWitnessCache=new WeakMap();
+     function tick(dt) {
++      trafficProgressCache=new Map();trafficProgressCacheSize=0;
+       const act=active();if(!act.length){race.finished=true;return;}
+       race.traffic??={steps:0,syncLateralDenied:0,brakingSteps:0,marginRecoverySteps:0,infeasibleSteps:0,
+         minAcceleration:0,minFollowingSlack:null,minResponseSlack:null,lastInfeasible:null};
+@@ -1586,34 +1654,45 @@
+       }
+       function brakingTrajectory(move) {
+         if(brakingCache.has(move)) return brakingCache.get(move);
+-        const points=[{s:move.s,v:move.v}],events=[move.v/RACE_F.braking];let at=move.s,previous=move.v;
+-        for(let i=1;i<=brakingSteps;i++) {
+-          const next=Math.max(0,move.v-RACE_F.braking*brakingInterval*i);
+-          const elapsed=previous>0?Math.min(brakingInterval,previous/RACE_F.braking):0;
+-          if(elapsed) at=advancePhysical(at,(previous+next)/2*elapsed,move.t);
+-          points.push({s:at,v:next});previous=next;
++        const points=[{s:move.s,v:move.v}],events=[move.v/RACE_F.braking];let at=move.s,previous=move.v,eventsReady=false;
++        function ensurePoints(until=brakingSteps) {
++          for(let i=points.length;i<=until;i++) {
++            const next=Math.max(0,move.v-RACE_F.braking*brakingInterval*i);
++            const elapsed=previous>0?Math.min(brakingInterval,previous/RACE_F.braking):0;
++            if(elapsed) at=advancePhysical(at,(previous+next)/2*elapsed,move.t);
++            points.push({s:at,v:next});previous=next;
++          }
++          return points;
+         }
+-        const breakpoints=laneArcBreakpoints(move.s,at,geo);
+-        for(const where of breakpoints) {
+-          // 解析直道内的查表节点不改变度量或身体投影；保留直弯
+-          // 接点及所有曲线 cell 边界，避免对直道无意义地切碎求根。
+-          if(kAt(where-1e-4,geo)===0&&kAt(where+1e-4,geo)===0) continue;
+-          const distance=laneArcDistance(move.s,where,move.t,geo);
+-          const terminal=Math.sqrt(Math.max(0,move.v*move.v-2*RACE_F.braking*distance));
+-          events.push(2*distance/Math.max(1e-12,move.v+terminal));
++        function ensureEvents() {
++          if(eventsReady)return events;
++          ensurePoints();
++          const breakpoints=laneArcBreakpoints(move.s,at,geo);
++          for(const where of breakpoints) {
++            if(kAt(where-1e-4,geo)===0&&kAt(where+1e-4,geo)===0) continue;
++            const distance=laneArcDistance(move.s,where,move.t,geo);
++            const terminal=Math.sqrt(Math.max(0,move.v*move.v-2*RACE_F.braking*distance));
++            events.push(2*distance/Math.max(1e-12,move.v+terminal));
++          }
++          eventsReady=true;return events;
+         }
+         const queryCache=new Map();
+-        const trajectory={points,events,pointAt:time=>{
++        const trajectory={get points(){return ensurePoints();},get events(){return ensureEvents();},sampleAt(time){
++          const i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
++          if(regular&&i>=0&&i<=brakingSteps){ensurePoints(i);return points[i];}
++          return this.pointAt(time);
++        },pointAt:time=>{
+           if(queryCache.has(time)) return queryCache.get(time);
+           const atTime=Math.min(Math.max(0,time),move.v/RACE_F.braking),v=Math.max(0,move.v-RACE_F.braking*atTime);
+-          const index=Math.min(points.length-1,Math.floor(atTime/brakingInterval)),base=points[index],elapsed=atTime-index*brakingInterval;
++          const index=Math.min(brakingSteps,Math.floor(atTime/brakingInterval));ensurePoints(index);
++          const base=points[index],elapsed=atTime-index*brakingInterval;
+           const point={s:advancePhysical(base.s,(base.v+v)/2*elapsed,move.t),v};
+           queryCache.set(time,point);return point;
+         }};
+         brakingCache.set(move,trajectory);return trajectory;
+       }
+       function followingSlack(H,F,move,frontMove,withResponse=true) {
+-        const ownScale=laneProgressCoef(move.s,move.t,geo);
++        const ownScale=trafficProgressCoef(move.s,move.t);
+         let paired=followingCache.get(move);
+         if(!paired){paired=new WeakMap();followingCache.set(move,paired);}
+         if(paired.has(frontMove)) return paired.get(frontMove)-(withResponse?(1/60)*move.v*ownScale:0);
+@@ -1643,7 +1722,8 @@
+         // The derivative-control curvature bound also covers the absolute
+         // heading variation, so this proof does not assume constant curvature
+         // or a monotone center-gap. If it cannot prove safety, check every cell.
+-        const curvatureUpper=geo.maxReferenceCurvature;
++        const routeBound=trafficRouteIntervalBounds(Math.min(move.s,frontMove.s),Math.max(stoppingEnd(move),stoppingEnd(frontMove)),geo);
++        const curvatureUpper=routeBound?.maxCurvature??geo.maxReferenceCurvature;
+         const frontMetricMargin=1-Math.abs(frontMove.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
+         const rearMetricMargin=1-Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
+         if(geo.progressCoefLowerBound>0&&Number.isFinite(curvatureUpper)&&frontMetricMargin>0&&rearMetricMargin>0) {
+@@ -1653,7 +1733,11 @@
+           const headingBound=curvatureUpper*frontDistance/frontMetricMargin;
+           const physicalLower=initialPhysicalGap-closingDistance-Math.abs(move.t-frontMove.t)*headingBound;
+           const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,geo.progressCoefUpperBound);
+-          const lowerBound=physicalLower*geo.progressCoefLowerBound-bodyUpper;
++          // Convert only along the rear lane, rather than every legal track lane.
++          // |signed curvature| <= curvatureUpper bounds its physical metric.
++          const rearMetricUpper=(routeBound?.maxMetric??geo.maxReferenceMetric)*(1+Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper);
++          const rearProgressLower=Number.isFinite(rearMetricUpper)&&rearMetricUpper>0?Math.min(1,1/rearMetricUpper):0;
++          const lowerBound=physicalLower*rearProgressLower-bodyUpper;
+           if(lowerBound>=response+1e-8) {
+             paired.set(frontMove,lowerBound);return lowerBound-(withResponse?response:0);
+           }
+@@ -1662,6 +1746,18 @@
+         // 内部步1/60秒的响应余量，不能随当前小步缩小，否则下一次
+         // 合法外部step变大时会突然要求更多空间，制造不可行状态。
+         const own=brakingTrajectory(move),front=brakingTrajectory(frontMove);
++        let witnesses=trafficNegativeWitnessCache.get(H);
++        if(!witnesses){witnesses=new WeakMap();trafficNegativeWitnessCache.set(H,witnesses);}
++        // Any exact sampled negative gap rejects a response query. The previous
++        // pair's minimizing time is just a candidate; it never proves acceptance.
++        const witnessTime=witnesses.get(F);
++        if(withResponse&&Number.isFinite(witnessTime)&&witnessTime>=0) {
++          const time=Math.min(witnessTime,brakingSteps*brakingInterval),i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
++          // Match the original regular-grid representation as well as pointAt.
++          const r=regular?own.points[i]:own.pointAt(time),f=regular?front.points[i]:front.pointAt(time);
++          const witness= f.s-r.s-bodyClearance(H,F,r.s,f.s,move.t,frontMove.t).longitudinal-response;
++          if(witness<-1e-7)return witness;
++        }
+         let closest=Infinity;
+         // 最终停止位置不足以定义安全域：前马先入外道弯道时，即使
+         // 后马物理速度较低，进度速度也可暂时更高。检查整个未来
+@@ -1673,34 +1769,106 @@
+           const r=regular&&own.points[i]?own.points[i]:own.pointAt(time);
+           const f=regular&&front.points[i]?front.points[i]:front.pointAt(time);
+           const body=bodyClearance(H,F,r.s,f.s,move.t,frontMove.t),gap=f.s-r.s-body.longitudinal;
+-          values.set(time,gap);closest=Math.min(closest,gap);return gap;
++          values.set(time,gap);
++          if(gap<closest)witnesses.set(F,time);
++          closest=Math.min(closest,gap);return gap;
++        }
++        const certificates=[];
++        function certifyInterval(left,right,depth) {
++          const r=own.sampleAt(left),f=front.sampleAt(left),rr=own.sampleAt(right),fr=front.sampleAt(right),span=right-left;
++          const bounds=trafficRouteIntervalBounds(Math.min(r.s,f.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
++          let lower=-Infinity;
++          if(bounds&&bounds.minMetric>0&&Number.isFinite(bounds.signedMin)&&Number.isFinite(bounds.signedMax)) {
++            const reference=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-reference,fd=frontMove.t-reference;
++            const rearMetricMax=bounds.maxMetric*Math.max(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
++            const rearOffsetMin=Math.min(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
++            const frontOffsetMin=Math.min(1+fd*bounds.signedMin,1+fd*bounds.signedMax);
++            const rearProjectionMin=bounds.minMetric*Math.min(1+rd*Math.max(0,bounds.signedMin),1+rd*Math.max(0,bounds.signedMax));
++            const frontProjectionMin=bounds.minMetric*Math.min(1+fd*Math.max(0,bounds.signedMin),1+fd*Math.max(0,bounds.signedMax));
++            if(rearMetricMax>0&&rearOffsetMin>0&&frontOffsetMin>0&&rearProjectionMin>0&&frontProjectionMin>0) {
++              const distance=(v,time)=>{const elapsed=Math.min(time,v/RACE_F.braking);return(v+Math.max(0,v-RACE_F.braking*elapsed))/2*elapsed;};
++              const rearDistance=distance(r.v,span),frontDistance=distance(f.v,span),closing=Math.max(0,rearDistance-frontDistance);
++              const headingMin=frontDistance*bounds.signedMin/(1+fd*bounds.signedMin),headingMax=frontDistance*bounds.signedMax/(1+fd*bounds.signedMax);
++              // This is a bound for every intermediate time, including the
++              // zero heading change at the left endpoint. Do not prepay gains.
++              const headingContribution=Math.min(0,(move.t-frontMove.t)*headingMin,(move.t-frontMove.t)*headingMax);
++              const physicalLower=laneArcDistance(r.s,f.s,move.t,geo)-closing+headingContribution-1e-6;
++              const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,1/rearProjectionMin,1/frontProjectionMin);
++              lower=physicalLower>0?physicalLower/rearMetricMax-bodyUpper:-Infinity;
++            }
++          }
++          if(lower>=response+1e-8) {certificates.push({left,right,lower});return true;}
++          if(depth>=6)return false;
++          const middle=(left+right)/2;
++          const a=certifyInterval(left,middle,depth+1),b=certifyInterval(middle,right,depth+1);return a&&b;
++        }
++        const fullyCertified=certifyInterval(0,brakingSteps*brakingInterval,0);
++        certificates.sort((a,b)=>a.left-b.left);
++        for(const certificate of certificates)closest=Math.min(closest,certificate.lower);
++        if(fullyCertified){paired.set(frontMove,closest);return closest-(withResponse?response:0);}
++        function covered(left,right) {
++          let through=left;
++          for(const certificate of certificates) {
++            if(certificate.right<through)continue;
++            if(certificate.left>through+1e-12)return false;
++            through=Math.max(through,certificate.right);
++            if(through>=right-1e-12)return true;
++          }
++          return false;
+         }
+         const times=[...own.points.map((_,i)=>i*brakingInterval),...own.events,...front.events]
+           .filter(t=>t>=0&&t<=brakingSteps*brakingInterval).sort((a,b)=>a-b)
+           .filter((t,i,all)=>!i||t-all[i-1]>1e-10);
+         for(const time of times) {
++          if(covered(time,time))continue;
+           gapAt(time);
+           if(withResponse&&closest-response<-1e-7) return closest-response;
+         }
+         for(let i=1;i<times.length;i++) {
+           const left=times[i-1],right=times[i],span=right-left;
+-          if(span<1e-8) continue;
++          if(span<1e-8||covered(left,right)) continue;
++          // Enclose center progress and body projection over this complete time
++          // interval. Only certified intervals skip the original root search.
++          function sampledPoint(trajectory,time) {
++            const j=Math.round(time/brakingInterval),regular=Math.abs(time-j*brakingInterval)<1e-12;
++            return regular&&trajectory.points[j]?trajectory.points[j]:trajectory.pointAt(time);
++          }
++          const rl=sampledPoint(own,left),fl=sampledPoint(front,left),rr=sampledPoint(own,right),fr=sampledPoint(front,right);
++          const interval=trafficRouteIntervalBounds(Math.min(rl.s,fl.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
++          if(interval&&interval.minMetric>0&&Number.isFinite(interval.signedMin)&&Number.isFinite(interval.signedMax)) {
++            const ref=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-ref,fd=frontMove.t-ref;
++            const physicalRearMin=interval.minMetric*Math.min(1+rd*interval.signedMin,1+rd*interval.signedMax);
++            const physicalFrontMax=interval.maxMetric*Math.max(1+fd*interval.signedMin,1+fd*interval.signedMax);
++            const physicalFrontMin=interval.minMetric*Math.min(1+fd*interval.signedMin,1+fd*interval.signedMax);
++            const projectionRearMin=interval.minMetric*Math.min(1+rd*Math.max(0,interval.signedMin),1+rd*Math.max(0,interval.signedMax));
++            const projectionFrontMin=interval.minMetric*Math.min(1+fd*Math.max(0,interval.signedMin),1+fd*Math.max(0,interval.signedMax));
++            if(physicalRearMin>0&&physicalFrontMin>0&&physicalFrontMax>0&&projectionRearMin>0&&projectionFrontMin>0) {
++              const rateUpper=rl.v/physicalRearMin-Math.max(0,fl.v-RACE_F.braking*span)/physicalFrontMax;
++              const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,1/projectionRearMin,1/projectionFrontMin);
++              const intervalLower=fl.s-rl.s-Math.max(0,rateUpper)*span-bodyUpper-1e-6;
++              if(intervalLower>=response+1e-8) {closest=Math.min(closest,intervalLower);continue;}
++            }
++          }
++
+           // 包含完整身体投影的局部极小，而不只找两马中心进度速度
+           // 相等。断点左右极限也保留，覆盖内道身体投影与曲率跳变。
+           const edge=Math.min(1e-8,span/1000),epsilon=Math.min(1e-5,span/1000);
+           gapAt(left+edge);gapAt(right-edge);
+           const middle=(left+right)/2;gapAt(middle);
+           if(withResponse&&closest-response<-1e-7) return closest-response;
++          const slopes=new Map();
+           const slopeAt=time=>{
++            if(slopes.has(time))return slopes.get(time);
++            if(time>=Math.max(move.v,frontMove.v)/RACE_F.braking)return 0;
+             const r=own.pointAt(time),f=front.pointAt(time);
+-            const rv=r.v*laneProgressCoef(r.s,move.t,geo),fv=f.v*laneProgressCoef(f.s,frontMove.t,geo);
++            const rv=r.v*trafficProgressCoef(r.s,move.t),fv=f.v*trafficProgressCoef(f.s,frontMove.t);
+             // 对完整身体投影做局部导数。中心进度速度直接来自同一
+             // 弧长导数；只在微小局部计算投影变化，避免重复逆解路径。
+             const a=Math.max(left+edge,time-epsilon),b=Math.min(right-edge,time+epsilon);
+             if(b<=a)return 0;
+             const ca=bodyClearance(H,F,r.s+rv*(a-time),f.s+fv*(a-time),move.t,frontMove.t).longitudinal;
+             const cb=bodyClearance(H,F,r.s+rv*(b-time),f.s+fv*(b-time),move.t,frontMove.t).longitudinal;
+-            return fv-rv-(cb-ca)/(b-a);
++            const value=fv-rv-(cb-ca)/(b-a);slopes.set(time,value);return value;
+           };
+           for(const [a,b] of [[left+edge,middle],[middle,right-edge]]) {
+             let low=a,high=b,dl=slopeAt(low),dh=slopeAt(high);

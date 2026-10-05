@@ -1,0 +1,184 @@
+{
+  "engineHash": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "candidateHash": "d0fea99e162584783b93e64a25ceb47685ab90894140de5c63aea548f3d6b956",
+  "checks": [
+    {
+      "name": "Exact complete forecast n1 collisionfalse dt0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "opponentPathConflict": false,
+      "resultHash": "3d56b77ce7bb71b414862ac24a9d2c5a6815a17e36df00747e18340782512bdc"
+    },
+    {
+      "name": "Exact complete forecast n1 collisionfalse dt0.12",
+      "pass": true,
+      "steps": 90,
+      "opponentPathConflict": false,
+      "resultHash": "47f4aee217daf611a92a3e982df0e1a132c4a65ea3804d981a161be60b10f9b5"
+    },
+    {
+      "name": "Exact complete forecast n1 collisiontrue dt0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "opponentPathConflict": false,
+      "resultHash": "3d56b77ce7bb71b414862ac24a9d2c5a6815a17e36df00747e18340782512bdc"
+    },
+    {
+      "name": "Exact complete forecast n1 collisiontrue dt0.12",
+      "pass": true,
+      "steps": 90,
+      "opponentPathConflict": false,
+      "resultHash": "47f4aee217daf611a92a3e982df0e1a132c4a65ea3804d981a161be60b10f9b5"
+    },
+    {
+      "name": "Exact complete forecast n6 collisionfalse dt0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "opponentPathConflict": false,
+      "resultHash": "54be874b06bffb487f20a4c30c2d9a3a4c77e7f76b20988da53e0d62de6345ef"
+    },
+    {
+      "name": "Exact complete forecast n6 collisionfalse dt0.12",
+      "pass": true,
+      "steps": 90,
+      "opponentPathConflict": false,
+      "resultHash": "f0531695850d2770eca9f14b47d8996de5d8bb58b14c43eee8a78c10e7d8070f"
+    },
+    {
+      "name": "Exact complete forecast n6 collisiontrue dt0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "opponentPathConflict": true,
+      "resultHash": "9e9276747900269a2b3717c8c9915df26a5165e43aef50af5354e4be157ad4f1"
+    },
+    {
+      "name": "Exact complete forecast n6 collisiontrue dt0.12",
+      "pass": true,
+      "steps": 90,
+      "opponentPathConflict": true,
+      "resultHash": "63863a683951ca1b3e07ac03a74e37f59405ba806f73427ab782f3df1920bafe"
+    },
+    {
+      "name": "Exact complete forecast n17 collisionfalse dt0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "opponentPathConflict": false,
+      "resultHash": "04c05b5651b86a0267939ba5eb4b390f16d00da564f5bd13cc2556255cdbb5b7"
+    },
+    {
+      "name": "Exact complete forecast n17 collisionfalse dt0.12",
+      "pass": true,
+      "steps": 90,
+      "opponentPathConflict": false,
+      "resultHash": "ca2cb0c190d53a822e81a131f605c99696ade3d3d24197f68d4e4b3dee706e0c"
+    },
+    {
+      "name": "Exact complete forecast n17 collisiontrue dt0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "opponentPathConflict": true,
+      "resultHash": "0d08f937fe8d15e6836d363f1ba16dadc66d34f8ba77ff2b3a0b5ae8f1c5a707"
+    },
+    {
+      "name": "Exact complete forecast n17 collisiontrue dt0.12",
+      "pass": true,
+      "steps": 90,
+      "opponentPathConflict": true,
+      "resultHash": "a9506509ba4c91834ec388c34c7d03da35a844131a7727ffd43f0488bbb34269"
+    },
+    {
+      "name": "Every actual tick and rider candidate is identical for 4 AI horses",
+      "pass": true,
+      "actualFramesEach": 180,
+      "simulatedSeconds": 3,
+      "wallSeconds": 0.7787763999999998,
+      "stateHash": "ba08431944bc8dac56214007ee5477f9d7ddca83ca246bc37e3ab177278a6e3d"
+    },
+    {
+      "name": "Every actual tick and rider candidate is identical for 8 AI horses",
+      "pass": true,
+      "actualFramesEach": 180,
+      "simulatedSeconds": 3,
+      "wallSeconds": 1.3818835,
+      "stateHash": "7081dd66019729f9a917650a988a54162b00ff96797c0692a8bab7c260da51a2"
+    },
+    {
+      "name": "Every actual tick and rider candidate is identical for 18 AI horses",
+      "pass": true,
+      "actualFramesEach": 180,
+      "simulatedSeconds": 3,
+      "wallSeconds": 5.347597899999999,
+      "stateHash": "644f4b06c4059ed7280f16eab51ea9dde6445384affa8af4de8b45f01a29277e"
+    }
+  ],
+  "benchmarks": [
+    {
+      "opponents": 17,
+      "collision": false,
+      "maxDt": 0.016666666666666666,
+      "before": {
+        "medianMs": 41.73134999999911,
+        "p90Ms": 50.56419999999889,
+        "runs": 8
+      },
+      "after": {
+        "medianMs": 40.14034999999967,
+        "p90Ms": 47.725899999999456,
+        "runs": 8
+      },
+      "speedup": 1.0396359274395828
+    },
+    {
+      "opponents": 17,
+      "collision": false,
+      "maxDt": 0.12,
+      "before": {
+        "medianMs": 6.387899999999718,
+        "p90Ms": 9.625200000000405,
+        "runs": 8
+      },
+      "after": {
+        "medianMs": 4.56984999999986,
+        "p90Ms": 8.891900000000533,
+        "runs": 8
+      },
+      "speedup": 1.3978358151799102
+    },
+    {
+      "opponents": 17,
+      "collision": true,
+      "maxDt": 0.016666666666666666,
+      "before": {
+        "medianMs": 46.39800000000014,
+        "p90Ms": 66.47600000000057,
+        "runs": 8
+      },
+      "after": {
+        "medianMs": 22.703750000000582,
+        "p90Ms": 27.188900000001013,
+        "runs": 8
+      },
+      "speedup": 2.0436271541044517
+    },
+    {
+      "opponents": 17,
+      "collision": true,
+      "maxDt": 0.12,
+      "before": {
+        "medianMs": 7.648200000000543,
+        "p90Ms": 10.252399999999398,
+        "runs": 8
+      },
+      "after": {
+        "medianMs": 3.400650000000496,
+        "p90Ms": 3.9029000000009546,
+        "runs": 8
+      },
+      "speedup": 2.2490406245863075
+    }
+  ],
+  "failures": [],
+  "productionModified": false,
+  "pass": true,
+  "productionUnchanged": true
+}

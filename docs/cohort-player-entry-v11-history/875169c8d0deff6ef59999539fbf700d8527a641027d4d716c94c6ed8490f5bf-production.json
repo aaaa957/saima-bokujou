@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-10-03T23:20:12.931Z",
+  "productionInputHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "testedSourceHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "inMemoryPatch": false,
+  "productionSourceUnchanged": true,
+  "scope": "Six focused public player entry qualification/identity checks. No actual race steps and no race-fit claim.",
+  "cases": [
+    {
+      "name": "Newcomer sporting qualification accepts a gifted unstarted horse and excludes started/winning peers",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ []\n- [\n-   'gifted-new'\n- ]\n\n    at D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:20:45\n    at test (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:13:64)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:15:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Maiden and one/two/three-win races enforce exact wins before physical readiness matching",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ []\n- [\n-   'eligible-maiden'\n- ]\n\n    at D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:31:40\n    at test (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:13:64)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:24:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Public graded/open player entry accepts a superior saved horse above the former ability ceiling",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: open must retain the strong saved entrant\n    at D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:44:4\n    at test (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:13:64)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:37:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Multiple aliases of the player are excluded while duplicate rival ids fail clearly without rerolling traits",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Missing expected exception.\n    at D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:55:9\n    at test (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:13:64)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:53:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Explicit zero ability maximum is respected independently of zero-win qualification",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   'positive-ability',\n    'zero-ability'\n  ]\n\n    at D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:63:9\n    at test (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:13:64)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:60:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Qualified-roster scarcity reports the original request and never fabricates ineligible fillers",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 8\n\n    at D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:69:62\n    at test (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:13:64)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\cohort-player-entry-v11.js:66:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    }
+  ],
+  "passed": 0,
+  "failed": 6
+}

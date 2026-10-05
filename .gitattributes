@@ -1,0 +1,4 @@
+# Frozen official reference hashes use exact bytes. Do not convert CRLF/LF.
+docs/current-engine-reality-sources-2026-10-02.json -text
+docs/system-external-reference-2022.json -text
+tests/fixtures/race-validation-reference-2020-v11.json -text

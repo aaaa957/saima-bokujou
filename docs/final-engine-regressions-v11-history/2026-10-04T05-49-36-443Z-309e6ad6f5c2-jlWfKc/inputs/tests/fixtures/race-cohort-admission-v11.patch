@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "productionInputHash": "1ca77ab4eacdd18ec98ed8bcc6b5e3cfa74525dd16dfca3f2fbe6d151304f818",
+  "generatedAt": "2026-10-03T10:45:52.228Z",
+  "changes": [
+    {
+      "file": "sim.js",
+      "description": "Keep stronger payable candidates in grade/distance matching; the fast reference is not an admission ceiling",
+      "old": "      const forecast=raceEntryForecast(h,race),inside=forecast.feasible&&forecast.seconds>=fast-1e-7&&forecast.seconds<=slow+1e-7;\n      const distance=forecast.seconds<fast?fast-forecast.seconds:forecast.seconds>slow?forecast.seconds-slow:0;",
+      "new": "      const forecast=raceEntryForecast(h,race),inside=forecast.feasible&&forecast.seconds<=slow+1e-7;\n      const distance=forecast.seconds>slow?forecast.seconds-slow:0;"
+    },
+    {
+      "file": "sim.js",
+      "description": "Disclose matching versus caller qualification and the retained fast reference",
+      "old": "      predictionWindow:{fastSeconds:fast,slowSeconds:slow},candidates:candidates.length,requested,selected:selected.length,\n      eligible:eligible.length,fallback,shortage:Math.max(0,requested-candidates.length),",
+      "new": "      predictionWindow:{fastSeconds:fast,slowSeconds:slow},candidates:candidates.length,requested,selected:selected.length,\n      eligibilityScope:'Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.',\n      fastIsNotAdmissionCeiling:true,\n      eligible:eligible.length,fallback,shortage:Math.max(0,requested-candidates.length),"
+    },
+    {
+      "file": "sim.js",
+      "description": "Clarify uniform stronger-tail matching and fallback priority",
+      "old": "      selection:'Within shared grade/distance forecast window: uniform without replacement. Scarcity: nearest window, explicitly reported. No realized race simulation.',",
+      "new": "      selection:'Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.',"
+    },
+    {
+      "file": "sim.js",
+      "description": "Honor an explicit zero wins maximum in maiden qualification",
+      "old": "      h.wins >= (o.winsMin || 0) && h.wins <= (o.winsMax || 99) &&",
+      "new": "      h.wins >= (o.winsMin || 0) && h.wins <= (o.winsMax !== undefined ? o.winsMax : 99) &&"
+    }
+  ],
+  "notes": [
+    "Fast prediction is a representative reference, never a stronger-horse admission ceiling.",
+    "Uniform matching keeps stronger payable entrants; fallback has no fast-side penalty.",
+    "Upstream explicit zero wins maximum must remain zero. No stable horse attributes or RNG generation change."
+  ]
+}

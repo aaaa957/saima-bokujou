@@ -1,0 +1,251 @@
+{
+  "sourceHash": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "candidateHash": "821ea4f7d1339cd337981cd2350234ebff58e7388ae04b3c8e7b820ca3167d93",
+  "checks": [
+    {
+      "name": "Forecast exact equivalence 0 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "acd69487325efba3cec6da41731448c5e1d2d35888bc18577bcd70fa3faa5593"
+    },
+    {
+      "name": "Forecast exact equivalence 0 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "1baf6d34dcecead858a955fd2a465e43269153535fd69049cccf19a94b3bedb7"
+    },
+    {
+      "name": "Forecast exact equivalence 1 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "4517212d12bd7bc0b12fec88b60056fc62f8155f16dc6f7c57abb89610a4853e"
+    },
+    {
+      "name": "Forecast exact equivalence 1 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "223ba049ecc1a297239f8502fb910906177eccae4aa2b8bb3d2d2377d5a2acfa"
+    },
+    {
+      "name": "Forecast exact equivalence 2 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "0c15230c1118b9e510f6927bd5e7339a89ac12ab6911f160c4bdc482859a3edb"
+    },
+    {
+      "name": "Forecast exact equivalence 2 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "4c02e4e88bd21fbae874777699a34d2fadae6abafd8be4cda35fc8d997e27627"
+    },
+    {
+      "name": "Forecast exact equivalence 3 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "a6a21c85bba6511d7000563d262037b6c126ed14bab2a119c15dfc2a0642036d"
+    },
+    {
+      "name": "Forecast exact equivalence 3 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "ab53d478630d5ad90b84347ed07edb3092bf17ab65492ad5dbca960b07f2125f"
+    },
+    {
+      "name": "Forecast exact equivalence 4 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 1,
+      "complete": false,
+      "trafficFeasible": false,
+      "trajectoryHash": "09a5f7bbd41a61d4511aec75151e328b59de21474f956c79d687243cb0e14ddd"
+    },
+    {
+      "name": "Forecast exact equivalence 4 dt 0.12",
+      "pass": true,
+      "steps": 92,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "80686e3b34acc602b09df7517cc4e60df807fb7c0a1f08f1d97799a439bc6236"
+    },
+    {
+      "name": "Forecast exact equivalence 5 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "452583d15da5d8e3eb112b795eccf2a9c8fd27d74961735decaa8b3dfafd3869"
+    },
+    {
+      "name": "Forecast exact equivalence 5 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "7874f9cc6d773c740d5f078476004c851135b292a534659fdf287b14c839a992"
+    },
+    {
+      "name": "Forecast exact equivalence 6 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 1,
+      "complete": false,
+      "trafficFeasible": false,
+      "trajectoryHash": "f310b0a7aa9d52e15a20c85080f88a118550ed8cc18a3f3c5e60d1bd71460bff"
+    },
+    {
+      "name": "Forecast exact equivalence 6 dt 0.12",
+      "pass": true,
+      "steps": 1,
+      "complete": false,
+      "trafficFeasible": false,
+      "trajectoryHash": "60e5be0295898a8692a23e45ecc42d2e3756e7f5896bcec5290fce48cafd0675"
+    },
+    {
+      "name": "Actual exact equivalence 0 标准",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 0 东京",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 1 标准",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 1 东京",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 2 标准",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 2 东京",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 3 标准",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 3 东京",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 4 标准",
+      "pass": true,
+      "ticks": 0,
+      "expectedConstructedFailure": "交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）"
+    },
+    {
+      "name": "Actual exact equivalence 4 东京",
+      "pass": true,
+      "ticks": 0,
+      "expectedConstructedFailure": "交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）"
+    },
+    {
+      "name": "Actual exact equivalence 5 标准",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 5 东京",
+      "pass": true,
+      "ticks": 180,
+      "expectedConstructedFailure": null
+    },
+    {
+      "name": "Actual exact equivalence 6 标准",
+      "pass": true,
+      "ticks": 0,
+      "expectedConstructedFailure": "交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）"
+    },
+    {
+      "name": "Actual exact equivalence 6 东京",
+      "pass": true,
+      "ticks": 0,
+      "expectedConstructedFailure": "交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）"
+    }
+  ],
+  "benchmarks": [
+    {
+      "case": 0,
+      "plain": {
+        "medianMs": 695.0504999999994,
+        "p90Ms": 715.2645999999986,
+        "runs": 5
+      },
+      "candidate": {
+        "medianMs": 793.8669000000009,
+        "p90Ms": 846.5005999999994,
+        "runs": 5
+      },
+      "speedup": 0.8755252297330933
+    },
+    {
+      "case": 1,
+      "plain": {
+        "medianMs": 745.518,
+        "p90Ms": 755.5226000000002,
+        "runs": 5
+      },
+      "candidate": {
+        "medianMs": 753.5322999999989,
+        "p90Ms": 799.1068999999989,
+        "runs": 5
+      },
+      "speedup": 0.989364357705703
+    },
+    {
+      "case": 4,
+      "plain": {
+        "medianMs": 0.5636000000013155,
+        "p90Ms": 0.8858999999974912,
+        "runs": 5
+      },
+      "candidate": {
+        "medianMs": 0.3551000000006752,
+        "p90Ms": 0.3801999999996042,
+        "runs": 5
+      },
+      "speedup": 1.5871585468888871
+    }
+  ],
+  "failures": [],
+  "scope": "Exact-state/ledger trajectory equivalence for a candidate early negative witness; this test never modifies production.",
+  "pass": true,
+  "productionUnchanged": true,
+  "recommendation": "Do not apply: extra exact interval samples preserve these trajectories but slow the binding-headway benchmark. Native actual traffic still rejects the intentionally impossible starting states."
+}

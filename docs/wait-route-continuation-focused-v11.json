@@ -1,0 +1,66 @@
+{
+  "sourceHash": "50f77fdc68a5db53a6e660e8a4c5a0137d8303693988f646282c6bddedec75a1",
+  "candidateHash": "bda9827cf02052af9f313aea1d92c68000b16a79f2e98931da24358d3c927778",
+  "checks": [
+    {
+      "name": "wait-route goal null checks at 0.12",
+      "pass": true,
+      "calls": 1,
+      "remainingActions": 2,
+      "checkedDt": 0.12
+    },
+    {
+      "name": "follow goal null checks at 0.016666666666666666",
+      "pass": true,
+      "calls": 1,
+      "remainingActions": 2,
+      "checkedDt": 0.016666666666666666
+    },
+    {
+      "name": "follow goal {\"s\":500,\"tolerance\":0.12} checks at 0.016666666666666666",
+      "pass": true,
+      "calls": 1,
+      "remainingActions": 2,
+      "checkedDt": 0.016666666666666666
+    },
+    {
+      "name": "wait-route goal {\"s\":500,\"tolerance\":0.12} checks at 0.016666666666666666",
+      "pass": true,
+      "calls": 1,
+      "remainingActions": 2,
+      "checkedDt": 0.016666666666666666
+    },
+    {
+      "name": "route goal {\"t\":4,\"lateralTolerance\":0.2} checks at 0.016666666666666666",
+      "pass": true,
+      "calls": 1,
+      "remainingActions": 2,
+      "checkedDt": 0.016666666666666666
+    },
+    {
+      "name": "Default projectActions and actual fixed controls are unchanged",
+      "pass": true,
+      "framesEach": 300,
+      "dataHash": "281911ad7afbb5291c29d384590c25e7523c53e5c78cfc34ab39f0b7d5cb80fe"
+    },
+    {
+      "name": "Coarse route lookahead error is measured explicitly without claiming a bound",
+      "pass": true,
+      "steps": {
+        "coarse": 38,
+        "fine": 265
+      },
+      "endpointDelta": {
+        "s": 0.007300365600258374,
+        "t": 0,
+        "v": 0.004001662802718187,
+        "stamina": -0.13149711781670703
+      },
+      "netEnergyDelta": 0.13149711781558437,
+      "meaning": "This one observed error is not a uniform guarantee. No absolute goal is accepted using this coarse comparison."
+    }
+  ],
+  "failures": [],
+  "scope": "Resolution selection for finite remaining orders, default-API/control invariance, and measured coarse/fine lookahead discrepancy. Coarse continuation is not a traffic certificate.",
+  "pass": true
+}

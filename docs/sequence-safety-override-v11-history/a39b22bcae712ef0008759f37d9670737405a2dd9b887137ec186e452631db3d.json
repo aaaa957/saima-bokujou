@@ -1,0 +1,2390 @@
+{
+  "sourceHash": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "scriptHash": "5b49e0bc8333b0cdb688a942b27e1dcbc14be6e4c02ab307815af3ba63388bb1",
+  "builtAt": "2026-10-04T04:43:35.144Z",
+  "actualStepCalls": 0,
+  "scope": "Branch reachability and command/sequence coherence. Stubbed accepted follow projections are not physically certified candidate evidence or natural-event frequency. Actual controller geometry and avoidBlock execution are unchanged; raw real forecasts retained.",
+  "rows": [
+    {
+      "kind": "different-wake-front",
+      "stub": true,
+      "privateSourceHash": "3bd4ab79d0a678cea1b1490d422861634017b1b3b49a189b1e5616da6f4f4adb",
+      "planned": 16.19677734375,
+      "input": {
+        "own": {
+          "s": 500,
+          "t": 4,
+          "v": 17
+        },
+        "wake": {
+          "s": 504,
+          "t": 5.4,
+          "v": 15.99677734375
+        },
+        "front": {
+          "s": 507,
+          "t": 4,
+          "v": 14
+        }
+      },
+      "calls": [
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 2.7275,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 4,
+              "targetV": 16.03677734375,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 4,
+              "targetV": 16.35677734375,
+              "targetT": 4,
+              "goal": {
+                "s": 502.0148,
+                "tolerance": 0.12
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": true,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 4.096,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": true
+        }
+      ],
+      "afterDecision": {
+        "targetV": 16.19677734375,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 16.19677734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": 99.99999999999994,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-no-saving",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 0,
+            "regainedDistance": 99.99999999999994,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 16.19677734375,
+          "score": 16.04407734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-no-saving": 1
+        }
+      },
+      "afterApplyAgain": {
+        "targetV": 16.19677734375,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 16.19677734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": 99.99999999999994,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-no-saving",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 0,
+            "regainedDistance": 99.99999999999994,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 16.19677734375,
+          "score": 16.04407734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-no-saving": 1
+        }
+      },
+      "selectionWitness": false,
+      "commandMatchesFirstAction": null,
+      "reapplyRepairsLane": null
+    },
+    {
+      "kind": "same-lane-target",
+      "stub": true,
+      "privateSourceHash": "3bd4ab79d0a678cea1b1490d422861634017b1b3b49a189b1e5616da6f4f4adb",
+      "planned": 16.19677734375,
+      "input": {
+        "own": {
+          "s": 500,
+          "t": 4,
+          "v": 17
+        },
+        "wake": {
+          "s": 504,
+          "t": 5.4,
+          "v": 15.99677734375
+        },
+        "front": {
+          "s": 507,
+          "t": 4,
+          "v": 14
+        }
+      },
+      "calls": [
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 5.4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 4.096,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 5.4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 4.096,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 4,
+              "targetV": 16.03677734375,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 4,
+              "targetV": 16.35677734375,
+              "targetT": 4,
+              "goal": {
+                "s": 502.0148,
+                "tolerance": 0.12
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": true,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 4.096,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": true
+        }
+      ],
+      "afterDecision": {
+        "targetV": 16.19677734375,
+        "targetT": 5.4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 5.4,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 5.4,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 16.19677734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": 99.99999999999994,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-no-saving",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 0,
+            "regainedDistance": 99.99999999999994,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 5.4,
+          "pace": 16.19677734375,
+          "score": 16.19677734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-no-saving": 1
+        }
+      },
+      "afterApplyAgain": {
+        "targetV": 16.19677734375,
+        "targetT": 5.4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 5.4,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 5.4,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 16.19677734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": 99.99999999999994,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-no-saving",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 0,
+            "regainedDistance": 99.99999999999994,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 5.4,
+          "pace": 16.19677734375,
+          "score": 16.19677734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-no-saving": 1
+        }
+      },
+      "selectionWitness": false,
+      "commandMatchesFirstAction": null,
+      "reapplyRepairsLane": null
+    },
+    {
+      "kind": "no-control-change",
+      "stub": true,
+      "privateSourceHash": "3bd4ab79d0a678cea1b1490d422861634017b1b3b49a189b1e5616da6f4f4adb",
+      "planned": 16.19677734375,
+      "input": {
+        "own": {
+          "s": 500,
+          "t": 4,
+          "v": 17
+        },
+        "wake": {
+          "s": 503.5,
+          "t": 5.4,
+          "v": 15.99677734375
+        },
+        "front": {
+          "s": 504.5,
+          "t": 4,
+          "v": 15.03677734375
+        }
+      },
+      "calls": [
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 503.5,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.76365234375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 503.5,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 503.5,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.76365234375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 503.5,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 4,
+              "targetV": 16.03677734375,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 503.5,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 4,
+              "targetV": 16.35677734375,
+              "targetT": 4,
+              "goal": {
+                "s": 502.0148,
+                "tolerance": 0.12
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": true,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 4.096,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": true
+        }
+      ],
+      "afterDecision": {
+        "targetV": 15.16177734375,
+        "targetT": 4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.76365234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.76365234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "wait",
+          "reason": "预测通道未开放，保留制动距离等待",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 15.16177734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": 99.99999999999994,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-no-saving",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 0,
+            "regainedDistance": 99.99999999999994,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 4,
+          "pace": 16.19677734375,
+          "score": 16.19677734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-no-saving": 1
+        }
+      },
+      "afterApplyAgain": {
+        "targetV": 15.16177734375,
+        "targetT": 4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.76365234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.76365234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "wait",
+          "reason": "预测通道未开放，保留制动距离等待",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 15.16177734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": 99.99999999999994,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-no-saving",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 0,
+            "regainedDistance": 99.99999999999994,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 4,
+          "pace": 16.19677734375,
+          "score": 16.19677734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-no-saving": 1
+        }
+      },
+      "selectionWitness": false,
+      "commandMatchesFirstAction": null,
+      "reapplyRepairsLane": null
+    },
+    {
+      "kind": "different-wake-front",
+      "stub": false,
+      "privateSourceHash": "3bd4ab79d0a678cea1b1490d422861634017b1b3b49a189b1e5616da6f4f4adb",
+      "planned": 16.19677734375,
+      "input": {
+        "own": {
+          "s": 500,
+          "t": 4,
+          "v": 17
+        },
+        "wake": {
+          "s": 504,
+          "t": 5.4,
+          "v": 15.99677734375
+        },
+        "front": {
+          "s": 507,
+          "t": 4,
+          "v": 14
+        }
+      },
+      "calls": [
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.0148,
+              "t": 4,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 2.7275,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 8,
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": false,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 3.904,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        },
+        {
+          "actions": [
+            {
+              "duration": 4,
+              "targetV": 16.03677734375,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.99677734375,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 4,
+              "targetV": 16.35677734375,
+              "targetT": 4,
+              "goal": {
+                "s": 502.0148,
+                "tolerance": 0.12
+              }
+            },
+            {
+              "duration": 2.8,
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "leader": null
+            }
+          ],
+          "maxDt": 0.12,
+          "goal": true,
+          "fine": false,
+          "natural": {
+            "complete": false,
+            "energyFeasible": true,
+            "goalReached": false,
+            "pathConflict": true,
+            "endpoint": {
+              "s": 502.01251162481117,
+              "t": 4.096,
+              "v": 16.58,
+              "stamina": 2450,
+              "guts": 4199.8161748400025,
+              "retention": 0.999996498568381,
+              "aerobicOutput": 50
+            },
+            "netEnergy": 0
+          },
+          "stubbed": false
+        }
+      ],
+      "afterDecision": {
+        "targetV": 16.19677734375,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 16.19677734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": -0.002288375188811642,
+          "goalReached": false,
+          "targetShortfall": 0,
+          "pathConflict": true,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-goal",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": false,
+            "energyFeasible": true,
+            "pathConflict": true,
+            "saving": 0,
+            "regainedDistance": -0.002288375188811642,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 16.19677734375,
+          "score": 16.04407734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-goal": 1
+        }
+      },
+      "afterApplyAgain": {
+        "targetV": 16.19677734375,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.229925690688777,
+          "reservePrice": 0.1433677600876437,
+          "selected": "settle",
+          "selectedScore": null,
+          "baseline": {
+            "s": 502.0148,
+            "energy": 0,
+            "rank": 2
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 16.19677734375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 4,
+              "score": null,
+              "predictedS": 502.0148,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2.7275,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "route",
+              "targetV": 16.19677734375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            },
+            {
+              "mode": "position",
+              "targetV": 16.82615234375,
+              "targetT": 2,
+              "score": null,
+              "predictedS": 502.01251162481117,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": false,
+              "targetShortfall": 0,
+              "pathConflict": true
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.99677734375,
+          "targetV": 16.19677734375,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 16.03677734375,
+          "catchV": 16.35677734375,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 0,
+          "savingResolution": "coarse",
+          "regainedDistance": -0.002288375188811642,
+          "goalReached": false,
+          "targetShortfall": 0,
+          "pathConflict": true,
+          "accepted": false,
+          "fineChecked": false,
+          "rejectedReason": "coarse-goal",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 502.0148,
+            "goalReached": false,
+            "energyFeasible": true,
+            "pathConflict": true,
+            "saving": 0,
+            "regainedDistance": -0.002288375188811642,
+            "steps": 1
+          },
+          "fine": null
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 16.19677734375,
+          "score": 16.04407734375
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "followRejectedReasons": {
+          "coarse-goal": 1
+        }
+      }
+    }
+  ],
+  "productionUnchanged": true,
+  "overrideWitness": false
+}

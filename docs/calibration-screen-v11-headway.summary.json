@@ -1,0 +1,742 @@
+{
+  "input": "docs/calibration-screen-v11-headway.json.gz",
+  "inputNormalizedSha256": "2964aac79cfd375c8c66aaa9a0bf7a9db26416519f8e28d039e3c765565f1329",
+  "source": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "cohort": "fixed-v8",
+  "proof": {
+    "file": "docs/calibration-screen-v11-headway.json.gz",
+    "sourceProof": "archived immutable source verified",
+    "source": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+    "declared": 24,
+    "covered": 14,
+    "complete": false,
+    "metadataRows": 0,
+    "retainedErrors": 1,
+    "retainedEngineeringFailures": [],
+    "forecastCoverage": {
+      "queries": 0,
+      "feasible": 0,
+      "infeasible": 0,
+      "maxFeasibleTimeError": null
+    },
+    "consistent": true
+  },
+  "arms": [
+    {
+      "name": "current",
+      "completed": 4,
+      "metrics": {
+        "winnerTime": {
+          "realMedian": 104.9,
+          "simMedian": 101.5516241706618,
+          "medianError": -3.0866605488518033,
+          "meanAbsoluteError": 3.8925181890950036
+        },
+        "winnerFinal600": {
+          "realMedian": 33.85,
+          "simMedian": 32.4856355000132,
+          "medianError": -1.2898211671311337,
+          "meanAbsoluteError": 1.9080735950283163
+        },
+        "first200": {
+          "realMedian": 12.25,
+          "simMedian": 13.487402075607392,
+          "medianError": 1.272449065632407,
+          "meanAbsoluteError": 1.2798999822297854
+        },
+        "first400": {
+          "realMedian": 23.05,
+          "simMedian": 24.328472609098853,
+          "medianError": 1.3201645743208168,
+          "meanAbsoluteError": 1.399318591709835
+        },
+        "first600": {
+          "realMedian": 34.4,
+          "simMedian": 35.2132875006977,
+          "medianError": 0.8131983734635249,
+          "meanAbsoluteError": 0.9832636162045159
+        },
+        "remainingSpeed": {
+          "realMedian": 17.401521394873374,
+          "simMedian": 18.487685542822184,
+          "medianError": 1.1465819982089478,
+          "meanAbsoluteError": 1.0955163309642133
+        },
+        "tailSeconds": {
+          "realMedian": 1.8499999999999943,
+          "simMedian": 4.770482106347458,
+          "medianError": 2.0515267625387352,
+          "meanAbsoluteError": 2.3628153280639204
+        },
+        "within1": {
+          "realMedian": 0.7678571428571428,
+          "simMedian": 0.20833333333333331,
+          "medianError": -0.59375,
+          "meanAbsoluteError": 0.48933531746031744
+        },
+        "within2": {
+          "realMedian": 0.9642857142857143,
+          "simMedian": 0.4201388888888889,
+          "medianError": -0.4375,
+          "meanAbsoluteError": 0.5163690476190477
+        },
+        "final600Span": {
+          "realMedian": 2.3999999999999986,
+          "simMedian": 1.8824311244418723,
+          "medianError": -0.7258266025022095,
+          "meanAbsoluteError": 1.1431732627692632
+        },
+        "post200Cv": {
+          "realMedian": 0.05643389058347839,
+          "simMedian": 0.005929715118322129,
+          "medianError": -0.05084507004262727,
+          "meanAbsoluteError": 0.05178913219199664
+        },
+        "last200Difference": {
+          "realMedian": 0.5,
+          "simMedian": 0.017133120891777764,
+          "medianError": -0.49422754350181464,
+          "meanAbsoluteError": 0.6802401057447418
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231001",
+          "gate": "leading200Within10pct"
+        },
+        {
+          "id": "240929",
+          "gate": "leading200Within10pct"
+        },
+        {
+          "id": "241124",
+          "gate": "winnerWithin5pct"
+        }
+      ],
+      "engineeringFailures": [],
+      "physical": {
+        "medianPost200ActualV": 18.299928464644527,
+        "medianPost200RequestedV": 18.39767157789342,
+        "medianPeakV": 19.07691379292535,
+        "medianMeanActualPower": 80.33950838100743,
+        "medianMeanOxygenOutput": 51.22177175628845,
+        "medianFinishReserve": 0.13243265725209066,
+        "medianRunCpuSeconds": 176.1015,
+        "medianRunWallSeconds": 412.90682130000005
+      },
+      "meanAbsoluteResidualChangeFromCurrent": null,
+      "paretoDominatedBy": []
+    },
+    {
+      "name": "fast80-peak08",
+      "completed": 2,
+      "metrics": {
+        "winnerTime": {
+          "realMedian": 67.5,
+          "simMedian": 62.30000460828974,
+          "medianError": -5.199995391710257,
+          "meanAbsoluteError": 5.199995391710257
+        },
+        "winnerFinal600": {
+          "realMedian": 34.35,
+          "simMedian": 30.063474867714255,
+          "medianError": -4.286525132285746,
+          "meanAbsoluteError": 4.286525132285746
+        },
+        "first200": {
+          "realMedian": 11.75,
+          "simMedian": 12.332056867781166,
+          "medianError": 0.5820568677811666,
+          "meanAbsoluteError": 0.5820568677811666
+        },
+        "first400": {
+          "realMedian": 21.900000000000002,
+          "simMedian": 22.31444404041434,
+          "medianError": 0.41444404041433813,
+          "meanAbsoluteError": 0.41444404041433813
+        },
+        "first600": {
+          "realMedian": 32.7,
+          "simMedian": 32.23652974057549,
+          "medianError": -0.46347025942451126,
+          "meanAbsoluteError": 0.6005372531565882
+        },
+        "remainingSpeed": {
+          "realMedian": 17.93896568589595,
+          "simMedian": 20.01282926582961,
+          "medianError": 2.0738635799336578,
+          "meanAbsoluteError": 2.0738635799336578
+        },
+        "tailSeconds": {
+          "realMedian": 1.4500000000000028,
+          "simMedian": 4.007649230315241,
+          "medianError": 2.5576492303152385,
+          "meanAbsoluteError": 2.5576492303152385
+        },
+        "within1": {
+          "realMedian": 0.84375,
+          "simMedian": 0.25,
+          "medianError": -0.59375,
+          "meanAbsoluteError": 0.59375
+        },
+        "within2": {
+          "realMedian": 1,
+          "simMedian": 0.59375,
+          "medianError": -0.40625,
+          "meanAbsoluteError": 0.40625
+        },
+        "final600Span": {
+          "realMedian": 2.2499999999999964,
+          "simMedian": 1.3776950086204849,
+          "medianError": -0.8723049913795116,
+          "meanAbsoluteError": 0.8723049913795116
+        },
+        "post200Cv": {
+          "realMedian": 0.06537247984016065,
+          "simMedian": 0.006324555320336736,
+          "medianError": -0.05904792451982391,
+          "meanAbsoluteError": 0.05904792451982391
+        },
+        "last200Difference": {
+          "realMedian": 0.9000000000000012,
+          "simMedian": 0.05306822272337186,
+          "medianError": -0.8469317772766294,
+          "meanAbsoluteError": 0.8469317772766294
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231001",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "231001",
+          "gate": "winner600Within10pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winner600Within10pct"
+        }
+      ],
+      "engineeringFailures": [],
+      "physical": {
+        "medianPost200ActualV": 19.866930850578903,
+        "medianPost200RequestedV": 20.108126051551267,
+        "medianPeakV": 20.111104077788518,
+        "medianMeanActualPower": 95.62619518817266,
+        "medianMeanOxygenOutput": 50.85162281266594,
+        "medianFinishReserve": 0.11288732935492146,
+        "medianRunCpuSeconds": 53.8905,
+        "medianRunWallSeconds": 134.02586730000002
+      },
+      "meanAbsoluteResidualChangeFromCurrent": {
+        "winnerTime": 1.307477202615253,
+        "winnerFinal600": 2.3784515372574297,
+        "first200": -0.6978431144486188,
+        "first400": -0.9848745512954968,
+        "first600": -0.3827263630479276,
+        "remainingSpeed": 0.9783472489694445,
+        "tailSeconds": 0.19483390225131814,
+        "within1": 0.10441468253968256,
+        "within2": -0.11011904761904767,
+        "final600Span": -0.27086827138975167,
+        "post200Cv": 0.007258792327827265,
+        "last200Difference": 0.16669167153188758
+      },
+      "paretoDominatedBy": []
+    },
+    {
+      "name": "fast80-peak12",
+      "completed": 2,
+      "metrics": {
+        "winnerTime": {
+          "realMedian": 67.5,
+          "simMedian": 61.225255906233414,
+          "medianError": -6.274744093766582,
+          "meanAbsoluteError": 6.274744093766582
+        },
+        "winnerFinal600": {
+          "realMedian": 34.35,
+          "simMedian": 29.50460940692168,
+          "medianError": -4.8453905930783225,
+          "meanAbsoluteError": 4.8453905930783225
+        },
+        "first200": {
+          "realMedian": 11.75,
+          "simMedian": 12.202305511999484,
+          "medianError": 0.45230551199948277,
+          "meanAbsoluteError": 0.45230551199948277
+        },
+        "first400": {
+          "realMedian": 21.900000000000002,
+          "simMedian": 21.986955856615516,
+          "medianError": 0.08695585661551242,
+          "meanAbsoluteError": 0.2006199106468447
+        },
+        "first600": {
+          "realMedian": 32.7,
+          "simMedian": 31.72064649931174,
+          "medianError": -0.9793535006882603,
+          "meanAbsoluteError": 0.9793535006882603
+        },
+        "remainingSpeed": {
+          "realMedian": 17.93896568589595,
+          "simMedian": 20.39860911540871,
+          "medianError": 2.4596434295127576,
+          "meanAbsoluteError": 2.4596434295127576
+        },
+        "tailSeconds": {
+          "realMedian": 1.4500000000000028,
+          "simMedian": 4.964394367099569,
+          "medianError": 3.514394367099566,
+          "meanAbsoluteError": 3.514394367099566
+        },
+        "within1": {
+          "realMedian": 0.84375,
+          "simMedian": 0.21875,
+          "medianError": -0.625,
+          "meanAbsoluteError": 0.625
+        },
+        "within2": {
+          "realMedian": 1,
+          "simMedian": 0.59375,
+          "medianError": -0.40625,
+          "meanAbsoluteError": 0.40625
+        },
+        "final600Span": {
+          "realMedian": 2.2499999999999964,
+          "simMedian": 1.8001104816649534,
+          "medianError": -0.4498895183350431,
+          "meanAbsoluteError": 0.4498895183350431
+        },
+        "post200Cv": {
+          "realMedian": 0.06537247984016065,
+          "simMedian": 0.006453627877894687,
+          "medianError": -0.058918851962265956,
+          "meanAbsoluteError": 0.058918851962265956
+        },
+        "last200Difference": {
+          "realMedian": 0.9000000000000012,
+          "simMedian": 0.05400010341121586,
+          "medianError": -0.8459998965887854,
+          "meanAbsoluteError": 0.8459998965887854
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231001",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "231001",
+          "gate": "winner600Within10pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winner600Within10pct"
+        }
+      ],
+      "engineeringFailures": [],
+      "physical": {
+        "medianPost200ActualV": 20.121846125382305,
+        "medianPost200RequestedV": 20.318333512771574,
+        "medianPeakV": 20.451684643373852,
+        "medianMeanActualPower": 98.13303098056299,
+        "medianMeanOxygenOutput": 50.73825660078937,
+        "medianFinishReserve": 0.08448929710030575,
+        "medianRunCpuSeconds": 51.1255,
+        "medianRunWallSeconds": 145.16321925
+      },
+      "meanAbsoluteResidualChangeFromCurrent": {
+        "winnerTime": 2.3822259046715786,
+        "winnerFinal600": 2.9373169980500062,
+        "first200": -0.8275944702303026,
+        "first400": -1.1986986810629903,
+        "first600": -0.00391011551625553,
+        "remainingSpeed": 1.3641270985485443,
+        "tailSeconds": 1.1515790390356457,
+        "within1": 0.13566468253968256,
+        "within2": -0.11011904761904767,
+        "final600Span": -0.6932837444342201,
+        "post200Cv": 0.007129719770269313,
+        "last200Difference": 0.16575979084404358
+      },
+      "paretoDominatedBy": []
+    },
+    {
+      "name": "air2-fast80-peak08",
+      "completed": 2,
+      "metrics": {
+        "winnerTime": {
+          "realMedian": 67.5,
+          "simMedian": 62.307651927814405,
+          "medianError": -5.192348072185595,
+          "meanAbsoluteError": 5.192348072185595
+        },
+        "winnerFinal600": {
+          "realMedian": 34.35,
+          "simMedian": 30.069484219644938,
+          "medianError": -4.2805157803550635,
+          "meanAbsoluteError": 4.2805157803550635
+        },
+        "first200": {
+          "realMedian": 11.75,
+          "simMedian": 12.341751313372754,
+          "medianError": 0.5917513133727548,
+          "meanAbsoluteError": 0.5917513133727548
+        },
+        "first400": {
+          "realMedian": 21.900000000000002,
+          "simMedian": 22.315045069074245,
+          "medianError": 0.41504506907424066,
+          "meanAbsoluteError": 0.41504506907424066
+        },
+        "first600": {
+          "realMedian": 32.7,
+          "simMedian": 32.23816770816947,
+          "medianError": -0.4618322918305324,
+          "meanAbsoluteError": 0.6005399324742413
+        },
+        "remainingSpeed": {
+          "realMedian": 17.93896568589595,
+          "simMedian": 20.0136490638196,
+          "medianError": 2.07468337792365,
+          "meanAbsoluteError": 2.07468337792365
+        },
+        "tailSeconds": {
+          "realMedian": 1.4500000000000028,
+          "simMedian": 4.08333596085302,
+          "medianError": 2.6333359608530174,
+          "meanAbsoluteError": 2.6333359608530174
+        },
+        "within1": {
+          "realMedian": 0.84375,
+          "simMedian": 0.25,
+          "medianError": -0.59375,
+          "meanAbsoluteError": 0.59375
+        },
+        "within2": {
+          "realMedian": 1,
+          "simMedian": 0.625,
+          "medianError": -0.375,
+          "meanAbsoluteError": 0.375
+        },
+        "final600Span": {
+          "realMedian": 2.2499999999999964,
+          "simMedian": 1.4051224693181084,
+          "medianError": -0.8448775306818881,
+          "meanAbsoluteError": 0.8448775306818881
+        },
+        "post200Cv": {
+          "realMedian": 0.06537247984016065,
+          "simMedian": 0.006324555320336736,
+          "medianError": -0.05904792451982391,
+          "meanAbsoluteError": 0.05904792451982391
+        },
+        "last200Difference": {
+          "realMedian": 0.9000000000000012,
+          "simMedian": 0.05357340262212418,
+          "medianError": -0.8464265973778771,
+          "meanAbsoluteError": 0.8464265973778771
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231001",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "231001",
+          "gate": "winner600Within10pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winner600Within10pct"
+        }
+      ],
+      "engineeringFailures": [],
+      "physical": {
+        "medianPost200ActualV": 19.88324921743302,
+        "medianPost200RequestedV": 20.10167843009871,
+        "medianPeakV": 20.111429927379312,
+        "medianMeanActualPower": 95.4034547875781,
+        "medianMeanOxygenOutput": 50.84642274727663,
+        "medianFinishReserve": 0.12541096234696486,
+        "medianRunCpuSeconds": 54.8435,
+        "medianRunWallSeconds": 135.5667307
+      },
+      "meanAbsoluteResidualChangeFromCurrent": {
+        "winnerTime": 1.2998298830905917,
+        "winnerFinal600": 2.372442185326747,
+        "first200": -0.6881486688570306,
+        "first400": -0.9842735226355943,
+        "first600": -0.38272368373027454,
+        "remainingSpeed": 0.9791670469594367,
+        "tailSeconds": 0.270520632789097,
+        "within1": 0.10441468253968256,
+        "within2": -0.14136904761904767,
+        "final600Span": -0.29829573208737514,
+        "post200Cv": 0.007258792327827265,
+        "last200Difference": 0.16618649163313526
+      },
+      "paretoDominatedBy": []
+    },
+    {
+      "name": "air4-fast80-peak12",
+      "completed": 2,
+      "metrics": {
+        "winnerTime": {
+          "realMedian": 67.5,
+          "simMedian": 61.456991929276974,
+          "medianError": -6.043008070723026,
+          "meanAbsoluteError": 6.043008070723026
+        },
+        "winnerFinal600": {
+          "realMedian": 34.35,
+          "simMedian": 29.5141103932638,
+          "medianError": -4.835889606736201,
+          "meanAbsoluteError": 4.835889606736201
+        },
+        "first200": {
+          "realMedian": 11.75,
+          "simMedian": 12.252057253416853,
+          "medianError": 0.5020572534168526,
+          "meanAbsoluteError": 0.5020572534168526
+        },
+        "first400": {
+          "realMedian": 21.900000000000002,
+          "simMedian": 22.142360793038794,
+          "medianError": 0.24236079303879166,
+          "meanAbsoluteError": 0.24236079303879166
+        },
+        "first600": {
+          "realMedian": 32.7,
+          "simMedian": 31.942881536013175,
+          "medianError": -0.757118463986826,
+          "meanAbsoluteError": 0.757118463986826
+        },
+        "remainingSpeed": {
+          "realMedian": 17.93896568589595,
+          "simMedian": 20.32316699655304,
+          "medianError": 2.384201310657092,
+          "meanAbsoluteError": 2.384201310657092
+        },
+        "tailSeconds": {
+          "realMedian": 1.4500000000000028,
+          "simMedian": 4.821684850622063,
+          "medianError": 3.37168485062206,
+          "meanAbsoluteError": 3.37168485062206
+        },
+        "within1": {
+          "realMedian": 0.84375,
+          "simMedian": 0.1875,
+          "medianError": -0.65625,
+          "meanAbsoluteError": 0.65625
+        },
+        "within2": {
+          "realMedian": 1,
+          "simMedian": 0.625,
+          "medianError": -0.375,
+          "meanAbsoluteError": 0.375
+        },
+        "final600Span": {
+          "realMedian": 2.2499999999999964,
+          "simMedian": 2.0378862087289544,
+          "medianError": -0.21211379127104202,
+          "meanAbsoluteError": 0.21211379127104202
+        },
+        "post200Cv": {
+          "realMedian": 0.06537247984016065,
+          "simMedian": 0.004978637688583678,
+          "medianError": -0.06039384215157696,
+          "meanAbsoluteError": 0.06039384215157696
+        },
+        "last200Difference": {
+          "realMedian": 0.9000000000000012,
+          "simMedian": 0.05570451453791847,
+          "medianError": -0.8442954854620828,
+          "meanAbsoluteError": 0.8442954854620828
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231001",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "231001",
+          "gate": "winner600Within10pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winner600Within10pct"
+        }
+      ],
+      "engineeringFailures": [],
+      "physical": {
+        "medianPost200ActualV": 20.076662120456348,
+        "medianPost200RequestedV": 20.343121459508694,
+        "medianPeakV": 20.348614231450437,
+        "medianMeanActualPower": 97.94579890561809,
+        "medianMeanOxygenOutput": 50.760158406842315,
+        "medianFinishReserve": 0.10149083626706838,
+        "medianRunCpuSeconds": 51.414,
+        "medianRunWallSeconds": 122.19163955
+      },
+      "meanAbsoluteResidualChangeFromCurrent": {
+        "winnerTime": 2.1504898816280225,
+        "winnerFinal600": 2.9278160117078844,
+        "first200": -0.7778427288129328,
+        "first400": -1.1569577986710433,
+        "first600": -0.22614515221768983,
+        "remainingSpeed": 1.2886849796928788,
+        "tailSeconds": 1.0088695225581397,
+        "within1": 0.16691468253968256,
+        "within2": -0.14136904761904767,
+        "final600Span": -0.9310594714982212,
+        "post200Cv": 0.00860470995958032,
+        "last200Difference": 0.16405537971734097
+      },
+      "paretoDominatedBy": []
+    },
+    {
+      "name": "air2-fast80-peak12-cost105",
+      "completed": 2,
+      "metrics": {
+        "winnerTime": {
+          "realMedian": 67.5,
+          "simMedian": 62.2317012381511,
+          "medianError": -5.268298761848897,
+          "meanAbsoluteError": 5.268298761848897
+        },
+        "winnerFinal600": {
+          "realMedian": 34.35,
+          "simMedian": 29.807210426745243,
+          "medianError": -4.542789573254758,
+          "meanAbsoluteError": 4.542789573254758
+        },
+        "first200": {
+          "realMedian": 11.75,
+          "simMedian": 12.48570425547857,
+          "medianError": 0.73570425547857,
+          "meanAbsoluteError": 0.73570425547857
+        },
+        "first400": {
+          "realMedian": 21.900000000000002,
+          "simMedian": 22.485482381880797,
+          "medianError": 0.5854823818807944,
+          "meanAbsoluteError": 0.5854823818807944
+        },
+        "first600": {
+          "realMedian": 32.7,
+          "simMedian": 32.42449081140586,
+          "medianError": -0.275509188594139,
+          "meanAbsoluteError": 0.6551766238693411
+        },
+        "remainingSpeed": {
+          "realMedian": 17.93896568589595,
+          "simMedian": 20.102210371306864,
+          "medianError": 2.1632446854109126,
+          "meanAbsoluteError": 2.1632446854109126
+        },
+        "tailSeconds": {
+          "realMedian": 1.4500000000000028,
+          "simMedian": 5.87810010666265,
+          "medianError": 4.428100106662647,
+          "meanAbsoluteError": 4.428100106662647
+        },
+        "within1": {
+          "realMedian": 0.84375,
+          "simMedian": 0.1875,
+          "medianError": -0.65625,
+          "meanAbsoluteError": 0.65625
+        },
+        "within2": {
+          "realMedian": 1,
+          "simMedian": 0.46875,
+          "medianError": -0.53125,
+          "meanAbsoluteError": 0.53125
+        },
+        "final600Span": {
+          "realMedian": 2.2499999999999964,
+          "simMedian": 2.4123274809095854,
+          "medianError": 0.16232748090958893,
+          "meanAbsoluteError": 0.16232748090958893
+        },
+        "post200Cv": {
+          "realMedian": 0.06537247984016065,
+          "simMedian": 0.006231159094105997,
+          "medianError": -0.059141320746054646,
+          "meanAbsoluteError": 0.059141320746054646
+        },
+        "last200Difference": {
+          "realMedian": 0.9000000000000012,
+          "simMedian": 0.07681540212876214,
+          "medianError": -0.8231845978712391,
+          "meanAbsoluteError": 0.8231845978712391
+        }
+      },
+      "gateFailures": [
+        {
+          "id": "231001",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "231001",
+          "gate": "winner600Within10pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winnerWithin5pct"
+        },
+        {
+          "id": "240929",
+          "gate": "winner600Within10pct"
+        }
+      ],
+      "engineeringFailures": [],
+      "physical": {
+        "medianPost200ActualV": 19.61299106013414,
+        "medianPost200RequestedV": 19.756121331761918,
+        "medianPeakV": 20.168142575273656,
+        "medianMeanActualPower": 98.2526532740061,
+        "medianMeanOxygenOutput": 50.807054400728944,
+        "medianFinishReserve": 0.0646614914354078,
+        "medianRunCpuSeconds": 64.578,
+        "medianRunWallSeconds": 166.67464030000002
+      },
+      "meanAbsoluteResidualChangeFromCurrent": {
+        "winnerTime": 1.375780572753893,
+        "winnerFinal600": 2.634715978226442,
+        "first200": -0.5441957267512154,
+        "first400": -0.8138362098290406,
+        "first600": -0.3280869923351748,
+        "remainingSpeed": 1.0677283544466993,
+        "tailSeconds": 2.065284778598727,
+        "within1": 0.16691468253968256,
+        "within2": 0.014880952380952328,
+        "final600Span": -0.9808457818596743,
+        "post200Cv": 0.007352188554058003,
+        "last200Difference": 0.1429444921264973
+      },
+      "paretoDominatedBy": []
+    }
+  ],
+  "scope": "Four 2023/2024 real events, one simulated seed each per parameter arm. Event medians/errors and all 12 metrics remain separate; no scalar weighting hides correlated start/total/pack metrics. Physical medians across generated horses are mechanism diagnostics, not matched real GPS/power observations. Pareto domination is strict across all 12 event-weighted MAEs and is not evidence of generalization."
+}

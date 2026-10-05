@@ -1,0 +1,1549 @@
+{
+  "sourceHash": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "baselineHash": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "candidateHash": "2f4cf19022f1d618ea3885d6831b26a3716bcd2fe2f71fe44e23611b1f921308",
+  "scriptHash": "063bf37f96321f85cad624b40f4168a3d73e668053feb20bb01dc997fec27236",
+  "builtAt": "2026-10-04T04:59:12.484Z",
+  "actualStepCalls": 0,
+  "baselineScope": "Same current coefficients/version/physics with the former controller tail restored in memory, only for a fault comparison.",
+  "scope": "Synthetic follow forecast acceptance selects exact branch outcomes; visible geometry, real applyRiderSequence and real avoidBlock are exercised. This is instruction/commitment coherence, not physical candidate feasibility, prevalence or field numerical validation.",
+  "checks": [
+    {
+      "name": "The patch is idempotent, exactly reversible, and changes only runAI",
+      "pass": true
+    },
+    {
+      "name": "Actual laneChanged cancels the unexecuted follow commitment",
+      "pass": true,
+      "before": {
+        "targetV": 15.759921875,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.18231830851797917,
+          "selected": "follow",
+          "selectedScore": 116.16214335179791,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.8491461100569321
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2.7275,
+              "score": 2.447823544158508,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "follow",
+              "targetV": 15.759921875,
+              "targetT": 4,
+              "score": 116.16214335179791,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "follow",
+          "reason": "连续跟跑、追回的距离目标可达且净耗能降低",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 15.759921875,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": {
+          "at": 30,
+          "mode": "follow",
+          "stage": 0,
+          "actions": [
+            {
+              "duration": 4,
+              "targetV": 15.759921875,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.719921875,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 4,
+              "targetV": 16.079921875,
+              "targetT": 4
+            }
+          ],
+          "goal": {
+            "s": 627.359375,
+            "tolerance": 0.12
+          }
+        },
+        "followOpportunity": {
+          "following": 15.759921875,
+          "catchV": 16.079921875,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 100,
+          "savingResolution": "fine",
+          "regainedDistance": 100,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": true,
+          "fineChecked": true,
+          "rejectedReason": null,
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 91
+          },
+          "fine": {
+            "maxDt": 0.016666666666666666,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 648
+          }
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 15.919921875,
+          "score": 15.767221875
+        },
+        "committedSequences": 1,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "斜行in",
+        "events": []
+      },
+      "after": {
+        "targetV": 15.759921875,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.18231830851797917,
+          "selected": "route",
+          "selectedScore": null,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.8491461100569321
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2.7275,
+              "score": 2.447823544158508,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "follow",
+              "targetV": 15.759921875,
+              "targetT": 4,
+              "score": 116.16214335179791,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "follow",
+          "actualControls": {
+            "targetV": 15.759921875,
+            "targetT": 2.7275
+          },
+          "selectedCandidateScore": 116.16214335179791,
+          "sequenceCommitted": false,
+          "safetyOverride": {
+            "candidateMode": "follow",
+            "before": {
+              "targetV": 15.759921875,
+              "targetT": 5.4
+            },
+            "actual": {
+              "targetV": 15.759921875,
+              "targetT": 2.7275
+            },
+            "speedChanged": false,
+            "laneChanged": true
+          }
+        },
+        "strategy": {
+          "mode": "route",
+          "reason": "按实测近马避让调整实际指令，取消尚未执行的动作序列",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 15.759921875,
+          "at": 500,
+          "time": 30,
+          "selectedCandidate": "follow",
+          "targetT": 2.7275,
+          "safetyOverride": {
+            "candidateMode": "follow",
+            "before": {
+              "targetV": 15.759921875,
+              "targetT": 5.4
+            },
+            "actual": {
+              "targetV": 15.759921875,
+              "targetT": 2.7275
+            },
+            "speedChanged": false,
+            "laneChanged": true
+          }
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 15.759921875,
+          "catchV": 16.079921875,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 100,
+          "savingResolution": "fine",
+          "regainedDistance": 100,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": true,
+          "rejectedReason": "safety-override",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 91
+          },
+          "fine": {
+            "maxDt": 0.016666666666666666,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 648
+          }
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 15.919921875,
+          "score": 15.767221875
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 1,
+        "safetyOverrides": 1,
+        "followRejectedReasons": {
+          "safety-override": 1
+        },
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "斜行in",
+        "events": []
+      }
+    },
+    {
+      "name": "Actual speedChanged cancels the unexecuted follow commitment",
+      "pass": true,
+      "before": {
+        "targetV": 14.884921875,
+        "targetT": 5.4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.18231830851797917,
+          "selected": "follow",
+          "selectedScore": 116.39339335179791,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.7542694497153761
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "follow",
+              "targetV": 15.759921875,
+              "targetT": 4,
+              "score": 116.39339335179791,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "wait",
+          "reason": "预测通道未开放，保留制动距离等待",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 14.884921875,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": {
+          "at": 30,
+          "mode": "follow",
+          "stage": 0,
+          "actions": [
+            {
+              "duration": 4,
+              "targetV": 15.759921875,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 503.5,
+                "t": 5.4,
+                "v": 15.719921875,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 4,
+              "targetV": 16.079921875,
+              "targetT": 4
+            }
+          ],
+          "goal": {
+            "s": 627.359375,
+            "tolerance": 0.12
+          }
+        },
+        "followOpportunity": {
+          "following": 15.759921875,
+          "catchV": 16.079921875,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 100,
+          "savingResolution": "fine",
+          "regainedDistance": 100,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": true,
+          "fineChecked": true,
+          "rejectedReason": null,
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 91
+          },
+          "fine": {
+            "maxDt": 0.016666666666666666,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 648
+          }
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 4,
+          "pace": 15.919921875,
+          "score": 15.919921875
+        },
+        "committedSequences": 1,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "收力",
+        "events": []
+      },
+      "after": {
+        "targetV": 14.884921875,
+        "targetT": 5.4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.18231830851797917,
+          "selected": "wait",
+          "selectedScore": null,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.7542694497153761
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "follow",
+              "targetV": 15.759921875,
+              "targetT": 4,
+              "score": 116.39339335179791,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "follow",
+          "actualControls": {
+            "targetV": 14.884921875,
+            "targetT": 5.4
+          },
+          "selectedCandidateScore": 116.39339335179791,
+          "sequenceCommitted": false,
+          "safetyOverride": {
+            "candidateMode": "follow",
+            "before": {
+              "targetV": 15.759921875,
+              "targetT": 5.4
+            },
+            "actual": {
+              "targetV": 14.884921875,
+              "targetT": 5.4
+            },
+            "speedChanged": true,
+            "laneChanged": false
+          }
+        },
+        "strategy": {
+          "mode": "wait",
+          "reason": "按实测近马避让调整实际指令，取消尚未执行的动作序列",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 14.884921875,
+          "at": 500,
+          "time": 30,
+          "selectedCandidate": "follow",
+          "targetT": 5.4,
+          "safetyOverride": {
+            "candidateMode": "follow",
+            "before": {
+              "targetV": 15.759921875,
+              "targetT": 5.4
+            },
+            "actual": {
+              "targetV": 14.884921875,
+              "targetT": 5.4
+            },
+            "speedChanged": true,
+            "laneChanged": false
+          }
+        },
+        "sequence": null,
+        "followOpportunity": {
+          "following": 15.759921875,
+          "catchV": 16.079921875,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 100,
+          "savingResolution": "fine",
+          "regainedDistance": 100,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": false,
+          "fineChecked": true,
+          "rejectedReason": "safety-override",
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 91
+          },
+          "fine": {
+            "maxDt": 0.016666666666666666,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 648
+          }
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 4,
+          "pace": 15.919921875,
+          "score": 15.919921875
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 1,
+        "safetyOverrides": 1,
+        "followRejectedReasons": {
+          "safety-override": 1
+        },
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "收力",
+        "events": []
+      }
+    },
+    {
+      "name": "Repeated safe lane assignment with the same actual tuple keeps legal follow",
+      "pass": true,
+      "after": {
+        "targetV": 15.759921875,
+        "targetT": 5.4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.18231830851797917,
+          "selected": "follow",
+          "selectedScore": 116.16214335179791,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.8491461100569321
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 5.4,
+              "score": -3.008116276480874,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "follow",
+              "targetV": 15.759921875,
+              "targetT": 4,
+              "score": 116.16214335179791,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "follow",
+          "actualControls": {
+            "targetV": 15.759921875,
+            "targetT": 5.4
+          },
+          "sequenceCommitted": true
+        },
+        "strategy": {
+          "mode": "follow",
+          "reason": "连续跟跑、追回的距离目标可达且净耗能降低",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 15.759921875,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": {
+          "at": 30,
+          "mode": "follow",
+          "stage": 0,
+          "actions": [
+            {
+              "duration": 4,
+              "targetV": 15.759921875,
+              "targetT": 5.4,
+              "leader": {
+                "id": "wake",
+                "s": 504,
+                "t": 5.4,
+                "v": 15.719921875,
+                "accel": 0,
+                "lateralV": 0,
+                "bodyLength": 2.635,
+                "bodyWidth": 0.755
+              }
+            },
+            {
+              "duration": 4,
+              "targetV": 16.079921875,
+              "targetT": 4
+            }
+          ],
+          "goal": {
+            "s": 627.359375,
+            "tolerance": 0.12
+          }
+        },
+        "followOpportunity": {
+          "following": 15.759921875,
+          "catchV": 16.079921875,
+          "followTime": 4,
+          "catchTime": 4,
+          "saving": 100,
+          "savingResolution": "fine",
+          "regainedDistance": 100,
+          "goalReached": true,
+          "targetShortfall": 0,
+          "pathConflict": false,
+          "accepted": true,
+          "fineChecked": true,
+          "rejectedReason": null,
+          "coarse": {
+            "maxDt": 0.12,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 91
+          },
+          "fine": {
+            "maxDt": 0.016666666666666666,
+            "goalS": 627.359375,
+            "goalReached": true,
+            "energyFeasible": true,
+            "pathConflict": false,
+            "saving": 100,
+            "regainedDistance": 100,
+            "steps": 648
+          }
+        },
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 5.4,
+          "pace": 15.919921875,
+          "score": 15.919921875
+        },
+        "committedSequences": 1,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "斜行out",
+        "events": []
+      }
+    },
+    {
+      "name": "A nonsequence settled candidate records its actual safety lane instruction",
+      "pass": true,
+      "before": {
+        "targetV": 15.919921875,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.1700730489906522,
+          "selected": "settle",
+          "selectedScore": 0,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.8491461100569321
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2.7275,
+              "score": -99.62186395584152,
+              "predictedS": 571.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": -98.13666424788448,
+              "predictedS": 571.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 15.919921875,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": null,
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 15.919921875,
+          "score": 15.767221875
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "斜行in",
+        "events": []
+      },
+      "after": {
+        "targetV": 15.919921875,
+        "targetT": 2.7275,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.1700730489906522,
+          "selected": "route",
+          "selectedScore": null,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.8491461100569321
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2.7275,
+              "score": -99.62186395584152,
+              "predictedS": 571.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": -98.13666424788448,
+              "predictedS": 571.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "settle",
+          "actualControls": {
+            "targetV": 15.919921875,
+            "targetT": 2.7275
+          },
+          "selectedCandidateScore": 0,
+          "sequenceCommitted": false,
+          "safetyOverride": {
+            "candidateMode": "settle",
+            "before": {
+              "targetV": 15.919921875,
+              "targetT": 4
+            },
+            "actual": {
+              "targetV": 15.919921875,
+              "targetT": 2.7275
+            },
+            "speedChanged": false,
+            "laneChanged": true
+          }
+        },
+        "strategy": {
+          "mode": "route",
+          "reason": "按实测近马避让调整实际指令",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 15.919921875,
+          "at": 500,
+          "time": 30,
+          "selectedCandidate": "settle",
+          "targetT": 2.7275,
+          "safetyOverride": {
+            "candidateMode": "settle",
+            "before": {
+              "targetV": 15.919921875,
+              "targetT": 4
+            },
+            "actual": {
+              "targetV": 15.919921875,
+              "targetT": 2.7275
+            },
+            "speedChanged": false,
+            "laneChanged": true
+          }
+        },
+        "sequence": null,
+        "followOpportunity": null,
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 2.7275,
+          "pace": 15.919921875,
+          "score": 15.767221875
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 1,
+        "followRejectedReasons": null,
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "斜行in",
+        "events": []
+      }
+    },
+    {
+      "name": "An attack overridden to wait cannot emit a false launch or sprint start",
+      "pass": true,
+      "before": {
+        "targetV": 14.75,
+        "targetT": 2,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.1700730489906522,
+          "selected": "attack",
+          "selectedScore": 1922.7351735292862,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.8491461100569321
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 4,
+              "score": 1918.8021502771708,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 2,
+              "score": 1922.7351735292862,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ]
+        },
+        "strategy": {
+          "mode": "wait",
+          "reason": "预测通道未开放，保留制动距离等待",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 14.75,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": null,
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 4,
+          "pace": 15.919921875,
+          "score": 15.919921875
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": true,
+        "launches": 1,
+        "withdrawals": 0,
+        "sprintAt": 500,
+        "action": "收力",
+        "events": [
+          {
+            "t": 30,
+            "text": "own 开始发力！"
+          }
+        ]
+      },
+      "after": {
+        "targetV": 14.75,
+        "targetT": 2,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.1700730489906522,
+          "selected": "wait",
+          "selectedScore": null,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 0.8491461100569321
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 4,
+              "score": 1918.8021502771708,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 2,
+              "score": 1922.7351735292862,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "attack",
+          "actualControls": {
+            "targetV": 14.75,
+            "targetT": 2
+          },
+          "selectedCandidateScore": 1922.7351735292862,
+          "sequenceCommitted": false,
+          "safetyOverride": {
+            "candidateMode": "attack",
+            "before": {
+              "targetV": 18.75,
+              "targetT": 2
+            },
+            "actual": {
+              "targetV": 14.75,
+              "targetT": 2
+            },
+            "speedChanged": true,
+            "laneChanged": false
+          }
+        },
+        "strategy": {
+          "mode": "wait",
+          "reason": "按实测近马避让调整实际指令",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 14.75,
+          "at": 500,
+          "time": 30,
+          "selectedCandidate": "attack",
+          "targetT": 2,
+          "safetyOverride": {
+            "candidateMode": "attack",
+            "before": {
+              "targetV": 18.75,
+              "targetT": 2
+            },
+            "actual": {
+              "targetV": 14.75,
+              "targetT": 2
+            },
+            "speedChanged": true,
+            "laneChanged": false
+          }
+        },
+        "sequence": null,
+        "followOpportunity": null,
+        "avoidCalls": 1,
+        "avoidGap": {
+          "t": 4,
+          "pace": 15.919921875,
+          "score": 15.919921875
+        },
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 1,
+        "followRejectedReasons": null,
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "收力",
+        "events": []
+      }
+    },
+    {
+      "name": "An unchanged attack tuple keeps its label and emits one real launch",
+      "pass": true,
+      "after": {
+        "targetV": 18.75,
+        "targetT": 2,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.1700730489906522,
+          "selected": "attack",
+          "selectedScore": 1922.7351735292862,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 1.8491461100569322
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 4,
+              "score": 1918.8021502771708,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 2,
+              "score": 1922.7351735292862,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "attack",
+          "actualControls": {
+            "targetV": 18.75,
+            "targetT": 2
+          }
+        },
+        "strategy": {
+          "mode": "attack",
+          "reason": "余程预算支持持续发力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 18.75,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": null,
+        "avoidCalls": 0,
+        "avoidGap": null,
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": true,
+        "launches": 1,
+        "withdrawals": 0,
+        "sprintAt": 500,
+        "action": "打鞭",
+        "events": [
+          {
+            "t": 30,
+            "text": "own 开始发力！"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Attack persistence and genuine withdrawal each bookkeep only once",
+      "pass": true,
+      "held": {
+        "targetV": 18.75,
+        "targetT": 2,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.1700730489906522,
+          "selected": "attack",
+          "selectedScore": 1922.7351735292862,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 1.8491461100569322
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 4,
+              "score": 1918.8021502771708,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "route",
+              "targetV": 15.919921875,
+              "targetT": 2,
+              "score": 3.9330232521155337,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "attack",
+              "targetV": 18.75,
+              "targetT": 2,
+              "score": 1922.7351735292862,
+              "predictedS": 771.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "attack",
+          "actualControls": {
+            "targetV": 18.75,
+            "targetT": 2
+          }
+        },
+        "strategy": {
+          "mode": "attack",
+          "reason": "余程预算支持持续发力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 18.75,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": null,
+        "avoidCalls": 0,
+        "avoidGap": null,
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": true,
+        "launches": 0,
+        "withdrawals": 0,
+        "sprintAt": null,
+        "action": "打鞭",
+        "events": []
+      },
+      "withdrawn": {
+        "targetV": 15.919921875,
+        "targetT": 4,
+        "planning": {
+          "horizon": 8,
+          "evaluationHorizon": 10.8,
+          "targetRank": 1,
+          "bendDeadline": 22.616515307503295,
+          "reservePrice": 0.1700730489906522,
+          "selected": "settle",
+          "selectedScore": 0,
+          "baseline": {
+            "s": 671.93515625,
+            "energy": 100,
+            "rank": 1.8491461100569322
+          },
+          "candidates": [
+            {
+              "mode": "settle",
+              "targetV": 15.919921875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            },
+            {
+              "mode": "position",
+              "targetV": 16.549296875,
+              "targetT": 4,
+              "score": 0,
+              "predictedS": 671.93515625,
+              "predictedReserve": 2450,
+              "energyFeasible": true,
+              "goalReached": true,
+              "targetShortfall": 0,
+              "pathConflict": false
+            }
+          ],
+          "selectedCandidate": "settle",
+          "actualControls": {
+            "targetV": 15.919921875,
+            "targetT": 4
+          }
+        },
+        "strategy": {
+          "mode": "settle",
+          "reason": "按自身状态保留余程能力",
+          "reserveEstimate": 2450,
+          "observedPace": 15.719921875,
+          "targetV": 15.919921875,
+          "at": 500,
+          "time": 30
+        },
+        "sequence": null,
+        "followOpportunity": null,
+        "avoidCalls": 0,
+        "avoidGap": null,
+        "committedSequences": 0,
+        "safetyOverriddenSequences": 0,
+        "safetyOverrides": 0,
+        "followRejectedReasons": null,
+        "attacking": false,
+        "launches": 0,
+        "withdrawals": 1,
+        "sprintAt": null,
+        "action": "推骑",
+        "events": [
+          {
+            "t": 30,
+            "text": "own 收力重新调整节奏"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Default projected physical movement is unchanged by the controller patch",
+      "pass": true,
+      "forecastQueries": 2,
+      "exactHash": "c8ccc8a3f30cbe00dfba4d3b1168aff83e4e8668ae7087235ac5320b3eb26509"
+    }
+  ],
+  "failures": [],
+  "productionUnchanged": true,
+  "pass": true
+}

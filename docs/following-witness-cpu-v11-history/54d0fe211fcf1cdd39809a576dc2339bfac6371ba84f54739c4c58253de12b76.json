@@ -1,0 +1,241 @@
+{
+  "sourceHash": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+  "candidateHash": "ac87f38a869b412e970fccf6da79da296ba3628315638364528a7178c87461f2",
+  "checks": [
+    {
+      "name": "Forecast exact equivalence 0 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "acd69487325efba3cec6da41731448c5e1d2d35888bc18577bcd70fa3faa5593"
+    },
+    {
+      "name": "Forecast exact equivalence 0 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "1baf6d34dcecead858a955fd2a465e43269153535fd69049cccf19a94b3bedb7"
+    },
+    {
+      "name": "Forecast exact equivalence 1 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "4517212d12bd7bc0b12fec88b60056fc62f8155f16dc6f7c57abb89610a4853e"
+    },
+    {
+      "name": "Forecast exact equivalence 1 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "223ba049ecc1a297239f8502fb910906177eccae4aa2b8bb3d2d2377d5a2acfa"
+    },
+    {
+      "name": "Forecast exact equivalence 2 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "0c15230c1118b9e510f6927bd5e7339a89ac12ab6911f160c4bdc482859a3edb"
+    },
+    {
+      "name": "Forecast exact equivalence 2 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "4c02e4e88bd21fbae874777699a34d2fadae6abafd8be4cda35fc8d997e27627"
+    },
+    {
+      "name": "Forecast exact equivalence 3 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "a6a21c85bba6511d7000563d262037b6c126ed14bab2a119c15dfc2a0642036d"
+    },
+    {
+      "name": "Forecast exact equivalence 3 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "ab53d478630d5ad90b84347ed07edb3092bf17ab65492ad5dbca960b07f2125f"
+    },
+    {
+      "name": "Forecast exact equivalence 4 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 1,
+      "complete": false,
+      "trafficFeasible": false,
+      "trajectoryHash": "09a5f7bbd41a61d4511aec75151e328b59de21474f956c79d687243cb0e14ddd"
+    },
+    {
+      "name": "Forecast exact equivalence 4 dt 0.12",
+      "pass": true,
+      "steps": 92,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "80686e3b34acc602b09df7517cc4e60df807fb7c0a1f08f1d97799a439bc6236"
+    },
+    {
+      "name": "Forecast exact equivalence 5 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 648,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "452583d15da5d8e3eb112b795eccf2a9c8fd27d74961735decaa8b3dfafd3869"
+    },
+    {
+      "name": "Forecast exact equivalence 5 dt 0.12",
+      "pass": true,
+      "steps": 90,
+      "complete": true,
+      "trafficFeasible": true,
+      "trajectoryHash": "7874f9cc6d773c740d5f078476004c851135b292a534659fdf287b14c839a992"
+    },
+    {
+      "name": "Forecast exact equivalence 6 dt 0.016666666666666666",
+      "pass": true,
+      "steps": 1,
+      "complete": false,
+      "trafficFeasible": false,
+      "trajectoryHash": "f310b0a7aa9d52e15a20c85080f88a118550ed8cc18a3f3c5e60d1bd71460bff"
+    },
+    {
+      "name": "Forecast exact equivalence 6 dt 0.12",
+      "pass": true,
+      "steps": 1,
+      "complete": false,
+      "trafficFeasible": false,
+      "trajectoryHash": "60e5be0295898a8692a23e45ecc42d2e3756e7f5896bcec5290fce48cafd0675"
+    },
+    {
+      "name": "Actual exact equivalence 0 标准",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 0 东京",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 1 标准",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 1 东京",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 2 标准",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 2 东京",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 3 标准",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 3 东京",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 4 标准",
+      "pass": false,
+      "error": "Error: 交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）\n    at trafficFailure (D:\\work4\\saima-bokujou\\sim.snapshot.js:2185:13)\n    at tick (D:\\work4\\saima-bokujou\\sim.snapshot.js:2323:13)\n    at Object.step (D:\\work4\\saima-bokujou\\sim.snapshot.js:2448:11)\n    at D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:242\n    at check (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:18:67)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:64)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)"
+    },
+    {
+      "name": "Actual exact equivalence 4 东京",
+      "pass": false,
+      "error": "Error: 交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）\n    at trafficFailure (D:\\work4\\saima-bokujou\\sim.snapshot.js:2185:13)\n    at tick (D:\\work4\\saima-bokujou\\sim.snapshot.js:2323:13)\n    at Object.step (D:\\work4\\saima-bokujou\\sim.snapshot.js:2448:11)\n    at D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:242\n    at check (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:18:67)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:64)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)"
+    },
+    {
+      "name": "Actual exact equivalence 5 标准",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 5 东京",
+      "pass": true,
+      "ticks": 180
+    },
+    {
+      "name": "Actual exact equivalence 6 标准",
+      "pass": false,
+      "error": "Error: 交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）\n    at trafficFailure (D:\\work4\\saima-bokujou\\sim.snapshot.js:2185:13)\n    at tick (D:\\work4\\saima-bokujou\\sim.snapshot.js:2323:13)\n    at Object.step (D:\\work4\\saima-bokujou\\sim.snapshot.js:2448:11)\n    at D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:242\n    at check (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:18:67)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:64)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)"
+    },
+    {
+      "name": "Actual exact equivalence 6 东京",
+      "pass": false,
+      "error": "Error: 交通运动状态不可行：既有跟车间距不满足有限制动可行域（h0/h1，30.000秒）\n    at trafficFailure (D:\\work4\\saima-bokujou\\sim.snapshot.js:2185:13)\n    at tick (D:\\work4\\saima-bokujou\\sim.snapshot.js:2323:13)\n    at Object.step (D:\\work4\\saima-bokujou\\sim.snapshot.js:2448:11)\n    at D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:242\n    at check (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:18:67)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\following-witness-cpu-v11.js:20:64)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)"
+    }
+  ],
+  "benchmarks": [
+    {
+      "case": 0,
+      "plain": {
+        "medianMs": 672.4958999999999,
+        "p90Ms": 703.9019000000008,
+        "runs": 5
+      },
+      "candidate": {
+        "medianMs": 740.7534999999989,
+        "p90Ms": 788.6984999999986,
+        "runs": 5
+      },
+      "speedup": 0.9078538272178274
+    },
+    {
+      "case": 1,
+      "plain": {
+        "medianMs": 706.5293999999994,
+        "p90Ms": 843.5570000000007,
+        "runs": 5
+      },
+      "candidate": {
+        "medianMs": 869.6805999999997,
+        "p90Ms": 932.6442999999999,
+        "runs": 5
+      },
+      "speedup": 0.8124010125096498
+    },
+    {
+      "case": 4,
+      "plain": {
+        "medianMs": 1.2489999999997963,
+        "p90Ms": 4.476600000001781,
+        "runs": 5
+      },
+      "candidate": {
+        "medianMs": 1.0397000000011758,
+        "p90Ms": 6.1875,
+        "runs": 5
+      },
+      "speedup": 1.2013080696339173
+    }
+  ],
+  "failures": [
+    "Actual exact equivalence 4 标准",
+    "Actual exact equivalence 4 东京",
+    "Actual exact equivalence 6 标准",
+    "Actual exact equivalence 6 东京"
+  ],
+  "scope": "Exact-state/ledger trajectory equivalence for a candidate early negative witness; this test never modifies production.",
+  "pass": false,
+  "productionUnchanged": true
+}

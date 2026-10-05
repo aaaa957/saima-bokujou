@@ -1,0 +1,3480 @@
+{
+  "startedAt": "2026-10-04T05:49:37.142Z",
+  "testSourceHash": "9ee0c4abcbce526191ed86cd8efaf7f2536a3aa37ccdc677f37e07862018377c",
+  "fixtureSourceHash": "8dcd5d5421e7fd0cb14d27c90797e56bc24617bde503f189a7fff71d156b7a06",
+  "historicalSourceHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "coreSourceHash": "9911f0d84d3c59c51eed02718e16fd3485c523d0c9fd181dca5ff650f56cab7b",
+  "engineHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "productionAtStartHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "productionUsed": true,
+  "coefficientHash": "f2e32942de8cd14203306f4539b6f65561eab547fcd6cfebe54e5788eb58b471",
+  "protocol": {
+    "dt": 0.016666666666666666,
+    "fieldSeed": 2026100301,
+    "raceSeed": 2026100302,
+    "horse": "Neutral70; all attributes70,480+57kg, no morale/fatigue modifiers; controlled request; no AI or traffic.",
+    "exactReference": "Actual execution at60Hz from the identical full state, same route and RNG. Finite actions use integral frames; end-state/work include the final whole frame while official finish seconds are interpolated.",
+    "golden": "Core factoring alone compared with published26fa9cb, every physical state and ledger at each frame. Controller and coefficient changes are excluded from this factoring check.",
+    "coarse": "Finite default1/30s, tail default0.5s with0.05s response/low-reserve adaptation. Accuracy is reported against60Hz; no fitting to race results.",
+    "leader": "Visible s/t/v/accel/body geometry only. Decaying observed acceleration uses1.4s response; no hidden opponent physiology or future targets. Projection is not a traffic certificate.",
+    "scope": "12 fixed solo continuations plus3 exact factoring controls; microbenchmark forecasts are counted separately, not simulated races. No real field calibration or between-horse physiological inference."
+  },
+  "executions": 18,
+  "frames": 31831,
+  "forecastQueries": 39,
+  "microbenchmarkQueries": 150,
+  "rows": [
+    {
+      "case": {
+        "name": "gate-flat",
+        "length": 1200,
+        "course": "标准",
+        "request": 17
+      },
+      "stateHash": "4a34aa435fdb2a826b354140a0c922c0d202f9d56282337107955f128b028f6c",
+      "actual": {
+        "status": "complete",
+        "frames": 4366,
+        "seconds": 72.76368086417388,
+        "ledgerSeconds": 72.76666666666667,
+        "endpoint": {
+          "s": 1200,
+          "t": 1.4,
+          "v": 16.58673600811766,
+          "stamina": 69.58896483780491,
+          "guts": 2503.561507786102,
+          "retention": 0.9676868858625924,
+          "aerobicOutput": 48.57433718975585
+        },
+        "ledger": {
+          "work": 5684.12296719009,
+          "aerobicUsed": 3303.711932027994,
+          "energyUsed": 2380.4110351622003,
+          "recovered": 0,
+          "unpaidWork": 6.617666484243223e-14
+        },
+        "final600": 35.305647825543836
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 72.76368086417388,
+        "ledgerSeconds": 72.76666666666382,
+        "steps": 4366,
+        "endpoint": {
+          "s": 1200,
+          "t": 1.4,
+          "v": 16.58673600811766,
+          "stamina": 69.58896483780491,
+          "guts": 2503.561507786102,
+          "retention": 0.9676868858625924,
+          "aerobicOutput": 48.57433718975585
+        },
+        "ledger": {
+          "work": 5684.12296719009,
+          "aerobicUsed": 3303.711932027994,
+          "energyUsed": 2380.4110351622003,
+          "requiredDraw": 2380.4110351622003,
+          "recovered": 0,
+          "unpaidWork": 6.617666484243223e-14,
+          "kineticChange": 137.5599057014935,
+          "positiveKineticWork": 144.499999999998
+        },
+        "limits": {
+          "requestSeconds": 71.49999999999723,
+          "velocitySeconds": 0,
+          "powerSeconds": 1.266666666666667,
+          "curveSeconds": 0,
+          "accelerationSeconds": 2.8999999999999946,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 2380.4110351622003,
+        "netRequired": 2380.4110351622003,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0.9642527448873288,
+        "meanTrackingShortfall": 0.5082492004776387,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 0,
+            "to": 1200.049537143229,
+            "time": 72.76666666666382,
+            "duration": 72.76666666666382,
+            "requestedDuration": null,
+            "startedAt": 0,
+            "endedAt": 72.76666666666382,
+            "targetV": 17,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 0,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 0,
+            "t": 1.4,
+            "v": 0,
+            "reserve": 2450
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 72.74269099237671,
+        "ledgerSeconds": 72.75102068012276,
+        "steps": 411,
+        "endpoint": {
+          "s": 1200,
+          "t": 1.4,
+          "v": 16.620466262820507,
+          "stamina": 70.64311418122351,
+          "guts": 2503.7684769180855,
+          "retention": 0.9676908281317731,
+          "aerobicOutput": 48.577083700064435
+        },
+        "ledger": {
+          "work": 5686.553858758751,
+          "aerobicUsed": 3307.196972939996,
+          "energyUsed": 2379.3568858187778,
+          "requiredDraw": 2379.3568858187778,
+          "recovered": 0,
+          "unpaidWork": 1.2045919817182948e-14,
+          "kineticChange": 138.11994939677734,
+          "positiveKineticWork": 144.49999999999994
+        },
+        "limits": {
+          "requestSeconds": 71.57705699846076,
+          "velocitySeconds": 0,
+          "powerSeconds": 1.1739636816620547,
+          "curveSeconds": 0,
+          "accelerationSeconds": 2.8936807300198817,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 2379.3568858187778,
+        "netRequired": 2379.3568858187778,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0.9330632122485554,
+        "meanTrackingShortfall": 0.5034581019202952,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 0,
+            "to": 1200.1384605757512,
+            "time": 72.75102068012276,
+            "duration": 72.75102068012276,
+            "requestedDuration": null,
+            "startedAt": 0,
+            "endedAt": 72.75102068012276,
+            "targetV": 17,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 0,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 0,
+            "t": 1.4,
+            "v": 0,
+            "reserve": 2450
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 0,
+        "ledgerSeconds": -2.8421709430404007e-12,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": -0.020989871797169712,
+        "ledgerSeconds": -0.015645986543901813,
+        "s": 0,
+        "t": 0,
+        "v": 0.03373025470284574,
+        "stamina": 1.054149343418601,
+        "guts": 0.2069691319834419,
+        "retention": 0.0000039422691806567656,
+        "aerobicOutput": 0.0027465103085830833,
+        "work": 2.430891568660627,
+        "energy": -1.054149343422523,
+        "recovery": 0
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 72.75215068569064,
+        "ledgerSeconds": 72.76666666666382,
+        "steps": 4366,
+        "endpoint": {
+          "s": 1200,
+          "t": 1.4,
+          "v": 16.999999999999883,
+          "stamina": 60.7256197902139,
+          "guts": 2498.59804201897,
+          "retention": 0.9675923436575042,
+          "aerobicOutput": 48.57413582334329
+        },
+        "ledger": {
+          "work": 5692.986244423867,
+          "aerobicUsed": 3303.7118642141822,
+          "energyUsed": 2389.2743802097903,
+          "requiredDraw": 2389.2743802097903,
+          "recovered": 0,
+          "unpaidWork": 6.412275224687569e-14,
+          "kineticChange": 144.499999999998,
+          "positiveKineticWork": 144.499999999998
+        },
+        "limits": {
+          "requestSeconds": 72.76666666666382,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 2.8999999999999946,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 2389.2743802097903,
+        "netRequired": 2389.2743802097903,
+        "peakPowerShortfall": 13.380653182834564,
+        "energyFeasible": false,
+        "requestedEnergyFeasible": false,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0.5055386938356294,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": false,
+        "segments": [
+          {
+            "index": 0,
+            "from": 0,
+            "to": 1200.246771676544,
+            "time": 72.76666666666382,
+            "duration": 72.76666666666382,
+            "requestedDuration": null,
+            "startedAt": 0,
+            "endedAt": 72.76666666666382,
+            "targetV": 17,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 0,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 0,
+            "t": 1.4,
+            "v": 0,
+            "reserve": 2450
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "gate-side-wind",
+        "length": 2400,
+        "course": "東京",
+        "wind": 5,
+        "side": 2,
+        "request": 17,
+        "finite": 8
+      },
+      "stateHash": "6017bfde4677c81a9547328cc6c9ded09609a2e59785cf6b27aa60762c2bcec6",
+      "actual": {
+        "status": "complete",
+        "frames": 480,
+        "seconds": 7.999999999999977,
+        "ledgerSeconds": 8,
+        "endpoint": {
+          "s": 99.20873682140778,
+          "t": 3.4,
+          "v": 16.951778150921708,
+          "stamina": 2119.4465729854824,
+          "guts": 3989.0453247297364,
+          "retention": 0.9959818157091378,
+          "aerobicOutput": 37.59002877698562
+        },
+        "ledger": {
+          "work": 565.5057555793348,
+          "aerobicUsed": 234.95232856482158,
+          "energyUsed": 330.5534270145131,
+          "recovered": 0,
+          "unpaidWork": 1.3083284455817079e-14
+        }
+      },
+      "fine": {
+        "complete": true,
+        "finished": false,
+        "seconds": 7.999999999999977,
+        "ledgerSeconds": 7.999999999999977,
+        "steps": 480,
+        "endpoint": {
+          "s": 99.20873682140778,
+          "t": 3.4,
+          "v": 16.951778150921708,
+          "stamina": 2119.4465729854824,
+          "guts": 3989.0453247297364,
+          "retention": 0.9959818157091378,
+          "aerobicOutput": 37.59002877698562
+        },
+        "ledger": {
+          "work": 565.5057555793348,
+          "aerobicUsed": 234.95232856482158,
+          "energyUsed": 330.5534270145131,
+          "requiredDraw": 330.5534270145131,
+          "recovered": 0,
+          "unpaidWork": 1.3083284455817079e-14,
+          "kineticChange": 143.6813912390333,
+          "positiveKineticWork": 143.6813912390333
+        },
+        "limits": {
+          "requestSeconds": 7.999999999999977,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 2.8999999999999946,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 330.5534270145131,
+        "netRequired": 330.5534270145131,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 4.591594874901566,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 0,
+            "to": 99.20873682140778,
+            "time": 7.999999999999977,
+            "duration": 7.999999999999977,
+            "requestedDuration": 8,
+            "startedAt": 0,
+            "endedAt": 7.999999999999977,
+            "targetV": 17,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 0,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 0,
+            "t": 1.4,
+            "v": 0,
+            "reserve": 2450
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": false,
+        "seconds": 7.999999999999982,
+        "ledgerSeconds": 7.999999999999982,
+        "steps": 241,
+        "endpoint": {
+          "s": 99.28014957836405,
+          "t": 3.4,
+          "v": 16.953537000164584,
+          "stamina": 2118.989983300626,
+          "guts": 3988.775344077412,
+          "retention": 0.9959766732205221,
+          "aerobicOutput": 37.590045439014446
+        },
+        "ledger": {
+          "work": 566.092258253296,
+          "aerobicUsed": 235.08224155392008,
+          "energyUsed": 331.0100166993756,
+          "requiredDraw": 331.0100166993756,
+          "recovered": 0,
+          "unpaidWork": 1.272940086671781e-14,
+          "kineticChange": 143.71120840797477,
+          "positiveKineticWork": 143.71120840797477
+        },
+        "limits": {
+          "requestSeconds": 7.999999999999982,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 2.9,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 331.0100166993756,
+        "netRequired": 331.0100166993756,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 4.582634451320183,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 0,
+            "to": 99.28014957836405,
+            "time": 7.999999999999982,
+            "duration": 7.999999999999982,
+            "requestedDuration": 8,
+            "startedAt": 0,
+            "endedAt": 7.999999999999982,
+            "targetV": 17,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 0,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 0,
+            "t": 1.4,
+            "v": 0,
+            "reserve": 2450
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 0,
+        "ledgerSeconds": -2.3092638912203256e-14,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 5.329070518200751e-15,
+        "ledgerSeconds": -1.7763568394002505e-14,
+        "s": 0.07141275695626348,
+        "t": 0,
+        "v": 0.0017588492428757263,
+        "stamina": -0.4565896848562261,
+        "guts": -0.26998065232464796,
+        "retention": -0.000005142488615716978,
+        "aerobicOutput": 0.000016662028826885944,
+        "work": 0.5865026739611494,
+        "energy": 0.4565896848625357,
+        "recovery": 0
+      },
+      "demand": null
+    },
+    {
+      "case": {
+        "name": "flat-history-full",
+        "length": 2400,
+        "course": "标准",
+        "s": 1800,
+        "v": 16,
+        "reserve": 0.47,
+        "guts": 0.88,
+        "oxygen": 0.98,
+        "request": 18.75
+      },
+      "stateHash": "f9a59af9837bbf1db643224620b944d1d68cc30414ce7d83af4182785f44a950",
+      "actual": {
+        "status": "complete",
+        "frames": 2092,
+        "seconds": 34.85349248356633,
+        "ledgerSeconds": 34.86666666666667,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 13.795841901431881,
+          "stamina": 5.663078545559679,
+          "guts": 2866.6083013562334,
+          "retention": 0.9746020628829759,
+          "aerobicOutput": 48.835254873921734
+        },
+        "ledger": {
+          "work": 2852.4098544478766,
+          "aerobicUsed": 1706.572932993435,
+          "energyUsed": 1145.8369214544375,
+          "recovered": 0,
+          "unpaidWork": 5.384581669432009e-14
+        },
+        "final600": 0
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 34.853492483567614,
+        "ledgerSeconds": 34.86666666666597,
+        "steps": 2092,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 13.795841901431881,
+          "stamina": 5.663078545559679,
+          "guts": 2866.6083013562334,
+          "retention": 0.9746020628829759,
+          "aerobicOutput": 48.835254873921734
+        },
+        "ledger": {
+          "work": 2852.4098544478766,
+          "aerobicUsed": 1706.572932993435,
+          "energyUsed": 1145.8369214544375,
+          "requiredDraw": 1145.8369214544375,
+          "recovered": 0,
+          "unpaidWork": 5.384581669432009e-14,
+          "kineticChange": -32.837373115348186,
+          "positiveKineticWork": 43.10600137183087
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 21.70000000000005,
+          "powerSeconds": 13.1666666666669,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1145.8369214544375,
+        "netRequired": 1145.8369214544375,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 5.036237442938464,
+        "meanTrackingShortfall": 1.5363740583529881,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1800,
+            "to": 2400.1817578320865,
+            "time": 34.86666666666597,
+            "duration": 34.86666666666597,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 54.86666666666597,
+            "targetV": 18.75,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1800,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 1151.5
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 34.85452515134849,
+        "ledgerSeconds": 34.86285550851844,
+        "steps": 425,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 13.793446188759631,
+          "stamina": 5.6297267292883335,
+          "guts": 2866.59049549406,
+          "retention": 0.9746017237236964,
+          "aerobicOutput": 48.836022094921255
+        },
+        "ledger": {
+          "work": 2852.435286673853,
+          "aerobicUsed": 1706.5650134031468,
+          "energyUsed": 1145.8702732707131,
+          "requiredDraw": 1145.8702732707131,
+          "recovered": 0,
+          "unpaidWork": 2.89906987305244e-14,
+          "kineticChange": -32.8704211188962,
+          "positiveKineticWork": 43.330947777819574
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 21.671202880187938,
+          "powerSeconds": 13.191652628330571,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1145.8702732707131,
+        "netRequired": 1145.8702732707131,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 5.038061927750533,
+        "meanTrackingShortfall": 1.5364098229973109,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1800,
+            "to": 2400.1149071236955,
+            "time": 34.86285550851844,
+            "duration": 34.86285550851844,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 54.86285550851844,
+            "targetV": 18.75,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1800,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 1151.5
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 1.2860823517257813e-12,
+        "ledgerSeconds": -6.963318810448982e-13,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 0.0010326677821623775,
+        "ledgerSeconds": -0.003811158148224081,
+        "s": 0,
+        "t": 0,
+        "v": -0.0023957126722500277,
+        "stamina": -0.033351816271345314,
+        "guts": -0.01780586217319069,
+        "retention": -3.39159279549861e-7,
+        "aerobicOutput": 0.0007672209995206458,
+        "work": 0.02543222597660133,
+        "energy": 0.033351816275626334,
+        "recovery": 0
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 32.76974085756807,
+        "ledgerSeconds": 32.783333333332756,
+        "steps": 1967,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 18.221701145568534,
+          "stamina": 0,
+          "guts": 2688.10100950589,
+          "retention": 0.9712019239905884,
+          "aerobicOutput": 48.79522279807137
+        },
+        "ledger": {
+          "work": 3089.2243715927207,
+          "aerobicUsed": 1604.5925724395934,
+          "energyUsed": 1151.499999999997,
+          "requiredDraw": 1484.6317991531291,
+          "recovered": 0,
+          "unpaidWork": 333.1317991531324,
+          "kineticChange": 38.01519631920681,
+          "positiveKineticWork": 43.10600137183087
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 21.70000000000005,
+          "powerSeconds": 11.083333333333464,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1484.6317991531291,
+        "netRequired": 1484.6317991531291,
+        "peakPowerShortfall": 44.91617821636634,
+        "energyFeasible": false,
+        "requestedEnergyFeasible": false,
+        "goalReached": true,
+        "targetShortfall": 0.5397822553293885,
+        "meanTrackingShortfall": 0.44046225083514196,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": false,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1800,
+            "to": 2400.247679210124,
+            "time": 32.783333333332756,
+            "duration": 32.783333333332756,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 52.783333333332756,
+            "targetV": 18.75,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1800,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 1151.5
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "flat-history-depleted",
+        "length": 2400,
+        "course": "标准",
+        "s": 1800,
+        "v": 14,
+        "reserve": 0.001,
+        "guts": 0.7,
+        "oxygen": 1,
+        "request": 18.75
+      },
+      "stateHash": "9e976f8ae670511f290ef7938730fee487808dced6390256d7bc99738667b94a",
+      "actual": {
+        "status": "complete",
+        "frames": 2671,
+        "seconds": 44.513864466663165,
+        "ledgerSeconds": 44.516666666666666,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 13.456052215313822,
+          "stamina": 0.011193755428824068,
+          "guts": 2700.115626258694,
+          "retention": 0.971430773833499,
+          "aerobicOutput": 48.62200169843936
+        },
+        "ledger": {
+          "work": 2170.7900993749795,
+          "aerobicUsed": 2168.3512931304053,
+          "energyUsed": 2.4388062445711833,
+          "recovered": 0,
+          "unpaidWork": 3.7398810297485755e-14
+        },
+        "final600": 0
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 44.513864466664444,
+        "ledgerSeconds": 44.51666666666542,
+        "steps": 2671,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 13.456052215313822,
+          "stamina": 0.011193755428824068,
+          "guts": 2700.115626258694,
+          "retention": 0.971430773833499,
+          "aerobicOutput": 48.62200169843936
+        },
+        "ledger": {
+          "work": 2170.7900993749795,
+          "aerobicUsed": 2168.3512931304053,
+          "energyUsed": 2.4388062445711833,
+          "requiredDraw": 2.4388062445711833,
+          "recovered": 0,
+          "unpaidWork": 3.7398810297485755e-14,
+          "kineticChange": -7.467329389374001,
+          "positiveKineticWork": 0.577887886319246
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 0,
+          "powerSeconds": 44.51666666666542,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 2.4388062445711833,
+        "netRequired": 2.4388062445711833,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 5.323378900069997,
+        "meanTrackingShortfall": 5.271054888088684,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1800,
+            "to": 2400.037706565261,
+            "time": 44.51666666666542,
+            "duration": 44.51666666666542,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 64.51666666666543,
+            "targetV": 18.75,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1800,
+            "t": 1.4,
+            "v": 14,
+            "reserve": 2.45
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 44.51452760536138,
+        "ledgerSeconds": 44.56452755713128,
+        "steps": 892,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 13.454511106807633,
+          "stamina": 0.01128338565843153,
+          "guts": 2699.867077489442,
+          "retention": 0.9714260395712274,
+          "aerobicOutput": 48.62185150169767
+        },
+        "ledger": {
+          "work": 2173.0500003100524,
+          "aerobicUsed": 2170.6112836957113,
+          "energyUsed": 2.43871661434157,
+          "requiredDraw": 2.43871661434157,
+          "recovered": 0,
+          "unpaidWork": 4.995006897218003e-14,
+          "kineticChange": -7.488065438395026,
+          "positiveKineticWork": 0.5788566977730625
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 0,
+          "powerSeconds": 44.56452755713128,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 2.43871661434157,
+        "netRequired": 2.43871661434157,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 5.323370259805197,
+        "meanTrackingShortfall": 5.271280569642056,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1800,
+            "to": 2400.672763489033,
+            "time": 44.56452755713128,
+            "duration": 44.56452755713128,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 64.56452755713127,
+            "targetV": 18.75,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1800,
+            "t": 1.4,
+            "v": 14,
+            "reserve": 2.45
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 1.2789769243681803e-12,
+        "ledgerSeconds": -1.2434497875801753e-12,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 0.0006631386982149934,
+        "ledgerSeconds": 0.04786089046461228,
+        "s": 0,
+        "t": 0,
+        "v": -0.0015411085061884933,
+        "stamina": 0.00008963022960746178,
+        "guts": -0.24854876925201097,
+        "retention": -0.000004734262271544054,
+        "aerobicOutput": -0.0001501967416928096,
+        "work": 2.259900935072892,
+        "energy": -0.00008963022961339107,
+        "recovery": 0
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 33.408716202194725,
+        "ledgerSeconds": 33.41666666666605,
+        "steps": 2005,
+        "endpoint": {
+          "s": 2400,
+          "t": 1.4,
+          "v": 17.96162108491549,
+          "stamina": 0,
+          "guts": 1961.2599797236658,
+          "retention": 0.9573573329471174,
+          "aerobicOutput": 48.129095761679416
+        },
+        "ledger": {
+          "work": 3050.7290161119245,
+          "aerobicUsed": 1621.4849527696447,
+          "energyUsed": 2.45,
+          "requiredDraw": 1429.2440633422823,
+          "recovered": 0,
+          "unpaidWork": 1426.7940633422822,
+          "kineticChange": 63.30991599904033,
+          "positiveKineticWork": 68.04336579725987
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 0,
+          "powerSeconds": 33.41666666666605,
+          "curveSeconds": 0,
+          "accelerationSeconds": 1.0666666666666678,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1429.2440633422823,
+        "netRequired": 1429.2440633422823,
+        "peakPowerShortfall": 54.43007761680209,
+        "energyFeasible": false,
+        "requestedEnergyFeasible": false,
+        "goalReached": true,
+        "targetShortfall": 0.7993840715023701,
+        "meanTrackingShortfall": 0.7906143473975688,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": false,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1800,
+            "to": 2400.14280389113,
+            "time": 33.41666666666605,
+            "duration": 33.41666666666605,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 53.41666666666605,
+            "targetV": 18.75,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1800,
+            "t": 1.4,
+            "v": 14,
+            "reserve": 2.45
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "uphill-nakayama",
+        "length": 2000,
+        "course": "中山",
+        "s": 1770,
+        "v": 15,
+        "reserve": 0.12,
+        "guts": 0.8,
+        "oxygen": 0.85,
+        "request": 18
+      },
+      "stateHash": "1d35fe2e7454a5e57cd650b6ff6c711a499741890ad4f1df377b0376efb153df",
+      "actual": {
+        "status": "complete",
+        "frames": 901,
+        "seconds": 15.002786137416805,
+        "ledgerSeconds": 15.016666666666666,
+        "endpoint": {
+          "s": 2000,
+          "t": 1.4,
+          "v": 13.625151058372623,
+          "stamina": 6.327196507891577,
+          "guts": 3124.0377608031636,
+          "retention": 0.9795054811581555,
+          "aerobicOutput": 47.421153791364915
+        },
+        "ledger": {
+          "work": 968.2679784125936,
+          "aerobicUsed": 680.5951749204864,
+          "energyUsed": 287.67280349210887,
+          "recovered": 0,
+          "unpaidWork": 1.911318325831246e-14
+        },
+        "final600": 0
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 15.002786137417985,
+        "ledgerSeconds": 15.016666666666993,
+        "steps": 901,
+        "endpoint": {
+          "s": 2000,
+          "t": 1.4,
+          "v": 13.625151058372623,
+          "stamina": 6.327196507891577,
+          "guts": 3124.0377608031636,
+          "retention": 0.9795054811581555,
+          "aerobicOutput": 47.421153791364915
+        },
+        "ledger": {
+          "work": 968.2679784125936,
+          "aerobicUsed": 680.5951749204864,
+          "energyUsed": 287.67280349210887,
+          "requiredDraw": 287.67280349210887,
+          "recovered": 0,
+          "unpaidWork": 1.911318325831246e-14,
+          "kineticChange": -19.677629318263698,
+          "positiveKineticWork": 45.45484963367248
+        },
+        "limits": {
+          "requestSeconds": 2.833333333333328,
+          "velocitySeconds": 0,
+          "powerSeconds": 12.183333333333518,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 287.67280349210887,
+        "netRequired": 287.67280349210887,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 4.445750185536069,
+        "meanTrackingShortfall": 2.671089790877635,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1770,
+            "to": 2000.1891405394647,
+            "time": 15.016666666666993,
+            "duration": 15.016666666666993,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 35.01666666666699,
+            "targetV": 18,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1770,
+            "t": 1.4,
+            "v": 15,
+            "reserve": 294
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 15.002070174595893,
+        "ledgerSeconds": 15.010398518430002,
+        "steps": 302,
+        "endpoint": {
+          "s": 2000,
+          "t": 1.4,
+          "v": 13.624727151314886,
+          "stamina": 6.3143333130759505,
+          "guts": 3124.052869773679,
+          "retention": 0.9795057689480701,
+          "aerobicOutput": 47.420268617381794
+        },
+        "ledger": {
+          "work": 968.0780019746317,
+          "aerobicUsed": 680.3923352877076,
+          "energyUsed": 287.6856666869242,
+          "requiredDraw": 287.6856666869242,
+          "recovered": 0,
+          "unpaidWork": 2.7901292387610965e-14,
+          "kineticChange": -19.683405026111473,
+          "positiveKineticWork": 45.62906699981724
+        },
+        "limits": {
+          "requestSeconds": 2.849999999999998,
+          "velocitySeconds": 0,
+          "powerSeconds": 12.160398518429963,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 287.6856666869242,
+        "netRequired": 287.6856666869242,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 4.447052404346421,
+        "meanTrackingShortfall": 2.669729141285159,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1770,
+            "to": 2000.113476694485,
+            "time": 15.010398518430002,
+            "duration": 15.010398518430002,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 35.01039851843,
+            "targetV": 18,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1770,
+            "t": 1.4,
+            "v": 15,
+            "reserve": 294
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 1.1795009413617663e-12,
+        "ledgerSeconds": 3.268496584496461e-13,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": -0.0007159628209123525,
+        "ledgerSeconds": -0.006268148236664217,
+        "s": 0,
+        "t": 0,
+        "v": -0.000423907057736983,
+        "stamina": -0.012863194815626144,
+        "guts": 0.015108970515484543,
+        "retention": 2.8778991456590575e-7,
+        "aerobicOutput": -0.00088517398312149,
+        "work": -0.18997643796194552,
+        "energy": 0.012863194815338375,
+        "recovery": 0
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 12.963053957969144,
+        "ledgerSeconds": 12.96666666666689,
+        "steps": 778,
+        "endpoint": {
+          "s": 2000,
+          "t": 1.4,
+          "v": 17.99997421645653,
+          "stamina": 0,
+          "guts": 2954.7073779842904,
+          "retention": 0.9762801405330341,
+          "aerobicOutput": 47.00803756957733
+        },
+        "ledger": {
+          "work": 1192.653817905037,
+          "aerobicUsed": 583.541146691362,
+          "energyUsed": 293.99999999999983,
+          "requiredDraw": 609.1126712136753,
+          "recovered": 0,
+          "unpaidWork": 315.1126712136761,
+          "kineticChange": 49.49953589654993,
+          "positiveKineticWork": 49.49953589654993
+        },
+        "limits": {
+          "requestSeconds": 12.96666666666689,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 609.1126712136753,
+        "netRequired": 609.1126712136753,
+        "peakPowerShortfall": 47.58329541292815,
+        "energyFeasible": false,
+        "requestedEnergyFeasible": false,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0.25719573295327575,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": false,
+        "segments": [
+          {
+            "index": 0,
+            "from": 1770,
+            "to": 2000.065029055617,
+            "time": 12.96666666666689,
+            "duration": 12.96666666666689,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 32.96666666666689,
+            "targetV": 18,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 1770,
+            "t": 1.4,
+            "v": 15,
+            "reserve": 294
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "outer-bend-kyoto",
+        "length": 3000,
+        "course": "京都",
+        "s": 700,
+        "v": 16,
+        "t": 14,
+        "reserve": 0.45,
+        "guts": 0.85,
+        "oxygen": 1,
+        "wind": 8,
+        "request": 17.5
+      },
+      "stateHash": "478bf29433030479cfb8fbfca83d0254773ee513019483ef09c714f51681b938",
+      "actual": {
+        "status": "complete",
+        "frames": 10212,
+        "seconds": 170.18944160517555,
+        "ledgerSeconds": 170.2,
+        "endpoint": {
+          "s": 3000,
+          "t": 14,
+          "v": 12.728499337704495,
+          "stamina": 0.000017105307183359397,
+          "guts": 2045.2438591918626,
+          "retention": 0.9589570258893688,
+          "aerobicOutput": 47.99821973336575
+        },
+        "ledger": {
+          "work": 9351.192259141055,
+          "aerobicUsed": 8248.692276246378,
+          "energyUsed": 1102.4999828946886,
+          "recovered": 0,
+          "unpaidWork": 1.0323459921121017e-13
+        },
+        "final600": 47.83748206525863
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 170.18944160515977,
+        "ledgerSeconds": 170.2000000000276,
+        "steps": 10212,
+        "endpoint": {
+          "s": 3000,
+          "t": 14,
+          "v": 12.728499337704495,
+          "stamina": 0.000017105307183359397,
+          "guts": 2045.2438591918626,
+          "retention": 0.9589570258893688,
+          "aerobicOutput": 47.99821973336575
+        },
+        "ledger": {
+          "work": 9351.192259141055,
+          "aerobicUsed": 8248.692276246378,
+          "energyUsed": 1102.4999828946886,
+          "requiredDraw": 1102.4999828946886,
+          "recovered": 0,
+          "unpaidWork": 1.0323459921121017e-13,
+          "kineticChange": -46.992652305028116,
+          "positiveKineticWork": 38.04341633341272
+        },
+        "limits": {
+          "requestSeconds": 22.250000000000018,
+          "velocitySeconds": 0,
+          "powerSeconds": 147.95000000000988,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1102.4999828946886,
+        "netRequired": 1102.4999828946886,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 4.772224068597339,
+        "meanTrackingShortfall": 3.520118024062913,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 700,
+            "to": 3000.1343925797705,
+            "time": 170.2000000000276,
+            "duration": 170.2000000000276,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 190.2000000000276,
+            "targetV": 17.5,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 700,
+            "t": 14,
+            "v": 16,
+            "reserve": 1102.5
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 170.19237067251848,
+        "ledgerSeconds": 170.24237063990952,
+        "steps": 3116,
+        "endpoint": {
+          "s": 3000,
+          "t": 14,
+          "v": 12.72846151245693,
+          "stamina": 0.000014911337148935672,
+          "guts": 2045.0258436879546,
+          "retention": 0.9589528732131039,
+          "aerobicOutput": 47.99809554977528
+        },
+        "ledger": {
+          "work": 9353.174209292245,
+          "aerobicUsed": 8250.674224203594,
+          "energyUsed": 1102.4999850886666,
+          "requiredDraw": 1102.4999850886666,
+          "recovered": 0,
+          "unpaidWork": 8.270395241278881e-14,
+          "kineticChange": -46.99313376295133,
+          "positiveKineticWork": 38.068474332038164
+        },
+        "limits": {
+          "requestSeconds": 22.22924084192927,
+          "velocitySeconds": 0,
+          "powerSeconds": 148.01312979797544,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1102.4999850886666,
+        "netRequired": 1102.4999850886666,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 4.77224033417432,
+        "meanTrackingShortfall": 3.520648477473664,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 700,
+            "to": 3000.636423480474,
+            "time": 170.24237063990952,
+            "duration": 170.24237063990952,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 190.24237063990952,
+            "targetV": 17.5,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 700,
+            "t": 14,
+            "v": 16,
+            "reserve": 1102.5
+          }
+        }
+      },
+      "fineError": {
+        "seconds": -1.5774048733874224e-11,
+        "ledgerSeconds": 2.759747985692229e-11,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 0.0029290673429329672,
+        "ledgerSeconds": 0.04237063990953516,
+        "s": 0,
+        "t": 0,
+        "v": -0.00003782524756523742,
+        "stamina": -0.000002193970034423725,
+        "guts": -0.21801550390796365,
+        "retention": -0.000004152676264967958,
+        "aerobicOutput": -0.0001241835904721711,
+        "work": 1.9819501511901763,
+        "energy": 0.0000021939779344393173,
+        "recovery": 0
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 136.24854088644275,
+        "ledgerSeconds": 136.25000000000057,
+        "steps": 8175,
+        "endpoint": {
+          "s": 3000,
+          "t": 14,
+          "v": 17.250737101977197,
+          "stamina": 0,
+          "guts": 0,
+          "retention": 0.92,
+          "aerobicOutput": 46.20588088914965
+        },
+        "ledger": {
+          "work": 11779.074483451423,
+          "aerobicUsed": 6524.960943318957,
+          "energyUsed": 1102.4999999999984,
+          "requiredDraw": 5254.113540132166,
+          "recovered": 0,
+          "unpaidWork": 4151.6135401321835,
+          "kineticChange": 20.793965280766315,
+          "positiveKineticWork": 25.124999999997954
+        },
+        "limits": {
+          "requestSeconds": 109.74999999999505,
+          "velocitySeconds": 0,
+          "powerSeconds": 26.499999999999776,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 5254.113540132166,
+        "netRequired": 5254.113540132166,
+        "peakPowerShortfall": 45.68718387209423,
+        "energyFeasible": false,
+        "requestedEnergyFeasible": false,
+        "goalReached": true,
+        "targetShortfall": 0.25,
+        "meanTrackingShortfall": 0.037492179705878266,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": false,
+        "segments": [
+          {
+            "index": 0,
+            "from": 700,
+            "to": 3000.02517079251,
+            "time": 136.25000000000057,
+            "duration": 136.25000000000057,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 156.25000000000057,
+            "targetV": 17.5,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 700,
+            "t": 14,
+            "v": 16,
+            "reserve": 1102.5
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "low-reserve-fade",
+        "length": 800,
+        "course": "标准",
+        "s": 650,
+        "v": 16,
+        "reserve": 0.0326530612244898,
+        "guts": 0.9,
+        "oxygen": 1,
+        "request": 19
+      },
+      "stateHash": "f6816ac668a98f57b208ef518e5158aac89dfb51c2b26a9ad7401c466c7e5f0c",
+      "actual": {
+        "status": "complete",
+        "frames": 606,
+        "seconds": 10.089594467963511,
+        "ledgerSeconds": 10.1,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 13.928769671748686,
+          "stamina": 6.395647097620366,
+          "guts": 3683.693331321259,
+          "retention": 0.9901655872632621,
+          "aerobicOutput": 49.56117236492363
+        },
+        "ledger": {
+          "work": 574.4064533879135,
+          "aerobicUsed": 500.8021004855346,
+          "energyUsed": 73.60435290237966,
+          "recovered": 0,
+          "unpaidWork": 1.3034712198489729e-14
+        },
+        "final600": 0
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 10.089594467964165,
+        "ledgerSeconds": 10.100000000000081,
+        "steps": 606,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 13.928769671748686,
+          "stamina": 6.395647097620366,
+          "guts": 3683.693331321259,
+          "retention": 0.9901655872632621,
+          "aerobicOutput": 49.56117236492363
+        },
+        "ledger": {
+          "work": 574.4064533879135,
+          "aerobicUsed": 500.8021004855346,
+          "energyUsed": 73.60435290237966,
+          "requiredDraw": 73.60435290237966,
+          "recovered": 0,
+          "unpaidWork": 1.3034712198489729e-14,
+          "kineticChange": -30.994687715687007,
+          "positiveKineticWork": 1.1566781079271493
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 0,
+          "powerSeconds": 10.100000000000081,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 73.60435290237966,
+        "netRequired": 73.60435290237966,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 5.162220773194484,
+        "meanTrackingShortfall": 4.134163974229393,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 650,
+            "to": 800.1449438602818,
+            "time": 10.100000000000081,
+            "duration": 10.100000000000081,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 30.10000000000008,
+            "targetV": 19,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 650,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 80.00000000000001
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 10.08966560192556,
+        "ledgerSeconds": 10.097994264252046,
+        "steps": 203,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 13.928737440523953,
+          "stamina": 6.4089577319773205,
+          "guts": 3683.711726928054,
+          "retention": 0.9901659376557724,
+          "aerobicOutput": 49.56126619646152
+        },
+        "ledger": {
+          "work": 574.2936731939532,
+          "aerobicUsed": 500.70263092593007,
+          "energyUsed": 73.59104226802263,
+          "requiredDraw": 73.59104226802263,
+          "recovered": 0,
+          "unpaidWork": 1.2163881013549371e-14,
+          "kineticChange": -30.99513665647312,
+          "positiveKineticWork": 1.2071664015030592
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 0,
+          "powerSeconds": 10.097994264252046,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 73.59104226802263,
+        "netRequired": 73.59104226802263,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 5.162331558138915,
+        "meanTrackingShortfall": 4.134076445404552,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 650,
+            "to": 800.1160107871139,
+            "time": 10.097994264252046,
+            "duration": 10.097994264252046,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 30.097994264252044,
+            "targetV": 19,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 650,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 80.00000000000001
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 6.536993168992922e-13,
+        "ledgerSeconds": 8.171241461241152e-14,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 0.00007113396204871947,
+        "ledgerSeconds": -0.0020057357479537075,
+        "s": 0,
+        "t": 0,
+        "v": -0.000032231224732726105,
+        "stamina": 0.013310634356954232,
+        "guts": 0.018395606794911146,
+        "retention": 3.5039251033985863e-7,
+        "aerobicOutput": 0.00009383153788888876,
+        "work": -0.11278019396036143,
+        "energy": -0.013310634357026174,
+        "recovery": 0
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 8.236261429589273,
+        "ledgerSeconds": 8.24999999999999,
+        "steps": 495,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 18.517001127861562,
+          "stamina": 0,
+          "guts": 3517.6698852221707,
+          "retention": 0.9870032359089937,
+          "aerobicOutput": 49.51874733884516
+        },
+        "ledger": {
+          "work": 797.072605433082,
+          "aerobicUsed": 408.95676503265145,
+          "energyUsed": 79.99999999999999,
+          "requiredDraw": 388.11584040042993,
+          "recovered": 0,
+          "unpaidWork": 308.11584040043,
+          "kineticChange": 43.439665384613164,
+          "positiveKineticWork": 43.707107944660095
+        },
+        "limits": {
+          "requestSeconds": 0,
+          "velocitySeconds": 0,
+          "powerSeconds": 8.24999999999999,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0.05,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 388.11584040042993,
+        "netRequired": 388.11584040042993,
+        "peakPowerShortfall": 49.20580534350036,
+        "energyFeasible": false,
+        "requestedEnergyFeasible": false,
+        "goalReached": true,
+        "targetShortfall": 0.4934982765722431,
+        "meanTrackingShortfall": 0.787345671119084,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": false,
+        "segments": [
+          {
+            "index": 0,
+            "from": 650,
+            "to": 800.2543982132678,
+            "time": 8.24999999999999,
+            "duration": 8.24999999999999,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 28.24999999999999,
+            "targetV": 19,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 650,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 80.00000000000001
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "zero-reserve-recovery",
+        "length": 800,
+        "course": "标准",
+        "s": 650,
+        "v": 10,
+        "reserve": 0,
+        "guts": 0.9,
+        "oxygen": 1,
+        "request": 10
+      },
+      "stateHash": "7741385794d2d5ba6e5d9e4d28ba6a2046344c3438c9e9ccf6ca12889ea0cada",
+      "actual": {
+        "status": "complete",
+        "frames": 901,
+        "seconds": 15.000000000002558,
+        "ledgerSeconds": 15.016666666666666,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 10,
+          "stamina": 30.033333333333985,
+          "guts": 3736.4137714012304,
+          "retention": 0.9911697861219282,
+          "aerobicOutput": 49.579992622109984
+        },
+        "ledger": {
+          "work": 396.23844180752366,
+          "aerobicUsed": 396.23844180752366,
+          "energyUsed": 0,
+          "recovered": 30.033333333333985,
+          "unpaidWork": 0
+        },
+        "final600": 0
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 15.000000000003737,
+        "ledgerSeconds": 15.016666666666993,
+        "steps": 901,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 10,
+          "stamina": 30.033333333333985,
+          "guts": 3736.4137714012304,
+          "retention": 0.9911697861219282,
+          "aerobicOutput": 49.579992622109984
+        },
+        "ledger": {
+          "work": 396.23844180752366,
+          "aerobicUsed": 396.23844180752366,
+          "energyUsed": 0,
+          "requiredDraw": 0,
+          "recovered": 30.033333333333985,
+          "unpaidWork": 0,
+          "kineticChange": 0,
+          "positiveKineticWork": 0
+        },
+        "limits": {
+          "requestSeconds": 15.016666666666993,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 0,
+        "netRequired": -30.033333333333985,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 650,
+            "to": 800.1666666666325,
+            "time": 15.016666666666993,
+            "duration": 15.016666666666993,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 35.01666666666699,
+            "targetV": 10,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 650,
+            "t": 1.4,
+            "v": 10,
+            "reserve": 0
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 15.000000000000071,
+        "ledgerSeconds": 15.000000000000078,
+        "steps": 300,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 10,
+          "stamina": 30.000000000000156,
+          "guts": 3736.462275000058,
+          "retention": 0.9911707100000011,
+          "aerobicOutput": 49.58006424525511
+        },
+        "ledger": {
+          "work": 395.7974999999987,
+          "aerobicUsed": 395.7974999999987,
+          "energyUsed": 0,
+          "requiredDraw": 0,
+          "recovered": 30.000000000000156,
+          "unpaidWork": 0,
+          "kineticChange": 0,
+          "positiveKineticWork": 0
+        },
+        "limits": {
+          "requestSeconds": 15.000000000000078,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 0,
+        "netRequired": -30.000000000000156,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 650,
+            "to": 800,
+            "time": 15.000000000000078,
+            "duration": 15.000000000000078,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 35.00000000000008,
+            "targetV": 10,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 650,
+            "t": 1.4,
+            "v": 10,
+            "reserve": 0
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 1.1795009413617663e-12,
+        "ledgerSeconds": 3.268496584496461e-13,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": -2.4868995751603507e-12,
+        "ledgerSeconds": -0.01666666666658756,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": -0.03333333333382882,
+        "guts": 0.04850359882766497,
+        "retention": 9.238780729337037e-7,
+        "aerobicOutput": 0.00007162314512498824,
+        "work": -0.4409418075249505,
+        "energy": 0,
+        "recovery": -0.03333333333382882
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 15.000000000003737,
+        "ledgerSeconds": 15.016666666666993,
+        "steps": 901,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 10,
+          "stamina": 30.033333333333985,
+          "guts": 3736.4137714012304,
+          "retention": 0.9911697861219282,
+          "aerobicOutput": 49.579992622109984
+        },
+        "ledger": {
+          "work": 396.23844180752366,
+          "aerobicUsed": 396.23844180752366,
+          "energyUsed": 0,
+          "requiredDraw": 0,
+          "recovered": 30.033333333333985,
+          "unpaidWork": 0,
+          "kineticChange": 0,
+          "positiveKineticWork": 0
+        },
+        "limits": {
+          "requestSeconds": 15.016666666666993,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 0,
+        "netRequired": -30.033333333333985,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 650,
+            "to": 800.1666666666325,
+            "time": 15.016666666666993,
+            "duration": 15.016666666666993,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 35.01666666666699,
+            "targetV": 10,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 650,
+            "t": 1.4,
+            "v": 10,
+            "reserve": 0
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "cold-oxygen-demand",
+        "length": 800,
+        "course": "标准",
+        "s": 400,
+        "v": 17.5,
+        "reserve": 1,
+        "guts": 1,
+        "oxygen": 0.2,
+        "request": 18.5
+      },
+      "stateHash": "febb01315a743c77c3749739caf83637b369d43f44e093d40bb2798dc9314638",
+      "actual": {
+        "status": "complete",
+        "frames": 1306,
+        "seconds": 21.764363374719053,
+        "ledgerSeconds": 21.766666666666666,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 18.471348174909636,
+          "stamina": 1137.7934127955234,
+          "guts": 3384.8831458071268,
+          "retention": 0.9844739646820405,
+          "aerobicOutput": 44.98535304107871
+        },
+        "ledger": {
+          "work": 2042.0353631896637,
+          "aerobicUsed": 729.8287759851876,
+          "energyUsed": 1312.2065872044782,
+          "recovered": 0,
+          "unpaidWork": 4.5075054799781356e-14
+        },
+        "final600": 0
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 21.764363374720332,
+        "ledgerSeconds": 21.766666666666712,
+        "steps": 1306,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 18.471348174909636,
+          "stamina": 1137.7934127955234,
+          "guts": 3384.8831458071268,
+          "retention": 0.9844739646820405,
+          "aerobicOutput": 44.98535304107871
+        },
+        "ledger": {
+          "work": 2042.0353631896637,
+          "aerobicUsed": 729.8287759851876,
+          "energyUsed": 1312.2065872044782,
+          "requiredDraw": 1312.2065872044782,
+          "recovered": 0,
+          "unpaidWork": 4.5075054799781356e-14,
+          "kineticChange": 17.470351699368763,
+          "positiveKineticWork": 17.999992570506862
+        },
+        "limits": {
+          "requestSeconds": 15.63333333333369,
+          "velocitySeconds": 3.4999999999999925,
+          "powerSeconds": 2.633333333333329,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1312.2065872044782,
+        "netRequired": 1312.2065872044782,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0.8882598585364754,
+        "meanTrackingShortfall": 0.12132258249926023,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 400,
+            "to": 800.0425451209319,
+            "time": 21.766666666666712,
+            "duration": 21.766666666666712,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 41.76666666666671,
+            "targetV": 18.5,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 400,
+            "t": 1.4,
+            "v": 17.5,
+            "reserve": 2450
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 21.754394323527677,
+        "ledgerSeconds": 21.762664596544678,
+        "steps": 68,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 18.472485586944376,
+          "stamina": 1143.41753552141,
+          "guts": 3387.2377993407586,
+          "retention": 0.9845188152255383,
+          "aerobicOutput": 44.992071016177746
+        },
+        "ledger": {
+          "work": 2043.6371967625007,
+          "aerobicUsed": 737.0547322839093,
+          "energyUsed": 1306.5824644785916,
+          "requiredDraw": 1306.5824644785916,
+          "recovered": 0,
+          "unpaidWork": 2.220446049250313e-15,
+          "kineticChange": 17.491361879933862,
+          "positiveKineticWork": 17.999999953099802
+        },
+        "limits": {
+          "requestSeconds": 16.5,
+          "velocitySeconds": 2.962664596544677,
+          "powerSeconds": 2.3000000000000007,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1306.5824644785916,
+        "netRequired": 1306.5824644785916,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0.8750866158991286,
+        "meanTrackingShortfall": 0.11287782034804732,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 400,
+            "to": 800.1527728914527,
+            "time": 21.762664596544678,
+            "duration": 21.762664596544678,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 41.76266459654468,
+            "targetV": 18.5,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 400,
+            "t": 1.4,
+            "v": 17.5,
+            "reserve": 2450
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 1.2789769243681803e-12,
+        "ledgerSeconds": 4.618527782440651e-14,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": -0.009969051191376366,
+        "ledgerSeconds": -0.004002070121988055,
+        "s": 0,
+        "t": 0,
+        "v": 0.0011374120347404926,
+        "stamina": 5.6241227258865365,
+        "guts": 2.35465353363179,
+        "retention": 0.0000448505434977875,
+        "aerobicOutput": 0.006717975099036266,
+        "work": 1.6018335728369948,
+        "energy": -5.6241227258865365,
+        "recovery": 0
+      },
+      "demand": {
+        "complete": true,
+        "finished": true,
+        "seconds": 21.68418576069253,
+        "ledgerSeconds": 21.70000000000005,
+        "steps": 1302,
+        "endpoint": {
+          "s": 800,
+          "t": 1.4,
+          "v": 18.469125348395004,
+          "stamina": 1125.565115427679,
+          "guts": 3378.3764100012263,
+          "retention": 0.9843500268571662,
+          "aerobicOutput": 44.949713765945134
+        },
+        "ledger": {
+          "work": 2051.1626540110933,
+          "aerobicUsed": 726.7277694387715,
+          "energyUsed": 1324.4348845723237,
+          "requiredDraw": 1324.4348845723237,
+          "recovered": 0,
+          "unpaidWork": 4.696243394164412e-14,
+          "kineticChange": 17.429295567363425,
+          "positiveKineticWork": 17.999998282149193
+        },
+        "limits": {
+          "requestSeconds": 18.00000000000026,
+          "velocitySeconds": 3.6999999999999917,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1324.4348845723237,
+        "netRequired": 1324.4348845723237,
+        "peakPowerShortfall": 14.583431796209581,
+        "energyFeasible": false,
+        "requestedEnergyFeasible": false,
+        "goalReached": true,
+        "targetShortfall": 0.04323565500875404,
+        "meanTrackingShortfall": 0.053360523295207345,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": false,
+        "segments": [
+          {
+            "index": 0,
+            "from": 400,
+            "to": 800.292076644494,
+            "time": 21.70000000000005,
+            "duration": 21.70000000000005,
+            "requestedDuration": null,
+            "startedAt": 20,
+            "endedAt": 41.700000000000045,
+            "targetV": 18.5,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "demand",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 400,
+            "t": 1.4,
+            "v": 17.5,
+            "reserve": 2450
+          }
+        }
+      }
+    },
+    {
+      "case": {
+        "name": "low-high-return-sequence",
+        "length": 1600,
+        "course": "标准",
+        "s": 600,
+        "v": 16,
+        "reserve": 0.6,
+        "guts": 0.9,
+        "oxygen": 1,
+        "actions": [
+          {
+            "duration": 3,
+            "targetV": 14
+          },
+          {
+            "duration": 5,
+            "targetV": 18
+          }
+        ],
+        "request": 16
+      },
+      "stateHash": "448dae620f153432808256f8c6c3b82a8219d6e4cfeb6831f3d07bcfc2ed8522",
+      "actual": {
+        "status": "complete",
+        "frames": 3736,
+        "seconds": 62.25048862136883,
+        "ledgerSeconds": 62.266666666666666,
+        "endpoint": {
+          "s": 1600,
+          "t": 1.4,
+          "v": 16.000000000000117,
+          "stamina": 125.47297100430025,
+          "guts": 2690.421340974181,
+          "retention": 0.9712461207804606,
+          "aerobicOutput": 48.72458299262538
+        },
+        "ledger": {
+          "work": 4404.611072293431,
+          "aerobicUsed": 3060.0078699076403,
+          "energyUsed": 1344.6032023856912,
+          "recovered": 0.07617338999298079,
+          "unpaidWork": 1.7383111009655616e-13
+        },
+        "final600": 37.49999996114952
+      },
+      "fine": {
+        "complete": true,
+        "finished": true,
+        "seconds": 62.250488621370124,
+        "ledgerSeconds": 62.26666666666441,
+        "steps": 3736,
+        "endpoint": {
+          "s": 1600,
+          "t": 1.4,
+          "v": 16.000000000000117,
+          "stamina": 125.47297100430025,
+          "guts": 2690.421340974181,
+          "retention": 0.9712461207804606,
+          "aerobicOutput": 48.72458299262538
+        },
+        "ledger": {
+          "work": 4404.611072293431,
+          "aerobicUsed": 3060.0078699076403,
+          "energyUsed": 1344.6032023856912,
+          "requiredDraw": 1344.6032023856912,
+          "recovered": 0.07617338999298079,
+          "unpaidWork": 1.7383111009655616e-13,
+          "kineticChange": 1.8758328224066645e-12,
+          "positiveKineticWork": 61.331619174654435
+        },
+        "limits": {
+          "requestSeconds": 62.26666666666441,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0.08333333333333333,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1344.6032023856912,
+        "netRequired": 1344.5270289956982,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0.06836630080273852,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 600,
+            "to": 644.073718887381,
+            "time": 2.9999999999999942,
+            "duration": 2.9999999999999942,
+            "requestedDuration": 3,
+            "startedAt": 20,
+            "endedAt": 22.999999999999993,
+            "targetV": 14,
+            "goalReached": true
+          },
+          {
+            "index": 1,
+            "from": 644.073718887381,
+            "to": 729.816777224064,
+            "time": 4.999999999999982,
+            "duration": 4.999999999999982,
+            "requestedDuration": 5,
+            "startedAt": 22.999999999999993,
+            "endedAt": 27.99999999999998,
+            "targetV": 18,
+            "goalReached": true
+          },
+          {
+            "index": 2,
+            "from": 729.816777224064,
+            "to": 1600.2588487247087,
+            "time": 54.266666666664435,
+            "duration": 54.266666666664435,
+            "requestedDuration": null,
+            "startedAt": 27.99999999999998,
+            "endedAt": 82.2666666666644,
+            "targetV": 16,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 600,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 1470
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": true,
+        "seconds": 62.262663468203854,
+        "ledgerSeconds": 62.31266346820322,
+        "steps": 572,
+        "endpoint": {
+          "s": 1600,
+          "t": 1.4,
+          "v": 16.000000000000004,
+          "stamina": 126.15068870465197,
+          "guts": 2690.5600291898622,
+          "retention": 0.9712487624607593,
+          "aerobicOutput": 48.72616509194379
+        },
+        "ledger": {
+          "work": 4406.092372370978,
+          "aerobicUsed": 3062.1594615946624,
+          "energyUsed": 1343.9329107762871,
+          "requiredDraw": 1343.9329107762871,
+          "recovered": 0.08359948093732456,
+          "unpaidWork": 3.41740524767431e-14,
+          "kineticChange": 5.684341886080802e-14,
+          "positiveKineticWork": 61.395479493041336
+        },
+        "limits": {
+          "requestSeconds": 62.31266346820322,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0.1,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 1343.9329107762871,
+        "netRequired": 1343.8493112953497,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0.0679064080735601,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 600,
+            "to": 644.0611925342722,
+            "time": 2.999999999999999,
+            "duration": 2.999999999999999,
+            "requestedDuration": 3,
+            "startedAt": 20,
+            "endedAt": 23,
+            "targetV": 14,
+            "goalReached": true
+          },
+          {
+            "index": 1,
+            "from": 644.0611925342722,
+            "to": 729.8297633806499,
+            "time": 4.999999999999982,
+            "duration": 4.999999999999982,
+            "requestedDuration": 5,
+            "startedAt": 23,
+            "endedAt": 27.999999999999982,
+            "targetV": 18,
+            "goalReached": true
+          },
+          {
+            "index": 2,
+            "from": 729.8297633806499,
+            "to": 1600.7999999999897,
+            "time": 54.31266346820324,
+            "duration": 54.31266346820324,
+            "requestedDuration": null,
+            "startedAt": 27.999999999999982,
+            "endedAt": 82.31266346820323,
+            "targetV": 16,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 600,
+            "t": 1.4,
+            "v": 16,
+            "reserve": 1470
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 1.2931877790833823e-12,
+        "ledgerSeconds": -2.2524204723595176e-12,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 0.012174846835023345,
+        "ledgerSeconds": 0.04599680153655328,
+        "s": 0,
+        "t": 0,
+        "v": -1.1368683772161603e-13,
+        "stamina": 0.677717700351721,
+        "guts": 0.13868821568121348,
+        "retention": 0.0000026416802987316856,
+        "aerobicOutput": 0.0015820993184121335,
+        "work": 1.4813000775475302,
+        "energy": -0.6702916094041029,
+        "recovery": 0.007426090944343766
+      },
+      "demand": null
+    },
+    {
+      "case": {
+        "name": "finite-accelerate-lateral",
+        "length": 2000,
+        "course": "中山",
+        "s": 900,
+        "v": 12,
+        "reserve": 0.7,
+        "guts": 0.9,
+        "oxygen": 0.6,
+        "t": 5,
+        "side": 2,
+        "request": 17,
+        "finite": 8
+      },
+      "stateHash": "ddaf8f5cd05f92693843d8cc17004c180f0381bd50dfa89e7530ee53599bde55",
+      "actual": {
+        "status": "complete",
+        "frames": 480,
+        "seconds": 7.999999999999545,
+        "ledgerSeconds": 8,
+        "endpoint": {
+          "s": 1030.246456381183,
+          "t": 7,
+          "v": 16.99614545870286,
+          "stamina": 1356.8853993847301,
+          "guts": 3547.8392245526975,
+          "retention": 0.98757788999148,
+          "aerobicOutput": 40.61288808006034
+        },
+        "ledger": {
+          "work": 645.5382288220829,
+          "aerobicUsed": 287.4236282068121,
+          "energyUsed": 358.11460061526986,
+          "recovered": 0,
+          "unpaidWork": 1.2878587085651816e-14
+        }
+      },
+      "fine": {
+        "complete": true,
+        "finished": false,
+        "seconds": 7.999999999999977,
+        "ledgerSeconds": 7.999999999999977,
+        "steps": 480,
+        "endpoint": {
+          "s": 1030.246456381183,
+          "t": 7,
+          "v": 16.99614545870286,
+          "stamina": 1356.8853993847301,
+          "guts": 3547.8392245526975,
+          "retention": 0.98757788999148,
+          "aerobicOutput": 40.61288808006034
+        },
+        "ledger": {
+          "work": 645.5382288220829,
+          "aerobicUsed": 287.4236282068121,
+          "energyUsed": 358.11460061526986,
+          "requiredDraw": 358.11460061526986,
+          "recovered": 0,
+          "unpaidWork": 1.2878587085651816e-14,
+          "kineticChange": 72.4344802266929,
+          "positiveKineticWork": 72.4344802266929
+        },
+        "limits": {
+          "requestSeconds": 7.999999999999977,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0.31666666666666665,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 358.11460061526986,
+        "netRequired": 358.11460061526986,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0.7125261896687971,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 900,
+            "to": 1030.246456381183,
+            "time": 7.999999999999977,
+            "duration": 7.999999999999977,
+            "requestedDuration": 8,
+            "startedAt": 20,
+            "endedAt": 27.99999999999998,
+            "targetV": 17,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 900,
+            "t": 5,
+            "v": 12,
+            "reserve": 1715
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": false,
+        "seconds": 7.999999999999981,
+        "ledgerSeconds": 7.999999999999981,
+        "steps": 240,
+        "endpoint": {
+          "s": 1030.2804720204372,
+          "t": 7,
+          "v": 16.99634435842318,
+          "stamina": 1356.6691895870267,
+          "guts": 3547.708172832948,
+          "retention": 0.9875753937682467,
+          "aerobicOutput": 40.612941278455935
+        },
+        "ledger": {
+          "work": 645.8451134655562,
+          "aerobicUsed": 287.5143030525822,
+          "energyUsed": 358.33081041297413,
+          "requiredDraw": 358.33081041297413,
+          "recovered": 0,
+          "unpaidWork": 1.4432899320127035e-14,
+          "kineticChange": 72.43786077505172,
+          "positiveKineticWork": 72.43786077505172
+        },
+        "limits": {
+          "requestSeconds": 7.999999999999981,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0.3333333333333333,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 358.33081041297413,
+        "netRequired": 358.33081041297413,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0.7082935408939126,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 900,
+            "to": 1030.2804720204372,
+            "time": 7.999999999999981,
+            "duration": 7.999999999999981,
+            "requestedDuration": 8,
+            "startedAt": 20,
+            "endedAt": 27.999999999999982,
+            "targetV": 17,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 900,
+            "t": 5,
+            "v": 12,
+            "reserve": 1715
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 4.3165471197426086e-13,
+        "ledgerSeconds": -2.3092638912203256e-14,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 4.360956040727615e-13,
+        "ledgerSeconds": -1.865174681370263e-14,
+        "s": 0.03401563925422124,
+        "t": 0,
+        "v": 0.0001988997203206111,
+        "stamina": -0.21620979770341364,
+        "guts": -0.13105171974939367,
+        "retention": -0.000002496223233339201,
+        "aerobicOutput": 0.000053198395598030856,
+        "work": 0.3068846434732677,
+        "energy": 0.2162097977042663,
+        "recovery": 0
+      },
+      "demand": null
+    },
+    {
+      "case": {
+        "name": "finite-bounded-deceleration",
+        "length": 1200,
+        "course": "小回り",
+        "s": 400,
+        "v": 18,
+        "reserve": 0.8,
+        "guts": 0.95,
+        "oxygen": 1,
+        "t": 4,
+        "request": 12,
+        "finite": 8
+      },
+      "stateHash": "4b9fe242574dc0f9a8e1bf5d1589a28633de4efb8103a9e055207958ca155b82",
+      "actual": {
+        "status": "complete",
+        "frames": 480,
+        "seconds": 7.999999999999545,
+        "ledgerSeconds": 8,
+        "endpoint": {
+          "s": 503.2999277670261,
+          "t": 4,
+          "v": 12.005012503424734,
+          "stamina": 1969.0955235233696,
+          "guts": 3960.030390336043,
+          "retention": 0.9954291502921151,
+          "aerobicOutput": 49.79177627244042
+        },
+        "ledger": {
+          "work": 272.45099694506774,
+          "aerobicUsed": 272.45099694506774,
+          "energyUsed": 0,
+          "recovered": 9.095523523372949,
+          "unpaidWork": 0
+        }
+      },
+      "fine": {
+        "complete": true,
+        "finished": false,
+        "seconds": 7.999999999999977,
+        "ledgerSeconds": 7.999999999999977,
+        "steps": 480,
+        "endpoint": {
+          "s": 503.2999277670261,
+          "t": 4,
+          "v": 12.005012503424734,
+          "stamina": 1969.0955235233696,
+          "guts": 3960.030390336043,
+          "retention": 0.9954291502921151,
+          "aerobicOutput": 49.79177627244042
+        },
+        "ledger": {
+          "work": 272.45099694506774,
+          "aerobicUsed": 272.45099694506774,
+          "energyUsed": 0,
+          "requiredDraw": 0,
+          "recovered": 9.095523523372949,
+          "unpaidWork": 0,
+          "kineticChange": -89.93983739630791,
+          "positiveKineticWork": 0
+        },
+        "limits": {
+          "requestSeconds": 7.999999999999977,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 0,
+        "netRequired": -9.095523523372949,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 400,
+            "to": 503.2999277670261,
+            "time": 7.999999999999977,
+            "duration": 7.999999999999977,
+            "requestedDuration": 8,
+            "startedAt": 20,
+            "endedAt": 27.99999999999998,
+            "targetV": 12,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.016666666666666666,
+          "tailMaxDt": 0.016666666666666666,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 400,
+            "t": 4,
+            "v": 18,
+            "reserve": 1960
+          }
+        }
+      },
+      "coarse": {
+        "complete": true,
+        "finished": false,
+        "seconds": 7.999999999999981,
+        "ledgerSeconds": 7.999999999999981,
+        "steps": 240,
+        "endpoint": {
+          "s": 503.26774274575183,
+          "t": 4,
+          "v": 12.004764883004432,
+          "stamina": 1969.1012777805952,
+          "guts": 3960.056195090406,
+          "retention": 0.9954296418112458,
+          "aerobicOutput": 49.791805667365615
+        },
+        "ledger": {
+          "work": 272.2164082690448,
+          "aerobicUsed": 272.2164082690448,
+          "energyUsed": 0,
+          "requiredDraw": 0,
+          "recovered": 9.101277780596948,
+          "unpaidWork": 0,
+          "kineticChange": -89.9428100518918,
+          "positiveKineticWork": 0
+        },
+        "limits": {
+          "requestSeconds": 7.999999999999981,
+          "velocitySeconds": 0,
+          "powerSeconds": 0,
+          "curveSeconds": 0,
+          "accelerationSeconds": 0,
+          "draftingSeconds": 0,
+          "followingSeconds": 0,
+          "headwaySeconds": 0
+        },
+        "required": 0,
+        "netRequired": -9.101277780596948,
+        "peakPowerShortfall": 0,
+        "energyFeasible": true,
+        "requestedEnergyFeasible": true,
+        "goalReached": true,
+        "targetShortfall": 0,
+        "meanTrackingShortfall": 0,
+        "pathConflict": false,
+        "opponentPathConflict": false,
+        "trafficFeasible": true,
+        "trafficCertified": false,
+        "feasible": true,
+        "segments": [
+          {
+            "index": 0,
+            "from": 400,
+            "to": 503.26774274575183,
+            "time": 7.999999999999981,
+            "duration": 7.999999999999981,
+            "requestedDuration": 8,
+            "startedAt": 20,
+            "endedAt": 27.999999999999982,
+            "targetV": 12,
+            "goalReached": true
+          }
+        ],
+        "observedLeaderEndpoints": [],
+        "model": {
+          "mode": "paid-execution",
+          "maxDt": 0.03333333333333333,
+          "tailMaxDt": 0.5,
+          "tickOrigin": 20,
+          "opponentMotionPrior": null,
+          "opponent": "visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification",
+          "initialState": {
+            "s": 400,
+            "t": 4,
+            "v": 18,
+            "reserve": 1960
+          }
+        }
+      },
+      "fineError": {
+        "seconds": 4.3165471197426086e-13,
+        "ledgerSeconds": -2.3092638912203256e-14,
+        "s": 0,
+        "t": 0,
+        "v": 0,
+        "stamina": 0,
+        "guts": 0,
+        "retention": 0,
+        "aerobicOutput": 0,
+        "work": 0,
+        "energy": 0,
+        "recovery": 0
+      },
+      "coarseError": {
+        "seconds": 4.360956040727615e-13,
+        "ledgerSeconds": -1.865174681370263e-14,
+        "s": -0.03218502127424472,
+        "t": 0,
+        "v": -0.0002476204203016863,
+        "stamina": 0.005754257225589754,
+        "guts": 0.02580475436298002,
+        "retention": 4.915191307297562e-7,
+        "aerobicOutput": 0.000029394925192605115,
+        "work": -0.23458867602295186,
+        "energy": 0,
+        "recovery": 0.005754257223999915
+      },
+      "demand": null
+    }
+  ],
+  "golden": [
+    {
+      "case": "gate-flat",
+      "frames": 600,
+      "maxStateError": 0,
+      "maxLedgerError": 0,
+      "exact": true
+    },
+    {
+      "case": "gate-side-wind",
+      "frames": 600,
+      "maxStateError": 0,
+      "maxLedgerError": 0,
+      "exact": true
+    },
+    {
+      "case": "uphill-nakayama",
+      "frames": 600,
+      "maxStateError": 0,
+      "maxLedgerError": 0,
+      "exact": true
+    }
+  ],
+  "properties": [
+    {
+      "name": "Goal reachability is separate from paid energy and clipped speed",
+      "status": "passed",
+      "baselineS": 2349.5580706198,
+      "endpointS": 2348.6611457433096,
+      "shortfall": 0.8380771190344056,
+      "energyFeasible": true,
+      "goalReached": false
+    },
+    {
+      "name": "Opponent forecast uses no hidden state, bounded acceleration, and persistent epochs",
+      "status": "passed",
+      "leaderEnd": {
+        "id": "visible",
+        "s": 311.19306326856656,
+        "t": 1.4,
+        "v": 13.077565289804792,
+        "finished": false
+      },
+      "traceTime": 20.016666666666666,
+      "stageTime": 23.99999999999999,
+      "pathConflict": false
+    },
+    {
+      "name": "Actual wake corridor is used during observed actions",
+      "status": "passed",
+      "tests": [
+        {
+          "lateral": 1.5,
+          "draftingSeconds": 1
+        },
+        {
+          "lateral": 1.8,
+          "draftingSeconds": 0
+        }
+      ]
+    },
+    {
+      "name": "Future guts, reserve, oxygen and recovery evolve instead of freezing",
+      "status": "passed",
+      "initial": {
+        "s": 1800,
+        "t": 1.4,
+        "v": 16,
+        "stamina": 1151.5,
+        "guts": 3696,
+        "retention": 0.9904,
+        "aerobicOutput": 22.284
+      },
+      "endpoint": {
+        "s": 2400,
+        "t": 1.4,
+        "v": 13.437281710706756,
+        "stamina": 0.9302216249388303,
+        "guts": 2881.2776133469392,
+        "retention": 0.9748814783494655,
+        "aerobicOutput": 48.160891200098426
+      }
+    }
+  ],
+  "failures": [],
+  "inputHash": "6bb38e0dfedcfa73b482dafd8429a70cea43ade3678d3611697a5b9a58652b39",
+  "performance": {
+    "newBudget": {
+      "runs": 40,
+      "meanMilliseconds": 1.5427525000000002,
+      "meanSteps": 574
+    },
+    "oldBudget": {
+      "runs": 40,
+      "meanMilliseconds": 0.31840750000000073,
+      "meanSteps": 0
+    },
+    "newEightSeconds": {
+      "runs": 40,
+      "meanMilliseconds": 0.11267750000000092,
+      "meanSteps": 68
+    },
+    "caveat": "Warmed single-process wall-time microbenchmark; not whole-race wall time or isolated CPU throughput. Other concurrent team workloads may increase the timings. Nine budget bisections and multiple finite candidates increase controller CPU."
+  },
+  "summary": {
+    "rows": 12,
+    "allFineWithin1e7": true,
+    "fineMaxAbsSeconds": 1.5774048733874224e-11,
+    "fineMaxAbsState": 0,
+    "coarseMaxAbsSeconds": 0.020989871797169712,
+    "coarseMaxAbsEnergy": 5.6241227258865365,
+    "coarseMaxAbsDistance": 0.07141275695626348,
+    "failures": 0,
+    "productionUnchanged": true
+  },
+  "productionEndHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "elapsedSeconds": 1.6761019999999998
+}

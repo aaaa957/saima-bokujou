@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-10-04T05:04:36.316Z",
+  "baselineArchive": "docs/race-validation-v11-baseline-external.json.source.js.gz",
+  "baselineHash": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "cohortFixtureHash": "fb8f3f20703114e4843fad2ad90a39d35615d4919a4a20054f6e1c07db012589",
+  "releaseFixtureHash": null,
+  "releasePatchApplied": false,
+  "declaredFinalEngineHash": null,
+  "rebuiltHash": "2ab0d6469f70e1f4c65b40d1d30ab4432b6c7866fe2b295ef9e02d68ec96276e",
+  "productionHash": "2ab0d6469f70e1f4c65b40d1d30ab4432b6c7866fe2b295ef9e02d68ec96276e",
+  "exactEquality": true,
+  "counts": [
+    {
+      "description": "Remove artificial strong/weak stat advantage",
+      "matches": 1
+    },
+    {
+      "description": "Stable candidate pool, entry forecast and conditioned cohort",
+      "matches": 1
+    },
+    {
+      "description": "Career opponents share distance and grade selection; preserve player migration",
+      "matches": 1
+    },
+    {
+      "description": "Career race passes actual conditions",
+      "matches": 1
+    },
+    {
+      "description": "Featured race uses conditioned all-AI cohort",
+      "matches": 1
+    },
+    {
+      "description": "Existing roster filter plus stable physical entry selection",
+      "matches": 1
+    },
+    {
+      "description": "Scheduled race selects at actual venue and distance",
+      "matches": 1
+    },
+    {
+      "description": "Weekly AI race selects from persistent roster by its conditions",
+      "matches": 1
+    },
+    {
+      "description": "Player roster race shares grade and actual distance",
+      "matches": 1
+    },
+    {
+      "description": "Export cohort APIs",
+      "matches": 1
+    },
+    {
+      "description": "Independent full-support forward intention for newly generated or missing behavior; saved values remain authoritative",
+      "matches": 1
+    },
+    {
+      "description": "Honor an explicit zero wins maximum in maiden qualification",
+      "matches": 1
+    },
+    {
+      "description": "Honor an explicit zero ability maximum in caller qualification",
+      "matches": 1
+    },
+    {
+      "description": "Separate player race qualifications from representative ability bands",
+      "matches": 1
+    }
+  ],
+  "firstDifferentLines": []
+}

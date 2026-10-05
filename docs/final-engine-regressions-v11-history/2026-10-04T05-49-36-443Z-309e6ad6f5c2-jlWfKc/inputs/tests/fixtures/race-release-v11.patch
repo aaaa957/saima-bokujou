@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "baseEngineHash": "f2809633e1d04d266629a477ab4bd256a1ff9a34dd127d3de504a0265304495f",
+  "finalEngineHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "generatedAt": "2026-10-04T05:47:31.299Z",
+  "scope": "Only source header and literal RACE_F; all mechanism/controller/cohort changes must already rebuild exactly.",
+  "changes": [
+    {
+      "file": "sim.js",
+      "description": "Final release header/version and report reference",
+      "old": "﻿/* ============================================================\n * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.3\n * 本轮运动、路线与个体分化验收：docs/系统一致性与节奏诊断-v2026.10.02.3.md\n * 模型结构、实赛约束与验证口径：docs/比赛系统-现实拟合-v2026.10.02.1.md\n * 情报误差机制来源：《游戏策划案》4.5 情报系统\n * 运行环境：浏览器(挂载到 window.SaimaSim) / Node(require)\n * 已简化的部分（碰撞/弯道/出闸噪声）见 README.md\n * ============================================================ */",
+      "new": "﻿/* ============================================================\n * 赛马风云 · 连续比赛模拟引擎 v2026.10.04.1\n * 本轮预测、骑手、阵容与联合校准：docs/比赛系统重构与联合校准-v11.md\n * 模型结构、实赛约束与验证口径：docs/比赛系统-现实拟合-v2026.10.02.1.md\n * 情报误差机制来源：《游戏策划案》4.5 情报系统\n * 运行环境：浏览器(挂载到 window.SaimaSim) / Node(require)\n * 已简化的部分（碰撞/弯道/出闸噪声）见 README.md\n * ============================================================ */"
+    },
+    {
+      "file": "sim.js",
+      "description": "Final frozen literal RACE_F calibration",
+      "old": "const RACE_F = {\n    baseSpeed:{a:0.020,b:15.80,min:1,max:115}, // 70点=17.2m/s参考速度\n    staminaPer:35, gutsPer:60, energyScale:1,\n    aerobicBase:0.86, aerobicStaminaK:0.0020, // 旧展示兼容；物理用下列有单位参数\n    aerobicPower:50, aerobicPerPoint:0.24, aerobicTau:10,\n    resistanceK:0.250, airK:0.00065, recoveryRate:0.12, recoveryMax:2.0,\n    fatigueLoss:0.08, fatigueWork:0.11, fatigueExcess:0.45,\n    reservePower:75, reserveFade:0.10, efficiencyPerPoint:0.0025,\n    peakExtra:1.55, burstSpeedK:0.010,\n    maxAccel:4.6, runningAccel:2.2, braking:3.5,\n    responseTime:1.4, lateralSpeed:0.8, laneBias:1,\n    draftRange:12, draftSave:0.72, leadCost:1, // 只减少空气阻力项，不给全部做功打折\n    curveLateral:3.6, turnCost:0.045,\n    // 以下只用于赛前公开预测/历史辅助接口，不反馈给比赛物理。\n    paceRef:1.72, paceSizeFix:0.03, paceSlowGate:1, paceHighGate:1.5,\n    actionReserveFloor:0.35,\n  };",
+      "new": "const RACE_F = {\n    baseSpeed:{a:0.020,b:15.80,min:1,max:115}, // 70点=17.2m/s参考速度\n    staminaPer:35, gutsPer:60, energyScale:1,\n    aerobicBase:0.86, aerobicStaminaK:0.0020, // 旧展示兼容；物理用下列有单位参数\n    aerobicPower:50, aerobicPerPoint:0.24, aerobicTau:10,\n    resistanceK:0.250215, airK:0.001365, recoveryRate:0.12, recoveryMax:2.0,\n    fatigueLoss:0.08, fatigueWork:0.11, fatigueExcess:0.45,\n    reservePower:75, reserveFade:0.10, efficiencyPerPoint:0.0025,\n    peakExtra:1.55, burstSpeedK:0.010,\n    maxAccel:5.75, runningAccel:2.75, braking:3.5,\n    responseTime:1.12, lateralSpeed:0.8, laneBias:1,\n    draftRange:12, draftSave:0.72, leadCost:1, // 只减少空气阻力项，不给全部做功打折\n    curveLateral:3.6, turnCost:0.045,\n    // 以下只用于赛前公开预测/历史辅助接口，不反馈给比赛物理。\n    paceRef:1.72, paceSizeFix:0.03, paceSlowGate:1, paceHighGate:1.5,\n    actionReserveFloor:0.35,\n  };"
+    }
+  ]
+}

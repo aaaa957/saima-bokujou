@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),assert=require('node:assert/strict'),{execFileSync}=require('node:child_process'),{Worker,isMainThread,parentPort,workerData}=require('node:worker_threads');
+const {compileSource,references,makeJobs,observe,engineering}=require('./race-validation-v11'),{HASH,fieldFor,DT}=require('./system-reality-v9');
+const {applyRouteStationLookupPatch,restoreRouteStationLookupBaseline}=require('./fixtures/route-station-lookup-v11');
+const root=path.resolve(__dirname,'..'),out=path.join(root,'docs/route-station-lookup-prefix-v11.json'),clone=x=>JSON.parse(JSON.stringify(x));
+if(isMainThread){
+  const production=fs.readFileSync(path.join(root,'sim.js'),'utf8').replace(/\r\n/g,'\n'),source=production.includes('  const ROUTE_STATION_LOOKUP_CACHE=new WeakMap();')?restoreRouteStationLookupBaseline(production):production,candidate=applyRouteStationLookupPatch(source),parameters=JSON.parse(fs.readFileSync(path.join(root,'tests/fixtures/race-validation-v11-parameters/selected-nopeak-cost105.json'),'utf8'));
+  const generator=execFileSync('git',['show','582ce9046dd8552d950d0296e8500a8234388eff:sim.js'],{cwd:root,encoding:'utf8',maxBuffer:8*1024*1024}).replace(/\r\n/g,'\n'),job=makeJobs('calibration',references().races,1,'selected').find(j=>j.id==='241020');
+  const report={sourceHash:HASH(source),candidateHash:HASH(candidate),productionStartHash:HASH(production),generatorHash:HASH(generator),scriptHash:HASH(fs.readFileSync(__filename,'utf8')),job,parameters,arms:[],declaredPartialExecutions:2,declaredFullExecutions:0,maximumDisplayFramesPerArm:120,maximumSimulatedSecondsPerArm:2,maximumWorkerWallSeconds:60,workerMemoryMb:192,scope:'Exact old/new Kyoto selected-cohort start prefix; no full race or general performance guarantee.',startedAt:new Date().toISOString(),closed:false};
+  const save=()=>fs.writeFileSync(out,JSON.stringify(report,null,2)+'\n');save();
+  for(const [key,value]of [['source',source],['candidate',candidate],['script',fs.readFileSync(__filename,'utf8')]])fs.writeFileSync(out+'.'+key+'.js.gz',zlib.gzipSync(value));
+  const worker=new Worker(__filename,{workerData:{source,candidate,generator,job,parameters},resourceLimits:{maxOldGenerationSizeMb:192}}),timer=setTimeout(()=>{report.error='60-second watchdog';report.closed=true;save();worker.terminate();},60000);
+  worker.on('message',m=>{if(m.arm){report.arms.push(m.arm);console.log(JSON.stringify({arm:m.arm.name,frames:m.arm.frames,simulatedSeconds:m.arm.simulatedSeconds,cpu:m.arm.threadCpuSeconds,wall:m.arm.wallSeconds,forecastCount:m.arm.forecastCount,engineering:m.arm.engineering,error:m.arm.error}));}if(m.finished){Object.assign(report,m.finished);report.closed=true;report.finishedAt=new Date().toISOString();clearTimeout(timer);}save();});
+  worker.on('error',e=>{report.error=e.stack;report.closed=true;clearTimeout(timer);save();});
+  worker.on('exit',code=>{clearTimeout(timer);report.exitCode=code;report.productionUnchanged=HASH(fs.readFileSync(path.join(root,'sim.js'),'utf8'))===report.productionStartHash;report.pass=code===0&&report.closed&&!report.error&&report.exactPaired&&report.arms.length===2&&report.arms.every(a=>a.engineering.passed&&!a.error)&&report.productionUnchanged;save();console.log(JSON.stringify({out,pass:report.pass,exactPaired:report.exactPaired,actualSteps:report.actualSteps,sourceHash:report.sourceHash,candidateHash:report.candidateHash,productionUnchanged:report.productionUnchanged}));if(!report.pass)process.exitCode=1;});
+}else{
+  const {source,candidate,generator,job,parameters}=workerData,arms=[];
+  const returnAnchor='      return {complete,finished,seconds:finished?finishTime-atTime:elapsed,ledgerSeconds:elapsed,steps,endpoint:',endAnchor='initialState:{s:initial.s,t:initial.t,v:initial.v,reserve:initialReserve}}};';
+  function instrument(raw){assert.equal(raw.split(returnAnchor).length-1,1);assert.equal(raw.split(endAnchor).length-1,1);return raw.replace(returnAnchor,'      return globalThis.__lookupCapture(H,actions,options,{complete,finished,seconds:finished?finishTime-atTime:elapsed,ledgerSeconds:elapsed,steps,endpoint:').replace(endAnchor,'initialState:{s:initial.s,t:initial.t,v:initial.v,reserve:initialReserve}}});');}
+  function run(name,raw){
+    const forecasts=[],frameStates=[],decisions=[],lastDecision=new Map();let capture=false;
+    globalThis.__lookupCapture=(H,actions,options,result)=>{if(capture)forecasts.push(JSON.stringify({id:H.id,actions,options,result}));return result;};
+    const S=compileSource(instrument(raw)),B=compileSource(generator);Object.assign(S.RACE_F,parameters);
+    const proxy={mulberry32:S.mulberry32,makeField:(rng,opts)=>S.makeField(rng,{...opts,length:job.length,race:{length:job.length,surface:'草地',state:job.state,course:job.course,dir:job.dir,profile:'平坦'},playerIndex:-1,entryOverrides:{surface:'草地',special:'左右皆可','疲劳':0,'斗志':50,jockeyGrade:'优秀',bodyMass:480,carriedWeight:job.weight}})};
+    const field=fieldFor(job,proxy,S),inputHash=HASH(JSON.stringify(field)),r=S.createRace(field,{length:job.length,course:job.course,dir:job.dir,state:job.state,surface:'草地',profile:'平坦',wind:0,rng:S.mulberry32(job.raceSeed)}),obs=observe(S,r);let error=null;capture=true;
+    const start=process.hrtime.bigint(),cpu=process.threadCpuUsage();
+    try{for(let i=0;i<120&&!r.race.finished;i++){obs.step();frameStates.push(JSON.stringify({...r.race,geo:undefined}));for(const H of r.race.horses)if(H.strategy&&lastDecision.get(H)!==H.strategy.time){lastDecision.set(H,H.strategy.time);decisions.push({id:H.id,strategy:clone(H.strategy),planning:clone(H.planning??null),followOpportunity:clone(H.followOpportunity??null),riderSequence:clone(H.riderSequence??null),targetV:H.targetV,targetT:H.targetT,attacking:H.attacking});}}}catch(e){error=e.stack;}
+    const used=process.threadCpuUsage(cpu),wallSeconds=Number(process.hrtime.bigint()-start)/1e9,observed=obs.result(),finalState=JSON.stringify({...r.race,geo:undefined});delete globalThis.__lookupCapture;
+    const arm={name,sourceHash:HASH(raw),inputHash,simulatedSeconds:r.race.t,completed:frameStates.length===120,fullRace:false,finished:r.race.finished,wallSeconds,threadCpuSeconds:(used.user+used.system)/1e6,error,...observed,forecastCount:forecasts.length,forecastHash:HASH(JSON.stringify(forecasts)),frameStateHashes:frameStates.map(HASH),finalStateHash:HASH(finalState),decisions};arm.engineering=engineering(arm,'start');
+    fs.writeFileSync(out+'.'+name+'.frames.json.gz',zlib.gzipSync(JSON.stringify(frameStates)));fs.writeFileSync(out+'.'+name+'.forecasts.json.gz',zlib.gzipSync(JSON.stringify(forecasts)));fs.writeFileSync(out+'.'+name+'.final-state.json.gz',zlib.gzipSync(finalState));
+    return {arm,frameStates,forecasts,finalState};
+  }
+  try{
+    for(const [name,raw]of [['original',source],['candidate',candidate]]){const result=run(name,raw);arms.push(result);parentPort.postMessage({arm:result.arm});}
+    const [a,b]=arms;assert.equal(a.arm.inputHash,b.arm.inputHash);assert.deepEqual(b.frameStates,a.frameStates,'Every serialized race/horse state, decision, planning and ledger at every display frame exact');assert.deepEqual(b.forecasts,a.forecasts,'Every private and public action/finish prediction exact');assert.equal(b.finalState,a.finalState);
+    const strip=arm=>{const x=clone(arm);delete x.name;delete x.sourceHash;delete x.wallSeconds;delete x.threadCpuSeconds;return x;};assert.deepEqual(strip(b.arm),strip(a.arm),'Complete observed trace/guard/power/decision payload exact');
+    parentPort.postMessage({finished:{exactPaired:true,actualSteps:arms.reduce((s,a)=>s+a.arm.internalTicks,0),completeRaceExecutions:0,comparison:'Direct equal JSON strings for every frame and all forecasts; direct deepEqual all other row fields excluding only source/name/execution clocks.'}});
+  }catch(e){parentPort.postMessage({finished:{exactPaired:false,error:e.stack,actualSteps:arms.reduce((s,a)=>s+a.arm.internalTicks,0),completeRaceExecutions:0}});process.exitCode=1;}
+}

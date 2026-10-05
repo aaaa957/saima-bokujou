@@ -1,0 +1,48 @@
+{
+  "sourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "candidateHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "pass": true,
+  "checks": [
+    {
+      "name": "Coarse energy refusal performs no fine forecast",
+      "pass": true
+    },
+    {
+      "name": "Coarse goal refusal performs no fine forecast",
+      "pass": true
+    },
+    {
+      "name": "Coarse path refusal performs no fine forecast",
+      "pass": true
+    },
+    {
+      "name": "Coarse no-saving refusal performs no fine forecast",
+      "pass": true
+    },
+    {
+      "name": "Coarse pass but fine energy refusal cannot commit",
+      "pass": true
+    },
+    {
+      "name": "Coarse pass but fine goal refusal cannot commit",
+      "pass": true
+    },
+    {
+      "name": "Coarse pass but fine path refusal cannot commit",
+      "pass": true
+    },
+    {
+      "name": "Coarse pass but fine no-saving refusal cannot commit",
+      "pass": true
+    },
+    {
+      "name": "Only an energy-positive fine reachable catch may become a committed follow sequence",
+      "pass": true
+    },
+    {
+      "name": "Direct projected movement and actual fixed controls are unchanged by planning-only screening",
+      "pass": true
+    }
+  ],
+  "productionUnchanged": true
+}

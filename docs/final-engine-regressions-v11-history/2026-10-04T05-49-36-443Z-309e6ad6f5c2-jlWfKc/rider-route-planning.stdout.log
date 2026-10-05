@@ -1,0 +1,19 @@
+PASS a settled gallop can consider paid attack before30 metres while a slow horse beyond30 metres is still starting
+PASS a closed gate cannot complete the start or consume propulsion reserve
+PASS starting stability also depends on acceleration response at the same speed and position
+PASS same distance and physical route replan from reserve rather than a common launch point
+PASS a depleted-reserve boundary does not introduce a command cliff at four percent
+PASS equal remaining routes and states produce equal commands despite different completed proportions
+PASS route forecasting is read-only, deterministic, and does not consume rider randomness
+PASS state forecast traverses bend, official hill, lap, shelter-end and finish without teleporting
+PASS paid route state agrees with actual60Hz continuation including future fatigue and recovery
+PASS crossing a bend entry by two millimetres cannot create a target-acceleration budget jump
+PASS oxygen startup costs reserve while finite acceleration pays its positive kinetic work once
+PASS a future hill changes the route budget and real command at the same distance
+PASS energy capacity alone cannot authorize a pace above available oxygen and reserve power
+Terminal-release fixture: {"need":122.84252433898591,"margin":32.126813236860876,"reserve":154.9693375758468,"required":123.87727110051372,"peakPowerShortfall":10.849113863834297}
+PASS remaining reserve power at the route end can reject a pace despite sufficient total joules
+PASS warm oxygen sustains an unchanged economical pace with zero reserve
+
+15 rider route planning tests passed; 0 failed.
+Dense reference (8 cases): max reserve deviation 6.432187 J/kg; max relative deviation 2.199952%; max time deviation 0.045039 s.

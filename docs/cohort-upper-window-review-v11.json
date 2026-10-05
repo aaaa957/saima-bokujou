@@ -1,0 +1,1806 @@
+{
+  "generatedAt": "2026-10-03T10:34:20.651Z",
+  "sourceHash": "1ca77ab4eacdd18ec98ed8bcc6b5e3cfa74525dd16dfca3f2fbe6d151304f818",
+  "inputHash": "25798b7aa992d6910c668a773f095ce63460642c728b93a8f4bd62b3cf5f085c",
+  "productionSourceUnchanged": true,
+  "scope": "One constructed pre-race counterexample of hard-window eligibility; no simulation and no tail/win-rate fit.",
+  "race": {
+    "length": 2400,
+    "course": "東京芝A",
+    "surface": "草地",
+    "state": "良",
+    "dir": "左回",
+    "profile": "平坦"
+  },
+  "inputPool": [
+    {
+      "id": "h1",
+      "name": "白風花",
+      "sire": "嵐蓮",
+      "dam": "桜蓮",
+      "age": 5,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.19920690149114406,
+        "settle": 0.6326599313272163,
+        "tractability": 0.747016804823652
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.21877360034268348,
+        "power": 0.3291650883154944,
+        "economy": -0.7079420166090131,
+        "kinetics": 0.4553765316493809,
+        "durability": -0.38505593028385193
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 93,
+        "出闸能力": 86,
+        "爆发力": 88,
+        "力量": 85,
+        "毅力": 88,
+        "智力": 80,
+        "体格": 88,
+        "血统力": 76
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.5,
+      "form": {
+        "出赛": 19,
+        "胜利": 6,
+        "前三": 14
+      },
+      "player": false,
+      "style": "追"
+    },
+    {
+      "id": "h2",
+      "name": "雪波",
+      "sire": "疾富士",
+      "dam": "天駒",
+      "age": 4,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.586189068214963,
+        "settle": 0.46092290580552076,
+        "tractability": 0.6499876561071725
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.5280395830748603,
+        "power": 0.21984887644648549,
+        "economy": -0.5925473554059864,
+        "kinetics": 0.3140952588990331,
+        "durability": 0.054134740796871444
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "栗毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 96,
+        "耐力": 97,
+        "出闸能力": 86,
+        "爆发力": 90,
+        "力量": 88,
+        "毅力": 92,
+        "智力": 88,
+        "体格": 91,
+        "血统力": 61
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.9,
+      "form": {
+        "出赛": 13,
+        "胜利": 4,
+        "前三": 8
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h3",
+      "name": "紅富士",
+      "sire": "風蓮",
+      "dam": "雪影",
+      "age": 4,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.1371250185928441,
+        "settle": 0.40943162113148723,
+        "tractability": 0.6651660164482892
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.16069527980871498,
+        "power": -0.9653492192272097,
+        "economy": 0.7377240272704513,
+        "kinetics": -0.4332599308341742,
+        "durability": -0.5956610220950097
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 94,
+        "出闸能力": 88,
+        "爆发力": 91,
+        "力量": 84,
+        "毅力": 90,
+        "智力": 82,
+        "体格": 87,
+        "血统力": 63
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.5,
+      "form": {
+        "出赛": 13,
+        "胜利": 4,
+        "前三": 7
+      },
+      "player": false,
+      "style": "追"
+    },
+    {
+      "id": "h4",
+      "name": "光刃",
+      "sire": "風富士",
+      "dam": "翔影",
+      "age": 5,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.6181763413026465,
+        "settle": 0.6487906149178744,
+        "tractability": 0.706728121072054
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.38204145210329443,
+        "power": -0.261772035388276,
+        "economy": -0.6444686817936599,
+        "kinetics": -0.214053360838443,
+        "durability": 0.5529708735411987
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 93,
+        "耐力": 90,
+        "出闸能力": 86,
+        "爆发力": 89,
+        "力量": 82,
+        "毅力": 91,
+        "智力": 81,
+        "体格": 81,
+        "血统力": 36
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.7,
+      "form": {
+        "出赛": 20,
+        "胜利": 6,
+        "前三": 11
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h5",
+      "name": "蒼吹雪",
+      "sire": "雲翼",
+      "dam": "白蓮",
+      "age": 3,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.6056871670244144,
+        "settle": 0.4860349319232628,
+        "tractability": 0.6054391015712173
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.6761082927463575,
+        "power": -0.49887659663800143,
+        "economy": -0.07674334296025337,
+        "kinetics": 0.10180632742121816,
+        "durability": 0.2122341424925253
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "黑鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 94,
+        "耐力": 92,
+        "出闸能力": 86,
+        "爆发力": 93,
+        "力量": 90,
+        "毅力": 91,
+        "智力": 81,
+        "体格": 82,
+        "血统力": 80
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.5,
+      "form": {
+        "出赛": 11,
+        "胜利": 4,
+        "前三": 8
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h6",
+      "name": "蒼疾風",
+      "sire": "暁帝",
+      "dam": "暁流星",
+      "age": 5,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.8014269755883328,
+        "settle": 0.40522171838488436,
+        "tractability": 0.6953380067702384
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.08224437511526048,
+        "power": 0.7951880984939634,
+        "economy": 0.394587833667174,
+        "kinetics": 0.2687544208019972,
+        "durability": 0.14582523624412716
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 95,
+        "出闸能力": 87,
+        "爆发力": 90,
+        "力量": 88,
+        "毅力": 95,
+        "智力": 83,
+        "体格": 89,
+        "血统力": 51
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.6,
+      "form": {
+        "出赛": 20,
+        "胜利": 7,
+        "前三": 12
+      },
+      "player": false,
+      "style": "逃"
+    },
+    {
+      "id": "h7",
+      "name": "風白波",
+      "sire": "紅曜",
+      "dam": "銀駒",
+      "age": 3,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.06746480345141032,
+        "settle": 0.675834545146674,
+        "tractability": 0.6328922561798246
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.4453661451814696,
+        "power": 0.5810594119131565,
+        "economy": -0.3234212745446712,
+        "kinetics": -0.3378524761646986,
+        "durability": -0.2671218778239563
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 95,
+        "耐力": 95,
+        "出闸能力": 89,
+        "爆发力": 91,
+        "力量": 84,
+        "毅力": 93,
+        "智力": 88,
+        "体格": 80,
+        "血统力": 83
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.3,
+      "form": {
+        "出赛": 11,
+        "胜利": 3,
+        "前三": 7
+      },
+      "player": false,
+      "style": "追"
+    },
+    {
+      "id": "h8",
+      "name": "嵐野",
+      "sire": "星野",
+      "dam": "雷鳴",
+      "age": 5,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.4797453358611141,
+        "settle": 0.6987826176434756,
+        "tractability": 0.7663132819216699
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.19359067345503717,
+        "power": -0.8362442566314712,
+        "economy": -0.9371111248154194,
+        "kinetics": 0.059079878125339755,
+        "durability": -0.28288757840637124
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "黑鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 96,
+        "耐力": 97,
+        "出闸能力": 86,
+        "爆发力": 94,
+        "力量": 90,
+        "毅力": 92,
+        "智力": 83,
+        "体格": 89,
+        "血统力": 56
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.2,
+      "form": {
+        "出赛": 19,
+        "胜利": 5,
+        "前三": 13
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h9",
+      "name": "雪海人",
+      "sire": "光翼",
+      "dam": "風海人",
+      "age": 5,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.46034509730894496,
+        "settle": 0.6454949197890237,
+        "tractability": 0.7612735158056021
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.7283798523712902,
+        "power": 0.3699736692011356,
+        "economy": 0.3259305351879448,
+        "kinetics": -0.15893132155761125,
+        "durability": -0.3408805781509727
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 91,
+        "耐力": 91,
+        "出闸能力": 82,
+        "爆发力": 92,
+        "力量": 88,
+        "毅力": 92,
+        "智力": 87,
+        "体格": 83,
+        "血统力": 41
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.4,
+      "form": {
+        "出赛": 20,
+        "胜利": 6,
+        "前三": 12
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h10",
+      "name": "蒼駒",
+      "sire": "黑流星",
+      "dam": "銀富士",
+      "age": 5,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.35350841704322933,
+        "settle": 0.44009884817246353,
+        "tractability": 0.5899547231048345
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.043749640905298294,
+        "power": 0.6703170754713937,
+        "economy": 0.7515194623731077,
+        "kinetics": 0.2958719528280198,
+        "durability": 0.05400525408331305
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 95,
+        "耐力": 93,
+        "出闸能力": 87,
+        "爆发力": 91,
+        "力量": 86,
+        "毅力": 91,
+        "智力": 82,
+        "体格": 87,
+        "血统力": 88
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 16,
+        "胜利": 6,
+        "前三": 11
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h11",
+      "name": "桜野",
+      "sire": "風紅葉",
+      "dam": "翔曜",
+      "age": 5,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.721240588449464,
+        "settle": 0.5051004875274375,
+        "tractability": 0.6268891061116011
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.8117738257627933,
+        "power": 0.8531037520151585,
+        "economy": -0.16683158213272692,
+        "kinetics": 0.39867989290505645,
+        "durability": 0.8728762276936322
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 93,
+        "耐力": 95,
+        "出闸能力": 88,
+        "爆发力": 91,
+        "力量": 90,
+        "毅力": 93,
+        "智力": 81,
+        "体格": 89,
+        "血统力": 75
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.1,
+      "form": {
+        "出赛": 20,
+        "胜利": 6,
+        "前三": 13
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h12",
+      "name": "暁鳴",
+      "sire": "天王",
+      "dam": "嵐王",
+      "age": 4,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.637795597885915,
+        "settle": 0.6149492519432679,
+        "tractability": 0.6718344888351858
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.7797600369900465,
+        "power": -0.01829071103129536,
+        "economy": -0.05339676155708731,
+        "kinetics": 0.08044879743829364,
+        "durability": -0.3916432777419686
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 93,
+        "出闸能力": 86,
+        "爆发力": 93,
+        "力量": 91,
+        "毅力": 92,
+        "智力": 89,
+        "体格": 82,
+        "血统力": 81
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.6,
+      "form": {
+        "出赛": 15,
+        "胜利": 4,
+        "前三": 7
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h13",
+      "name": "光海人",
+      "sire": "雷天馬",
+      "dam": "風野",
+      "age": 2,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.13843999957936287,
+        "settle": 0.5318484362820164,
+        "tractability": 0.711829494573176
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.034842947148717926,
+        "power": 0.6153024655533954,
+        "economy": 0.6095613665878772,
+        "kinetics": -0.37841454213485126,
+        "durability": -0.47430001979228115
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 90,
+        "出闸能力": 86,
+        "爆发力": 90,
+        "力量": 88,
+        "毅力": 89,
+        "智力": 85,
+        "体格": 80,
+        "血统力": 66
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1,
+      "form": {
+        "出赛": 8,
+        "胜利": 2,
+        "前三": 4
+      },
+      "player": false,
+      "style": "追"
+    },
+    {
+      "id": "h14",
+      "name": "翔蓮",
+      "sire": "嵐刃",
+      "dam": "風王",
+      "age": 3,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.14140517115977325,
+        "settle": 0.5471534224329517,
+        "tractability": 0.6621497124452145
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.5313821091549471,
+        "power": -0.6777664544992149,
+        "economy": 0.3872679169289768,
+        "kinetics": -0.38792308792471886,
+        "durability": -0.4694689241005108
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 94,
+        "出闸能力": 86,
+        "爆发力": 89,
+        "力量": 86,
+        "毅力": 88,
+        "智力": 86,
+        "体格": 86,
+        "血统力": 77
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 9,
+        "胜利": 3,
+        "前三": 5
+      },
+      "player": false,
+      "style": "追"
+    },
+    {
+      "id": "h15",
+      "name": "暁野",
+      "sire": "雪紅葉",
+      "dam": "黑天馬",
+      "age": 3,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.43276436662665524,
+        "settle": 0.7034845800632612,
+        "tractability": 0.6249128485061228
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.5010374236153439,
+        "power": -0.4031038026325404,
+        "economy": 0.4996045074425638,
+        "kinetics": -0.6940594411455094,
+        "durability": -0.7670885705156252
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "芦毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 96,
+        "耐力": 97,
+        "出闸能力": 87,
+        "爆发力": 91,
+        "力量": 89,
+        "毅力": 95,
+        "智力": 88,
+        "体格": 89,
+        "血统力": 72
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.1,
+      "form": {
+        "出赛": 12,
+        "胜利": 4,
+        "前三": 7
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h16",
+      "name": "雷駒",
+      "sire": "暁翼",
+      "dam": "嵐天馬",
+      "age": 4,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.7683498748684621,
+        "settle": 0.4860469627641142,
+        "tractability": 0.6390949471723288
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.12343828754965214,
+        "power": -0.6978492573369294,
+        "economy": 0.5041656400542707,
+        "kinetics": -0.33556563472375267,
+        "durability": -0.18193498367909344
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "黑鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 94,
+        "出闸能力": 86,
+        "爆发力": 95,
+        "力量": 84,
+        "毅力": 94,
+        "智力": 83,
+        "体格": 88,
+        "血统力": 60
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.2,
+      "form": {
+        "出赛": 13,
+        "胜利": 4,
+        "前三": 8
+      },
+      "player": false,
+      "style": "逃"
+    },
+    {
+      "id": "h17",
+      "name": "月駒",
+      "sire": "銀紅葉",
+      "dam": "月風花",
+      "age": 3,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.5900819596176722,
+        "settle": 0.6368570094918832,
+        "tractability": 0.7059084276370705
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.7544620295055211,
+        "power": 0.7287854017689823,
+        "economy": 0.6901768644805998,
+        "kinetics": -0.7091720493510365,
+        "durability": -0.6895440720953048
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 92,
+        "出闸能力": 87,
+        "爆发力": 93,
+        "力量": 84,
+        "毅力": 93,
+        "智力": 89,
+        "体格": 87,
+        "血统力": 39
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1,
+      "form": {
+        "出赛": 9,
+        "胜利": 3,
+        "前三": 5
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h18",
+      "name": "疾王",
+      "sire": "月吹雪",
+      "dam": "光天馬",
+      "age": 4,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.13884695986494933,
+        "settle": 0.47915120550338186,
+        "tractability": 0.7185512287151069
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.5580559177324176,
+        "power": 0.6241142919985577,
+        "economy": -0.6998945387545973,
+        "kinetics": -0.8342430131509899,
+        "durability": -0.6549970051273704
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "栗毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 95,
+        "耐力": 94,
+        "出闸能力": 87,
+        "爆发力": 91,
+        "力量": 84,
+        "毅力": 88,
+        "智力": 84,
+        "体格": 80,
+        "血统力": 34
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 16,
+        "胜利": 5,
+        "前三": 11
+      },
+      "player": false,
+      "style": "追"
+    },
+    {
+      "id": "h19",
+      "name": "雲風花",
+      "sire": "銀野",
+      "dam": "暁白波",
+      "age": 4,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.3913166394250714,
+        "settle": 0.6632854606667534,
+        "tractability": 0.7561032410785556
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.39661139852833005,
+        "power": 0.24536852701567113,
+        "economy": 0.6742732809856534,
+        "kinetics": 0.3716361753642559,
+        "durability": 0.5874717465834692
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 96,
+        "出闸能力": 85,
+        "爆发力": 96,
+        "力量": 91,
+        "毅力": 92,
+        "智力": 84,
+        "体格": 86,
+        "血统力": 84
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.5,
+      "form": {
+        "出赛": 15,
+        "胜利": 4,
+        "前三": 10
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h20",
+      "name": "月帝",
+      "sire": "白紅葉",
+      "dam": "嵐駒",
+      "age": 4,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.37936335176247016,
+        "settle": 0.6789620239147917,
+        "tractability": 0.6442025798093528
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.48687558437231926,
+        "power": -0.3009140399750322,
+        "economy": 0.26286588576622305,
+        "kinetics": -0.6593328542076051,
+        "durability": -0.020503601781092562
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 96,
+        "耐力": 92,
+        "出闸能力": 85,
+        "爆发力": 88,
+        "力量": 87,
+        "毅力": 91,
+        "智力": 80,
+        "体格": 80,
+        "血统力": 34
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 16,
+        "胜利": 5,
+        "前三": 9
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h21",
+      "name": "紅翼",
+      "sire": "翔海人",
+      "dam": "蒼曜",
+      "age": 4,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.5443438089939859,
+        "settle": 0.5360170905003324,
+        "tractability": 0.792172686725855
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.35485198576934635,
+        "power": 0.808901032200083,
+        "economy": -0.14625215493142607,
+        "kinetics": -0.536605760641396,
+        "durability": 0.02098287926055492
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 95,
+        "耐力": 94,
+        "出闸能力": 83,
+        "爆发力": 90,
+        "力量": 83,
+        "毅力": 88,
+        "智力": 89,
+        "体格": 81,
+        "血统力": 62
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 14,
+        "胜利": 4,
+        "前三": 10
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h22",
+      "name": "雪鳴",
+      "sire": "暁波",
+      "dam": "星駒",
+      "age": 4,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.8054945585116153,
+        "settle": 0.6415472179166973,
+        "tractability": 0.6233976631294936
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.43202335468959063,
+        "power": 0.18546359736938028,
+        "economy": -0.10779118253849448,
+        "kinetics": -0.5422437079250813,
+        "durability": 0.07088180992286652
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 96,
+        "耐力": 96,
+        "出闸能力": 84,
+        "爆发力": 91,
+        "力量": 88,
+        "毅力": 91,
+        "智力": 83,
+        "体格": 83,
+        "血统力": 68
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 15,
+        "胜利": 5,
+        "前三": 10
+      },
+      "player": false,
+      "style": "逃"
+    },
+    {
+      "id": "h23",
+      "name": "月翼",
+      "sire": "星紅葉",
+      "dam": "疾吹雪",
+      "age": 5,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.7455285421243911,
+        "settle": 0.6103389464458451,
+        "tractability": 0.7244540952891112
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.6172812580363825,
+        "power": -0.7398533851141109,
+        "economy": -0.7292004018090665,
+        "kinetics": 0.2290823954157531,
+        "durability": -0.3937721519498154
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "芦毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 95,
+        "出闸能力": 85,
+        "爆发力": 92,
+        "力量": 90,
+        "毅力": 90,
+        "智力": 85,
+        "体格": 91,
+        "血统力": 39
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 20,
+        "胜利": 7,
+        "前三": 12
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h24",
+      "name": "翔野",
+      "sire": "黑曜",
+      "dam": "星富士",
+      "age": 3,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.33157450238611297,
+        "settle": 0.7017458775769918,
+        "tractability": 0.6158667539879681
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.42323917276225986,
+        "power": 0.3318689114879817,
+        "economy": 0.27121867295354607,
+        "kinetics": 0.7927639564499258,
+        "durability": 0.6721666835714132
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "黑鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 95,
+        "耐力": 93,
+        "出闸能力": 87,
+        "爆发力": 89,
+        "力量": 88,
+        "毅力": 93,
+        "智力": 89,
+        "体格": 89,
+        "血统力": 66
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.7,
+      "form": {
+        "出赛": 9,
+        "胜利": 2,
+        "前三": 4
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h25",
+      "name": "雷王",
+      "sire": "疾流星",
+      "dam": "雪駒",
+      "age": 5,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.8468522824796111,
+        "settle": 0.48087777596898384,
+        "tractability": 0.6875257332623006
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.20845010785851628,
+        "power": -0.24457807287108152,
+        "economy": -0.40749715198762715,
+        "kinetics": -0.4461964675225317,
+        "durability": 0.004608588502742358
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 96,
+        "出闸能力": 90,
+        "爆发力": 93,
+        "力量": 90,
+        "毅力": 93,
+        "智力": 85,
+        "体格": 88,
+        "血统力": 67
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.9,
+      "form": {
+        "出赛": 19,
+        "胜利": 6,
+        "前三": 13
+      },
+      "player": false,
+      "style": "逃"
+    },
+    {
+      "id": "h26",
+      "name": "天風花",
+      "sire": "雲白波",
+      "dam": "雲流星",
+      "age": 3,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.45740216112585064,
+        "settle": 0.5877429361548275,
+        "tractability": 0.6114569329842926
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.7571387442294508,
+        "power": -0.48734924409072844,
+        "economy": 0.43532947148196405,
+        "kinetics": -0.8838954687118531,
+        "durability": -0.7647293049376458
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 92,
+        "耐力": 94,
+        "出闸能力": 86,
+        "爆发力": 88,
+        "力量": 83,
+        "毅力": 89,
+        "智力": 80,
+        "体格": 80,
+        "血统力": 42
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.6,
+      "form": {
+        "出赛": 11,
+        "胜利": 3,
+        "前三": 6
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h27",
+      "name": "蒼帝",
+      "sire": "雪王",
+      "dam": "雷野",
+      "age": 5,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.5888703558318344,
+        "settle": 0.47030596904549743,
+        "tractability": 0.7166388780921699
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.7368418685859068,
+        "power": 0.34808777451980855,
+        "economy": -0.903055710485205,
+        "kinetics": 0.3897769740782678,
+        "durability": 0.25724804981146004
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 96,
+        "耐力": 97,
+        "出闸能力": 90,
+        "爆发力": 92,
+        "力量": 90,
+        "毅力": 92,
+        "智力": 91,
+        "体格": 89,
+        "血统力": 60
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.1,
+      "form": {
+        "出赛": 16,
+        "胜利": 4,
+        "前三": 10
+      },
+      "player": false,
+      "style": "先"
+    },
+    {
+      "id": "h28",
+      "name": "光影",
+      "sire": "光曜",
+      "dam": "疾鳴",
+      "age": 5,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.21784062269379212,
+        "settle": 0.6023606940731406,
+        "tractability": 0.7116625942010433
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0.599869085662067,
+        "power": -0.5765965879429131,
+        "economy": -0.1431034202221781,
+        "kinetics": 0.4275077413767576,
+        "durability": 0.7383435221388935
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "芦毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 95,
+        "耐力": 96,
+        "出闸能力": 84,
+        "爆发力": 90,
+        "力量": 85,
+        "毅力": 87,
+        "智力": 80,
+        "体格": 89,
+        "血统力": 78
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.4,
+      "form": {
+        "出赛": 16,
+        "胜利": 5,
+        "前三": 11
+      },
+      "player": false,
+      "style": "追"
+    },
+    {
+      "id": "h29",
+      "name": "雪刃",
+      "sire": "雷富士",
+      "dam": "嵐鳴",
+      "age": 4,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.5319324154875139,
+        "settle": 0.47878507976606494,
+        "tractability": 0.730337267568335
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.5372672970639542,
+        "power": -0.17463244332466277,
+        "economy": 0.7247330368030817,
+        "kinetics": 0.0155633496120572,
+        "durability": -0.02699561349581925
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 95,
+        "出闸能力": 82,
+        "爆发力": 89,
+        "力量": 85,
+        "毅力": 90,
+        "智力": 82,
+        "体格": 83,
+        "血统力": 46
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.2,
+      "form": {
+        "出赛": 15,
+        "胜利": 5,
+        "前三": 9
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h30",
+      "name": "天曜",
+      "sire": "月海人",
+      "dam": "黑野",
+      "age": 3,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.4129255082006659,
+        "settle": 0.5151174255590887,
+        "tractability": 0.7710295260958374
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.7015145398210734,
+        "power": -0.6974903364665807,
+        "economy": 0.8460879557300359,
+        "kinetics": 0.29116166532039645,
+        "durability": -0.052591087343171194
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "芦毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 96,
+        "出闸能力": 87,
+        "爆发力": 95,
+        "力量": 91,
+        "毅力": 96,
+        "智力": 84,
+        "体格": 88,
+        "血统力": 51
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.7,
+      "form": {
+        "出赛": 11,
+        "胜利": 3,
+        "前三": 6
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "h31",
+      "name": "疾蓮",
+      "sire": "白富士",
+      "dam": "暁富士",
+      "age": 3,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.84327766201386,
+        "settle": 0.46469875511899594,
+        "tractability": 0.6438226171061397
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.3042532916646451,
+        "power": 0.6954386716941372,
+        "economy": 0.2470434680115432,
+        "kinetics": -0.6159782161936164,
+        "durability": -0.20628302716650068
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 91,
+        "出闸能力": 84,
+        "爆发力": 92,
+        "力量": 87,
+        "毅力": 91,
+        "智力": 87,
+        "体格": 89,
+        "血统力": 79
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.8,
+      "form": {
+        "出赛": 8,
+        "胜利": 3,
+        "前三": 5
+      },
+      "player": false,
+      "style": "逃"
+    },
+    {
+      "id": "h32",
+      "name": "光波",
+      "sire": "嵐紅葉",
+      "dam": "雷紅葉",
+      "age": 4,
+      "sex": "牡",
+      "behavior": {
+        "forwardness": 0.3392634226043259,
+        "settle": 0.4705773103693501,
+        "tractability": 0.74800122413598
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": -0.5882591806352139,
+        "power": 0.7192083568777888,
+        "economy": -0.6739377207588405,
+        "kinetics": 0.18647095756605264,
+        "durability": 0.21013529729098085
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "青鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 92,
+        "耐力": 96,
+        "出闸能力": 83,
+        "爆发力": 90,
+        "力量": 86,
+        "毅力": 89,
+        "智力": 84,
+        "体格": 87,
+        "血统力": 41
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 0.9,
+      "form": {
+        "出赛": 12,
+        "胜利": 4,
+        "前三": 8
+      },
+      "player": false,
+      "style": "差"
+    },
+    {
+      "id": "open-superior",
+      "name": "",
+      "sire": "",
+      "dam": "",
+      "age": 4,
+      "sex": "牝",
+      "behavior": {
+        "forwardness": 0.5,
+        "settle": 0.5,
+        "tractability": 0.65
+      },
+      "physiology": {
+        "version": 1,
+        "endurance": 0,
+        "power": 0,
+        "economy": 0,
+        "kinetics": 0,
+        "durability": 0
+      },
+      "carriedWeight": 57,
+      "bodyMass": 480,
+      "coat": "黑鹿毛",
+      "surface": "草地",
+      "special": "左右皆可",
+      "stats": {
+        "速度": 97,
+        "耐力": 97,
+        "出闸能力": 94,
+        "爆发力": 97,
+        "力量": 95,
+        "毅力": 97,
+        "智力": 88,
+        "体格": 93,
+        "血统力": 44
+      },
+      "斗志": 50,
+      "疲劳": 0,
+      "jockeyGrade": "优秀",
+      "aggression": 1.5,
+      "form": {
+        "出赛": 12,
+        "胜利": 4,
+        "前三": 7
+      },
+      "player": false,
+      "style": "差"
+    }
+  ],
+  "strongerEntry": {
+    "id": "open-superior",
+    "stats": {
+      "速度": 97,
+      "耐力": 97,
+      "出闸能力": 94,
+      "爆发力": 97,
+      "力量": 95,
+      "毅力": 97,
+      "智力": 88,
+      "体格": 93,
+      "血统力": 44
+    },
+    "physiology": {
+      "version": 1,
+      "endurance": 0,
+      "power": 0,
+      "economy": 0,
+      "kinetics": 0,
+      "durability": 0
+    },
+    "forecast": {
+      "version": 1,
+      "seconds": 137.4765989908207,
+      "requestedV": 17.78109375,
+      "required": 3276.1197348938817,
+      "capacity": 3395,
+      "aerobic": 56.48,
+      "maxV": 19.560000000000002,
+      "peakPowerShortfall": 0,
+      "feasible": true,
+      "referenceLane": 1.4
+    },
+    "fasterThanWindow": true,
+    "markedEligible": false,
+    "selected": false
+  },
+  "diagnostics": {
+    "version": 1,
+    "race": {
+      "length": 2400,
+      "course": "東京芝A",
+      "surface": "草地",
+      "state": "良",
+      "dir": "左回",
+      "profile": "平坦",
+      "wind": 0
+    },
+    "levelBand": [
+      87,
+      91
+    ],
+    "predictionWindow": {
+      "fastSeconds": 138.048332252303,
+      "slowSeconds": 140.6303256692325
+    },
+    "candidates": 33,
+    "requested": 8,
+    "selected": 8,
+    "eligible": 13,
+    "fallback": 0,
+    "shortage": 0,
+    "selection": "Within shared grade/distance forecast window: uniform without replacement. Scarcity: nearest window, explicitly reported. No realized race simulation.",
+    "entries": [
+      {
+        "id": "h25",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 139.93727558076114,
+          "requestedV": 17.462145316858003,
+          "required": 3173.9459752452494,
+          "capacity": 3277.821767515317,
+          "aerobic": 55.653838296701856,
+          "maxV": 19.49135501610534,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      },
+      {
+        "id": "h13",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 138.75967760939113,
+          "requestedV": 17.621099548018478,
+          "required": 3242.0063151228383,
+          "capacity": 3343.8202766493196,
+          "aerobic": 54.70453032481251,
+          "maxV": 19.561953470321818,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      },
+      {
+        "id": "h21",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 138.897000784892,
+          "requestedV": 17.60560202188848,
+          "required": 3443.176714907313,
+          "capacity": 3556.128439593827,
+          "aerobic": 54.77067266367506,
+          "maxV": 19.54439875045775,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      },
+      {
+        "id": "h7",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 139.4634055235482,
+          "requestedV": 17.52642582738426,
+          "required": 3401.175938522658,
+          "capacity": 3518.2022544611245,
+          "aerobic": 54.75297479349189,
+          "maxV": 19.52784449693498,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      },
+      {
+        "id": "h1",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 140.6112099934545,
+          "requestedV": 17.380410287627328,
+          "required": 3237.7321565188513,
+          "capacity": 3362.1432362466935,
+          "aerobic": 54.91268448544871,
+          "maxV": 19.50845306561702,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      },
+      {
+        "id": "h31",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 139.32648808328267,
+          "requestedV": 17.549887138394382,
+          "required": 3319.9343729949405,
+          "capacity": 3406.497216934583,
+          "aerobic": 54.2026949413389,
+          "maxV": 19.591408050908516,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      },
+      {
+        "id": "h16",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 139.45875910995613,
+          "requestedV": 17.52949069763195,
+          "required": 2955.4892743374776,
+          "capacity": 3060.4075943361504,
+          "aerobic": 56.10414594568842,
+          "maxV": 19.458184153069823,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      },
+      {
+        "id": "h29",
+        "eligible": true,
+        "forecast": {
+          "version": 1,
+          "seconds": 139.24053099724114,
+          "requestedV": 17.562878513458926,
+          "required": 3130.828040172396,
+          "capacity": 3266.9347125945496,
+          "aerobic": 54.49565156822093,
+          "maxV": 19.459588960024217,
+          "peakPowerShortfall": 0,
+          "feasible": true,
+          "referenceLane": 1.4
+        }
+      }
+    ]
+  },
+  "inference": "A hard upper ability / minimum-time eligibility boundary excludes superior candidates even when no fallback is needed. This is cohort matching, not realistic open-grade qualification.",
+  "officialSources": [
+    {
+      "title": "JRA: how to read G1 entry-selection priority",
+      "url": "https://www.jra.go.jp/keiba/tokubetsu/mikata.html"
+    },
+    {
+      "title": "JRA: race class structure",
+      "url": "https://www.jra.go.jp/keiba/rules/class.html"
+    }
+  ]
+}

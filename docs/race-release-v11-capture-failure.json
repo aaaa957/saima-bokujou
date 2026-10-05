@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-04T05:47:30.023Z",
+  "scope": "Fixture capture tooling failure; no numerical engine execution",
+  "actualEngineSteps": 0,
+  "engineHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "helperByteSha256": "2a80143d6387c432188a7727f195993f5f5f2ec1cf877c9c8e07b17bd3449e92",
+  "error": "AssertionError: Recognized source header and literal RACE_F required",
+  "cause": "Source begins with UTF-8 BOM; header regular expression required slash at offset zero. RACE_F literal matched.",
+  "cohortProofBeforeCapture": "docs/cohort-fixture-proof-v11-pre-capture-failure.json",
+  "repair": "Permit and preserve the existing BOM in the header section; production source and parameters remain frozen."
+}

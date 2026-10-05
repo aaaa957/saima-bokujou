@@ -1,0 +1,96 @@
+{
+  "sourceNormalizedSha256": "aec439529da1c9a1cf776ee6958dd30a46b25277210d5e81eacbb9b4e3deb90e",
+  "anchor": "At neutral70, flat straight wind0, v18, resistanceK_new=old-(airK_new-old)*18. Entire 12..22 curve reported; at86 economy differs, so equal18 anchor is approximate there.",
+  "stage": "Declared exploratory finite grid after initial smoke; controlled-only evaluation complete. These files have not been fitted to reserved2020.",
+  "variants": [
+    {
+      "name": "current",
+      "parameters": {}
+    },
+    {
+      "name": "fast85",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.19,
+        "peakExtra": 1.55
+      }
+    },
+    {
+      "name": "fast80-peak08",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.1199999999999999,
+        "peakExtra": 2.35
+      }
+    },
+    {
+      "name": "fast80-peak12",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.1199999999999999,
+        "peakExtra": 2.75
+      }
+    },
+    {
+      "name": "air2-anchor18",
+      "parameters": {
+        "airK": 0.0013,
+        "resistanceK": 0.2383
+      }
+    },
+    {
+      "name": "air4-anchor18",
+      "parameters": {
+        "airK": 0.0026,
+        "resistanceK": 0.2149
+      }
+    },
+    {
+      "name": "air2-fast80-peak08",
+      "parameters": {
+        "airK": 0.0013,
+        "resistanceK": 0.2383,
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.1199999999999999,
+        "peakExtra": 2.35
+      }
+    },
+    {
+      "name": "air4-fast80-peak12",
+      "parameters": {
+        "airK": 0.0026,
+        "resistanceK": 0.2149,
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.1199999999999999,
+        "peakExtra": 2.75
+      }
+    },
+    {
+      "name": "air2-fast80-peak12-cost105",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.1199999999999999,
+        "peakExtra": 2.75,
+        "airK": 0.001365,
+        "resistanceK": 0.250215
+      }
+    },
+    {
+      "name": "air4-fast85-peak08-cost105",
+      "parameters": {
+        "maxAccel": 5.75,
+        "runningAccel": 2.75,
+        "responseTime": 1.19,
+        "peakExtra": 2.35,
+        "airK": 0.00273,
+        "resistanceK": 0.225645
+      }
+    }
+  ]
+}

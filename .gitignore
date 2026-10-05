@@ -16,3 +16,29 @@ docs/.traffic-optimized-final-v9-checkpoints/
 # Complete v10 causal traces are stored as lossless .json.gz archives.
 docs/causal-controller-start-v10.json
 docs/causal-population-paths-v10.json
+
+# v11 closed historical raw reports remain local; byte-verified gzip is tracked.
+docs/race-validation-v11-baseline-external.json
+docs/race-validation-v11-baseline-smoke.json
+docs/race-validation-v11-candidate-initial-smoke.json
+docs/race-validation-v11-cohort-initial-training.json
+docs/calibration-screen-v11-headway.json
+docs/calibration-screen-v11-headway.json.before-stop-checkpoint
+docs/calibration-screen-v11-headway.json.after-stop-checkpoint
+docs/controlled-grid-v11.json
+docs/follow-coarse-screen-partial-v11.json
+docs/wait-route-continuation-partial-v11.json
+docs/calibration-mechanical-v11.json
+docs/calibration-mechanical-v11.json.missing-process-checkpoint
+docs/calibration-selected-nopeak-v11.json
+docs/calibration-selected-peak-v11.json
+docs/calibration-selected-training-rest-v11.json
+docs/calibration-selected-training-v11.json
+docs/calibration-mechanical-v11.json.before-resume-checkpoint
+docs/calibration-mechanical-v11.json.after-resume-checkpoint
+docs/follow-coarse-screen-partial-v11-history/e929c14c596b36e407b70d431551c865f551f72c2ad8b17fb4e808640c7046b3.json
+docs/follow-coarse-screen-partial-v11-history/15ba1cf8366ddc0d8e3685ab06ac0e77f2aacaa3bbc7bad825cf4208311a3103.json
+# Exact duplicate of the verified canonical wait-route .json.gz, retained local.
+docs/wait-route-continuation-partial-v11-history/83142f24ac5b8fb2049ddf06edb29ac149b04ca3fdeacd2ac1ef94bd647599cc.json
+# Full candidate-final batch is committed as the lossless .json.gz archive (raw is 15.6 MB).
+docs/candidate-final-all30.json

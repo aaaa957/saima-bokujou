@@ -1,0 +1,49 @@
+{
+  "sourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "candidateHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "pass": true,
+  "productionUnchanged": true,
+  "actualStepCalls": 0,
+  "checks": [
+    {
+      "name": "The patch is idempotent, exactly reversible, and changes only runAI",
+      "pass": true
+    },
+    {
+      "name": "Actual laneChanged cancels the unexecuted follow commitment",
+      "pass": true
+    },
+    {
+      "name": "Actual speedChanged cancels the unexecuted follow commitment",
+      "pass": true
+    },
+    {
+      "name": "Repeated safe lane assignment with the same actual tuple keeps legal follow",
+      "pass": true
+    },
+    {
+      "name": "A nonsequence settled candidate records its actual safety lane instruction",
+      "pass": true
+    },
+    {
+      "name": "An attack overridden to wait cannot emit a false launch or sprint start",
+      "pass": true
+    },
+    {
+      "name": "An unchanged attack tuple keeps its label and emits one real launch",
+      "pass": true
+    },
+    {
+      "name": "Attack persistence and genuine withdrawal each bookkeep only once",
+      "pass": true
+    },
+    {
+      "name": "A no-viable-plan fallback keeps wait even when the actual tuple is unchanged",
+      "pass": true
+    },
+    {
+      "name": "Default projected physical movement is unchanged by the controller patch",
+      "pass": true
+    }
+  ]
+}

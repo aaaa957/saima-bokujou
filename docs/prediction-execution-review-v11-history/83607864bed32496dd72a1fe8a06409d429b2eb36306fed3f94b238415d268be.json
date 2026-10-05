@@ -1,0 +1,343 @@
+{
+  "startedAt": "2026-10-03T10:10:10.590Z",
+  "sourceArtifact": "docs\\prediction-execution-review-v11-source.txt",
+  "engineHash": "675c31be6d606704663cc422d81da7ff2e0254cc62780dc30bde2ef03db96cab",
+  "instrumentedHash": "917ba4b0a16f6bfb8f2cad0c0203effcf45bc1a7a4b5c066ffa5952c5d806964",
+  "testSourceHash": "d6b0f69e59dbbf560c85f2fed5178392014293daf49cb03781cb02da577d5623",
+  "protocol": {
+    "race": {
+      "length": 2400,
+      "course": "标准",
+      "surface": "草地",
+      "state": "良",
+      "profile": "平坦",
+      "wind": 0
+    },
+    "rng": "constant0.5",
+    "horse": "Neutral70,480kg+57kg, no morale/fatigue modifiers; tractability.65; position/risk/patience.5/.5/.7; excellent jockey.",
+    "cases": "Two constructed stable horses8m apart in one lane; fixed controls for execution. No natural population inference.",
+    "scope": "Readonly source snapshot instrumentation; no changes to physics/controller/fixtures. Goals and cache suggestions evaluated at exact same state; no parameter search.",
+    "leaderMeaning": "Omitted leader inherits within one projectActions call; explicit null clears. New calls start with no inherited observation."
+  },
+  "executions": 3,
+  "frames": 768,
+  "forecasts": 23,
+  "findings": [
+    {
+      "name": "Existing wake omitted from baseline but automatically present in execution",
+      "status": "failed",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 7.999999999999977\n- 0\n\n    at D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:46:160\n    at evidence (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:42:81)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:43:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Re-observation starting in catch loses inherited leader",
+      "status": "failed",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(!Object.hasOwn(continuation.requests[0],'leader'))\n\n    at D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:54:90\n    at evidence (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:42:81)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:51:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Explicit null is overwritten to omission during continuation reconstruction",
+      "status": "observed",
+      "kind": "latent-api-edge-case",
+      "capturedRequests": [
+        {
+          "duration": 2,
+          "targetV": 14.84326171875,
+          "targetT": 10,
+          "leader": {
+            "s": 208,
+            "t": 10,
+            "v": 14.84326171875,
+            "accel": 0,
+            "bodyLength": 2.635,
+            "bodyWidth": 0.755
+          }
+        },
+        {
+          "duration": 2,
+          "targetV": 14.84326171875,
+          "targetT": 10
+        },
+        {
+          "duration": 2.8,
+          "targetV": 14.8125,
+          "targetT": 10,
+          "leader": null
+        }
+      ],
+      "actualContinuationForecastDraft": 4,
+      "explicitNullForecastDraft": 1.9999999999999978,
+      "productionReachability": "Current generator stores follow and omitted-leader catch only; appended leader:null settle is forecast-only. This explicit-null riderSequence is constructed, not a demonstrated natural sequence."
+    },
+    {
+      "name": "Forecast-only settle tail is not committed by riderSequence",
+      "status": "observed",
+      "kind": "source-invariant",
+      "followGenerated": true,
+      "forecastDurations": [
+        4,
+        4,
+        2.8
+      ],
+      "forecastLeaders": [
+        "observed",
+        "omitted",
+        "null"
+      ],
+      "storedCandidateDurations": null,
+      "committedSequenceDurations": null,
+      "boundary": "Model predictive control may legitimately assume a settle tail before replanning. Scoring that tail is not a guarantee it will be executed, and should not be described as a committed3-stage sequence."
+    }
+  ],
+  "dtEvidence": [
+    {
+      "case": "gate",
+      "inputHash": "918c06d12bd07a3c0b451a0cad7b5243d1ca8a1e16578d9b326687d19c9ed3f9",
+      "dt": 0.06,
+      "distanceError": 0.16708014755786849,
+      "velocityError": -0.0036923497682401774,
+      "reserveError": -0.8234943411110862,
+      "gutsError": -0.5026628642108335,
+      "netEnergyError": 0.8234943411117115,
+      "steps": 182,
+      "referenceSteps": 648
+    },
+    {
+      "case": "gate",
+      "inputHash": "918c06d12bd07a3c0b451a0cad7b5243d1ca8a1e16578d9b326687d19c9ed3f9",
+      "dt": 0.12,
+      "distanceError": 0.392206065356703,
+      "velocityError": -0.009074126854713427,
+      "reserveError": -1.9167165085651732,
+      "gutsError": -1.1741355780350204,
+      "netEnergyError": 1.9167165085660258,
+      "steps": 92,
+      "referenceSteps": 648
+    },
+    {
+      "case": "gate",
+      "inputHash": "918c06d12bd07a3c0b451a0cad7b5243d1ca8a1e16578d9b326687d19c9ed3f9",
+      "dt": 0.24,
+      "distanceError": 0.8285332946114181,
+      "velocityError": -0.020717196473484023,
+      "reserveError": -4.0233000915077355,
+      "gutsError": -2.458676343641855,
+      "netEnergyError": 4.023300091509213,
+      "steps": 47,
+      "referenceSteps": 648
+    },
+    {
+      "case": "settled",
+      "inputHash": "665ce07c3f920e1b2c6eca6d7f9cb3d34f2a04cee13d61aff7076596cd3eccb1",
+      "dt": 0.06,
+      "distanceError": 0.011170111344142697,
+      "velocityError": -0.005710864266198712,
+      "reserveError": -0.02692129228603335,
+      "gutsError": -0.01504258552176907,
+      "netEnergyError": 0.02692129228336171,
+      "steps": 181,
+      "referenceSteps": 648
+    },
+    {
+      "case": "settled",
+      "inputHash": "665ce07c3f920e1b2c6eca6d7f9cb3d34f2a04cee13d61aff7076596cd3eccb1",
+      "dt": 0.12,
+      "distanceError": 0.02640407942163847,
+      "velocityError": -0.013701491678308031,
+      "reserveError": -0.06068658787512504,
+      "gutsError": -0.033907401751548605,
+      "netEnergyError": 0.06068658787359027,
+      "steps": 92,
+      "referenceSteps": 648
+    },
+    {
+      "case": "settled",
+      "inputHash": "665ce07c3f920e1b2c6eca6d7f9cb3d34f2a04cee13d61aff7076596cd3eccb1",
+      "dt": 0.24,
+      "distanceError": 0.056017255597282656,
+      "velocityError": -0.029931968433604794,
+      "reserveError": -0.11622518203989785,
+      "gutsError": -0.06492964385142841,
+      "netEnergyError": 0.1162251820385336,
+      "steps": 46,
+      "referenceSteps": 648
+    },
+    {
+      "case": "low-reserve",
+      "inputHash": "d3116c37a96dedfe106e9044cdd8f8bf6b83f6fa8c2462b0241fff51d5cbb7b2",
+      "dt": 0.06,
+      "distanceError": -0.0037235425468225003,
+      "velocityError": 0.0008087374026715111,
+      "reserveError": 0.024099878659234797,
+      "gutsError": 0.013475059186930594,
+      "netEnergyError": -0.02409987865922858,
+      "steps": 182,
+      "referenceSteps": 648
+    },
+    {
+      "case": "low-reserve",
+      "inputHash": "d3116c37a96dedfe106e9044cdd8f8bf6b83f6fa8c2462b0241fff51d5cbb7b2",
+      "dt": 0.12,
+      "distanceError": -0.007924325787143971,
+      "velocityError": 0.0020113421767486983,
+      "reserveError": 0.0583569439237932,
+      "gutsError": 0.032627854345264495,
+      "netEnergyError": -0.058356943923811855,
+      "steps": 93,
+      "referenceSteps": 648
+    },
+    {
+      "case": "low-reserve",
+      "inputHash": "d3116c37a96dedfe106e9044cdd8f8bf6b83f6fa8c2462b0241fff51d5cbb7b2",
+      "dt": 0.24,
+      "distanceError": -0.015772086006336394,
+      "velocityError": 0.004293839371543484,
+      "reserveError": 0.1232909735730261,
+      "gutsError": 0.06892488191078883,
+      "netEnergyError": -0.12329097357303453,
+      "steps": 48,
+      "referenceSteps": 648
+    },
+    {
+      "case": "lateral",
+      "inputHash": "ca8a4dc983c8d38ea827327898b244e937f9fa3d841a757d6d6706c8d56fd465",
+      "dt": 0.06,
+      "distanceError": 0.08182627999309489,
+      "velocityError": -0.005514652480663074,
+      "reserveError": -0.4038899492982182,
+      "gutsError": -0.25734978073933235,
+      "netEnergyError": 0.40388994929645605,
+      "steps": 181,
+      "referenceSteps": 648
+    },
+    {
+      "case": "lateral",
+      "inputHash": "ca8a4dc983c8d38ea827327898b244e937f9fa3d841a757d6d6706c8d56fd465",
+      "dt": 0.12,
+      "distanceError": 0.19243726277426276,
+      "velocityError": -0.013260833882053902,
+      "reserveError": -0.9395635633220536,
+      "gutsError": -0.6002124290835127,
+      "netEnergyError": 0.9395635633230768,
+      "steps": 92,
+      "referenceSteps": 648
+    },
+    {
+      "case": "lateral",
+      "inputHash": "ca8a4dc983c8d38ea827327898b244e937f9fa3d841a757d6d6706c8d56fd465",
+      "dt": 0.24,
+      "distanceError": 0.41117578364725205,
+      "velocityError": -0.029088165949449518,
+      "reserveError": -1.9759436066586886,
+      "gutsError": -1.265333160886712,
+      "netEnergyError": 1.975943606658575,
+      "steps": 46,
+      "referenceSteps": 648
+    },
+    {
+      "case": "hill",
+      "inputHash": "b63e21c45eb671c0b1d695d999b86e0981db4e381c54dbd1c4763a84e299f9cf",
+      "dt": 0.06,
+      "distanceError": 0.042471293649896324,
+      "velocityError": -0.009756467263191126,
+      "reserveError": -0.13227101269171726,
+      "gutsError": -0.08567871404011385,
+      "netEnergyError": 0.13227101269160357,
+      "steps": 183,
+      "referenceSteps": 648
+    },
+    {
+      "case": "hill",
+      "inputHash": "b63e21c45eb671c0b1d695d999b86e0981db4e381c54dbd1c4763a84e299f9cf",
+      "dt": 0.12,
+      "distanceError": 0.10099391909579936,
+      "velocityError": -0.023173295677430872,
+      "reserveError": -0.315775086712506,
+      "gutsError": -0.2043904287093028,
+      "netEnergyError": 0.3157750867122786,
+      "steps": 94,
+      "referenceSteps": 648
+    },
+    {
+      "case": "hill",
+      "inputHash": "b63e21c45eb671c0b1d695d999b86e0981db4e381c54dbd1c4763a84e299f9cf",
+      "dt": 0.24,
+      "distanceError": 0.21640769706937135,
+      "velocityError": -0.05073635898568796,
+      "reserveError": -0.6612319205594304,
+      "gutsError": -0.42928574030065647,
+      "netEnergyError": 0.6612319205594872,
+      "steps": 48,
+      "referenceSteps": 648
+    }
+  ],
+  "microbenchmarks": [
+    {
+      "length": 1200,
+      "function": "budget",
+      "runs": 15,
+      "meanMilliseconds": 20.027446666666673,
+      "projectionQueries": 135,
+      "sameStateCacheMeanMilliseconds": 1.2704533333333379,
+      "maxCachedResultError": 0,
+      "scope": "Warmed wall time with possible concurrent tasks. Same-state repeated inputs only; not a cross-observation production cache recommendation."
+    },
+    {
+      "length": 1200,
+      "function": "finite",
+      "runs": 15,
+      "meanMilliseconds": 0.6217599999999948,
+      "projectionQueries": 15,
+      "sameStateCacheMeanMilliseconds": 0.2550666666666681,
+      "maxCachedResultError": 0,
+      "scope": "Warmed wall time with possible concurrent tasks. Same-state repeated inputs only; not a cross-observation production cache recommendation."
+    },
+    {
+      "length": 2400,
+      "function": "budget",
+      "runs": 15,
+      "meanMilliseconds": 67.18678666666665,
+      "projectionQueries": 135,
+      "sameStateCacheMeanMilliseconds": 2.605066666666668,
+      "maxCachedResultError": 0,
+      "scope": "Warmed wall time with possible concurrent tasks. Same-state repeated inputs only; not a cross-observation production cache recommendation."
+    },
+    {
+      "length": 2400,
+      "function": "finite",
+      "runs": 15,
+      "meanMilliseconds": 0.669293333333341,
+      "projectionQueries": 15,
+      "sameStateCacheMeanMilliseconds": 0.5498666666666698,
+      "maxCachedResultError": 0,
+      "scope": "Warmed wall time with possible concurrent tasks. Same-state repeated inputs only; not a cross-observation production cache recommendation."
+    }
+  ],
+  "failures": [
+    {
+      "name": "Existing wake omitted from baseline but automatically present in execution",
+      "status": "failed",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 7.999999999999977\n- 0\n\n    at D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:46:160\n    at evidence (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:42:81)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:43:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    },
+    {
+      "name": "Re-observation starting in catch loses inherited leader",
+      "status": "failed",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(!Object.hasOwn(continuation.requests[0],'leader'))\n\n    at D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:54:90\n    at evidence (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:42:81)\n    at Object.<anonymous> (D:\\work4\\saima-bokujou\\tests\\prediction-execution-review-v11.js:51:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)"
+    }
+  ],
+  "exactInverse": true,
+  "inputHash": "07d4d79401f0a2d09a5d75850c746e2266464172d2448e26c8e01e812f0b08e0",
+  "instrumentationControl": {
+    "framesPerArm": 60,
+    "maxPhysicalError": 0,
+    "exact": true
+  },
+  "sourceAtEndHash": "675c31be6d606704663cc422d81da7ff2e0254cc62780dc30bde2ef03db96cab",
+  "sourceUnchanged": true,
+  "elapsedSeconds": 3.3100793,
+  "summary": {
+    "findings": 4,
+    "counterexamples": 0,
+    "failures": 2,
+    "maxDt012DistanceError": 0.392206065356703,
+    "maxDt012NetEnergyError": 1.9167165085660258
+  }
+}

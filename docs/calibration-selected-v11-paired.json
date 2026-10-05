@@ -1,0 +1,605 @@
+{
+  "current": "docs/calibration-selected-nopeak-v11.json",
+  "reference": "docs/calibration-selected-peak-v11.json",
+  "currentReportNormalizedSha256": "4bb7a37cd657c0108a93f2d8902dd085c9b136461a41b7178dfc70ff9d362b9d",
+  "referenceReportNormalizedSha256": "6d7ec1c7c1f23135946ffabc28ee7bc5f9d163cac75302e177bf24e418e5dac8",
+  "currentSource": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "referenceSource": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "currentParameters": {
+    "maxAccel": 5.75,
+    "runningAccel": 2.75,
+    "responseTime": 1.12,
+    "peakExtra": 1.55,
+    "resistanceK": 0.250215,
+    "airK": 0.001365
+  },
+  "referenceParameters": {
+    "maxAccel": 5.75,
+    "runningAccel": 2.75,
+    "responseTime": 1.12,
+    "peakExtra": 2.75,
+    "resistanceK": 0.250215,
+    "airK": 0.001365
+  },
+  "parameterDifferences": [
+    {
+      "key": "peakExtra",
+      "current": 1.55,
+      "reference": 2.75
+    }
+  ],
+  "proof": [
+    {
+      "file": "docs/calibration-selected-nopeak-v11.json",
+      "sourceProof": "archived immutable source verified",
+      "source": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+      "declared": 4,
+      "covered": 4,
+      "complete": true,
+      "metadataRows": 4,
+      "retainedErrors": 0,
+      "retainedEngineeringFailures": [],
+      "forecastCoverage": {
+        "queries": 0,
+        "feasible": 0,
+        "infeasible": 0,
+        "maxFeasibleTimeError": null
+      },
+      "consistent": true
+    },
+    {
+      "file": "docs/calibration-selected-peak-v11.json",
+      "sourceProof": "archived immutable source verified",
+      "source": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+      "declared": 4,
+      "covered": 4,
+      "complete": true,
+      "metadataRows": 4,
+      "retainedErrors": 0,
+      "retainedEngineeringFailures": [],
+      "forecastCoverage": {
+        "queries": 0,
+        "feasible": 0,
+        "infeasible": 0,
+        "maxFeasibleTimeError": null
+      },
+      "consistent": true
+    }
+  ],
+  "paired": {
+    "referenceEngine": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+    "referenceParameters": {
+      "maxAccel": 5.75,
+      "runningAccel": 2.75,
+      "responseTime": 1.12,
+      "peakExtra": 2.75,
+      "resistanceK": 0.250215,
+      "airK": 0.001365
+    },
+    "rows": [
+      {
+        "jobKey": "332cdeff52506131154a177c60966d87e80d855963508bb2441f23808f6c8eb1",
+        "matchedJob": true,
+        "sameInputField": true,
+        "cohort": "selected",
+        "referenceCohort": "selected",
+        "interpretation": "paired mechanism change on identical serialized entrant input",
+        "differences": {
+          "winnerTime": -0.43413601730594564,
+          "winnerFinal600": -0.4729198382762121,
+          "first200": -0.39441190288572514,
+          "first400": -0.3782392769752718,
+          "first600": -0.3293282835762952,
+          "remainingSpeed": 0.005461201301105945,
+          "tailSeconds": -0.16115000370177768,
+          "within1": -0.07142857142857142,
+          "within2": -0.21428571428571427,
+          "final600Span": 4.008595168401854,
+          "post200Cv": 0.010857002619444736,
+          "last200Difference": -0.5238098990116953
+        },
+        "horsePairs": [
+          {
+            "id": "h36",
+            "matched": true,
+            "time": -0.9856225143469146,
+            "first200": -0.2954156222247253
+          },
+          {
+            "id": "h9",
+            "matched": true,
+            "time": -0.26865137294126384,
+            "first200": -0.39441190288572514
+          },
+          {
+            "id": "h48",
+            "matched": true,
+            "time": 2.2080686336576036,
+            "first200": 0.0075788180531493055
+          },
+          {
+            "id": "h51",
+            "matched": true,
+            "time": 4.7368144468400715,
+            "first200": -0.025791516585870866
+          },
+          {
+            "id": "h22",
+            "matched": true,
+            "time": 2.029743895662847,
+            "first200": -0.06262604067602418
+          },
+          {
+            "id": "h2",
+            "matched": true,
+            "time": 2.2324826844107974,
+            "first200": -0.11588336295658408
+          },
+          {
+            "id": "h44",
+            "matched": true,
+            "time": 1.7728563674935174,
+            "first200": 0.054283921675972735
+          },
+          {
+            "id": "h38",
+            "matched": true,
+            "time": -1.384591413208085,
+            "first200": 0.1903257839891097
+          },
+          {
+            "id": "h3",
+            "matched": true,
+            "time": 5.179910296706282,
+            "first200": 0.023284276398751302
+          },
+          {
+            "id": "h35",
+            "matched": true,
+            "time": -0.01703443926288628,
+            "first200": -0.06069324167668455
+          },
+          {
+            "id": "h6",
+            "matched": true,
+            "time": 1.1123374065126086,
+            "first200": -0.02078255753219871
+          },
+          {
+            "id": "h53",
+            "matched": true,
+            "time": 1.7709250508191872,
+            "first200": 0.008408588138635764
+          },
+          {
+            "id": "h1",
+            "matched": true,
+            "time": 2.762522480890823,
+            "first200": 0.04730304167107313
+          },
+          {
+            "id": "h17",
+            "matched": true,
+            "time": 4.581288472961319,
+            "first200": -0.04574826538590848
+          }
+        ],
+        "id": "241124",
+        "length": 2400,
+        "seed": 2026400216,
+        "absoluteResidualChanges": {
+          "winnerTime": 0.43413601730594564,
+          "winnerFinal600": -0.4729198382762121,
+          "first200": -0.39441190288572514,
+          "first400": -0.3782392769752718,
+          "first600": 0.3293282835762952,
+          "remainingSpeed": 0.005461201301105945,
+          "tailSeconds": -0.16115000370177768,
+          "within1": 0.0714285714285714,
+          "within2": 0.2142857142857143,
+          "final600Span": 2.312742615776017,
+          "post200Cv": -0.010857002619444736,
+          "last200Difference": 0.5238098990116953
+        }
+      },
+      {
+        "jobKey": "3c8b0e69c6be165eaae33a314227821ab3bcdf895e70d4d5392117b9c9c8a75c",
+        "matchedJob": true,
+        "sameInputField": true,
+        "cohort": "selected",
+        "referenceCohort": "selected",
+        "interpretation": "paired mechanism change on identical serialized entrant input",
+        "differences": {
+          "winnerTime": -0.016229714425492148,
+          "winnerFinal600": -0.016423928340572047,
+          "first200": -0.002483456667345507,
+          "first400": 0.02099589227653098,
+          "first600": -0.0276084234824836,
+          "remainingSpeed": 0.0018414609802981374,
+          "tailSeconds": 0.026665210295448105,
+          "within1": -0.05555555555555558,
+          "within2": 0.1111111111111111,
+          "final600Span": -1.1461709629803778,
+          "post200Cv": 0.0000033352122129695627,
+          "last200Difference": 0.025439239869086805
+        },
+        "horsePairs": [
+          {
+            "id": "h40",
+            "matched": true,
+            "time": -3.714652421533657,
+            "first200": -0.001081345895062924
+          },
+          {
+            "id": "h34",
+            "matched": true,
+            "time": -2.3735004275955305,
+            "first200": -0.10018447780281114
+          },
+          {
+            "id": "h9",
+            "matched": true,
+            "time": 0.13446023666855922,
+            "first200": -0.016264942806680338
+          },
+          {
+            "id": "h15",
+            "matched": true,
+            "time": -1.2149645861497333,
+            "first200": -0.03270744974570938
+          },
+          {
+            "id": "h2",
+            "matched": true,
+            "time": 0.45187744059828105,
+            "first200": 0.06804316811995825
+          },
+          {
+            "id": "h38",
+            "matched": true,
+            "time": -0.030691535760041688,
+            "first200": -0.39356954424648727
+          },
+          {
+            "id": "h17",
+            "matched": true,
+            "time": -0.016229714425492148,
+            "first200": 0.0037383978298777265
+          },
+          {
+            "id": "h31",
+            "matched": true,
+            "time": -0.3484160354828134,
+            "first200": 0.042193722832541525
+          },
+          {
+            "id": "h65",
+            "matched": true,
+            "time": -0.24403949127798796,
+            "first200": -0.03911464640654927
+          },
+          {
+            "id": "h35",
+            "matched": true,
+            "time": -0.10223755964614156,
+            "first200": -0.03484237479098162
+          },
+          {
+            "id": "h71",
+            "matched": true,
+            "time": 0.010435495869955957,
+            "first200": -0.18117377775136845
+          },
+          {
+            "id": "h53",
+            "matched": true,
+            "time": -1.0176446824799257,
+            "first200": -0.006126832272139282
+          },
+          {
+            "id": "h57",
+            "matched": true,
+            "time": 0.5798157200049161,
+            "first200": -0.06682860118950984
+          },
+          {
+            "id": "h58",
+            "matched": true,
+            "time": -0.0986030510578928,
+            "first200": -0.20317366669492998
+          },
+          {
+            "id": "h51",
+            "matched": true,
+            "time": 0.30194132656876604,
+            "first200": -0.004279766172299304
+          },
+          {
+            "id": "h1",
+            "matched": true,
+            "time": -1.5331148798227332,
+            "first200": -0.026937636734956527
+          },
+          {
+            "id": "h6",
+            "matched": true,
+            "time": 0.32901441556069244,
+            "first200": -0.04102262075804575
+          },
+          {
+            "id": "h41",
+            "matched": true,
+            "time": -2.7053939287558535,
+            "first200": 0.016030639132539548
+          }
+        ],
+        "id": "231126",
+        "length": 2400,
+        "seed": 2026400216,
+        "absoluteResidualChanges": {
+          "winnerTime": -0.016229714425492148,
+          "winnerFinal600": -0.016423928340572047,
+          "first200": -0.002483456667345507,
+          "first400": 0.02099589227653098,
+          "first600": -0.0276084234824836,
+          "remainingSpeed": 0.0018414609802981374,
+          "tailSeconds": -0.026665210295448105,
+          "within1": -0.05555555555555558,
+          "within2": -0.1111111111111111,
+          "final600Span": 1.1461709629803778,
+          "post200Cv": -0.0000033352122129695627,
+          "last200Difference": 0.025439239869086805
+        }
+      },
+      {
+        "jobKey": "b6baa75e45e33e06f33300bcbec8dd77180aecc4baae9196a4cefe138f640204",
+        "matchedJob": true,
+        "sameInputField": false,
+        "cohort": "selected",
+        "referenceCohort": "selected",
+        "interpretation": "joint engine/cohort contrast; not an isolated engine effect",
+        "differences": {
+          "winnerTime": 2.0451492660636603,
+          "winnerFinal600": 1.3036680330629409,
+          "first200": 0.25732171680680516,
+          "first400": 0.49926301985841803,
+          "first600": 0.7414812330007194,
+          "remainingSpeed": -0.6809134007212805,
+          "tailSeconds": -0.7697471431872032,
+          "within1": 0.0625,
+          "within2": 0.1875,
+          "final600Span": -0.3568186651977925,
+          "post200Cv": -0.00544470664699729,
+          "last200Difference": 0.1289667630320892
+        },
+        "horsePairs": [
+          {
+            "id": "h5",
+            "matched": false
+          },
+          {
+            "id": "h24",
+            "matched": true,
+            "time": 1.7425549411647978,
+            "first200": -0.015861028351560336
+          },
+          {
+            "id": "h16",
+            "matched": true,
+            "time": 2.5354561504224193,
+            "first200": -0.040576962070815625
+          },
+          {
+            "id": "h11",
+            "matched": false
+          },
+          {
+            "id": "h21",
+            "matched": false
+          },
+          {
+            "id": "h18",
+            "matched": false
+          },
+          {
+            "id": "h30",
+            "matched": true,
+            "time": 1.2138585270898403,
+            "first200": -0.1188333591729478
+          },
+          {
+            "id": "h61",
+            "matched": true,
+            "time": 0.4930603263954083,
+            "first200": 0.18663847152609314
+          },
+          {
+            "id": "h26",
+            "matched": true,
+            "time": 1.4251877462127993,
+            "first200": 0.012559923732327505
+          },
+          {
+            "id": "h32",
+            "matched": false
+          },
+          {
+            "id": "h58",
+            "matched": false
+          },
+          {
+            "id": "h47",
+            "matched": true,
+            "time": 1.891611284636383,
+            "first200": 0.01047577271121014
+          },
+          {
+            "id": "h2",
+            "matched": true,
+            "time": 2.2769854253091566,
+            "first200": 0.06001650236061273
+          },
+          {
+            "id": "h14",
+            "matched": false
+          },
+          {
+            "id": "h1",
+            "matched": true,
+            "time": 1.2492587389075283,
+            "first200": -0.0346787552581489
+          },
+          {
+            "id": "h51",
+            "matched": true,
+            "time": 2.6396943391320136,
+            "first200": 0.12398687170409062
+          }
+        ],
+        "id": "231001",
+        "length": 1200,
+        "seed": 2026100207,
+        "absoluteResidualChanges": {
+          "winnerTime": -2.0451492660636603,
+          "winnerFinal600": -1.3036680330629409,
+          "first200": 0.25732171680680516,
+          "first400": 0.49926301985841803,
+          "first600": -0.5692671322802667,
+          "remainingSpeed": -0.6809134007212805,
+          "tailSeconds": -0.7697471431872032,
+          "within1": -0.0625,
+          "within2": -0.1875,
+          "final600Span": 0.3568186651977925,
+          "post200Cv": 0.00544470664699729,
+          "last200Difference": -0.1289667630320892
+        }
+      },
+      {
+        "jobKey": "df9289e87199706a425e7054f250bb910ee30aae6bf15cd72dcd649b748039be",
+        "matchedJob": true,
+        "sameInputField": false,
+        "cohort": "selected",
+        "referenceCohort": "selected",
+        "interpretation": "joint engine/cohort contrast; not an isolated engine effect",
+        "differences": {
+          "winnerTime": 2.155232512831418,
+          "winnerFinal600": 1.568162242822595,
+          "first200": 0.21669877718193042,
+          "first400": 0.5448997250316836,
+          "first600": 0.8125465960684863,
+          "remainingSpeed": -0.7317636000800789,
+          "tailSeconds": -0.8056864665880283,
+          "within1": 0.1875,
+          "within2": 0.25,
+          "final600Span": -0.391409781995641,
+          "post200Cv": 0.0031879983620508546,
+          "last200Difference": 0.08180085514777602
+        },
+        "horsePairs": [
+          {
+            "id": "h2",
+            "matched": true,
+            "time": 2.9690448406208034,
+            "first200": -0.05129872241137612
+          },
+          {
+            "id": "h24",
+            "matched": true,
+            "time": 1.7311728846694905,
+            "first200": -0.030634691374185508
+          },
+          {
+            "id": "h16",
+            "matched": true,
+            "time": 3.007017691136575,
+            "first200": -0.06001933329697451
+          },
+          {
+            "id": "h12",
+            "matched": true,
+            "time": 1.3495460462433897,
+            "first200": -0.1151611019999148
+          },
+          {
+            "id": "h21",
+            "matched": false
+          },
+          {
+            "id": "h19",
+            "matched": true,
+            "time": 1.5066490123494916,
+            "first200": -0.11260105403492915
+          },
+          {
+            "id": "h31",
+            "matched": false
+          },
+          {
+            "id": "h61",
+            "matched": true,
+            "time": 0.5012968921628982,
+            "first200": 0.18152858108401126
+          },
+          {
+            "id": "h26",
+            "matched": true,
+            "time": 1.473556148171511,
+            "first200": -0.004215942156914565
+          },
+          {
+            "id": "h34",
+            "matched": false
+          },
+          {
+            "id": "h58",
+            "matched": false
+          },
+          {
+            "id": "h47",
+            "matched": true,
+            "time": 1.83031359775714,
+            "first200": -0.02261097778854193
+          },
+          {
+            "id": "h5",
+            "matched": false
+          },
+          {
+            "id": "h17",
+            "matched": true,
+            "time": 0.6179733753351826,
+            "first200": 0.007899275980234322
+          },
+          {
+            "id": "h1",
+            "matched": true,
+            "time": 1.4563894633497796,
+            "first200": -0.04489658703908539
+          },
+          {
+            "id": "h52",
+            "matched": false
+          }
+        ],
+        "id": "240929",
+        "length": 1200,
+        "seed": 2026100207,
+        "absoluteResidualChanges": {
+          "winnerTime": -2.155232512831418,
+          "winnerFinal600": -1.568162242822595,
+          "first200": 0.21669877718193042,
+          "first400": 0.5448997250316836,
+          "first600": 0.8125465960684863,
+          "remainingSpeed": -0.7317636000800789,
+          "tailSeconds": -0.8056864665880283,
+          "within1": -0.1875,
+          "within2": -0.25,
+          "final600Span": 0.391409781995641,
+          "post200Cv": -0.003187998362050845,
+          "last200Difference": -0.08180085514777602
+        }
+      }
+    ]
+  },
+  "interpretation": "Shared source isolates the selected global parameter configurations only when serialized entrant input is also identical. If readiness selection changes input, the paired event/seed contrast includes population selection as well as parameter effects. This tool performs no new race or forecast execution."
+}

@@ -1,0 +1,324 @@
+{
+  "generatedAt": "2026-10-04T05:49:50.420Z",
+  "sourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "baselineSourceHash": "ba2d75ec50da707c30f232ce5e286a1e727d58e936d17f9d6168e3b96025a85f",
+  "proposedSourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "productionSourceUnchanged": true,
+  "fixture": {
+    "old": "forwardness:0.5+((s['出闸能力']??70)-(s['爆发力']??70))*0.006+(r()-0.5)*0.5",
+    "new": "forwardness:0.5-Math.sin(Math.asin(1-2*r())/3)"
+  },
+  "scope": "1000 deterministic newly generated horses per level. Proposed Beta(2,2) preference prior consumes the same one RNG draw, independent of physical ability; no win-rate tuning.",
+  "proposedPrior": {
+    "distribution": "Beta(2,2)",
+    "cdf": "3*x*x - 2*x*x*x",
+    "expectedAbove075": 0.15625,
+    "expectedBelow025": 0.15625,
+    "expectedAbove09": 0.028,
+    "expectedBelow01": 0.028
+  },
+  "savedBehaviorPreserved": true,
+  "missingBehaviorStableAcrossAbilityChanges": true,
+  "cases": [
+    {
+      "level": 35,
+      "original": {
+        "n": 1000,
+        "min": 0.1866159967528656,
+        "p10": 0.27113866114513946,
+        "median": 0.4777252467302605,
+        "p90": 0.6704504714715295,
+        "max": 0.7350576581023633,
+        "binProportions": [
+          {
+            "lo": 0,
+            "hi": 0.1,
+            "n": 0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.25,
+            "n": 72
+          },
+          {
+            "lo": 0.25,
+            "hi": 0.5,
+            "n": 474
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 454
+          },
+          {
+            "lo": 0.75,
+            "hi": 0.9,
+            "n": 0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1,
+            "n": 0
+          }
+        ],
+        "intentionLabels": {
+          "追": 158,
+          "差": 499,
+          "先": 343,
+          "逃": 0
+        },
+        "pearsonIntentVsGateMinusBurst": 0.14500151288716526,
+        "meanGateMinusBurst": -5.577
+      },
+      "proposed": {
+        "n": 1000,
+        "min": 0.011919631609826009,
+        "p10": 0.19953074530130624,
+        "median": 0.5158399082918697,
+        "p90": 0.8115099921845296,
+        "max": 0.9842584612791809,
+        "binProportions": [
+          {
+            "lo": 0,
+            "hi": 0.1,
+            "n": 23
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.25,
+            "n": 129
+          },
+          {
+            "lo": 0.25,
+            "hi": 0.5,
+            "n": 329
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 352
+          },
+          {
+            "lo": 0.75,
+            "hi": 0.9,
+            "n": 144
+          },
+          {
+            "lo": 0.9,
+            "hi": 1,
+            "n": 23
+          }
+        ],
+        "intentionLabels": {
+          "追": 202,
+          "差": 351,
+          "先": 280,
+          "逃": 167
+        },
+        "pearsonIntentVsGateMinusBurst": 0.032176529145241,
+        "meanGateMinusBurst": -5.577
+      },
+      "sameStatsPhysiologyAndOtherBehavior": true
+    },
+    {
+      "level": 70,
+      "original": {
+        "n": 1000,
+        "min": 0.1866159967528656,
+        "p10": 0.27113866114513946,
+        "median": 0.4777252467302605,
+        "p90": 0.6704504714715295,
+        "max": 0.7350576581023633,
+        "binProportions": [
+          {
+            "lo": 0,
+            "hi": 0.1,
+            "n": 0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.25,
+            "n": 72
+          },
+          {
+            "lo": 0.25,
+            "hi": 0.5,
+            "n": 474
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 454
+          },
+          {
+            "lo": 0.75,
+            "hi": 0.9,
+            "n": 0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1,
+            "n": 0
+          }
+        ],
+        "intentionLabels": {
+          "追": 158,
+          "差": 499,
+          "先": 343,
+          "逃": 0
+        },
+        "pearsonIntentVsGateMinusBurst": 0.14500151288716526,
+        "meanGateMinusBurst": -5.577
+      },
+      "proposed": {
+        "n": 1000,
+        "min": 0.011919631609826009,
+        "p10": 0.19953074530130624,
+        "median": 0.5158399082918697,
+        "p90": 0.8115099921845296,
+        "max": 0.9842584612791809,
+        "binProportions": [
+          {
+            "lo": 0,
+            "hi": 0.1,
+            "n": 23
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.25,
+            "n": 129
+          },
+          {
+            "lo": 0.25,
+            "hi": 0.5,
+            "n": 329
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 352
+          },
+          {
+            "lo": 0.75,
+            "hi": 0.9,
+            "n": 144
+          },
+          {
+            "lo": 0.9,
+            "hi": 1,
+            "n": 23
+          }
+        ],
+        "intentionLabels": {
+          "追": 202,
+          "差": 351,
+          "先": 280,
+          "逃": 167
+        },
+        "pearsonIntentVsGateMinusBurst": 0.032176529145241,
+        "meanGateMinusBurst": -5.577
+      },
+      "sameStatsPhysiologyAndOtherBehavior": true
+    },
+    {
+      "level": 86,
+      "original": {
+        "n": 1000,
+        "min": 0.1866159967528656,
+        "p10": 0.27113866114513946,
+        "median": 0.4777252467302605,
+        "p90": 0.6704504714715295,
+        "max": 0.7350576581023633,
+        "binProportions": [
+          {
+            "lo": 0,
+            "hi": 0.1,
+            "n": 0
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.25,
+            "n": 72
+          },
+          {
+            "lo": 0.25,
+            "hi": 0.5,
+            "n": 474
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 454
+          },
+          {
+            "lo": 0.75,
+            "hi": 0.9,
+            "n": 0
+          },
+          {
+            "lo": 0.9,
+            "hi": 1,
+            "n": 0
+          }
+        ],
+        "intentionLabels": {
+          "追": 158,
+          "差": 499,
+          "先": 343,
+          "逃": 0
+        },
+        "pearsonIntentVsGateMinusBurst": 0.14500151288716526,
+        "meanGateMinusBurst": -5.577
+      },
+      "proposed": {
+        "n": 1000,
+        "min": 0.011919631609826009,
+        "p10": 0.19953074530130624,
+        "median": 0.5158399082918697,
+        "p90": 0.8115099921845296,
+        "max": 0.9842584612791809,
+        "binProportions": [
+          {
+            "lo": 0,
+            "hi": 0.1,
+            "n": 23
+          },
+          {
+            "lo": 0.1,
+            "hi": 0.25,
+            "n": 129
+          },
+          {
+            "lo": 0.25,
+            "hi": 0.5,
+            "n": 329
+          },
+          {
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 352
+          },
+          {
+            "lo": 0.75,
+            "hi": 0.9,
+            "n": 144
+          },
+          {
+            "lo": 0.9,
+            "hi": 1,
+            "n": 23
+          }
+        ],
+        "intentionLabels": {
+          "追": 202,
+          "差": 351,
+          "先": 280,
+          "逃": 167
+        },
+        "pearsonIntentVsGateMinusBurst": 0.032176529145241,
+        "meanGateMinusBurst": -5.577
+      },
+      "sameStatsPhysiologyAndOtherBehavior": true
+    }
+  ]
+}

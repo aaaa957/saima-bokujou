@@ -1,0 +1,2558 @@
+{
+  "sourceNormalizedSha256": "40b00648956b99cc6f750a3e5aecf8a3c7a813f01fb51266ead851a161f6adc1",
+  "job": {
+    "kind": "start",
+    "n": 8,
+    "length": 1200,
+    "level": 86,
+    "intent": 0.5,
+    "seed": 2026101103,
+    "raceSeed": -420175658
+  },
+  "interpretation": "Identical whole race object JSON at every outer60Hz frame. Constructed 8-horse finite action sequence at noninteger0.237/0.529s boundaries; AI observation held to isolate transition execution, positive speed at second boundary. Internal callback sees every fractional tick; no tolerance relaxation. Two partial executions, zero full races/diagnostic forecast queries.",
+  "counts": {
+    "initializedRaces": 2,
+    "steppedPartialRaces": 2,
+    "fullRaces": 0,
+    "frames": 4788
+  },
+  "passed": true,
+  "plain": {
+    "observed": false,
+    "frames": 2394,
+    "digest": "bba1d2511d936c6bec505644e45386efdb2dc3cd0c4f1c7c0d5d65a753551e35",
+    "end": "551741510d00e06870ed0c344857c3bcab9ff66b34a7d6a465d2579313b9f3cb",
+    "completed": true
+  },
+  "observed": {
+    "observed": true,
+    "frames": 2394,
+    "digest": "bba1d2511d936c6bec505644e45386efdb2dc3cd0c4f1c7c0d5d65a753551e35",
+    "end": "551741510d00e06870ed0c344857c3bcab9ff66b34a7d6a465d2579313b9f3cb",
+    "completed": true,
+    "engineering": {
+      "frames": 2394,
+      "internalTicks": 2396,
+      "internalTickCallback": true,
+      "finite": true,
+      "maxWorkError": 9.322320693172514e-12,
+      "maxReserveError": 1.1823431123048067e-11,
+      "maxUnpaid": 7.062406215396777e-14,
+      "maxMotionError": 3.1030733538273125e-13,
+      "bodyOverlapFrames": 0,
+      "maxOverlap": 0,
+      "minAcceleration": 0,
+      "maxAcceleration": 4.939627891368507,
+      "brakingLimit": 3.5,
+      "parameters": [
+        {
+          "id": "h1",
+          "gate": 6,
+          "lane": 9.8,
+          "startDelay": 0.2010815615071915,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h2",
+          "gate": 7,
+          "lane": 11.4,
+          "startDelay": 0.21335206491686404,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h3",
+          "gate": 8,
+          "lane": 13,
+          "startDelay": 0.18281862775376068,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h4",
+          "gate": 4,
+          "lane": 6.6000000000000005,
+          "startDelay": 0.23857462097704413,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h5",
+          "gate": 2,
+          "lane": 3.4000000000000004,
+          "startDelay": 0.30772254497325047,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h6",
+          "gate": 1,
+          "lane": 1.8,
+          "startDelay": 0.2507761735590175,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h7",
+          "gate": 3,
+          "lane": 5,
+          "startDelay": 0.2465336604863405,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h8",
+          "gate": 5,
+          "lane": 8.2,
+          "startDelay": 0.20284245369303971,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        }
+      ],
+      "powerProfiles": [
+        {
+          "id": "h1",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.33880699475681,
+          "meanOxygenOutput": 46.59961942148382,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.75094895264365,
+          "peakV": 16.499999999984162,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.507271102616722,
+          "post200MeanPhysicalV": 16.49993112321963,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2646.9183990907313,
+            "aerobicUsed": 1840.2464246654147,
+            "energyUsed": 806.6719744253168,
+            "unpaidWork": 7.062406215396777e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.499999999984162,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        },
+        {
+          "id": "h2",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.30855780465323,
+          "meanOxygenOutput": 46.599817361807695,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.75091700822199,
+          "peakV": 16.499999999984013,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.502196182593272,
+          "post200MeanPhysicalV": 16.499931294461007,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2645.7114564055987,
+            "aerobicUsed": 1839.9100209369967,
+            "energyUsed": 805.8014354686021,
+            "unpaidWork": 6.877571429031448e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.499999999984013,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        },
+        {
+          "id": "h3",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.35290568359132,
+          "meanOxygenOutput": 46.59935014461966,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.75095215614293,
+          "peakV": 16.499999999984375,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.514822525975184,
+          "post200MeanPhysicalV": 16.499932020929492,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2647.480936775228,
+            "aerobicUsed": 1840.7478923850244,
+            "energyUsed": 806.733044390212,
+            "unpaidWork": 6.939674529471418e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.499999999984375,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        },
+        {
+          "id": "h4",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.29269417248375,
+          "meanOxygenOutput": 46.6001854957019,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.75086009935538,
+          "peakV": 16.49999999998372,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.491770307837124,
+          "post200MeanPhysicalV": 16.499930038373932,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2645.0784974820363,
+            "aerobicUsed": 1839.2155956119102,
+            "energyUsed": 805.8629018701175,
+            "unpaidWork": 6.529976212532596e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.49999999998372,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        },
+        {
+          "id": "h5",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.19284266192767,
+          "meanOxygenOutput": 46.601236584491126,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.75075118061005,
+          "peakV": 16.499999999982876,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.463180170510093,
+          "post200MeanPhysicalV": 16.49992892834832,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2641.094422210849,
+            "aerobicUsed": 1837.3023296459999,
+            "energyUsed": 803.7920925648498,
+            "unpaidWork": 6.725869861057276e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.499999999982876,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        },
+        {
+          "id": "h6",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.30329466848997,
+          "meanOxygenOutput": 46.60034780347874,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.7509509123956,
+          "peakV": 16.49999999998359,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.486729115097992,
+          "post200MeanPhysicalV": 16.499928619555966,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2645.5014572726845,
+            "aerobicUsed": 1838.8779530115614,
+            "energyUsed": 806.6235042611225,
+            "unpaidWork": 6.785717820978476e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.49999999998359,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        },
+        {
+          "id": "h7",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.28894812909105,
+          "meanOxygenOutput": 46.600300280471714,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.75091346162117,
+          "peakV": 16.49999999998363,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.488481646171481,
+          "post200MeanPhysicalV": 16.499929636938436,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2644.929030350668,
+            "aerobicUsed": 1838.9954801062029,
+            "energyUsed": 805.9335502444613,
+            "unpaidWork": 6.636184657349276e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.49999999998363,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        },
+        {
+          "id": "h8",
+          "activeSeconds": 39.89999999999902,
+          "meanActualPower": 66.34489876894261,
+          "meanOxygenOutput": 46.59963954368008,
+          "meanReserveReleaseCeiling": 80.99999999999858,
+          "peakPower": 74.75092558370112,
+          "peakV": 16.49999999998413,
+          "meanRequest": 16.516917293232748,
+          "meanPhysicalV": 15.50654352064425,
+          "post200MeanPhysicalV": 16.499931035884718,
+          "post200MeanRequest": 16.499999999999723,
+          "work": {
+            "workUsed": 2647.1614608807454,
+            "aerobicUsed": 1840.1977320479375,
+            "energyUsed": 806.9637288328031,
+            "unpaidWork": 7.032395499262378e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 16.49999999998413,
+            "sprintAt": null,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0
+          }
+        }
+      ],
+      "trace": [
+        {
+          "time": 0.016666666666666666,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 0,
+              "lane": 9.8,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 0,
+              "lane": 11.4,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 0,
+              "lane": 13,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 0,
+              "lane": 6.6000000000000005,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 0,
+              "lane": 3.4000000000000004,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 0,
+              "lane": 1.8,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 0,
+              "lane": 5,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 0,
+              "lane": 8.2,
+              "v": 0,
+              "targetV": 16,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 2.0166666666666644,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 6.950479344862761,
+              "lane": 9.8,
+              "v": 7.884677190855244,
+              "targetV": 16.5,
+              "power": 44.94662296872172,
+              "oxygen": 29.79667613861919,
+              "reserve": 0.9982542651912576,
+              "retention": 0.9998936006454892,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 6.770342764581065,
+              "lane": 11.4,
+              "v": 7.838113623149277,
+              "targetV": 16.5,
+              "power": 44.641255343547044,
+              "oxygen": 29.79668316355216,
+              "reserve": 0.9983233948198124,
+              "retention": 0.9998959944083716,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 6.900647932449908,
+              "lane": 13,
+              "v": 7.95381678947431,
+              "targetV": 16.5,
+              "power": 45.39969763937681,
+              "oxygen": 29.796665398578654,
+              "reserve": 0.9981491537771235,
+              "retention": 0.9998899802029791,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 6.861370667107273,
+              "lane": 6.6000000000000005,
+              "v": 7.742174773603432,
+              "targetV": 16.5,
+              "power": 44.01534990601159,
+              "oxygen": 29.796697076990437,
+              "reserve": 0.9984608144764049,
+              "retention": 0.9999007949723636,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 6.538053692874736,
+              "lane": 3.4000000000000004,
+              "v": 7.477267805486163,
+              "targetV": 16.5,
+              "power": 42.295431299080114,
+              "oxygen": 29.796731859375114,
+              "reserve": 0.9988073620824575,
+              "retention": 0.9999131858460343,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 7.06213639422577,
+              "lane": 1.8,
+              "v": 7.695638967433217,
+              "targetV": 16.5,
+              "power": 43.713062810934275,
+              "oxygen": 29.796703555255245,
+              "reserve": 0.9985249854244359,
+              "retention": 0.9999030588370287,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 6.897266576270251,
+              "lane": 5,
+              "v": 7.71182431466825,
+              "targetV": 16.5,
+              "power": 43.81778613551592,
+              "oxygen": 29.796701316332634,
+              "reserve": 0.9985027886869005,
+              "retention": 0.9999022750964944,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 7.031471712522491,
+              "lane": 8.2,
+              "v": 7.877995034485518,
+              "targetV": 16.5,
+              "power": 44.90318988748869,
+              "oxygen": 29.79667715431364,
+              "reserve": 0.9982642128327652,
+              "retention": 0.9998939450206159,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 4.016666666666658,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 29.252337927199843,
+              "lane": 9.8,
+              "v": 13.99902516211283,
+              "targetV": 16.5,
+              "power": 74.03040633105746,
+              "oxygen": 34.280470124649945,
+              "reserve": 0.9759273593083352,
+              "retention": 0.9992005162138491,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 28.936636459642937,
+              "lane": 11.4,
+              "v": 13.976847927056783,
+              "targetV": 16.5,
+              "power": 74.05564458545955,
+              "oxygen": 34.28052244461072,
+              "reserve": 0.9761148375520412,
+              "retention": 0.9992060027267343,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 29.220279828764852,
+              "lane": 13,
+              "v": 14.031621775735504,
+              "targetV": 16.5,
+              "power": 73.99249543254693,
+              "oxygen": 34.28039164005577,
+              "reserve": 0.9756484053709955,
+              "retention": 0.9991923528281806,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 29.016798597181484,
+              "lane": 6.6000000000000005,
+              "v": 13.93071920317818,
+              "targetV": 16.5,
+              "power": 74.10670152913434,
+              "oxygen": 34.28062890661213,
+              "reserve": 0.9765000970374935,
+              "retention": 0.99921727998205,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 28.34600600389959,
+              "lane": 3.4000000000000004,
+              "v": 13.799821177099268,
+              "targetV": 16.5,
+              "power": 74.24100042840053,
+              "oxygen": 34.28091301142363,
+              "reserve": 0.9775543318328446,
+              "retention": 0.9992481645837574,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 29.27904803872209,
+              "lane": 1.8,
+              "v": 13.90811499271813,
+              "targetV": 16.5,
+              "power": 74.13101118452109,
+              "oxygen": 34.28067982943345,
+              "reserve": 0.9766861884445122,
+              "retention": 0.9992227299446883,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 29.04999655713999,
+              "lane": 5,
+              "v": 13.91597683127597,
+              "targetV": 16.5,
+              "power": 74.12260911859764,
+              "oxygen": 34.280662130255116,
+              "reserve": 0.97662139983996,
+              "retention": 0.9992208331679455,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 29.371673624234756,
+              "lane": 8.2,
+              "v": 13.995853957040083,
+              "targetV": 16.5,
+              "power": 74.03404276072057,
+              "oxygen": 34.280477675288644,
+              "reserve": 0.9759543806816373,
+              "retention": 0.9992013067689566,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 6.016666666666651,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 59.5988066050013,
+              "lane": 9.8,
+              "v": 15.905754255908167,
+              "targetV": 16.5,
+              "power": 70.1859486272894,
+              "oxygen": 37.919570596629896,
+              "reserve": 0.9521890451264858,
+              "retention": 0.9984567554724546,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 59.25957511748201,
+              "lane": 11.4,
+              "v": 15.90048481962751,
+              "targetV": 16.5,
+              "power": 70.20112235574456,
+              "oxygen": 37.91966597791756,
+              "reserve": 0.9523608887314949,
+              "retention": 0.9984618331437588,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 59.601333474769554,
+              "lane": 13,
+              "v": 15.913499395372847,
+              "targetV": 16.5,
+              "power": 70.16360029169633,
+              "oxygen": 37.919428151443384,
+              "reserve": 0.951933245145946,
+              "retention": 0.9984491975602575,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 59.29079473396411,
+              "lane": 6.6000000000000005,
+              "v": 15.88952437435233,
+              "targetV": 16.5,
+              "power": 70.23260321927877,
+              "oxygen": 37.91986115353325,
+              "reserve": 0.9527139352650956,
+              "retention": 0.9984722680436476,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 58.48111949102399,
+              "lane": 3.4000000000000004,
+              "v": 15.85842226419551,
+              "targetV": 16.5,
+              "power": 70.3213430948696,
+              "oxygen": 37.92038956747229,
+              "reserve": 0.9536790189036863,
+              "retention": 0.9985008214173742,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 59.52906113514752,
+              "lane": 1.8,
+              "v": 15.884153486304628,
+              "targetV": 16.5,
+              "power": 70.24798990152615,
+              "oxygen": 37.919955044171466,
+              "reserve": 0.9528843929158554,
+              "retention": 0.9984773091926943,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 59.308351054905124,
+              "lane": 5,
+              "v": 15.886021503540528,
+              "targetV": 16.5,
+              "power": 70.24264131221193,
+              "oxygen": 37.919922383575944,
+              "reserve": 0.9528250304302777,
+              "retention": 0.9984755543059636,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 59.71477765723371,
+              "lane": 8.2,
+              "v": 15.905000759675591,
+              "targetV": 16.5,
+              "power": 70.18811991563211,
+              "oxygen": 37.91958435121459,
+              "reserve": 0.9522138249962192,
+              "retention": 0.9984574874126256,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 8.016666666666644,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 91.96831257877476,
+              "lane": 9.8,
+              "v": 16.35880385559194,
+              "targetV": 16.5,
+              "power": 68.78740845171117,
+              "oxygen": 40.87241709420456,
+              "reserve": 0.9323394483224556,
+              "retention": 0.9978034281064796,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 91.62349022564204,
+              "lane": 11.4,
+              "v": 16.357551807775977,
+              "targetV": 16.5,
+              "power": 68.79152923345663,
+              "oxygen": 40.872544784136885,
+              "reserve": 0.9325056661582334,
+              "retention": 0.9978083583744398,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 91.97905703228393,
+              "lane": 13,
+              "v": 16.36064414446431,
+              "targetV": 16.5,
+              "power": 68.78134905982752,
+              "oxygen": 40.87222663193485,
+              "reserve": 0.9320919253763309,
+              "retention": 0.9977960870727003,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 91.64308082275046,
+              "lane": 6.6000000000000005,
+              "v": 16.354947544086688,
+              "targetV": 16.5,
+              "power": 68.80009593538695,
+              "oxygen": 40.87280649246251,
+              "reserve": 0.9328470260470564,
+              "retention": 0.9978184870783683,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 90.80040627800322,
+              "lane": 3.4000000000000004,
+              "v": 16.347557507084723,
+              "targetV": 16.5,
+              "power": 68.82437202089422,
+              "oxygen": 40.87351784623786,
+              "reserve": 0.9337790554965835,
+              "retention": 0.9978461745056129,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 91.87564871811655,
+              "lane": 1.8,
+              "v": 16.353671390758002,
+              "targetV": 16.5,
+              "power": 68.8042915925972,
+              "oxygen": 40.87293258825879,
+              "reserve": 0.9330117642058869,
+              "retention": 0.9978233783800453,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 91.65692060193508,
+              "lane": 5,
+              "v": 16.354115242201647,
+              "targetV": 16.5,
+              "power": 68.80283249247266,
+              "oxygen": 40.872888711775445,
+              "reserve": 0.9329543903369375,
+              "retention": 0.9978216755940025,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 92.08348417240245,
+              "lane": 8.2,
+              "v": 16.358624820632198,
+              "targetV": 16.5,
+              "power": 68.78799778437757,
+              "oxygen": 40.87243550602325,
+              "reserve": 0.9323634235005922,
+              "retention": 0.997804138962115,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 10.016666666666744,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 124.81850363784312,
+              "lane": 9.8,
+              "v": 16.466450998776327,
+              "targetV": 16.5,
+              "power": 68.42782034435095,
+              "oxygen": 43.267787499991954,
+              "reserve": 0.9147690615386956,
+              "retention": 0.9972005838999747,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 124.47235286347,
+              "lane": 11.4,
+              "v": 16.46615350514514,
+              "targetV": 16.5,
+              "power": 68.42882852807372,
+              "oxygen": 43.26794067289318,
+              "reserve": 0.9149339075876496,
+              "retention": 0.997205477837613,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 124.83120063565242,
+              "lane": 13,
+              "v": 16.466888261804208,
+              "targetV": 16.5,
+              "power": 68.42633834746468,
+              "oxygen": 43.267559152367475,
+              "reserve": 0.9145235534341808,
+              "retention": 0.9971932962378971,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 124.48918033990785,
+              "lane": 6.6000000000000005,
+              "v": 16.465534717386685,
+              "targetV": 16.5,
+              "power": 68.43092529754286,
+              "oxygen": 43.26825484235145,
+              "reserve": 0.9152724123619784,
+              "retention": 0.9972155309417102,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 123.63866497470947,
+              "lane": 3.4000000000000004,
+              "v": 16.46377880286466,
+              "targetV": 16.5,
+              "power": 68.43687335090794,
+              "oxygen": 43.269110305214696,
+              "reserve": 0.9161963246971403,
+              "retention": 0.9972430035584471,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 124.72039423811339,
+              "lane": 1.8,
+              "v": 16.46523149614957,
+              "targetV": 16.5,
+              "power": 68.43195263994009,
+              "oxygen": 43.26840632249931,
+              "reserve": 0.9154357503876639,
+              "retention": 0.9972203851778919,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 124.5021370477846,
+              "lane": 5,
+              "v": 16.465336957758932,
+              "targetV": 16.5,
+              "power": 68.43159533539617,
+              "oxygen": 43.26835360513962,
+              "reserve": 0.9153788634375133,
+              "retention": 0.997218695282078,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 124.93348527559206,
+              "lane": 8.2,
+              "v": 16.4664084590589,
+              "targetV": 16.5,
+              "power": 68.42796451317999,
+              "oxygen": 43.26780958604695,
+              "reserve": 0.9147928406533847,
+              "retention": 0.9972012895624688,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 12.016666666666843,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 157.78290818753032,
+              "lane": 9.8,
+              "v": 16.492028567863347,
+              "targetV": 16.5,
+              "power": 68.3408409710607,
+              "oxygen": 45.210150279167806,
+              "reserve": 0.8987604676065829,
+              "retention": 0.9966311899884914,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 157.436441772769,
+              "lane": 11.4,
+              "v": 16.49195788169667,
+              "targetV": 16.5,
+              "power": 68.3410821615026,
+              "oxygen": 45.21032399738476,
+              "reserve": 0.8989250680839117,
+              "retention": 0.9966360769495172,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 157.79606912089108,
+              "lane": 13,
+              "v": 16.49213246402794,
+              "targetV": 16.5,
+              "power": 68.34048645557822,
+              "oxygen": 45.20989138350804,
+              "reserve": 0.8985153182257084,
+              "retention": 0.9966239125342734,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 157.45261271613265,
+              "lane": 6.6000000000000005,
+              "v": 16.491810854231076,
+              "targetV": 16.5,
+              "power": 68.34158382397843,
+              "oxygen": 45.210680458558244,
+              "reserve": 0.8992630590263412,
+              "retention": 0.996646115478636,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 156.60023432771933,
+              "lane": 3.4000000000000004,
+              "v": 16.491393639025272,
+              "targetV": 16.5,
+              "power": 68.34300726946309,
+              "oxygen": 45.21165205680919,
+              "reserve": 0.9001854883901097,
+              "retention": 0.9966735462158764,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 157.68350489696724,
+              "lane": 1.8,
+              "v": 16.491738807152892,
+              "targetV": 16.5,
+              "power": 68.34182964381236,
+              "oxygen": 45.21085239975964,
+              "reserve": 0.8994261435562839,
+              "retention": 0.9966509625370444,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 157.46535960128,
+              "lane": 5,
+              "v": 16.49176386542679,
+              "targetV": 16.5,
+              "power": 68.34174414718352,
+              "oxygen": 45.210792556117006,
+              "reserve": 0.8993693447463506,
+              "retention": 0.9966492751371197,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 157.89784469068974,
+              "lane": 8.2,
+              "v": 16.492018460186262,
+              "targetV": 16.5,
+              "power": 68.34087546005503,
+              "oxygen": 45.210175327768,
+              "reserve": 0.8987842117353622,
+              "retention": 0.9966318946560835,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 14.016666666666943,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 190.7744505075341,
+              "lane": 9.8,
+              "v": 16.49810594271091,
+              "targetV": 16.5,
+              "power": 68.32008730031076,
+              "oxygen": 46.78435574892755,
+              "reserve": 0.8839454660382657,
+              "retention": 0.9960870182915452,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 190.4279090948342,
+              "lane": 11.4,
+              "v": 16.49808914727856,
+              "targetV": 16.5,
+              "power": 68.32014470111929,
+              "oxygen": 46.7845461531342,
+              "reserve": 0.884110103145807,
+              "retention": 0.9960919055876415,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 190.78772167460176,
+              "lane": 13,
+              "v": 16.498130629026317,
+              "targetV": 16.5,
+              "power": 68.3200029308096,
+              "oxygen": 46.78407204260527,
+              "reserve": 0.8837002603546034,
+              "retention": 0.9960797402931219,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 190.44392404223208,
+              "lane": 6.6000000000000005,
+              "v": 16.498054212722494,
+              "targetV": 16.5,
+              "power": 68.32026409418191,
+              "oxygen": 46.7849369605527,
+              "reserve": 0.8844481669193385,
+              "retention": 0.9961019447431672,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 189.59110298898275,
+              "lane": 3.4000000000000004,
+              "v": 16.497955080033638,
+              "targetV": 16.5,
+              "power": 68.32060288610653,
+              "oxygen": 46.786002865244214,
+              "reserve": 0.8853707753581195,
+              "retention": 0.9961293766785543,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 190.67473978120265,
+              "lane": 1.8,
+              "v": 16.498037093929867,
+              "targetV": 16.5,
+              "power": 68.32032259931742,
+              "oxygen": 46.78512551802985,
+              "reserve": 0.8846112852493474,
+              "retention": 0.9961067920688698,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 190.456621072314,
+              "lane": 5,
+              "v": 16.49804304791726,
+              "targetV": 16.5,
+              "power": 68.32030225101957,
+              "oxygen": 46.78505988716537,
+              "reserve": 0.8845544746529621,
+              "retention": 0.9961051045753347,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 190.8893762864601,
+              "lane": 8.2,
+              "v": 16.498103541069757,
+              "targetV": 16.5,
+              "power": 68.32009550828072,
+              "oxygen": 46.78438320363313,
+              "reserve": 0.8839692155500404,
+              "retention": 0.9960877230100971,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 16.01666666666704,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 223.77244091500776,
+              "lane": 9.8,
+              "v": 16.49954996129267,
+              "targetV": 16.5,
+              "power": 68.31515120622326,
+              "oxygen": 48.059350747284036,
+              "reserve": 0.8700800569858186,
+              "retention": 0.9955628253841495,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 223.4258816823742,
+              "lane": 11.4,
+              "v": 16.499545970603105,
+              "targetV": 16.5,
+              "power": 68.31516485020751,
+              "oxygen": 48.05955473792126,
+              "reserve": 0.8702448051970698,
+              "retention": 0.9955677149101614,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 223.7857382742268,
+              "lane": 13,
+              "v": 16.499555826900615,
+              "targetV": 16.5,
+              "power": 68.31513115195206,
+              "oxygen": 48.059046838802125,
+              "reserve": 0.8698346853635816,
+              "retention": 0.9955555440527939,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 223.44185956424963,
+              "lane": 6.6000000000000005,
+              "v": 16.499537669955306,
+              "targetV": 16.5,
+              "power": 68.31519322969265,
+              "oxygen": 48.059973511081765,
+              "reserve": 0.8705830964873146,
+              "retention": 0.9955777586287531,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 222.58893333133574,
+              "lane": 3.4000000000000004,
+              "v": 16.49951411546865,
+              "targetV": 16.5,
+              "power": 68.3152737609298,
+              "oxygen": 48.06111619968828,
+              "reserve": 0.8715063210304936,
+              "retention": 0.9956052028928508,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 223.67265714020175,
+              "lane": 1.8,
+              "v": 16.49953360243351,
+              "targetV": 16.5,
+              "power": 68.31520713631944,
+              "oxygen": 48.060175597807024,
+              "reserve": 0.8707463242870651,
+              "retention": 0.9955826081480709,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 223.4545447484867,
+              "lane": 5,
+              "v": 16.49953501713454,
+              "targetV": 16.5,
+              "power": 68.31520229953833,
+              "oxygen": 48.06010525489036,
+              "reserve": 0.8706894755812996,
+              "retention": 0.9955809198908452,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 223.88736414579552,
+              "lane": 8.2,
+              "v": 16.49954939064916,
+              "targetV": 16.5,
+              "power": 68.31515315722724,
+              "oxygen": 48.05938016115497,
+              "reserve": 0.8701038225419603,
+              "retention": 0.9955635304248673,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 18.016666666666925,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 256.7719634244757,
+              "lane": 9.8,
+              "v": 16.499893068261837,
+              "targetV": 16.5,
+              "power": 68.31397808549133,
+              "oxygen": 49.09116703778998,
+              "reserve": 0.8569792971414452,
+              "retention": 0.9950546989893404,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 256.4253999577254,
+              "lane": 11.4,
+              "v": 16.499892120051456,
+              "targetV": 16.5,
+              "power": 68.313981327676,
+              "oxygen": 49.09138210460738,
+              "reserve": 0.857144179949189,
+              "retention": 0.9950595913173371,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 256.7852670070979,
+              "lane": 13,
+              "v": 16.499894461963418,
+              "targetV": 16.5,
+              "power": 68.31397332005474,
+              "oxygen": 49.09084665960191,
+              "reserve": 0.8567337249106515,
+              "retention": 0.9950474134812768,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 256.44136903262324,
+              "lane": 6.6000000000000005,
+              "v": 16.499890147770675,
+              "targetV": 16.5,
+              "power": 68.31398807142335,
+              "oxygen": 49.09182367629958,
+              "reserve": 0.8574827474443981,
+              "retention": 0.9950696407851868,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 255.58841780842715,
+              "lane": 3.4000000000000004,
+              "v": 16.499884551091625,
+              "targetV": 16.5,
+              "power": 68.31400720792877,
+              "oxygen": 49.09302895998739,
+              "reserve": 0.8584067247060653,
+              "retention": 0.9950971007115207,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 256.6721622929394,
+              "lane": 1.8,
+              "v": 16.49988918130452,
+              "targetV": 16.5,
+              "power": 68.31399137602628,
+              "oxygen": 49.09203679237648,
+              "reserve": 0.8576461084673438,
+              "retention": 0.9950744930771778,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 256.4540514022208,
+              "lane": 5,
+              "v": 16.49988951744548,
+              "targetV": 16.5,
+              "power": 68.31399022667215,
+              "oxygen": 49.09196260809181,
+              "reserve": 0.8575892133867389,
+              "retention": 0.9950728038547804,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 256.8868860498114,
+              "lane": 8.2,
+              "v": 16.49989293267373,
+              "targetV": 16.5,
+              "power": 68.31397854910601,
+              "oxygen": 49.09119804885087,
+              "reserve": 0.8570030821111204,
+              "retention": 0.9950554044342331,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 20.01666666666681,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 289.77184997002894,
+              "lane": 9.8,
+              "v": 16.49997459241518,
+              "targetV": 16.5,
+              "power": 68.31369932975217,
+              "oxygen": 49.92534238238889,
+              "reserve": 0.8444960646617251,
+              "retention": 0.9945595427792474,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 289.4252854972287,
+              "lane": 11.4,
+              "v": 16.49997436711504,
+              "targetV": 16.5,
+              "power": 68.31370010012824,
+              "oxygen": 49.92556648736263,
+              "reserve": 0.8446610923641793,
+              "retention": 0.9945644381442016,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 289.7851550313665,
+              "lane": 13,
+              "v": 16.499974923566555,
+              "targetV": 16.5,
+              "power": 68.31369819743315,
+              "oxygen": 49.925008564837405,
+              "reserve": 0.8442502765718368,
+              "retention": 0.9945522527467141,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 289.4412524795388,
+              "lane": 6.6000000000000005,
+              "v": 16.499973898489998,
+              "targetV": 16.5,
+              "power": 68.31370170251749,
+              "oxygen": 49.92602666247323,
+              "reserve": 0.844999957340467,
+              "retention": 0.9945744938470243,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 288.588295317273,
+              "lane": 3.4000000000000004,
+              "v": 16.49997256868744,
+              "targetV": 16.5,
+              "power": 68.31370624956003,
+              "oxygen": 49.927283022124776,
+              "reserve": 0.8459247464335035,
+              "retention": 0.9946019707873973,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 289.67204471443523,
+              "lane": 1.8,
+              "v": 16.499973668852178,
+              "targetV": 16.5,
+              "power": 68.31370248772468,
+              "oxygen": 49.926248778333,
+              "reserve": 0.8451634619268024,
+              "retention": 0.9945793491479027,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 289.4539341803621,
+              "lane": 5,
+              "v": 16.49997374872117,
+              "targetV": 16.5,
+              "power": 68.3137022146252,
+              "oxygen": 49.92617145955604,
+              "reserve": 0.8451065168718055,
+              "retention": 0.9945776588781103,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 289.88677245150586,
+              "lane": 8.2,
+              "v": 16.49997456019869,
+              "targetV": 16.5,
+              "power": 68.313699439909,
+              "oxygen": 49.92537469675641,
+              "reserve": 0.8445198705255428,
+              "retention": 0.9945602486620833,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 22.016666666666698,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 322.7718230126117,
+              "lane": 9.8,
+              "v": 16.499993963014393,
+              "targetV": 16.5,
+              "power": 68.31363309493052,
+              "oxygen": 50.59888636347352,
+              "reserve": 0.8325115458905749,
+              "retention": 0.9940748600584136,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 322.4252583007682,
+              "lane": 11.4,
+              "v": 16.499993909481788,
+              "targetV": 16.5,
+              "power": 68.3136332779768,
+              "oxygen": 50.59911785077256,
+              "reserve": 0.8326767247855369,
+              "retention": 0.9940797585970249,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 322.7851284253009,
+              "lane": 13,
+              "v": 16.499994041697793,
+              "targetV": 16.5,
+              "power": 68.31363282588127,
+              "oxygen": 50.59854156862615,
+              "reserve": 0.8322655325918396,
+              "retention": 0.9940675652985311,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 322.44122478586775,
+              "lane": 6.6000000000000005,
+              "v": 16.499993798133836,
+              "targetV": 16.5,
+              "power": 68.31363365871381,
+              "oxygen": 50.59959322091318,
+              "reserve": 0.8330159002245103,
+              "retention": 0.994089820816682,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 321.5882662126832,
+              "lane": 3.4000000000000004,
+              "v": 16.49999348216524,
+              "targetV": 16.5,
+              "power": 68.3136347391225,
+              "oxygen": 50.600891297727465,
+              "reserve": 0.8339415369557631,
+              "retention": 0.994117315549279,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 322.67201677711887,
+              "lane": 1.8,
+              "v": 16.499993743570585,
+              "targetV": 16.5,
+              "power": 68.31363384528703,
+              "oxygen": 50.5998226876058,
+              "reserve": 0.8331795546655932,
+              "retention": 0.9940946792630977,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 322.45390632778646,
+              "lane": 5,
+              "v": 16.499993762547927,
+              "targetV": 16.5,
+              "power": 68.31363378039738,
+              "oxygen": 50.59974280864726,
+              "reserve": 0.833122557445445,
+              "retention": 0.9940929878983283,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 322.88674545990705,
+              "lane": 8.2,
+              "v": 16.49999395535955,
+              "targetV": 16.5,
+              "power": 68.31363312110308,
+              "oxygen": 50.59891974237592,
+              "reserve": 0.8325353735556368,
+              "retention": 0.9940755663988774,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 24.016666666666584,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 355.7718166073774,
+              "lane": 9.8,
+              "v": 16.499998565578135,
+              "targetV": 16.5,
+              "power": 68.31361735711086,
+              "oxygen": 51.1418776197461,
+              "reserve": 0.8209293558236026,
+              "retention": 0.9935986263594989,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 355.42525183873545,
+              "lane": 11.4,
+              "v": 16.499998552858475,
+              "targetV": 16.5,
+              "power": 68.3136174006049,
+              "oxygen": 51.14211514377808,
+              "reserve": 0.8210946905558538,
+              "retention": 0.993603528170364,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 355.7851221035495,
+              "lane": 13,
+              "v": 16.499998584273754,
+              "targetV": 16.5,
+              "power": 68.31361729318655,
+              "oxygen": 51.1415238483763,
+              "reserve": 0.820683110412871,
+              "retention": 0.9935913267257483,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 355.4412182056953,
+              "lane": 6.6000000000000005,
+              "v": 16.49999852640157,
+              "targetV": 16.5,
+              "power": 68.3136174910693,
+              "oxygen": 51.142602939162714,
+              "reserve": 0.8214341860222717,
+              "retention": 0.9936135971099127,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 354.5882592972682,
+              "lane": 3.4000000000000004,
+              "v": 16.49999845132564,
+              "targetV": 16.5,
+              "power": 68.31361774778327,
+              "oxygen": 51.14393512784422,
+              "reserve": 0.8223606966904178,
+              "retention": 0.9936411101932412,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 355.6720101390549,
+              "lane": 1.8,
+              "v": 16.499998513437045,
+              "targetV": 16.5,
+              "power": 68.3136175354027,
+              "oxygen": 51.14283841669029,
+              "reserve": 0.8215979949478573,
+              "retention": 0.9936184588001673,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 355.45389970985735,
+              "lane": 5,
+              "v": 16.49999851794616,
+              "targetV": 16.5,
+              "power": 68.31361751998305,
+              "oxygen": 51.14275644425638,
+              "reserve": 0.8215409439501878,
+              "retention": 0.9936167663061868,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 355.88673904655076,
+              "lane": 8.2,
+              "v": 16.499998563759295,
+              "targetV": 16.5,
+              "power": 68.31361736333301,
+              "oxygen": 51.141911869148174,
+              "reserve": 0.8209532059594394,
+              "retention": 0.993599333171802,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 26.01666666666647,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 388.7718150854574,
+              "lane": 9.8,
+              "v": 16.499999659173266,
+              "targetV": 16.5,
+              "power": 68.31361361771607,
+              "oxygen": 51.57876185802888,
+              "reserve": 0.8096712004065759,
+              "retention": 0.9931291974165395,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 388.4252503033199,
+              "lane": 11.4,
+              "v": 16.499999656151005,
+              "targetV": 16.5,
+              "power": 68.31361362804925,
+              "oxygen": 51.57900432525043,
+              "reserve": 0.8098366946572515,
+              "retention": 0.9931341025772134,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 388.78512060146574,
+              "lane": 13,
+              "v": 16.499999663615455,
+              "targetV": 16.5,
+              "power": 68.31361360252538,
+              "oxygen": 51.57840073613651,
+              "reserve": 0.8094247174108703,
+              "retention": 0.9931218927936194,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 388.4412166422092,
+              "lane": 6.6000000000000005,
+              "v": 16.499999649864687,
+              "targetV": 16.5,
+              "power": 68.31361364954599,
+              "oxygen": 51.579502294914825,
+              "reserve": 0.8101765177289054,
+              "retention": 0.9931441783963092,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 387.5882576541266,
+              "lane": 3.4000000000000004,
+              "v": 16.499999632026217,
+              "targetV": 16.5,
+              "power": 68.31361371054228,
+              "oxygen": 51.58086241475649,
+              "reserve": 0.8111039231468186,
+              "retention": 0.9931717102689211,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 388.67200856181336,
+              "lane": 1.8,
+              "v": 16.499999646784246,
+              "targetV": 16.5,
+              "power": 68.31361366007707,
+              "oxygen": 51.57974269428109,
+              "reserve": 0.8103404848054404,
+              "retention": 0.9931490434076541,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 388.45389813740013,
+              "lane": 5,
+              "v": 16.49999964785564,
+              "targetV": 16.5,
+              "power": 68.31361365641487,
+              "oxygen": 51.57965900765716,
+              "reserve": 0.8102833787533109,
+              "retention": 0.9931473497575576,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 388.88673752270086,
+              "lane": 8.2,
+              "v": 16.49999965874109,
+              "targetV": 16.5,
+              "power": 68.31361361919164,
+              "oxygen": 51.57879682024093,
+              "reserve": 0.80969507354395,
+              "retention": 0.9931299047118638,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 28.016666666666357,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 421.77181472384046,
+              "lane": 9.8,
+              "v": 16.499999919017643,
+              "targetV": 16.5,
+              "power": 68.31361272921434,
+              "oxygen": 51.929406757509376,
+              "reserve": 0.7986734559324841,
+              "retention": 0.9926652371101075,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 421.4252499384967,
+              "lane": 11.4,
+              "v": 16.499999918299533,
+              "targetV": 16.5,
+              "power": 68.3136127316688,
+              "oxygen": 51.92965327920277,
+              "reserve": 0.7988391126897992,
+              "retention": 0.9926701456834022,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 421.7851202445624,
+              "lane": 13,
+              "v": 16.499999920073137,
+              "targetV": 16.5,
+              "power": 68.31361272560336,
+              "oxygen": 51.92903960653728,
+              "reserve": 0.7984267309084977,
+              "retention": 0.992657927404621,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 421.44121627071587,
+              "lane": 6.6000000000000005,
+              "v": 16.49999991680586,
+              "targetV": 16.5,
+              "power": 68.31361273677462,
+              "oxygen": 51.93015959379845,
+              "reserve": 0.799179269517361,
+              "retention": 0.9926802285113334,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 420.5882572637066,
+              "lane": 3.4000000000000004,
+              "v": 16.49999991256735,
+              "targetV": 16.5,
+              "power": 68.31361275126797,
+              "oxygen": 51.93154262176812,
+              "reserve": 0.8001075865722003,
+              "retention": 0.9927077795282111,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 421.6720081870519,
+              "lane": 1.8,
+              "v": 16.499999916073936,
+              "targetV": 16.5,
+              "power": 68.31361273928034,
+              "oxygen": 51.93040402998109,
+              "reserve": 0.7993433977203792,
+              "retention": 0.9926850969063155,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 421.45389776377533,
+              "lane": 5,
+              "v": 16.49999991632851,
+              "targetV": 16.5,
+              "power": 68.31361273840751,
+              "oxygen": 51.93031893741047,
+              "reserve": 0.7992862355774718,
+              "retention": 0.9926834020783193,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 421.88673716062584,
+              "lane": 8.2,
+              "v": 16.499999918914952,
+              "targetV": 16.5,
+              "power": 68.31361272956462,
+              "oxygen": 51.92944230437771,
+              "reserve": 0.7986973525022815,
+              "retention": 0.99266594489751,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 30.016666666666243,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 453.0367563367354,
+              "lane": 9.8,
+              "v": 16.499999980758137,
+              "targetV": 16.5,
+              "power": 69.4862553894125,
+              "oxygen": 52.209899429925294,
+              "reserve": 0.7873000302158866,
+              "retention": 0.9921903877151083,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 452.4154746078488,
+              "lane": 11.4,
+              "v": 16.499999980587486,
+              "targetV": 16.5,
+              "power": 69.45554921777584,
+              "oxygen": 52.210152115887055,
+              "reserve": 0.7874874776110111,
+              "retention": 0.992195864900614,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 452.4501682530274,
+              "lane": 13,
+              "v": 16.499999981008926,
+              "targetV": 16.5,
+              "power": 69.42603352301691,
+              "oxygen": 52.20953039913275,
+              "reserve": 0.7870830709448368,
+              "retention": 0.9921838571463738,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 453.35239871657916,
+              "lane": 6.6000000000000005,
+              "v": 16.499999980232598,
+              "targetV": 16.5,
+              "power": 69.55150322771232,
+              "oxygen": 52.21066049487056,
+              "reserve": 0.7877806861185791,
+              "retention": 0.9922047190774493,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 453.1727072806264,
+              "lane": 3.4000000000000004,
+              "v": 16.499999979225496,
+              "targetV": 16.5,
+              "power": 69.62235227690732,
+              "oxygen": 52.212063064486465,
+              "reserve": 0.7886967544285963,
+              "retention": 0.9922319452406759,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 454.583831247531,
+              "lane": 1.8,
+              "v": 16.499999980058693,
+              "targetV": 16.5,
+              "power": 69.66007977693984,
+              "oxygen": 52.21090133377358,
+              "reserve": 0.787884014354011,
+              "retention": 0.9922079977336242,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 453.68921637564637,
+              "lane": 5,
+              "v": 16.49999998011918,
+              "targetV": 16.5,
+              "power": 69.5861885044712,
+              "oxygen": 52.21082026773801,
+              "reserve": 0.7878706655449649,
+              "retention": 0.9922074481812343,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 453.45654182032604,
+              "lane": 8.2,
+              "v": 16.499999980733744,
+              "targetV": 16.5,
+              "power": 69.51821693372958,
+              "oxygen": 52.20993382513016,
+              "reserve": 0.7873080226135769,
+              "retention": 0.9921906797528063,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 32.01666666666613,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 483.7228998903722,
+              "lane": 9.8,
+              "v": 16.499999995428038,
+              "targetV": 16.5,
+              "power": 69.48625534554574,
+              "oxygen": 52.433235434330996,
+              "reserve": 0.7758983865349292,
+              "retention": 0.9917139458151774,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 482.6971879332649,
+              "lane": 11.4,
+              "v": 16.499999995387473,
+              "targetV": 16.5,
+              "power": 69.45554917335092,
+              "oxygen": 52.433498766176406,
+              "reserve": 0.7761064079574198,
+              "retention": 0.9917199597894877,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 482.3379731128268,
+              "lane": 13,
+              "v": 16.499999995487617,
+              "targetV": 16.5,
+              "power": 69.42603347940141,
+              "oxygen": 52.43287502149741,
+              "reserve": 0.7757211989347842,
+              "retention": 0.9917084558594477,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 484.8807005833336,
+              "lane": 6.6000000000000005,
+              "v": 16.49999999530316,
+              "targetV": 16.5,
+              "power": 69.5515031830063,
+              "oxygen": 52.433992678916994,
+              "reserve": 0.7763361934508907,
+              "retention": 0.9917271547980325,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 485.5906966769626,
+              "lane": 3.4000000000000004,
+              "v": 16.499999995063867,
+              "targetV": 16.5,
+              "power": 69.62235223033353,
+              "oxygen": 52.4354008199072,
+              "reserve": 0.7772061205965857,
+              "retention": 0.9917531703411406,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 487.46576324791585,
+              "lane": 1.8,
+              "v": 16.499999995261835,
+              "targetV": 16.5,
+              "power": 69.66007973244305,
+              "oxygen": 52.434211808206534,
+              "reserve": 0.7763675314631685,
+              "retention": 0.9917285513209032,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 485.6561728769522,
+              "lane": 5,
+              "v": 16.499999995276205,
+              "targetV": 16.5,
+              "power": 69.5861884597018,
+              "oxygen": 52.43414696138152,
+              "reserve": 0.7764032308104727,
+              "retention": 0.9917292838120444,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 484.5580646437004,
+              "lane": 8.2,
+              "v": 16.499999995422222,
+              "targetV": 16.5,
+              "power": 69.51821688997556,
+              "oxygen": 52.43326348495035,
+              "reserve": 0.7758851630233843,
+              "retention": 0.9917136833026611,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 34.01666666666602,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 514.4090434584825,
+              "lane": 9.8,
+              "v": 16.499999998913673,
+              "targetV": 16.5,
+              "power": 69.4862553351214,
+              "oxygen": 52.61010915579828,
+              "reserve": 0.7646290414420905,
+              "retention": 0.9912402821856758,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 512.9789012730904,
+              "lane": 11.4,
+              "v": 16.49999999890404,
+              "targetV": 16.5,
+              "power": 69.45554916279768,
+              "oxygen": 52.61038654190903,
+              "reserve": 0.7648576451464613,
+              "retention": 0.9912468331221366,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 512.2257779865396,
+              "lane": 13,
+              "v": 16.499999998927834,
+              "targetV": 16.5,
+              "power": 69.42603346903698,
+              "oxygen": 52.60976621128291,
+              "reserve": 0.7644916343048573,
+              "retention": 0.9912358330275828,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 516.409002465365,
+              "lane": 6.6000000000000005,
+              "v": 16.499999998884004,
+              "targetV": 16.5,
+              "power": 69.55150317238574,
+              "oxygen": 52.6108520126707,
+              "reserve": 0.765023993172444,
+              "retention": 0.9912523686588703,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 518.0086860898072,
+              "lane": 3.4000000000000004,
+              "v": 16.499999998827146,
+              "targetV": 16.5,
+              "power": 69.62235221926473,
+              "oxygen": 52.61225251836539,
+              "reserve": 0.7658477782812616,
+              "retention": 0.9912771735635395,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 520.3476952643737,
+              "lane": 1.8,
+              "v": 16.499999998874184,
+              "targetV": 16.5,
+              "power": 69.66007972187197,
+              "oxygen": 52.61103456734464,
+              "reserve": 0.7649833213871348,
+              "retention": 0.9912518826373733,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 517.6231293938363,
+              "lane": 5,
+              "v": 16.499999998877595,
+              "targetV": 16.5,
+              "power": 69.58618844906138,
+              "oxygen": 52.610995798159294,
+              "reserve": 0.7650680830828,
+              "retention": 0.9912538974700783,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 515.6595874817624,
+              "lane": 8.2,
+              "v": 16.499999998912298,
+              "targetV": 16.5,
+              "power": 69.51821687958241,
+              "oxygen": 52.61012647233247,
+              "reserve": 0.7645945962850338,
+              "retention": 0.9912394650024833,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 36.016666666665905,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 545.0951870300315,
+              "lane": 9.8,
+              "v": 16.499999999741878,
+              "targetV": 16.5,
+              "power": 69.48625533264358,
+              "oxygen": 52.74921825638353,
+              "reserve": 0.7534641364314549,
+              "retention": 0.9907688117979193,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 543.2606146163396,
+              "lane": 11.4,
+              "v": 16.499999999739597,
+              "targetV": 16.5,
+              "power": 69.45554916028827,
+              "oxygen": 52.74951247088845,
+              "reserve": 0.753713332717031,
+              "retention": 0.9907758999128168,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 542.1135828635576,
+              "lane": 13,
+              "v": 16.499999999745246,
+              "targetV": 16.5,
+              "power": 69.42603346657481,
+              "oxygen": 52.748899980947506,
+              "reserve": 0.7533665238583176,
+              "retention": 0.9907654037335876,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 547.9373043510258,
+              "lane": 6.6000000000000005,
+              "v": 16.499999999734836,
+              "targetV": 16.5,
+              "power": 69.55150316985966,
+              "oxygen": 52.74993812872021,
+              "reserve": 0.7538162204383292,
+              "retention": 0.9907797754981581,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 550.4266755065743,
+              "lane": 3.4000000000000004,
+              "v": 16.499999999721318,
+              "targetV": 16.5,
+              "power": 69.62235221663667,
+              "oxygen": 52.751320256595214,
+              "reserve": 0.7545938547157649,
+              "retention": 0.9908033695797047,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 553.2296272846503,
+              "lane": 1.8,
+              "v": 16.499999999732506,
+              "targetV": 16.5,
+              "power": 69.66007971935915,
+              "oxygen": 52.750072013415455,
+              "reserve": 0.7537035103635683,
+              "retention": 0.990777406333964,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 549.590085914422,
+              "lane": 5,
+              "v": 16.49999999973331,
+              "targetV": 16.5,
+              "power": 69.58618844653358,
+              "oxygen": 52.75006734373722,
+              "reserve": 0.7538373545136743,
+              "retention": 0.9907807039304608,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 546.7611103233138,
+              "lane": 8.2,
+              "v": 16.499999999741547,
+              "targetV": 16.5,
+              "power": 69.51821687710957,
+              "oxygen": 52.74922126719135,
+              "reserve": 0.7534084612593948,
+              "retention": 0.9907674397682911,
+              "mode": null
+            }
+          ]
+        },
+        {
+          "time": 38.01666666666579,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 575.7813306023977,
+              "lane": 9.8,
+              "v": 16.499999999938677,
+              "targetV": 16.5,
+              "power": 69.48625533205644,
+              "oxygen": 52.85763155760383,
+              "reserve": 0.7423810278437009,
+              "retention": 0.9902990591350478,
+              "mode": null
+            },
+            {
+              "id": "h2",
+              "s": 573.5423279604025,
+              "lane": 11.4,
+              "v": 16.499999999938122,
+              "targetV": 16.5,
+              "power": 69.45554915969326,
+              "oxygen": 52.8579448591603,
+              "reserve": 0.7426508286744545,
+              "retention": 0.9903066846796252,
+              "mode": null
+            },
+            {
+              "id": "h3",
+              "s": 572.0013877413618,
+              "lane": 13,
+              "v": 16.499999999939472,
+              "targetV": 16.5,
+              "power": 69.42603346598855,
+              "oxygen": 52.85734381134131,
+              "reserve": 0.7423232282559192,
+              "retention": 0.9902966925513238,
+              "mode": null
+            },
+            {
+              "id": "h4",
+              "s": 579.4656062375497,
+              "lane": 6.6000000000000005,
+              "v": 16.499999999937,
+              "targetV": 16.5,
+              "power": 69.551503169262,
+              "oxygen": 52.858321450080695,
+              "reserve": 0.7426902264318653,
+              "retention": 0.990308899690731,
+              "mode": null
+            },
+            {
+              "id": "h5",
+              "s": 582.8446649242729,
+              "lane": 3.4000000000000004,
+              "v": 16.499999999933788,
+              "targetV": 16.5,
+              "power": 69.62235221601375,
+              "oxygen": 52.8596764602825,
+              "reserve": 0.7434216946392668,
+              "retention": 0.9903312826291436,
+              "mode": null
+            },
+            {
+              "id": "h6",
+              "s": 586.1115593058345,
+              "lane": 1.8,
+              "v": 16.499999999936446,
+              "targetV": 16.5,
+              "power": 69.6600797187644,
+              "oxygen": 52.85839682038358,
+              "reserve": 0.7425054423188954,
+              "retention": 0.9903046466331162,
+              "mode": null
+            },
+            {
+              "id": "h7",
+              "s": 581.5570424358873,
+              "lane": 5,
+              "v": 16.49999999993663,
+              "targetV": 16.5,
+              "power": 69.58618844593482,
+              "oxygen": 52.85843277946417,
+              "reserve": 0.7426883938425065,
+              "retention": 0.9903092275167049,
+              "mode": null
+            },
+            {
+              "id": "h8",
+              "s": 577.862633165695,
+              "lane": 8.2,
+              "v": 16.49999999993858,
+              "targetV": 16.5,
+              "power": 69.51821687652334,
+              "oxygen": 52.85761735573642,
+              "reserve": 0.7423041121442635,
+              "retention": 0.9902971320382239,
+              "mode": null
+            }
+          ]
+        }
+      ],
+      "traffic": {
+        "steps": 2396,
+        "syncLateralDenied": 0,
+        "brakingSteps": 0,
+        "marginRecoverySteps": 0,
+        "infeasibleSteps": 0,
+        "minAcceleration": 0,
+        "minFollowingSlack": null,
+        "minResponseSlack": null,
+        "lastInfeasible": null
+      }
+    }
+  }
+}

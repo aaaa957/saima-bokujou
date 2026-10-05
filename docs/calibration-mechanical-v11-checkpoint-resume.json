@@ -1,0 +1,91 @@
+{
+  "reason": "After the six sprint and two first-arm long rows completed, the original static allocation left one worker handling all remaining long rows. Root authorized a checkpoint resume with exactly the same source, protocol, parameters, driver, orchestrator and2workers; repartitioning the remaining jobs balances both workers without changing numerical methods or discarding results.",
+  "before": {
+    "at": "2026-10-04T00:23:42.455Z",
+    "pid": 2440,
+    "protocolHash": "32c787f42b5a7b470432c3f24812ea9248bb304a2c6e86a83d68fc04278af7e8",
+    "covered": 8,
+    "pending": 4,
+    "files": [
+      {
+        "file": "docs/calibration-mechanical-v11.json",
+        "byteSha256": "d8c99db9c7bf40e73f4d1fb1db36c65a2f68be9a4ebd32cb2891de3327efb2be"
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.source.js.gz",
+        "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8"
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.driver.js.gz",
+        "byteSha256": "355630f7f2628f914cbab12cbcfdb4ff6577cfb4db52dee9952b41e46552058a"
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.orchestrator.js.gz",
+        "byteSha256": "f50ee83a0ed767aa24e8807f8db0cb8b734f782c2b5ab38061639541735966cb"
+      }
+    ]
+  },
+  "afterTermination": {
+    "at": "2026-10-04T00:23:45.307Z",
+    "pid": 2440,
+    "protocolHash": "32c787f42b5a7b470432c3f24812ea9248bb304a2c6e86a83d68fc04278af7e8",
+    "covered": 8,
+    "pending": 4,
+    "files": [
+      {
+        "file": "docs/calibration-mechanical-v11.json",
+        "byteSha256": "d8c99db9c7bf40e73f4d1fb1db36c65a2f68be9a4ebd32cb2891de3327efb2be"
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.source.js.gz",
+        "byteSha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8"
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.driver.js.gz",
+        "byteSha256": "355630f7f2628f914cbab12cbcfdb4ff6577cfb4db52dee9952b41e46552058a"
+      },
+      {
+        "file": "docs/calibration-mechanical-v11.json.orchestrator.js.gz",
+        "byteSha256": "f50ee83a0ed767aa24e8807f8db0cb8b734f782c2b5ab38061639541735966cb"
+      }
+    ]
+  },
+  "runningUncompletedAttempt": {
+    "steppedProgress": "Unknown. A running attempt can have advanced before termination; it is neither zero execution nor a completed full race.",
+    "classification": "Administrative checkpoint interruption; all declared jobs remain scheduled under the same protocol, and completed rows are unchanged."
+  },
+  "annotatedCheckpointByteSha256": "018a2a9cbfe4d4f33e679c7a089758c48cd83b6937f93a9af904967bc17cf68a",
+  "timing": {
+    "checkpointReportedWallSeconds": 829.693,
+    "elapsedWallBeforeTerminationSeconds": 922.625,
+    "scope": "The resumed batch cumulative wall begins from the last complete checkpoint. Extra unreported wall of the interrupted running attempt is recorded here separately; its physical progress and CPU remain unknown."
+  },
+  "archiveMappings": [
+    {
+      "file": "docs/calibration-mechanical-v11.json.before-resume-checkpoint",
+      "gzipFile": "docs/calibration-mechanical-v11.json.before-resume-checkpoint.gz",
+      "uncompressedBytes": 1736833,
+      "uncompressedByteSha256": "d8c99db9c7bf40e73f4d1fb1db36c65a2f68be9a4ebd32cb2891de3327efb2be",
+      "compressedBytes": 482411,
+      "compressedByteSha256": "eb69a55312fb7625eacf542131b2fa2d31b19830f5aa62150b8d3458a4635d5a",
+      "decodedByteSha256": "d8c99db9c7bf40e73f4d1fb1db36c65a2f68be9a4ebd32cb2891de3327efb2be",
+      "ratio": 0.27775324397912754,
+      "verifiedLossless": true,
+      "inputUnchanged": true,
+      "reused": false
+    },
+    {
+      "file": "docs/calibration-mechanical-v11.json.after-resume-checkpoint",
+      "gzipFile": "docs/calibration-mechanical-v11.json.after-resume-checkpoint.gz",
+      "uncompressedBytes": 1736833,
+      "uncompressedByteSha256": "d8c99db9c7bf40e73f4d1fb1db36c65a2f68be9a4ebd32cb2891de3327efb2be",
+      "compressedBytes": 482411,
+      "compressedByteSha256": "eb69a55312fb7625eacf542131b2fa2d31b19830f5aa62150b8d3458a4635d5a",
+      "decodedByteSha256": "d8c99db9c7bf40e73f4d1fb1db36c65a2f68be9a4ebd32cb2891de3327efb2be",
+      "ratio": 0.27775324397912754,
+      "verifiedLossless": true,
+      "inputUnchanged": true,
+      "reused": false
+    }
+  ]
+}

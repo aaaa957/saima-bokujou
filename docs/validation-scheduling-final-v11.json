@@ -1,0 +1,510 @@
+{
+  "at": "2026-10-04T05:38:33.749Z",
+  "driverNormalizedSha256": "c01f5097d94ff49e635adb1c78b3f3c413a616615e6a3aafd29e12c5a8a6ae85",
+  "engineSteps": 0,
+  "checks": [
+    {
+      "scope": "calibration",
+      "lengths": [
+        1200,
+        2400
+      ],
+      "jobs": 4,
+      "jobListSha256": "8d144e19b08e0a83c74c7f73c1349370de60de39180ddb384bb645ddc4019004",
+      "originalAssignmentEstimatedCosts": [
+        307200,
+        777600,
+        307200,
+        470400
+      ],
+      "newAssignmentEstimatedCosts": [
+        777600,
+        470400,
+        307200,
+        307200
+      ],
+      "groups": [
+        {
+          "worker": 0,
+          "jobs": [
+            "3c8b0e69c6be165eaae33a314227821ab3bcdf895e70d4d5392117b9c9c8a75c"
+          ]
+        },
+        {
+          "worker": 1,
+          "jobs": [
+            "332cdeff52506131154a177c60966d87e80d855963508bb2441f23808f6c8eb1"
+          ]
+        },
+        {
+          "worker": 2,
+          "jobs": [
+            "b6baa75e45e33e06f33300bcbec8dd77180aecc4baae9196a4cefe138f640204"
+          ]
+        },
+        {
+          "worker": 3,
+          "jobs": [
+            "df9289e87199706a425e7054f250bb910ee30aae6bf15cd72dcd649b748039be"
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "calibration",
+      "lengths": null,
+      "jobs": 12,
+      "jobListSha256": "11e9ac732beaf6611a0230d4eaca5e7e5523d0b9b524924ca81da51a647403f4",
+      "originalAssignmentEstimatedCosts": [
+        3358200,
+        5427840,
+        3465200,
+        4381440
+      ],
+      "newAssignmentEstimatedCosts": [
+        4439040,
+        4126400,
+        4166400,
+        3900840
+      ],
+      "groups": [
+        {
+          "worker": 0,
+          "jobs": [
+            "5849d2c575006deb87a13504a868116fb836c46981f767cb01f2cd77e909f877"
+          ]
+        },
+        {
+          "worker": 1,
+          "jobs": [
+            "d43719fd6d0cdae8f68e8004501563588733247bbf89b4faf02933c8cc6291b1",
+            "bc42e66d6187a20e7138c1bcc5264c616e5bc2a5b50f027d24807dbd3a7b7368",
+            "50ef29a3f89db395f723a24e26283ffa94e745b43302ff663f83edbdd4667055",
+            "a01d4454bec3ef3bdb9c6365990cc93030ef12265d3742a7101d4e5fcc51c31a"
+          ]
+        },
+        {
+          "worker": 2,
+          "jobs": [
+            "26ef235a33782a012a4c0d70f77af67d84be3865a7ac365d3a048786af6d8099",
+            "3c8b0e69c6be165eaae33a314227821ab3bcdf895e70d4d5392117b9c9c8a75c",
+            "b6baa75e45e33e06f33300bcbec8dd77180aecc4baae9196a4cefe138f640204",
+            "df9289e87199706a425e7054f250bb910ee30aae6bf15cd72dcd649b748039be"
+          ]
+        },
+        {
+          "worker": 3,
+          "jobs": [
+            "8077c575a512f63af6b3ef7fecec17c433f9d0b279e3cd99e43a79fa0ac1f2d7",
+            "c10630594a2f7c9fa8319194fc74581196bbc48b348ade4c129c332fd446f944",
+            "332cdeff52506131154a177c60966d87e80d855963508bb2441f23808f6c8eb1"
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "controls",
+      "lengths": null,
+      "jobs": 108,
+      "jobListSha256": "bfdee43975c4ebb70b52bda2e4c400d5f1e310e0f5c4a862f10583d80152c21e",
+      "originalAssignmentEstimatedCosts": [
+        173340,
+        1733400,
+        173340,
+        1733400
+      ],
+      "newAssignmentEstimatedCosts": [
+        953400,
+        953400,
+        953340,
+        953340
+      ],
+      "groups": [
+        {
+          "worker": 0,
+          "jobs": [
+            "745525bad247f7ddb479502a3fc9ecdec2be68da398dddc08f612b477ea3b7d9",
+            "dfa0e14f76e5a9695f3e711c0152a316fe703160a6033825c996a460cf25dafb",
+            "eba86e80ff35fa636e50c04816f71f2546ee38cbc39926176f53acd64054cba6",
+            "9ae76db3e4bd15b0b53669ecc6181b792f52a273dda03f4d19a96fd7859b73ef",
+            "766431360faacf3efcc765b9d60c7cd59688a0bd4325c08ff378e3dd4627e208",
+            "a7e0e7e00a951bf8c38ee74c3f738a07ae18c934829b666b3fbec9d3ea4eef4b",
+            "5c9eaa74bab109c4fca720c849dd2eb0d9144f5a0a88b400c416a1b5caca303a",
+            "7e59e703ca2e042d145d7f2b92bae7b54fd31c94f1cdaf6b1f1258cf46740015",
+            "56d6e6bee0f5c1b645681daa190e85b6df9b16cb201feeb34f851f357ec37f8a",
+            "f3fd87aea1d6849b5e34e46a8af91e9c54e6ebf62b4aae08dee6903dd1c39c94",
+            "6d08cdd77bf6cd83af2cae7f9f9c9e4b7a173008daf7e77fcc8569aca2fa36a6",
+            "b91f8d625cd081c8f9ab5447638536688872ed492ec6eeb3989eb594db1fcfaa",
+            "b8947039ca9217b32c5fe9b07151bef89d5de4afadb24dedd387e00e82cf9167",
+            "3c6c8d84d4f33164ec781166431546cc628d6d41a58a199a47b0f574faeb95ae",
+            "6bfde4192d4660414b0808a15426761264f2bd29f04eeea24def67c9593216e0",
+            "976c86b3f51eb984ac7cb73d589b368c22121bef16ef8598776be7c459fb36b9",
+            "30a51587cd09b24d7dffca416a70372b42cddec4067f3085a15e646d9d843708",
+            "cad7197e4bc619ca631edcc639f62e5eea954174ee13c9032bccf5b2821faf65",
+            "22f7c746bc2ddda47d31fb8264e7576fc91b57cdcf689e04e6196067a91b05f1",
+            "89b63e38b7388e1a3aafab62f320f6650019b93e57e0f08beae9848d77d8e233",
+            "16d322ca65c7dfc0bb187f38939c22f7136c8e01632aab7e2512fbe1f450a44a",
+            "29570cbeaf5e8db7c56ad379bf5db53a13c155031e0f1cf0c31a973d01eb6ea9",
+            "67d262f99920fa1694159a88de0e80142254191e37f4b14ca384236b7f80dcaa",
+            "97fea98295fa2820b2a3f9e326f7ca4c5737f03e0d9b19623af1d5ba18b19ab2",
+            "02a4a73e3eb7644659be0fbb4605c0592cf0abc9b9d64fc8fc0dc985be701bf8",
+            "1861a56a4238fb342a0aa90ec9f1f4f3c9f3c31c1d014f5eb3a3cd06832d5005"
+          ]
+        },
+        {
+          "worker": 1,
+          "jobs": [
+            "6ebe9f969a169b9f4f1eb218f305a5c378972e065ebdf69fc866986c4288bba6",
+            "60066ba2039b6eae9334edaadef08ed8b0e305962d1a2cbc5c9c72b576c4e743",
+            "46cc0eb86b68475081f8949425e3790b56b423c0fa675efbb152b778a9b7c08f",
+            "4b1b2ec0ad5f80e6d4159d599a35a85c3d238a36998731497fe5b8a39686f817",
+            "145ea0be256b798500515ed88c334d603dafe5075a4935e0ad022f55753aabe2",
+            "da00399398eaf228a7ae43f7931e38ed3abd18239b209c99c428a1f896da75c1",
+            "1da3ff4e6313c314db2fdc69cc371077c924b9fc414ac3c4dba0aef339fef05f",
+            "c1d2a49382a926e4fd65d47af2f0b931fb970347ff30dfade6d4fe446d0dfa85",
+            "7bd80a6543ec751f216912f42f5b024c4e48bb1bb8e75aad72d009d49d9326b7",
+            "c5d7a5685ab156fa2e052e4b55355c260d5dc89d79a2b7e4d232555cdf330897",
+            "905466144bdb2238e7f1e5dd3707a5b8c46a24a340300d0d58d70e9a12a3782e",
+            "47e33eb10b96ca733d3f67315b42289098efce504d4a2a8b02783f5ee68d03e0",
+            "8d96b01e29f4a44879614bad017fe1b079713f1a49f0b0caad3e6930380bfcda",
+            "cdf870edb307124b74ccbe066610f05db0d67dcd03b16b469a04eddd19b7f567",
+            "7ec275b5f160f103d04a317adf72f1763ecfdab2c536c6a239a61f7feef47367",
+            "e421a7e4b6d8c800d57acc8e4349bef2c1c139ffe13ac70efd3b936872c42a53",
+            "0cf5e05488284e74c3ac5d0fc00a68167c0e96fe86dac511bdfdc4d517533f25",
+            "96ed00878bc73dd0448dca2f4b86887b225db00791b5850fbe3acfa6bd66a0c2",
+            "c6255e1eaf6716974cc1e3526326a2f5150bceea532fab530f469d1b2a3fe74b",
+            "8a836640a3d064a2e0e0c1a3ca245ad69b8afc1acf762b11ece2875c490b4bf4",
+            "399e6237934805e277fa1c39549fb894f594ffb8cf9753e2f3b6698256151f50",
+            "a8f74fea0411cb88a5f215df9005ed391a8cc198fb471bae39ab76f89637188a",
+            "3ed79bf6f5b5eaa34b1a093f4dfa67997f94d293875b5bf8d868b309f3163809",
+            "e95b104df2cd9cd90d6dd8a5a5005bb4ebf171c74201737e8f85f7f51ac02fc5",
+            "6aaf09952b0a9b5a6fcc699b62d3b1eea23f4d4c2e2199fdfc879d86c78de184",
+            "76b186cb1fbbd3685205f89eb0fb840c5fac74b30e44c1bb4e7c7579ddf23aa2"
+          ]
+        },
+        {
+          "worker": 2,
+          "jobs": [
+            "912fc0d6c3a6b2ed2460251cb615ac1d67c29d593f75af74382813f03c2baa55",
+            "952958a027ea5b1948a6243dfe8f2ab0216f6206b6c2ba5de892c8d2c1824489",
+            "b1887910c89bf89dbedd649493561aee196b46ea22ecb80cb0e97dbd6e37b03f",
+            "87e1f1f1d1138a0995199a24e8dd05fd1e42237dea1a747ccca3994b2838b165",
+            "8fac78d200fd02b20202baddba94d4e9e7a4631f8b772f1fa3f9b1aa8606d52e",
+            "d2d3b3e5791eeeda202646fbf096362c358f918e4c4eddc33026ac26069be049",
+            "e2270c2b464250739eaaf9b7f93af759eb538cf540438f45f354a3d05841e896",
+            "c322039fc31eb071cd53e4cbdb19faf2096bcb7473e8d3cd3c8ad4ca7a0f5928",
+            "f842284442110ad4fb96d2d18324c85de2a8f26dea992610660f3f1fce32908e",
+            "4eb88388238f6dfb0d3cda04fb9fc0bc3b43818cfe35646dd61db60477c91e28",
+            "1d0b71c3cfbec2f4a54bcd554ccfacb32f0b2ea696e3d3fd2a203ce0a26e400e",
+            "a4a48315d73dfb52000f2f99c270df3ff2dd70e63642b6d53c14eb168a0aded3",
+            "66983573fc6a49d07eb082205ce1fd64c4934d0bbfdbcdc3660c719fd11d5285",
+            "d9b3c966639cc4d461da147c1fb7d5baf72ed3ddc000490c38fe1751e24c6203",
+            "08e1f12a438f108fe8fb54b17ecf14c993a6abd618dc9982b1bc21192a7a7fdf",
+            "7dca64436a76ae9e38a06caaf4ca6b5d0aa60d5109b31496dfd97959442398be",
+            "1f04f7cea55907f48b3a709b315c4d9700b51730cf65dec0ee1ea37958b72d74",
+            "dd7b45a7362492eff5d163736f511db3fdde530bcabe07eed83cfa6cd77a342a",
+            "98f722c24c1918f226ca0688659264416aafbac1c23b2722f9588c8eeb62bbae",
+            "6143261d5844b8557662d28a32d451a7dc868ad3cb08051245daee8725266987",
+            "151920ee94dbe1205ffd61b169859ed833f740b6f8ec254c65777fcafc0a4dd1",
+            "ab180bd3c190320ddeadc9f2e8c11ed4b0de4211e86005f5ba6e44f6c8f53a5e",
+            "02f8d9bca0c144da763f97aed8b71efbddf11b34933cf29f35111651f35481b9",
+            "cd52e158a78986f41ff2c64bbd650defe4b6102bb30d13a8b6468824fe1fb15d",
+            "fa2d296328e382e6bc8a5f0d0203ea77d025a6315d239a02b201c3d173d06a6c",
+            "23bf1fa7a311162b0ddd56255d907b26d33e7c8afc193bbabc90c6692759a133",
+            "e5c31cc06e1be011f4a41eecda3cb3e7b6609e11dbda61afbb104cb07b8e0ddb",
+            "e6e9f627c4159c53a7a4249b34eea0c0da23e3acb6f0f36bd71c03f0ebeeef70"
+          ]
+        },
+        {
+          "worker": 3,
+          "jobs": [
+            "b7c4f4957e15415c9978c506226e302f86ae058b480670f30cb4cc17b8a0e7a8",
+            "625f5b0e8da10cc3b592a3cf39a335a3cd3528a78645fd48cd83ad2a3b1622a4",
+            "37a99a00171246db5bd403da9c00e1109cd15b924b70e9b224321d844dd267ae",
+            "15c35a987e02cd375b434d84439a1f0c913e26a2e0db505b04db7d7e408cc731",
+            "993fc21264e24e5aeb84bc5e33c351bf59e498a82f213f80112cb07681eb01a8",
+            "f24c223eb428f600871e9527296a2823ca0bc29e4b900daf7dc9bd0471e88e67",
+            "3f58ed1332b5cabbfc835aa886aa7abd760e5e478dc4fc7559e8cf56d0eb2250",
+            "f15743b33b1eb89e4461c699acd37a0a248097cf6f9909c8cd2f1d113888d7e8",
+            "b48dc730dd5ae287f0006af839707778fa5d5948f22af9271d37e297a32da3af",
+            "3e0232f555309b2bb4a2be65609bc3d3d50641d1e08ad18828c47a27544e77a1",
+            "a201a0882cb27a0fdea548aaee7bfbfe61a97c0ddcc1b95d1c61fa99fadf7293",
+            "7967bbdfa16439bec02b965b53e6d14de2d1386561a294829f39eaba982bb65f",
+            "682f54dca62973ffdda912589eb7eb920fb55ec902400cf3a7fdc8d274d1960a",
+            "f27932105d21bcd1d35db300dc267805fd93dda7fea25d9367f8575093302474",
+            "8328e44f72c0ba147123a50df3a9ae58d5d09806293da863d8d07e555cfb4429",
+            "180eb55e7b1230b12e9a17baa4e55fc6d278354baa9f9af2ce28b78799dcf694",
+            "ed61e829ad847e51979fa2c6576a0b99b527702ff2f9bf05bc1697e12e8672ff",
+            "54c6a9c24e716e1941db84d38fb88b687935a6efa2e458a02880a9c2ab718dae",
+            "aab3c7ee266fcba8f436ad073744807fa6f24f44e08e353703c0d9cbda3de4a1",
+            "70c5e08bd29e53091e68b1834bff06d67bd71b85fe4ada38438ab23811912e00",
+            "f76fb9a9dbaf554f42db248cc6a116647795fd653b1b6ed7dd2c7c2fce134489",
+            "b914aba9d2c20186caee9afec3aca6a8d2c0ef587bf54b6f70dc7e5bb7fd3e8a",
+            "d921579bf1454836ad2a4bd1ff03f734a53a68db52609e33265b8e2b37c2d37b",
+            "e2ce0dd344a8fd3387fa017b67364598a70b64b28bb32aea451eb702f9e9c416",
+            "9997cb804d2f48cf4bda5a73edc9314b1d00487979f209e7c62c65e7dd09804a",
+            "385b11dd535e2e13c3f97726f1a857133c05c62495562220ab89164990e74505",
+            "9d692443ebc9b47ba57984f7aa16c2089cb71c52dcfa9cb41b7052f423b96f54",
+            "d5de7f920ce34501fcd9987374100bf20d7ac7f9d7838ca8f8be2d74356ead30"
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "forecasts",
+      "lengths": null,
+      "jobs": 18,
+      "jobListSha256": "5ab94a13443afa670430b00af29eb29255abf10900f772a6634b4dbf4614a488",
+      "originalAssignmentEstimatedCosts": [
+        11200,
+        11200,
+        9200,
+        9200
+      ],
+      "newAssignmentEstimatedCosts": [
+        10000,
+        10000,
+        10400,
+        10400
+      ],
+      "groups": [
+        {
+          "worker": 0,
+          "jobs": [
+            "fde85df856daab6e819c06e8e3a47c0c5892be04b6202ab0f28d62db46ac42fa",
+            "ef95021f6166c5d9b39934b4ed096f6158570f562b1d07f72997ddedbda46962",
+            "778cb4e324af5e6260d28983a8434df31b250c5d1383ce0466796cb733dd075d",
+            "c7a16cd3baa7b498239b19bf91e4e5d4dfdec724d7d3e372291f170beb1f1e67"
+          ]
+        },
+        {
+          "worker": 1,
+          "jobs": [
+            "32379511f6cebf2f75c74ab591714b8a3b7552439615b277262ab0d562ee723b",
+            "16ae4c4923654d993fa5c8318370e3cc058112cebbc61098fb1516c79c2a727c",
+            "69c0581a5a236debaf367e42a0697e504e8bd94104b5d5e4bc9c7a2fb9a4cc41",
+            "1aba658f07823d6da87161e18478e23eefb3e00ba0f9be4376a27a6ff01ef21b"
+          ]
+        },
+        {
+          "worker": 2,
+          "jobs": [
+            "d912f2008576a683d3d91ac7d303b7159560e765b39246de2c03c531eaed617e",
+            "7e227367465123110542ccd3c8282b63a43e4364df489af85e6e920d45759b98",
+            "ca2329f51da08ab9d4827e2c17f4d759ab3fabc0049ec9818ec4994779cd3da6",
+            "303531ccb110738f6700c4296b544dda5ae575f3ae4d3cc5186e7f306499cdca",
+            "2ac202fedf8b4df85ba3aca957305b05a5a041bd5c879077f0eeed3893e44d4c"
+          ]
+        },
+        {
+          "worker": 3,
+          "jobs": [
+            "52eb9e5cd2d59478f3d30b4f4d0d496353a4515d50fdd20881f362e47064b06b",
+            "6b836c93860594d85bde6dc953071ed05d6a35f9535de33b040407308c8a70a8",
+            "ea7826a4eeea1bdf9b34623a9122bb515a319144b326543d808c5921a6eb48e0",
+            "30f8d11398665a8e1cff6d2f6136d6cea8e1e5f029594c57517c8e9372ddd949",
+            "f728e2fdd245535ffda7649464307d8512e7addc139d8b6002dfead83bc8ed48"
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "final",
+      "lengths": null,
+      "jobs": 156,
+      "jobListSha256": "739cae7ee318bad36e01db6c7247468c8f4f7c08f3619116153ef4fb3a38fca3",
+      "originalAssignmentEstimatedCosts": [
+        12186740,
+        13009800,
+        5608940,
+        9536920
+      ],
+      "newAssignmentEstimatedCosts": [
+        10085600,
+        10085620,
+        10085620,
+        10085560
+      ],
+      "groups": [
+        {
+          "worker": 0,
+          "jobs": [
+            "c7eae67c8098d915c019e40069ecdc6b2e158b6624486497f34ecce2a8a4e36e",
+            "50dc006844136373600c5a974009693e3241f685b25f7876dffa7fc83807588a",
+            "c10630594a2f7c9fa8319194fc74581196bbc48b348ade4c129c332fd446f944",
+            "f6f2fea1496a3e368b80db0f92b1a5392026038dfa1539674d446fddcc317ffa",
+            "332cdeff52506131154a177c60966d87e80d855963508bb2441f23808f6c8eb1",
+            "7340e56d35308dec6f036c2431ef5df72c53c10dd9edc16314af2e92aeadcf52",
+            "6c5992a997daafebeee029cd966adf245b86f00c3bf551534d9715158602768b",
+            "912fc0d6c3a6b2ed2460251cb615ac1d67c29d593f75af74382813f03c2baa55",
+            "952958a027ea5b1948a6243dfe8f2ab0216f6206b6c2ba5de892c8d2c1824489",
+            "b1887910c89bf89dbedd649493561aee196b46ea22ecb80cb0e97dbd6e37b03f",
+            "87e1f1f1d1138a0995199a24e8dd05fd1e42237dea1a747ccca3994b2838b165",
+            "8fac78d200fd02b20202baddba94d4e9e7a4631f8b772f1fa3f9b1aa8606d52e",
+            "993fc21264e24e5aeb84bc5e33c351bf59e498a82f213f80112cb07681eb01a8",
+            "f24c223eb428f600871e9527296a2823ca0bc29e4b900daf7dc9bd0471e88e67",
+            "3f58ed1332b5cabbfc835aa886aa7abd760e5e478dc4fc7559e8cf56d0eb2250",
+            "da00399398eaf228a7ae43f7931e38ed3abd18239b209c99c428a1f896da75c1",
+            "1da3ff4e6313c314db2fdc69cc371077c924b9fc414ac3c4dba0aef339fef05f",
+            "c1d2a49382a926e4fd65d47af2f0b931fb970347ff30dfade6d4fe446d0dfa85",
+            "7bd80a6543ec751f216912f42f5b024c4e48bb1bb8e75aad72d009d49d9326b7",
+            "c5d7a5685ab156fa2e052e4b55355c260d5dc89d79a2b7e4d232555cdf330897",
+            "905466144bdb2238e7f1e5dd3707a5b8c46a24a340300d0d58d70e9a12a3782e",
+            "b8947039ca9217b32c5fe9b07151bef89d5de4afadb24dedd387e00e82cf9167",
+            "3c6c8d84d4f33164ec781166431546cc628d6d41a58a199a47b0f574faeb95ae",
+            "6bfde4192d4660414b0808a15426761264f2bd29f04eeea24def67c9593216e0",
+            "976c86b3f51eb984ac7cb73d589b368c22121bef16ef8598776be7c459fb36b9",
+            "30a51587cd09b24d7dffca416a70372b42cddec4067f3085a15e646d9d843708",
+            "d912f2008576a683d3d91ac7d303b7159560e765b39246de2c03c531eaed617e",
+            "7e227367465123110542ccd3c8282b63a43e4364df489af85e6e920d45759b98",
+            "778cb4e324af5e6260d28983a8434df31b250c5d1383ce0466796cb733dd075d",
+            "2ac202fedf8b4df85ba3aca957305b05a5a041bd5c879077f0eeed3893e44d4c",
+            "151920ee94dbe1205ffd61b169859ed833f740b6f8ec254c65777fcafc0a4dd1",
+            "02f8d9bca0c144da763f97aed8b71efbddf11b34933cf29f35111651f35481b9",
+            "fa2d296328e382e6bc8a5f0d0203ea77d025a6315d239a02b201c3d173d06a6c",
+            "cad7197e4bc619ca631edcc639f62e5eea954174ee13c9032bccf5b2821faf65",
+            "22f7c746bc2ddda47d31fb8264e7576fc91b57cdcf689e04e6196067a91b05f1",
+            "c6255e1eaf6716974cc1e3526326a2f5150bceea532fab530f469d1b2a3fe74b",
+            "89b63e38b7388e1a3aafab62f320f6650019b93e57e0f08beae9848d77d8e233",
+            "8a836640a3d064a2e0e0c1a3ca245ad69b8afc1acf762b11ece2875c490b4bf4",
+            "29570cbeaf5e8db7c56ad379bf5db53a13c155031e0f1cf0c31a973d01eb6ea9",
+            "3ed79bf6f5b5eaa34b1a093f4dfa67997f94d293875b5bf8d868b309f3163809",
+            "02a4a73e3eb7644659be0fbb4605c0592cf0abc9b9d64fc8fc0dc985be701bf8",
+            "d5de7f920ce34501fcd9987374100bf20d7ac7f9d7838ca8f8be2d74356ead30"
+          ]
+        },
+        {
+          "worker": 1,
+          "jobs": [
+            "5849d2c575006deb87a13504a868116fb836c46981f767cb01f2cd77e909f877",
+            "57c8c4bba5bf33532dbac468ae5ff22011428c7eee97ca2b2983fc6bb58b3e45",
+            "3c8b0e69c6be165eaae33a314227821ab3bcdf895e70d4d5392117b9c9c8a75c",
+            "bc42e66d6187a20e7138c1bcc5264c616e5bc2a5b50f027d24807dbd3a7b7368",
+            "46aa990f7ca71d5fb1d15ada4b7a4329d8dd6b5092552aad07c5f8f19865b857",
+            "b6baa75e45e33e06f33300bcbec8dd77180aecc4baae9196a4cefe138f640204",
+            "9b826514dfdb11bce62ce28b8baa10569077ed174f29ca5c7d8fddf15852b994",
+            "a01d4454bec3ef3bdb9c6365990cc93030ef12265d3742a7101d4e5fcc51c31a",
+            "60066ba2039b6eae9334edaadef08ed8b0e305962d1a2cbc5c9c72b576c4e743",
+            "46cc0eb86b68475081f8949425e3790b56b423c0fa675efbb152b778a9b7c08f",
+            "4b1b2ec0ad5f80e6d4159d599a35a85c3d238a36998731497fe5b8a39686f817",
+            "145ea0be256b798500515ed88c334d603dafe5075a4935e0ad022f55753aabe2",
+            "f15743b33b1eb89e4461c699acd37a0a248097cf6f9909c8cd2f1d113888d7e8",
+            "b48dc730dd5ae287f0006af839707778fa5d5948f22af9271d37e297a32da3af",
+            "3e0232f555309b2bb4a2be65609bc3d3d50641d1e08ad18828c47a27544e77a1",
+            "a201a0882cb27a0fdea548aaee7bfbfe61a97c0ddcc1b95d1c61fa99fadf7293",
+            "66983573fc6a49d07eb082205ce1fd64c4934d0bbfdbcdc3660c719fd11d5285",
+            "d9b3c966639cc4d461da147c1fb7d5baf72ed3ddc000490c38fe1751e24c6203",
+            "08e1f12a438f108fe8fb54b17ecf14c993a6abd618dc9982b1bc21192a7a7fdf",
+            "7dca64436a76ae9e38a06caaf4ca6b5d0aa60d5109b31496dfd97959442398be",
+            "1f04f7cea55907f48b3a709b315c4d9700b51730cf65dec0ee1ea37958b72d74",
+            "dd7b45a7362492eff5d163736f511db3fdde530bcabe07eed83cfa6cd77a342a",
+            "98f722c24c1918f226ca0688659264416aafbac1c23b2722f9588c8eeb62bbae",
+            "fde85df856daab6e819c06e8e3a47c0c5892be04b6202ab0f28d62db46ac42fa",
+            "ef95021f6166c5d9b39934b4ed096f6158570f562b1d07f72997ddedbda46962",
+            "ca2329f51da08ab9d4827e2c17f4d759ab3fabc0049ec9818ec4994779cd3da6",
+            "303531ccb110738f6700c4296b544dda5ae575f3ae4d3cc5186e7f306499cdca",
+            "c7a16cd3baa7b498239b19bf91e4e5d4dfdec724d7d3e372291f170beb1f1e67",
+            "6143261d5844b8557662d28a32d451a7dc868ad3cb08051245daee8725266987",
+            "f76fb9a9dbaf554f42db248cc6a116647795fd653b1b6ed7dd2c7c2fce134489",
+            "d921579bf1454836ad2a4bd1ff03f734a53a68db52609e33265b8e2b37c2d37b",
+            "9997cb804d2f48cf4bda5a73edc9314b1d00487979f209e7c62c65e7dd09804a",
+            "96ed00878bc73dd0448dca2f4b86887b225db00791b5850fbe3acfa6bd66a0c2",
+            "16d322ca65c7dfc0bb187f38939c22f7136c8e01632aab7e2512fbe1f450a44a",
+            "a8f74fea0411cb88a5f215df9005ed391a8cc198fb471bae39ab76f89637188a",
+            "97fea98295fa2820b2a3f9e326f7ca4c5737f03e0d9b19623af1d5ba18b19ab2",
+            "6aaf09952b0a9b5a6fcc699b62d3b1eea23f4d4c2e2199fdfc879d86c78de184",
+            "1861a56a4238fb342a0aa90ec9f1f4f3c9f3c31c1d014f5eb3a3cd06832d5005"
+          ]
+        },
+        {
+          "worker": 2,
+          "jobs": [
+            "d43719fd6d0cdae8f68e8004501563588733247bbf89b4faf02933c8cc6291b1",
+            "26ef235a33782a012a4c0d70f77af67d84be3865a7ac365d3a048786af6d8099",
+            "23e3a123ead93f6fa599e9464e3231322f5083199205347659d43b93731d11b8",
+            "8a8648d80a319d434dde2bce2fd95a2dfc1e6f59d84a321ff56328afc94a4fe7",
+            "0be76c91db8a1fcb83a75b24e66b56636f909bba2074d45314bcf5623f288b4d",
+            "50ef29a3f89db395f723a24e26283ffa94e745b43302ff663f83edbdd4667055",
+            "df9289e87199706a425e7054f250bb910ee30aae6bf15cd72dcd649b748039be",
+            "6fcf6099a0f806e6a2660a516ab89e130c67227efdfc3145a2f2e23aa3c63184",
+            "745525bad247f7ddb479502a3fc9ecdec2be68da398dddc08f612b477ea3b7d9",
+            "b7c4f4957e15415c9978c506226e302f86ae058b480670f30cb4cc17b8a0e7a8",
+            "625f5b0e8da10cc3b592a3cf39a335a3cd3528a78645fd48cd83ad2a3b1622a4",
+            "37a99a00171246db5bd403da9c00e1109cd15b924b70e9b224321d844dd267ae",
+            "15c35a987e02cd375b434d84439a1f0c913e26a2e0db505b04db7d7e408cc731",
+            "d2d3b3e5791eeeda202646fbf096362c358f918e4c4eddc33026ac26069be049",
+            "e2270c2b464250739eaaf9b7f93af759eb538cf540438f45f354a3d05841e896",
+            "a7e0e7e00a951bf8c38ee74c3f738a07ae18c934829b666b3fbec9d3ea4eef4b",
+            "5c9eaa74bab109c4fca720c849dd2eb0d9144f5a0a88b400c416a1b5caca303a",
+            "7e59e703ca2e042d145d7f2b92bae7b54fd31c94f1cdaf6b1f1258cf46740015",
+            "a4a48315d73dfb52000f2f99c270df3ff2dd70e63642b6d53c14eb168a0aded3",
+            "682f54dca62973ffdda912589eb7eb920fb55ec902400cf3a7fdc8d274d1960a",
+            "f27932105d21bcd1d35db300dc267805fd93dda7fea25d9367f8575093302474",
+            "8328e44f72c0ba147123a50df3a9ae58d5d09806293da863d8d07e555cfb4429",
+            "180eb55e7b1230b12e9a17baa4e55fc6d278354baa9f9af2ce28b78799dcf694",
+            "ed61e829ad847e51979fa2c6576a0b99b527702ff2f9bf05bc1697e12e8672ff",
+            "54c6a9c24e716e1941db84d38fb88b687935a6efa2e458a02880a9c2ab718dae",
+            "aab3c7ee266fcba8f436ad073744807fa6f24f44e08e353703c0d9cbda3de4a1",
+            "32379511f6cebf2f75c74ab591714b8a3b7552439615b277262ab0d562ee723b",
+            "16ae4c4923654d993fa5c8318370e3cc058112cebbc61098fb1516c79c2a727c",
+            "ea7826a4eeea1bdf9b34623a9122bb515a319144b326543d808c5921a6eb48e0",
+            "30f8d11398665a8e1cff6d2f6136d6cea8e1e5f029594c57517c8e9372ddd949",
+            "1aba658f07823d6da87161e18478e23eefb3e00ba0f9be4376a27a6ff01ef21b",
+            "70c5e08bd29e53091e68b1834bff06d67bd71b85fe4ada38438ab23811912e00",
+            "ab180bd3c190320ddeadc9f2e8c11ed4b0de4211e86005f5ba6e44f6c8f53a5e",
+            "cd52e158a78986f41ff2c64bbd650defe4b6102bb30d13a8b6468824fe1fb15d",
+            "23bf1fa7a311162b0ddd56255d907b26d33e7c8afc193bbabc90c6692759a133",
+            "e5c31cc06e1be011f4a41eecda3cb3e7b6609e11dbda61afbb104cb07b8e0ddb",
+            "399e6237934805e277fa1c39549fb894f594ffb8cf9753e2f3b6698256151f50",
+            "67d262f99920fa1694159a88de0e80142254191e37f4b14ca384236b7f80dcaa",
+            "e95b104df2cd9cd90d6dd8a5a5005bb4ebf171c74201737e8f85f7f51ac02fc5",
+            "e6e9f627c4159c53a7a4249b34eea0c0da23e3acb6f0f36bd71c03f0ebeeef70",
+            "76b186cb1fbbd3685205f89eb0fb840c5fac74b30e44c1bb4e7c7579ddf23aa2"
+          ]
+        },
+        {
+          "worker": 3,
+          "jobs": [
+            "36632bc40b9803982b7cb8f1635e4a54a1de17d99704f35361a07679c216c313",
+            "8077c575a512f63af6b3ef7fecec17c433f9d0b279e3cd99e43a79fa0ac1f2d7",
+            "1bbb372a6ebac67b3d90aa1adacbcd5bbf13145dd4bfba131e4808adf8c15814",
+            "93e2e47ba064001ad4910c89fbbec1a78a7babd7a499c993cc0c739c8fd084fe",
+            "79e14c12df65af09641e6f964b0d4a732c96c9f6fda2efd71a32ca76d7684ba7",
+            "50ecb933b7d63316917c53abccf0aea119e468242bfc2a809ca671156c2ec24a",
+            "2df2033227f4e6efb2973bc3db27ebbee25e6b7d41a10815d4127639d6f4359e",
+            "6ebe9f969a169b9f4f1eb218f305a5c378972e065ebdf69fc866986c4288bba6",
+            "dfa0e14f76e5a9695f3e711c0152a316fe703160a6033825c996a460cf25dafb",
+            "eba86e80ff35fa636e50c04816f71f2546ee38cbc39926176f53acd64054cba6",
+            "9ae76db3e4bd15b0b53669ecc6181b792f52a273dda03f4d19a96fd7859b73ef",
+            "766431360faacf3efcc765b9d60c7cd59688a0bd4325c08ff378e3dd4627e208",
+            "c322039fc31eb071cd53e4cbdb19faf2096bcb7473e8d3cd3c8ad4ca7a0f5928",
+            "f842284442110ad4fb96d2d18324c85de2a8f26dea992610660f3f1fce32908e",
+            "4eb88388238f6dfb0d3cda04fb9fc0bc3b43818cfe35646dd61db60477c91e28",
+            "1d0b71c3cfbec2f4a54bcd554ccfacb32f0b2ea696e3d3fd2a203ce0a26e400e",
+            "7967bbdfa16439bec02b965b53e6d14de2d1386561a294829f39eaba982bb65f",
+            "56d6e6bee0f5c1b645681daa190e85b6df9b16cb201feeb34f851f357ec37f8a",
+            "f3fd87aea1d6849b5e34e46a8af91e9c54e6ebf62b4aae08dee6903dd1c39c94",
+            "6d08cdd77bf6cd83af2cae7f9f9c9e4b7a173008daf7e77fcc8569aca2fa36a6",
+            "b91f8d625cd081c8f9ab5447638536688872ed492ec6eeb3989eb594db1fcfaa",
+            "47e33eb10b96ca733d3f67315b42289098efce504d4a2a8b02783f5ee68d03e0",
+            "8d96b01e29f4a44879614bad017fe1b079713f1a49f0b0caad3e6930380bfcda",
+            "cdf870edb307124b74ccbe066610f05db0d67dcd03b16b469a04eddd19b7f567",
+            "7ec275b5f160f103d04a317adf72f1763ecfdab2c536c6a239a61f7feef47367",
+            "e421a7e4b6d8c800d57acc8e4349bef2c1c139ffe13ac70efd3b936872c42a53",
+            "0cf5e05488284e74c3ac5d0fc00a68167c0e96fe86dac511bdfdc4d517533f25",
+            "52eb9e5cd2d59478f3d30b4f4d0d496353a4515d50fdd20881f362e47064b06b",
+            "6b836c93860594d85bde6dc953071ed05d6a35f9535de33b040407308c8a70a8",
+            "69c0581a5a236debaf367e42a0697e504e8bd94104b5d5e4bc9c7a2fb9a4cc41",
+            "f728e2fdd245535ffda7649464307d8512e7addc139d8b6002dfead83bc8ed48",
+            "b914aba9d2c20186caee9afec3aca6a8d2c0ef587bf54b6f70dc7e5bb7fd3e8a",
+            "e2ce0dd344a8fd3387fa017b67364598a70b64b28bb32aea451eb702f9e9c416",
+            "385b11dd535e2e13c3f97726f1a857133c05c62495562220ab89164990e74505",
+            "9d692443ebc9b47ba57984f7aa16c2089cb71c52dcfa9cb41b7052f423b96f54"
+          ]
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "scope": "Cost values are deterministic rough relative scheduling estimates, not measured CPU or physical quantities. Only worker assignment/order changes. Jobs, source, entrant RNG, numerical integration, physics and guard thresholds are unchanged. Each simulation independently compiles its frozen source and seeded input."
+}

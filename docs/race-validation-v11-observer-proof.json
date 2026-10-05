@@ -1,0 +1,2381 @@
+{
+  "sourceNormalizedSha256": "51caabc1395b62a325f3048aa923994516310d8c69665f3fd17b89978615b82a",
+  "job": {
+    "kind": "start",
+    "n": 8,
+    "length": 1200,
+    "level": 86,
+    "intent": 0.5,
+    "seed": 2026101103,
+    "raceSeed": -420175658
+  },
+  "interpretation": "Identical whole race object JSON at every 60Hz frame, plain versus read-only observer; constructed natural-AI 8-horse standard flat first600. Two stepped partial races, zero completed full races, zero explicit finishPlan diagnostic queries.",
+  "counts": {
+    "initializedRaces": 2,
+    "steppedPartialRaces": 2,
+    "fullRaces": 0,
+    "frames": 4230
+  },
+  "passed": true,
+  "plain": {
+    "observed": false,
+    "frames": 2115,
+    "digest": "675e58c514c10a81aab2158da41e20ee5b513f56974c0ebfc4aaede71ae2b6fd",
+    "end": "f54d3211a43b084292b91ec646b3ed8c80a3b33d4254e109405c22f756fd0ba7",
+    "completed": true
+  },
+  "observed": {
+    "observed": true,
+    "frames": 2115,
+    "digest": "675e58c514c10a81aab2158da41e20ee5b513f56974c0ebfc4aaede71ae2b6fd",
+    "end": "f54d3211a43b084292b91ec646b3ed8c80a3b33d4254e109405c22f756fd0ba7",
+    "completed": true,
+    "engineering": {
+      "frames": 2115,
+      "finite": true,
+      "maxWorkError": 7.275957614183426e-12,
+      "maxReserveError": 1.000444171950221e-11,
+      "maxUnpaid": 6.432701593617196e-14,
+      "maxMotionError": 3.0625502134284943e-13,
+      "bodyOverlapFrames": 0,
+      "maxOverlap": 0,
+      "minAcceleration": -0.11478099183499069,
+      "maxAcceleration": 4.939627891368507,
+      "brakingLimit": 3.5,
+      "parameters": [
+        {
+          "id": "h1",
+          "gate": 6,
+          "lane": 9.8,
+          "startDelay": 0.2010815615071915,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h2",
+          "gate": 7,
+          "lane": 11.4,
+          "startDelay": 0.21335206491686404,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h3",
+          "gate": 8,
+          "lane": 13,
+          "startDelay": 0.18281862775376068,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h4",
+          "gate": 4,
+          "lane": 6.6000000000000005,
+          "startDelay": 0.23857462097704413,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h5",
+          "gate": 2,
+          "lane": 3.4000000000000004,
+          "startDelay": 0.30772254497325047,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h6",
+          "gate": 1,
+          "lane": 1.8,
+          "startDelay": 0.2507761735590175,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h7",
+          "gate": 3,
+          "lane": 5,
+          "startDelay": 0.2465336604863405,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        },
+        {
+          "id": "h8",
+          "gate": 5,
+          "lane": 8.2,
+          "startDelay": 0.20284245369303971,
+          "base": 17.52,
+          "maxV": 19.23,
+          "aerobic": 53.84,
+          "reservePower": 81,
+          "capacity": 3010,
+          "tau": 9.68,
+          "stats": {
+            "速度": 86,
+            "爆发力": 86,
+            "出闸能力": 86,
+            "耐力": 86,
+            "力量": 86,
+            "毅力": 86,
+            "体格": 86,
+            "智力": 86
+          },
+          "behavior": {
+            "forwardness": 0.5,
+            "settle": 0.5,
+            "tractability": 0.65
+          },
+          "plan": {
+            "position": 0.5,
+            "risk": 0.35,
+            "patience": 0.5
+          }
+        }
+      ],
+      "powerProfiles": [
+        {
+          "id": "h1",
+          "meanActualPower": 87.63517625587241,
+          "meanOxygenOutput": 45.685381309766036,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 100.63660619335552,
+          "peakV": 19.127894769087675,
+          "meanRequest": 19.216466007314153,
+          "meanPhysicalV": 17.567746251406177,
+          "post200MeanPhysicalV": 19.034072059235356,
+          "post200MeanRequest": 19.229999999999638,
+          "work": {
+            "workUsed": 3089.1399630194983,
+            "aerobicUsed": 1591.3313646411204,
+            "energyUsed": 1497.8085983783794,
+            "unpaidWork": 6.327794191407499e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.127894769087675,
+            "sprintAt": 62.595753280760896,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "launches": 1,
+            "positionSamples": 19,
+            "meanPosition": 0.2481203007518797
+          }
+        },
+        {
+          "id": "h2",
+          "meanActualPower": 87.20540156873011,
+          "meanOxygenOutput": 45.688388368975836,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 101.3187552324538,
+          "peakV": 19.105400419819023,
+          "meanRequest": 19.179775847739805,
+          "meanPhysicalV": 17.52932945491308,
+          "post200MeanPhysicalV": 19.026482073152962,
+          "post200MeanRequest": 19.226743230949978,
+          "work": {
+            "workUsed": 3073.990405297723,
+            "aerobicUsed": 1591.0930630143096,
+            "energyUsed": 1482.8973422834158,
+            "unpaidWork": 6.432701593617196e-14,
+            "recovered": 0,
+            "draftSeconds": 1.8999999999999981,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.105400419819023,
+            "sprintAt": 119.2943769433453,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "positionSamples": 19,
+            "meanPosition": 0.8721804511278195,
+            "launches": 2,
+            "withdrawals": 1
+          }
+        },
+        {
+          "id": "h3",
+          "meanActualPower": 87.48043315503277,
+          "meanOxygenOutput": 45.6863755030219,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 100.82818947981067,
+          "peakV": 19.12100075369791,
+          "meanRequest": 19.18512649601099,
+          "meanPhysicalV": 17.561071427844634,
+          "post200MeanPhysicalV": 19.027583607784816,
+          "post200MeanRequest": 19.227111688496223,
+          "work": {
+            "workUsed": 3083.685268714901,
+            "aerobicUsed": 1591.8786219185686,
+            "energyUsed": 1491.8066467963317,
+            "unpaidWork": 6.364526961011308e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.12100075369791,
+            "sprintAt": 91.16878183399152,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "launches": 2,
+            "positionSamples": 19,
+            "meanPosition": 0.631578947368421,
+            "withdrawals": 1
+          }
+        },
+        {
+          "id": "h4",
+          "meanActualPower": 87.56345138412905,
+          "meanOxygenOutput": 45.68634597305568,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 101.00334550320855,
+          "peakV": 19.127678515800987,
+          "meanRequest": 19.208132784796422,
+          "meanPhysicalV": 17.545834790546014,
+          "post200MeanPhysicalV": 19.03447449540337,
+          "post200MeanRequest": 19.229999999999638,
+          "work": {
+            "workUsed": 3086.6116612905435,
+            "aerobicUsed": 1590.3117593979025,
+            "energyUsed": 1496.2999018926455,
+            "unpaidWork": 6.230085891623105e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.127678515800987,
+            "sprintAt": 63.392311963753535,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "launches": 1,
+            "positionSamples": 19,
+            "meanPosition": 0.4586466165413534
+          }
+        },
+        {
+          "id": "h5",
+          "meanActualPower": 87.23513727824628,
+          "meanOxygenOutput": 45.68862705194834,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 100.65556607434229,
+          "peakV": 19.12276301621546,
+          "meanRequest": 19.20482047872375,
+          "meanPhysicalV": 17.500041544892674,
+          "post200MeanPhysicalV": 19.035178126724766,
+          "post200MeanRequest": 19.229999999999638,
+          "work": {
+            "workUsed": 3075.0385890581883,
+            "aerobicUsed": 1588.43696343642,
+            "energyUsed": 1486.601625621765,
+            "unpaidWork": 6.221412274243221e-14,
+            "recovered": 0,
+            "draftSeconds": 3.299999999999993,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.12276301621546,
+            "sprintAt": 113.82044052711296,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "positionSamples": 19,
+            "meanPosition": 0.7669172932330828,
+            "launches": 1
+          }
+        },
+        {
+          "id": "h6",
+          "meanActualPower": 87.58735224193764,
+          "meanOxygenOutput": 45.686781431303395,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 101.32485792154719,
+          "peakV": 19.127440481283003,
+          "meanRequest": 19.212569176640397,
+          "meanPhysicalV": 17.536949059379552,
+          "post200MeanPhysicalV": 19.034649517610227,
+          "post200MeanRequest": 19.229999999999638,
+          "work": {
+            "workUsed": 3087.454166528307,
+            "aerobicUsed": 1589.9829907400174,
+            "energyUsed": 1497.4711757882835,
+            "unpaidWork": 5.982020434558422e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.127440481283003,
+            "sprintAt": 62.984805341496084,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "launches": 1,
+            "positionSamples": 19,
+            "meanPosition": 0.21052631578947367
+          }
+        },
+        {
+          "id": "h7",
+          "meanActualPower": 87.49057539794437,
+          "meanOxygenOutput": 45.687215741632166,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 100.33635158486157,
+          "peakV": 19.12419369434501,
+          "meanRequest": 19.198255817819486,
+          "meanPhysicalV": 17.533803789906862,
+          "post200MeanPhysicalV": 19.034782086830347,
+          "post200MeanRequest": 19.229999999999638,
+          "work": {
+            "workUsed": 3084.0427827775393,
+            "aerobicUsed": 1590.1177230940434,
+            "energyUsed": 1493.9250596834902,
+            "unpaidWork": 5.853650897336138e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.12419369434501,
+            "sprintAt": 93.17011051018312,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "launches": 1,
+            "positionSamples": 19,
+            "meanPosition": 0.556390977443609
+          }
+        },
+        {
+          "id": "h8",
+          "meanActualPower": 87.57394517752124,
+          "meanOxygenOutput": 45.68607819857269,
+          "meanReserveReleaseCeiling": 81,
+          "peakPower": 100.89376465657932,
+          "peakV": 19.118725691080204,
+          "meanRequest": 19.193249889184763,
+          "meanPhysicalV": 17.558927668402625,
+          "post200MeanPhysicalV": 19.034102447868555,
+          "post200MeanRequest": 19.229999999999638,
+          "work": {
+            "workUsed": 3086.981567507627,
+            "aerobicUsed": 1591.3064341238005,
+            "energyUsed": 1495.6751333838295,
+            "unpaidWork": 6.379705791426105e-14,
+            "recovered": 0,
+            "draftSeconds": 0,
+            "blockedSeconds": 0,
+            "peakSpeed": 19.118725691080204,
+            "sprintAt": 64.52718802983381,
+            "decisions": 24,
+            "lateralDeniedSteps": 0,
+            "boundedBrakingSeconds": 0,
+            "marginRecoverySteps": 0,
+            "launches": 2,
+            "withdrawals": 1,
+            "positionSamples": 19,
+            "meanPosition": 0.26315789473684215
+          }
+        }
+      ],
+      "trace": [
+        {
+          "time": 0.016666666666666666,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 0,
+              "lane": 9.8,
+              "v": 0,
+              "targetV": 19.198300781249998,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            },
+            {
+              "id": "h2",
+              "s": 0,
+              "lane": 11.4,
+              "v": 0,
+              "targetV": 19.198300781249998,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            },
+            {
+              "id": "h3",
+              "s": 0,
+              "lane": 13,
+              "v": 0,
+              "targetV": 19.198300781249998,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            },
+            {
+              "id": "h4",
+              "s": 0,
+              "lane": 6.6000000000000005,
+              "v": 0,
+              "targetV": 18.944707031250005,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            },
+            {
+              "id": "h5",
+              "s": 0,
+              "lane": 3.4000000000000004,
+              "v": 0,
+              "targetV": 19.198300781249998,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            },
+            {
+              "id": "h6",
+              "s": 0,
+              "lane": 1.8,
+              "v": 0,
+              "targetV": 19.103203125,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            },
+            {
+              "id": "h7",
+              "s": 0,
+              "lane": 5,
+              "v": 0,
+              "targetV": 19.008105468750003,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            },
+            {
+              "id": "h8",
+              "s": 0,
+              "lane": 8.2,
+              "v": 0,
+              "targetV": 18.913007812500005,
+              "power": 0,
+              "oxygen": 24.278940981749486,
+              "reserve": 1,
+              "retention": 1,
+              "mode": "start"
+            }
+          ]
+        },
+        {
+          "time": 2.0166666666666644,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 6.95053675487152,
+              "lane": 9.8,
+              "v": 7.884709591453006,
+              "targetV": 19.198300781249998,
+              "power": 44.94683538469202,
+              "oxygen": 29.79667613532363,
+              "reserve": 0.9982542167850225,
+              "retention": 0.9998935989778827,
+              "mode": "start"
+            },
+            {
+              "id": "h2",
+              "s": 6.770399519918461,
+              "lane": 11.4,
+              "v": 7.83814608206348,
+              "targetV": 19.198300781249998,
+              "power": 44.641467793197705,
+              "oxygen": 29.796683160241546,
+              "reserve": 0.9983233475924275,
+              "retention": 0.999895992769725,
+              "mode": "start"
+            },
+            {
+              "id": "h3",
+              "s": 6.9007036994280195,
+              "lane": 13,
+              "v": 7.9538491034813,
+              "targetV": 18.944707031250005,
+              "power": 45.399909973177,
+              "oxygen": 29.796665395347333,
+              "reserve": 0.9981491041977676,
+              "retention": 0.9998899785045462,
+              "mode": "start"
+            },
+            {
+              "id": "h4",
+              "s": 6.8613784771518995,
+              "lane": 6.6000000000000005,
+              "v": 7.742180730923794,
+              "targetV": 19.198300781249998,
+              "power": 44.01538877420846,
+              "oxygen": 29.79669707734358,
+              "reserve": 0.998460806054763,
+              "retention": 0.9999007946808953,
+              "mode": "start"
+            },
+            {
+              "id": "h5",
+              "s": 6.538061805087006,
+              "lane": 3.4000000000000004,
+              "v": 7.477273823473235,
+              "targetV": 19.198300781249998,
+              "power": 42.2954702096697,
+              "oxygen": 29.796731859683447,
+              "reserve": 0.9988073547378712,
+              "retention": 0.9999131855820035,
+              "mode": "start"
+            },
+            {
+              "id": "h6",
+              "s": 7.063621304721317,
+              "lane": 1.4,
+              "v": 7.6956449354108125,
+              "targetV": 19.1666015625,
+              "power": 43.713198951881694,
+              "oxygen": 29.796703555432487,
+              "reserve": 0.9985249699313584,
+              "retention": 0.9999030583605565,
+              "mode": "start"
+            },
+            {
+              "id": "h7",
+              "s": 6.897274504215383,
+              "lane": 5,
+              "v": 7.711830278939215,
+              "targetV": 19.198300781249998,
+              "power": 43.8178250100948,
+              "oxygen": 29.796701316696083,
+              "reserve": 0.9985027804808735,
+              "retention": 0.99990227481105,
+              "mode": "start"
+            },
+            {
+              "id": "h8",
+              "s": 7.031529914684068,
+              "lane": 8.2,
+              "v": 7.87802744345205,
+              "targetV": 19.198300781249998,
+              "power": 44.90340231874166,
+              "oxygen": 29.796677151003067,
+              "reserve": 0.998264164424793,
+              "retention": 0.9998939433535687,
+              "mode": "start"
+            }
+          ]
+        },
+        {
+          "time": 4.016666666666658,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 29.380071837805566,
+              "lane": 9.8,
+              "v": 14.456283560154837,
+              "targetV": 19.039804687500002,
+              "power": 92.85071990007535,
+              "oxygen": 34.28038168995742,
+              "reserve": 0.9734708242034782,
+              "retention": 0.999136318391253,
+              "mode": "start"
+            },
+            {
+              "id": "h2",
+              "s": 29.058861869331665,
+              "lane": 11.4,
+              "v": 14.42154794370977,
+              "targetV": 19.198300781249998,
+              "power": 92.57069188292041,
+              "oxygen": 34.280438102217566,
+              "reserve": 0.9737350915371618,
+              "retention": 0.9991438116553221,
+              "mode": "start"
+            },
+            {
+              "id": "h3",
+              "s": 29.356549392880588,
+              "lane": 13,
+              "v": 14.507860505331465,
+              "targetV": 19.13490234375,
+              "power": 93.26706127347319,
+              "oxygen": 34.28029683481406,
+              "reserve": 0.9730749618468719,
+              "retention": 0.9991250998016747,
+              "mode": "start"
+            },
+            {
+              "id": "h4",
+              "s": 29.12802463340535,
+              "lane": 6.6000000000000005,
+              "v": 14.34995936130032,
+              "targetV": 19.1666015625,
+              "power": 91.99449519598747,
+              "oxygen": 34.28055264403854,
+              "reserve": 0.9742747740371754,
+              "retention": 0.9991591248281837,
+              "mode": "start"
+            },
+            {
+              "id": "h5",
+              "s": 28.43058327185607,
+              "lane": 3.4000000000000004,
+              "v": 14.152343140970416,
+              "targetV": 19.13490234375,
+              "power": 90.41041782637127,
+              "oxygen": 34.280856135023946,
+              "reserve": 0.9757248945626323,
+              "retention": 0.9992003552348421,
+              "mode": "start"
+            },
+            {
+              "id": "h6",
+              "s": 29.39734042482946,
+              "lane": 1.4,
+              "v": 14.315244418953872,
+              "targetV": 19.198300781249998,
+              "power": 91.71553419123775,
+              "oxygen": 34.28060726995181,
+              "reserve": 0.9745336556684313,
+              "retention": 0.9991664770402156,
+              "mode": "start"
+            },
+            {
+              "id": "h7",
+              "s": 29.157925947333155,
+              "lane": 5,
+              "v": 14.32731842051014,
+              "targetV": 19.103203125,
+              "power": 91.81252467609528,
+              "oxygen": 34.28058828915135,
+              "reserve": 0.9744436005173985,
+              "retention": 0.9991639199655309,
+              "mode": "start"
+            },
+            {
+              "id": "h8",
+              "s": 29.498604913768496,
+              "lane": 8.2,
+              "v": 14.451298787034572,
+              "targetV": 19.039804687500002,
+              "power": 92.81051606351767,
+              "oxygen": 34.28038983776636,
+              "reserve": 0.9735089629087557,
+              "retention": 0.999137399479635,
+              "mode": "start"
+            }
+          ]
+        },
+        {
+          "time": 6.016666666666651,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 62.595753280760896,
+              "lane": 9.8,
+              "v": 18.01544933834819,
+              "targetV": 19.1666015625,
+              "power": 96.67970528080575,
+              "oxygen": 37.9165255807808,
+              "reserve": 0.9321200270711996,
+              "retention": 0.9979322888350803,
+              "mode": "start"
+            },
+            {
+              "id": "h2",
+              "s": 62.14925547463152,
+              "lane": 11.4,
+              "v": 17.890254240390764,
+              "targetV": 18.976406250000004,
+              "power": 94.58118905827995,
+              "oxygen": 37.916731882153215,
+              "reserve": 0.9333298197188916,
+              "retention": 0.9979644914558456,
+              "mode": "start"
+            },
+            {
+              "id": "h3",
+              "s": 62.66651646796698,
+              "lane": 13,
+              "v": 18.053261152410073,
+              "targetV": 19.198300781249998,
+              "power": 96.87653700199874,
+              "oxygen": 37.916304604269385,
+              "reserve": 0.9314799781813581,
+              "retention": 0.9979146893491194,
+              "mode": "start"
+            },
+            {
+              "id": "h4",
+              "s": 62.193824191311094,
+              "lane": 6.6000000000000005,
+              "v": 17.950147398826253,
+              "targetV": 19.103203125,
+              "power": 96.0448756620865,
+              "oxygen": 37.91692592401685,
+              "reserve": 0.9332239445568595,
+              "retention": 0.9979629334590445,
+              "mode": "start"
+            },
+            {
+              "id": "h5",
+              "s": 61.17837545049287,
+              "lane": 3.4000000000000004,
+              "v": 17.835787279099982,
+              "targetV": 19.198300781249998,
+              "power": 97.50306103656546,
+              "oxygen": 37.91769090205205,
+              "reserve": 0.9353008983746386,
+              "retention": 0.9980205433064958,
+              "mode": "start"
+            },
+            {
+              "id": "h6",
+              "s": 62.38768038612567,
+              "lane": 1.4,
+              "v": 17.90022258384728,
+              "targetV": 19.039804687500002,
+              "power": 95.36879610418957,
+              "oxygen": 37.91708146470945,
+              "reserve": 0.9338292115930253,
+              "retention": 0.9979793375409816,
+              "mode": "start"
+            },
+            {
+              "id": "h7",
+              "s": 62.203671906162796,
+              "lane": 5,
+              "v": 17.96085320736333,
+              "targetV": 19.13490234375,
+              "power": 96.42402447744757,
+              "oxygen": 37.91699925500657,
+              "reserve": 0.9332733511074696,
+              "retention": 0.9979646075544876,
+              "mode": "start"
+            },
+            {
+              "id": "h8",
+              "s": 62.72004558065999,
+              "lane": 8.2,
+              "v": 18.030771641593223,
+              "targetV": 19.198300781249998,
+              "power": 96.94437658775271,
+              "oxygen": 37.91653216695468,
+              "reserve": 0.93202358691006,
+              "retention": 0.9979298528910032,
+              "mode": "start"
+            }
+          ]
+        },
+        {
+          "time": 8.016666666666644,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 99.72237368219103,
+              "lane": 9.8,
+              "v": 18.901116218707244,
+              "targetV": 19.23,
+              "power": 93.84741834760786,
+              "oxygen": 40.86233549307421,
+              "reserve": 0.8951319027842208,
+              "retention": 0.9968310961034186,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 98.94772923019069,
+              "lane": 11.4,
+              "v": 18.709848791036862,
+              "targetV": 18.944707031250005,
+              "power": 91.50289571339796,
+              "oxygen": 40.86302823956221,
+              "reserve": 0.8978323249381785,
+              "retention": 0.9969022523939146,
+              "mode": "settle"
+            },
+            {
+              "id": "h3",
+              "s": 99.5813559895686,
+              "lane": 13,
+              "v": 18.767521366599407,
+              "targetV": 19.23,
+              "power": 94.33200487100501,
+              "oxygen": 40.862277998913825,
+              "reserve": 0.8962318945855305,
+              "retention": 0.9968589703114241,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 99.24730005567933,
+              "lane": 6.6000000000000005,
+              "v": 18.885018352554333,
+              "targetV": 19.23,
+              "power": 93.9133997022176,
+              "oxygen": 40.86296244011659,
+              "reserve": 0.8961784342080993,
+              "retention": 0.9968602392633388,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 98.09823971103548,
+              "lane": 3.4000000000000004,
+              "v": 18.80965403256181,
+              "targetV": 19.039804687500002,
+              "power": 92.42398276922654,
+              "oxygen": 40.86415367774093,
+              "reserve": 0.8984706613294312,
+              "retention": 0.9969234715655038,
+              "mode": "settle"
+            },
+            {
+              "id": "h6",
+              "s": 99.38904523702999,
+              "lane": 1.4,
+              "v": 18.873527079617883,
+              "targetV": 19.23,
+              "power": 93.95878692453199,
+              "oxygen": 40.86324387084847,
+              "reserve": 0.8967230827666295,
+              "retention": 0.9968750584232233,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 99.10140482036329,
+              "lane": 5,
+              "v": 18.778683109482497,
+              "targetV": 19.23,
+              "power": 94.30183745298382,
+              "oxygen": 40.8632318208513,
+              "reserve": 0.8974551199878114,
+              "retention": 0.9968939857788124,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 99.85099474287176,
+              "lane": 8.2,
+              "v": 18.84818160317158,
+              "targetV": 18.944707031250005,
+              "power": 90.99285901881997,
+              "oxygen": 40.86233016175971,
+              "reserve": 0.8954462831492044,
+              "retention": 0.9968393962861355,
+              "mode": "recover"
+            }
+          ]
+        },
+        {
+          "time": 10.016666666666744,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 137.76932955890953,
+              "lane": 9.8,
+              "v": 19.096085648310964,
+              "targetV": 19.23,
+              "power": 92.84937214348348,
+              "oxygen": 43.24759546609262,
+              "reserve": 0.8611474517709238,
+              "retention": 0.9957993486969279,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 136.63998279806154,
+              "lane": 11.4,
+              "v": 18.990367033007722,
+              "targetV": 19.23,
+              "power": 93.27139488549102,
+              "oxygen": 43.249019474484015,
+              "reserve": 0.8644760986270532,
+              "retention": 0.9958869189828726,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 137.48703111512154,
+              "lane": 13,
+              "v": 19.06470306027592,
+              "targetV": 19.23,
+              "power": 92.97499685017695,
+              "oxygen": 43.2478000014379,
+              "reserve": 0.8620709026536834,
+              "retention": 0.9958226090182134,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 137.27769682061393,
+              "lane": 6.6000000000000005,
+              "v": 19.09268122635793,
+              "targetV": 19.23,
+              "power": 92.8699056991535,
+              "oxygen": 43.24839426613931,
+              "reserve": 0.8621690831696792,
+              "retention": 0.9958278386901455,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 135.9784224391839,
+              "lane": 3.4000000000000004,
+              "v": 19.051149350140427,
+              "targetV": 19.23,
+              "power": 93.04631900499082,
+              "oxygen": 43.25007076454868,
+              "reserve": 0.8647432351367292,
+              "retention": 0.9958984337204945,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 137.407513573122,
+              "lane": 1.4,
+              "v": 19.09016349094486,
+              "targetV": 19.23,
+              "power": 92.8833138866673,
+              "oxygen": 43.24876935614619,
+              "reserve": 0.8626967769484026,
+              "retention": 0.9958422136372753,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 137.01955719351187,
+              "lane": 5,
+              "v": 19.067871273027144,
+              "targetV": 19.23,
+              "power": 92.97228195597559,
+              "oxygen": 43.2489293523052,
+              "reserve": 0.8633037855744513,
+              "retention": 0.9958578733040153,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 137.69147346735133,
+              "lane": 8.2,
+              "v": 19.02400815389041,
+              "targetV": 19.23,
+              "power": 93.13016806520878,
+              "oxygen": 43.24784803784981,
+              "reserve": 0.8622597663441052,
+              "retention": 0.9958285011859075,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 12.016666666666843,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 176.00481244236207,
+              "lane": 9.8,
+              "v": 19.127669961631987,
+              "targetV": 19.23,
+              "power": 92.46579371965133,
+              "oxygen": 45.17746702432862,
+              "reserve": 0.8290024957853664,
+              "retention": 0.9948083476106587,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 174.76484492869068,
+              "lane": 11.4,
+              "v": 19.103792606764138,
+              "targetV": 19.23,
+              "power": 92.57988629665823,
+              "oxygen": 45.17948034142673,
+              "reserve": 0.8321780658372583,
+              "retention": 0.9948919115720948,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 175.68962681695706,
+              "lane": 13,
+              "v": 19.120541871787914,
+              "targetV": 19.23,
+              "power": 92.49915241150948,
+              "oxygen": 45.17785973610195,
+              "reserve": 0.8298805531294094,
+              "retention": 0.9948304206115463,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 175.51008029344442,
+              "lane": 6.6000000000000005,
+              "v": 19.127276536107605,
+              "targetV": 19.23,
+              "power": 92.47479806213201,
+              "oxygen": 45.17840174149588,
+              "reserve": 0.8300157961275457,
+              "retention": 0.9948366169186208,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 174.16800078738888,
+              "lane": 3.4000000000000004,
+              "v": 19.11842560821492,
+              "targetV": 19.23,
+              "power": 92.52718201952035,
+              "oxygen": 45.18046424181035,
+              "reserve": 0.8325248695247469,
+              "retention": 0.9949055048190404,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 175.6374841592395,
+              "lane": 1.4,
+              "v": 19.126887646037922,
+              "targetV": 19.23,
+              "power": 92.4800689376527,
+              "oxygen": 45.17885044920728,
+              "reserve": 0.8305381970423031,
+              "retention": 0.994850852134848,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 175.22615123710514,
+              "lane": 5,
+              "v": 19.121811682260105,
+              "targetV": 19.23,
+              "power": 92.50358449942476,
+              "oxygen": 45.17913271629849,
+              "reserve": 0.8311131062230204,
+              "retention": 0.994865672170348,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 175.85098568257536,
+              "lane": 8.2,
+              "v": 19.11094374628702,
+              "targetV": 19.23,
+              "power": 92.53730746331848,
+              "oxygen": 45.17794896251159,
+              "reserve": 0.8300143160455447,
+              "retention": 0.994834872570832,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 14.016666666666943,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 214.25611662547826,
+              "lane": 9.8,
+              "v": 19.120916940967074,
+              "targetV": 19.23,
+              "power": 92.23726886026749,
+              "oxygen": 46.737297753800135,
+              "reserve": 0.798203068876064,
+              "retention": 0.9938465853194814,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 212.84451478398765,
+              "lane": 11.4,
+              "v": 19.029481500154258,
+              "targetV": 19.23,
+              "power": 92.61631777030678,
+              "oxygen": 46.739943248865785,
+              "reserve": 0.8023710232027204,
+              "retention": 0.9939560756967523,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 213.81288709939574,
+              "lane": 13,
+              "v": 19.051821795945223,
+              "targetV": 19.23,
+              "power": 92.51402841112365,
+              "oxygen": 46.73798101311739,
+              "reserve": 0.7998946065810091,
+              "retention": 0.9938899154969779,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 213.76147669249522,
+              "lane": 6.6000000000000005,
+              "v": 19.121236848236602,
+              "targetV": 19.23,
+              "power": 92.24348277668606,
+              "oxygen": 46.73834147912867,
+              "reserve": 0.7992121926281925,
+              "retention": 0.9938747420968376,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 212.4112457982692,
+              "lane": 3.4000000000000004,
+              "v": 19.120138209444217,
+              "targetV": 19.23,
+              "power": 92.26581954125976,
+              "oxygen": 46.74070802253454,
+              "reserve": 0.8017003010573844,
+              "retention": 0.9939430745354705,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 213.88872451790672,
+              "lane": 1.4,
+              "v": 19.121352536227185,
+              "targetV": 19.23,
+              "power": 92.24678579122101,
+              "oxygen": 46.73884913677488,
+              "reserve": 0.79973221939254,
+              "retention": 0.9938889136330942,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 213.4722716444947,
+              "lane": 5,
+              "v": 19.12036133335224,
+              "targetV": 19.23,
+              "power": 92.25448252798967,
+              "oxygen": 46.739226230821316,
+              "reserve": 0.8002982358675786,
+              "retention": 0.9939035001404296,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 214.0850164356632,
+              "lane": 8.2,
+              "v": 19.117324431717424,
+              "targetV": 19.23,
+              "power": 92.25800658587637,
+              "oxygen": 46.73795205304521,
+              "reserve": 0.7991886507776415,
+              "retention": 0.9938724226314386,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 16.01666666666704,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 252.48304930171463,
+              "lane": 9.8,
+              "v": 19.10542520436561,
+              "targetV": 19.23,
+              "power": 92.04886415820252,
+              "oxygen": 47.996421032297135,
+              "reserve": 0.7684714901012382,
+              "retention": 0.9929079439334859,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 250.97638053473037,
+              "lane": 11.4,
+              "v": 19.085267258592875,
+              "targetV": 19.23,
+              "power": 92.15467149910543,
+              "oxygen": 47.99965068560446,
+              "reserve": 0.7725018788558592,
+              "retention": 0.9930138291905298,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 251.9672697444994,
+              "lane": 13,
+              "v": 19.089615886201077,
+              "targetV": 19.23,
+              "power": 92.12070362301883,
+              "oxygen": 47.997396002359515,
+              "reserve": 0.7700639825619647,
+              "retention": 0.9929486828714069,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 251.98925663362255,
+              "lane": 6.6000000000000005,
+              "v": 19.105913237688576,
+              "targetV": 19.23,
+              "power": 92.05439898571521,
+              "oxygen": 47.99755245629183,
+              "reserve": 0.7694774872040525,
+              "retention": 0.9929360152848546,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 250.6390919483064,
+              "lane": 3.4000000000000004,
+              "v": 19.106651391598028,
+              "targetV": 19.23,
+              "power": 92.06954085439172,
+              "oxygen": 48.00016246766931,
+              "reserve": 0.7719553712530507,
+              "retention": 0.9930040720205947,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 252.11688279002314,
+              "lane": 1.4,
+              "v": 19.10614808062409,
+              "targetV": 19.23,
+              "power": 92.05722604517118,
+              "oxygen": 47.9981075381689,
+              "reserve": 0.769995868365789,
+              "retention": 0.9929501420000078,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 251.6996409624567,
+              "lane": 5,
+              "v": 19.106125559943308,
+              "targetV": 19.23,
+              "power": 92.0611477416676,
+              "oxygen": 47.99856033368908,
+              "reserve": 0.7705586019830707,
+              "retention": 0.9929646412942225,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 252.3086022334439,
+              "lane": 8.2,
+              "v": 19.10494819697586,
+              "targetV": 19.23,
+              "power": 92.05748475038047,
+              "oxygen": 47.99721156023737,
+              "reserve": 0.7694487651595513,
+              "retention": 0.9929335616852837,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 18.016666666666925,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 290.67672666302644,
+              "lane": 9.8,
+              "v": 19.08815710226806,
+              "targetV": 19.23,
+              "power": 91.87253357059248,
+              "oxygen": 49.011178017423,
+              "reserve": 0.739612321554359,
+              "retention": 0.9919882414718035,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 289.15057340230913,
+              "lane": 11.4,
+              "v": 19.08490884640702,
+              "targetV": 19.23,
+              "power": 91.91277770165654,
+              "oxygen": 49.01486245384406,
+              "reserve": 0.7436017065151046,
+              "retention": 0.9920930433350685,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 290.14490309890857,
+              "lane": 13,
+              "v": 19.084990723229936,
+              "targetV": 19.23,
+              "power": 91.89535173094997,
+              "oxygen": 49.0123761044438,
+              "reserve": 0.741177994991856,
+              "retention": 0.9920282758148311,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 290.1839581619463,
+              "lane": 6.6000000000000005,
+              "v": 19.08868390784367,
+              "targetV": 19.23,
+              "power": 91.87789236871564,
+              "oxygen": 49.012379957067374,
+              "reserve": 0.7406154883228218,
+              "retention": 0.992016234872335,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 288.8358041458684,
+              "lane": 3.4000000000000004,
+              "v": 19.089855178910586,
+              "targetV": 19.23,
+              "power": 91.89129014257036,
+              "oxygen": 49.01518565251753,
+              "reserve": 0.7430858284683154,
+              "retention": 0.992084085209727,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 290.31208830614435,
+              "lane": 1.4,
+              "v": 19.08894645764993,
+              "targetV": 19.23,
+              "power": 91.8805989682971,
+              "oxygen": 49.01297319130225,
+              "reserve": 0.7411324219875247,
+              "retention": 0.9920303217982906,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 289.89508403206764,
+              "lane": 5,
+              "v": 19.089153197199714,
+              "targetV": 19.23,
+              "power": 91.88361679804466,
+              "oxygen": 49.01348690465211,
+              "reserve": 0.7416932434617538,
+              "retention": 0.9920447694689212,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 290.5022352865576,
+              "lane": 8.2,
+              "v": 19.08841832567553,
+              "targetV": 19.23,
+              "power": 91.87826366595753,
+              "oxygen": 49.012077848644026,
+              "reserve": 0.7405856214344848,
+              "retention": 0.9920137524478602,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 20.01666666666681,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 328.8355836221999,
+              "lane": 9.8,
+              "v": 19.07071489971552,
+              "targetV": 19.23,
+              "power": 91.70120963274881,
+              "oxygen": 49.8273563652489,
+              "reserve": 0.7114739096968036,
+              "retention": 0.9910842667841917,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 327.3078728052847,
+              "lane": 11.4,
+              "v": 19.071475000419017,
+              "targetV": 19.23,
+              "power": 91.72581193004474,
+              "oxygen": 49.83140362994539,
+              "reserve": 0.7154455674276735,
+              "retention": 0.9911885921620683,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 328.30112145216475,
+              "lane": 13,
+              "v": 19.07054699508819,
+              "targetV": 19.23,
+              "power": 91.71235976327027,
+              "oxygen": 49.82873169073838,
+              "reserve": 0.7130300844775812,
+              "retention": 0.991124048493188,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 328.3438790388696,
+              "lane": 6.6000000000000005,
+              "v": 19.071249801275208,
+              "targetV": 19.23,
+              "power": 91.70651203992767,
+              "oxygen": 49.82861488986677,
+              "reserve": 0.7124743558477356,
+              "retention": 0.9911121848854154,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 326.99819166127367,
+              "lane": 3.4000000000000004,
+              "v": 19.07252115147116,
+              "targetV": 19.23,
+              "power": 91.71946050511444,
+              "oxygen": 49.83157778318695,
+              "reserve": 0.714937894199986,
+              "retention": 0.9911798476193232,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 328.47254186271476,
+              "lane": 1.4,
+              "v": 19.07151836767652,
+              "targetV": 19.23,
+              "power": 91.70918268358773,
+              "oxygen": 49.8292387647083,
+              "reserve": 0.712989909995324,
+              "retention": 0.9911262336819465,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 328.0560175334055,
+              "lane": 5,
+              "v": 19.07177891894801,
+              "targetV": 19.23,
+              "power": 91.71197842566608,
+              "oxygen": 49.82980156251109,
+              "reserve": 0.7135491753729949,
+              "retention": 0.9911406388469646,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 328.6618295149627,
+              "lane": 8.2,
+              "v": 19.071150258694864,
+              "targetV": 19.23,
+              "power": 91.70624052914609,
+              "oxygen": 49.82834419854742,
+              "reserve": 0.7124443173730536,
+              "retention": 0.9911096989513847,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 22.016666666666698,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 366.9597016813288,
+              "lane": 9.8,
+              "v": 19.05343824723138,
+              "targetV": 19.23,
+              "power": 91.53288981177401,
+              "oxygen": 50.482168025884796,
+              "reserve": 0.6839346696326383,
+              "retention": 0.9901934535916929,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 365.43467886286805,
+              "lane": 11.4,
+              "v": 19.05514532924127,
+              "targetV": 19.23,
+              "power": 91.5537260521997,
+              "oxygen": 50.4865065336752,
+              "reserve": 0.6878943169054688,
+              "retention": 0.9902974507726867,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 366.4257786798166,
+              "lane": 13,
+              "v": 19.053980243644485,
+              "targetV": 19.23,
+              "power": 91.54125083492998,
+              "oxygen": 50.48368565385596,
+              "reserve": 0.6854855460341325,
+              "retention": 0.9902330918918355,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 366.4690682559992,
+              "lane": 6.6000000000000005,
+              "v": 19.053973981594112,
+              "targetV": 19.23,
+              "power": 91.5381644097145,
+              "oxygen": 50.48347182395265,
+              "reserve": 0.6849324545562446,
+              "retention": 0.9902212977727894,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 365.1259503646398,
+              "lane": 3.4000000000000004,
+              "v": 19.05526642505147,
+              "targetV": 19.23,
+              "power": 91.55097120065727,
+              "oxygen": 50.486560724401954,
+              "reserve": 0.6873894565898363,
+              "retention": 0.9902887793602572,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 366.5982694604727,
+              "lane": 1.4,
+              "v": 19.054243426141692,
+              "targetV": 19.23,
+              "power": 91.54081924695096,
+              "oxygen": 50.48412024111531,
+              "reserve": 0.6854466630314262,
+              "retention": 0.9902353092307079,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 366.18228142511,
+              "lane": 5,
+              "v": 19.054516167951327,
+              "targetV": 19.23,
+              "power": 91.54355474103059,
+              "oxygen": 50.48472255030016,
+              "reserve": 0.6860044825019698,
+              "retention": 0.9902496746193431,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 366.7868682425942,
+              "lane": 8.2,
+              "v": 19.053913905219243,
+              "targetV": 19.23,
+              "power": 91.53774151009839,
+              "oxygen": 50.483226689221574,
+              "reserve": 0.6849024879648157,
+              "retention": 0.990218814595157,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 24.016666666666584,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 405.0494797853864,
+              "lane": 9.8,
+              "v": 19.0363747557723,
+              "targetV": 19.23,
+              "power": 91.36683430992701,
+              "oxygen": 51.00585563327055,
+              "reserve": 0.6568961432863902,
+              "retention": 0.9893137254669906,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 403.5281441169113,
+              "lane": 11.4,
+              "v": 19.038302436220942,
+              "targetV": 19.23,
+              "power": 91.38672335809164,
+              "oxygen": 51.0104279604006,
+              "reserve": 0.6608452946544547,
+              "retention": 0.9894174331402764,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 404.51684680548806,
+              "lane": 13,
+              "v": 19.037083613922007,
+              "targetV": 19.23,
+              "power": 91.3745131026611,
+              "oxygen": 51.00748773121366,
+              "reserve": 0.658442791335527,
+              "retention": 0.9893532478858567,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 404.5599170736856,
+              "lane": 6.6000000000000005,
+              "v": 19.036909613295336,
+              "targetV": 19.23,
+              "power": 91.37208805702593,
+              "oxygen": 51.00719551616692,
+              "reserve": 0.6578913095088637,
+              "retention": 0.9893414967012335,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 403.2193878014274,
+              "lane": 3.4000000000000004,
+              "v": 19.0382044437941,
+              "targetV": 19.23,
+              "power": 91.38482658703356,
+              "oxygen": 51.010385100211224,
+              "reserve": 0.6603419141043828,
+              "retention": 0.9894088003869256,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 404.68965691999813,
+              "lane": 1.4,
+              "v": 19.03717872399575,
+              "targetV": 19.23,
+              "power": 91.3747319597022,
+              "oxygen": 51.007863522068654,
+              "reserve": 0.6584041954065456,
+              "retention": 0.9893554713491866,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 404.274217403112,
+              "lane": 5,
+              "v": 19.037453790161337,
+              "targetV": 19.23,
+              "power": 91.37744570148126,
+              "oxygen": 51.00849757394608,
+              "reserve": 0.6589606167122335,
+              "retention": 0.989369798088155,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 404.87760850855244,
+              "lane": 8.2,
+              "v": 19.036858972246467,
+              "targetV": 19.23,
+              "power": 91.37163032982225,
+              "oxygen": 51.00697120563914,
+              "reserve": 0.6578614827050258,
+              "retention": 0.9893390179758174,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 26.01666666666647,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 442.1882774016109,
+              "lane": 9.8,
+              "v": 19.01944449031977,
+              "targetV": 19.23,
+              "power": 93.94950715204467,
+              "oxygen": 51.42296822179071,
+              "reserve": 0.6296537621418117,
+              "retention": 0.9884270732289081,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 440.63556982668877,
+              "lane": 11.4,
+              "v": 19.02143575660231,
+              "targetV": 19.23,
+              "power": 93.89932897956815,
+              "oxygen": 51.42773526154819,
+              "reserve": 0.6336831204853732,
+              "retention": 0.9885328610442493,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 441.3908030184279,
+              "lane": 13,
+              "v": 19.020197438075044,
+              "targetV": 19.23,
+              "power": 93.81664462645345,
+              "oxygen": 51.42469517324576,
+              "reserve": 0.6312428923396441,
+              "retention": 0.988467700115756,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 442.05533750708764,
+              "lane": 6.6000000000000005,
+              "v": 19.019977561631553,
+              "targetV": 19.23,
+              "power": 94.10816792441146,
+              "oxygen": 51.424336580788804,
+              "reserve": 0.6306275670577167,
+              "retention": 0.9884542815995118,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 441.0804330702794,
+              "lane": 3.4000000000000004,
+              "v": 19.021281938145723,
+              "targetV": 19.23,
+              "power": 94.2886376445379,
+              "oxygen": 51.42761195626353,
+              "reserve": 0.6331198439022032,
+              "retention": 0.9885226632943825,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 442.7470996275452,
+              "lane": 1.4,
+              "v": 19.020239849145998,
+              "targetV": 19.23,
+              "power": 94.38814683711134,
+              "oxygen": 51.42501730802411,
+              "reserve": 0.6310776242029089,
+              "retention": 0.9884666120175803,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 441.9469926370041,
+              "lane": 5,
+              "v": 19.02052238884529,
+              "targetV": 19.23,
+              "power": 94.19538244112235,
+              "oxygen": 51.42568030998698,
+              "reserve": 0.6316926016964232,
+              "retention": 0.9884824668152663,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 442.1918330016992,
+              "lane": 8.2,
+              "v": 19.01992798363213,
+              "targetV": 19.23,
+              "power": 94.02957556215107,
+              "oxygen": 51.42412858840421,
+              "reserve": 0.6305995593719848,
+              "retention": 0.9884518511491684,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 28.016666666666357,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 477.5439415061936,
+              "lane": 9.8,
+              "v": 19.00213427464158,
+              "targetV": 19.23,
+              "power": 93.76183457846098,
+              "oxygen": 51.75313668390515,
+              "reserve": 0.6015749032117549,
+              "retention": 0.9875172928589624,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 475.5289586471145,
+              "lane": 11.4,
+              "v": 19.004166741030065,
+              "targetV": 19.23,
+              "power": 93.7121432509985,
+              "oxygen": 51.758081881773585,
+              "reserve": 0.6056406735429009,
+              "retention": 0.987624015667374,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 475.82804679864137,
+              "lane": 13,
+              "v": 19.00292964081788,
+              "targetV": 19.23,
+              "power": 93.63021301720784,
+              "oxygen": 51.754961559644876,
+              "reserve": 0.6032530779757521,
+              "retention": 0.9875602407199545,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 478.3823040060938,
+              "lane": 6.6000000000000005,
+              "v": 19.002635385055562,
+              "targetV": 19.23,
+              "power": 93.91903206269578,
+              "oxygen": 51.75450900250229,
+              "reserve": 0.6024446927249966,
+              "retention": 0.987541778277461,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 478.4350517397957,
+              "lane": 3.4000000000000004,
+              "v": 19.003920256496812,
+              "targetV": 19.23,
+              "power": 94.09782420413117,
+              "oxygen": 51.757844351127126,
+              "reserve": 0.6048198258247931,
+              "retention": 0.9876070873276216,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 480.7702283981803,
+              "lane": 1.4,
+              "v": 19.00283512098678,
+              "targetV": 19.23,
+              "power": 94.19640152961367,
+              "oxygen": 51.75516164552366,
+              "reserve": 0.6027100435218997,
+              "retention": 0.987549279415786,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 478.78042125067003,
+              "lane": 5,
+              "v": 19.003164694092966,
+              "targetV": 19.23,
+              "power": 94.00544859692975,
+              "oxygen": 51.75587748087111,
+              "reserve": 0.6034529500666757,
+              "retention": 0.9875684750812099,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 478.0269814123649,
+              "lane": 8.2,
+              "v": 19.002600141782693,
+              "targetV": 19.23,
+              "power": 93.84118053732959,
+              "oxygen": 51.75432240777044,
+              "reserve": 0.6024685234653033,
+              "retention": 0.9875407032136466,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 30.016666666666243,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 512.8672976395948,
+              "lane": 9.8,
+              "v": 18.984750053862655,
+              "targetV": 19.23,
+              "power": 93.5765491173756,
+              "oxygen": 52.01256975714951,
+              "reserve": 0.5738147514423106,
+              "retention": 0.986614841026732,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 510.3905208677137,
+              "lane": 11.4,
+              "v": 18.986805958637273,
+              "targetV": 19.23,
+              "power": 93.52739590588968,
+              "oxygen": 52.017669220436716,
+              "reserve": 0.5779166987354973,
+              "retention": 0.9867224921210098,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 510.2339017389589,
+              "lane": 13,
+              "v": 18.985589346164318,
+              "targetV": 19.23,
+              "power": 93.44615740701781,
+              "oxygen": 52.01449750038198,
+              "reserve": 0.5755812164328862,
+              "retention": 0.9866600898056014,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 514.6759966496124,
+              "lane": 6.6000000000000005,
+              "v": 18.985203872612463,
+              "targetV": 19.23,
+              "power": 93.73233647971517,
+              "oxygen": 52.01391805906226,
+              "reserve": 0.5745814701639119,
+              "retention": 0.9866366282152838,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 515.7553829640366,
+              "lane": 3.4000000000000004,
+              "v": 18.9864393216781,
+              "targetV": 19.23,
+              "power": 93.90954599044277,
+              "oxygen": 52.017271455535344,
+              "reserve": 0.576840561839403,
+              "retention": 0.9866988932981278,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 518.7583768575942,
+              "lane": 1.4,
+              "v": 18.985318339902875,
+              "targetV": 19.23,
+              "power": 94.0071743622573,
+              "oxygen": 52.01449955344638,
+              "reserve": 0.5746637851453714,
+              "retention": 0.9866393439029685,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 515.5800711728795,
+              "lane": 5,
+              "v": 18.98570779710565,
+              "targetV": 19.23,
+              "power": 93.81798790186099,
+              "oxygen": 52.015291779699936,
+              "reserve": 0.5755334772751176,
+              "retention": 0.98666185033135,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 513.8293436987523,
+              "lane": 8.2,
+              "v": 18.985191796385386,
+              "targetV": 19.23,
+              "power": 93.65519600979451,
+              "oxygen": 52.01376242606173,
+              "reserve": 0.5746566762299385,
+              "retention": 0.9866368963456125,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 32.01666666666613,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 548.158389889341,
+              "lane": 9.8,
+              "v": 18.967447168261074,
+              "targetV": 19.23,
+              "power": 93.39293848326153,
+              "oxygen": 52.214539946836084,
+              "reserve": 0.546329600199336,
+              "retention": 0.9857187931945012,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 545.2202825854755,
+              "lane": 11.4,
+              "v": 18.969522185462374,
+              "targetV": 19.23,
+              "power": 93.34433058125272,
+              "oxygen": 52.219774171001795,
+              "reserve": 0.5504674591980445,
+              "retention": 0.9858273651510931,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 544.6084119023681,
+              "lane": 13,
+              "v": 18.968330453387665,
+              "targetV": 19.23,
+              "power": 93.26376306833664,
+              "oxygen": 52.2165743779161,
+              "reserve": 0.5481836124379483,
+              "retention": 0.9857663231170197,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 550.9364456141424,
+              "lane": 6.6000000000000005,
+              "v": 18.967850405758988,
+              "targetV": 19.23,
+              "power": 93.54734075788195,
+              "oxygen": 52.21584172094392,
+              "reserve": 0.5469941522212762,
+              "retention": 0.9857379059020674,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 553.0551916253987,
+              "lane": 2.9200000000000053,
+              "v": 18.96902981436727,
+              "targetV": 19.23,
+              "power": 92.50625382726797,
+              "oxygen": 52.21917937479758,
+              "reserve": 0.5491631935508041,
+              "retention": 0.9857978062497929,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 556.7115532684883,
+              "lane": 1.4,
+              "v": 18.96787483499348,
+              "targetV": 19.23,
+              "power": 93.81968802463908,
+              "oxygen": 52.21631747301087,
+              "reserve": 0.5468950395475037,
+              "retention": 0.9857358784700286,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 552.3459630950265,
+              "lane": 5,
+              "v": 18.968326796644117,
+              "targetV": 19.23,
+              "power": 93.6322416087502,
+              "oxygen": 52.217204952631,
+              "reserve": 0.5478904101782688,
+              "retention": 0.9857616664353798,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 549.5989582566696,
+              "lane": 8.2,
+              "v": 18.967863420915137,
+              "targetV": 19.23,
+              "power": 93.47089801952887,
+              "oxygen": 52.215724708572644,
+              "reserve": 0.5471202892591064,
+              "retention": 0.9857395054948274,
+              "mode": "attack"
+            }
+          ]
+        },
+        {
+          "time": 34.01666666666602,
+          "horses": [
+            {
+              "id": "h1",
+              "s": 583.4174012111497,
+              "lane": 9.8,
+              "v": 18.950250590358998,
+              "targetV": 19.23,
+              "power": 93.21072605177065,
+              "oxygen": 52.369833897841815,
+              "reserve": 0.5190839965524825,
+              "retention": 0.9848283996719907,
+              "mode": "attack"
+            },
+            {
+              "id": "h2",
+              "s": 580.035719664353,
+              "lane": 10.839999999999987,
+              "v": 18.952371055078956,
+              "targetV": 19.23,
+              "power": 91.94947656256002,
+              "oxygen": 52.37519952815337,
+              "reserve": 0.5235290034461085,
+              "retention": 0.9849449803603952,
+              "mode": "attack"
+            },
+            {
+              "id": "h3",
+              "s": 578.951755227177,
+              "lane": 13,
+              "v": 18.951177596805696,
+              "targetV": 19.23,
+              "power": 93.08275345456273,
+              "oxygen": 52.371977926738865,
+              "reserve": 0.5210248243192773,
+              "retention": 0.9848781912467465,
+              "mode": "attack"
+            },
+            {
+              "id": "h4",
+              "s": 587.1638359472989,
+              "lane": 6.6000000000000005,
+              "v": 18.950602807219617,
+              "targetV": 19.23,
+              "power": 93.36376082942401,
+              "oxygen": 52.37107107028179,
+              "reserve": 0.5196472589087603,
+              "retention": 0.9848448610093068,
+              "mode": "attack"
+            },
+            {
+              "id": "h5",
+              "s": 590.700615085642,
+              "lane": 1.4000000000000004,
+              "v": 18.951918330909393,
+              "targetV": 19.23,
+              "power": 92.41276832782081,
+              "oxygen": 52.37447828211143,
+              "reserve": 0.5224788866210125,
+              "retention": 0.984922065494562,
+              "mode": "attack"
+            },
+            {
+              "id": "h6",
+              "s": 594.6299470130097,
+              "lane": 1.4,
+              "v": 18.950536676144367,
+              "targetV": 19.23,
+              "power": 93.6336483146802,
+              "oxygen": 52.371413363613954,
+              "reserve": 0.5193682829638421,
+              "retention": 0.9848381317502057,
+              "mode": "attack"
+            },
+            {
+              "id": "h7",
+              "s": 589.0819645214256,
+              "lane": 4.679999999999993,
+              "v": 18.951051296609034,
+              "targetV": 19.23,
+              "power": 93.46389896235853,
+              "oxygen": 52.372411128307284,
+              "reserve": 0.5204871683052009,
+              "retention": 0.9848671443537224,
+              "mode": "attack"
+            },
+            {
+              "id": "h8",
+              "s": 585.336009355355,
+              "lane": 8.2,
+              "v": 18.950641201630425,
+              "targetV": 19.23,
+              "power": 93.28800678751185,
+              "oxygen": 52.370998791420156,
+              "reserve": 0.5198238942390567,
+              "retention": 0.9848477806145085,
+              "mode": "attack"
+            }
+          ]
+        }
+      ],
+      "traffic": {
+        "steps": 2115,
+        "syncLateralDenied": 0,
+        "brakingSteps": 0,
+        "marginRecoverySteps": 0,
+        "infeasibleSteps": 0,
+        "minAcceleration": -0.11478099183499069,
+        "minFollowingSlack": 0.2994401128331523,
+        "minResponseSlack": 0.006918229034130863,
+        "lastInfeasible": null
+      }
+    }
+  }
+}

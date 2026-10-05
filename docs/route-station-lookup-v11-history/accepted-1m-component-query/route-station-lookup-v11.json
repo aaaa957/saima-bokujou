@@ -1,0 +1,258 @@
+{
+  "sourceHash": "2ab0d6469f70e1f4c65b40d1d30ab4432b6c7866fe2b295ef9e02d68ec96276e",
+  "candidateHash": "f2809633e1d04d266629a477ab4bd256a1ff9a34dd127d3de504a0265304495f",
+  "scriptHash": "f2548d4f69695e83918fe0df22f2b8dd26855f50f0d51e735d4f9bc54bce77d1",
+  "actualStepCalls": 0,
+  "fullRaceExecutions": 0,
+  "checks": [
+    {
+      "name": "Patch idempotent, inverse exact, all interpolation expressions retained",
+      "pass": true
+    },
+    {
+      "name": "All route nodes, both nearest representable neighbours and fixed local neighbours",
+      "pass": true,
+      "tables": 19,
+      "queries": 265335
+    },
+    {
+      "name": "Declared random finite, outside range, exact endpoints and nonfinite original semantics",
+      "pass": true,
+      "queries": 19228
+    },
+    {
+      "name": "Synthetic immutable sparse/duplicate stations preserve original bracket for finite and nonfinite",
+      "pass": true,
+      "queries": 4075
+    }
+  ],
+  "routes": [
+    {
+      "course": "東京芝A",
+      "length": 1400,
+      "chute": false,
+      "nodes": 4171,
+      "end": 2083.1,
+      "queries": 20855
+    },
+    {
+      "course": "東京芝A",
+      "length": 1600,
+      "chute": true,
+      "nodes": 185,
+      "end": 92,
+      "queries": 925
+    },
+    {
+      "course": "東京芝A",
+      "length": 2000,
+      "chute": true,
+      "nodes": 985,
+      "end": 492,
+      "queries": 4925
+    },
+    {
+      "course": "東京泥",
+      "length": 1200,
+      "chute": false,
+      "nodes": 3801,
+      "end": 1899,
+      "queries": 19005
+    },
+    {
+      "course": "中山芝内A",
+      "length": 1800,
+      "chute": false,
+      "nodes": 3339,
+      "end": 1667.1,
+      "queries": 16695
+    },
+    {
+      "course": "中山芝外A",
+      "length": 1200,
+      "chute": false,
+      "nodes": 3684,
+      "end": 1839.7,
+      "queries": 18420
+    },
+    {
+      "course": "中山泥",
+      "length": 1000,
+      "chute": false,
+      "nodes": 2987,
+      "end": 1493,
+      "queries": 14935
+    },
+    {
+      "course": "京都芝内A",
+      "length": 1100,
+      "chute": false,
+      "nodes": 3569,
+      "end": 1782.8,
+      "queries": 17845
+    },
+    {
+      "course": "京都芝内A",
+      "length": 1600,
+      "chute": true,
+      "nodes": 762,
+      "end": 380.20000000000005,
+      "queries": 3810
+    },
+    {
+      "course": "京都芝外A",
+      "length": 1400,
+      "chute": false,
+      "nodes": 3793,
+      "end": 1894.3,
+      "queries": 18965
+    },
+    {
+      "course": "京都芝外A",
+      "length": 1600,
+      "chute": true,
+      "nodes": 463,
+      "end": 230.59999999999968,
+      "queries": 2315
+    },
+    {
+      "course": "京都芝外A",
+      "length": 1800,
+      "chute": true,
+      "nodes": 863,
+      "end": 430.5999999999997,
+      "queries": 4315
+    },
+    {
+      "course": "京都泥",
+      "length": 1000,
+      "chute": false,
+      "nodes": 3219,
+      "end": 1607.6,
+      "queries": 16095
+    },
+    {
+      "course": "阪神芝内A",
+      "length": 1200,
+      "chute": false,
+      "nodes": 3379,
+      "end": 1689,
+      "queries": 16895
+    },
+    {
+      "course": "阪神芝外A",
+      "length": 1400,
+      "chute": false,
+      "nodes": 4181,
+      "end": 2089,
+      "queries": 20905
+    },
+    {
+      "course": "阪神泥",
+      "length": 1200,
+      "chute": false,
+      "nodes": 3039,
+      "end": 1517.6,
+      "queries": 15195
+    },
+    {
+      "course": "新潟芝内A",
+      "length": 1200,
+      "chute": false,
+      "nodes": 3249,
+      "end": 1623,
+      "queries": 16245
+    },
+    {
+      "course": "新潟芝外A",
+      "length": 1400,
+      "chute": false,
+      "nodes": 4449,
+      "end": 2223,
+      "queries": 22245
+    },
+    {
+      "course": "新潟泥",
+      "length": 1000,
+      "chute": false,
+      "nodes": 2949,
+      "end": 1472.5,
+      "queries": 14745
+    }
+  ],
+  "queryCount": 284563,
+  "bracketQueries": 263213,
+  "benchmarks": [
+    {
+      "round": 0,
+      "original": {
+        "wallMs": 254.80870000000004,
+        "threadCpuMs": 219
+      },
+      "candidate": {
+        "wallMs": 166.2754,
+        "threadCpuMs": 125
+      }
+    },
+    {
+      "round": 1,
+      "candidate": {
+        "wallMs": 165.85600000000022,
+        "threadCpuMs": 109
+      },
+      "original": {
+        "wallMs": 252.00520000000006,
+        "threadCpuMs": 203
+      }
+    },
+    {
+      "round": 2,
+      "original": {
+        "wallMs": 259.8901999999998,
+        "threadCpuMs": 188
+      },
+      "candidate": {
+        "wallMs": 171.34090000000015,
+        "threadCpuMs": 109
+      }
+    },
+    {
+      "round": 3,
+      "candidate": {
+        "wallMs": 167.8434000000002,
+        "threadCpuMs": 109
+      },
+      "original": {
+        "wallMs": 263.12210000000005,
+        "threadCpuMs": 219
+      }
+    },
+    {
+      "round": 4,
+      "original": {
+        "wallMs": 272.1794,
+        "threadCpuMs": 157
+      },
+      "candidate": {
+        "wallMs": 179.2560000000003,
+        "threadCpuMs": 140
+      }
+    }
+  ],
+  "failures": [],
+  "queriesThatThrow": 5,
+  "componentBenchmark": {
+    "queriesPerArmPerRound": 1000000,
+    "rounds": 5,
+    "originalMedianWallMs": 259.8901999999998,
+    "candidateMedianWallMs": 167.8434000000002,
+    "originalMedianCpuMs": 203,
+    "candidateMedianCpuMs": 109,
+    "sink": 12000000.458505426,
+    "scope": "Warm pure quintic component calls, random Kyoto stations. This is not an end-to-end speed guarantee.",
+    "wallReduction": 0.35417572497924,
+    "cpuReduction": 0.4630541871921182
+  },
+  "productionUnchanged": true,
+  "pass": true
+}

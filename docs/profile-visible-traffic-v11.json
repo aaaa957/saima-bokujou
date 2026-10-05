@@ -1,0 +1,58 @@
+{
+  "sourceHash": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+  "instrumentedHash": "60edbe774ce7d5a1df04867631b1543be216053105bec8b2ffb2a34dc3c8f50d",
+  "instrumentation": "Counts and wrapper wall-time on exact unmodified calculations. No production changes; measured clocks may include OS scheduling.",
+  "cases": [
+    {
+      "name": "Binding fixed front",
+      "wallMs": 867.6609000000001,
+      "steps": 648,
+      "counters": {
+        "factories": 648,
+        "slackCalls": 17758,
+        "slackMs": 771.7112999999955,
+        "pairCache": 0,
+        "nowRejected": 0,
+        "stopRejected": 6092,
+        "distantProof": 0,
+        "routeProof": 1528,
+        "witnessRejected": 0,
+        "gapAt": 62552,
+        "certifyInterval": 80998,
+        "fullyCertified": 4233,
+        "notFullyCertified": 5905,
+        "slopeAt": 62552,
+        "forecastCalls": 1,
+        "peerPairs": 0
+      },
+      "resultHash": "bf7de7a409a01b5e0b6d79a83509a5df953f8f5782137199a83374f4c23293c7"
+    },
+    {
+      "name": "Eight AI horses first three seconds",
+      "frames": 180,
+      "simulatedSeconds": 2.9999999999999942,
+      "wallMs": 746.5088999999999,
+      "error": null,
+      "counters": {
+        "factories": 5359,
+        "slackCalls": 75,
+        "slackMs": 11.178299999999354,
+        "pairCache": 0,
+        "nowRejected": 38,
+        "stopRejected": 0,
+        "distantProof": 0,
+        "routeProof": 14,
+        "witnessRejected": 0,
+        "gapAt": 1152,
+        "certifyInterval": 1119,
+        "fullyCertified": 3,
+        "notFullyCertified": 20,
+        "slopeAt": 1132,
+        "forecastCalls": 206,
+        "peerPairs": 108759
+      },
+      "stateHash": "e4d753501ff88b9f6230020d375aa22068e8be84b4ff7129274cdba481c5a680"
+    }
+  ],
+  "productionUnchanged": true
+}

@@ -447,8 +447,8 @@ footer { margin-top: 24px; color: #5d7365; font-size: 11px; }
     <div id="newsBody"></div>
   </div>
 </div>
-<script src="sim.js?v=v2026.10.02.3"></script>
-<script src="career-save.js?v=v2026.10.02.3"></script>
+<script src="sim.js?v=v2026.10.04.1"></script>
+<script src="career-save.js?v=v2026.10.04.1"></script>
 <script>
 'use strict';
 const S = window.SaimaSim;
@@ -468,7 +468,7 @@ let lastRaceFailure = null;
    目的是区分"页面缓存"与"真的有 bug"——GitHub Pages 的 Cache-Control 是
    max-age=600，刷新后可能仍是旧文件；页面底部会显示这个号，
    对不上就说明看到的是旧版（硬刷新 Ctrl+F5 或加 ?v= 参数）。 */
-const APP_VER = 'v2026.10.02.3';
+const APP_VER = 'v2026.10.04.1';
 
 let state = 'setup', acc = 0, lastTs = 0, lastUiTs = 0, reportRng = null, cam = null, raceCount = 0;
 /* 赛道观感参数（透视距离 / 纵向比例 / 纵向锚点）。
@@ -539,7 +539,7 @@ function genField(seedValue) {
   seed = seedValue >>> 0;
   if (bet.horseId) { bankroll += bet.amount; bet = { horseId: null, amount: 0 }; }
   const rng = S.mulberry32(seed);
-  field = S.makeField(rng, { n: 8 });
+  field = S.makeField(rng, {n:8,race:singleRaceOptions()});
   staff = S.makeStaff(rng);
   oddsMap = S.marketOddsAndPopularity(field, singleRaceOptions(), S.mulberry32((seed ^ 0x33) >>> 0)).byId;
   playerId = field.find((h) => h.player).id;
@@ -827,7 +827,8 @@ function tacticLabel(h) {
   if (h.place) return '已冲线';
   if (h.gateOpen === false) return '等待出闸';
   if (h.startSettled === false) return '起步加速';
-  const labels = { start:'起步加速', settle:'分配出力', follow:'跟跑', position:'抢位', attack:'全力推进', recover:'收力调整' };
+  const labels = { start:'起步加速', 'start-position':'起步抢位', settle:'分配出力', follow:'跟跑',
+    position:'抢位', route:'选择路线', 'wait-route':'留隙换道', wait:'等待通道', attack:'全力推进', recover:'收力调整' };
   return labels[h.strategy && h.strategy.mode] || '准备起步';
 }
 function reserveStatus(h) {
@@ -1519,7 +1520,7 @@ function runAutotest() {
   try {
     const out = [];
     for (let s = 1; s <= 3; s++) {
-      const f = S.makeField(S.mulberry32(s * 7919), { n: 8 });
+      const f = S.makeField(S.mulberry32(s * 7919), { n: 8, playerIndex:-1, race:{length:2000,course:'标准'} });
       testedRace = null;
       const r = S.createRace(f, { length: 2000, course: '标准', rng: S.mulberry32(s * 104729) });
       testedRace = r;
@@ -2041,8 +2042,8 @@ function enterFoalToRoster() {
   $('foalCard').innerHTML = '<div style="color:var(--green);font-weight:700">✅ ' + h.name + ' 已入厩！它将在6月的新马赛出道——届时去赛程里找它下注吧。</div>';
 }
 /* ---------- 多场模拟（蒙特卡洛验证） ----------
- * 与 tests/mc.js 同口径：使用完全相同的阵容与随机种子配对复跑，
- * 骑手固定「普通」、疲劳归零；doc/balanced 保留为历史 API 别名，均使用当前引擎。
+ * 使用当前距离与地面下的全 AI 条件阵容，保留自然生成的骑手、斗志与疲劳。
+ * 相同种子复建相同阵容与比赛随机流；doc/balanced 均为当前引擎的历史 API 别名。
  * 分片异步执行（每片约 60ms）以免阻塞界面，过程中持续显示进度。
  */
 const MC_STYLES = ['逃', '先', '差', '追'];
@@ -2053,7 +2054,8 @@ const mc = { running: false, stage: null, mode: null, i: 0, trials: 0,
 let lastMc = null;
 
 function mcField(seed) {
-  return S.makeField(S.mulberry32(seed), { n: 8, strongIndex: 2, playerIndex: 2, level: 70 });
+  return S.makeField(S.mulberry32(seed), { n: 8, playerIndex:-1, level:70,
+    race:{length:mc.L,surface:mc.surface,state:'良',profile:'缓坂',course:'标准'} });
 }
 function mcRace(field, coefMode, seed) {
   const r = S.createRace(field, {

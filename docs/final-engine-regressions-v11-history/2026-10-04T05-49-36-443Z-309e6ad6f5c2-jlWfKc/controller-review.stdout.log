@@ -1,0 +1,11 @@
+PASS cohort seconds reuse launch delay already integrated by finishPlan
+PASS near and distant rivals expose only visible motion and body size to rider
+PASS a distant moving front horse remains ahead in predicted rank
+PASS visible braking prediction never integrates negative velocity after stopping
+PASS sequence stage boundaries persist requests until the promised stage ends
+PASS sequence revalidation pays only future motion from measured state and keeps absolute goal
+PASS committed multi-action motion executes with paid energy and the projected endpoint
+PASS segmented visible-leader forecast keeps one observation epoch and cannot reset draft credit
+PASS paid remaining-route candidates use time utility; crossed candidates discard unused reserve
+PASS finite following does not invent saving when holding pace already shares the wake
+{"passed":10,"failed":0,"sourceHash":"309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9","productionSourceUnchanged":true}

@@ -1,0 +1,49 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "at": "2026-10-03",
+      "sourceNormalizedSha256": "1ca77ab4eacdd18ec98ed8bcc6b5e3cfa74525dd16dfca3f2fbe6d151304f818",
+      "command": "node tests/calibrate-validation-v11.js --workers 2",
+      "declaredTrainingJobs": 24,
+      "completedSamples": 0,
+      "workerThreadsRequested": 2,
+      "actualEngineProgress": "Unknown: process terminated natively before any completed-row message or checkpoint. Do not count unobserved failed starts as completed full races.",
+      "phase": "After frozen artifacts were written; before first completed sample",
+      "exitCode": 1,
+      "error": "FATAL ERROR: Zone Allocation failed - process out of memory (reported twice)",
+      "gcSummary": "Scavenge 72.2 (88.9) -> 56.4 (89.6) MB; Scavenge 72.7 (89.6) -> 56.9 (89.6) MB; Zone allocation failure.",
+      "subsequentEnvironmentRead": {
+        "freePhysicalMemoryKiB": 165816,
+        "totalPhysicalMemoryKiB": 16555320,
+        "freeVirtualMemoryKiB": 612628,
+        "totalVirtualMemoryKiB": 37274292
+      },
+      "interpretation": "Global OS memory/commit pressure was observed after the failure. This is not proof that the race physics itself requires the shown system memory. No other process was terminated."
+    },
+    {
+      "attempt": 2,
+      "at": "2026-10-04",
+      "phase": "Source snapshot guard before grid dispatch",
+      "expectedSourceNormalizedSha256": "875169c8d0deff6ef59999539fbf700d8527a641027d4d716c94c6ed8490f5bf",
+      "observedSourceNormalizedSha256": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+      "error": "Source changed before snapshot; source qualification callers were updated by root before the snapshot read.",
+      "steppedEngineExecutions": 0,
+      "snapshotWritten": false,
+      "resolution": "Waited for the final feature hash acknowledgement, then preserved the e1bd immutable snapshot and started the mechanism grid from that archive. No old-source rows were dispatched or merged."
+    },
+    {
+      "attempt": 3,
+      "at": "2026-10-04",
+      "sourceNormalizedSha256": "e1bd832dbe954407d9fa7c44a12aa535881d8e2ab46fee8cb6a234033ccdb56f",
+      "phase": "Root-authorized stop of obsolete exploratory controller source",
+      "completedFullRaceRows": 14,
+      "uncoveredDeclaredJobs": 10,
+      "completedRowEngineeringFailures": 0,
+      "runningUncompletedJobActualSteppedProgress": "Unknown; not counted as zero execution or a completed full race.",
+      "reason": "A newer coarse-first/rank controller replaces the old strategy. Remaining old-source rows no longer inform final selection, and complete2400 executions had high measured CPU cost. This is a plan revision, not deletion of unfavorable outcomes.",
+      "record": "docs/calibration-screen-v11-stop.json",
+      "evidence": "Checkpoint before/after termination and all frozen source/driver/orchestrator byte hashes retained;14rows unaltered, report remains incomplete with an administrative-stop record."
+    }
+  ]
+}

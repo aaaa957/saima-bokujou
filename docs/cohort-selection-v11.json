@@ -1,0 +1,1008 @@
+{
+  "generatedAt": "2026-10-04T05:49:48.900Z",
+  "protocol": {
+    "scope": "Mechanism, population constraints and save/seed compatibility; no race-fit or coefficient-search claim.",
+    "source": "Current source with exact review fixture in memory unless production already integrated.",
+    "baseEngineHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+    "engineHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+    "fixtureHash": "fb8f3f20703114e4843fad2ad90a39d35615d4919a4a20054f6e1c07db012589",
+    "testRaces": "Zero actual race steps; forecast-only physical route integration."
+  },
+  "integrity": {
+    "complete": true,
+    "passed": 17,
+    "failed": 0,
+    "productionSourceUnchanged": true,
+    "pageSourceUnchanged": true
+  },
+  "tests": [
+    {
+      "name": "Default makeField retains shape, ids, chosen player and deterministic seed without strong advantage",
+      "passed": true
+    },
+    {
+      "name": "Stable candidate generation does not read race distance or relabel identity",
+      "passed": true
+    },
+    {
+      "name": "Selection is deterministic, without replacement, and preserves existing attributes and profiles",
+      "passed": true
+    },
+    {
+      "name": "Selected cohort has physical joint window and disclosed scarcity, not a hidden perfect packet",
+      "passed": true
+    },
+    {
+      "name": "Out-of-band sparse pool retains honest fallback and never fabricates new horses",
+      "passed": true
+    },
+    {
+      "name": "Forecast ignores realized place/time and does not mutate input or consume caller RNG",
+      "passed": true
+    },
+    {
+      "name": "Entry forecast counts the start delay exactly once in shared route integration",
+      "passed": true
+    },
+    {
+      "name": "Forecast and selection never step the engine or secretly use race results",
+      "passed": true
+    },
+    {
+      "name": "Legacy roster migration persists before selection and survives JSON roundtrip across distances",
+      "passed": true
+    },
+    {
+      "name": "Cohort field reserves same player identity across distances without stat or physiology replacement",
+      "passed": true
+    },
+    {
+      "name": "Career callers condition opponents and preserve old player phenotype without adding save requirements",
+      "passed": true
+    },
+    {
+      "name": "Tier keys condition bounds but do not mutate the same horse across grades",
+      "passed": true
+    },
+    {
+      "name": "Entry overrides preserve generation RNG and latent identity before physical selection",
+      "passed": true
+    },
+    {
+      "name": "Explicit v11 equal-ability diagnostic uses same selected identities and frozen latent profiles",
+      "passed": true
+    },
+    {
+      "name": "Stronger payable G1 candidate retains nonzero uniform matching support and no fast-side fallback penalty",
+      "passed": true
+    },
+    {
+      "name": "Legacy saved elite can pass real G1 roster qualification while age, wins and rest exclusions remain effective",
+      "passed": true
+    },
+    {
+      "name": "Maiden winsMax zero excludes an already-winning horse before forecast matching",
+      "passed": true
+    }
+  ],
+  "samples": [
+    {
+      "length": 1200,
+      "version": 1,
+      "race": {
+        "length": 1200,
+        "course": "标准",
+        "surface": "草地",
+        "state": "良",
+        "dir": "左回",
+        "profile": "平坦",
+        "wind": 0
+      },
+      "levelBand": [
+        68,
+        72
+      ],
+      "predictionWindow": {
+        "fastSeconds": 70.07035046973394,
+        "slowSeconds": 71.7100612360789
+      },
+      "candidates": 64,
+      "requested": 16,
+      "selected": 16,
+      "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+      "fastIsNotAdmissionCeiling": true,
+      "eligible": 39,
+      "fallback": 0,
+      "shortage": 0,
+      "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+      "entries": [
+        {
+          "id": "h36",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 70.5041176857661,
+            "requestedV": 17.605757524970926,
+            "required": 2527.4815588794645,
+            "capacity": 2647.419408039263,
+            "aerobic": 51.63820658288246,
+            "maxV": 18.87717166196415,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h60",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 68.53198141685291,
+            "requestedV": 18.128662578943732,
+            "required": 2742.637149560982,
+            "capacity": 2875.9930300604656,
+            "aerobic": 53.36810258969119,
+            "maxV": 18.970876784369466,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h57",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.40653579322601,
+            "requestedV": 17.352173317906786,
+            "required": 2637.7043852345446,
+            "capacity": 2754.6797450077315,
+            "aerobic": 50.689352619607284,
+            "maxV": 19.00939594502892,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h53",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 69.87466952485666,
+            "requestedV": 17.764596356741837,
+            "required": 2530.29601478316,
+            "capacity": 2663.258677314027,
+            "aerobic": 52.99962711914784,
+            "maxV": 18.88124650136937,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h25",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.18794514337303,
+            "requestedV": 17.417900171121374,
+            "required": 2517.546897885194,
+            "capacity": 2631.0166639708327,
+            "aerobic": 50.693171867984816,
+            "maxV": 18.639756117826575,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h44",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 70.1627112955722,
+            "requestedV": 17.681601633779405,
+            "required": 2518.034677440945,
+            "capacity": 2646.505047733065,
+            "aerobic": 51.174088100325434,
+            "maxV": 18.660375076031364,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h32",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.08946780810419,
+            "requestedV": 17.439669485916944,
+            "required": 2673.131507409655,
+            "capacity": 2796.2885854272768,
+            "aerobic": 50.254330187012656,
+            "maxV": 18.93342839825318,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h30",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 68.95994436499694,
+            "requestedV": 17.999528710348258,
+            "required": 2813.2058298114334,
+            "capacity": 2974.0715998819023,
+            "aerobic": 51.073340552748185,
+            "maxV": 18.73721045020145,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h9",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 70.71986675325273,
+            "requestedV": 17.538425276831433,
+            "required": 2474.403052485397,
+            "capacity": 2602.221377553184,
+            "aerobic": 53.36397651075708,
+            "maxV": 18.83760370582488,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h27",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.28597516505216,
+            "requestedV": 17.386027420876296,
+            "required": 2310.464929729439,
+            "capacity": 2427.8409007519244,
+            "aerobic": 51.49445216203745,
+            "maxV": 18.942956795430007,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h55",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 70.29584748529975,
+            "requestedV": 17.653405853840884,
+            "required": 2620.7745092053487,
+            "capacity": 2742.5218687200163,
+            "aerobic": 49.87567421210633,
+            "maxV": 18.99689508990732,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h28",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.22962764673876,
+            "requestedV": 17.397655278236893,
+            "required": 2527.3778793248734,
+            "capacity": 2651.3583349595724,
+            "aerobic": 50.11018339218933,
+            "maxV": 18.887067893226916,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h13",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.55582485332874,
+            "requestedV": 17.313064043003656,
+            "required": 2367.1688643005987,
+            "capacity": 2487.9508998037454,
+            "aerobic": 49.80988786554718,
+            "maxV": 18.658736730807423,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h33",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.03062674579051,
+            "requestedV": 17.44646115039753,
+            "required": 2548.929107281698,
+            "capacity": 2681.651141433606,
+            "aerobic": 50.42154858146821,
+            "maxV": 18.940922648714515,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h5",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 69.56183234599862,
+            "requestedV": 17.85299767125975,
+            "required": 2785.0586368559907,
+            "capacity": 2917.65090372856,
+            "aerobic": 50.51362210356319,
+            "maxV": 18.976333629590318,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h46",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 71.09674331936013,
+            "requestedV": 17.42798805720104,
+            "required": 2506.446471787364,
+            "capacity": 2625.101172624098,
+            "aerobic": 49.98333969361028,
+            "maxV": 18.78446556685242,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        }
+      ],
+      "ids": [
+        "h36",
+        "h60",
+        "h57",
+        "h53",
+        "h25",
+        "h44",
+        "h32",
+        "h30",
+        "h9",
+        "h27",
+        "h55",
+        "h28",
+        "h13",
+        "h33",
+        "h5",
+        "h46"
+      ]
+    },
+    {
+      "length": 2400,
+      "version": 1,
+      "race": {
+        "length": 2400,
+        "course": "标准",
+        "surface": "草地",
+        "state": "良",
+        "dir": "左回",
+        "profile": "平坦",
+        "wind": 0
+      },
+      "levelBand": [
+        68,
+        72
+      ],
+      "predictionWindow": {
+        "fastSeconds": 155.11863164644558,
+        "slowSeconds": 157.9191084605009
+      },
+      "candidates": 64,
+      "requested": 16,
+      "selected": 16,
+      "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+      "fastIsNotAdmissionCeiling": true,
+      "eligible": 37,
+      "fallback": 0,
+      "shortage": 0,
+      "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+      "entries": [
+        {
+          "id": "h36",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 155.74397733006174,
+            "requestedV": 15.621111067225408,
+            "required": 2579.372178410082,
+            "capacity": 2647.419408039263,
+            "aerobic": 51.63820658288246,
+            "maxV": 18.87717166196415,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h60",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 152.30075624121167,
+            "requestedV": 15.976337387300191,
+            "required": 2790.594925810126,
+            "capacity": 2875.9930300604656,
+            "aerobic": 53.36810258969119,
+            "maxV": 18.970876784369466,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h55",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 156.61251569497864,
+            "requestedV": 15.52881822471257,
+            "required": 2655.1139082343147,
+            "capacity": 2742.5218687200163,
+            "aerobic": 49.87567421210633,
+            "maxV": 18.99689508990732,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h52",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 156.16642021413222,
+            "requestedV": 15.574242550552665,
+            "required": 2506.3680294618316,
+            "capacity": 2565.0356748587374,
+            "aerobic": 51.88870005650135,
+            "maxV": 18.89632638489621,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h24",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 153.55416208202755,
+            "requestedV": 15.84314467388544,
+            "required": 2705.326465097372,
+            "capacity": 2790.334751680896,
+            "aerobic": 52.01485173553702,
+            "maxV": 18.960412798614914,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h40",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 156.48364866911524,
+            "requestedV": 15.540942744581026,
+            "required": 2472.7739108813635,
+            "capacity": 2533.074099912781,
+            "aerobic": 50.40591692446642,
+            "maxV": 18.89347199313239,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h30",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 154.05834102090964,
+            "requestedV": 15.786483490788678,
+            "required": 2900.2038066411997,
+            "capacity": 2974.0715998819023,
+            "aerobic": 51.073340552748185,
+            "maxV": 18.73721045020145,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h29",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 157.63730249908764,
+            "requestedV": 15.424080704944188,
+            "required": 2325.6641125110978,
+            "capacity": 2409.6076197834486,
+            "aerobic": 51.53632523364357,
+            "maxV": 18.552883425260205,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h11",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 152.62605550063188,
+            "requestedV": 15.94464397057388,
+            "required": 2680.7951250593046,
+            "capacity": 2760.4650622312047,
+            "aerobic": 52.89464703584032,
+            "maxV": 18.855640461564178,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h27",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 156.09484208009016,
+            "requestedV": 15.57998934639399,
+            "required": 2338.1936753091595,
+            "capacity": 2427.8409007519244,
+            "aerobic": 51.49445216203745,
+            "maxV": 18.942956795430007,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h58",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 155.13806193862513,
+            "requestedV": 15.675368400811454,
+            "required": 2706.102987556894,
+            "capacity": 2800.3543617179303,
+            "aerobic": 51.268050132894,
+            "maxV": 18.67581792564122,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h28",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 157.4337441333202,
+            "requestedV": 15.442801221062489,
+            "required": 2584.168703976396,
+            "capacity": 2651.3583349595724,
+            "aerobic": 50.11018339218933,
+            "maxV": 18.887067893226916,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h13",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 157.39215919478906,
+            "requestedV": 15.447472362184808,
+            "required": 2418.0276246258877,
+            "capacity": 2487.9508998037454,
+            "aerobic": 49.80988786554718,
+            "maxV": 18.658736730807423,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h33",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 157.3147738610341,
+            "requestedV": 15.453845819308214,
+            "required": 2595.7991246476795,
+            "capacity": 2681.651141433606,
+            "aerobic": 50.42154858146821,
+            "maxV": 18.940922648714515,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h3",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 155.2637745346736,
+            "requestedV": 15.668979196193222,
+            "required": 2665.7971666270846,
+            "capacity": 2727.077588221651,
+            "aerobic": 51.1403264242874,
+            "maxV": 19.016092218397358,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h46",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 157.3027296234997,
+            "requestedV": 15.454929861344485,
+            "required": 2559.1766790996244,
+            "capacity": 2625.101172624098,
+            "aerobic": 49.98333969361028,
+            "maxV": 18.78446556685242,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        }
+      ],
+      "ids": [
+        "h36",
+        "h60",
+        "h55",
+        "h52",
+        "h24",
+        "h40",
+        "h30",
+        "h29",
+        "h11",
+        "h27",
+        "h58",
+        "h28",
+        "h13",
+        "h33",
+        "h3",
+        "h46"
+      ]
+    },
+    {
+      "length": 3200,
+      "version": 1,
+      "race": {
+        "length": 3200,
+        "course": "标准",
+        "surface": "草地",
+        "state": "良",
+        "dir": "左回",
+        "profile": "平坦",
+        "wind": 0
+      },
+      "levelBand": [
+        68,
+        72
+      ],
+      "predictionWindow": {
+        "fastSeconds": 212.78834714969773,
+        "slowSeconds": 216.71573920553925
+      },
+      "candidates": 64,
+      "requested": 16,
+      "selected": 16,
+      "eligibilityScope": "Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.",
+      "fastIsNotAdmissionCeiling": true,
+      "eligible": 37,
+      "fallback": 0,
+      "shortage": 0,
+      "selection": "Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.",
+      "entries": [
+        {
+          "id": "h36",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 213.62055685985752,
+            "requestedV": 15.12494945278903,
+            "required": 2583.1379607211734,
+            "capacity": 2647.419408039263,
+            "aerobic": 51.63820658288246,
+            "maxV": 18.87717166196415,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h60",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 209.19228170890884,
+            "requestedV": 15.446054369069174,
+            "required": 2795.7815555703028,
+            "capacity": 2875.9930300604656,
+            "aerobic": 53.36810258969119,
+            "maxV": 18.970876784369466,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h55",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 215.3668523368169,
+            "requestedV": 14.99767131743049,
+            "required": 2645.641172361744,
+            "capacity": 2742.5218687200163,
+            "aerobic": 49.87567421210633,
+            "maxV": 18.99689508990732,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h52",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 213.81472767869636,
+            "requestedV": 15.108529863495157,
+            "required": 2523.8737150063093,
+            "capacity": 2565.0356748587374,
+            "aerobic": 51.88870005650135,
+            "maxV": 18.89632638489621,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h24",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 210.97993436974647,
+            "requestedV": 15.31320909268143,
+            "required": 2698.3159708528124,
+            "capacity": 2790.334751680896,
+            "aerobic": 52.01485173553702,
+            "maxV": 18.960412798614914,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h40",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 214.2691214978172,
+            "requestedV": 15.075313682282225,
+            "required": 2494.6840318418285,
+            "capacity": 2533.074099912781,
+            "aerobic": 50.40591692446642,
+            "maxV": 18.89347199313239,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h30",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 212.03587295339793,
+            "requestedV": 15.233222185898784,
+            "required": 2921.2922742152136,
+            "capacity": 2974.0715998819023,
+            "aerobic": 51.073340552748185,
+            "maxV": 18.73721045020145,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h29",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 215.33966943396518,
+            "requestedV": 14.998806548784728,
+            "required": 2345.082786419045,
+            "capacity": 2409.6076197834486,
+            "aerobic": 51.53632523364357,
+            "maxV": 18.552883425260205,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h11",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 209.17984461658185,
+            "requestedV": 15.44915520615,
+            "required": 2714.6504867905333,
+            "capacity": 2760.4650622312047,
+            "aerobic": 52.89464703584032,
+            "maxV": 18.855640461564178,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h27",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 213.30663067070907,
+            "requestedV": 15.14404912151895,
+            "required": 2357.1104009778496,
+            "capacity": 2427.8409007519244,
+            "aerobic": 51.49445216203745,
+            "maxV": 18.942956795430007,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h58",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 213.1271132146846,
+            "requestedV": 15.154882258749147,
+            "required": 2709.0965275704393,
+            "capacity": 2800.3543617179303,
+            "aerobic": 51.268050132894,
+            "maxV": 18.67581792564122,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h28",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 216.06575273598162,
+            "requestedV": 14.946330349399148,
+            "required": 2580.9369295620595,
+            "capacity": 2651.3583349595724,
+            "aerobic": 50.11018339218933,
+            "maxV": 18.887067893226916,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h13",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 215.47089643573668,
+            "requestedV": 14.988720309524433,
+            "required": 2439.034541757068,
+            "capacity": 2487.9508998037454,
+            "aerobic": 49.80988786554718,
+            "maxV": 18.658736730807423,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h33",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 215.92430412819962,
+            "requestedV": 14.955691986535886,
+            "required": 2595.2155721113763,
+            "capacity": 2681.651141433606,
+            "aerobic": 50.42154858146821,
+            "maxV": 18.940922648714515,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h3",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 213.00238463127855,
+            "requestedV": 15.168476314368304,
+            "required": 2684.000080150476,
+            "capacity": 2727.077588221651,
+            "aerobic": 51.1403264242874,
+            "maxV": 19.016092218397358,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        },
+        {
+          "id": "h46",
+          "eligible": true,
+          "forecast": {
+            "version": 1,
+            "seconds": 215.83852758987126,
+            "requestedV": 14.961665312380347,
+            "required": 2566.6427236770105,
+            "capacity": 2625.101172624098,
+            "aerobic": 49.98333969361028,
+            "maxV": 18.78446556685242,
+            "peakPowerShortfall": 0,
+            "feasible": true,
+            "referenceLane": 1.4
+          }
+        }
+      ],
+      "ids": [
+        "h36",
+        "h60",
+        "h55",
+        "h52",
+        "h24",
+        "h40",
+        "h30",
+        "h29",
+        "h11",
+        "h27",
+        "h58",
+        "h28",
+        "h13",
+        "h33",
+        "h3",
+        "h46"
+      ]
+    }
+  ]
+}

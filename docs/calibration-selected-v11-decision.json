@@ -1,0 +1,337 @@
+{
+  "selectedAt": "2026-10-04T04:52:11.620Z",
+  "stage": "Four-event selected screen complete; remaining eight training events not yet measured.",
+  "candidate": "selected-nopeak-cost105",
+  "sourceNormalizedSha256": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "driverNormalizedSha256": "5ddc9740c256ca1fd54eba1522bba69d3f855a90c397be5ca401053942152d9e",
+  "parameterFile": "tests/fixtures/race-validation-v11-parameters/selected-nopeak-cost105.json",
+  "parameters": {
+    "maxAccel": 5.75,
+    "runningAccel": 2.75,
+    "responseTime": 1.12,
+    "peakExtra": 1.55,
+    "resistanceK": 0.250215,
+    "airK": 0.001365
+  },
+  "inputs": [
+    {
+      "kind": "nopeak",
+      "file": "docs/calibration-selected-nopeak-v11.summary.json",
+      "byteSha256": "c2ec79863acfe786e03593c211e6d40212c0ad5b701a2254990425512293de5a"
+    },
+    {
+      "kind": "peak",
+      "file": "docs/calibration-selected-peak-v11.summary.json",
+      "byteSha256": "16be932eb206c5b6547feb3d2193963bc17ad077ca7e3044e6cd3bad6b4a50e2"
+    },
+    {
+      "kind": "paired",
+      "file": "docs/calibration-selected-v11-paired.json",
+      "byteSha256": "f1dd608ac9d66ccef613c52e74ec4dc16be6805a2a9638f4ada87989397aefca"
+    }
+  ],
+  "reason": "Retain peakExtra1.55 with improved initial acceleration/response and air-reallocated105% running cost. In the full four-event selected screen, nopeak has no broad speed failures; peak2.75 has winner-time and winner600 failures in both1200 cases. Nopeak improves MAE for total time, winner600, sustained-speed proxy, tail gap, within1/2 and tempo CV. Peak improves first200/400/600, final600 span and last200 difference, so neither configuration dominates all12 metrics. Choose the more balanced candidate without adding a distance patch or tuning only total time.",
+  "meanAbsoluteResidualDifferenceNopeakMinusPeak": {
+    "winnerTime": -0.9456188690036562,
+    "winnerFinal600": -0.84029351062558,
+    "first200": 0.019281283608916233,
+    "first400": 0.1717298400478402,
+    "first600": 0.1362498309705078,
+    "remainingSpeed": -0.3513435846299888,
+    "tailSeconds": -0.4408122059431143,
+    "within1": -0.058531746031746046,
+    "within2": -0.08358134920634919,
+    "final600Span": 1.051785506487457,
+    "post200Cv": -0.0021509073866778083,
+    "last200Difference": 0.08462038017522922
+  },
+  "gates": {
+    "nopeak": [],
+    "peak": [
+      {
+        "id": "231001",
+        "gate": "winnerWithin5pct"
+      },
+      {
+        "id": "231001",
+        "gate": "winner600Within10pct"
+      },
+      {
+        "id": "240929",
+        "gate": "winnerWithin5pct"
+      },
+      {
+        "id": "240929",
+        "gate": "winner600Within10pct"
+      }
+    ]
+  },
+  "physical": {
+    "nopeak": {
+      "medianPost200ActualV": 18.16211572754971,
+      "medianPost200RequestedV": 18.302637822329665,
+      "medianPeakV": 19.135332434635863,
+      "medianMeanActualPower": 83.60656153014703,
+      "medianMeanOxygenOutput": 52.082286497068694,
+      "medianFinishReserve": 0.11015120027862194,
+      "medianRunCpuSeconds": 94.852,
+      "medianRunWallSeconds": 273.53266795
+    },
+    "peak": {
+      "medianPost200ActualV": 18.36176303507954,
+      "medianPost200RequestedV": 18.434357035571416,
+      "medianPeakV": 19.74124526875198,
+      "medianMeanActualPower": 85.01654680649509,
+      "medianMeanOxygenOutput": 51.95273508762692,
+      "medianFinishReserve": 0.05522968005860786,
+      "medianRunCpuSeconds": 119.66400000000002,
+      "medianRunWallSeconds": 309.6101899
+    }
+  },
+  "pairedInputs": [
+    {
+      "id": "241124",
+      "length": 2400,
+      "sameInputField": true,
+      "interpretation": "paired mechanism change on identical serialized entrant input"
+    },
+    {
+      "id": "231126",
+      "length": 2400,
+      "sameInputField": true,
+      "interpretation": "paired mechanism change on identical serialized entrant input"
+    },
+    {
+      "id": "231001",
+      "length": 1200,
+      "sameInputField": false,
+      "interpretation": "joint engine/cohort contrast; not an isolated engine effect"
+    },
+    {
+      "id": "240929",
+      "length": 1200,
+      "sameInputField": false,
+      "interpretation": "joint engine/cohort contrast; not an isolated engine effect"
+    }
+  ],
+  "interpretation": "Both2400 cases have identical serialized entrant input, permitting a matched mechanism comparison; both1200 inputs differ because readiness selection changes, so those are joint parameter/population effects. All original eight rows and unfavorable outcomes remain archived. Neither arm fits pack/tempo reality; the screen is not population validation.",
+  "nextTraining": {
+    "newJobs": [
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "230604",
+        "partition": "calibration",
+        "n": 18,
+        "length": 1600,
+        "course": "東京芝A",
+        "dir": "左回",
+        "state": "良",
+        "weight": 56,
+        "seed": 2026200210,
+        "raceSeed": 3874628907,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "231029",
+        "partition": "calibration",
+        "n": 11,
+        "length": 2000,
+        "course": "東京芝A",
+        "dir": "左回",
+        "state": "良",
+        "weight": 58,
+        "seed": 2026300213,
+        "raceSeed": 3874593420,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "231022",
+        "partition": "calibration",
+        "n": 17,
+        "length": 3000,
+        "course": "京都芝外A",
+        "dir": "右回",
+        "state": "良",
+        "weight": 57,
+        "seed": 2026500219,
+        "raceSeed": 3875441090,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "230430",
+        "partition": "calibration",
+        "n": 17,
+        "length": 3200,
+        "course": "京都芝外A",
+        "dir": "右回",
+        "state": "稍重",
+        "weight": 58,
+        "seed": 2026600222,
+        "raceSeed": 3875278503,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "240602",
+        "partition": "calibration",
+        "n": 18,
+        "length": 1600,
+        "course": "東京芝A",
+        "dir": "左回",
+        "state": "稍重",
+        "weight": 58,
+        "seed": 2026200210,
+        "raceSeed": 3874628907,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "241027",
+        "partition": "calibration",
+        "n": 15,
+        "length": 2000,
+        "course": "東京芝A",
+        "dir": "左回",
+        "state": "良",
+        "weight": 58,
+        "seed": 2026300213,
+        "raceSeed": 3874593420,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "241020",
+        "partition": "calibration",
+        "n": 18,
+        "length": 3000,
+        "course": "京都芝外A",
+        "dir": "右回",
+        "state": "良",
+        "weight": 57,
+        "seed": 2026500219,
+        "raceSeed": 3875441090,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "240428",
+        "partition": "calibration",
+        "n": 17,
+        "length": 3200,
+        "course": "京都芝外A",
+        "dir": "右回",
+        "state": "良",
+        "weight": 58,
+        "seed": 2026600222,
+        "raceSeed": 3875278503,
+        "replicate": 0
+      }
+    ],
+    "reusedJobs": [
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "231001",
+        "partition": "calibration",
+        "n": 16,
+        "length": 1200,
+        "course": "中山芝外A",
+        "dir": "右回",
+        "state": "良",
+        "weight": 56,
+        "seed": 2026100207,
+        "raceSeed": 3874794582,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "231126",
+        "partition": "calibration",
+        "n": 18,
+        "length": 2400,
+        "course": "東京芝A",
+        "dir": "左回",
+        "state": "良",
+        "weight": 58,
+        "seed": 2026400216,
+        "raceSeed": 3875475553,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "240929",
+        "partition": "calibration",
+        "n": 16,
+        "length": 1200,
+        "course": "中山芝外A",
+        "dir": "右回",
+        "state": "良",
+        "weight": 58,
+        "seed": 2026100207,
+        "raceSeed": 3874794582,
+        "replicate": 0
+      },
+      {
+        "kind": "race",
+        "context": "external-selected",
+        "external": true,
+        "cohort": "selected",
+        "id": "241124",
+        "partition": "calibration",
+        "n": 14,
+        "length": 2400,
+        "course": "東京芝A",
+        "dir": "左回",
+        "state": "良",
+        "weight": 58,
+        "seed": 2026400216,
+        "raceSeed": 3875475553,
+        "replicate": 0
+      }
+    ],
+    "sourceArtifact": "docs/race-validation-v11-coarse-rank-screen-source.js.gz",
+    "workers": 4,
+    "workerOldGenerationLimitMb": 192,
+    "parentOldGenerationLimitMb": 192,
+    "newOutput": "docs/calibration-selected-training-rest-v11.json",
+    "mergedOutput": "docs/calibration-selected-training-v11.json",
+    "mergedEngineSteps": 0,
+    "plan": "Reuse selected-nopeak four rows exactly and measure the other eight disjoint training events. Strict read-only union rejects duplicate jobKey/event identity and checks source/parameters/driver. This completes12 measured training events, not12 additional races."
+  },
+  "finalScope": "Source630 is an exploratory frozen controller. Root has approved a later safety-override continuation/telemetry fix; these630 rows are not final production-hash acceptance. After this12-event training check, stop parameter exploration absent a new mechanism bug. Root embeds the chosen constants and release version, freezes final source, then runs all30 official events,18 solo forecasts and108 starts under that final hash. Reserved2020 is not dispatched before final freeze."
+}

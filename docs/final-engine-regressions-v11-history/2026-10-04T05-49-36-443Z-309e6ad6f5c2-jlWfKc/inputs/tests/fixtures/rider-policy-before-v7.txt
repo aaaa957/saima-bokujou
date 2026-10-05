@@ -1,0 +1,74 @@
+    function runAI(H) {
+      if(H.control) return;
+      const list=ranked(),remaining=Math.max(0,length-H.s),localFront=frontOf(H);
+      const behavior=H.behavior||{forwardness:0.5,settle:0.5,tractability:0.5};
+      const plan=H.plan||{position:behavior.forwardness,risk:0.5,patience:behavior.settle};
+      const quality={'新人':0.40,'普通':0.70,'优秀':0.88,'殿堂':0.97}[H.jockey]??0.70;
+      // 有限观察间隔与有界误差；优秀骑手更准确，不取得额外速度或能量。
+      const speedError=(rng()*2-1)*(0.05+(1-quality)*0.55);
+      const reserveEstimate=H.stamina*clamp(1+(rng()*2-1)*(0.02+(1-quality)*0.18),0.82,1.18);
+      const judgement=clamp(1+(rng()*2-1)*(1-quality)*0.10,0.92,1.08);
+      const near=list.filter(F=>F!==H && Math.abs(F.s-H.s)<24);
+      const ahead=near.filter(F=>F.s>H.s+3).sort((a,b)=>a.s-b.s)[0];
+      const wake=near.find(F=>F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<2.5);
+      const observedPace=(ahead?.v??H.v)+speedError;
+      const sustainable=H.sustainableV(H.s,!!wake);
+      const allocation=clamp(0.72+0.18*plan.risk+0.10*(1-plan.patience),0.72,1);
+      const planned=budgetSpeed(H,reserveEstimate*allocation,wake?Math.min(44,remaining):0);
+      const maxDemand=reserveToFinish(H,H.maxV);
+      const sr=H.stamina/Math.max(1,H.staminaMax);
+      const obstruction=localFront && localFront.s-H.s<6 && localFront.v<H.maxV-0.35;
+      const gap=obstruction||H.blocked?findGap(H,true):null;
+      const hasPass=gap && Math.abs(gap.t-H.t)>0.25 && gap.pace>(localFront?.v??H.v)+0.12;
+      const keepAttack=!!H.attacking && maxDemand<=reserveEstimate*judgement*1.12;
+      let attacking=H.s>30 && sr>0.015 && (keepAttack||maxDemand<=reserveEstimate*judgement*(0.92+0.08*plan.risk));
+      if(obstruction && !hasPass) attacking=false;
+      let desired,mode,reason;
+      if(attacking) {
+        desired=H.maxV;mode='attack';reason='预计余力可支付余程，存在推进机会';
+      } else {
+        // 争位只响应附近机会；不会为了追回远处领跑者持续透支。
+        const urge=ahead?clamp((plan.position-0.5)*0.50+(behavior.forwardness-0.5)*(1-behavior.settle)*0.30,-0.25,0.30):0;
+        const pressure=near.some(F=>F.s<H.s && H.s-F.s<9 && F.targetV>H.v+0.12 &&
+          (F.strategy?.mode==='position'||F.strategy?.mode==='attack'))?0.10*plan.risk:0;
+        desired=Math.min(planned,sustainable+(planned-sustainable)*(1-plan.patience*0.20)+urge+pressure);
+        if(wake && observedPace>=sustainable-0.6 && observedPace<=desired+0.3 && plan.patience>0.35) {
+          desired=Math.min(desired,Math.max(sustainable-0.35,observedPace+0.06));
+          mode='follow';reason='跟随附近步速，利用遮挡保存余力';
+        } else if(urge+pressure>0.08 && sr>0.12) {
+          mode='position';reason='在余程预算内争取附近位置';
+        } else {
+          mode=sr<0.12||H.attacking?'recover':'settle';reason=H.attacking?'撤回发动，重新分配余力':'按自身能力与余程分配出力';
+        }
+        if(sr<0.04) desired=Math.min(desired,sustainable);
+      }
+      if(attacking&&!H.attacking) {
+        H.statsSummary.launches=(H.statsSummary.launches||0)+1;
+        if(H.sprintAt===null) {H.sprintAt=H.s;H.statsSummary.sprintAt=H.s;}
+        event(H.name+' 开始发力！');
+      } else if(!attacking&&H.attacking) {
+        H.statsSummary.withdrawals=(H.statsSummary.withdrawals||0)+1;
+        event(H.name+' 收力重新调整节奏');
+      }
+      H.attacking=attacking;H.targetV=Math.max(3,Math.min(H.maxV,desired));
+      setAction(H,attacking?(sr>0.15?'打鞭':'推骑'):H.targetV>H.v+0.15?'推骑':'收力');
+      if(H.blocked || (localFront && localFront.s-H.s<4+Math.max(0,H.targetV-localFront.v)*3 && H.targetV>localFront.v+0.3)) {
+        if(!avoidBlock(H,gap||findGap(H,true))) {mode='follow';reason='通道未开放，收力等待机会';}
+        recordDecision(H,list,mode,reason,reserveEstimate,observedPace);return;
+      }
+      recordDecision(H,list,mode,reason,reserveEstimate,observedPace);
+      if(H.laneIntentT>0 && Math.abs(H.targetT-H.t)>0.1) return;
+      H.laneIntentT=0;
+      const pass=H.passTarget,gainV=pass?H.targetV*laneProgressCoef(H.s,H.t,geo)-pass.v*laneProgressCoef(pass.s,pass.t,geo):0;
+      if(pass && !pass.place && !pass.dnf && pass.s-H.s<=14 && gainV>0.05 && H.s-pass.s<(horseLen(H)+horseLen(pass))/2+1) return;
+      H.passTarget=null;
+      let goal=H.t;
+      if(wake&&!attacking&&H.targetV<=wake.v+0.25) goal=wake.t;
+      else if(kAt(H.s,geo)>0 || !localFront) goal=Math.max(1.4,H.t-2);
+      // 选短路/遮挡同样需要开放路径，不能给入内指令跨越并排马匹。
+      const side=near.some(F=>Math.abs(F.s-H.s)<(horseLen(H)+horseLen(F))/2+0.4 &&
+        Math.min(H.t,goal)-(horseWid(H)+horseWid(F))/2<F.t && F.t<Math.max(H.t,goal)+(horseWid(H)+horseWid(F))/2);
+      if(!side&&Math.abs(goal-H.t)>0.2) {
+        setLaneTarget(H,goal);setAction(H,goal<H.t?'斜行in':'斜行out');
+      }
+    }

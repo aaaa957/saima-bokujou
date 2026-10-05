@@ -1,6 +1,6 @@
 ﻿/* ============================================================
- * 赛马风云 · 连续比赛模拟引擎 v2026.10.02.3
- * 本轮运动、路线与个体分化验收：docs/系统一致性与节奏诊断-v2026.10.02.3.md
+ * 赛马风云 · 连续比赛模拟引擎 v2026.10.04.1
+ * 本轮预测、骑手、阵容与联合校准：docs/比赛系统重构与联合校准-v11.md
  * 模型结构、实赛约束与验证口径：docs/比赛系统-现实拟合-v2026.10.02.1.md
  * 情报误差机制来源：《游戏策划案》4.5 情报系统
  * 运行环境：浏览器(挂载到 window.SaimaSim) / Node(require)
@@ -166,11 +166,36 @@
     const loop={lap,home,back,bend1,bend2,step,stations,samples,first,last,A,C,turns};
     ROUTE_LOOP_CACHE.set(key,loop);return loop;
   }
+  // Exact bracket lookup on the same immutable route stations. The metre bin
+  // supplies only a search seed; the original <= comparisons locate the exact
+  // cell. No query coordinate, interpolation, or floating expression is rounded.
+  const ROUTE_STATION_LOOKUP_CACHE=new WeakMap();
+  function routeStationLowerIndex(stations,at) {
+    const last=stations.length-1,first=stations[0],end=stations[last];
+    if(!Number.isFinite(at)||last<1||!Number.isFinite(first)||!Number.isFinite(end)||at<first||at>=end) {
+      let lo=0,hi=last;
+      while(hi-lo>1){const mid=(lo+hi)>>1;if(stations[mid]<=at)lo=mid;else hi=mid;}
+      return lo;
+    }
+    let lookup=ROUTE_STATION_LOOKUP_CACHE.get(stations);
+    if(!lookup) {
+      const bins=new Uint32Array(Math.ceil(end-first));let lo=0;
+      for(let bin=0;bin<bins.length;bin++) {
+        const seed=first+bin;
+        while(lo<last-1&&stations[lo+1]<=seed)lo++;
+        bins[bin]=lo;
+      }
+      lookup={first,bins};ROUTE_STATION_LOOKUP_CACHE.set(stations,lookup);
+    }
+    let lo=lookup.bins[Math.min(lookup.bins.length-1,Math.floor(at-lookup.first))];
+    while(lo>0&&stations[lo]>at)lo--;
+    while(lo<last-1&&stations[lo+1]<=at)lo++;
+    return lo;
+  }
   function routeTablePoint(samples,step,at) {
     let i,f;
     if(Array.isArray(step)) {
-      const stations=step;let lo=0,hi=stations.length-1;
-      while(hi-lo>1){const mid=(lo+hi)>>1;if(stations[mid]<=at)lo=mid;else hi=mid;}
+      const stations=step,lo=routeStationLowerIndex(stations,at),hi=stations.length>1?lo+1:stations.length-1;
       i=lo;step=stations[hi]-stations[lo];f=clamp((at-stations[lo])/step,0,1);
     } else {
       const z=clamp(at/step,0,samples.length-1);i=Math.min(Math.floor(z),samples.length-2);f=z-i;
@@ -551,12 +576,12 @@
     staminaPer:35, gutsPer:60, energyScale:1,
     aerobicBase:0.86, aerobicStaminaK:0.0020, // 旧展示兼容；物理用下列有单位参数
     aerobicPower:50, aerobicPerPoint:0.24, aerobicTau:10,
-    resistanceK:0.250, airK:0.00065, recoveryRate:0.12, recoveryMax:2.0,
+    resistanceK:0.250215, airK:0.001365, recoveryRate:0.12, recoveryMax:2.0,
     fatigueLoss:0.08, fatigueWork:0.11, fatigueExcess:0.45,
     reservePower:75, reserveFade:0.10, efficiencyPerPoint:0.0025,
     peakExtra:1.55, burstSpeedK:0.010,
-    maxAccel:4.6, runningAccel:2.2, braking:3.5,
-    responseTime:1.4, lateralSpeed:0.8, laneBias:1,
+    maxAccel:5.75, runningAccel:2.75, braking:3.5,
+    responseTime:1.12, lateralSpeed:0.8, laneBias:1,
     draftRange:12, draftSave:0.72, leadCost:1, // 只减少空气阻力项，不给全部做功打折
     curveLateral:3.6, turnCost:0.045,
     // 以下只用于赛前公开预测/历史辅助接口，不反馈给比赛物理。
@@ -771,7 +796,8 @@
     // 两者均不消费比赛 RNG，也不读取跑法标签。
     let seed=2166136261; for(const c of String(h.id||h.name||'horse')) seed=Math.imul(seed^c.charCodeAt(0),16777619);
     const r=generationRng||mulberry32(seed), s=h.stats||{}, supplied=h.behavior||{};
-    const values={forwardness:0.5+((s['出闸能力']??70)-(s['爆发力']??70))*0.006+(r()-0.5)*0.5,
+    // Mild full-support temperament prior; gate execution does not dictate intent.
+    const values={forwardness:0.5-Math.sin(Math.asin(1-2*r())/3),
       settle:0.5+((s['智力']??70)-70)*0.004+(r()-0.5)*0.3,
       tractability:0.65+((s['智力']??70)-70)*0.003+(r()-0.5)*0.2};
     for(const key of Object.keys(values)) values[key]=clamp(Number.isFinite(supplied[key])?supplied[key]:values[key],0,1);
@@ -794,7 +820,7 @@
     const o = opts || {};
     /* 「强马」的档差。原为 ±5 —— 也就是场次内单靠 tier 就能拉出 5 点能力差。
        与「场次内能力跨度 ±2」的策略对齐后压到 ±2（见 FIELD_LEVEL_SPAN）。 */
-    const boost = o.tier === 'strong' ? 2 : (o.tier === 'weak' ? -2 : 0);
+    const boost = 0; // 历史 tier 兼容，不为指定马制造能力优势。
     /* 场次水平决定整体档次；个体能力与跑法标签独立。 */
     const level = o.level !== undefined ? o.level : 70;
     const stats = {};
@@ -842,27 +868,130 @@
       player: !!o.player,
     },o.style,rng);
   }
-  function makeField(rng, opts) {
-    const o = opts || {};
-    const n = o.n || 8;
-    const used = new Set();
-    const strongIdx = o.strongIndex !== undefined ? o.strongIndex : Math.floor(rng() * n);
-    const playerIdx = o.playerIndex !== undefined ? o.playerIndex : strongIdx;
-    /* 场次水平（整场统一），档差由 tier 提供（见 RACE_F / makeHorse） */
-    const level = o.level !== undefined ? o.level : 62 + Math.floor(rng() * 17);
-    const horses = [];
-    for (let i = 0; i < n; i++) {
-      const h = makeHorse(rng, {
-        tier: i === strongIdx ? 'strong' : 'normal',
-        level,
-        id: 'h' + (i + 1),
-        player: i === playerIdx,
-      });
-      h.name = makeName(rng, used);
-      h.sire = makeName(rng, used);
-      h.dam = makeName(rng, used);
-      horses.push(h);
+  /* ---------------- 赛前候选与条件阵容 ---------------- */
+  // 报名分布的模型假设；不会乘进速度、成本或距离适性。
+  const COHORT_VERSION = 1;
+  const COHORT_POOL_MULTIPLIER = 4;
+  const cohortForecastCache = new Map();
+  function applyCohortEntryOverrides(h, overrides) {
+    const o=overrides||{};
+    // 状态规范在完整生成和档案物化之后、报名评估之前；不改生成 RNG。
+    for(const key of ['surface','special','斗志','疲劳','jockeyGrade','bodyMass','carriedWeight'])
+      if(Object.prototype.hasOwnProperty.call(o,key))h[key]=o[key];
+    return h;
+  }
+  function cohortRaceOptions(options) {
+    const o=options||{}, race=o.race||o;
+    return {length:Number(race.length||race.dist)||2000,course:race.course||race.venue||'标准',
+      surface:race.surface||'草地',state:race.state||'良',dir:race.dir||'左回',
+      profile:race.profile||'平坦',wind:Number(race.wind)||0};
+  }
+  function cohortLevelBand(options) {
+    const o=options||{}, tier=typeof o.tierKey==='string'?TIER_BY_KEY[o.tierKey]:o.tierDef;
+    const explicit=o.levelBand||tier?.level;
+    const requestedCenter=Number.isFinite(o.level)?o.level:explicit?(explicit[0]+explicit[1])/2:70;
+    const lower=explicit?Number(explicit[0]):20,upper=explicit?Number(explicit[1]):97;
+    if(!Number.isFinite(lower)||!Number.isFinite(upper)||lower>upper)throw new Error('无效赛级能力区间');
+    const center=clamp(requestedCenter,lower,upper);
+    return [clamp(Math.max(lower,center-FIELD_LEVEL_SPAN),20,97),clamp(Math.min(upper,center+FIELD_LEVEL_SPAN),20,97)];
+  }
+  function raceEntryForecast(h, options) {
+    if(!h||!h.stats)throw new Error('无效赛前候选马');
+    const raceOptions=cohortRaceOptions(options);
+    if(!Number.isFinite(raceOptions.length)||raceOptions.length<200)throw new Error('无效报名比赛距离');
+    // 仅克隆并构造同物理的赛前状态，不 step、不读取赛后名次/总时。
+    // 输入档案不因评估距离而改变，现有马只由选择入口显式补齐旧档。
+    const entry=JSON.parse(JSON.stringify(h));horsePhysiology(entry);entry.behavior=horseBehavior(entry);
+    const key=JSON.stringify([raceOptions,entry.stats,entry.physiology,entry['疲劳']||0,entry['斗志']??70,
+      entry.behavior,entry.surface,entry.special,entry.bodyMass,entry.carriedWeight,RACE_F]);
+    if(cohortForecastCache.has(key))return {...cohortForecastCache.get(key)};
+    const r=createRace([entry],{...raceOptions,rng:()=>0.5}),H=r.race.horses[0];
+    H.t=r.race.geo.referenceLane;H.targetT=H.t;
+    let low=3,high=H.maxV,best=null;
+    for(let i=0;i<9;i++){
+      const requested=(low+high)/2,forecast=H.finishPlan(requested,0,{earlyExit:true});
+      if(forecast.feasible){low=requested;best=forecast;}else high=requested;
     }
+    if(!best)best=H.finishPlan(low,0);
+    const result={version:COHORT_VERSION,seconds:best.seconds,requestedV:low,
+      required:best.required,capacity:H.staminaMax,aerobic:H.aerobic,maxV:H.maxV,
+      peakPowerShortfall:best.peakPowerShortfall,feasible:best.feasible,referenceLane:H.t};
+    if(![result.seconds,result.requestedV,result.required,result.capacity,result.aerobic,result.maxV].every(Number.isFinite)||result.seconds<=0)
+      throw new Error('赛前候选预测未产生有限结果');
+    if(cohortForecastCache.size>=512)cohortForecastCache.delete(cohortForecastCache.keys().next().value);
+    cohortForecastCache.set(key,result);return {...result};
+  }
+  function cohortReference(level, race, entryOverrides) {
+    const reference=makeHorse(()=>0.5,{id:'cohort-reference',level,physiology:neutralPhysiology(),
+      behavior:{forwardness:0.5,settle:0.5,tractability:0.65},surface:race.surface,
+      special:'左右皆可','斗志':50,'疲劳':0,bodyMass:480,carriedWeight:57});
+    applyCohortEntryOverrides(reference,entryOverrides);return raceEntryForecast(reference,race);
+  }
+  function selectRaceCohort(candidates, rng, options) {
+    if(!Array.isArray(candidates)||typeof rng!=='function')throw new Error('无效候选池');
+    const o=options||{},race=cohortRaceOptions(o),band=cohortLevelBand(o);
+    const requested=Number.isInteger(o.n)?Math.max(0,o.n):8,n=Math.min(requested,candidates.length);
+    const ids=new Set();
+    for(const h of candidates){if(!h||!h.id||ids.has(h.id))throw new Error('候选身份重复或缺失');ids.add(h.id);horsePhysiology(h);}
+    const references=band.map(level=>cohortReference(level,race,o.entryOverrides));
+    const fast=Math.min(...references.map(r=>r.seconds)),slow=Math.max(...references.map(r=>r.seconds));
+    const assessed=candidates.map((h,index)=>{
+      const forecast=raceEntryForecast(h,race),inside=forecast.feasible&&forecast.seconds<=slow+1e-7;
+      const distance=forecast.seconds>slow?forecast.seconds-slow:0;
+      return {h,index,forecast,inside,distance};
+    });
+    const eligible=assessed.filter(x=>x.inside),selected=[];
+    const available=eligible.slice();
+    // 合格候选无放回报名；没有“八匹最接近”或指定冠军。
+    while(selected.length<n&&available.length){const i=Math.min(available.length-1,Math.floor(rng()*available.length));selected.push(available.splice(i,1)[0]);}
+    const fallback=n-selected.length;
+    if(fallback){
+      const rest=assessed.filter(x=>!x.inside).map(x=>({...x,tie:rng()})).sort((a,b)=>a.distance-b.distance||a.tie-b.tie||a.index-b.index);
+      selected.push(...rest.slice(0,fallback));
+    }
+    return {horses:selected.map(x=>x.h),diagnostics:{version:COHORT_VERSION,race,levelBand:band,
+      predictionWindow:{fastSeconds:fast,slowSeconds:slow},candidates:candidates.length,requested,selected:selected.length,
+      eligibilityScope:'Caller filters decide age, wins/class and rest qualification; forecast only matches payable distance/grade readiness.',
+      fastIsNotAdmissionCeiling:true,
+      eligible:eligible.length,fallback,shortage:Math.max(0,requested-candidates.length),
+      selection:'Payable entrants no slower than shared grade/distance reference: uniform without replacement. Faster entrants remain admissible. Scarcity: nearest slow boundary, explicitly reported. Qualification is determined by caller filters; no realized race simulation.',
+      entries:selected.map(x=>({id:x.h.id,eligible:x.inside,forecast:{...x.forecast}}))}};
+  }
+  function makeRaceCandidatePool(rng, options) {
+    const o=options||{},n=Number.isInteger(o.n)?o.n:32,band=cohortLevelBand(o),used=new Set(),horses=[];
+    if(n<1||n>256)throw new Error('无效候选池规模');
+    // 生成不读取比赛距离/赛道；相同 RNG、赛级和池规模对应相同个体。
+    for(let i=0;i<n;i++){
+      const level=band[0]+rng()*(band[1]-band[0]);
+      const h=makeHorse(rng,{level,id:(o.idPrefix||'h')+(i+1),player:false});
+      h.name=makeName(rng,used);h.sire=makeName(rng,used);h.dam=makeName(rng,used);
+      applyCohortEntryOverrides(h,o.entryOverrides);horses.push(h);
+    }
+    return horses;
+  }
+  function makeField(rng, opts) {
+    const o=opts||{},n=o.n||8;
+    if(!Number.isInteger(n)||n<1||n>64)throw new Error('无效阵容规模');
+    // strongIndex 保留为玩家身份兼容选项，不再给能力或生理加点。
+    const identityIndex=o.strongIndex!==undefined?o.strongIndex:Math.floor(rng()*n);
+    const playerIndex=o.playerIndex!==undefined?o.playerIndex:identityIndex;
+    const level=o.level!==undefined?o.level:62+Math.floor(rng()*17);
+    const race=o.race||(Number.isFinite(o.length)||Number.isFinite(o.dist)?o:null);
+    if(!race){
+      const used=new Set(),horses=[];
+      for(let i=0;i<n;i++){
+        const h=makeHorse(rng,{level,id:(o.idPrefix||'h')+(i+1),player:i===playerIndex});
+        h.name=makeName(rng,used);h.sire=makeName(rng,used);h.dam=makeName(rng,used);horses.push(h);
+      }
+      return horses;
+    }
+    const poolSize=Math.min(256,Math.max(n,n*COHORT_POOL_MULTIPLIER));
+    const pool=makeRaceCandidatePool(rng,{n:poolSize,level,levelBand:o.levelBand,tierKey:o.tierKey,tierDef:o.tierDef,idPrefix:o.idPrefix,entryOverrides:o.entryOverrides});
+    const player=Number.isInteger(playerIndex)&&playerIndex>=0&&playerIndex<pool.length?pool[playerIndex]:null;
+    const result=selectRaceCohort(pool.filter(h=>h!==player),rng,{...o,level,race,n:n-(player?1:0)});
+    const horses=result.horses;
+    if(player){player.player=true;horses.splice(Math.min(playerIndex,horses.length),0,player);}
+    Object.defineProperty(horses,'cohort',{value:{...result.diagnostics,playerReserved:player?.id||null},enumerable:false});
     return horses;
   }
 
@@ -1194,6 +1323,7 @@
       H.kineticCost=(from,to)=>0.5*Math.max(0,to*to-from*from)*H.massRatio;
       // 验证/诊断入口：不消耗随机数，也不修改马匹或比赛状态。
       H.finishPlan=(requestedV,draftDistance=0,options={})=>finishPlan(H,requestedV,draftDistance,options);
+      H.projectActions=(actions,options={})=>projectActions(H,actions,options);
       H.cruise=H.sustainableV();
       return H;
     }); race.horses=horses;
@@ -1251,90 +1381,552 @@
         (RACE_F.curveLateral+(H.adj['力量']-70)*0.008)/curvature))*bendCoefFor(H.h.special,dir));
       return cap;
     }
-    // 路线预算预测有限加速与制动，功率与运动执行共用；不会把动能重复收费。
-    // 固定当前疲劳、车道和起始加速余力，未预知未来受阻、横移或恢复。
+    // 状态推进共用实际供能、有限加速、弧长运动和储备/疲劳/恢复结算。
+    // 余程预算是需求可支付检查；动作预测是受限制的执行轨迹，两者不混淆。
+    function raceSupplyState(H,dt) {
+      const fatigue=1-H.fatigueLoss*(1-H.guts/H.gutsMax);
+      const aerobicTarget=H.aerobic*fatigue;
+      const aerobic=(H.aerobicOutput??H.aerobic*0.45)+(aerobicTarget-(H.aerobicOutput??H.aerobic*0.45))*(1-Math.exp(-dt/H.aerobicTau));
+      const reserveFade=clamp(clamp(H.stamina/H.staminaMax,0,1)/RACE_F.reserveFade,0,1);
+      const reservePower=Math.min(H.reservePower*reserveFade,Math.max(0,H.stamina)/dt);
+      return {fatigue,aerobicTarget,aerobic,reserveFade,reservePower,maxPower:aerobic+reservePower};
+    }
+    function raceEnergyState(H,work,aerobic,dt) {
+      const excess=Math.max(0,work-aerobic),draw=Math.min(H.stamina,excess*dt);
+      const restore=Math.min(H.staminaMax-H.stamina,Math.max(0,aerobic*0.90-work)*H.recoveryRate*dt,H.recoveryMax*dt);
+      const stamina=clamp(H.stamina-draw+restore,0,H.staminaMax);
+      const guts=Math.max(0,H.guts-(H.fatigueWork*work+H.fatigueExcess*excess)*dt);
+      return {excess,draw,restore,stamina,guts,retention:1-H.fatigueLoss*(1-guts/H.gutsMax)};
+    }
+    function raceAccelerationLimits(H,supply,drafting) {
+      const mix=clamp(H.v/H.base,0,1);
+      const maxA=(RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230)*(1-mix)+
+        RACE_F.runningAccel*(0.65+H.adj['爆发力']/200)*mix)*(0.65+0.35*supply.reserveFade);
+      const response=RACE_F.responseTime*clamp(1+(0.65-H.behavior.tractability)*0.4,0.82,1.26);
+      const kineticBudget=Math.max(0,supply.maxPower-powerCost(H,H.v,0,drafting))/(H.massRatio*Math.max(H.v,1));
+      return {maxA,response,kineticBudget};
+    }
+    function raceKinematicProposal(H,before,v,transverse,dt,startFraction,aerobic) {
+      const bodyMargin=horseWid(H)/2,width=trackWidthAt(H.s,geo);
+      const lateralLimit=Math.min(RACE_F.lateralSpeed,(H.v+v)/2*0.06)*dt*startFraction;
+      const t=clamp(H.t+clamp(transverse-H.t,-lateralLimit,lateralLimit),bodyMargin,width-bodyMargin);
+      const lateral=startFraction?(t-before.t)/(dt*startFraction):0,travelV=(H.v+v)/2;
+      const forwardV=Math.sqrt(Math.max(0,travelV*travelV-lateral*lateral));
+      return {s:laneAdvance(H.s,forwardV*dt*startFraction,(H.t+t)/2,geo),
+        t,v,a:(v-H.v)/dt,travelV,lateral,aerobic,activeFraction:startFraction};
+    }
+    function projectionCopy(H) {
+      // The forecast mutates only top-level motion/energy fields (s, t, v, stamina,
+      // guts, retention, aerobicOutput). adj / behavior / statsSummary are read-only
+      // for the whole projection: there is no assignment to .adj[...] , .adj.x,
+      // .behavior.x or .statsSummary.x anywhere in the engine, and none inside the
+      // projection. Sharing them keeps the forecast isolated exactly as before while
+      // removing three throwaway objects per copy, which the closure-heavy planner
+      // performs twice per candidate.
+      return {...H};
+    }
+    function followingBodyLength(H) {return H.observedBodyLength??horseLen(H);}
+    function followingBodyWidth(H) {return H.observedBodyWidth??horseWid(H);}
+    function followingBodyClearance(H,F,hs,fs,ht,ft) {
+      const scale=Math.max(1,trafficProgressCoef(hs,ht),trafficProgressCoef(fs,ft));
+      return {longitudinal:((followingBodyLength(H)+followingBodyLength(F))/2+0.20)*scale,
+        lateral:(followingBodyWidth(H)+followingBodyWidth(F))/2+0.10};
+    }
+    function followingSpeedCap(H,F,before=H,frontBefore=F) {
+      if(!F)return Infinity;
+      const gap=frontBefore.s-before.s-(followingBodyLength(H)+followingBodyLength(F))/2-0.25;
+      return Math.max(0,frontBefore.v+gap*0.65);
+    }
+    function projectionWake(H,F) {
+      return !!F&&!F.finished&&F!==H&&F.s>H.s&&F.s-H.s<=RACE_F.draftRange&&Math.abs(F.t-H.t)<=(followingBodyWidth(H)+followingBodyWidth(F))/2+0.8;
+    }
+    function projectionBodySweep(H,F,before,frontBefore,move,frontMove) {
+      const clear=followingBodyClearance(H,F,(before.s+move.s)/2,(frontBefore.s+frontMove.s)/2,(before.t+move.t)/2,(frontBefore.t+frontMove.t)/2);
+      const longitudinal=axisOverlap(frontBefore.s-before.s,frontMove.s-move.s,clear.longitudinal);
+      const lateral=axisOverlap(frontBefore.t-before.t,frontMove.t-move.t,clear.lateral);
+      return !!longitudinal&&!!lateral&&Math.min(longitudinal[1],lateral[1])-Math.max(longitudinal[0],lateral[0])>1e-9;
+    }
+    function projectionMove(H,requestedV,requestedT,drafting,dt,time,demand=false,front=null,traffic=[]) {
+      const before={s:H.s,t:H.t,v:H.v},supply=raceSupplyState(H,dt);
+      H.aerobicOutput=supply.aerobic;
+      const maxVelocity=H.maxV*supply.fatigue,powerVelocity=speedAtPower(H,supply.maxPower,drafting);
+      const curvature=laneCurvatureAt(H.s,H.t,geo),curveVelocity=curvature>0?Math.sqrt(Math.max(1,
+        (RACE_F.curveLateral+(H.adj['力量']-70)*0.008)/curvature))*bendCoefFor(H.h.special,dir):Infinity;
+      const physicalCap=Math.min(maxVelocity,curveVelocity),cap=demand?physicalCap:Math.min(physicalCap,powerVelocity);
+      const followingCap=followingSpeedCap(H,front,before,front);
+      const fraction=clamp((time+dt-H.startDelay)/dt,0,1),desired=fraction?Math.min(Math.max(0,requestedV),cap,followingCap):0;
+      const limits=raceAccelerationLimits(H,supply,drafting),upperA=demand?limits.maxA:Math.min(limits.maxA,limits.kineticBudget);
+      const a=clamp((desired-H.v)/limits.response,-RACE_F.braking,upperA);
+      const freeV=Math.max(0,H.v+a*dt*fraction),minimumV=Math.max(0,H.v-RACE_F.braking*dt*fraction);
+      const margin=horseWid(H)/2+0.2,targetT=clamp(requestedT,margin,trackWidthAt(H.s,geo)-margin);
+      const proposalCache=new Map();
+      const propose=v=>{if(!proposalCache.has(v))proposalCache.set(v,raceKinematicProposal(H,before,v,targetT,dt,fraction,supply.aerobic));return proposalCache.get(v);};
+      let move=propose(freeV),work=motionPower(H,before,move,drafting,dt),finiteBrakingFeasible=true;
+      if(!demand&&work>supply.maxPower+1e-7) {
+        let low=minimumV,high=freeV;
+        if(motionPower(H,before,propose(low),drafting,dt)>supply.maxPower+1e-7) finiteBrakingFeasible=false;
+        else {
+          for(let n=0;n<28;n++) {const mid=(low+high)/2;if(motionPower(H,before,propose(mid),drafting,dt)<=supply.maxPower) low=mid;else high=mid;}
+          move=propose(low);work=motionPower(H,before,move,drafting,dt);
+        }
+      }
+      let trafficFeasible=true,headwayLimited=false;
+      if(traffic.length) {
+        let followingSlack=null;
+        const ahead=traffic.filter(x=>x.before.s>before.s).sort((a,b)=>b.before.s-a.before.s);
+        for(const observed of ahead) {
+          const F=observed.h,fm=observed.move,clear=followingBodyClearance(H,F,before.s,observed.before.s,before.t,observed.before.t);
+          const transverse=axisOverlap(observed.before.t-before.t,fm.t-move.t,clear.lateral);
+          if(!transverse)continue;
+          followingSlack??=followingConstraintSolver(Math.max(freeV,...traffic.map(x=>x.move.v)));
+          if(followingSlack(H,F,move,fm)>=-1e-8)continue;
+          const lower=propose(minimumV);headwayLimited=true;
+          if(followingSlack(H,F,lower,fm)<-1e-7) {
+            if(followingSlack(H,F,lower,fm,false)<-1e-7)trafficFeasible=false;
+            move=lower;
+          } else {
+            let low=minimumV,high=move.v;
+            for(let n=0;n<28;n++){const mid=(low+high)/2;if(followingSlack(H,F,propose(mid),fm)>=0)low=mid;else high=mid;}
+            move=propose(low);
+          }
+          work=motionPower(H,before,move,drafting,dt);
+          if(!demand&&work>supply.maxPower+1e-7)finiteBrakingFeasible=false;
+        }
+      }
+      const energy=raceEnergyState(H,work,supply.aerobic,dt),path=laneArcDistance(before.s,move.s,(before.t+move.t)/2,geo);
+      const finishTime=move.s>=length?time+dt*(1-fraction)+(path>0?clamp(laneArcDistance(before.s,length,(before.t+move.t)/2,geo)/path,0,1)*dt*fraction:dt*fraction):null;
+      H.s=move.s;H.t=move.t;H.v=move.v;H.stamina=energy.stamina;H.guts=energy.guts;H.retention=energy.retention;
+      return {before,move,supply,limits,energy,work,finishTime,finiteBrakingFeasible,
+        requestedV,desired,physicalCap,powerVelocity,curveVelocity,cap,drafting,followingCap,trafficFeasible,headwayLimited,
+        requestedPowerShortfall:Math.max(0,work-supply.maxPower),velocityCapShortfall:Math.max(0,requestedV-physicalCap),
+        requestedTrackingShortfall:Math.max(0,requestedV-(before.v+move.v)/2)};
+    }
+    function projectActions(H,actions,options={}) {
+      if(!Array.isArray(actions)||actions.length>32) throw new Error('动作预测需要至多32个有限动作');
+      // Only s/t/v are ever read back from the pre-override snapshot; the reserve is
+      // reported from initialReserve below, so a second full horse copy is not needed.
+      const local=projectionCopy(H),initial={s:H.s,t:H.t,v:H.v},atTime=race.t;
+      if(Number.isFinite(options.reserve)) local.stamina=clamp(options.reserve,0,local.staminaMax);
+      const initialReserve=local.stamina;
+      const requestedMode=options.demand===true,maxDt=clamp(Number.isFinite(options.maxDt)?options.maxDt:1/30,1/120,1);
+      const tickOrigin=Number.isFinite(options.tickOrigin)?options.tickOrigin:atTime;
+      // Measured A/B: coarsening this step is NOT a safe optimisation. budgetSpeed
+      // feeds its result back into rider speed choice, so a coarser integral changes
+      // which race is run: same source, same seed, 8 horses 4x slower / 16 horses 2x
+      // faster, because the 8-horse race became a different (longer) race. Keep the
+      // reference resolution until the remainder budget can be computed with an
+      // identical-result, cheaper algorithm.
+      const tailMaxDt=clamp(Number.isFinite(options.tailMaxDt)?options.tailMaxDt:0.5,1/120,1);
+      const ledger={work:0,aerobicUsed:0,energyUsed:0,requiredDraw:0,recovered:0,unpaidWork:0,kineticChange:0,positiveKineticWork:0};
+      const limits={requestSeconds:0,velocitySeconds:0,powerSeconds:0,curveSeconds:0,accelerationSeconds:0,draftingSeconds:0,followingSeconds:0,headwaySeconds:0};
+      let elapsed=0,steps=0,finished=local.s>=length,finishTime=finished?atTime:null,finiteBrakingFeasible=true,trafficFeasible=true,pathConflict=false,peakPowerShortfall=0,targetShortfall=0,trackingIntegral=0,stoppedEarly=false;
+      const segments=[],trace=options.trace?[]:null,observedLeaders=new Map();let previousLeader=null;
+      // Optional public launch hypothesis. The default observation API remains
+      // the measured-motion extrapolator, including fixed-control comparisons.
+      const suppliedPrior=options.opponentMotionPrior;
+      const motionPrior=suppliedPrior&&Number.isFinite(suppliedPrior.pace)&&suppliedPrior.pace>0?{
+        pace:clamp(suppliedPrior.pace,3,30),
+        launchUntil:Number.isFinite(suppliedPrior.launchUntil)?Math.max(0,suppliedPrior.launchUntil):0.8,
+        assumedDelay:Number.isFinite(suppliedPrior.assumedDelay)?Math.max(0,suppliedPrior.assumedDelay):0.3}:null;
+      let opponentPathConflict=false;
+      const multipleOpponents=Object.prototype.hasOwnProperty.call(options,'opponents');
+      if(multipleOpponents&&(!Array.isArray(options.opponents)||options.opponents.length>128))throw new Error('可见对手预测需要至多128个观测记录');
+      function observation(seen) {
+        if(!seen||![seen.s,seen.t,seen.v].every(Number.isFinite)||seen.v<0)throw new Error('对手预测需要可见位置与非负速度');
+        const key=seen.id??JSON.stringify([seen.s,seen.t,seen.v,seen.accel,seen.lateralV,seen.bodyWidth,seen.bodyLength,seen.observedAt]);
+        if(observedLeaders.has(key))return observedLeaders.get(key);
+        const size=!multipleOpponents&&Number.isFinite(seen.bodySize)?seen.bodySize:70;
+        const F={id:seen.id??'visible-'+observedLeaders.size,s:seen.s,t:seen.t,v:seen.v,observedV:seen.v,
+          observedAt:Number.isFinite(seen.observedAt)?seen.observedAt:atTime,lastAt:Number.isFinite(seen.observedAt)?seen.observedAt:atTime,
+          adj:{'体格':size},observedBodyWidth:Number.isFinite(seen.bodyWidth)&&seen.bodyWidth>0?seen.bodyWidth:horseWid({adj:{'体格':size}}),
+          observedBodyLength:Number.isFinite(seen.bodyLength)&&seen.bodyLength>0?seen.bodyLength:horseLen({adj:{'体格':size}}),
+          accel:clamp(Number.isFinite(seen.accel)?seen.accel:0,-RACE_F.braking,RACE_F.runningAccel),
+          lateralV:clamp(Number.isFinite(seen.lateralV)?seen.lateralV:0,-RACE_F.lateralSpeed,RACE_F.lateralSpeed),finished:seen.s>=length};
+        F.launchPrior=!!motionPrior&&((F.observedAt<motionPrior.launchUntil&&F.observedV<3)||
+          (F.accel>0.3&&F.observedV<motionPrior.pace*0.9));
+        observedLeaders.set(key,F);return F;
+      }
+      function observedMove(F,dt,time) {
+        const age=Math.max(0,time+dt-F.observedAt),tau=RACE_F.responseTime;
+        let v;
+        if(F.launchPrior) {
+          const delay=F.observedV>0?0:Math.max(0,motionPrior.assumedDelay-F.observedAt);
+          const fraction=clamp((time+dt-F.observedAt-delay)/dt,0,1);
+          const mix=clamp(F.v/Math.max(3,motionPrior.pace),0,1);
+          const acceleration=RACE_F.maxAccel*(0.7+70/230)*(1-mix)+RACE_F.runningAccel*(0.65+70/200)*mix;
+          v=Math.max(0,F.v+clamp((motionPrior.pace-F.v)/tau,-RACE_F.braking,acceleration)*dt*fraction);
+          // Fractional stall release must not advance along the full time step.
+          dt*=fraction;
+        } else v=Math.max(0,F.observedV+F.accel*tau*(1-Math.exp(-age/tau)));
+        const meanV=(F.v+v)/2;
+        const margin=followingBodyWidth(F)/2,width=trackWidthAt(F.s,geo),lateralLimit=Math.min(RACE_F.lateralSpeed,meanV*0.06);
+        const t=clamp(F.t+clamp(F.lateralV,-lateralLimit,lateralLimit)*dt,margin,width-margin),lateral=dt>0?(t-F.t)/dt:0;
+        return {s:laneAdvance(F.s,Math.sqrt(Math.max(0,meanV*meanV-lateral*lateral))*dt,(F.t+t)/2,geo),t,v};
+      }
+      function catchObservationUp(F,time) {
+        while(!F.finished&&F.lastAt<time-1e-10){const dt=Math.min(maxDt,time-F.lastAt),move=observedMove(F,dt,F.lastAt);
+          Object.assign(F,move);F.lastAt+=dt;F.finished=F.s>=length;}
+      }
+      const opponents=multipleOpponents?options.opponents.map(observation).filter((F,i,a)=>a.indexOf(F)===i):[];
+      // Linear advance of the local horse is monotone inside one projection, so the
+      // next route key can be tracked with a cursor instead of a full scan per step.
+      // The value is identical to routeCorners.find(s => s > local.s + 1e-6).
+      let cornerCursor=0;
+      function nextRouteKey(s) {
+        while(cornerCursor>0&&routeCorners[cornerCursor-1]>s+1e-6)cornerCursor--;
+        while(cornerCursor<routeCorners.length&&routeCorners[cornerCursor]<=s+1e-6)cornerCursor++;
+        return cornerCursor<routeCorners.length?routeCorners[cornerCursor]:undefined;
+      }
+      function run(action,isTail,index) {
+        if(!action||!Number.isFinite(action.targetV)||action.targetV<0) throw new Error('无效动作预测请求速度');
+        if(!isTail&&(!Number.isFinite(action.duration)||action.duration<=0||action.duration>120)) throw new Error('有限动作预测时长必须在0至120秒之间');
+        const duration=isTail?600:action.duration,begin=elapsed,startS=local.s,goal=action.goal||null;
+        // 对手只接受可见位置、速度/加速度及横移。不得读取目标指令或生理储备。
+        let leader=previousLeader;
+        if(!multipleOpponents&&action.leader)leader=observation(action.leader);
+        if(Object.prototype.hasOwnProperty.call(action,'leader')&&action.leader===null) leader=null;
+        previousLeader=leader;
+        while(elapsed-begin<duration-1e-10&&!finished&&steps<48000) {
+          let dt=Math.min(isTail?tailMaxDt:maxDt,duration-(elapsed-begin));
+          // Keep one cadence across finite action boundaries. Do not start a new
+          // full frame after a short boundary substep; execution consumes the
+          // remaining part of the same prescribed frame before its next frame.
+          if(!isTail) {
+            const phase=(atTime+elapsed-tickOrigin)/maxDt;
+            if(Math.abs(phase-Math.round(phase))>1e-7)dt=Math.min(dt,tickOrigin+Math.ceil(phase)*maxDt-(atTime+elapsed));
+          }
+          if(isTail&&(Math.abs(action.targetV-local.v)>0.8||local.stamina/local.staminaMax<0.15||local.v<3)) dt=Math.min(dt,0.05);
+          const nextKey=nextRouteKey(local.s);
+          if(dt>1/60+1e-10&&nextKey!=null&&local.v>1) dt=Math.min(dt,Math.max(1/120,(nextKey-local.s)/Math.max(1,local.v*laneProgressCoef(local.s,local.t,geo))));
+          const visible=multipleOpponents?opponents:leader?[leader]:[];
+          for(const F of visible)catchObservationUp(F,atTime+elapsed);
+          // A one-way forecast only ever consumes the nearest drafter and the nearest
+          // body blocker ahead, so a single pass replaces sorting every opponent on
+          // every step. Ties keep the first-seen opponent, exactly as a stable sort
+          // followed by .find would.
+          const activeVisible=[];
+          let wake=null,front=null;
+          for(const F of visible) {
+            if(F.finished)continue;
+            activeVisible.push(F);
+            if(projectionWake(local,F)&&(wake===null||F.s<wake.s))wake=F;
+            if(F.s>local.s&&Math.abs(F.t-local.t)<(followingBodyWidth(local)+followingBodyWidth(F))/2+0.2&&
+              (front===null||F.s<front.s))front=F;
+          }
+          const drafting=!!wake||!activeVisible.length&&(action.draft===true||Number.isFinite(action.draftUntil)&&local.s<action.draftUntil);
+          const traffic=activeVisible.map(F=>({h:F,before:{s:F.s,t:F.t,v:F.v},move:observedMove(F,dt,atTime+elapsed)}));
+          const result=projectionMove(local,action.targetV,Number.isFinite(action.targetT)?action.targetT:local.t,drafting,dt,atTime+elapsed,requestedMode,front,traffic);
+          if(!result.trafficFeasible){trafficFeasible=false;pathConflict=true;}
+          for(const observed of traffic){if(projectionBodySweep(local,observed.h,result.before,observed.before,result.move,observed.move))pathConflict=true;
+            Object.assign(observed.h,observed.move);observed.h.lastAt=atTime+elapsed+dt;observed.h.finished=observed.h.s>=length;}
+          // Peers may respond to each other, which this one-way forecast cannot know.
+          // Their mutual extrapolated collision is uncertainty, not an own route veto.
+          if(!opponentPathConflict) {
+            peerCollision:for(let a=0;a<traffic.length;a++)for(let b=a+1;b<traffic.length;b++) {
+              if(projectionBodySweep(traffic[a].h,traffic[b].h,traffic[a].before,traffic[b].before,traffic[a].move,traffic[b].move)) {
+                opponentPathConflict=true;break peerCollision;
+              }
+            }
+          }
+          const {energy,supply,work}=result;
+          ledger.work+=work*dt;ledger.aerobicUsed+=Math.min(work,supply.aerobic)*dt;ledger.energyUsed+=energy.draw;
+          ledger.requiredDraw+=energy.excess*dt;ledger.recovered+=energy.restore;ledger.unpaidWork+=Math.max(0,work*dt-Math.min(work,supply.aerobic)*dt-energy.draw);
+          const kinetic=0.5*(result.move.v*result.move.v-result.before.v*result.before.v)*local.massRatio;
+          ledger.kineticChange+=kinetic;ledger.positiveKineticWork+=Math.max(0,kinetic);
+          peakPowerShortfall=Math.max(peakPowerShortfall,result.requestedPowerShortfall);targetShortfall=Math.max(targetShortfall,Math.max(0,action.targetV-result.cap));trackingIntegral+=result.requestedTrackingShortfall*dt;
+          if(action.targetV<=result.cap+1e-7) limits.requestSeconds+=dt;
+          if(result.physicalCap<=Math.min(result.powerVelocity,result.curveVelocity)+1e-7&&action.targetV>=result.cap-1e-7) limits.velocitySeconds+=dt;
+          if(result.powerVelocity<=Math.min(result.physicalCap,result.curveVelocity)+1e-7&&action.targetV>=result.cap-1e-7) limits.powerSeconds+=dt;
+          if(result.curveVelocity<=Math.min(result.physicalCap,result.powerVelocity)+1e-7&&action.targetV>=result.cap-1e-7) limits.curveSeconds+=dt;
+          if(Math.abs(result.move.a-result.limits.maxA)<1e-6) limits.accelerationSeconds+=dt;
+          if(drafting) limits.draftingSeconds+=dt;
+          if(result.followingCap<Math.min(action.targetV,result.cap)-1e-7)limits.followingSeconds+=dt;
+          if(result.headwayLimited)limits.headwaySeconds+=dt;
+          elapsed+=dt;steps++;
+          if(!result.finiteBrakingFeasible) finiteBrakingFeasible=false;
+          if(trace) trace.push({time:atTime+elapsed,s:local.s,t:local.t,v:local.v,stamina:local.stamina,guts:local.guts,retention:local.retention,aerobicOutput:local.aerobicOutput,work,supply:supply.aerobic,drafting,requestedV:action.targetV,
+            followingCap:result.followingCap,headwayLimited:result.headwayLimited,trafficFeasible:result.trafficFeasible,frontId:front?.id??null,wakeId:wake?.id??null,
+            ...(wake||leader?{observedLeader:{s:(wake||leader).s,t:(wake||leader).t,v:(wake||leader).v}}:{}),
+            ...(multipleOpponents?{opponents:visible.map(F=>({id:F.id,s:F.s,t:F.t,v:F.v,finished:F.finished}))}:{})});
+          if(result.finishTime!=null) {finished=true;finishTime=result.finishTime;}
+          if(!finiteBrakingFeasible||!trafficFeasible||options.earlyExit&&requestedMode&&(peakPowerShortfall>1e-7||ledger.requiredDraw>initialReserve+ledger.recovered+1e-7)) {stoppedEarly=true;break;}
+        }
+        const goalReached=!goal||(Number.isFinite(goal.s)?local.s>=goal.s-(goal.tolerance??0.02):true)&&
+          (Number.isFinite(goal.t)?Math.abs(local.t-goal.t)<=(goal.lateralTolerance??0.2):true);
+        segments.push({index,from:startS,to:local.s,time:elapsed-begin,duration:elapsed-begin,requestedDuration:action.duration??null,
+          startedAt:atTime+begin,endedAt:atTime+elapsed,targetV:action.targetV,goalReached,...(goal?{goal:{...goal},distanceShortfall:Number.isFinite(goal.s)?Math.max(0,goal.s-local.s):0}:{})});
+      }
+      for(let i=0;i<actions.length&&!finished&&!stoppedEarly;i++) run(actions[i],false,i);
+      if(!finished&&!stoppedEarly&&Number.isFinite(options.tailTargetV)) run({targetV:options.tailTargetV,targetT:options.tailTargetT??local.t,draftUntil:options.tailDraftUntil},true,actions.length);
+      const completionRequired=Number.isFinite(options.tailTargetV),complete=!stoppedEarly&&steps<48000&&(!completionRequired||finished);
+      const energyFeasible=finiteBrakingFeasible&&peakPowerShortfall<=1e-7&&ledger.unpaidWork<=1e-6;
+      const requestedEnergyFeasible=finiteBrakingFeasible&&peakPowerShortfall<=1e-7&&ledger.requiredDraw<=initialReserve+ledger.recovered+1e-7;
+      const finalGoal=options.goal,finalGoalReached=!finalGoal||(Number.isFinite(finalGoal.s)?local.s>=finalGoal.s-(finalGoal.tolerance??0.02):true)&&
+        (Number.isFinite(finalGoal.t)?Math.abs(local.t-finalGoal.t)<=(finalGoal.lateralTolerance??0.2):true);
+      return {complete,finished,seconds:finished?finishTime-atTime:elapsed,ledgerSeconds:elapsed,steps,endpoint:{s:finished?length:local.s,t:local.t,v:local.v,stamina:local.stamina,guts:local.guts,retention:local.retention,aerobicOutput:local.aerobicOutput},
+        ledger,limits,required:ledger.requiredDraw,netRequired:ledger.requiredDraw-ledger.recovered,peakPowerShortfall,energyFeasible,requestedEnergyFeasible,
+        goalReached:complete&&finalGoalReached&&segments.every(s=>s.goalReached),targetShortfall,meanTrackingShortfall:elapsed?trackingIntegral/elapsed:0,
+        pathConflict,opponentPathConflict,trafficFeasible,trafficCertified:false,feasible:complete&&requestedEnergyFeasible,segments,
+        observedLeaderEndpoints:[...observedLeaders.values()].map(F=>({id:F.id,s:F.s,t:F.t,v:F.v,finished:F.finished})),...(trace?{trace}:{}),
+        model:{mode:requestedMode?'demand':'paid-execution',maxDt,tailMaxDt,tickOrigin,opponentMotionPrior:motionPrior,opponent:'visible motion only; all supplied opponents propagate once per step; closest aligned wake/front; shared finite stopping/response constraint; no hidden state or full traffic certification',initialState:{s:initial.s,t:initial.t,v:initial.v,reserve:initialReserve}}};
+    }
     function finishPlan(H,requestedV,draftDistance=0,options={}) {
       if(!Number.isFinite(requestedV)||requestedV<0) throw new Error('无效预测配速');
-      const reserve=Math.max(0,Number.isFinite(options.reserve)?options.reserve:H.stamina);
-      const maxStep=Number.isFinite(options.maxStep)?clamp(options.maxStep,1,80):40;
-      const mesh=maxStep===40?routeMesh:planningPoints(maxStep);
       const from=clamp(H.s,0,length),draftEnd=Math.min(length,from+Math.max(0,draftDistance));
-      const points=[from,...mesh.filter(s=>s>from+1e-7)];
-      if(draftEnd>from+1e-7&&draftEnd<length-1e-7&&!points.some(s=>Math.abs(s-draftEnd)<1e-7)) {
-        points.push(draftEnd);points.sort((a,b)=>a-b);
+      const result=projectActions(H,[],{...options,demand:true,tailTargetV:Math.max(3,requestedV),tailTargetT:H.t,tailDraftUntil:draftEnd,
+        tailMaxDt:Number.isFinite(options.maxStep)?clamp(options.maxStep/Math.max(1,H.v||H.base),1/120,0.5):(options.tailMaxDt??0.5)});
+      return {...result,feasible:result.complete&&result.requestedEnergyFeasible};
+    }
+
+    // Shared one-way physical stopping/response constraint; no opponent hidden state.
+    function followingConstraintSolver(maximumSpeed) {
+      const brakingCache=new WeakMap(),stoppingCache=new WeakMap(),followingCache=new WeakMap(),brakingInterval=0.125;
+      const brakingSteps=Math.ceil(maximumSpeed/RACE_F.braking/brakingInterval);
+      function advancePhysical(at,distance,transverse) {
+        return laneAdvance(at,distance,transverse,geo);
       }
-      const maximumSupply=H.aerobic*H.retention;
-      const initialSupply=H.aerobicOutput??maximumSupply,tau=H.aerobicTau;
-      const oxygenAt=t=>maximumSupply+(initialSupply-maximumSupply)*Math.exp(-t/tau);
-      const oxygenIntegral=(a,b)=>maximumSupply*(b-a)+(initialSupply-maximumSupply)*tau*(Math.exp(-a/tau)-Math.exp(-b/tau));
-      const response=RACE_F.responseTime*clamp(1+(0.65-H.behavior.tractability)*0.4,0.82,1.26);
-      const accelerationReserve=clamp(reserve/Math.max(1,H.staminaMax)/RACE_F.reserveFade,0,1);
-      const quadrature=[[0.1127016653792583,5/18],[0.5,4/9],[0.8872983346207417,5/18]];
-      let required=0,elapsed=0,previousV=H.v,peakPowerShortfall=0;
-      const segments=options.trace?[]:null;
-      for(let i=1;i<points.length;i++) {
-        const a=points[i-1];let b=points[i],at=(a+b)/2;
-        let target=Math.max(3,Math.min(requestedV,projectedCap(H,at)));
-        // 大幅提速时随当前速度细化到约半秒，避免把低速的加速上限冻结40米。
-        const transientStep=Math.max(1,previousV*0.5)*laneProgressCoef(at,H.t,geo);
-        if(Math.abs(target-previousV)>2&&b-a>transientStep+1e-7) {
-          b=a+transientStep;points.splice(i,0,b);at=(a+b)/2;
-          target=Math.max(3,Math.min(requestedV,projectedCap(H,at)));
-        }
-        const distance=laneArcDistance(a,b,H.t,geo);
-        const mix=clamp(previousV/H.base,0,1),sign=target>=previousV?1:-1;
-        const limit=sign>0?(RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230)*(1-mix)+
-          RACE_F.runningAccel*(0.65+H.adj['爆发力']/200)*mix)*(0.65+0.35*accelerationReserve):RACE_F.braking;
-        const boundedTime=Math.max(0,Math.abs(target-previousV)/limit-response);
-        const boundedV=previousV+sign*limit*boundedTime;
-        const boundedDistance=previousV*boundedTime+sign*limit*boundedTime*boundedTime/2;
-        function trajectory(t) {
-          if(boundedTime>0&&t<=boundedTime) return {v:previousV+sign*limit*t,distance:previousV*t+sign*limit*t*t/2,a:sign*limit};
-          const tail=t-boundedTime,decay=Math.exp(-tail/response);
-          return {v:target+(boundedV-target)*decay,
-            distance:boundedDistance+target*tail+(boundedV-target)*response*(1-decay),
-            a:-(boundedV-target)*decay/response};
-        }
-        let high=Math.max(0.01,distance/Math.max(1,(previousV+target)/2));
-        while(trajectory(high).distance<distance) high*=2;
-        let low=0,seconds=high;
-        for(let n=0;n<12;n++) {
-          const point=trajectory(seconds),error=point.distance-distance;
-          if(Math.abs(error)<1e-7) break;
-          if(error>0) high=seconds;else low=seconds;
-          const next=seconds-error/Math.max(0.1,point.v);
-          seconds=next>low&&next<high?next:(low+high)/2;
-        }
-        const end=trajectory(seconds);
-        const grade=(elevationAt(b,geo,g)-elevationAt(a,geo,g))/distance;
-        let draw=0,power=0,segmentShortfall=0;
-        for(const [fraction,weight] of quadrature) {
-          // The bounded planning cell uses its exact arc length; interior work
-          // quadrature interpolates progress instead of repeated arc inversions.
-          // This is an approximate rider forecast, never the traffic safety path.
-          const point=trajectory(seconds*fraction),where=a+(b-a)*point.distance/distance;
-          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*point.v);
-          const oxygen=oxygenAt(elapsed+seconds*fraction);
-          draw+=weight*Math.max(0,output-oxygen)*seconds;power+=weight*output;
-          segmentShortfall=Math.max(segmentShortfall,output-oxygen);
-        }
-        // 端点与加速度从上限转为响应控制的接点，也可能是瞬时需求峰值。
-        for(const when of [0,Math.min(seconds,boundedTime),seconds]) {
-          const point=trajectory(when),where=clamp(a+(b-a)*point.distance/distance,a+1e-8,b-1e-8);
-          const output=powerCost(H,point.v,point.a,at<draftEnd,where,9.81*grade*point.v);
-          segmentShortfall=Math.max(segmentShortfall,output-oxygenAt(elapsed+when));
-        }
-        required+=draw;
-        const after=Math.max(0,reserve-required);
-        // 储备只耗用时，格末是本格可用功率的下界；不能拿平均储备放行末段透支。
-        const available=H.reservePower*clamp(after/Math.max(1,H.staminaMax)/RACE_F.reserveFade,0,1);
-        peakPowerShortfall=Math.max(peakPowerShortfall,segmentShortfall-available);
-        if(segments) segments.push({from:a,to:b,v:distance/seconds,fromV:previousV,toV:end.v,time:seconds,
-          power,oxygen:oxygenIntegral(elapsed,elapsed+seconds),draw,kinetic:H.kineticCost(previousV,end.v)});
-        elapsed+=seconds;previousV=end.v;
+      function stoppingEnd(move) {
+        if(!stoppingCache.has(move)) stoppingCache.set(move,advancePhysical(move.s,move.v*move.v/(2*RACE_F.braking),move.t));
+        return stoppingCache.get(move);
       }
-      return {required,seconds:elapsed,feasible:required<=reserve+1e-7&&peakPowerShortfall<=1e-7,
-        peakPowerShortfall,...(segments?{segments}:{})};
+      function brakingTrajectory(move) {
+        if(brakingCache.has(move)) return brakingCache.get(move);
+        const points=[{s:move.s,v:move.v}],events=[move.v/RACE_F.braking];let at=move.s,previous=move.v,eventsReady=false;
+        function ensurePoints(until=brakingSteps) {
+          for(let i=points.length;i<=until;i++) {
+            const next=Math.max(0,move.v-RACE_F.braking*brakingInterval*i);
+            const elapsed=previous>0?Math.min(brakingInterval,previous/RACE_F.braking):0;
+            if(elapsed) at=advancePhysical(at,(previous+next)/2*elapsed,move.t);
+            points.push({s:at,v:next});previous=next;
+          }
+          return points;
+        }
+        function ensureEvents() {
+          if(eventsReady)return events;
+          ensurePoints();
+          const breakpoints=laneArcBreakpoints(move.s,at,geo);
+          for(const where of breakpoints) {
+            if(kAt(where-1e-4,geo)===0&&kAt(where+1e-4,geo)===0) continue;
+            const distance=laneArcDistance(move.s,where,move.t,geo);
+            const terminal=Math.sqrt(Math.max(0,move.v*move.v-2*RACE_F.braking*distance));
+            events.push(2*distance/Math.max(1e-12,move.v+terminal));
+          }
+          eventsReady=true;return events;
+        }
+        const queryCache=new Map();
+        const trajectory={get points(){return ensurePoints();},get events(){return ensureEvents();},sampleAt(time){
+          const i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
+          if(regular&&i>=0&&i<=brakingSteps){ensurePoints(i);return points[i];}
+          return this.pointAt(time);
+        },pointAt:time=>{
+          if(queryCache.has(time)) return queryCache.get(time);
+          const atTime=Math.min(Math.max(0,time),move.v/RACE_F.braking),v=Math.max(0,move.v-RACE_F.braking*atTime);
+          const index=Math.min(brakingSteps,Math.floor(atTime/brakingInterval));ensurePoints(index);
+          const base=points[index],elapsed=atTime-index*brakingInterval;
+          const point={s:advancePhysical(base.s,(base.v+v)/2*elapsed,move.t),v};
+          queryCache.set(time,point);return point;
+        }};
+        brakingCache.set(move,trajectory);return trajectory;
+      }
+      function followingSlack(H,F,move,frontMove,withResponse=true) {
+        const ownScale=trafficProgressCoef(move.s,move.t);
+        let paired=followingCache.get(move);
+        if(!paired){paired=new WeakMap();followingCache.set(move,paired);}
+        if(paired.has(frontMove)) return paired.get(frontMove)-(withResponse?(1/60)*move.v*ownScale:0);
+        const response=(1/60)*move.v*ownScale;
+        if(withResponse) {
+          // One negative witness proves rejection, but is only an upper bound
+          // on the full minimum. Never cache it for physical-slack queries.
+          const now=frontMove.s-move.s-followingBodyClearance(H,F,move.s,frontMove.s,move.t,frontMove.t).longitudinal-response;
+          if(now<-1e-7) return now;
+          const rearEnd=stoppingEnd(move),frontEnd=stoppingEnd(frontMove);
+          const stop=frontEnd-rearEnd-followingBodyClearance(H,F,rearEnd,frontEnd,move.t,frontMove.t).longitudinal-response;
+          if(stop<-1e-7) return stop;
+        }
+        if(geo.progressCoefUpperBound) {
+          const bodyUpper=((followingBodyLength(H)+followingBodyLength(F))/2+0.20)*Math.max(1,geo.progressCoefUpperBound);
+          // 前马在未来只向前运动。若后马完整停止终点仍在前马
+          // 当前身体之后，则全时域可行；几何界由导数包络保守得出。
+          const lowerBound=frontMove.s-stoppingEnd(move)-bodyUpper;
+          if(lowerBound>=(1/60)*move.v*ownScale+1e-8) {
+            paired.set(frontMove,lowerBound);
+            return lowerBound-(withResponse?(1/60)*move.v*ownScale:0);
+          }
+        }
+        // Write the future gap as physical arc along the rear horse's lane:
+        // G(t)=G(0)+dFront(t)-dRear(t)+(tRear-tFront)*deltaHeadingFront(t).
+        // Equal finite braking gives dFront-dRear >= -max(0,(vr²-vf²)/(2a)).
+        // The derivative-control curvature bound also covers the absolute
+        // heading variation, so this proof does not assume constant curvature
+        // or a monotone center-gap. If it cannot prove safety, check every cell.
+        const routeBound=trafficRouteIntervalBounds(Math.min(move.s,frontMove.s),Math.max(stoppingEnd(move),stoppingEnd(frontMove)),geo);
+        const curvatureUpper=routeBound?.maxCurvature??geo.maxReferenceCurvature;
+        const frontMetricMargin=1-Math.abs(frontMove.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
+        const rearMetricMargin=1-Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
+        if(geo.progressCoefLowerBound>0&&Number.isFinite(curvatureUpper)&&frontMetricMargin>0&&rearMetricMargin>0) {
+          const initialPhysicalGap=laneArcDistance(move.s,frontMove.s,move.t,geo);
+          const frontDistance=frontMove.v*frontMove.v/(2*RACE_F.braking);
+          const closingDistance=Math.max(0,(move.v*move.v-frontMove.v*frontMove.v)/(2*RACE_F.braking));
+          const headingBound=curvatureUpper*frontDistance/frontMetricMargin;
+          const physicalLower=initialPhysicalGap-closingDistance-Math.abs(move.t-frontMove.t)*headingBound;
+          const bodyUpper=((followingBodyLength(H)+followingBodyLength(F))/2+0.20)*Math.max(1,geo.progressCoefUpperBound);
+          // Convert only along the rear lane, rather than every legal track lane.
+          // |signed curvature| <= curvatureUpper bounds its physical metric.
+          const rearMetricUpper=(routeBound?.maxMetric??geo.maxReferenceMetric)*(1+Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper);
+          const rearProgressLower=Number.isFinite(rearMetricUpper)&&rearMetricUpper>0?Math.min(1,1/rearMetricUpper):0;
+          const lowerBound=physicalLower*rearProgressLower-bodyUpper;
+          if(lowerBound>=response+1e-8) {
+            paired.set(frontMove,lowerBound);return lowerBound-(withResponse?response:0);
+          }
+        }
+        // 同样的有限制动下，后马必须留下相对停止距离。固定使用最大
+        // 内部步1/60秒的响应余量，不能随当前小步缩小，否则下一次
+        // 合法外部step变大时会突然要求更多空间，制造不可行状态。
+        const own=brakingTrajectory(move),front=brakingTrajectory(frontMove);
+        let witnesses=trafficNegativeWitnessCache.get(H);
+        if(!witnesses){witnesses=new WeakMap();trafficNegativeWitnessCache.set(H,witnesses);}
+        // Any exact sampled negative gap rejects a response query. The previous
+        // pair's minimizing time is just a candidate; it never proves acceptance.
+        const witnessTime=witnesses.get(F);
+        if(withResponse&&Number.isFinite(witnessTime)&&witnessTime>=0) {
+          const time=Math.min(witnessTime,brakingSteps*brakingInterval),i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
+          // Match the original regular-grid representation as well as pointAt.
+          const r=regular?own.points[i]:own.pointAt(time),f=regular?front.points[i]:front.pointAt(time);
+          const witness= f.s-r.s-followingBodyClearance(H,F,r.s,f.s,move.t,frontMove.t).longitudinal-response;
+          if(witness<-1e-7)return witness;
+        }
+        let closest=Infinity;
+        // 最终停止位置不足以定义安全域：前马先入外道弯道时，即使
+        // 后马物理速度较低，进度速度也可暂时更高。检查整个未来
+        // 制动过程的最近接近，提前留下空间而不是临接触才制动。
+        const values=new Map();
+        function gapAt(time) {
+          if(values.has(time)) return values.get(time);
+          const i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
+          const r=regular&&own.points[i]?own.points[i]:own.pointAt(time);
+          const f=regular&&front.points[i]?front.points[i]:front.pointAt(time);
+          const body=followingBodyClearance(H,F,r.s,f.s,move.t,frontMove.t),gap=f.s-r.s-body.longitudinal;
+          values.set(time,gap);
+          if(gap<closest)witnesses.set(F,time);
+          closest=Math.min(closest,gap);return gap;
+        }
+        const certificates=[];
+        function certifyInterval(left,right,depth) {
+          const r=own.sampleAt(left),f=front.sampleAt(left),rr=own.sampleAt(right),fr=front.sampleAt(right),span=right-left;
+          const bounds=trafficRouteIntervalBounds(Math.min(r.s,f.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
+          let lower=-Infinity;
+          if(bounds&&bounds.minMetric>0&&Number.isFinite(bounds.signedMin)&&Number.isFinite(bounds.signedMax)) {
+            const reference=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-reference,fd=frontMove.t-reference;
+            const rearMetricMax=bounds.maxMetric*Math.max(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
+            const rearOffsetMin=Math.min(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
+            const frontOffsetMin=Math.min(1+fd*bounds.signedMin,1+fd*bounds.signedMax);
+            const rearProjectionMin=bounds.minMetric*Math.min(1+rd*Math.max(0,bounds.signedMin),1+rd*Math.max(0,bounds.signedMax));
+            const frontProjectionMin=bounds.minMetric*Math.min(1+fd*Math.max(0,bounds.signedMin),1+fd*Math.max(0,bounds.signedMax));
+            if(rearMetricMax>0&&rearOffsetMin>0&&frontOffsetMin>0&&rearProjectionMin>0&&frontProjectionMin>0) {
+              const distance=(v,time)=>{const elapsed=Math.min(time,v/RACE_F.braking);return(v+Math.max(0,v-RACE_F.braking*elapsed))/2*elapsed;};
+              const rearDistance=distance(r.v,span),frontDistance=distance(f.v,span),closing=Math.max(0,rearDistance-frontDistance);
+              const headingMin=frontDistance*bounds.signedMin/(1+fd*bounds.signedMin),headingMax=frontDistance*bounds.signedMax/(1+fd*bounds.signedMax);
+              // This is a bound for every intermediate time, including the
+              // zero heading change at the left endpoint. Do not prepay gains.
+              const headingContribution=Math.min(0,(move.t-frontMove.t)*headingMin,(move.t-frontMove.t)*headingMax);
+              const physicalLower=laneArcDistance(r.s,f.s,move.t,geo)-closing+headingContribution-1e-6;
+              const bodyUpper=((followingBodyLength(H)+followingBodyLength(F))/2+0.20)*Math.max(1,1/rearProjectionMin,1/frontProjectionMin);
+              lower=physicalLower>0?physicalLower/rearMetricMax-bodyUpper:-Infinity;
+            }
+          }
+          if(lower>=response+1e-8) {certificates.push({left,right,lower});return true;}
+          if(depth>=6)return false;
+          const middle=(left+right)/2;
+          const a=certifyInterval(left,middle,depth+1),b=certifyInterval(middle,right,depth+1);return a&&b;
+        }
+        const fullyCertified=certifyInterval(0,brakingSteps*brakingInterval,0);
+        certificates.sort((a,b)=>a.left-b.left);
+        for(const certificate of certificates)closest=Math.min(closest,certificate.lower);
+        if(fullyCertified){paired.set(frontMove,closest);return closest-(withResponse?response:0);}
+        function covered(left,right) {
+          let through=left;
+          for(const certificate of certificates) {
+            if(certificate.right<through)continue;
+            if(certificate.left>through+1e-12)return false;
+            through=Math.max(through,certificate.right);
+            if(through>=right-1e-12)return true;
+          }
+          return false;
+        }
+        const times=[...own.points.map((_,i)=>i*brakingInterval),...own.events,...front.events]
+          .filter(t=>t>=0&&t<=brakingSteps*brakingInterval).sort((a,b)=>a-b)
+          .filter((t,i,all)=>!i||t-all[i-1]>1e-10);
+        for(const time of times) {
+          if(covered(time,time))continue;
+          gapAt(time);
+          if(withResponse&&closest-response<-1e-7) return closest-response;
+        }
+        for(let i=1;i<times.length;i++) {
+          const left=times[i-1],right=times[i],span=right-left;
+          if(span<1e-8||covered(left,right)) continue;
+          // Enclose center progress and body projection over this complete time
+          // interval. Only certified intervals skip the original root search.
+          function sampledPoint(trajectory,time) {
+            const j=Math.round(time/brakingInterval),regular=Math.abs(time-j*brakingInterval)<1e-12;
+            return regular&&trajectory.points[j]?trajectory.points[j]:trajectory.pointAt(time);
+          }
+          const rl=sampledPoint(own,left),fl=sampledPoint(front,left),rr=sampledPoint(own,right),fr=sampledPoint(front,right);
+          const interval=trafficRouteIntervalBounds(Math.min(rl.s,fl.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
+          if(interval&&interval.minMetric>0&&Number.isFinite(interval.signedMin)&&Number.isFinite(interval.signedMax)) {
+            const ref=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-ref,fd=frontMove.t-ref;
+            const physicalRearMin=interval.minMetric*Math.min(1+rd*interval.signedMin,1+rd*interval.signedMax);
+            const physicalFrontMax=interval.maxMetric*Math.max(1+fd*interval.signedMin,1+fd*interval.signedMax);
+            const physicalFrontMin=interval.minMetric*Math.min(1+fd*interval.signedMin,1+fd*interval.signedMax);
+            const projectionRearMin=interval.minMetric*Math.min(1+rd*Math.max(0,interval.signedMin),1+rd*Math.max(0,interval.signedMax));
+            const projectionFrontMin=interval.minMetric*Math.min(1+fd*Math.max(0,interval.signedMin),1+fd*Math.max(0,interval.signedMax));
+            if(physicalRearMin>0&&physicalFrontMin>0&&physicalFrontMax>0&&projectionRearMin>0&&projectionFrontMin>0) {
+              const rateUpper=rl.v/physicalRearMin-Math.max(0,fl.v-RACE_F.braking*span)/physicalFrontMax;
+              const bodyUpper=((followingBodyLength(H)+followingBodyLength(F))/2+0.20)*Math.max(1,1/projectionRearMin,1/projectionFrontMin);
+              const intervalLower=fl.s-rl.s-Math.max(0,rateUpper)*span-bodyUpper-1e-6;
+              if(intervalLower>=response+1e-8) {closest=Math.min(closest,intervalLower);continue;}
+            }
+          }
+
+          // 包含完整身体投影的局部极小，而不只找两马中心进度速度
+          // 相等。断点左右极限也保留，覆盖内道身体投影与曲率跳变。
+          const edge=Math.min(1e-8,span/1000),epsilon=Math.min(1e-5,span/1000);
+          gapAt(left+edge);gapAt(right-edge);
+          const middle=(left+right)/2;gapAt(middle);
+          if(withResponse&&closest-response<-1e-7) return closest-response;
+          const slopes=new Map();
+          const slopeAt=time=>{
+            if(slopes.has(time))return slopes.get(time);
+            if(time>=Math.max(move.v,frontMove.v)/RACE_F.braking)return 0;
+            const r=own.pointAt(time),f=front.pointAt(time);
+            const rv=r.v*trafficProgressCoef(r.s,move.t),fv=f.v*trafficProgressCoef(f.s,frontMove.t);
+            // 对完整身体投影做局部导数。中心进度速度直接来自同一
+            // 弧长导数；只在微小局部计算投影变化，避免重复逆解路径。
+            const a=Math.max(left+edge,time-epsilon),b=Math.min(right-edge,time+epsilon);
+            if(b<=a)return 0;
+            const ca=followingBodyClearance(H,F,r.s+rv*(a-time),f.s+fv*(a-time),move.t,frontMove.t).longitudinal;
+            const cb=followingBodyClearance(H,F,r.s+rv*(b-time),f.s+fv*(b-time),move.t,frontMove.t).longitudinal;
+            const value=fv-rv-(cb-ca)/(b-a);slopes.set(time,value);return value;
+          };
+          for(const [a,b] of [[left+edge,middle],[middle,right-edge]]) {
+            let low=a,high=b,dl=slopeAt(low),dh=slopeAt(high);
+            if(!(dl<-1e-7&&dh>1e-7)) continue;
+            if(!geo.route) {
+              // 抽象直弯区间中，两马倍率与身体投影为常量，有限
+              // 制动的相对进度速度为线性函数，极小点可以直接求出。
+              gapAt(low-dl*(high-low)/(dh-dl));continue;
+            }
+            for(let n=0;n<18;n++) {
+              const mid=(low+high)/2;
+              if(slopeAt(mid)<0) low=mid;else high=mid;
+            }
+            gapAt((low+high)/2);
+            if(withResponse&&closest-response<-1e-7) return closest-response;
+          }
+        }
+        paired.set(frontMove,closest);
+        return closest-(withResponse?(1/60)*move.v*ownScale:0);
+      }
+      return followingSlack;
     }
     function reserveToFinish(H,requestedV,draftDistance=0) {
       return finishPlan(H,requestedV,draftDistance).required;
@@ -1343,7 +1935,7 @@
       let low=3,high=H.maxV;
       for(let i=0;i<9;i++) {
         const mid=(low+high)/2;
-        if(finishPlan(H,mid,draftDistance,{reserve}).feasible) low=mid;else high=mid;
+        if(finishPlan(H,mid,draftDistance,{reserve,earlyExit:true}).feasible) low=mid;else high=mid;
       }
       return low;
     }
@@ -1369,101 +1961,326 @@
       if(!H.strategyHistory) H.strategyHistory=[];
       H.strategyHistory.push({...H.strategy});if(H.strategyHistory.length>80) H.strategyHistory.shift();
     }
+    // Only visible motion is extrapolated. Opponents' energy and future orders are unknown.
+    function observedPosition(F,seconds,anticipatedPace=null) {
+      const response=RACE_F.responseTime;
+      // At the break, frozen zero-speed extrapolation would pretend that all rivals
+      // remain in their stalls. Use a shared public kinematic prior, then replace it
+      // with observed motion. No rival attributes or reserve enter this estimate.
+      if(anticipatedPace&&((race.t<0.8&&F.v<3)||(F.accel>0.3&&F.v<anticipatedPace*0.9))) {
+        let elapsed=0,v=F.v,distance=0,delay=F.v>0?0:Math.max(0,0.3-race.t);
+        while(elapsed<seconds-1e-9){const dt=Math.min(0.25,seconds-elapsed),moving=Math.max(0,elapsed+dt-Math.max(elapsed,delay));
+          const mix=clamp(v/Math.max(3,anticipatedPace),0,1);
+          const limit=RACE_F.maxAccel*(0.7+70/230)*(1-mix)+RACE_F.runningAccel*(0.65+70/200)*mix;
+          const next=Math.max(0,v+clamp((anticipatedPace-v)/response,-RACE_F.braking,limit)*moving);
+          distance+=(v+next)*moving/2;v=next;elapsed+=dt;}
+        return {s:F.s+distance*laneProgressCoef(F.s,F.t,geo),t:F.t,v};
+      }
+      const a=clamp(F.accel||0,-RACE_F.braking,RACE_F.runningAccel);
+      const change=a*response*(1-Math.exp(-seconds/response));
+      const stop=a<0&&F.v+a*response<0?-response*Math.log1p(F.v/(a*response)):Infinity;
+      const movingSeconds=Math.min(seconds,stop);
+      const distance=Math.max(0,F.v*movingSeconds+a*response*(movingSeconds-response*(1-Math.exp(-movingSeconds/response))));
+      return {s:F.s+distance*laneProgressCoef(F.s,F.t,geo),t:F.t,v:Math.max(0,F.v+change)};
+    }
+    function applyRiderSequence(H) {
+      const sequence=H.riderSequence;if(!sequence)return;
+      let elapsed=race.t-sequence.at,index=0;
+      while(index<sequence.actions.length&&elapsed>=sequence.actions[index].duration-1e-9){elapsed-=sequence.actions[index++].duration;}
+      if(index===sequence.actions.length){H.riderSequence=null;H.lastObserve=0;return;}
+      const action=sequence.actions[index];
+      H.targetV=Math.max(3,Math.min(H.maxV,action.targetV));
+      if(sequence.stage!==index){sequence.stage=index;setLaneTarget(H,action.targetT);}
+    }
     function runAI(H) {
       if(H.control) return;
       const list=ranked(),remaining=Math.max(0,length-H.s),localFront=frontOf(H);
       const behavior=H.behavior||{forwardness:0.5,settle:0.5,tractability:0.5};
       const plan=H.plan||{position:behavior.forwardness,risk:0.5,patience:behavior.settle};
       const quality={'新人':0.40,'普通':0.70,'优秀':0.88,'殿堂':0.97}[H.jockey]??0.70;
-      // 有限观察间隔与有界误差；优秀骑手更准确，不取得额外速度或能量。
       const speedError=(rng()*2-1)*(0.05+(1-quality)*0.55);
       const reserveEstimate=H.stamina*clamp(1+(rng()*2-1)*(0.02+(1-quality)*0.18),0.82,1.18);
-      const judgement=clamp(1+(rng()*2-1)*(1-quality)*0.10,0.92,1.08);
-      const near=list.filter(F=>F!==H && Math.abs(F.s-H.s)<24);
-      const ahead=near.filter(F=>F.s>H.s+3).sort((a,b)=>a.s-b.s)[0];
-      const wake=near.find(F=>F.s>H.s+3 && F.s-H.s<12 && Math.abs(F.t-H.t)<2.5);
-      const observedPace=(wake?.v??ahead?.v??H.v)+speedError;
-      // 完整滚动预算只保留很小的判断误差余量；耐心不直接扣减巡航速度。
-      const allocation=clamp(0.96+0.025*plan.risk,0.96,0.985);
-      const planned=budgetSpeed(H,reserveEstimate*allocation,wake?Math.min(44,remaining):0);
+      const near=list.filter(F=>F!==H&&Math.abs(F.s-H.s)<48);
+      const wake=near.filter(F=>F.s>H.s&&F.s-H.s<=RACE_F.draftRange&&
+        Math.abs(F.t-H.t)<=(horseWid(H)+horseWid(F))/2+0.8).sort((a,b)=>a.s-b.s)[0];
+      const visible=F=>({id:F.id,s:F.s,t:F.t,v:Math.max(0,F.v+speedError),accel:F.accel||0,lateralV:F.lateralV||0,
+        bodyLength:horseLen(F),bodyWidth:horseWid(F)});
+      const observedPace=(wake?.v??localFront?.v??H.v)+speedError;
+      // The remaining-route budget and the short action forecast share state propagation.
+      // A possible wake is credited only by a finite forecast while actually in its corridor.
+      const planned=budgetSpeed(H,reserveEstimate*clamp(0.965+0.02*plan.risk,0.965,0.985),0);
       updateStartState(H,planned);
-      const attackPlan=finishPlan(H,H.maxV,0,{reserve:reserveEstimate*judgement});
-      const maxDemand=attackPlan.required;
-      const sr=H.stamina/Math.max(1,H.staminaMax);
-      const obstruction=localFront && localFront.s-H.s<4+Math.max(0,H.maxV-localFront.v)*3 && localFront.v<H.maxV-0.35;
-      // 用本次预算速度评估通道，不能沿用上一观察的慢速指令把超越机会误判为无收益。
+      const horizon=Math.max(0.05,Math.min(8,remaining/Math.max(3,planned)));
+      const settleDuration=Math.min(RACE_F.responseTime*2,Math.max(0,remaining/Math.max(3,planned)-horizon));
+      const evaluationHorizon=horizon+settleDuration;
+      const options={maxDt:0.12,trace:true,opponents:list.filter(F=>F!==H).map(visible),
+        opponentMotionPrior:{pace:H.startSettled?planned:Math.max(planned,H.base+RACE_F.peakExtra),launchUntil:0.8,assumedDelay:0.3}};
+      const holdT=H.laneIntentT>0?H.targetT:H.t;
+      const evaluate=(mode,actions,t,goal=null,maxDt=options.maxDt)=>{
+        const requests=actions.map(a=>({...a,targetT:a.targetT??t}));
+        if(requests[0].leader===undefined)requests[0].leader=wake?visible(wake):null;
+        if(goal)requests.at(-1).goal=goal;
+        // Account for the subsequent return to budget pace instead of pricing all
+        // terminal kinetic energy as if it disappeared at the planning boundary.
+        if(settleDuration>0)requests.push({duration:settleDuration,targetV:planned,targetT:t,leader:null});
+        const forecast=H.projectActions(requests,{...options,maxDt});
+        // Every projected own sweep is checked against the same visible motion
+        // used for wake and following constraints. Future rival responses remain
+        // uncertain; the actual simultaneous solver still checks execution.
+        const conflict=forecast.pathConflict;
+        return {mode,actions,t,goal,forecast,conflict,request:actions[0].targetV};
+      };
+      if(H.riderSequence) {
+        const sequence=H.riderSequence,actions=[];let elapsed=race.t-sequence.at;
+        for(const action of sequence.actions){if(elapsed>=action.duration){elapsed-=action.duration;continue;}
+          actions.push({...action,duration:action.duration-elapsed,
+            leader:action.leader===null?null:action.leader&&wake?visible(wake):undefined});elapsed=0;}
+        const continuation=actions.length?evaluate(sequence.mode,actions,actions.at(-1).targetT,sequence.goal,1/60):null;
+        if(continuation&&!continuation.conflict&&continuation.forecast.energyFeasible&&continuation.forecast.goalReached) {
+          applyRiderSequence(H);
+          H.planning={...H.planning,continuation:true,remainingActions:actions.length,
+            predictedGoal:continuation.forecast.goalReached,predictedS:continuation.forecast.endpoint.s};
+          recordDecision(H,list,sequence.mode,'从实测状态复核并继续已规划的动作序列',reserveEstimate,observedPace);return;
+        }
+        H.statsSummary.cancelledSequences=(H.statsSummary.cancelledSequences||0)+1;H.riderSequence=null;
+      }
+      const candidates=[],baseline=evaluate(H.startSettled?'settle':'start',
+        [{duration:horizon,targetV:planned}],holdT);
+      candidates.push(baseline);
+      const ahead=near.filter(F=>F.s>H.s).sort((a,b)=>a.s-b.s)[0];
+      const nextBend=routeCorners.find(at=>at>H.s+0.1&&kAt(Math.min(length,at+0.1),geo)>0);
+      const bendDeadline=nextBend===undefined?Infinity:(nextBend-H.s)/Math.max(3,planned);
+      const targetRank=(1-plan.position)*Math.max(0,list.length-1);
+      const rankCache=new WeakMap();
+      const rankAt=forecast=>{
+        if(rankCache.has(forecast))return rankCache.get(forecast);
+        // Utility and motion share this candidate's visible trajectory and time.
+        const endpoints=new Map((forecast.observedLeaderEndpoints||[]).map(F=>[F.id,F]));
+        const rank=list.filter(F=>F!==H).reduce((sum,F)=>{
+          const p=endpoints.get(F.id)||observedPosition(visible(F),forecast.seconds,options.opponentMotionPrior.pace);
+          return sum+(p.finished?1:clamp(0.5+(p.s-forecast.endpoint.s)/Math.max(2,horseLen(H)*2),0,1));
+        },0);
+        rankCache.set(forecast,rank);return rank;
+      };
+      const baseRank=rankAt(baseline.forecast);
+      const baseEnergy=baseline.forecast.ledger.energyUsed-baseline.forecast.ledger.recovered;
+      const powerSlope=(H.powerFor(planned+0.12,0,false)-H.powerFor(Math.max(3,planned-0.12),0,false))/0.24;
+      const reservePrice=(1+0.12*plan.patience)/Math.max(3,powerSlope-Math.max(0,H.powerFor(planned,0,false)-H.aerobicOutput)/Math.max(3,planned));
+      // Position has value through room to run, contact with the pack and corner access.
+      // It never adds a speed, acceleration or energy multiplier to a running style.
+      const positionValue=horseLen(H)*(0.65+0.55*plan.risk)*(bendDeadline<horizon+3?1.35:1);
       H.targetV=planned;
-      const gap=obstruction||H.blocked?findGap(H,true):null;
-      const hasPass=gap && Math.abs(gap.t-H.t)>0.25 && gap.pace>(localFront?.v??H.v)+0.12;
-      const keepAttack=!!H.attacking&&maxDemand<=reserveEstimate*judgement*1.12;
-      let attacking=H.startSettled&&attackPlan.feasible&&
-        (keepAttack||maxDemand<=reserveEstimate*judgement*(0.92+0.08*plan.risk));
-      if(obstruction && !hasPass) attacking=false;
-      let desired,mode,reason;
-      if(attacking) {
-        desired=H.maxV;mode='attack';reason='预计余力可支付余程，存在推进机会';
-      } else {
-        desired=planned;mode=!H.startSettled?'start':H.attacking?'recover':'settle';
-        reason=!H.startSettled?'按实际加速建立跑动节奏':H.attacking?'撤回发动，重新分配余力':'按自身能力与余程分配出力';
-        // 跟跑节省的能量必须足以偿付之后追回丢失距离的出力；便宜遮挡不能成为慢跑陷阱。
-        if(wake && observedPace>3 && observedPace<=planned+0.3 && plan.patience>0.25) {
-          const following=Math.min(planned,observedPace+0.06);
-          // 观察窗口由遮挡能维持多久及余程时间限制，不按全程百分比切段。
-          const horizon=Math.min(8,(wake.s-H.s)/Math.max(0.1,planned-observedPace),remaining/Math.max(3,planned));
-          const lostDistance=Math.max(0,planned-following)*horizon;
-          const catchWindow=Math.min(8,Math.max(0,remaining/Math.max(3,planned)-horizon));
-          const catchV=planned+lostDistance/Math.max(0.1,catchWindow);
-          const saving=Math.max(0,H.powerFor(planned,0,false)-H.powerFor(following,0,true))*horizon;
-          const regainCost=Math.max(0,H.powerFor(catchV,0,false)-H.powerFor(planned,0,false))*catchWindow+
-            H.kineticCost(following,catchV);
-          const benefit=saving-regainCost;
-          const canRegain=catchWindow>0.5&&finishPlan(H,catchV,0,{reserve:reserveEstimate}).feasible;
-          H.followOpportunity={saving,regainCost,lostDistance,benefit};
-          if(canRegain&&benefit>Math.max(0.1,(1-plan.patience)*0.5)&&plan.position<0.85) {
-            desired=following;mode='follow';reason='遮挡收益足以偿付之后追回距离的出力';
-          }
+      const openGap=findGap(H,true);
+      const sideBlocked=t=>near.some(F=>Math.abs(F.s-H.s)<(horseLen(H)+horseLen(F))/2+0.35&&
+        Math.min(H.t,t)-(horseWid(H)+horseWid(F))/2-0.1<F.t&&F.t<Math.max(H.t,t)+(horseWid(H)+horseWid(F))/2+0.1);
+      const lanes=[holdT];
+      if(openGap&&Math.abs(openGap.t-holdT)>0.3&&!sideBlocked(openGap.t)) lanes.push(openGap.t);
+      const inner=Math.max(horseWid(H)/2+0.25,H.t-Math.min(2,horizon*RACE_F.lateralSpeed));
+      if(H.laneIntentT<=0&&Math.abs(inner-holdT)>0.3&&!sideBlocked(inner)&&!lanes.some(t=>Math.abs(t-inner)<0.3)) lanes.push(inner);
+      const attackPlan=finishPlan(H,H.maxV,0,{reserve:reserveEstimate});
+      const budgetFinishTime=attackPlan.feasible?finishPlan(H,planned,0,{reserve:reserveEstimate}).seconds:null;
+      for(const t of lanes) {
+        if(t!==holdT)candidates.push(evaluate('route',[{duration:horizon,targetV:planned}],t));
+        const needPosition=!H.startSettled||baseRank>targetRank+0.25||
+          (ahead&&ahead.s-H.s<12&&ahead.v>planned+0.05);
+        if(needPosition||attackPlan.feasible) {
+          const surge=Math.min(H.maxV,Math.max(planned+0.25,
+            ahead?ahead.v+speedError+(ahead.s-H.s+horseLen(H))/Math.max(2,horizon):H.maxV));
+          candidates.push(evaluate(attackPlan.feasible?'attack':!H.startSettled?'start-position':'position',
+            [{duration:horizon,targetV:attackPlan.feasible?H.maxV:surge}],t));
         }
-        // 前位指令只为可支付的实际超越机会短时出力，不对领先者施加保护或远距追赶。
-        if(ahead&&ahead.s-H.s<12&&plan.position>0.55&&mode!=='follow') {
-          const horizon=Math.min(8,remaining/Math.max(3,planned));
-          const clearance=(horseLen(H)+horseLen(ahead))/2+0.5;
-          const requested=Math.min(H.maxV,Math.max(planned,ahead.v+speedError+(ahead.s-H.s+clearance)/Math.max(1,horizon)));
-          const extra=Math.max(0,H.powerFor(requested,0,false)-H.powerFor(planned,0,false))*horizon+
-            Math.max(0,H.kineticCost(H.v,requested)-H.kineticCost(H.v,planned));
-          const available=Math.max(0,reserveEstimate-reserveToFinish(H,planned))*(0.35+plan.risk*0.65);
-          if(extra<=available&&requested>planned+0.05) {
-            desired=requested;mode='position';reason='支付短时超越成本后仍可完成余程预算';
+      }
+      // Dropping behind a flank can create a legal inside route; it is paid and timed.
+      if(H.laneIntentT<=0&&(sideBlocked(inner)||H.blocked)&&H.v>3) {
+        const delay=Math.min(2,horizon/2),front=localFront;
+        const easing=Math.max(3,Math.min(planned-0.35,front?front.v-0.2:planned-0.35));
+        candidates.push(evaluate('wait-route',[{duration:delay,targetV:easing,targetT:H.t},
+          {duration:horizon-delay,targetV:planned,targetT:inner}],inner));
+      }
+      H.followOpportunity=null;
+      if(wake&&observedPace>3&&observedPace<=planned+0.25&&horizon>1&&plan.patience>0.2) {
+        // A cheap same-resolution comparison screens opportunities. It is a
+        // planning heuristic, not a traffic certificate or a catch guarantee.
+        // Only a subsequent 60 Hz reference and catch may enter the candidates.
+        const following=Math.max(3,Math.min(planned,observedPace+0.04));
+        const followTime=Math.min(horizon/2,(wake.s-H.s)/Math.max(0.1,planned-observedPace));
+        const catchTime=horizon-followTime;
+        const catchV=planned+Math.max(0,planned-following)*followTime/Math.max(0.1,catchTime);
+        const actions=[{duration:followTime,targetV:following,targetT:wake.t,leader:visible(wake)},
+          {duration:catchTime,targetV:catchV,targetT:holdT}];
+        const netEnergy=f=>f.ledger.energyUsed-f.ledger.recovered;
+        const goalAt=f=>f.trace.find(p=>p.time>=race.t+horizon-1e-7)?.s??f.endpoint.s;
+        const coarseGoal=goalAt(baseline.forecast);
+        const screened=evaluate('follow',actions,holdT,{s:coarseGoal,tolerance:0.12});
+        const coarseSaving=netEnergy(baseline.forecast)-netEnergy(screened.forecast);
+        const rejectReason=(c,saving,prefix)=>!c.forecast.energyFeasible?prefix+'energy':
+          !c.forecast.complete||!c.forecast.goalReached?prefix+'goal':c.conflict?prefix+'path':
+          !(saving>0)?prefix+'no-saving':null;
+        const coarseReject=rejectReason(screened,coarseSaving,'coarse-');
+        H.statsSummary.followScreenAttempts=(H.statsSummary.followScreenAttempts||0)+1;
+        H.followOpportunity={following,catchV,followTime,catchTime,saving:coarseSaving,
+          savingResolution:'coarse',regainedDistance:screened.forecast.endpoint.s-baseline.forecast.endpoint.s,
+          goalReached:screened.forecast.goalReached,targetShortfall:screened.forecast.targetShortfall,
+          pathConflict:screened.conflict,accepted:false,fineChecked:false,rejectedReason:coarseReject,
+          coarse:{maxDt:options.maxDt,goalS:coarseGoal,goalReached:screened.forecast.goalReached,
+            energyFeasible:screened.forecast.energyFeasible,pathConflict:screened.conflict,
+            saving:coarseSaving,regainedDistance:screened.forecast.endpoint.s-baseline.forecast.endpoint.s,
+            steps:screened.forecast.steps},fine:null};
+        if(coarseReject) {
+          const reasons=H.statsSummary.followRejectedReasons||(H.statsSummary.followRejectedReasons={});
+          reasons[coarseReject]=(reasons[coarseReject]||0)+1;
+          H.statsSummary.coarseCatchRejected=(H.statsSummary.coarseCatchRejected||0)+1;
+          H.statsSummary.rejectedCatchPlans=(H.statsSummary.rejectedCatchPlans||0)+1;
+        } else {
+          H.statsSummary.fineCatchChecks=(H.statsSummary.fineCatchChecks||0)+1;
+          const reference=evaluate(baseline.mode,baseline.actions,holdT,null,1/60);
+          const goalS=goalAt(reference.forecast);
+          const c=evaluate('follow',actions,holdT,{s:goalS,tolerance:0.12},1/60);
+          c.reference=reference;
+          const saving=netEnergy(reference.forecast)-netEnergy(c.forecast),fineReject=rejectReason(c,saving,'fine-');
+          Object.assign(H.followOpportunity,{saving,savingResolution:'fine',fineChecked:true,
+            regainedDistance:c.forecast.endpoint.s-reference.forecast.endpoint.s,
+            goalReached:c.forecast.goalReached,targetShortfall:c.forecast.targetShortfall,
+            pathConflict:c.conflict,rejectedReason:fineReject,
+            fine:{maxDt:1/60,goalS,goalReached:c.forecast.goalReached,energyFeasible:c.forecast.energyFeasible,
+              pathConflict:c.conflict,saving,regainedDistance:c.forecast.endpoint.s-reference.forecast.endpoint.s,
+              steps:c.forecast.steps}});
+          if(!fineReject) {
+            H.statsSummary.fineCatchViable=(H.statsSummary.fineCatchViable||0)+1;
+            candidates.push(c);
+          } else {
+            const reasons=H.statsSummary.followRejectedReasons||(H.statsSummary.followRejectedReasons={});
+            reasons[fineReject]=(reasons[fineReject]||0)+1;
+            H.statsSummary.fineCatchRejected=(H.statsSummary.fineCatchRejected||0)+1;
+            H.statsSummary.rejectedCatchPlans=(H.statsSummary.rejectedCatchPlans||0)+1;
           }
         }
       }
-      if(attacking&&!H.attacking) {
-        H.statsSummary.launches=(H.statsSummary.launches||0)+1;
-        if(H.sprintAt===null) {H.sprintAt=H.s;H.statsSummary.sprintAt=H.s;}
-        event(H.name+' 开始发力！');
-      } else if(!attacking&&H.attacking) {
-        H.statsSummary.withdrawals=(H.statsSummary.withdrawals||0)+1;
-        event(H.name+' 收力重新调整节奏');
+      const futureTurns=routeMesh.reduce((angle,at,i)=>i&&at>H.s?
+        angle+kAt((Math.max(H.s,routeMesh[i-1])+at)/2,geo)*(at-Math.max(H.s,routeMesh[i-1])):angle,0);
+      for(const c of candidates) {
+        const f=c.forecast,rank=rankAt(f),netEnergy=f.ledger.energyUsed-f.ledger.recovered;
+        const reference=c.reference||baseline,ref=reference.forecast;
+        const refEnergy=ref.ledger.energyUsed-ref.ledger.recovered,refRank=rankAt(ref);
+        const positionGain=Math.abs(refRank-targetRank)-Math.abs(rank-targetRank);
+        const routeBenefit=(holdT-f.endpoint.t)*futureTurns*0.35;
+        const changeCost=c.t!==holdT?0.15:0;
+        c.score=f.endpoint.s-ref.endpoint.s-(netEnergy-refEnergy)*reservePrice+
+          positionGain*positionValue+routeBenefit-changeCost;
+        // Once the complete remaining route is payable, unused reserve has no
+        // terminal value: compare finishing time, keeping the local traffic check.
+        if(c.mode==='attack'&&attackPlan.feasible)c.score=Math.max(c.score,
+          (budgetFinishTime-attackPlan.seconds)*planned+routeBenefit-changeCost);
+        if(f.finished)c.score=((baseline.forecast.finished?baseline.forecast.seconds:budgetFinishTime??evaluationHorizon)-f.seconds)*planned;
+        if(c.conflict||!f.energyFeasible)c.score=-Infinity;
       }
-      H.attacking=attacking;H.targetV=Math.max(3,Math.min(H.maxV,desired));
+      const viable=candidates.filter(c=>Number.isFinite(c.score));
+      let chosen=viable.sort((a,b)=>b.score-a.score)[0]||baseline;
+      if(chosen!==baseline&&chosen.score<0.15&&Number.isFinite(baseline.score))chosen=baseline;
+      let mode=chosen.mode,reason={start:'建立可支付的跑动速度','start-position':'在发走后争取可达的位置',
+        settle:'按自身状态保留余程能力',route:'比较横移时间与剩余弯道外绕成本',position:'短时推进争取可达位置',
+        attack:'余程预算支持持续发力',follow:'连续跟跑、追回的距离目标可达且净耗能降低',
+        'wait-route':'收力留出横移间隙，再进入较短路线'}[mode];
+      const attacking=mode==='attack',sr=H.stamina/Math.max(1,H.staminaMax);
+      H.targetV=Math.max(3,Math.min(H.maxV,chosen.request));
+      const first=chosen.actions[0];
+      if(Math.abs((first.targetT??chosen.t)-H.targetT)>0.2)setLaneTarget(H,first.targetT??chosen.t);
+      if(mode==='follow')H.followOpportunity.accepted=true;
+      else if(H.followOpportunity?.fineChecked&&!H.followOpportunity.rejectedReason) {
+        H.followOpportunity.rejectedReason='lower-score';
+        const reasons=H.statsSummary.followRejectedReasons||(H.statsSummary.followRejectedReasons={});
+        reasons['lower-score']=(reasons['lower-score']||0)+1;
+      }
+      if(mode==='follow'||mode==='wait-route') {
+        H.riderSequence={at:race.t,mode,stage:-1,actions:chosen.actions.map(a=>({...a})),
+          goal:chosen.goal};
+        applyRiderSequence(H);
+      }
+      H.planning={horizon,evaluationHorizon,targetRank,bendDeadline:Number.isFinite(bendDeadline)?bendDeadline:null,
+        reservePrice,selected:mode,selectedScore:Number.isFinite(chosen.score)?chosen.score:null,
+        baseline:{s:baseline.forecast.endpoint.s,energy:baseEnergy,rank:baseRank},
+        candidates:candidates.map(c=>({mode:c.mode,targetV:c.request,targetT:c.t,score:Number.isFinite(c.score)?c.score:null,
+          predictedS:c.forecast.endpoint.s,predictedReserve:c.forecast.endpoint.stamina,
+          energyFeasible:c.forecast.energyFeasible,goalReached:c.forecast.goalReached,
+          targetShortfall:c.forecast.targetShortfall,pathConflict:c.conflict}))};
+      const sequenceBeforeSafety=H.riderSequence,beforeSafety={targetV:H.targetV,targetT:H.targetT},reasonBeforeSafety=reason;
       setAction(H,attacking?(sr>0.15?'打鞭':'推骑'):H.targetV>H.v+0.15?'推骑':'收力');
-      if(H.blocked || (localFront && localFront.s-H.s<4+Math.max(0,H.targetV-localFront.v)*3 && H.targetV>localFront.v+0.3)) {
-        if(!avoidBlock(H,gap||findGap(H,true))) {mode='follow';reason='通道未开放，收力等待机会';}
-        recordDecision(H,list,mode,reason,reserveEstimate,observedPace);return;
+      if(!viable.length||(localFront&&localFront.s-H.s<4+Math.max(0,H.targetV-localFront.v)*3&&H.targetV>localFront.v+0.3)) {
+        if(!avoidBlock(H,openGap)){mode='wait';reason='预测通道未开放，保留制动距离等待';}
       }
+      const speedChanged=H.targetV!==beforeSafety.targetV,laneChanged=H.targetT!==beforeSafety.targetT;
+      H.planning.selectedCandidate=chosen.mode;
+      H.planning.actualControls={targetV:H.targetV,targetT:H.targetT};
+      if(speedChanged||laneChanged) {
+        // The safety command has no forecast for the selected action tuple.
+        // Preserve that immediate command and distinguish it from its candidate.
+        H.statsSummary.safetyOverrides=(H.statsSummary.safetyOverrides||0)+1;
+        if(sequenceBeforeSafety) {
+          H.riderSequence=null;
+          H.statsSummary.safetyOverriddenSequences=(H.statsSummary.safetyOverriddenSequences||0)+1;
+          if(sequenceBeforeSafety.mode==='follow'&&H.followOpportunity) {
+            H.followOpportunity.accepted=false;
+            H.followOpportunity.rejectedReason='safety-override';
+            const reasons=H.statsSummary.followRejectedReasons||(H.statsSummary.followRejectedReasons={});
+            reasons['safety-override']=(reasons['safety-override']||0)+1;
+          }
+        }
+        mode=laneChanged?'route':'wait';
+        reason=sequenceBeforeSafety?'按实测近马避让调整实际指令，取消尚未执行的动作序列':'按实测近马避让调整实际指令';
+        H.planning.selectedCandidateScore=H.planning.selectedScore;
+        H.planning.selectedScore=null;
+        H.planning.selected=mode;
+        H.planning.sequenceCommitted=false;
+        H.planning.safetyOverride={candidateMode:chosen.mode,before:beforeSafety,
+          actual:{targetV:H.targetV,targetT:H.targetT},speedChanged,laneChanged};
+      } else {
+        // Merely repeating a safe assignment does not change the action tuple.
+        if(sequenceBeforeSafety) {
+          mode=sequenceBeforeSafety.mode;reason=reasonBeforeSafety;
+          H.statsSummary.committedSequences=(H.statsSummary.committedSequences||0)+1;
+          H.planning.sequenceCommitted=true;
+        } else if(mode!==chosen.mode) {
+          // No viable plan may require waiting without a numerical tuple change.
+          H.planning.selectedCandidateScore=H.planning.selectedScore;
+          H.planning.selectedScore=null;
+          H.planning.fallbackReason=reason;
+        }
+        H.planning.selected=mode;
+      }
+      // Bookkeep labels after safety chooses the actual instruction, once only.
+      const finalAttacking=mode==='attack';
+      if(finalAttacking&&!H.attacking) {
+        H.statsSummary.launches=(H.statsSummary.launches||0)+1;
+        if(H.sprintAt===null){H.sprintAt=H.s;H.statsSummary.sprintAt=H.s;}
+        event(H.name+' 开始发力！');
+      } else if(!finalAttacking&&H.attacking) {
+        H.statsSummary.withdrawals=(H.statsSummary.withdrawals||0)+1;event(H.name+' 收力重新调整节奏');
+      }
+      H.attacking=finalAttacking;
       recordDecision(H,list,mode,reason,reserveEstimate,observedPace);
-      if(H.laneIntentT>0 && Math.abs(H.targetT-H.t)>0.1) return;
-      H.laneIntentT=0;
-      const pass=H.passTarget,gainV=pass?H.targetV*laneProgressCoef(H.s,H.t,geo)-pass.v*laneProgressCoef(pass.s,pass.t,geo):0;
-      if(pass && !pass.place && !pass.dnf && pass.s-H.s<=14 && gainV>0.05 && H.s-pass.s<(horseLen(H)+horseLen(pass))/2+1) return;
-      H.passTarget=null;
-      let goal=H.t;
-      if(wake&&!attacking&&H.targetV<=wake.v+0.25) goal=wake.t;
-      else if(kAt(H.s,geo)>0 || !localFront) goal=Math.max(1.4,H.t-2);
-      // 选短路/遮挡同样需要开放路径，不能给入内指令跨越并排马匹。
-      const side=near.some(F=>Math.abs(F.s-H.s)<(horseLen(H)+horseLen(F))/2+0.4 &&
-        Math.min(H.t,goal)-(horseWid(H)+horseWid(F))/2<F.t && F.t<Math.max(H.t,goal)+(horseWid(H)+horseWid(F))/2);
-      if(!side&&Math.abs(goal-H.t)>0.2) {
-        setLaneTarget(H,goal);setAction(H,goal<H.t?'斜行in':'斜行out');
+      // A lateral commitment has a lifecycle, not just a start. While the chosen
+      // lateral route is still unfinished the promise is kept; once it is done,
+      // a passing commitment is released as soon as the opponent is no longer
+      // being passed (gone, finished, out of reach or not actually losing ground).
+      // Without this the horse would stay pinned outside for the rest of the race.
+      if(H.laneIntentT>0&&Math.abs(H.targetT-H.t)>0.1) {
+        H.statsSummary.keptLaneCommitments=(H.statsSummary.keptLaneCommitments||0)+1;
+      } else if(H.passTarget) {
+        const pass=H.passTarget;
+        const gainV=H.targetV*laneProgressCoef(H.s,H.t,geo)-pass.v*laneProgressCoef(pass.s,pass.t,geo);
+        const stillPassing=!pass.place&&!pass.dnf&&pass.s-H.s<=14&&gainV>0.05&&
+          H.s-pass.s<(horseLen(H)+horseLen(pass))/2+1;
+        if(!stillPassing) {
+          H.statsSummary.releasedPassTargets=(H.statsSummary.releasedPassTargets||0)+1;
+          H.passTarget=null;
+        }
+      }
+      if(H.planning.safetyOverride||H.planning.fallbackReason) {
+        const detail={selectedCandidate:H.planning.selectedCandidate,targetT:H.targetT,
+          ...(H.planning.safetyOverride?{safetyOverride:H.planning.safetyOverride}:{}),
+          ...(H.planning.fallbackReason?{fallbackReason:H.planning.fallbackReason}:{})};
+        Object.assign(H.strategy,detail);
+        Object.assign(H.strategyHistory[H.strategyHistory.length-1],detail);
       }
     }
     function headwindAt(at) {
@@ -1566,6 +2383,7 @@
       }
       for(const H of act) {
         H.lastObserve-=dt;H.actionT=Math.max(0,H.actionT-dt);H.laneIntentT=Math.max(0,H.laneIntentT-dt);
+        if(!H.control)applyRiderSequence(H);
         if(!H.control && H.lastObserve<=0) {runAI(H);H.lastObserve=(JOCKEY_CADENCE[H.jockey]||2)*(0.95+rng()*0.10);}
         if(H.control) {if(Number.isFinite(H.control.targetV)) H.targetV=Math.max(0,H.control.targetV);if(Number.isFinite(H.control.targetT)) H.targetT=H.control.targetT;}
       }
@@ -1575,15 +2393,9 @@
         const wake=act.find(F=>F!==H && old.get(F).s>before.s && old.get(F).s-before.s<=RACE_F.draftRange &&
           Math.abs(old.get(F).t-before.t)<=(horseWid(H)+horseWid(F))/2+0.8);
         H.drafting=!!wake;
-        const fatigue=1-H.fatigueLoss*(1-H.guts/H.gutsMax);
-        const aerobicTarget=H.aerobic*fatigue;
-        H.aerobicOutput+=(aerobicTarget-H.aerobicOutput)*(1-Math.exp(-dt/H.aerobicTau));
-        const aerobic=H.aerobicOutput;
-        const stRatio=clamp(H.stamina/H.staminaMax,0,1);
-        const reserveFade=clamp(stRatio/RACE_F.reserveFade,0,1);
-        // 可用无氧功率同时受剩余容量与本步能量约束，不能先透支再截成零。
-        const reservePower=Math.min(H.reservePower*reserveFade,H.stamina/dt);
-        const maxPower=aerobic+reservePower;
+        const supply=raceSupplyState(H,dt);
+        H.aerobicOutput=supply.aerobic;
+        const {fatigue,aerobic,reserveFade,maxPower}=supply;
         let cap=Math.min(H.maxV*fatigue,speedAtPower(H,maxPower,!!wake));
         const curvature=laneCurvatureAt(H.s,H.t,geo);
         if(curvature>0) {
@@ -1595,19 +2407,14 @@
         const front=act.filter(F=>F!==H && old.get(F).s>before.s && Math.abs(old.get(F).t-before.t)<(horseWid(H)+horseWid(F))/2+0.2)
           .sort((a,b)=>old.get(a).s-old.get(b).s)[0];
         if(front) {
-          const gap=old.get(front).s-before.s-(horseLen(H)+horseLen(front))/2-0.25;
-          const safe=Math.max(0,old.get(front).v+gap*0.65);
+          const safe=followingSpeedCap(H,front,before,old.get(front));
           if(safe<desired-0.1){H.blocked=true;H.blocker=front;}
           desired=Math.min(desired,safe);
         }
         const startFraction=clamp((race.t+dt-H.startDelay)/dt,0,1);
         if(!startFraction) desired=0;
-        const accelerationMix=clamp(H.v/H.base,0,1);
-        const maxA=(RACE_F.maxAccel*(0.7+H.adj['出闸能力']/230)*(1-accelerationMix)+
-          RACE_F.runningAccel*(0.65+H.adj['爆发力']/200)*accelerationMix)*
-          (0.65+0.35*reserveFade);
-        const response=RACE_F.responseTime*clamp(1+(0.65-H.behavior.tractability)*0.4,0.82,1.26);
-        const kineticBudget=Math.max(0,maxPower-powerCost(H,H.v,0,!!wake))/(H.massRatio*Math.max(H.v,1));
+        const limits=raceAccelerationLimits(H,supply,!!wake);
+        const {maxA,response,kineticBudget}=limits;
         let a=clamp((desired-H.v)/response,-RACE_F.braking,Math.min(maxA,kineticBudget));
         let nextV=Math.max(0,H.v+a*dt*startFraction);
         // 先提案，随后共同验证整步横移与跟车，不在积分后硬夹位置或速度。
@@ -1621,12 +2428,7 @@
           let lateralCache=proposalCache.get(v);
           if(!lateralCache){lateralCache=new Map();proposalCache.set(v,lateralCache);}
           if(lateralCache.has(transverse))return lateralCache.get(transverse);
-          const lateralLimit=Math.min(RACE_F.lateralSpeed,(H.v+v)/2*0.06)*dt*startFraction;
-          const t=clamp(H.t+clamp(transverse-H.t,-lateralLimit,lateralLimit),bodyMargin,width-bodyMargin);
-          const lateral=startFraction?(t-before.t)/(dt*startFraction):0,travelV=(H.v+v)/2;
-          const forwardV=Math.sqrt(Math.max(0,travelV*travelV-lateral*lateral));
-          const proposal={s:advancePhysical(H.s,forwardV*dt*startFraction,(H.t+t)/2),
-            t,v,a:(v-H.v)/dt,travelV,lateral,aerobic,activeFraction:startFraction};
+          const proposal=raceKinematicProposal(H,before,v,transverse,dt,startFraction,aerobic);
           lateralCache.set(transverse,proposal);return proposal;
         }
         const minV=Math.max(0,before.v-RACE_F.braking*dt*startFraction);
@@ -1648,252 +2450,7 @@
         motion.set(H,paidProposal(nextV));H.pot=desired;
       }
       const frontFirst=act.slice().sort((a,b)=>old.get(b).s-old.get(a).s||a.gate-b.gate);
-      const brakingCache=new WeakMap(),stoppingCache=new WeakMap(),followingCache=new WeakMap(),brakingInterval=0.125;
-      const brakingSteps=Math.ceil(Math.max(...[...motionModel.values()].map(m=>m.freeV))/RACE_F.braking/brakingInterval);
-      function advancePhysical(at,distance,transverse) {
-        return laneAdvance(at,distance,transverse,geo);
-      }
-      function stoppingEnd(move) {
-        if(!stoppingCache.has(move)) stoppingCache.set(move,advancePhysical(move.s,move.v*move.v/(2*RACE_F.braking),move.t));
-        return stoppingCache.get(move);
-      }
-      function brakingTrajectory(move) {
-        if(brakingCache.has(move)) return brakingCache.get(move);
-        const points=[{s:move.s,v:move.v}],events=[move.v/RACE_F.braking];let at=move.s,previous=move.v,eventsReady=false;
-        function ensurePoints(until=brakingSteps) {
-          for(let i=points.length;i<=until;i++) {
-            const next=Math.max(0,move.v-RACE_F.braking*brakingInterval*i);
-            const elapsed=previous>0?Math.min(brakingInterval,previous/RACE_F.braking):0;
-            if(elapsed) at=advancePhysical(at,(previous+next)/2*elapsed,move.t);
-            points.push({s:at,v:next});previous=next;
-          }
-          return points;
-        }
-        function ensureEvents() {
-          if(eventsReady)return events;
-          ensurePoints();
-          const breakpoints=laneArcBreakpoints(move.s,at,geo);
-          for(const where of breakpoints) {
-            if(kAt(where-1e-4,geo)===0&&kAt(where+1e-4,geo)===0) continue;
-            const distance=laneArcDistance(move.s,where,move.t,geo);
-            const terminal=Math.sqrt(Math.max(0,move.v*move.v-2*RACE_F.braking*distance));
-            events.push(2*distance/Math.max(1e-12,move.v+terminal));
-          }
-          eventsReady=true;return events;
-        }
-        const queryCache=new Map();
-        const trajectory={get points(){return ensurePoints();},get events(){return ensureEvents();},sampleAt(time){
-          const i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
-          if(regular&&i>=0&&i<=brakingSteps){ensurePoints(i);return points[i];}
-          return this.pointAt(time);
-        },pointAt:time=>{
-          if(queryCache.has(time)) return queryCache.get(time);
-          const atTime=Math.min(Math.max(0,time),move.v/RACE_F.braking),v=Math.max(0,move.v-RACE_F.braking*atTime);
-          const index=Math.min(brakingSteps,Math.floor(atTime/brakingInterval));ensurePoints(index);
-          const base=points[index],elapsed=atTime-index*brakingInterval;
-          const point={s:advancePhysical(base.s,(base.v+v)/2*elapsed,move.t),v};
-          queryCache.set(time,point);return point;
-        }};
-        brakingCache.set(move,trajectory);return trajectory;
-      }
-      function followingSlack(H,F,move,frontMove,withResponse=true) {
-        const ownScale=trafficProgressCoef(move.s,move.t);
-        let paired=followingCache.get(move);
-        if(!paired){paired=new WeakMap();followingCache.set(move,paired);}
-        if(paired.has(frontMove)) return paired.get(frontMove)-(withResponse?(1/60)*move.v*ownScale:0);
-        const response=(1/60)*move.v*ownScale;
-        if(withResponse) {
-          // One negative witness proves rejection, but is only an upper bound
-          // on the full minimum. Never cache it for physical-slack queries.
-          const now=frontMove.s-move.s-bodyClearance(H,F,move.s,frontMove.s,move.t,frontMove.t).longitudinal-response;
-          if(now<-1e-7) return now;
-          const rearEnd=stoppingEnd(move),frontEnd=stoppingEnd(frontMove);
-          const stop=frontEnd-rearEnd-bodyClearance(H,F,rearEnd,frontEnd,move.t,frontMove.t).longitudinal-response;
-          if(stop<-1e-7) return stop;
-        }
-        if(geo.progressCoefUpperBound) {
-          const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,geo.progressCoefUpperBound);
-          // 前马在未来只向前运动。若后马完整停止终点仍在前马
-          // 当前身体之后，则全时域可行；几何界由导数包络保守得出。
-          const lowerBound=frontMove.s-stoppingEnd(move)-bodyUpper;
-          if(lowerBound>=(1/60)*move.v*ownScale+1e-8) {
-            paired.set(frontMove,lowerBound);
-            return lowerBound-(withResponse?(1/60)*move.v*ownScale:0);
-          }
-        }
-        // Write the future gap as physical arc along the rear horse's lane:
-        // G(t)=G(0)+dFront(t)-dRear(t)+(tRear-tFront)*deltaHeadingFront(t).
-        // Equal finite braking gives dFront-dRear >= -max(0,(vr²-vf²)/(2a)).
-        // The derivative-control curvature bound also covers the absolute
-        // heading variation, so this proof does not assume constant curvature
-        // or a monotone center-gap. If it cannot prove safety, check every cell.
-        const routeBound=trafficRouteIntervalBounds(Math.min(move.s,frontMove.s),Math.max(stoppingEnd(move),stoppingEnd(frontMove)),geo);
-        const curvatureUpper=routeBound?.maxCurvature??geo.maxReferenceCurvature;
-        const frontMetricMargin=1-Math.abs(frontMove.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
-        const rearMetricMargin=1-Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper;
-        if(geo.progressCoefLowerBound>0&&Number.isFinite(curvatureUpper)&&frontMetricMargin>0&&rearMetricMargin>0) {
-          const initialPhysicalGap=laneArcDistance(move.s,frontMove.s,move.t,geo);
-          const frontDistance=frontMove.v*frontMove.v/(2*RACE_F.braking);
-          const closingDistance=Math.max(0,(move.v*move.v-frontMove.v*frontMove.v)/(2*RACE_F.braking));
-          const headingBound=curvatureUpper*frontDistance/frontMetricMargin;
-          const physicalLower=initialPhysicalGap-closingDistance-Math.abs(move.t-frontMove.t)*headingBound;
-          const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,geo.progressCoefUpperBound);
-          // Convert only along the rear lane, rather than every legal track lane.
-          // |signed curvature| <= curvatureUpper bounds its physical metric.
-          const rearMetricUpper=(routeBound?.maxMetric??geo.maxReferenceMetric)*(1+Math.abs(move.t-(geo.referenceLane??(TRACK_WIDTH/2)))*curvatureUpper);
-          const rearProgressLower=Number.isFinite(rearMetricUpper)&&rearMetricUpper>0?Math.min(1,1/rearMetricUpper):0;
-          const lowerBound=physicalLower*rearProgressLower-bodyUpper;
-          if(lowerBound>=response+1e-8) {
-            paired.set(frontMove,lowerBound);return lowerBound-(withResponse?response:0);
-          }
-        }
-        // 同样的有限制动下，后马必须留下相对停止距离。固定使用最大
-        // 内部步1/60秒的响应余量，不能随当前小步缩小，否则下一次
-        // 合法外部step变大时会突然要求更多空间，制造不可行状态。
-        const own=brakingTrajectory(move),front=brakingTrajectory(frontMove);
-        let witnesses=trafficNegativeWitnessCache.get(H);
-        if(!witnesses){witnesses=new WeakMap();trafficNegativeWitnessCache.set(H,witnesses);}
-        // Any exact sampled negative gap rejects a response query. The previous
-        // pair's minimizing time is just a candidate; it never proves acceptance.
-        const witnessTime=witnesses.get(F);
-        if(withResponse&&Number.isFinite(witnessTime)&&witnessTime>=0) {
-          const time=Math.min(witnessTime,brakingSteps*brakingInterval),i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
-          // Match the original regular-grid representation as well as pointAt.
-          const r=regular?own.points[i]:own.pointAt(time),f=regular?front.points[i]:front.pointAt(time);
-          const witness= f.s-r.s-bodyClearance(H,F,r.s,f.s,move.t,frontMove.t).longitudinal-response;
-          if(witness<-1e-7)return witness;
-        }
-        let closest=Infinity;
-        // 最终停止位置不足以定义安全域：前马先入外道弯道时，即使
-        // 后马物理速度较低，进度速度也可暂时更高。检查整个未来
-        // 制动过程的最近接近，提前留下空间而不是临接触才制动。
-        const values=new Map();
-        function gapAt(time) {
-          if(values.has(time)) return values.get(time);
-          const i=Math.round(time/brakingInterval),regular=Math.abs(time-i*brakingInterval)<1e-12;
-          const r=regular&&own.points[i]?own.points[i]:own.pointAt(time);
-          const f=regular&&front.points[i]?front.points[i]:front.pointAt(time);
-          const body=bodyClearance(H,F,r.s,f.s,move.t,frontMove.t),gap=f.s-r.s-body.longitudinal;
-          values.set(time,gap);
-          if(gap<closest)witnesses.set(F,time);
-          closest=Math.min(closest,gap);return gap;
-        }
-        const certificates=[];
-        function certifyInterval(left,right,depth) {
-          const r=own.sampleAt(left),f=front.sampleAt(left),rr=own.sampleAt(right),fr=front.sampleAt(right),span=right-left;
-          const bounds=trafficRouteIntervalBounds(Math.min(r.s,f.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
-          let lower=-Infinity;
-          if(bounds&&bounds.minMetric>0&&Number.isFinite(bounds.signedMin)&&Number.isFinite(bounds.signedMax)) {
-            const reference=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-reference,fd=frontMove.t-reference;
-            const rearMetricMax=bounds.maxMetric*Math.max(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
-            const rearOffsetMin=Math.min(1+rd*bounds.signedMin,1+rd*bounds.signedMax);
-            const frontOffsetMin=Math.min(1+fd*bounds.signedMin,1+fd*bounds.signedMax);
-            const rearProjectionMin=bounds.minMetric*Math.min(1+rd*Math.max(0,bounds.signedMin),1+rd*Math.max(0,bounds.signedMax));
-            const frontProjectionMin=bounds.minMetric*Math.min(1+fd*Math.max(0,bounds.signedMin),1+fd*Math.max(0,bounds.signedMax));
-            if(rearMetricMax>0&&rearOffsetMin>0&&frontOffsetMin>0&&rearProjectionMin>0&&frontProjectionMin>0) {
-              const distance=(v,time)=>{const elapsed=Math.min(time,v/RACE_F.braking);return(v+Math.max(0,v-RACE_F.braking*elapsed))/2*elapsed;};
-              const rearDistance=distance(r.v,span),frontDistance=distance(f.v,span),closing=Math.max(0,rearDistance-frontDistance);
-              const headingMin=frontDistance*bounds.signedMin/(1+fd*bounds.signedMin),headingMax=frontDistance*bounds.signedMax/(1+fd*bounds.signedMax);
-              // This is a bound for every intermediate time, including the
-              // zero heading change at the left endpoint. Do not prepay gains.
-              const headingContribution=Math.min(0,(move.t-frontMove.t)*headingMin,(move.t-frontMove.t)*headingMax);
-              const physicalLower=laneArcDistance(r.s,f.s,move.t,geo)-closing+headingContribution-1e-6;
-              const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,1/rearProjectionMin,1/frontProjectionMin);
-              lower=physicalLower>0?physicalLower/rearMetricMax-bodyUpper:-Infinity;
-            }
-          }
-          if(lower>=response+1e-8) {certificates.push({left,right,lower});return true;}
-          if(depth>=6)return false;
-          const middle=(left+right)/2;
-          const a=certifyInterval(left,middle,depth+1),b=certifyInterval(middle,right,depth+1);return a&&b;
-        }
-        const fullyCertified=certifyInterval(0,brakingSteps*brakingInterval,0);
-        certificates.sort((a,b)=>a.left-b.left);
-        for(const certificate of certificates)closest=Math.min(closest,certificate.lower);
-        if(fullyCertified){paired.set(frontMove,closest);return closest-(withResponse?response:0);}
-        function covered(left,right) {
-          let through=left;
-          for(const certificate of certificates) {
-            if(certificate.right<through)continue;
-            if(certificate.left>through+1e-12)return false;
-            through=Math.max(through,certificate.right);
-            if(through>=right-1e-12)return true;
-          }
-          return false;
-        }
-        const times=[...own.points.map((_,i)=>i*brakingInterval),...own.events,...front.events]
-          .filter(t=>t>=0&&t<=brakingSteps*brakingInterval).sort((a,b)=>a-b)
-          .filter((t,i,all)=>!i||t-all[i-1]>1e-10);
-        for(const time of times) {
-          if(covered(time,time))continue;
-          gapAt(time);
-          if(withResponse&&closest-response<-1e-7) return closest-response;
-        }
-        for(let i=1;i<times.length;i++) {
-          const left=times[i-1],right=times[i],span=right-left;
-          if(span<1e-8||covered(left,right)) continue;
-          // Enclose center progress and body projection over this complete time
-          // interval. Only certified intervals skip the original root search.
-          function sampledPoint(trajectory,time) {
-            const j=Math.round(time/brakingInterval),regular=Math.abs(time-j*brakingInterval)<1e-12;
-            return regular&&trajectory.points[j]?trajectory.points[j]:trajectory.pointAt(time);
-          }
-          const rl=sampledPoint(own,left),fl=sampledPoint(front,left),rr=sampledPoint(own,right),fr=sampledPoint(front,right);
-          const interval=trafficRouteIntervalBounds(Math.min(rl.s,fl.s)-1e-6,Math.max(rr.s,fr.s)+1e-6,geo);
-          if(interval&&interval.minMetric>0&&Number.isFinite(interval.signedMin)&&Number.isFinite(interval.signedMax)) {
-            const ref=geo.referenceLane??(TRACK_WIDTH/2),rd=move.t-ref,fd=frontMove.t-ref;
-            const physicalRearMin=interval.minMetric*Math.min(1+rd*interval.signedMin,1+rd*interval.signedMax);
-            const physicalFrontMax=interval.maxMetric*Math.max(1+fd*interval.signedMin,1+fd*interval.signedMax);
-            const physicalFrontMin=interval.minMetric*Math.min(1+fd*interval.signedMin,1+fd*interval.signedMax);
-            const projectionRearMin=interval.minMetric*Math.min(1+rd*Math.max(0,interval.signedMin),1+rd*Math.max(0,interval.signedMax));
-            const projectionFrontMin=interval.minMetric*Math.min(1+fd*Math.max(0,interval.signedMin),1+fd*Math.max(0,interval.signedMax));
-            if(physicalRearMin>0&&physicalFrontMin>0&&physicalFrontMax>0&&projectionRearMin>0&&projectionFrontMin>0) {
-              const rateUpper=rl.v/physicalRearMin-Math.max(0,fl.v-RACE_F.braking*span)/physicalFrontMax;
-              const bodyUpper=((horseLen(H)+horseLen(F))/2+0.20)*Math.max(1,1/projectionRearMin,1/projectionFrontMin);
-              const intervalLower=fl.s-rl.s-Math.max(0,rateUpper)*span-bodyUpper-1e-6;
-              if(intervalLower>=response+1e-8) {closest=Math.min(closest,intervalLower);continue;}
-            }
-          }
-
-          // 包含完整身体投影的局部极小，而不只找两马中心进度速度
-          // 相等。断点左右极限也保留，覆盖内道身体投影与曲率跳变。
-          const edge=Math.min(1e-8,span/1000),epsilon=Math.min(1e-5,span/1000);
-          gapAt(left+edge);gapAt(right-edge);
-          const middle=(left+right)/2;gapAt(middle);
-          if(withResponse&&closest-response<-1e-7) return closest-response;
-          const slopes=new Map();
-          const slopeAt=time=>{
-            if(slopes.has(time))return slopes.get(time);
-            if(time>=Math.max(move.v,frontMove.v)/RACE_F.braking)return 0;
-            const r=own.pointAt(time),f=front.pointAt(time);
-            const rv=r.v*trafficProgressCoef(r.s,move.t),fv=f.v*trafficProgressCoef(f.s,frontMove.t);
-            // 对完整身体投影做局部导数。中心进度速度直接来自同一
-            // 弧长导数；只在微小局部计算投影变化，避免重复逆解路径。
-            const a=Math.max(left+edge,time-epsilon),b=Math.min(right-edge,time+epsilon);
-            if(b<=a)return 0;
-            const ca=bodyClearance(H,F,r.s+rv*(a-time),f.s+fv*(a-time),move.t,frontMove.t).longitudinal;
-            const cb=bodyClearance(H,F,r.s+rv*(b-time),f.s+fv*(b-time),move.t,frontMove.t).longitudinal;
-            const value=fv-rv-(cb-ca)/(b-a);slopes.set(time,value);return value;
-          };
-          for(const [a,b] of [[left+edge,middle],[middle,right-edge]]) {
-            let low=a,high=b,dl=slopeAt(low),dh=slopeAt(high);
-            if(!(dl<-1e-7&&dh>1e-7)) continue;
-            if(!geo.route) {
-              // 抽象直弯区间中，两马倍率与身体投影为常量，有限
-              // 制动的相对进度速度为线性函数，极小点可以直接求出。
-              gapAt(low-dl*(high-low)/(dh-dl));continue;
-            }
-            for(let n=0;n<18;n++) {
-              const mid=(low+high)/2;
-              if(slopeAt(mid)<0) low=mid;else high=mid;
-            }
-            gapAt((low+high)/2);
-            if(withResponse&&closest-response<-1e-7) return closest-response;
-          }
-        }
-        paired.set(frontMove,closest);
-        return closest-(withResponse?(1/60)*move.v*ownScale:0);
-      }
+      const followingSlack=followingConstraintSolver(Math.max(...[...motionModel.values()].map(m=>m.freeV)));
       // 横移提案同步审核；两匹相向并道不得分别对照旧位置获得许可。
       // 否决整步横移后重新积分，不重写已经走出的距离。
       let changed=true,passes=0;
@@ -1970,7 +2527,7 @@
       }
       for(const H of frontFirst) {
         const move=motion.get(H), before=old.get(H);
-        H.s=move.s;H.t=move.t;H.prevV=before.v;H.v=move.v;H.accel=(H.v-before.v)/dt;
+        H.s=move.s;H.t=move.t;H.prevV=before.v;H.v=move.v;H.accel=(H.v-before.v)/dt;H.lateralV=move.lateral;
         H.trafficStep={lateralDenied:denied.has(H),boundedBraking:H.blocked&&H.accel<-1e-8,
           marginRecovery:marginRecovery.has(H),blocker:H.blocker?.id||null,deltaS:move.s-before.s,deltaT:move.t-before.t};
         race.traffic.syncLateralDenied+=denied.has(H)?1:0;
@@ -1982,12 +2539,9 @@
         H.statsSummary.marginRecoverySteps=(H.statsSummary.marginRecoverySteps||0)+(marginRecovery.has(H)?1:0);
         const work=motionPower(H,before,move,H.drafting,dt);
         H.power=work;H.effort=H.targetV/Math.max(1,H.cruise);
-        const excess=Math.max(0,work-move.aerobic), draw=Math.min(H.stamina,excess*dt);
-        // 只有明显低于供能的做功才允许有限恢复；制动不回充动能。
-        const restore=Math.min(H.staminaMax-H.stamina,Math.max(0,move.aerobic*0.90-work)*H.recoveryRate*dt,H.recoveryMax*dt);
-        H.stamina=clamp(H.stamina-draw+restore,0,H.staminaMax);
-        H.guts=Math.max(0,H.guts-(H.fatigueWork*work+H.fatigueExcess*excess)*dt);
-        H.retention=1-H.fatigueLoss*(1-H.guts/H.gutsMax);
+        const energy=raceEnergyState(H,work,move.aerobic,dt);
+        const {excess,draw,restore}=energy;
+        H.stamina=energy.stamina;H.guts=energy.guts;H.retention=energy.retention;
         updateStartState(H);
         H.stage=H.stamina>H.staminaMax*0.12?'耐力':H.stamina>H.staminaMax*0.015?'毅力':'失速';
         const stats=H.statsSummary,aerobicUsed=Math.min(work,move.aerobic)*dt;
@@ -2053,10 +2607,24 @@
         race.finished=true;for(const H of active()){H.dnf=true;race.dnf.push(H);}
       }
     }
-    function step(dt) {
+    function step(dt,onTick) {
       if(!Number.isFinite(dt)||dt<=0) throw new Error('比赛步长必须是正数');
       const count=Math.ceil(dt/(1/60)), sub=dt/count;
-      for(let i=0;i<count&&!race.finished;i++) tick(sub);
+      for(let i=0;i<count&&!race.finished;i++) {
+        let left=sub;
+        while(left>1e-10&&!race.finished) {
+          let slice=left;
+          // Execute finite action transitions at their forecast time, including
+          // transitions falling between two display/60 Hz update boundaries.
+          for(const H of horses)if(!H.control&&!H.place&&!H.dnf&&H.riderSequence) {
+            let boundary=H.riderSequence.at;
+            for(const action of H.riderSequence.actions){boundary+=action.duration;
+              const until=boundary-race.t;if(until>1e-9){slice=Math.min(slice,until);break;}}
+          }
+          const before=typeof onTick==='function'?horses.map(H=>({id:H.id,s:H.s,t:H.t,v:H.v,place:H.place,dnf:H.dnf})):null;
+          tick(slice);if(before)onTick(before,slice);left-=slice;
+        }
+      }
     }
     function snapshot() {
       const list=ranked();return {t:race.t,finished:race.finished,length,dir,profile,g,course:geo.course,
@@ -2187,22 +2755,11 @@
     return events;
   }
   /* 生涯比赛的对手阵容（7名AI + 玩家马，对手强度按赛事等级） */
-  function makeCareerRaceField(h, tierDef, rng) {
+  function makeCareerRaceField(h, tierDef, rng, race) {
     horsePhysiology(h);
-    const horses = [];
-    const used = new Set();
-    for (let i = 0; i < 7; i++) {
-      /* 场次档次取区间中点，同场马之间只差 ±FIELD_LEVEL_SPAN */
-      const base = (tierDef.level[0] + tierDef.level[1]) / 2;
-      const level = base + (rng() * 2 - 1) * FIELD_LEVEL_SPAN;
-      const rh = makeHorse(rng, { level, id: 'r' + (i + 1) });
-      rh.name = makeName(rng, used);
-      rh.sire = makeName(rng, used);
-      rh.dam = makeName(rng, used);
-      rh.age = h.age;
-      rh.player = false;
-      horses.push(rh);
-    }
+    const base=(tierDef.level[0]+tierDef.level[1])/2;
+    const horses=makeField(rng,{n:7,level:base,tierDef,race,playerIndex:-1,idPrefix:'r'});
+    for(const rh of horses){rh.age=h.age;rh.player=false;}
     const playerEntry = {
       id: h.id, name: h.name, style: h.style, age: h.age, sex: h.sex, coat: h.coat,
       surface: h.surface, special: h.special,
@@ -2234,7 +2791,7 @@
       const state = weightedPick(rng, [['良', 80], ['稍重', 12], ['重', 5], ['不良', 3]]);
       const dir = rng() < 0.5 ? '左回' : '右回';
       const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
-      const field = makeCareerRaceField(h, t, rng);
+      const field = makeCareerRaceField(h, t, rng, {length:dist,surface,state,dir,profile});
       const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
       return { key, name: t.name, prize: t.prize, dist, surface, state, dir, profile, field, odds };
     });
@@ -2248,7 +2805,7 @@
     const state = weightedPick(rng, [['良', 80], ['稍重', 12], ['重', 5], ['不良', 3]]);
     const dir = rng() < 0.5 ? '左回' : '右回';
     const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
-    const field = makeField(rng, { n: 8, level: t.level[0] + rng() * (t.level[1] - t.level[0]) });
+    const field = makeField(rng, {n:8,level:t.level[0]+rng()*(t.level[1]-t.level[0]),tierDef:t,playerIndex:-1,race:{length:dist,surface,state,dir,profile}});
     const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
     return {
       name: makeRaceName(rng, 5 + (weekNum % 30)), key, tier: t.name, prize: t.prize,
@@ -2389,11 +2946,16 @@
     const o = opts || {};
     const cooldown = o.cooldown !== undefined ? o.cooldown : 2;
     const pool = roster.filter((h) => !h.retired && h.age >= (o.ageMin || 2) && h.age <= (o.ageMax || 5) &&
-      h.wins >= (o.winsMin || 0) && h.wins <= (o.winsMax || 99) &&
+      h.wins >= (o.winsMin || 0) && h.wins <= (o.winsMax !== undefined ? o.winsMax : 99) &&
       h.starts <= (o.startsMax !== undefined ? o.startsMax : 99) &&
-      h.ability >= (o.abilityMin || 0) && h.ability <= (o.abilityMax || 100) &&
+      h.ability >= (o.abilityMin || 0) && h.ability <= (o.abilityMax !== undefined ? o.abilityMax : 100) &&
       weekNum - h.lastRaceWeek >= cooldown);
     const n = Math.min(o.n || 8, pool.length);
+    if(o.race){
+      const selected=selectRaceCohort(pool,rng,{...o,n:o.n||8});
+      Object.defineProperty(selected.horses,'cohort',{value:selected.diagnostics,enumerable:false});
+      return selected.horses;
+    }
     const sorted = pool.slice().sort((a, b) => b.ability - a.ability);
     const chosen = [];
     if (sorted.length <= n) chosen.push(...sorted);
@@ -2474,7 +3036,8 @@
     if(venueGeo.elevationProfile) profile='官方高程';
     const chosen = pickRosterField(roster, rng, weekNum, {
       ageMin: spec.ageMin, ageMax: spec.ageMax, winsMin: spec.winsMin, winsMax: spec.winsMax,
-      startsMax: spec.startsMax, abilityMin: spec.abilityMin, n: 8, cooldown: spec.cooldown,
+      startsMax:spec.startsMax,abilityMin:spec.abilityMin,n:8,cooldown:spec.cooldown,
+      tierKey:spec.key==='listed'?'open':spec.key,race:{length:dist,course:venue,surface,state,dir,profile},
     });
     const field = chosen.map((rh) => rosterEntry(rh, rng));
     const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
@@ -2562,7 +3125,7 @@
     const state = weightedPick(rng, [['良', 80], ['稍重', 12], ['重', 5], ['不良', 3]]);
     const dir = rng() < 0.5 ? '左回' : '右回';
     const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
-    const chosen = pickRosterField(roster, rng, weekNum, { ageMin: spec.ageMin, ageMax: spec.ageMax, winsMax: spec.winsMax, abilityMin, n: 8 });
+    const chosen = pickRosterField(roster,rng,weekNum,{ageMin:spec.ageMin,ageMax:spec.ageMax,winsMax:spec.winsMax,abilityMin,n:8,tierKey:tierName==='G1'?'g1':tierName==='G2'?'g2':tierName==='G3'?'g3':key==='maiden'?'maiden':'cond2',race:{length:dist,surface,state,dir,profile}});
     const field = chosen.map((rh) => rosterEntry(rh, rng));
     const odds = marketOddsAndPopularity(field, { length: dist, surface, state, dir, profile }, rng).byId;
     return {
@@ -2577,6 +3140,13 @@
     'newcomer': [0, 55, 2, 3], 'maiden': [0, 58, 2, 3],
     'cond1': [35, 62, 2, 4], 'cond2': [40, 68, 2, 4], 'cond3': [45, 72, 3, 5],
     'open': [55, 78, 3, 5], 'g3': [60, 82, 3, 5], 'g2': [68, 88, 3, 5], 'g1': [76, 96, 3, 5],
+  };
+  // Same sporting qualification as the weekly schedule. Ability bands are
+  // representative readiness references; stronger entrants are never barred.
+  const PLAYER_RACE_QUALIFICATION = {
+    newcomer:{winsMin:0,winsMax:0,startsMax:0},maiden:{winsMin:0,winsMax:0},
+    cond1:{winsMin:1,winsMax:1},cond2:{winsMin:2,winsMax:2},cond3:{winsMin:3,winsMax:3},
+    open:{winsMin:4,winsMax:99},g3:{winsMin:2,winsMax:99},g2:{winsMin:3,winsMax:99},g1:{winsMin:4,winsMax:99},
   };
   function raceOptionsForRoster(h, rng, roster, weekNum) {
     horsePhysiology(h);
@@ -2595,7 +3165,7 @@
       const state = weightedPick(rng, [['良', 80], ['稍重', 12], ['重', 5], ['不良', 3]]);
       const dir = rng() < 0.5 ? '左回' : '右回';
       const profile = weightedPick(rng, [['平坦', 20], ['缓坂', 45], ['中坂', 25], ['急坂', 10]]);
-      const rivals = pickRosterField(roster, rng, weekNum, { ageMin: band[2], ageMax: band[3], abilityMin: band[0], abilityMax: band[1], n: 7 });
+      const rivals = pickRosterField(roster.filter(rh=>rh.id!==h.id),rng,weekNum,{...PLAYER_RACE_QUALIFICATION[key],ageMin:band[2],ageMax:band[3],abilityMin:band[0],abilityMax:Infinity,n:7,tierKey:key,race:{length:dist,surface,state,dir,profile}});
       const field = rivals.map((rh) => rosterEntry(rh, rng));
       const playerEntry = {
         id: h.id, name: h.name, style: h.style, age: h.age, sex: h.sex, coat: h.coat,
@@ -2880,7 +3450,7 @@
     laneArcDistance, laneAdvance, laneArcBreakpoints, bendCoefFor, SLOPE_PROFILES, gradientAt, elevationAt,
     TIER_LABELS, tierIdx, tierText, COMMENT_TABLES,
     STAFF, CAT_ERROR_POOL, catText, fatigueBand, fatigueText,
-    makeHorse, makeField, horseBehavior, racePlanFor, horsePhysiology, neutralPhysiology, PHYSIOLOGY_KEYS,
+    makeHorse,makeField,makeRaceCandidatePool,raceEntryForecast,selectRaceCohort,COHORT_VERSION,COHORT_POOL_MULTIPLIER,horseBehavior,racePlanFor,horsePhysiology,neutralPhysiology,PHYSIOLOGY_KEYS,
     makeStaff, generateReport, oddsAndPopularity,
     /* 人气/赔率模型（市场）：独立于比赛引擎，只吃公开信息 */
     MARKET, marketEntryScore, marketOddsAndPopularity, marketImpliedProb, expectedValue,

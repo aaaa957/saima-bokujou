@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-10-04T04:27:29.316Z",
+  "scope": "Tracked-gzip reader/source-check rehearsal, no second clone and no physics runs.",
+  "cases": [
+    {
+      "name": "An exact missing raw path resolves its gzip sibling without materializing raw",
+      "passed": true
+    },
+    {
+      "name": "Historical follow partial reads explicit gzip and frozen source without stepping",
+      "passed": true
+    },
+    {
+      "name": "Historical CPU replay reads explicit gzip and guarded old source without stepping",
+      "passed": true
+    },
+    {
+      "name": "Historical wait partial reads gzip and correctly resolves candidate source prefix",
+      "passed": true
+    },
+    {
+      "name": "Follow summary writes a derived file and retains the historical driver hash",
+      "passed": true
+    },
+    {
+      "name": "Wait summary writes a derived file and retains historical processor metadata",
+      "passed": true
+    },
+    {
+      "name": "Resume rejection checks a temporary decoded checkpoint without changing gzip evidence",
+      "passed": true
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "steppedRaceExecutions": 0,
+  "archiveByteHashes": [
+    {
+      "file": "docs/calibration-screen-v11-headway.json.gz",
+      "sha256": "0cb0d34d4f6fe8b0abcc89d8e9f2666d83225b09e4462469c92c782a7f908b0e"
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11.json.gz",
+      "sha256": "e890aada87f9867d903123989c43ed6c64768abb4d592bb75d752e468d7f39d1"
+    },
+    {
+      "file": "docs/follow-coarse-screen-partial-v11.json.driver.js.gz",
+      "sha256": "e142dd7ca9ddf7d0333b3d813f4b98abaf0f36394c77ea786b423c2251d89167"
+    },
+    {
+      "file": "docs/wait-route-continuation-partial-v11.json.gz",
+      "sha256": "9d6ed93d73e67072a7095ce87f12c579ad0266c5ccd2b68bd96112418c292672"
+    },
+    {
+      "file": "docs/wait-route-continuation-partial-v11.json.driver.js.gz",
+      "sha256": "8c05554332473ea103de679e018670e4a828c8e9263312629ffbbd36e15d5813"
+    },
+    {
+      "file": "docs/race-validation-v11-baseline-external.json.gz",
+      "sha256": "817e3767f73dcf7e28aeb44655fa028d8ff146b727303d1bd1c75607707efb61"
+    }
+  ],
+  "archiveBytesUnchanged": true,
+  "productionByteSha256": "63068101ae7c0bf80db75094b9b497cde24bb88fe86f3df70fddee397974d4e8",
+  "productionUnchanged": true
+}

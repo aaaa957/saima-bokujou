@@ -1,0 +1,8 @@
+{
+  "maxAccel": 5.75,
+  "runningAccel": 2.75,
+  "responseTime": 1.12,
+  "peakExtra": 2.75,
+  "resistanceK": 0.250215,
+  "airK": 0.001365
+}

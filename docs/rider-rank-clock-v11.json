@@ -1,0 +1,131 @@
+{
+  "sourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "scriptHash": "86d217281c3bc6159bdb5538c8010221dd8900cf67795e223790e4093be63adc",
+  "checks": [
+    {
+      "name": "A rival farther than48m contributes its actual projected endpoint",
+      "pass": true,
+      "rank": 0.3671772366642765,
+      "independentExtrapolatorRank": 0.3695088797021362,
+      "formerFarConstantRank": 0.0400077765648037,
+      "constructedVisibleV": 9.364596605300903,
+      "seconds": 10.24,
+      "ledgerSeconds": 10.24,
+      "endpoint": {
+        "s": 663.3176282557847,
+        "t": 4,
+        "v": 15.827711016401418,
+        "stamina": 2272.4083921724573,
+        "guts": 4044.250322228465,
+        "retention": 0.9970333394710184,
+        "aerobicOutput": 49.946017532748364
+      },
+      "rivalEndpoint": {
+        "id": "rank-1",
+        "s": 662.6176522930054,
+        "t": 8.463999999999942,
+        "v": 9.554976236074374,
+        "finished": false
+      }
+    },
+    {
+      "name": "Mixed visible acceleration and lateral motion use one forecast for utility and route",
+      "pass": true,
+      "rank": 2,
+      "ids": [
+        "rank-1",
+        "rank-2"
+      ],
+      "opponents": [
+        {
+          "id": "rank-2",
+          "s": 682.6914282374678,
+          "t": 8.975999999999962,
+          "v": 11.164035945693877,
+          "finished": false
+        },
+        {
+          "id": "rank-1",
+          "s": 683.8700239579487,
+          "t": 9.047999999999965,
+          "v": 16.223976036204082,
+          "finished": false
+        }
+      ],
+      "ledgerSeconds": 10.24
+    },
+    {
+      "name": "Own early crossing uses the shortened projection clock and matching opponent endpoints",
+      "pass": true,
+      "rank": 0,
+      "crossingSeconds": 0.2667170304447417,
+      "physicalLedgerSeconds": 0.26710488561963636,
+      "proposedHorizon": 0.26710488561963636,
+      "opponents": [
+        {
+          "id": "rank-1",
+          "s": 1163.2052586274358,
+          "t": 7,
+          "v": 12,
+          "finished": false
+        }
+      ],
+      "meaning": "Crossing time is interpolated within the final physical step; opponent endpoints share its ledger step end, not an independently imposed longer horizon."
+    },
+    {
+      "name": "A rival already placed is excluded from the active position competition",
+      "pass": true,
+      "placedId": "rank-1",
+      "rank": 0,
+      "activeOpponentIds": []
+    },
+    {
+      "name": "An observed rival crossing during this projection counts ahead in its endpoint rank",
+      "pass": true,
+      "rank": 1,
+      "opponent": {
+        "id": "rank-1",
+        "s": 1200.7930169491526,
+        "t": 8,
+        "v": 16,
+        "finished": true
+      },
+      "own": {
+        "s": 1199.405435220811,
+        "t": 4,
+        "v": 18.560681203885316,
+        "stamina": 2371.353372952832,
+        "guts": 4147.143656829547,
+        "retention": 0.998993212511039,
+        "aerobicOutput": 49.99641160079945
+      }
+    },
+    {
+      "name": "Projection-based rank never reads hidden opponent physiology or planned orders",
+      "pass": true,
+      "rank": 2,
+      "hiddenReads": 0,
+      "guardedKeys": [
+        "h",
+        "stamina",
+        "staminaMax",
+        "guts",
+        "gutsMax",
+        "maxV",
+        "aerobic",
+        "aerobicOutput",
+        "aerobicTau",
+        "reservePower",
+        "physiology",
+        "behavior",
+        "plan",
+        "targetV",
+        "targetT"
+      ]
+    }
+  ],
+  "failures": [],
+  "scope": "Actual public projections captured from rider decisions; utility rank checked against that same projection endpoint and clock, without opponent hidden state.",
+  "pass": true,
+  "productionUnchanged": true
+}

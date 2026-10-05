@@ -1,0 +1,12 @@
+{
+  "sourceNormalizedSha256":"d0fea99e162584783b93e64a25ceb47685ab90894140de5c63aea548f3d6b956",
+  "predeclaredAt":"2026-10-04",
+  "sourceProvenanceScope":"The d0 hash records the source at axis declaration, not necessarily the source finally dispatched. The three axes were unchanged and unexecuted when root chose to dispatch them on an upcoming coarse-first controller. Grid protocol records its actual tested source and explicitly separates this strategy change from pure parameter effects; all committed goals retain 60Hz checks.",
+  "reason":"Two 1200 calibration-event pairs found fast80-peak08 reduced initial200 residual from +1.4057s to +0.5821s but moved winner-time residual from -2.3949s to -5.2000s and actual post200 speed from 19.153 to 19.867m/s. PeakExtra changes the full-race velocity ceiling, not initial response alone. These three extra global axes retain the original peak while improving mechanical response and applying 5/10% total running cost. They are declared before any executions of these arms. Original six-arm protocol/files are untouched; total nine screened arms remains within the predeclared 8-12 budget. No 2020 or internal-year outputs used to propose these axes.",
+  "anchor":"air2 first reallocates cost at neutral70, flat straight wind0, v18: resistanceK=.2383 and airK=.0013. cost105/110 multiply both by1.05/1.10. This is an equal-cost experimental anchor and a total-cost axis, not a claim of measured real aerodynamic fraction or uniquely identified biological parameters.",
+  "variants":[
+    {"name":"fast80-nopeak","parameters":{"maxAccel":5.75,"runningAccel":2.75,"responseTime":1.12,"peakExtra":1.55}},
+    {"name":"air2-fast80-nopeak-cost105","parameters":{"maxAccel":5.75,"runningAccel":2.75,"responseTime":1.12,"peakExtra":1.55,"resistanceK":0.250215,"airK":0.001365}},
+    {"name":"air2-fast80-nopeak-cost110","parameters":{"maxAccel":5.75,"runningAccel":2.75,"responseTime":1.12,"peakExtra":1.55,"resistanceK":0.26213,"airK":0.00143}}
+  ]
+}

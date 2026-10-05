@@ -1,0 +1,1175 @@
+{
+  "schemaVersion": 1,
+  "selectedBeforeCandidateCalibration": "2026-10-03",
+  "scope": "The same six G1 distance/course families, year 2020. Not used for v11 parameter fitting; validation agent has viewed official pages. This is a reserved-year test, not double-blind prediction or an all-race population sample.",
+  "selectionRule": "One 2020 official G1 per predeclared distance 1200/1600/2000/2400/3000/3200; same Nakayama/Tokyo/Kyoto route families. The 2021 Kyoto-to-Hanshin relocation is avoided.",
+  "measurementCaveats": [
+    "JRA 200m splits describe the successive leader at markers, not the eventual winner trajectory.",
+    "Estimated individual final600 and rounded 0.1s finish times are official proxies, not tracking data.",
+    "Fractions within 1/2 seconds and tail span use finite finishers; no DNF time is imputed.",
+    "Synthetic simulated entrants do not reconstruct these actual horses."
+  ],
+  "races": [
+    {
+      "id": "201004",
+      "date": "2020-10-04",
+      "length": 1200,
+      "course": "中山芝外A",
+      "direction": "右回",
+      "state": "良",
+      "surface": "草地",
+      "fieldSize": 16,
+      "entryCount": 16,
+      "raceSectionals200m": [
+        11.9,
+        10.1,
+        10.8,
+        11.5,
+        11.9,
+        12.1
+      ],
+      "winner": {
+        "finishTime": 68.3,
+        "final600": 33.6,
+        "carriedWeightKg": 55
+      },
+      "horses": [
+        {
+          "finishPosition": 1,
+          "horseNumber": 10,
+          "finishTime": 68.3,
+          "final600": 33.6,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 504,
+          "lastCornerRankReported": 15,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 2,
+          "horseNumber": 3,
+          "finishTime": 68.6,
+          "final600": 35,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 472,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 3,
+          "horseNumber": 16,
+          "finishTime": 68.7,
+          "final600": 33.7,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 478,
+          "lastCornerRankReported": 16,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 4,
+          "horseNumber": 7,
+          "finishTime": 68.8,
+          "final600": 35,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 492,
+          "lastCornerRankReported": 3,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 5,
+          "horseNumber": 15,
+          "finishTime": 69,
+          "final600": 34.6,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 490,
+          "lastCornerRankReported": 13,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 6,
+          "horseNumber": 13,
+          "finishTime": 69,
+          "final600": 34.7,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 474,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 7,
+          "horseNumber": 5,
+          "finishTime": 69.1,
+          "final600": 35.4,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 460,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 8,
+          "horseNumber": 1,
+          "finishTime": 69.1,
+          "final600": 35.1,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 504,
+          "lastCornerRankReported": 9,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 9,
+          "horseNumber": 6,
+          "finishTime": 69.1,
+          "final600": 35.4,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 512,
+          "lastCornerRankReported": 6,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 10,
+          "horseNumber": 2,
+          "finishTime": 69.3,
+          "final600": 36.5,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 502,
+          "lastCornerRankReported": 1,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 11,
+          "horseNumber": 14,
+          "finishTime": 69.3,
+          "final600": 34.8,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 448,
+          "lastCornerRankReported": 13,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 12,
+          "horseNumber": 4,
+          "finishTime": 69.3,
+          "final600": 35.3,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 500,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 13,
+          "horseNumber": 9,
+          "finishTime": 69.7,
+          "final600": 35.7,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 474,
+          "lastCornerRankReported": 10,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 14,
+          "horseNumber": 8,
+          "finishTime": 69.7,
+          "final600": 35.4,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 506,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 15,
+          "horseNumber": 11,
+          "finishTime": 69.8,
+          "final600": 36.4,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 448,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 16,
+          "horseNumber": 12,
+          "finishTime": 70.3,
+          "final600": 37.5,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 560,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        }
+      ],
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/sprint/result/sprint2020.html",
+        "publisher": "JRA",
+        "retrievedAt": "2026-10-03",
+        "htmlEncoding": "Shift_JIS",
+        "rawBytes": 91729,
+        "rawSha256": "0a9842cd4c53718c71194b5fe1770946dd96789ccf78dee33b37f5b810b383fe"
+      },
+      "validation": {
+        "uniqueHorseNumbers": true,
+        "finiteFinishers": 16,
+        "nonFinishers": 0,
+        "sectionalSumError": 0
+      }
+    },
+    {
+      "id": "200607",
+      "date": "2020-06-07",
+      "length": 1600,
+      "course": "東京芝A",
+      "direction": "左回",
+      "state": "稍重",
+      "surface": "草地",
+      "fieldSize": 14,
+      "entryCount": 14,
+      "raceSectionals200m": [
+        12.1,
+        10.9,
+        11.2,
+        11.5,
+        11.6,
+        11.4,
+        11,
+        11.9
+      ],
+      "winner": {
+        "finishTime": 91.6,
+        "final600": 33.7,
+        "carriedWeightKg": 56
+      },
+      "horses": [
+        {
+          "finishPosition": 1,
+          "horseNumber": 11,
+          "finishTime": 91.6,
+          "final600": 33.7,
+          "carriedWeightKg": 56,
+          "bodyMassKg": 492,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 2,
+          "horseNumber": 5,
+          "finishTime": 92,
+          "final600": 33.9,
+          "carriedWeightKg": 56,
+          "bodyMassKg": 488,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 3,
+          "horseNumber": 6,
+          "finishTime": 92.1,
+          "final600": 34.1,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 480,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 4,
+          "horseNumber": 3,
+          "finishTime": 92.1,
+          "final600": 33.8,
+          "carriedWeightKg": 56,
+          "bodyMassKg": 466,
+          "lastCornerRankReported": 13,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 5,
+          "horseNumber": 8,
+          "finishTime": 92.3,
+          "final600": 34.3,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 464,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 6,
+          "horseNumber": 9,
+          "finishTime": 92.3,
+          "final600": 34.7,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 476,
+          "lastCornerRankReported": 3,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 7,
+          "horseNumber": 2,
+          "finishTime": 92.4,
+          "final600": 34.6,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 456,
+          "lastCornerRankReported": 5,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 8,
+          "horseNumber": 14,
+          "finishTime": 92.4,
+          "final600": 35.1,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 476,
+          "lastCornerRankReported": 1,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 9,
+          "horseNumber": 7,
+          "finishTime": 92.7,
+          "final600": 34.6,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 502,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 10,
+          "horseNumber": 13,
+          "finishTime": 92.7,
+          "final600": 34.8,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 474,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 11,
+          "horseNumber": 10,
+          "finishTime": 93.2,
+          "final600": 35.7,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 504,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 12,
+          "horseNumber": 12,
+          "finishTime": 93.4,
+          "final600": 35.6,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 506,
+          "lastCornerRankReported": 5,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 13,
+          "horseNumber": 1,
+          "finishTime": 93.6,
+          "final600": 36,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 506,
+          "lastCornerRankReported": 3,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 14,
+          "horseNumber": 4,
+          "finishTime": 93.8,
+          "final600": 35.4,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 532,
+          "lastCornerRankReported": 13,
+          "status": "finished"
+        }
+      ],
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/yasuda/result/yasuda2020.html",
+        "publisher": "JRA",
+        "retrievedAt": "2026-10-03",
+        "htmlEncoding": "Shift_JIS",
+        "rawBytes": 88885,
+        "rawSha256": "1f2131d418aa22b6c97fecc7aae645828c7e8375e98a12be4a3134bac2a1459c"
+      },
+      "validation": {
+        "uniqueHorseNumbers": true,
+        "finiteFinishers": 14,
+        "nonFinishers": 0,
+        "sectionalSumError": 1.4210854715202004e-14
+      }
+    },
+    {
+      "id": "201101",
+      "date": "2020-11-01",
+      "length": 2000,
+      "course": "東京芝A",
+      "direction": "左回",
+      "state": "良",
+      "surface": "草地",
+      "fieldSize": 12,
+      "entryCount": 12,
+      "raceSectionals200m": [
+        12.7,
+        11.7,
+        12.1,
+        12.1,
+        11.9,
+        12,
+        11.7,
+        10.9,
+        11.1,
+        11.6
+      ],
+      "winner": {
+        "finishTime": 117.8,
+        "final600": 33.1,
+        "carriedWeightKg": 56
+      },
+      "horses": [
+        {
+          "finishPosition": 1,
+          "horseNumber": 9,
+          "finishTime": 117.8,
+          "final600": 33.1,
+          "carriedWeightKg": 56,
+          "bodyMassKg": 490,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 2,
+          "horseNumber": 6,
+          "finishTime": 117.9,
+          "final600": 32.7,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 478,
+          "lastCornerRankReported": 10,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 3,
+          "horseNumber": 7,
+          "finishTime": 117.9,
+          "final600": 32.8,
+          "carriedWeightKg": 56,
+          "bodyMassKg": 464,
+          "lastCornerRankReported": 9,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 4,
+          "horseNumber": 11,
+          "finishTime": 118.2,
+          "final600": 34,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 496,
+          "lastCornerRankReported": 1,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 5,
+          "horseNumber": 8,
+          "finishTime": 118.6,
+          "final600": 34.1,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 508,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 6,
+          "horseNumber": 3,
+          "finishTime": 119,
+          "final600": 34.5,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 496,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 7,
+          "horseNumber": 12,
+          "finishTime": 119.1,
+          "final600": 34.4,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 492,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 8,
+          "horseNumber": 2,
+          "finishTime": 119.2,
+          "final600": 33.9,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 478,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 9,
+          "horseNumber": 10,
+          "finishTime": 119.2,
+          "final600": 33.7,
+          "carriedWeightKg": 56,
+          "bodyMassKg": 488,
+          "lastCornerRankReported": 12,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 10,
+          "horseNumber": 5,
+          "finishTime": 119.4,
+          "final600": 34.5,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 484,
+          "lastCornerRankReported": 6,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 11,
+          "horseNumber": 1,
+          "finishTime": 119.5,
+          "final600": 34.6,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 550,
+          "lastCornerRankReported": 6,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 12,
+          "horseNumber": 4,
+          "finishTime": 120.7,
+          "final600": 35.8,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 450,
+          "lastCornerRankReported": 6,
+          "status": "finished"
+        }
+      ],
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/akiten/result/akiten2020.html",
+        "publisher": "JRA",
+        "retrievedAt": "2026-10-03",
+        "htmlEncoding": "Shift_JIS",
+        "rawBytes": 88195,
+        "rawSha256": "cc243a3788fbf0384ff53a1245583fe078365c2410c095b32a6c5801169082a0"
+      },
+      "validation": {
+        "uniqueHorseNumbers": true,
+        "finiteFinishers": 12,
+        "nonFinishers": 0,
+        "sectionalSumError": 0
+      }
+    },
+    {
+      "id": "201129",
+      "date": "2020-11-29",
+      "length": 2400,
+      "course": "東京芝A",
+      "direction": "左回",
+      "state": "良",
+      "surface": "草地",
+      "fieldSize": 15,
+      "entryCount": 15,
+      "raceSectionals200m": [
+        12.7,
+        10.8,
+        11.8,
+        11.3,
+        11.3,
+        11.5,
+        11.8,
+        11.9,
+        12.1,
+        12.3,
+        13.2,
+        12.3
+      ],
+      "winner": {
+        "finishTime": 143,
+        "final600": 34.7,
+        "carriedWeightKg": 55
+      },
+      "horses": [
+        {
+          "finishPosition": 1,
+          "horseNumber": 2,
+          "finishTime": 143,
+          "final600": 34.7,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 490,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 2,
+          "horseNumber": 6,
+          "finishTime": 143.2,
+          "final600": 34.3,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 456,
+          "lastCornerRankReported": 9,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 3,
+          "horseNumber": 5,
+          "finishTime": 143.2,
+          "final600": 34.4,
+          "carriedWeightKg": 53,
+          "bodyMassKg": 474,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 4,
+          "horseNumber": 1,
+          "finishTime": 143.2,
+          "final600": 34.8,
+          "carriedWeightKg": 55,
+          "bodyMassKg": 474,
+          "lastCornerRankReported": 6,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 5,
+          "horseNumber": 15,
+          "finishTime": 143.3,
+          "final600": 35.2,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 464,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 6,
+          "horseNumber": 3,
+          "finishTime": 143.8,
+          "final600": 35,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 482,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 7,
+          "horseNumber": 7,
+          "finishTime": 143.8,
+          "final600": 34.7,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 478,
+          "lastCornerRankReported": 10,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 8,
+          "horseNumber": 4,
+          "finishTime": 144.1,
+          "final600": 38.9,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 508,
+          "lastCornerRankReported": 1,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 9,
+          "horseNumber": 12,
+          "finishTime": 144.2,
+          "final600": 35.1,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 502,
+          "lastCornerRankReported": 10,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 10,
+          "horseNumber": 8,
+          "finishTime": 144.6,
+          "final600": 35.1,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 478,
+          "lastCornerRankReported": 15,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 11,
+          "horseNumber": 10,
+          "finishTime": 144.8,
+          "final600": 35.6,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 466,
+          "lastCornerRankReported": 12,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 12,
+          "horseNumber": 13,
+          "finishTime": 145,
+          "final600": 35.7,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 498,
+          "lastCornerRankReported": 12,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 13,
+          "horseNumber": 11,
+          "finishTime": 145.3,
+          "final600": 37,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 500,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 14,
+          "horseNumber": 9,
+          "finishTime": 145.6,
+          "final600": 37.5,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 488,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 15,
+          "horseNumber": 14,
+          "finishTime": 149.2,
+          "final600": 40,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 486,
+          "lastCornerRankReported": 12,
+          "status": "finished"
+        }
+      ],
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/jc/result/jc2020.html",
+        "publisher": "JRA",
+        "retrievedAt": "2026-10-03",
+        "htmlEncoding": "Shift_JIS",
+        "rawBytes": 92645,
+        "rawSha256": "066f5f45706ec7eb99a79c5e5d5f956c04f459d82e3b8ab46b6931ea0e56ac2c"
+      },
+      "validation": {
+        "uniqueHorseNumbers": true,
+        "finiteFinishers": 15,
+        "nonFinishers": 0,
+        "sectionalSumError": 0
+      }
+    },
+    {
+      "id": "201025",
+      "date": "2020-10-25",
+      "length": 3000,
+      "course": "京都芝外A",
+      "direction": "右回",
+      "state": "良",
+      "surface": "草地",
+      "fieldSize": 18,
+      "entryCount": 18,
+      "raceSectionals200m": [
+        12.8,
+        11.9,
+        12.1,
+        13.3,
+        12.1,
+        11.9,
+        13.1,
+        12.4,
+        12.5,
+        12.7,
+        12.9,
+        12.2,
+        11.8,
+        11.6,
+        12.2
+      ],
+      "winner": {
+        "finishTime": 185.5,
+        "final600": 35.2,
+        "carriedWeightKg": 57
+      },
+      "horses": [
+        {
+          "finishPosition": 1,
+          "horseNumber": 3,
+          "finishTime": 185.5,
+          "final600": 35.2,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 458,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 2,
+          "horseNumber": 9,
+          "finishTime": 185.5,
+          "final600": 35.1,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 474,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 3,
+          "horseNumber": 10,
+          "finishTime": 186.1,
+          "final600": 35.2,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 490,
+          "lastCornerRankReported": 14,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 4,
+          "horseNumber": 8,
+          "finishTime": 186.2,
+          "final600": 36.1,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 484,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 5,
+          "horseNumber": 15,
+          "finishTime": 186.2,
+          "final600": 35.4,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 436,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 6,
+          "horseNumber": 13,
+          "finishTime": 186.6,
+          "final600": 35.6,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 470,
+          "lastCornerRankReported": 14,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 7,
+          "horseNumber": 6,
+          "finishTime": 186.9,
+          "final600": 36.3,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 488,
+          "lastCornerRankReported": 8,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 8,
+          "horseNumber": 14,
+          "finishTime": 187.1,
+          "final600": 36.5,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 502,
+          "lastCornerRankReported": 8,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 9,
+          "horseNumber": 2,
+          "finishTime": 187.5,
+          "final600": 37.4,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 498,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 10,
+          "horseNumber": 11,
+          "finishTime": 187.6,
+          "final600": 37.7,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 450,
+          "lastCornerRankReported": 1,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 11,
+          "horseNumber": 4,
+          "finishTime": 187.6,
+          "final600": 36.9,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 488,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 12,
+          "horseNumber": 5,
+          "finishTime": 187.8,
+          "final600": 37.2,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 484,
+          "lastCornerRankReported": 8,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 13,
+          "horseNumber": 1,
+          "finishTime": 187.9,
+          "final600": 37.1,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 458,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 14,
+          "horseNumber": 16,
+          "finishTime": 187.9,
+          "final600": 36.6,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 472,
+          "lastCornerRankReported": 18,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 15,
+          "horseNumber": 7,
+          "finishTime": 188.5,
+          "final600": 38.1,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 488,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 16,
+          "horseNumber": 12,
+          "finishTime": 189.2,
+          "final600": 38.4,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 480,
+          "lastCornerRankReported": 14,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 17,
+          "horseNumber": 18,
+          "finishTime": 189.4,
+          "final600": 38.3,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 476,
+          "lastCornerRankReported": 14,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 18,
+          "horseNumber": 17,
+          "finishTime": 191.7,
+          "final600": 41.8,
+          "carriedWeightKg": 57,
+          "bodyMassKg": 540,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        }
+      ],
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/kikka/result/kikka2020.html",
+        "publisher": "JRA",
+        "retrievedAt": "2026-10-03",
+        "htmlEncoding": "Shift_JIS",
+        "rawBytes": 96067,
+        "rawSha256": "8be83a5e2401ab2e1622cd8577d3dd4d500ca861d72145994a2e450af8901621"
+      },
+      "validation": {
+        "uniqueHorseNumbers": true,
+        "finiteFinishers": 18,
+        "nonFinishers": 0,
+        "sectionalSumError": 0
+      }
+    },
+    {
+      "id": "200503",
+      "date": "2020-05-03",
+      "length": 3200,
+      "course": "京都芝外A",
+      "direction": "右回",
+      "state": "良",
+      "surface": "草地",
+      "fieldSize": 14,
+      "entryCount": 14,
+      "raceSectionals200m": [
+        13.2,
+        12.4,
+        12.4,
+        12.5,
+        12.5,
+        12,
+        11.6,
+        12.5,
+        12.1,
+        12.2,
+        12.7,
+        12.5,
+        11.9,
+        11.9,
+        11.9,
+        12.2
+      ],
+      "winner": {
+        "finishTime": 196.5,
+        "final600": 34.6,
+        "carriedWeightKg": 58
+      },
+      "horses": [
+        {
+          "finishPosition": 1,
+          "horseNumber": 14,
+          "finishTime": 196.5,
+          "final600": 34.6,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 490,
+          "lastCornerRankReported": 7,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 2,
+          "horseNumber": 6,
+          "finishTime": 196.5,
+          "final600": 35.1,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 446,
+          "lastCornerRankReported": 3,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 3,
+          "horseNumber": 5,
+          "finishTime": 196.9,
+          "final600": 35.3,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 478,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 4,
+          "horseNumber": 7,
+          "finishTime": 196.9,
+          "final600": 35.1,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 500,
+          "lastCornerRankReported": 6,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 5,
+          "horseNumber": 3,
+          "finishTime": 197.2,
+          "final600": 35.3,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 458,
+          "lastCornerRankReported": 8,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 6,
+          "horseNumber": 8,
+          "finishTime": 197.3,
+          "final600": 36.8,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 512,
+          "lastCornerRankReported": 1,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 7,
+          "horseNumber": 1,
+          "finishTime": 197.4,
+          "final600": 35.8,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 478,
+          "lastCornerRankReported": 4,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 8,
+          "horseNumber": 11,
+          "finishTime": 197.5,
+          "final600": 35.8,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 470,
+          "lastCornerRankReported": 8,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 9,
+          "horseNumber": 4,
+          "finishTime": 197.6,
+          "final600": 36.7,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 490,
+          "lastCornerRankReported": 2,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 10,
+          "horseNumber": 2,
+          "finishTime": 197.9,
+          "final600": 35.5,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 474,
+          "lastCornerRankReported": 10,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 11,
+          "horseNumber": 10,
+          "finishTime": 198.2,
+          "final600": 35.5,
+          "carriedWeightKg": 56,
+          "bodyMassKg": 340,
+          "lastCornerRankReported": 12,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 12,
+          "horseNumber": 9,
+          "finishTime": 198.7,
+          "final600": 36.3,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 502,
+          "lastCornerRankReported": 11,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 13,
+          "horseNumber": 13,
+          "finishTime": 204.7,
+          "final600": 42.2,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 460,
+          "lastCornerRankReported": 14,
+          "status": "finished"
+        },
+        {
+          "finishPosition": 14,
+          "horseNumber": 12,
+          "finishTime": 204.9,
+          "final600": 42.2,
+          "carriedWeightKg": 58,
+          "bodyMassKg": 482,
+          "lastCornerRankReported": 13,
+          "status": "finished"
+        }
+      ],
+      "source": {
+        "url": "https://www.jra.go.jp/datafile/seiseki/g1/haruten/result/haruten2020.html",
+        "publisher": "JRA",
+        "retrievedAt": "2026-10-03",
+        "htmlEncoding": "Shift_JIS",
+        "rawBytes": 91412,
+        "rawSha256": "7d02f4ebaf124f0e448c75db47907e36e0baa3c387b7b8785c322b97cfa0f7a4"
+      },
+      "validation": {
+        "uniqueHorseNumbers": true,
+        "finiteFinishers": 14,
+        "nonFinishers": 0,
+        "sectionalSumError": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,588 @@
+{
+  "startedAt": "2026-10-04T05:49:36.450Z",
+  "expectedSourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "sourceHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "sourceBytesHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "wrapperHash": "a40eb436a202e242bef50ac5ad1e3cf67b7d8f7814b84b84772a028ae3bdc07e",
+  "node": {
+    "executable": "D:\\应用\\jiuguan\\node.exe",
+    "version": "v24.12.0",
+    "heapLimitMB": 192
+  },
+  "history": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc",
+  "execution": "sequential child processes",
+  "scope": "Mechanism regressions only. Includes the small controlled replays already present in each listed suite; no new calibration grid or realism acceptance claim.",
+  "inputs": {
+    "sim.js": {
+      "bytes": 217599,
+      "sha256": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9"
+    },
+    "tests/final-engine-regressions-v11.js": {
+      "bytes": 18844,
+      "sha256": "a40eb436a202e242bef50ac5ad1e3cf67b7d8f7814b84b84772a028ae3bdc07e"
+    },
+    "tests/fixtures/follow-coarse-screen-v11.js": {
+      "bytes": 5746,
+      "sha256": "7d8a296af14da49d3848029389e478a9301b234986148a96c5ee772028727301"
+    },
+    "tests/fixtures/following-witness-cpu-v11.js": {
+      "bytes": 1573,
+      "sha256": "e4b059db767f25d646e4db7feb0c441a79fcb4f8819fcdf3e3316ed2753a847b"
+    },
+    "tests/fixtures/install-system-v11.js": {
+      "bytes": 1641,
+      "sha256": "a9ac5a0a3091178cadc5bc2b419a797f2f4899b9f38155db69f69b23deb9f6df"
+    },
+    "tests/fixtures/integrate-player-entry-v11.js": {
+      "bytes": 383,
+      "sha256": "e6098b2dc6d1ea433648909bd5dbea07c20c687f38b524dc2d5f35e8845c82dc"
+    },
+    "tests/fixtures/integrate-rank-coarse-v11.js": {
+      "bytes": 1047,
+      "sha256": "28e28e3f78a1209b4349f80c39cafc46b83150d0dca95bc6466ac0fc77fbc4f4"
+    },
+    "tests/fixtures/integrate-traffic-admission-v11.js": {
+      "bytes": 701,
+      "sha256": "0816d9034f420f3d0301b9edc878c1f39ccde26f83a8bdc3458748be209fd6ce"
+    },
+    "tests/fixtures/integrate-traffic-cpu-v11.js": {
+      "bytes": 382,
+      "sha256": "3926aff39cf2a5ca61529c7860c8e1d75ade3d02540c6f41a48a4e81140dc490"
+    },
+    "tests/fixtures/integrate-visible-prior-v11.js": {
+      "bytes": 455,
+      "sha256": "ea4bb90e4bbc06499fc3aca042e98c4321a8e0f160af909d4ed1c9763c18b2a5"
+    },
+    "tests/fixtures/prediction-peer-pair-cpu-v11.js": {
+      "bytes": 1883,
+      "sha256": "075cfc24435cf8a40c285c8c953f709dee9a4efa2fd62c8790f998203e724888"
+    },
+    "tests/fixtures/prediction-visible-prior-v11.js": {
+      "bytes": 3778,
+      "sha256": "2752efa00c3c30f0da21bdb71770236af41799c399de2e6d3e09ab143d37d94a"
+    },
+    "tests/fixtures/race-cohort-admission-v11.js": {
+      "bytes": 4371,
+      "sha256": "4124b5479b3366bc8d1b504ef91add5113ac434ab582a07558c30f55bab9ba62"
+    },
+    "tests/fixtures/race-cohort-admission-v11.patch": {
+      "bytes": 2806,
+      "sha256": "e3992f26a34298328533246845141a2d11957bfdd6379430d0063f6dd65095f9"
+    },
+    "tests/fixtures/race-cohort-player-entry-v11.js": {
+      "bytes": 4421,
+      "sha256": "c11a85a61dec5da43a37a04e15a0b2ad72bbe0b619c5533ed58d106dfcab7435"
+    },
+    "tests/fixtures/race-cohort-player-entry-v11.patch": {
+      "bytes": 2625,
+      "sha256": "120731ce2f119a2c3a5b6f6eeb5397eb66b6cfccc9b96e1d78c6a9cf40f3999f"
+    },
+    "tests/fixtures/race-cohort-v11.patch": {
+      "bytes": 17175,
+      "sha256": "fb8f3f20703114e4843fad2ad90a39d35615d4919a4a20054f6e1c07db012589"
+    },
+    "tests/fixtures/race-prediction-v11-core.txt": {
+      "bytes": 22799,
+      "sha256": "8dcd5d5421e7fd0cb14d27c90797e56bc24617bde503f189a7fff71d156b7a06"
+    },
+    "tests/fixtures/race-prediction-v11-install.js": {
+      "bytes": 6840,
+      "sha256": "57c0a396546b177a0db050ea2bbc5de2df5539e33dad29be0bbb113c04d6afcb"
+    },
+    "tests/fixtures/race-release-v11.js": {
+      "bytes": 3356,
+      "sha256": "50254aa03d9a2300b07752e9df3baee15cdddb5bb5df2f451b1a1d1015eb26ab"
+    },
+    "tests/fixtures/race-release-v11.patch": {
+      "bytes": 3832,
+      "sha256": "fb45e4563c96cd073111c19e5fbdadc8e11586554101dcb011866c086b8ccecb"
+    },
+    "tests/fixtures/race-validation-reference-2020-v11.json": {
+      "bytes": 31486,
+      "sha256": "528ae6bd3f431252591c761c06dccac51f9614d2357ef549f7fee0a09b6879b2"
+    },
+    "tests/fixtures/race-validation-v11-driver-before-inner-observer.js.gz": {
+      "bytes": 10591,
+      "sha256": "6cddbdc30a047932f3bf95f14b7d4a7b93e1d2f4e0287311df757b5531dc19b6"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air2-anchor18.json": {
+      "bytes": 46,
+      "sha256": "bf9faca41752a20d6a551e6003d4d292a4eb1ded4f1ccd75598762c39bd0654d"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air2-fast80-nopeak-cost105.json": {
+      "bytes": 114,
+      "sha256": "089ca6a1887d425b3879530be3131b2848b0ab3ca93b4aa3a4f382c3fc5cef32"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air2-fast80-nopeak-cost110.json": {
+      "bytes": 112,
+      "sha256": "3d4bb19b30bbe4523c130027c04064ba9c6903b5ac41fcd120ae271a85f86d61"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air2-fast80-peak08.json": {
+      "bytes": 149,
+      "sha256": "dc4ca41ee6939d5abe4ca11fe35b69f550ef1f5fa68c97fc4df9fab2a83c893d"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air2-fast80-peak12-cost105.json": {
+      "bytes": 153,
+      "sha256": "9e5ac1224b6b23ffd81164b7bb892d7a99766ec1b1b0ece9228fc8b31e32e100"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air4-anchor18.json": {
+      "bytes": 46,
+      "sha256": "799fe9857cf8a794d2690a59a158300673e2648430434334e4058bb1ad1e5ad4"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air4-fast80-peak12.json": {
+      "bytes": 149,
+      "sha256": "6ec1141a71a5603754b468b366a587bb0868b82f5cc6b6fa69637fd3b2e6baf1"
+    },
+    "tests/fixtures/race-validation-v11-parameters/air4-fast85-peak08-cost105.json": {
+      "bytes": 138,
+      "sha256": "bb6d89dd922f49f8af7ccd1e5c58e4be925ca0c76d8082a1cc23b92b1d054582"
+    },
+    "tests/fixtures/race-validation-v11-parameters/current.json": {
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    "tests/fixtures/race-validation-v11-parameters/fast80-nopeak.json": {
+      "bytes": 75,
+      "sha256": "f54e4069a580ccb7ab20065e1bd2b24ea472de9e059073d04137e5b2c3e545fe"
+    },
+    "tests/fixtures/race-validation-v11-parameters/fast80-peak08.json": {
+      "bytes": 106,
+      "sha256": "53af269345add41278ddc0ea834173b15bb54bb09de1e77f6c89fdc52764f5fd"
+    },
+    "tests/fixtures/race-validation-v11-parameters/fast80-peak12.json": {
+      "bytes": 106,
+      "sha256": "61aa9f78b17786dead304e82d0a783fe5e3bf28ecab9c6449d40131b57127e63"
+    },
+    "tests/fixtures/race-validation-v11-parameters/fast85.json": {
+      "bytes": 92,
+      "sha256": "4abccdee5e7fcfac79acf09a8b0ee154f840745ddbfa8bfcfef46f22e7456629"
+    },
+    "tests/fixtures/race-validation-v11-parameters/manifest-mechanical.json": {
+      "bytes": 1998,
+      "sha256": "e6c2075af09dc6700fcc19336a590d3e5efe5007593b31744ab41d8e4cf67351"
+    },
+    "tests/fixtures/race-validation-v11-parameters/manifest.json": {
+      "bytes": 2405,
+      "sha256": "107f52a388ee9c08cf083338ee787d38a0e9f4c77161c02d2a590be66c91a80d"
+    },
+    "tests/fixtures/race-validation-v11-parameters/selected-nopeak-cost105.json": {
+      "bytes": 139,
+      "sha256": "3092001a76d035922ae23192be9380833adced74593de7b58fdb9f66bfa6abaf"
+    },
+    "tests/fixtures/race-validation-v11-parameters/selected-peak-cost105.json": {
+      "bytes": 139,
+      "sha256": "8d8c2bed60f35c0fb085f151e72634ea438dabf0b658282c921b6dfe00b6ee45"
+    },
+    "tests/fixtures/rider-controller-v11.js": {
+      "bytes": 24117,
+      "sha256": "3d95da3659c30f105b5fde468616d3c6bf75841a50362fb90594dd286a522b74"
+    },
+    "tests/fixtures/rider-policy-before-v7.txt": {
+      "bytes": 5080,
+      "sha256": "43fce00422d09db73750d61fe1eea091ae97d3e7afef1a05a5c8cc3e1b5399f1"
+    },
+    "tests/fixtures/route-reserve-power-v11.js": {
+      "bytes": 1799,
+      "sha256": "3a65d8017b736577a1d5af7c15b51e9fcf10c0cc6f72034d37d6af571a2dee99"
+    },
+    "tests/fixtures/route-station-lookup-v11.js": {
+      "bytes": 2492,
+      "sha256": "3a14d161ea156777ba02ff6c0459371de65b8a78573b5e0767305ad4af495670"
+    },
+    "tests/fixtures/sequence-safety-override-v11.js": {
+      "bytes": 8340,
+      "sha256": "c210ce24f6462c1782a5586af62aa45359dc61c5f0bcc509ca6ede320c09b237"
+    },
+    "tests/fixtures/traffic-optimization-v9.patch": {
+      "bytes": 23952,
+      "sha256": "12d59e9ed00d4e498e358bbdad41ee3fee1e4191b66b62ecb12b53572769dc31"
+    },
+    "tests/fixtures/wait-route-continuation-v11.js": {
+      "bytes": 1531,
+      "sha256": "e73507af3a74d94d3a3b4ae7bc3b7840f4a289c5de4e74ebd5196f21de841a33"
+    },
+    "tests/follow-coarse-screen-focused-v11.js": {
+      "bytes": 6497,
+      "sha256": "8358190b0a7d7194bc8123016ff5a6a76f4110c1ad8165916bb5155d5f56b2c6"
+    },
+    "tests/prediction-consistency-v11.js": {
+      "bytes": 17497,
+      "sha256": "9ee0c4abcbce526191ed86cd8efaf7f2536a3aa37ccdc677f37e07862018377c"
+    },
+    "tests/race-validation-v11.js": {
+      "bytes": 34304,
+      "sha256": "c01f5097d94ff49e635adb1c78b3f3c413a616615e6a3aafd29e12c5a8a6ae85"
+    },
+    "tests/rider-controller-review-v11.js": {
+      "bytes": 13268,
+      "sha256": "1f004d3d13fe5c45d5851ae6366f0e23a140f6e3a97233ad4736b88b7c02a10e"
+    },
+    "tests/rider-planning-v11.js": {
+      "bytes": 6519,
+      "sha256": "a0c6c882d73a2bb79e6cf519c78fd75439a3642fe798e05c31179f7683bd101c"
+    },
+    "tests/rider-rank-clock-v11.js": {
+      "bytes": 8083,
+      "sha256": "86d217281c3bc6159bdb5538c8010221dd8900cf67795e223790e4093be63adc"
+    },
+    "tests/rider-route-planning.js": {
+      "bytes": 17367,
+      "sha256": "7462fa4b1bea255caa1d126eec09a1712785189e8e61f12499e6656eb7604412"
+    },
+    "tests/sequence-safety-override-focused-v11.js": {
+      "bytes": 9934,
+      "sha256": "cd845218e279e2c60454a168b2283ea643eb5b76065d4fb4d9afa9c3fbbbebc4"
+    },
+    "tests/sequence-safety-override-v11.js": {
+      "bytes": 8821,
+      "sha256": "ca41c3dbe4b57b70935aec8703efb46c253d57a592a20d24a7b7554fcfc50383"
+    },
+    "tests/system-reality-v9.js": {
+      "bytes": 20849,
+      "sha256": "50347af3c29fd83c680546d64e0255801aa37757344fc445b948774d7493dc11"
+    }
+  },
+  "previousOutputs": [],
+  "syntax": {
+    "exitCode": 0,
+    "signal": null,
+    "spawnError": null,
+    "wallSeconds": 0.06312069999999995,
+    "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/syntax.stdout.log",
+    "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/syntax.stderr.log",
+    "pass": true
+  },
+  "suites": [
+    {
+      "id": "prediction-consistency",
+      "script": "tests/prediction-consistency-v11.js",
+      "scriptHash": "9ee0c4abcbce526191ed86cd8efaf7f2536a3aa37ccdc677f37e07862018377c",
+      "scope": "12 fixed continuations and 3 paired factoring controls; 60 Hz state, work, energy and action transitions. Includes its existing 150-query microbenchmark; no field calibration.",
+      "previousOutputs": [
+        {
+          "path": "docs/prediction-consistency-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/prediction-consistency/previous/docs/prediction-consistency-v11.json",
+          "bytes": 109067,
+          "sha256": "114a3a027839348d44252afe36e512c930d4936835962e1024dfedc0b8e547bd"
+        },
+        {
+          "path": "docs/prediction-consistency-v11.md",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/prediction-consistency/previous/docs/prediction-consistency-v11.md",
+          "bytes": 2645,
+          "sha256": "e43c222d6877696870b8a59bbbf8e690a36fbf8bbeabc0d473d2c5dfcd519561"
+        }
+      ],
+      "producedOutputs": [
+        {
+          "path": "docs/prediction-consistency-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/prediction-consistency/produced/docs/prediction-consistency-v11.json",
+          "bytes": 111709,
+          "sha256": "05605978dd7bdb5556ca2b1a245d4e8ee5ea2f2ddfcba9d5ad8be761d36c3ad6"
+        },
+        {
+          "path": "docs/prediction-consistency-v11.md",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/prediction-consistency/produced/docs/prediction-consistency-v11.md",
+          "bytes": 2644,
+          "sha256": "126084ed60ba4142ccfb787cba7c3583fe7c9eeb3ec303e1eda8fbe78709ae69"
+        }
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "spawnError": null,
+      "wallSeconds": 1.8276100999999998,
+      "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/prediction-consistency.stdout.log",
+      "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/prediction-consistency.stderr.log",
+      "inputsUnchanged": true,
+      "evidence": {
+        "problems": [],
+        "checks": 12,
+        "report": "docs/prediction-consistency-v11.json",
+        "reportSha256": "05605978dd7bdb5556ca2b1a245d4e8ee5ea2f2ddfcba9d5ad8be761d36c3ad6",
+        "executions": 18,
+        "frames": 31831,
+        "forecastQueries": 39,
+        "microbenchmarkQueries": 150,
+        "coefficientHash": "f2e32942de8cd14203306f4539b6f65561eab547fcd6cfebe54e5788eb58b471",
+        "fineMaxAbsState": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "rider-route-planning",
+      "script": "tests/rider-route-planning.js",
+      "scriptHash": "b6e7515b2cd559ec7fcbff7d03dcb2806762ec550e5fa064c69b9d96a8b2f3d8",
+      "scope": "Route geometry, lateral work, grade/wind, reserve recovery and instantaneous power; dense controlled references. Output is stdout only.",
+      "previousOutputs": [],
+      "producedOutputs": [],
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "spawnError": null,
+      "wallSeconds": 1.8541919000000002,
+      "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rider-route-planning.stdout.log",
+      "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rider-route-planning.stderr.log",
+      "inputsUnchanged": true,
+      "evidence": {
+        "problems": [],
+        "checks": 15,
+        "kind": "stdout-only; source and scripts guarded by wrapper"
+      },
+      "pass": true
+    },
+    {
+      "id": "rider-planning",
+      "script": "tests/rider-planning-v11.js",
+      "scriptHash": "a0c6c882d73a2bb79e6cf519c78fd75439a3642fe798e05c31179f7683bd101c",
+      "scope": "Position utility, unattainable catch, blocked lanes and exact action transitions; includes 2 complete 4-horse 1200 m races for style-label trajectory equivalence.",
+      "previousOutputs": [
+        {
+          "path": "docs/rider-planning-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rider-planning/previous/docs/rider-planning-v11.json",
+          "bytes": 63765,
+          "sha256": "1339518cc78414dbe0acaf58faf29f97c035c8ea3b221307afed751f1f6aa900"
+        }
+      ],
+      "producedOutputs": [],
+      "status": "failed",
+      "exitCode": 1,
+      "signal": null,
+      "spawnError": null,
+      "wallSeconds": 0.4012062000000005,
+      "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rider-planning.stdout.log",
+      "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rider-planning.stderr.log",
+      "inputsUnchanged": true,
+      "evidence": {
+        "problems": [
+          "Suite did not produce a fresh JSON report.",
+          "Required generated artifact missing: docs/rider-planning-v11.json"
+        ]
+      },
+      "pass": false
+    },
+    {
+      "id": "finalcoarse-focused",
+      "script": "tests/follow-coarse-screen-focused-v11.js",
+      "scriptHash": "8358190b0a7d7194bc8123016ff5a6a76f4110c1ad8165916bb5155d5f56b2c6",
+      "scope": "Coarse refusals skip fine work, fine refusals cannot commit, accepted catches require fine goals/energy; planning patch is idempotent and fixed controls remain exact. Stub gates are mechanism tests, not numerical calibration.",
+      "previousOutputs": [
+        {
+          "path": "docs/follow-coarse-screen-focused-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused/previous/docs/follow-coarse-screen-focused-v11.json",
+          "bytes": 16410,
+          "sha256": "86394dfe37bcbe312b257e269a6881506484a3e2b1dc33910a90fa698dda0094"
+        },
+        {
+          "path": "docs/follow-coarse-screen-focused-v11.json.source.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused/previous/docs/follow-coarse-screen-focused-v11.json.source.js.gz",
+          "bytes": 70805,
+          "sha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8"
+        },
+        {
+          "path": "docs/follow-coarse-screen-focused-v11.json.candidate.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused/previous/docs/follow-coarse-screen-focused-v11.json.candidate.js.gz",
+          "bytes": 70805,
+          "sha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8"
+        }
+      ],
+      "producedOutputs": [
+        {
+          "path": "docs/follow-coarse-screen-focused-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused/produced/docs/follow-coarse-screen-focused-v11.json",
+          "bytes": 16418,
+          "sha256": "23a4620d20a4da9b870d7876a8d0b1e2d4d7633144deb6ec0d64a21c4aecfbac"
+        },
+        {
+          "path": "docs/follow-coarse-screen-focused-v11.json.source.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused/produced/docs/follow-coarse-screen-focused-v11.json.source.js.gz",
+          "bytes": 71968,
+          "sha256": "b983a1112a18c94616db50039aaf7d73c01cf88bc521ca263203f882e2f777dd"
+        },
+        {
+          "path": "docs/follow-coarse-screen-focused-v11.json.candidate.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused/produced/docs/follow-coarse-screen-focused-v11.json.candidate.js.gz",
+          "bytes": 71968,
+          "sha256": "b983a1112a18c94616db50039aaf7d73c01cf88bc521ca263203f882e2f777dd"
+        }
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "spawnError": null,
+      "wallSeconds": 1.3191318,
+      "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused.stdout.log",
+      "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/finalcoarse-focused.stderr.log",
+      "inputsUnchanged": true,
+      "evidence": {
+        "problems": [],
+        "checks": 10,
+        "report": "docs/follow-coarse-screen-focused-v11.json",
+        "reportSha256": "23a4620d20a4da9b870d7876a8d0b1e2d4d7633144deb6ec0d64a21c4aecfbac"
+      },
+      "pass": true
+    },
+    {
+      "id": "rank-focused",
+      "script": "tests/rider-rank-clock-v11.js",
+      "scriptHash": "86d217281c3bc6159bdb5538c8010221dd8900cf67795e223790e4093be63adc",
+      "scope": "Same-candidate visible endpoints and clock for distant/moving rivals, own early finish, placed/crossing rivals and guarded hidden-state access.",
+      "previousOutputs": [
+        {
+          "path": "docs/rider-rank-clock-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rank-focused/previous/docs/rider-rank-clock-v11.json",
+          "bytes": 3768,
+          "sha256": "6005ff23c7ecf4e71ae331af84bcb2cc84ae54361447541300ef8d136c542460"
+        },
+        {
+          "path": "docs/rider-rank-clock-v11.json.source.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rank-focused/previous/docs/rider-rank-clock-v11.json.source.js.gz",
+          "bytes": 70805,
+          "sha256": "2d5de89635ac233458fab54a427952647ceccea2b94d65c72719f62bb2ab65b8"
+        }
+      ],
+      "producedOutputs": [
+        {
+          "path": "docs/rider-rank-clock-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rank-focused/produced/docs/rider-rank-clock-v11.json",
+          "bytes": 3747,
+          "sha256": "51eb683f2efd16c67b8dbc7453877c704bb3034deafdc0a5ab786cf779df9598"
+        },
+        {
+          "path": "docs/rider-rank-clock-v11.json.source.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rank-focused/produced/docs/rider-rank-clock-v11.json.source.js.gz",
+          "bytes": 71968,
+          "sha256": "b983a1112a18c94616db50039aaf7d73c01cf88bc521ca263203f882e2f777dd"
+        }
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "spawnError": null,
+      "wallSeconds": 0.3507949000000008,
+      "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rank-focused.stdout.log",
+      "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/rank-focused.stderr.log",
+      "inputsUnchanged": true,
+      "evidence": {
+        "problems": [],
+        "checks": 6,
+        "report": "docs/rider-rank-clock-v11.json",
+        "reportSha256": "51eb683f2efd16c67b8dbc7453877c704bb3034deafdc0a5ab786cf779df9598"
+      },
+      "pass": true
+    },
+    {
+      "id": "controller-review",
+      "script": "tests/rider-controller-review-v11.js",
+      "scriptHash": "1f004d3d13fe5c45d5851ae6366f0e23a140f6e3a97233ad4736b88b7c02a10e",
+      "scope": "Visible motion prior, start-delay reuse, action continuation, viable routes, traffic veto separation and fine follow commitment.",
+      "previousOutputs": [
+        {
+          "path": "docs/rider-controller-review-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/controller-review/previous/docs/rider-controller-review-v11.json",
+          "bytes": 37186,
+          "sha256": "75820417cc5149bd38758bdf9ce86c8e84e3a6ac21ed10f76142894af329729a"
+        }
+      ],
+      "producedOutputs": [
+        {
+          "path": "docs/rider-controller-review-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/controller-review/produced/docs/rider-controller-review-v11.json",
+          "bytes": 29128,
+          "sha256": "8acaabf3388a8ba39f08d71be02ae1d9d1fa1d7b8c78379e228afed9f9f1f094"
+        }
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "spawnError": null,
+      "wallSeconds": 1.1833896999999998,
+      "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/controller-review.stdout.log",
+      "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/controller-review.stderr.log",
+      "inputsUnchanged": true,
+      "evidence": {
+        "problems": [],
+        "checks": 10,
+        "report": "docs/rider-controller-review-v11.json",
+        "reportSha256": "8acaabf3388a8ba39f08d71be02ae1d9d1fa1d7b8c78379e228afed9f9f1f094"
+      },
+      "pass": true
+    },
+    {
+      "id": "sequence-safety-focused",
+      "script": "tests/sequence-safety-override-focused-v11.js",
+      "scriptHash": "cd845218e279e2c60454a168b2283ea643eb5b76065d4fb4d9afa9c3fbbbebc4",
+      "scope": "Actual safety tuple changes cancel unexecuted sequences; candidate/actual telemetry and attack labels agree. Unchanged commands preserve commitments and launch/withdraw state. Synthetic branch forecasts are not field numerical evidence.",
+      "previousOutputs": [
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/previous/docs/sequence-safety-override-focused-v11.json",
+          "bytes": 52559,
+          "sha256": "4c4ddb85ef64dfc52bfc99920477510f8ec8c0a1c3ab83ae8e701553f02c7c56"
+        },
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json.source.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/previous/docs/sequence-safety-override-focused-v11.json.source.js.gz",
+          "bytes": 71552,
+          "sha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf"
+        },
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json.candidate.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/previous/docs/sequence-safety-override-focused-v11.json.candidate.js.gz",
+          "bytes": 71552,
+          "sha256": "bb55684c459134b6ec5608f9f014dbb1d8d8d289552e9648381c06bc858b2ebf"
+        },
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json.script.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/previous/docs/sequence-safety-override-focused-v11.json.script.js.gz",
+          "bytes": 2886,
+          "sha256": "34dbb54b67cd1411f0f9c50d3097290ad16869422f9551df20fe443910271e58"
+        }
+      ],
+      "producedOutputs": [
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/produced/docs/sequence-safety-override-focused-v11.json",
+          "bytes": 52013,
+          "sha256": "7e1e290c07a4858bcfefcfc5f196178162f756ee2b9bf5b6278e4667bf18de58"
+        },
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json.source.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/produced/docs/sequence-safety-override-focused-v11.json.source.js.gz",
+          "bytes": 71968,
+          "sha256": "b983a1112a18c94616db50039aaf7d73c01cf88bc521ca263203f882e2f777dd"
+        },
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json.candidate.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/produced/docs/sequence-safety-override-focused-v11.json.candidate.js.gz",
+          "bytes": 71968,
+          "sha256": "b983a1112a18c94616db50039aaf7d73c01cf88bc521ca263203f882e2f777dd"
+        },
+        {
+          "path": "docs/sequence-safety-override-focused-v11.json.script.js.gz",
+          "archive": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused/produced/docs/sequence-safety-override-focused-v11.json.script.js.gz",
+          "bytes": 2886,
+          "sha256": "34dbb54b67cd1411f0f9c50d3097290ad16869422f9551df20fe443910271e58"
+        }
+      ],
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "spawnError": null,
+      "wallSeconds": 0.9479589000000005,
+      "stdout": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused.stdout.log",
+      "stderr": "docs/final-engine-regressions-v11-history/2026-10-04T05-49-36-443Z-309e6ad6f5c2-jlWfKc/sequence-safety-focused.stderr.log",
+      "inputsUnchanged": true,
+      "evidence": {
+        "problems": [],
+        "checks": 10,
+        "report": "docs/sequence-safety-override-focused-v11.json",
+        "reportSha256": "7e1e290c07a4858bcfefcfc5f196178162f756ee2b9bf5b6278e4667bf18de58"
+      },
+      "pass": true
+    }
+  ],
+  "pass": false,
+  "finishedAt": "2026-10-04T05:49:45.198Z",
+  "productionEndHash": "309e6ad6f5c2892d8cfbcc679e08bc4613578ecb764f505d649e6304365c9ce9",
+  "inputsUnchanged": true
+}
