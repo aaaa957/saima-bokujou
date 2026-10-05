@@ -44,3 +44,5 @@ docs/wait-route-continuation-partial-v11-history/83142f24ac5b8fb2049ddf06edb29ac
 docs/candidate-final-all30.json
 # Breakdown-mechanism batch, same convention.
 docs/candidate-breakdown-v11.json
+# Distance-specialisation rebalance batch, same convention.
+docs/candidate-specialization-v11.json
