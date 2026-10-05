@@ -42,3 +42,5 @@ docs/follow-coarse-screen-partial-v11-history/15ba1cf8366ddc0d8e3685ab06ac0e77f2
 docs/wait-route-continuation-partial-v11-history/83142f24ac5b8fb2049ddf06edb29ac149b04ca3fdeacd2ac1ef94bd647599cc.json
 # Full candidate-final batch is committed as the lossless .json.gz archive (raw is 15.6 MB).
 docs/candidate-final-all30.json
+# Breakdown-mechanism batch, same convention.
+docs/candidate-breakdown-v11.json
