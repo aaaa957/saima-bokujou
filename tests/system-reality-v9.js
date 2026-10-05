@@ -15,7 +15,13 @@ function distribution(a){return {n:a.filter(Number.isFinite).length,median:q(a),
 function cv(a){if(!a.length)return null;const m=a.reduce((s,x)=>s+x,0)/a.length;return Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/a.length)/m;}
 function category(rank,n){return rank===1?'逃':rank<=Math.ceil(n*.375)?'先':rank<=Math.ceil(n*.625)?'差':'追';}
 function fieldFor(job,B,S){
-  const h=B.makeField(B.mulberry32(job.seed),{n:job.n,level:job.external?86:70});
+  // 把本场【距离/赛道】条件传进 makeField：引擎的 cohort 路径会为每个候选
+  // 预测"在本距离下的完赛时间"，并只让跑得到本场要求的马入选 ——
+  // 这就是"对应距离给对应数值的马跑"。
+  // 原先没传 race，makeField 走了"无 race"的简支路，把这条按距离判定的路径
+  // 整个绕过，导致 1200m 与 3200m 的阵容逐位相同（速度/耐力均值完全一致）。
+  const h=B.makeField(B.mulberry32(job.seed),{n:job.n,level:job.external?86:70,
+    race:{length:job.length,surface:'草地',state:job.state||'良',course:job.course,dir:job.dir,profile:'平坦'}});
   for(const x of h){x.surface='草地';x.special='左右皆可';
     if(job.external||job.context!=='native-official')Object.assign(x,{'疲劳':0,'斗志':50,jockeyGrade:job.external?'优秀':'普通',bodyMass:480,carriedWeight:job.weight??57});
     if(job.context==='equal-ability-flat')for(const k of Object.keys(x.stats))x.stats[k]=70;
