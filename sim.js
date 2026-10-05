@@ -579,7 +579,7 @@
     // 短距离时加成够用 ⇒ 由功率上限（速度）决定；长距离时加成不够 ⇒ 由氧气供给决定。
     // 因此这里抬高有氧基线、参数化其上限、并同步下调速度上限与储备容量以保住绝对用时。
     baseSpeed:{a:0.020,b:15.30,min:1,max:115}, // 70点=16.70m/s参考速度
-    staminaPer:30, gutsPer:60, energyScale:1,
+    staminaPer:33, gutsPer:60, energyScale:1,
     aerobicBase:0.86, aerobicStaminaK:0.0020, // 旧展示兼容；物理用下列有单位参数
     // aerobicCeiling 原为代码里写死的 68，会把"抬高有氧基线"静默截断（隐藏陷阱）。
     aerobicPower:58, aerobicPerPoint:0.24, aerobicTau:10, aerobicCeiling:76,
