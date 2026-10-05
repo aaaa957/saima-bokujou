@@ -589,6 +589,9 @@
     peakExtra:1.55, burstSpeedK:0.010,
     maxAccel:5.75, runningAccel:2.75, braking:3.5,
     responseTime:1.12, lateralSpeed:0.8, laneBias:1,
+    // 骑手对「车道经济性」的计价权重。真实节能 = 横向内移量 × 剩余转角（单位即米），
+    // 故 1.0 才对应真实距离节省；原为 0.35 的魔数，未说明依据。
+    laneRouteWeight:0.35,
     draftRange:12, draftSave:0.72, leadCost:1, // 只减少空气阻力项，不给全部做功打折
     curveLateral:3.6, turnCost:0.045,
     // 以下只用于赛前公开预测/历史辅助接口，不反馈给比赛物理。
@@ -2170,7 +2173,7 @@
         const reference=c.reference||baseline,ref=reference.forecast;
         const refEnergy=ref.ledger.energyUsed-ref.ledger.recovered,refRank=rankAt(ref);
         const positionGain=Math.abs(refRank-targetRank)-Math.abs(rank-targetRank);
-        const routeBenefit=(holdT-f.endpoint.t)*futureTurns*0.35;
+        const routeBenefit=(holdT-f.endpoint.t)*futureTurns*RACE_F.laneRouteWeight;
         const changeCost=c.t!==holdT?0.15:0;
         c.score=f.endpoint.s-ref.endpoint.s-(netEnergy-refEnergy)*reservePrice+
           positionGain*positionValue+routeBenefit-changeCost;
