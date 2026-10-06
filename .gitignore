@@ -48,3 +48,6 @@ docs/candidate-breakdown-v11.json
 docs/candidate-specialization-v11.json
 # Early-expansion (paceIntentSpan 0.15) batch, same convention.
 docs/candidate-expansion-v11.json
+
+# CPU profile 产物（临时诊断，不入库）
+.cprof/
