@@ -592,6 +592,10 @@
     // 骑手对「车道经济性」的计价权重。真实节能 = 横向内移量 × 剩余转角（单位即米），
     // 故 1.0 才对应真实距离节省；原为 0.35 的魔数，未说明依据。
     laneRouteWeight:0.35,
+    // 跑法/位置意图对配速请求的最大偏置（±比例）。现实里马群出闸后不久即拉开，
+    // 靠的是各骑手选择的配速不同；此前引擎里所有人跑同一条"最大可支付恒速"，
+    // 马群长时间并排，变道因此在赛程前 36% 都不合法。
+    paceIntentSpan:0.05,
     draftRange:12, draftSave:0.72, leadCost:1, // 只减少空气阻力项，不给全部做功打折
     curveLateral:3.6, turnCost:0.045,
     // 以下只用于赛前公开预测/历史辅助接口，不反馈给比赛物理。
@@ -2019,6 +2023,16 @@
       // The remaining-route budget and the short action forecast share state propagation.
       // A possible wake is credited only by a finite forecast while actually in its corridor.
       const planned=budgetSpeed(H,reserveEstimate*clamp(0.965+0.02*plan.risk,0.965,0.985),0);
+      // 跑法与位置意图进入【配速请求】。
+      // 现实里马群出闸后不久就拉开，靠的是各骑手选择的配速不同：抢前型前压、
+      // 后追型收后。此前 plan.position 只经 targetRank 影响"瞄准第几名"，不改变
+      // 请求速度，于是全场配速几乎相同、马群长时间并排，变道在赛程前 36% 都不合法
+      // （见 docs/变道插空机制-2026-10-06.md §八）。
+      // 该偏置在早段最强；中后段由"剩余储备"自然接管——前压者储备更低 ⇒
+      // budgetSpeed 复算出的配速回落，这正是现实里的拱形配速（而非硬编码形状）。
+      const frontBias=clamp((plan.position-0.5)*2,-1,1)*0.6+clamp((behavior.forwardness-0.5)*2,-1,1)*0.4;
+      const earlyWeight=clamp(1-H.s/Math.max(1,length*0.35),0,1);
+      const intentV=Math.max(3,Math.min(H.maxV,planned*(1+frontBias*RACE_F.paceIntentSpan*earlyWeight)));
       updateStartState(H,planned);
       const horizon=Math.max(0.05,Math.min(8,remaining/Math.max(3,planned)));
       const settleDuration=Math.min(RACE_F.responseTime*2,Math.max(0,remaining/Math.max(3,planned)-horizon));
@@ -2055,7 +2069,7 @@
         H.statsSummary.cancelledSequences=(H.statsSummary.cancelledSequences||0)+1;H.riderSequence=null;
       }
       const candidates=[],baseline=evaluate(H.startSettled?'settle':'start',
-        [{duration:horizon,targetV:planned}],holdT);
+        [{duration:horizon,targetV:intentV}],holdT);
       candidates.push(baseline);
       const ahead=near.filter(F=>F.s>H.s).sort((a,b)=>a.s-b.s)[0];
       const nextBend=routeCorners.find(at=>at>H.s+0.1&&kAt(Math.min(length,at+0.1),geo)>0);
