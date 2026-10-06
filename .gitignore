@@ -46,3 +46,5 @@ docs/candidate-final-all30.json
 docs/candidate-breakdown-v11.json
 # Distance-specialisation rebalance batch, same convention.
 docs/candidate-specialization-v11.json
+# Early-expansion (paceIntentSpan 0.15) batch, same convention.
+docs/candidate-expansion-v11.json
