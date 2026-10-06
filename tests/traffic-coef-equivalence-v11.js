@@ -1,18 +1,19 @@
-// 验证「移除 trafficProgressCache」这一改动：
-//   ① 逐位等价 —— 与改动前的引擎（HEAD 的 sim.js）跑完整比赛比对全场状态摘要
-//   ② 性能 —— 同场次的 CPU 对比
-// 只读：改动前的源码取自 git，写到临时文件，不改仓库。
+// 验证性能改动：① 逐位等价 —— 与指定基线（默认 HEAD）跑完整比赛比对全场摘要
+//              ② 性能 —— 同场次的 CPU 对比
+// 只读：基线源码取自 git，写到临时文件，不改仓库。
 //
-// 用法：node tests/traffic-coef-equivalence-v11.js
+// 用法：node tests/traffic-coef-equivalence-v11.js [baseline-ref]
+//   例：node tests/traffic-coef-equivalence-v11.js 989e73a   # 与本轮优化前的基线比
 const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
 const crypto = require('node:crypto');
 const { execSync } = require('node:child_process');
 const root = path.join(__dirname, '..');
 
-// 改动前的引擎（HEAD 里那一版，仍带缓存）
-const before = execSync('git show HEAD:sim.js', { cwd: root }).toString();
-const fBefore = path.join(os.tmpdir(), 'sim_before_tpc.js');
+const BEFORE_REF = process.argv[2] || 'HEAD';
+const before = execSync(`git show ${BEFORE_REF}:sim.js`, { cwd: root }).toString();
+const fBefore = path.join(os.tmpdir(), 'sim_before_perf.js');
 fs.writeFileSync(fBefore, before);
+console.log('基线: ' + BEFORE_REF);
 
 const DT = 1 / 30;
 const mk = i => {

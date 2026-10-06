@@ -2358,6 +2358,10 @@
         c2=H.powerC2=RACE_F.resistanceK*H.economy*ground*H.surfaceCost;
       }
       const curvature=laneCurvatureAt(at,transverse,geo), radius=curvature>0?1/curvature:Infinity;
+      // 注：曾试过把这里的结果写入一个复用的模块级缓冲对象以减少 GC，但
+      // powerTerms 在本作用域内定义于 POWER_TERMS 之前，而本函数体早期
+      // （createRace 内的自检路径）就会调到 powerTerms，触发 TDZ 报错。
+      // 该优化的收益未验证，遂不做，保持返回新对象。
       return {c2,c6:Number.isFinite(radius)?c2*RACE_F.turnCost/(radius*radius*RACE_F.curveLateral*RACE_F.curveLateral):0,
         air:RACE_F.airK*(drafting?RACE_F.draftSave:1),wind:headwindAt(at),
         gravity:9.81*gradientAt(at,geo,g)*laneProgressCoef(at,transverse,geo)};
