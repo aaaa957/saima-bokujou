@@ -210,6 +210,96 @@ D3_SWEEP_NEW = """    function projectionBodySweep(H,F,before,frontBefore,move,f
     }"""
 D3_SWEEP = [('d3-sweep', D3_SWEEP_OLD, D3_SWEEP_NEW)]
 
+# ---------------------------------------------------------------- 第三轮：减少调用层数
+# 实测规律（2026-10-06 第三轮）：本代码库里**多一层函数调用/闭包比分配一个小对象贵得多**。
+#   · 为「去对象」而引入 routeSegment + routeHermiteMetric 三层调用 → 反而慢 16.7%
+#   · 为「去对象」而把 routeTablePoint 内层闭包提到外层（P1b）→ 反而慢 14.1%
+#   而对象在年轻代是 bump 分配 + 立即回收，几乎免费。
+# ⇒ 优化方向改为「**减少调用层数 / 展开**」，而不是「去分配」。
+
+# V1：展开五点 Gauss 求积。原先每次调用都新建一个捕获 pointAt/a/b 的闭包，
+# 并走 Array.prototype.reduce 的 5 次回调与 [at,weight] 数组解构。
+# 实测 referenceArcIntegral 在真实赛场每 300 步被调用约 252 万次（1261 万个取点）。
+# 累加顺序保持 `sum +=`（首项 0+w0*m0，与 reduce 初值 0 一致）⇒ 数值逐位相同。
+QUAD_OLD = """  function referenceArcIntegral(pointAt,a,b) {
+    if(b<=a) return 0;
+    return (b-a)*ARC_QUADRATURE.reduce((sum,[at,weight])=>sum+weight*(pointAt(a+(b-a)*at).metric??1),0);
+  }"""
+QUAD_NEW = """  // 展开为直线代码：避免每次调用新建闭包、避免 reduce 的回调与数组解构。
+  // 累加顺序与 reduce(…,0) 完全一致（首项为 0+w0*m0），故数值逐位相同。
+  const [[Q_T0,Q_W0],[Q_T1,Q_W1],[Q_T2,Q_W2],[Q_T3,Q_W3],[Q_T4,Q_W4]]=ARC_QUADRATURE;
+  function referenceArcIntegral(pointAt,a,b) {
+    if(b<=a) return 0;
+    const d=b-a;
+    let sum=0;
+    sum+=Q_W0*(pointAt(a+d*Q_T0).metric??1);
+    sum+=Q_W1*(pointAt(a+d*Q_T1).metric??1);
+    sum+=Q_W2*(pointAt(a+d*Q_T2).metric??1);
+    sum+=Q_W3*(pointAt(a+d*Q_T3).metric??1);
+    sum+=Q_W4*(pointAt(a+d*Q_T4).metric??1);
+    return d*sum;
+  }"""
+QUAD = [('quad-unroll', QUAD_OLD, QUAD_NEW)]
+
+# V2：`run` 的投影循环里，`activeVisible=[]` 与 `traffic=activeVisible.map(cb)` 在
+# 「无对手」的投影步（占 96%）上仍会分配两个数组 + 一个捕获闭包 + 一次内置 map 调用。
+# 无对手时改用共享的冻结空数组（两处都只读）⇒ 数值不变。
+TRAFFIC_OLD = """          const activeVisible=[];
+          let wake=null,front=null;
+          for(const F of visible) {"""
+TRAFFIC_NEW = """          let activeVisible=EMPTY_PROJECTION_LIST;
+          let wake=null,front=null;
+          if(visible.length) activeVisible=[];
+          for(const F of visible) {"""
+TRAFFIC2_OLD = """          const traffic=activeVisible.map(F=>({h:F,before:{s:F.s,t:F.t,v:F.v},move:observedMove(F,dt,atTime+elapsed)}));"""
+TRAFFIC2_NEW = """          const traffic=activeVisible.length?activeVisible.map(F=>({h:F,before:{s:F.s,t:F.t,v:F.v},move:observedMove(F,dt,atTime+elapsed)})):EMPTY_PROJECTION_LIST;"""
+TRAFFIC3_OLD = """      function run(action,isTail,index) {"""
+TRAFFIC3_NEW = """      function run(action,isTail,index) {
+        // 无对手的投影步（实测占 96%）不需要为 activeVisible/traffic 各分配一个数组；
+        // 二者在投影内都只读，故共享同一个冻结空数组。数值逐位不变。
+        const EMPTY_PROJECTION_LIST=Object.freeze([]);"""
+TRAFFIC = [('traffic-empty-decl', TRAFFIC3_OLD, TRAFFIC3_NEW),
+           ('traffic-empty-a', TRAFFIC_OLD, TRAFFIC_NEW),
+           ('traffic-empty-b', TRAFFIC2_OLD, TRAFFIC2_NEW)]
+
+# V3：laneAdvance 里把「到某点的弧长」由捕获闭包改为内联。
+# 原实现每次调用都要新建一个捕获 stateAt/origin/t/geo 的闭包，再经过约 4 次间接调用；
+# 而 laneAdvance 在真实赛场每 300 步被调用约 117 万次。内联后调用次数与运算顺序不变
+# （origin 的两个场与参考线距先取出，表达式保持 `e.arc - oArc + oRel*(e.angle - oAng)` 的结合次序），
+# 故数值逐位一致。
+LANE_OLD = """    const stateAt=geo.route?routeArcState:abstractArcState,origin=stateAt(s,geo),initialCoef=laneProgressCoef(s,t,geo);
+    const distanceTo=to=>{const end=stateAt(to,geo);return end.arc-origin.arc+
+      (t-(geo.referenceLane??(TRACK_WIDTH/2)))*(end.angle-origin.angle);};
+    let span=Math.max(1,Math.abs(physicalDistance*initialCoef)*1.2),lo=s,hi=s;
+    if(physicalDistance>0){hi=s+span;while(distanceTo(hi)<physicalDistance){span*=2;hi=s+span;}}
+    else {lo=s-span;while(distanceTo(lo)>physicalDistance){span*=2;lo=s-span;}}
+    let at=clamp(s+physicalDistance*initialCoef,lo,hi);
+    for(let i=0;i<18;i++) {
+      const residual=distanceTo(at)-physicalDistance;
+      if(Math.abs(residual)<1e-9)return at;
+      if(residual>0)hi=at;else lo=at;
+      const candidate=at-residual*laneProgressCoef(at,t,geo);
+      at=candidate>lo&&candidate<hi?candidate:(lo+hi)/2;
+    }
+    return at;"""
+LANE_NEW = """    const stateAt=geo.route?routeArcState:abstractArcState,origin=stateAt(s,geo),initialCoef=laneProgressCoef(s,t,geo);
+    // 内联原 distanceTo 闭包：不新建闭包、不走间接调用，调用序列与表达式结合次序不变。
+    const oArc=origin.arc,oAng=origin.angle,oRel=t-(geo.referenceLane??(TRACK_WIDTH/2));
+    let span=Math.max(1,Math.abs(physicalDistance*initialCoef)*1.2),lo=s,hi=s;
+    if(physicalDistance>0){hi=s+span;let e=stateAt(hi,geo);while(e.arc-oArc+oRel*(e.angle-oAng)<physicalDistance){span*=2;hi=s+span;e=stateAt(hi,geo);}}
+    else {lo=s-span;let e=stateAt(lo,geo);while(e.arc-oArc+oRel*(e.angle-oAng)>physicalDistance){span*=2;lo=s-span;e=stateAt(lo,geo);}}
+    let at=clamp(s+physicalDistance*initialCoef,lo,hi);
+    for(let i=0;i<18;i++) {
+      const e=stateAt(at,geo),residual=e.arc-oArc+oRel*(e.angle-oAng)-physicalDistance;
+      if(Math.abs(residual)<1e-9)return at;
+      if(residual>0)hi=at;else lo=at;
+      const candidate=at-residual*laneProgressCoef(at,t,geo);
+      at=candidate>lo&&candidate<hi?candidate:(lo+hi)/2;
+    }
+    return at;"""
+LANE = [('lane-inline', LANE_OLD, LANE_NEW)]
+
+
 # rsi：routeStationLowerIndex 每次调用都做一次 WeakMap 查询（实测 10.4M 次 / 300 步），
 # 而它几乎总是被同一个 stations 数组重复调用。加一级「最近一次」记忆即可省掉这些查询。
 # 纯记忆化，数值必然一致。
@@ -276,5 +366,10 @@ write('c6.js', apply(base, P1B + P2 + P3 + D3 + RSI + PROPOSE))
 #  - D3 : followingBodyClearance 拆为返回数字的函数，少建对象；横向不查路线
 #  - PROPOSE: projectionMove 的提案缓存改为按需创建（最热路径只提一次案）
 write('cand.js', apply(base, P1B + P2 + P3 + D3 + PROPOSE))
+# 第三轮：减少调用层数 / 展开
+write('quad.js', apply(base, QUAD))
+write('traffic.js', apply(base, TRAFFIC))
+write('quad_traffic.js', apply(base, QUAD + TRAFFIC))
+write('lane.js', apply(base, LANE))
 print('完成')
 
