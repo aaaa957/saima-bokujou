@@ -51,3 +51,6 @@ docs/candidate-expansion-v11.json
 
 # CPU profile 产物（临时诊断，不入库）
 .cprof/
+
+# 性能 A/B 变体产物（临时，不入库）
+.perf/
