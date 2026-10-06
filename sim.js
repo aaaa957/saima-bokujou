@@ -2081,12 +2081,30 @@
       const positionValue=horseLen(H)*(0.65+0.55*plan.risk)*(bendDeadline<horizon+3?1.35:1);
       H.targetV=planned;
       const openGap=findGap(H,true);
-      const sideBlocked=t=>near.some(F=>Math.abs(F.s-H.s)<(horseLen(H)+horseLen(F))/2+0.35&&
-        Math.min(H.t,t)-(horseWid(H)+horseWid(F))/2-0.1<F.t&&F.t<Math.max(H.t,t)+(horseWid(H)+horseWid(F))/2+0.1);
+      // 变道可达性 —— 判据是「插空」，不是「走廊必须空」。
+      // 旧判据要求【整条横向走廊在当前位置上此刻为空】，现实里骑手做不到也不必做到：
+      // 变道是一个过程，只要【到达那一刻目标车道留得下这匹马】即可。
+      // 横移到 t 需 dtLat=|t-H.t|/lateralSpeed 秒，期间本马前进 v·dtLat；
+      // 对手届时位置按各自的观测速度外推。真正的碰撞仍由预测的 pathConflict 兜底
+      // （有冲突的候选会被 -Infinity 淘汰），这里只做粗筛。
+      const laneReachable=t=>{
+        const dtLat=Math.abs(t-H.t)/Math.max(1e-6,RACE_F.lateralSpeed);
+        const lead=Math.max(0,H.v)*dtLat,s0=H.s+lead;
+        return !near.some(F=>{
+          if(Math.abs(F.t-t)>=(horseWid(H)+horseWid(F))/2+0.1) return false;   // 目标车道上没有人
+          const fs=F.s+Math.max(0,F.v)*dtLat;                                  // 对手届时纵向位置
+          return Math.abs(fs-s0)<(horseLen(H)+horseLen(F))/2+0.35;
+        });
+      };
       const lanes=[holdT];
-      if(openGap&&Math.abs(openGap.t-holdT)>0.3&&!sideBlocked(openGap.t)) lanes.push(openGap.t);
-      const inner=Math.max(horseWid(H)/2+0.25,H.t-Math.min(2,horizon*RACE_F.lateralSpeed));
-      if(H.laneIntentT<=0&&Math.abs(inner-holdT)>0.3&&!sideBlocked(inner)&&!lanes.some(t=>Math.abs(t-inner)<0.3)) lanes.push(inner);
+      if(openGap&&Math.abs(openGap.t-holdT)>0.3&&laneReachable(openGap.t)) lanes.push(openGap.t);
+      // 内线候选的可达车道 = 一个视界内横移速度所能达到的最内侧。
+      // 原来写死上限 2 m（视界 8 s × 横移 0.8 m/s ⇒ 本可达 6.4 m），使外侧马
+      // 每 ~4.5 s 只能内移 2 m（等效 0.44 m/s，低于横移速度），17 m 要 ~38 s，
+      // 占 1200 m 赛程 58%。写死 2 m 原本是为在密集马群里"够得到"，现在
+      // laneReachable 已按"到达时刻插空"判定，大跨度不再必然被挡，故按物理量取。
+      const inner=Math.max(horseWid(H)/2+0.25,H.t-horizon*RACE_F.lateralSpeed);
+      if(H.laneIntentT<=0&&Math.abs(inner-holdT)>0.3&&laneReachable(inner)&&!lanes.some(t=>Math.abs(t-inner)<0.3)) lanes.push(inner);
       const attackPlan=finishPlan(H,H.maxV,0,{reserve:reserveEstimate});
       const budgetFinishTime=attackPlan.feasible?finishPlan(H,planned,0,{reserve:reserveEstimate}).seconds:null;
       for(const t of lanes) {
@@ -2101,7 +2119,7 @@
         }
       }
       // Dropping behind a flank can create a legal inside route; it is paid and timed.
-      if(H.laneIntentT<=0&&(sideBlocked(inner)||H.blocked)&&H.v>3) {
+      if(H.laneIntentT<=0&&(!laneReachable(inner)||H.blocked)&&H.v>3) {
         const delay=Math.min(2,horizon/2),front=localFront;
         const easing=Math.max(3,Math.min(planned-0.35,front?front.v-0.2:planned-0.35));
         candidates.push(evaluate('wait-route',[{duration:delay,targetV:easing,targetT:H.t},

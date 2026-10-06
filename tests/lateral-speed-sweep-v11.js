@@ -50,7 +50,7 @@ function run(length) {
 
 const save = S.RACE_F.lateralSpeed;
 console.log('lateralSpeed  距离   闸位ρ   速度ρ   时间CV   within1   首末差   全场加权平均横向偏移');
-for (const ls of [0.8, 1.2, 1.8, 2.5, 3.5]) {
+for (const ls of [0.8, 1.5, 2.5, 4.0]) {
   S.RACE_F.lateralSpeed = ls;
   for (const L of [1200, 3200]) {
     const r = run(L);
