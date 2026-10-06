@@ -2345,10 +2345,18 @@
         terms.air*airV*airV*speed+(gravityPower??terms.gravity*speed)+a*speed)*H.massRatio);
     }
     function powerTerms(H,drafting,at,transverse=H.t) {
-      const condition=(surface==='草地'?{'良':1,'稍重':1.035,'重':1.08,'不良':1.15}:
-        {'良':1,'稍重':0.995,'重':1.02,'不良':1.075})[state]||1;
-      const ground=1+(condition-1)*clamp(1-(H.adj['力量']-70)*0.006,0.7,1.3);
-      const c2=RACE_F.resistanceK*H.economy*ground*H.surfaceCost;
+      // c2 = resistanceK · economy · ground(地面状态 × 本马力量) · surfaceCost。
+      // 这四个输入在整场比赛中都不被写入：surface/state 是模块级量、H.economy 与
+      // H.surfaceCost 只在构造时设定、adj 全程只读。因此按马预计算一次即可。
+      // 原先每次调用都要构造一个地面状态字面量并在其中查表，而 powerTerms 在
+      // 每个投影步里被多次调用（powerCost / speedAtPower / motionPower）。
+      let c2=H.powerC2;
+      if(c2===undefined){
+        const condition=(surface==='草地'?{'良':1,'稍重':1.035,'重':1.08,'不良':1.15}:
+          {'良':1,'稍重':0.995,'重':1.02,'不良':1.075})[state]||1;
+        const ground=1+(condition-1)*clamp(1-(H.adj['力量']-70)*0.006,0.7,1.3);
+        c2=H.powerC2=RACE_F.resistanceK*H.economy*ground*H.surfaceCost;
+      }
       const curvature=laneCurvatureAt(at,transverse,geo), radius=curvature>0?1/curvature:Infinity;
       return {c2,c6:Number.isFinite(radius)?c2*RACE_F.turnCost/(radius*radius*RACE_F.curveLateral*RACE_F.curveLateral):0,
         air:RACE_F.airK*(drafting?RACE_F.draftSave:1),wind:headwindAt(at),
@@ -2381,14 +2389,15 @@
       const low=Math.max(0,Math.min(a,b)),high=Math.min(1,Math.max(a,b));
       return high-low>1e-9?[low,high]:null;
     }
-    let trafficProgressCache=new Map(),trafficProgressCacheSize=0;
+    // （原 trafficProgressCache 已移除：见 trafficProgressCoef 的说明）
     function trafficProgressCoef(s,t) {
-      let lane=trafficProgressCache.get(t);
-      if(lane){const value=lane.get(s);if(value!==undefined)return value;}
-      const value=laneProgressCoef(s,t,geo);
-      if(trafficProgressCacheSize>=16384){trafficProgressCache.clear();trafficProgressCacheSize=0;lane=null;}
-      if(!lane){lane=new Map();trafficProgressCache.set(t,lane);}
-      lane.set(s,value);trafficProgressCacheSize++;return value;
+      // 这里曾有一个「按 (t, s) 嵌套 Map + 每步重建」的记忆化缓存。
+      // 2026-10-06 实测（tests/traffic-coef-ab-v11.js，16 匹 400 步，5 轮取最小）：
+      //   带缓存 CPU=1.48s，去掉缓存 CPU=1.23s（快 1.20×），且全场状态摘要逐位相同。
+      // 原因是缓存自身的开销（嵌套 Map 查询 + 每个物理步重建）超过它省下的
+      // laneProgressCoef —— profile 显示缓存 self 11.58% 而目标函数仅 1.94%。
+      // 高命中率并不等于正收益：这条踩过一次，遂直接调用。
+      return laneProgressCoef(s,t,geo);
     }
     function bodyClearance(H,F,hs,fs,ht,ft) {
       // 纵坐标是路线进度；在内外道把真实体长投影到相同坐标。
@@ -2411,7 +2420,6 @@
     }
     const trafficNegativeWitnessCache=new WeakMap();
     function tick(dt) {
-      trafficProgressCache=new Map();trafficProgressCacheSize=0;
       const act=active();if(!act.length){race.finished=true;return;}
       race.traffic??={steps:0,syncLateralDenied:0,brakingSteps:0,marginRecoverySteps:0,infeasibleSteps:0,
         minAcceleration:0,minFollowingSlack:null,minResponseSlack:null,lastInfeasible:null};
