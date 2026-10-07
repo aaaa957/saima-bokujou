@@ -307,14 +307,44 @@
     else { const a=Math.PI/2+(q-2*S-B)/turnR; x=-S/2+(R+d)*Math.cos(a); y=(R+d)*Math.sin(a); }
     if(dir==='右回') x=-x; return {x,y};
   }
+  // 赛道圈上 q 处的 (测度, 曲率)。与 routeReferencePoint -> loopReferencePoint ->
+  // routeTablePoint 的取值**逐位一致**（同样的区间解析、Hermite 表达式与运算次序），
+  // 但就地求值：不建任何对象、不经过两层调用。结果经两个模块级量返回。
+  // 直线段沿用原语义：loopReferencePoint 对直线返回的对象没有 metric 字段，
+  // 原式 ??1 使测度恒为 1，曲率为 0。
+  let LOOP_METRIC=1,LOOP_K=0;
+  function loopMetricK(q,loop) {
+    const {home,bend1,back}=loop;
+    if(q<=home||(q>=home+bend1&&q<=home+bend1+back)) { LOOP_METRIC=1;LOOP_K=0;return; }
+    const samples=loop.samples,stations=loop.stations;
+    const i=routeStationLowerIndex(stations,q),h=stations[i+1]-stations[i],f=clamp((q-stations[i])/h,0,1),a=samples[i],b=samples[i+1];
+    const Ax=a.x,Bx=h*a.tx,Cx=0.5*h*h*(-a.k*a.ty),px=b.x-Ax-Bx-Cx,vx=h*b.tx-Bx-2*Cx,ax=h*h*(-b.k*b.ty)-2*Cx;
+    const Dx=10*px-4*vx+0.5*ax,Ex=-15*px+7*vx-ax,Fx=6*px-3*vx+0.5*ax;
+    const Ay=a.y,By=h*a.ty,Cy=0.5*h*h*(a.k*a.tx),py=b.y-Ay-By-Cy,vy=h*b.ty-By-2*Cy,ay=h*h*(b.k*b.tx)-2*Cy;
+    const Dy=10*py-4*vy+0.5*ay,Ey=-15*py+7*vy-ay,Fy=6*py-3*vy+0.5*ay;
+    const vX=((((5*Fx*f+4*Ex)*f+3*Dx)*f+2*Cx)*f+Bx)/h,aX=(((20*Fx*f+12*Ex)*f+6*Dx)*f+2*Cx)/(h*h);
+    const vY=((((5*Fy*f+4*Ey)*f+3*Dy)*f+2*Cy)*f+By)/h,aY=(((20*Fy*f+12*Ey)*f+6*Dy)*f+2*Cy)/(h*h);
+    const n=Math.hypot(vX,vY);
+    LOOP_METRIC=n;LOOP_K=Math.max(0,(vX*aY-vY*aX)/(n*n*n));
+  }
   function kAt(s, geo) {
-    if(geo.route) return routeReferencePoint(s,geo).k;
+    if(geo.route) {
+      const r=geo.route;
+      if(r.chute&&s<r.startLength) return routeReferencePoint(s,geo).k;
+      loopMetricK(mod(s+geo.startOffset,geo.lap),r.loop);return LOOP_K;
+    }
     const {S,B,R}=geo, q=mod(s+(geo.startOffset||0),geo.lap||2*S+2*B);
     return (q>=S && q<S+B) || q>=2*S+B ? 1/R : 0;
   }
   function laneProgressCoef(s,t,geo) {
     if(geo.route) {
-      const p=routeReferencePoint(s,geo),raw=1/((p.metric??1)*(1+p.k*(t-geo.referenceLane)));
+      const r=geo.route;
+      if(r.chute&&s<r.startLength) {
+        const p=routeReferencePoint(s,geo),raw=1/((p.metric??1)*(1+p.k*(t-geo.referenceLane)));
+        return 1+(raw-1)*RACE_F.laneBias;
+      }
+      loopMetricK(mod(s+geo.startOffset,geo.lap),r.loop);
+      const raw=1/(LOOP_METRIC*(1+LOOP_K*(t-geo.referenceLane)));
       return 1+(raw-1)*RACE_F.laneBias;
     }
     const raw=kAt(s,geo)>0?(geo.referenceR||geo.R)/(geo.R+t-TRACK_WIDTH/2):1;
@@ -392,7 +422,12 @@
     const n=Math.round(length/step),nodes=Array.from({length:n+1},(_,i)=>i*step);
     nodes.push(...extra.filter(x=>x>0&&x<length));nodes.sort((a,b)=>a-b);
     const q=nodes.filter((x,i)=>!i||x-nodes[i-1]>1e-9),arc=[0];
-    const result={q,arc,total:0,kind:spec.kind,samples:spec.samples,stations:spec.stations||null,
+    // 米级「种子桶」：只给出搜索起点，精确区间仍由同一套 <= 比较定位
+    // （与 routeStationLowerIndex 完全同一手法）⇒ 不改变任何浮点结果，只把二分变成 O(1)。
+    const last=q.length-1,first=q[0],end=q[last];
+    const nb=Math.max(1,Math.ceil(end-first)),bins=new Uint32Array(nb);let seed=0;
+    for(let bin=0;bin<nb;bin++){const v=first+bin;while(seed<last-1&&q[seed+1]<=v)seed++;bins[bin]=seed;}
+    const result={q,arc,total:0,bins,first,last,kind:spec.kind,samples:spec.samples,stations:spec.stations||null,
       step0:spec.step,home:spec.home||0,backStart:spec.backStart||0,backEnd:spec.backEnd||0};
     for(let i=1;i<q.length;i++) arc.push(arc[i-1]+arcCellIntegral(result,i-1,q[i]));
     result.total=arc.at(-1);ROUTE_ARC_CACHE.set(owner,result);return result;
@@ -403,9 +438,11 @@
       home:loop.home,backStart:loop.home+loop.bend1,backEnd:loop.home+loop.bend1+loop.back},loop.stations);
   }
   function referenceArcAt(table,q) {
-    if(q<=0) return q;if(q>=table.q.at(-1)) return table.total+q-table.q.at(-1);
-    let lo=0,hi=table.q.length-1;
-    while(hi-lo>1){const mid=(lo+hi)>>1;if(table.q[mid]<=q)lo=mid;else hi=mid;}
+    const lastQ=table.q[table.last];
+    if(q<=0) return q;if(q>=lastQ) return table.total+q-lastQ;
+    let lo=table.bins[Math.max(0,Math.min(table.bins.length-1,Math.floor(q-table.first)))];
+    while(lo>0&&table.q[lo]>q)lo--;
+    while(lo<table.last-1&&table.q[lo+1]<=q)lo++;
     return table.arc[lo]+arcCellIntegral(table,lo,q);
   }
   function loopHeadingAt(q,loop) {
