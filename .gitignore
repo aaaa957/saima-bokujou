@@ -54,3 +54,6 @@ docs/candidate-expansion-v11.json
 
 # 性能 A/B 变体产物（临时，不入库）
 .perf/
+
+# 批次产物（大文件；raw 不入库，.gz 按需入库）
+docs/race-validation-v11-current-*.json
