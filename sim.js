@@ -337,34 +337,76 @@
   // 展开为直线代码：避免每次调用新建闭包、避免 reduce 的回调与数组解构。
   // 累加顺序与 reduce(…,0) 完全一致（首项为 0+w0*m0），故数值逐位相同。
   const [[Q_T0,Q_W0],[Q_T1,Q_W1],[Q_T2,Q_W2],[Q_T3,Q_W3],[Q_T4,Q_W4]]=ARC_QUADRATURE;
-  function referenceArcIntegral(pointAt,a,b) {
-    if(b<=a) return 0;
-    const d=b-a;
+  // 求积的「就地内联」版。
+  // 表节点与站点数组**逐元素相同**（已验证 京都芝外A/東京芝A/中山芝外A 各距离），
+  // 引入线表节点与采样网格也相同 ⇒ 五点取样必然落在**同一个**表区间 [q[i], q[i+1]] 内，
+  // 于是区段索引就是 i，无需再搜索；也不必构造 pointAt 的返回对象
+  // （原路径每次取点要新建 1 个捕获闭包 + 3 个对象，而真实赛场每 300 步取点 1260 万次）。
+  // 数值与原路径逐位一致：取样位置、Hermite 表达式、乘法与累加次序全部保持不变
+  // （含直线段经 ??1 得到的测度恒为 1）。与 f 无关的量（p/v/acc 与 D/E/F）只算一次。
+  function arcCellIntegral(table,i,q) {
+    const a0=table.q[i],d=q-a0;
+    if(!(d>0)) return 0;
+    const samples=table.samples;
+    if(table.kind===0) {
+      // 该区间整体落在直线段内 ⇒ loopReferencePoint 返回的对象无 metric ⇒ 原式取 1。
+      // home / 入弯点 / 出弯点都是站点，故区间不会跨界，用区间端点判定即可。
+      if(table.q[i+1]<=table.home||(table.q[i]>=table.backStart&&table.q[i+1]<=table.backEnd)) {
+        let s=0;s+=Q_W0;s+=Q_W1;s+=Q_W2;s+=Q_W3;s+=Q_W4;return d*s;
+      }
+      const stations=table.stations,st=stations[i],h=stations[i+1]-st,a=samples[i],b=samples[i+1];
+      const Ax=a.x,Bx=h*a.tx,Cx=0.5*h*h*(-a.k*a.ty),px=b.x-Ax-Bx-Cx,vx=h*b.tx-Bx-2*Cx,ax=h*h*(-b.k*b.ty)-2*Cx;
+      const Dx=10*px-4*vx+0.5*ax,Ex=-15*px+7*vx-ax,Fx=6*px-3*vx+0.5*ax;
+      const Ay=a.y,By=h*a.ty,Cy=0.5*h*h*(a.k*a.tx),py=b.y-Ay-By-Cy,vy=h*b.ty-By-2*Cy,ay=h*h*(b.k*b.tx)-2*Cy;
+      const Dy=10*py-4*vy+0.5*ay,Ey=-15*py+7*vy-ay,Fy=6*py-3*vy+0.5*ay;
+      let sum=0,f,x;
+      x=a0+d*Q_T0;f=clamp((x-st)/h,0,1);
+      sum+=Q_W0*Math.hypot(((((5*Fx*f+4*Ex)*f+3*Dx)*f+2*Cx)*f+Bx)/h,((((5*Fy*f+4*Ey)*f+3*Dy)*f+2*Cy)*f+By)/h);
+      x=a0+d*Q_T1;f=clamp((x-st)/h,0,1);
+      sum+=Q_W1*Math.hypot(((((5*Fx*f+4*Ex)*f+3*Dx)*f+2*Cx)*f+Bx)/h,((((5*Fy*f+4*Ey)*f+3*Dy)*f+2*Cy)*f+By)/h);
+      x=a0+d*Q_T2;f=clamp((x-st)/h,0,1);
+      sum+=Q_W2*Math.hypot(((((5*Fx*f+4*Ex)*f+3*Dx)*f+2*Cx)*f+Bx)/h,((((5*Fy*f+4*Ey)*f+3*Dy)*f+2*Cy)*f+By)/h);
+      x=a0+d*Q_T3;f=clamp((x-st)/h,0,1);
+      sum+=Q_W3*Math.hypot(((((5*Fx*f+4*Ex)*f+3*Dx)*f+2*Cx)*f+Bx)/h,((((5*Fy*f+4*Ey)*f+3*Dy)*f+2*Cy)*f+By)/h);
+      x=a0+d*Q_T4;f=clamp((x-st)/h,0,1);
+      sum+=Q_W4*Math.hypot(((((5*Fx*f+4*Ex)*f+3*Dx)*f+2*Cx)*f+Bx)/h,((((5*Fy*f+4*Ey)*f+3*Dy)*f+2*Cy)*f+By)/h);
+      return d*sum;
+    }
+    // 网格表（起跑引入线）：区段解析与 routeTablePoint 的 else 分支完全一致。
+    const h=table.step0;
     let sum=0;
-    sum+=Q_W0*(pointAt(a+d*Q_T0).metric??1);
-    sum+=Q_W1*(pointAt(a+d*Q_T1).metric??1);
-    sum+=Q_W2*(pointAt(a+d*Q_T2).metric??1);
-    sum+=Q_W3*(pointAt(a+d*Q_T3).metric??1);
-    sum+=Q_W4*(pointAt(a+d*Q_T4).metric??1);
+    for(let k=0;k<5;k++) {
+      const pair=ARC_QUADRATURE[k],x=a0+d*pair[0];
+      const z=clamp(x/h,0,samples.length-1),j=Math.min(Math.floor(z),samples.length-2),f=z-j;
+      const a=samples[j],b=samples[j+1];
+      const Ax=a.x,Bx=h*a.tx,Cx=0.5*h*h*(-a.k*a.ty),px=b.x-Ax-Bx-Cx,vx=h*b.tx-Bx-2*Cx,ax=h*h*(-b.k*b.ty)-2*Cx;
+      const Dx=10*px-4*vx+0.5*ax,Ex=-15*px+7*vx-ax,Fx=6*px-3*vx+0.5*ax;
+      const Ay=a.y,By=h*a.ty,Cy=0.5*h*h*(a.k*a.tx),py=b.y-Ay-By-Cy,vy=h*b.ty-By-2*Cy,ay=h*h*(b.k*b.tx)-2*Cy;
+      const Dy=10*py-4*vy+0.5*ay,Ey=-15*py+7*vy-ay,Fy=6*py-3*vy+0.5*ay;
+      sum+=pair[1]*Math.hypot(((((5*Fx*f+4*Ex)*f+3*Dx)*f+2*Cx)*f+Bx)/h,((((5*Fy*f+4*Ey)*f+3*Dy)*f+2*Cy)*f+By)/h);
+    }
     return d*sum;
   }
-  function referenceArcTable(owner,length,step,pointAt,extra=[]) {
+  function referenceArcTable(owner,length,step,spec,extra=[]) {
     if(ROUTE_ARC_CACHE.has(owner)) return ROUTE_ARC_CACHE.get(owner);
     const n=Math.round(length/step),nodes=Array.from({length:n+1},(_,i)=>i*step);
     nodes.push(...extra.filter(x=>x>0&&x<length));nodes.sort((a,b)=>a-b);
     const q=nodes.filter((x,i)=>!i||x-nodes[i-1]>1e-9),arc=[0];
-    for(let i=1;i<q.length;i++) arc.push(arc[i-1]+referenceArcIntegral(pointAt,q[i-1],q[i]));
-    const result={q,arc,total:arc.at(-1),pointAt};ROUTE_ARC_CACHE.set(owner,result);return result;
+    const result={q,arc,total:0,kind:spec.kind,samples:spec.samples,stations:spec.stations||null,
+      step0:spec.step,home:spec.home||0,backStart:spec.backStart||0,backEnd:spec.backEnd||0};
+    for(let i=1;i<q.length;i++) arc.push(arc[i-1]+arcCellIntegral(result,i-1,q[i]));
+    result.total=arc.at(-1);ROUTE_ARC_CACHE.set(owner,result);return result;
   }
   function loopArcTable(loop) {
     if(ROUTE_ARC_CACHE.has(loop)) return ROUTE_ARC_CACHE.get(loop);
-    return referenceArcTable(loop,loop.lap,loop.step,q=>loopReferencePoint(q,loop),loop.stations);
+    return referenceArcTable(loop,loop.lap,loop.step,{kind:0,samples:loop.samples,stations:loop.stations,
+      home:loop.home,backStart:loop.home+loop.bend1,backEnd:loop.home+loop.bend1+loop.back},loop.stations);
   }
   function referenceArcAt(table,q) {
     if(q<=0) return q;if(q>=table.q.at(-1)) return table.total+q-table.q.at(-1);
     let lo=0,hi=table.q.length-1;
     while(hi-lo>1){const mid=(lo+hi)>>1;if(table.q[mid]<=q)lo=mid;else hi=mid;}
-    return table.arc[lo]+referenceArcIntegral(table.pointAt,table.q[lo],q);
+    return table.arc[lo]+arcCellIntegral(table,lo,q);
   }
   function loopHeadingAt(q,loop) {
     if(q<=loop.home) return 0;
@@ -388,7 +430,7 @@
     const r=geo.route,loop=r.loop,table=loopArcTable(loop),q0=s+geo.startOffset,circuit=Math.floor(q0/geo.lap),q=mod(q0,geo.lap);
     let arc=circuit*table.total+referenceArcAt(table,q),angle=circuit*2*Math.PI+loopHeadingAt(q,loop);
     if(r.chute&&s<r.startLength) {
-      const chute=r.chute,ct=referenceArcTable(chute,chute.length,chute.step,q=>routeTablePoint(chute.samples,chute.step,q));
+      const chute=r.chute,ct=referenceArcTable(chute,chute.length,chute.step,{kind:1,samples:chute.samples,step:chute.step});
       const endQ=r.startLength+geo.startOffset,endCircuit=Math.floor(endQ/geo.lap),merge=mod(endQ,geo.lap);
       const endArc=endCircuit*table.total+referenceArcAt(table,merge),endAngle=endCircuit*2*Math.PI+loopHeadingAt(merge,loop);
       const p=routeReferencePoint(s,geo);
