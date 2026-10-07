@@ -459,12 +459,29 @@
   }
   // Exact-number keys: no station rounding or interpolation changes. Geometry
   // is immutable, as for ROUTE_ARC_CACHE; keep each geometry's cache bounded.
-  const ROUTE_STATE_VALUE_CACHE=new WeakMap();
+  // routeArcState 的定长「直接映射」记忆。
+  // 原实现是 per-geo 的 Map：每 300 步要 519 万次 has+get（double 键要算哈希再查桶），
+  // 且每未命中一次就 set 一次、表满 4096 还要整表 clear（每 300 步约 615 次）。
+  // 改为定长表：用 s 的位模式取索引，命中判据是 s 逐位相等于键 —— 与 Map(SameValueZero)
+  // 在有限值上等价，且无哈希桶、无扩容、无 clear。未命中即重算并覆盖该槽。
+  // 换 geo（换一场比赛）时整表失效（clear 键），既避免跨 geo 命中，也避免跨比赛保留引用。
+  // 纯记忆化：不改变任何数值。
+  const RS_BITS=13,RS_SIZE=1<<RS_BITS,RS_MASK=RS_SIZE-1;
+  const RS_KEY=new Float64Array(RS_SIZE),RS_VAL=new Array(RS_SIZE);
+  const RS_HBUF=new Float64Array(1),RS_HBITS=new Uint32Array(RS_HBUF.buffer);
+  let RS_GEO=null,RS_TABLE=null;
   function routeArcState(s,geo) {
-    let cache=ROUTE_STATE_VALUE_CACHE.get(geo);
-    if(!cache){cache=new Map();ROUTE_STATE_VALUE_CACHE.set(geo,cache);}
-    if(cache.has(s))return cache.get(s);
-    const r=geo.route,loop=r.loop,table=loopArcTable(loop),q0=s+geo.startOffset,circuit=Math.floor(q0/geo.lap),q=mod(q0,geo.lap);
+    let table;
+    if(geo===RS_GEO) table=RS_TABLE;
+    else {
+      table=loopArcTable(geo.route.loop);
+      RS_GEO=geo;RS_TABLE=table;
+      for(let i=0;i<RS_SIZE;i++)RS_KEY[i]=NaN;
+    }
+    RS_HBUF[0]=s;
+    const slot=(RS_HBITS[0]^Math.imul(RS_HBITS[1],0x9E3779B1))&RS_MASK;
+    if(RS_KEY[slot]===s)return RS_VAL[slot];
+    const r=geo.route,loop=r.loop,q0=s+geo.startOffset,circuit=Math.floor(q0/geo.lap),q=mod(q0,geo.lap);
     let arc=circuit*table.total+referenceArcAt(table,q),angle=circuit*2*Math.PI+loopHeadingAt(q,loop);
     if(r.chute&&s<r.startLength) {
       const chute=r.chute,ct=referenceArcTable(chute,chute.length,chute.step,{kind:1,samples:chute.samples,step:chute.step});
@@ -476,8 +493,7 @@
       angle=endAngle+chuteAngle-Math.PI;
     }
     const value={arc,angle};
-    if(cache.size>=4096)cache.clear();
-    cache.set(s,value);return value;
+    RS_KEY[slot]=s;RS_VAL[slot]=value;return value;
   }
   function abstractArcState(s,geo) {
     const lap=geo.lap,{S,B}=geo,q0=s+(geo.startOffset||0),circuit=Math.floor(q0/lap),q=mod(q0,lap),radius=geo.referenceR||geo.R;
