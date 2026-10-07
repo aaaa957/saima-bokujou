@@ -467,9 +467,11 @@
   // 换 geo（换一场比赛）时整表失效（clear 键），既避免跨 geo 命中，也避免跨比赛保留引用。
   // 纯记忆化：不改变任何数值。
   const RS_BITS=13,RS_SIZE=1<<RS_BITS,RS_MASK=RS_SIZE-1;
-  const RS_KEY=new Float64Array(RS_SIZE),RS_VAL=new Array(RS_SIZE);
+  // T8：结果改用两个标量返回（RS_RET_ARC / RS_RET_ANGLE），表也存数值而非对象。
+  // 纯表示变更，数值与运算次序完全不变；调用方须在下次调用前立即读走这两个量。
+  const RS_KEY=new Float64Array(RS_SIZE),RS_ARC=new Float64Array(RS_SIZE),RS_ANGLE=new Float64Array(RS_SIZE);
   const RS_HBUF=new Float64Array(1),RS_HBITS=new Uint32Array(RS_HBUF.buffer);
-  let RS_GEO=null,RS_TABLE=null;
+  let RS_GEO=null,RS_TABLE=null,RS_RET_ARC=0,RS_RET_ANGLE=0;
   function routeArcState(s,geo) {
     let table;
     if(geo===RS_GEO) table=RS_TABLE;
@@ -480,7 +482,7 @@
     }
     RS_HBUF[0]=s;
     const slot=(RS_HBITS[0]^Math.imul(RS_HBITS[1],0x9E3779B1))&RS_MASK;
-    if(RS_KEY[slot]===s)return RS_VAL[slot];
+    if(RS_KEY[slot]===s){RS_RET_ARC=RS_ARC[slot];RS_RET_ANGLE=RS_ANGLE[slot];return;}
     const r=geo.route,loop=r.loop,q0=s+geo.startOffset,circuit=Math.floor(q0/geo.lap),q=mod(q0,geo.lap);
     let arc=circuit*table.total+referenceArcAt(table,q),angle=circuit*2*Math.PI+loopHeadingAt(q,loop);
     if(r.chute&&s<r.startLength) {
@@ -492,29 +494,32 @@
       let chuteAngle=Math.atan2(p.ty,p.tx);if(chuteAngle<0)chuteAngle+=2*Math.PI;
       angle=endAngle+chuteAngle-Math.PI;
     }
-    const value={arc,angle};
-    RS_KEY[slot]=s;RS_VAL[slot]=value;return value;
+    RS_KEY[slot]=s;RS_ARC[slot]=arc;RS_ANGLE[slot]=angle;
+    RS_RET_ARC=arc;RS_RET_ANGLE=angle;
   }
   function abstractArcState(s,geo) {
     const lap=geo.lap,{S,B}=geo,q0=s+(geo.startOffset||0),circuit=Math.floor(q0/lap),q=mod(q0,lap),radius=geo.referenceR||geo.R;
     const angle=q<S?0:q<S+B?(q-S)/radius:q<2*S+B?Math.PI:Math.PI+(q-2*S-B)/radius;
-    return {arc:q0,angle:circuit*2*Math.PI+angle};
+    RS_RET_ARC=q0;RS_RET_ANGLE=circuit*2*Math.PI+angle;
   }
   function laneArcDistance(s0,s1,t,geo) {
     if(!Number.isFinite(s0)||!Number.isFinite(s1)||!Number.isFinite(t)) throw new Error('无效车道弧长参数');
     if(s0===s1) return 0;
-    const at=geo.route?routeArcState:abstractArcState,a=at(s0,geo),b=at(s1,geo);
+    const at=geo.route?routeArcState:abstractArcState;
+    at(s0,geo);const aArc=RS_RET_ARC,aAngle=RS_RET_ANGLE;
+    at(s1,geo);const bArc=RS_RET_ARC,bAngle=RS_RET_ANGLE;
     // Exact parallel-curve relation: L(offset)=L(reference)+offset * signed turning angle.
-    return b.arc-a.arc+(t-(geo.referenceLane??(TRACK_WIDTH/2)))*(b.angle-a.angle);
+    return bArc-aArc+(t-(geo.referenceLane??(TRACK_WIDTH/2)))*(bAngle-aAngle);
   }
   function laneAdvance(s,physicalDistance,t,geo) {
     if(!Number.isFinite(s)||!Number.isFinite(physicalDistance)||!Number.isFinite(t)) throw new Error('无效车道推进参数');
     if(physicalDistance===0)return s;
     // Every inverse query has one immutable origin. Keep its exact arc/heading
     // and coefficient, while retaining the same quadrature and Newton steps.
-    const stateAt=geo.route?routeArcState:abstractArcState,origin=stateAt(s,geo),initialCoef=laneProgressCoef(s,t,geo);
-    const distanceTo=to=>{const end=stateAt(to,geo);return end.arc-origin.arc+
-      (t-(geo.referenceLane??(TRACK_WIDTH/2)))*(end.angle-origin.angle);};
+    const stateAt=geo.route?routeArcState:abstractArcState;stateAt(s,geo);
+    const oArc=RS_RET_ARC,oAngle=RS_RET_ANGLE,initialCoef=laneProgressCoef(s,t,geo);
+    const distanceTo=to=>{stateAt(to,geo);return RS_RET_ARC-oArc+
+      (t-(geo.referenceLane??(TRACK_WIDTH/2)))*(RS_RET_ANGLE-oAngle);};
     let span=Math.max(1,Math.abs(physicalDistance*initialCoef)*1.2),lo=s,hi=s;
     if(physicalDistance>0){hi=s+span;while(distanceTo(hi)<physicalDistance){span*=2;hi=s+span;}}
     else {lo=s-span;while(distanceTo(lo)>physicalDistance){span*=2;lo=s-span;}}
@@ -2462,14 +2467,27 @@
         const ground=1+(condition-1)*clamp(1-(H.adj['力量']-70)*0.006,0.7,1.3);
         c2=H.powerC2=RACE_F.resistanceK*H.economy*ground*H.surfaceCost;
       }
-      const curvature=laneCurvatureAt(at,transverse,geo), radius=curvature>0?1/curvature:Infinity;
+      // 就地内联：laneCurvatureAt 与 laneProgressCoef 对**同一个 at** 各走一条调用链，
+      // 且两者都落到 loopMetricK 上（同一个 q 被求值两次）。这里一次求出 (metric,K)，
+      // 同时构造曲率与进度系数 ⇒ 省掉 2 条调用链与 1 次重复求值。
+      // 表达式与原两个函数逐字一致（含 chute/abstract 分支一律回落到原函数），故数值逐位相同。
+      let curvature,progressCoef;
+      const pwRoute=geo.route;
+      if(pwRoute&&!(pwRoute.chute&&at<pwRoute.startLength)) {
+        loopMetricK(mod(at+geo.startOffset,geo.lap),pwRoute.loop);
+        const pwK=LOOP_K,pwD=transverse-geo.referenceLane,pwRaw=1/(LOOP_METRIC*(1+pwK*pwD));
+        curvature=pwK/(1+pwK*pwD);progressCoef=1+(pwRaw-1)*RACE_F.laneBias;
+      } else {
+        curvature=laneCurvatureAt(at,transverse,geo);progressCoef=laneProgressCoef(at,transverse,geo);
+      }
+      const radius=curvature>0?1/curvature:Infinity;
       // 注：曾试过把这里的结果写入一个复用的模块级缓冲对象以减少 GC，但
       // powerTerms 在本作用域内定义于 POWER_TERMS 之前，而本函数体早期
       // （createRace 内的自检路径）就会调到 powerTerms，触发 TDZ 报错。
       // 该优化的收益未验证，遂不做，保持返回新对象。
       return {c2,c6:Number.isFinite(radius)?c2*RACE_F.turnCost/(radius*radius*RACE_F.curveLateral*RACE_F.curveLateral):0,
         air:RACE_F.airK*(drafting?RACE_F.draftSave:1),wind:headwindAt(at),
-        gravity:9.81*gradientAt(at,geo,g)*laneProgressCoef(at,transverse,geo)};
+        gravity:9.81*gradientAt(at,geo,g)*progressCoef};
     }
     function motionPower(H,before,move,drafting,dt) {
       // 用实际高差支付势能；跨坡段接点时不能用坡前的点估计限制出力，
