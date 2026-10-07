@@ -334,9 +334,19 @@
   const ROUTE_ARC_CACHE=new WeakMap();
   const ARC_QUADRATURE=[[0.046910077030668,0.118463442528095],[0.230765344947158,0.239314335249683],
     [0.5,0.284444444444444],[0.769234655052842,0.239314335249683],[0.953089922969332,0.118463442528095]];
+  // 展开为直线代码：避免每次调用新建闭包、避免 reduce 的回调与数组解构。
+  // 累加顺序与 reduce(…,0) 完全一致（首项为 0+w0*m0），故数值逐位相同。
+  const [[Q_T0,Q_W0],[Q_T1,Q_W1],[Q_T2,Q_W2],[Q_T3,Q_W3],[Q_T4,Q_W4]]=ARC_QUADRATURE;
   function referenceArcIntegral(pointAt,a,b) {
     if(b<=a) return 0;
-    return (b-a)*ARC_QUADRATURE.reduce((sum,[at,weight])=>sum+weight*(pointAt(a+(b-a)*at).metric??1),0);
+    const d=b-a;
+    let sum=0;
+    sum+=Q_W0*(pointAt(a+d*Q_T0).metric??1);
+    sum+=Q_W1*(pointAt(a+d*Q_T1).metric??1);
+    sum+=Q_W2*(pointAt(a+d*Q_T2).metric??1);
+    sum+=Q_W3*(pointAt(a+d*Q_T3).metric??1);
+    sum+=Q_W4*(pointAt(a+d*Q_T4).metric??1);
+    return d*sum;
   }
   function referenceArcTable(owner,length,step,pointAt,extra=[]) {
     if(ROUTE_ARC_CACHE.has(owner)) return ROUTE_ARC_CACHE.get(owner);
